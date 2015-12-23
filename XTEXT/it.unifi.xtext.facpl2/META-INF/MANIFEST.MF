@@ -1,0 +1,32 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: it.unifi.xtext.facpl2
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: it.unifi.xtext.facpl2; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.xtext;visibility:=reexport,
+ org.eclipse.equinox.common;bundle-version="3.5.0",
+ org.eclipse.xtext.util,
+ org.eclipse.emf.ecore,
+ org.eclipse.emf.common,
+ org.eclipse.xtext.xbase.lib,
+ org.antlr.runtime,
+ org.eclipse.xtext.common.types,
+ org.objectweb.asm;bundle-version="[5.0.1,6.0.0)";resolution:=optional
+Import-Package: org.apache.log4j
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Export-Package: it.unifi.xtext.facpl,
+ it.unifi.xtext.facpl.facpl2,
+ it.unifi.xtext.facpl.facpl2.impl,
+ it.unifi.xtext.facpl.facpl2.util,
+ it.unifi.xtext.facpl.formatting,
+ it.unifi.xtext.facpl.generator,
+ it.unifi.xtext.facpl.generator.generators,
+ it.unifi.xtext.facpl.generator.util,
+ it.unifi.xtext.facpl.parser.antlr,
+ it.unifi.xtext.facpl.parser.antlr.internal,
+ it.unifi.xtext.facpl.scoping,
+ it.unifi.xtext.facpl.serializer,
+ it.unifi.xtext.facpl.services,
+ it.unifi.xtext.facpl.validation

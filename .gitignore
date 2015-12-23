@@ -1,0 +1,17 @@
+bin/
+.DS_Store
+._*
+*.log
+src-gen/
+xtend-gen/
+WEB-APPs/
+WEB-Example/
+JAR/
+JAR-Xtext/
+XACML2FACPL/source/
+XACML2FACPL/doc/
+XACML2FACPL/Jdom/
+XACML2FACPL/jaxp/
+TEST/Benchmark/
+EXAMPLES/ASCENS-School/
+

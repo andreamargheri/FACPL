@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="facpl2" nsURI="http://www.unifi.it/xtext/facpl/Facpl2" nsPrefix="facpl2">
+  <eClassifiers xsi:type="ecore:EClass" name="Facpl">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="importEl" upperBound="-1"
+        eType="#//Import" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="declarations" upperBound="-1"
+        eType="#//FunDecl" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="policies" upperBound="-1"
+        eType="#//PolicySet" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="requests" upperBound="-1"
+        eType="#//Request" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="main" eType="#//MainFacpl"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Import">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="importURI" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MainFacpl">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="extIndet" eType="#//BooleanLiteral"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="genPackage" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="refRequest" unique="false"
+        upperBound="-1" eType="#//Request"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="paf" eType="#//PAF" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FunDecl">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//TypeLiteral"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="args" unique="false" upperBound="-1"
+        eType="#//TypeLiteral"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="TypeLiteral">
+    <eLiterals name="Int" literal="Int"/>
+    <eLiterals name="Double" value="1" literal="Double"/>
+    <eLiterals name="Bool" value="2" literal="Bool"/>
+    <eLiterals name="String" value="3" literal="String"/>
+    <eLiterals name="DateTime" value="4" literal="DateTime"/>
+    <eLiterals name="Bag" value="5" literal="Bag"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PAF">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pep" eType="#//PEPAlg"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pdp" eType="#//PDP" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="PEPAlg">
+    <eLiterals name="BASE" literal="base"/>
+    <eLiterals name="DENY" value="1" literal="deny-biased"/>
+    <eLiterals name="PERMIT" value="2" literal="permit-biased"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Request">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="stub" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attributes" upperBound="-1"
+        eType="#//AttributeReq" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AttributeReq">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="name" eType="#//AttributeName"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" upperBound="-1"
+        eType="#//Expression" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AttributeName" eSuperTypes="#//Expression">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="category" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PDP">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pdpAlg" eType="#//Alg"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="polSet" upperBound="-1"
+        eType="#//AbstractPolicyIncl" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FacplPolicy">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="target" eType="#//Expression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="obl" upperBound="-1" eType="#//Obligation"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AbstractPolicyIncl">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="newPolicy" eType="#//FacplPolicy"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="refPol" eType="#//PolicySet"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PolicySet" eSuperTypes="#//FacplPolicy">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="polSetAlg" eType="#//Alg"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="policies" upperBound="-1"
+        eType="#//AbstractPolicyIncl" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Alg">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="idAlg" eType="#//AlgLiteral"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fStrategy" eType="#//FulfillmentStrategy"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="AlgLiteral">
+    <eLiterals name="ONLY_ONE" literal="only-one-applicable"/>
+    <eLiterals name="DENY_OVER" value="1" literal="deny-overrides"/>
+    <eLiterals name="PERMIT_OVER" value="2" literal="permit-overrides"/>
+    <eLiterals name="FIRST" value="3" literal="first-applicable"/>
+    <eLiterals name="DENY_UNLESS" value="4" literal="deny-unless-permit"/>
+    <eLiterals name="PERMIT_UNLESS" value="5" literal="permit-unless-deny"/>
+    <eLiterals name="WEAK_CONS" value="6" literal="weak-consensus"/>
+    <eLiterals name="STRONG_CONS" value="7" literal="strong-consensus"/>
+    <eLiterals name="CUSTOM_ALG" value="8" literal="custom-algorithm"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="FulfillmentStrategy">
+    <eLiterals name="GREEDY" literal="greedy"/>
+    <eLiterals name="ALL" value="1" literal="all"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Rule" eSuperTypes="#//FacplPolicy">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="effect" eType="#//Effect"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Effect">
+    <eLiterals name="PERMIT" literal="permit"/>
+    <eLiterals name="DENY" value="1" literal="deny"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Obligation">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="EvaluetedOn" eType="#//Effect"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="typeObl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pepAction" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expr" upperBound="-1" eType="#//Expression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Expression"/>
+  <eClassifiers xsi:type="ecore:EClass" name="NotExpression" eSuperTypes="#//Expression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="arg" eType="#//Expression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Function" eSuperTypes="#//Expression">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="functionId" eType="#//funID"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="arg1" eType="#//Expression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="arg2" eType="#//Expression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DeclaredFunction" eSuperTypes="#//Expression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="functionId" eType="#//FunDecl"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="args" upperBound="-1" eType="#//Expression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="funID">
+    <eLiterals name="EQUAL" literal="equal"/>
+    <eLiterals name="N_EQUAL" value="1" literal="not-equal"/>
+    <eLiterals name="LESS" value="2" literal="less-than"/>
+    <eLiterals name="LESS_EQ" value="3" literal="less-than-or-equal"/>
+    <eLiterals name="GREATER" value="4" literal="greater-than"/>
+    <eLiterals name="GREATER_EQ" value="5" literal="greater-than-or-equal"/>
+    <eLiterals name="IN" value="6" literal="in"/>
+    <eLiterals name="ADD" value="7" literal="addition"/>
+    <eLiterals name="SUBTRACT" value="8" literal="subtract"/>
+    <eLiterals name="DIVIDE" value="9" literal="divide"/>
+    <eLiterals name="MULTIPLY" value="10" literal="multiply"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Bag" eSuperTypes="#//Expression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="args" upperBound="-1" eType="#//Expression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StringLiteral" eSuperTypes="#//Expression">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BooleanLiteral" eSuperTypes="#//Expression">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IntLiteral" eSuperTypes="#//Expression">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DoubleLiteral" eSuperTypes="#//Expression">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DateLiteral" eSuperTypes="#//Expression">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TimeLiteral" eSuperTypes="#//Expression">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AndExpression" eSuperTypes="#//Expression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="left" eType="#//Expression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="right" eType="#//Expression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OrExpression" eSuperTypes="#//Expression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="left" eType="#//Expression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="right" eType="#//Expression"
+        containment="true"/>
+  </eClassifiers>
+</ecore:EPackage>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<Policy xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17 xacml-core-v3-schema-wd-17.xsd"
+	PolicyId="urn:oasis:names:tc:xacml:3.0:policy_deny_all"
+	RuleCombiningAlgId="urn:oasis:names:tc:xacml:3.0:rule-combining-algorithm:permit-overrides"
+	Version="1.0" MaxDelegationDepth="1">
+	<Description> Opt-out  </Description>
+	<Target />
+	<Rule RuleId="urn:oasis:names:tc:xacml:3.0:example:SimpleRule1"		Effect="Deny">
+	</Rule>
+</Policy>

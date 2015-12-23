@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/it.unifi.xtext.facpl2/src-gen" editDirectory="/it.unifi.xtext.facpl2.edit/src"
+    editorDirectory="/it.unifi.xtext.facpl2.editor/src" modelPluginID="it.unifi.xtext.facpl2"
+    forceOverwrite="true" modelName="Facpl2" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    complianceLevel="6.0" copyrightFields="false" editPluginID="it.unifi.xtext.facpl2.edit"
+    editorPluginID="it.unifi.xtext.facpl2.editor" runtimeVersion="2.11">
+  <genPackages prefix="Facpl2" basePackage="it.unifi.xtext.facpl" disposableProviderFactory="true"
+      fileExtensions="fpl" ecorePackage="Facpl2.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="Facpl2.ecore#//TypeLiteral">
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//TypeLiteral/Int"/>
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//TypeLiteral/Double"/>
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//TypeLiteral/Bool"/>
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//TypeLiteral/String"/>
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//TypeLiteral/DateTime"/>
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//TypeLiteral/Bag"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="Facpl2.ecore#//PEPAlg">
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//PEPAlg/BASE"/>
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//PEPAlg/DENY"/>
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//PEPAlg/PERMIT"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="Facpl2.ecore#//AlgLiteral">
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//AlgLiteral/ONLY_ONE"/>
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//AlgLiteral/DENY_OVER"/>
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//AlgLiteral/PERMIT_OVER"/>
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//AlgLiteral/FIRST"/>
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//AlgLiteral/DENY_UNLESS"/>
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//AlgLiteral/PERMIT_UNLESS"/>
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//AlgLiteral/WEAK_CONS"/>
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//AlgLiteral/STRONG_CONS"/>
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//AlgLiteral/CUSTOM_ALG"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="Facpl2.ecore#//FulfillmentStrategy">
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//FulfillmentStrategy/GREEDY"/>
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//FulfillmentStrategy/ALL"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="Facpl2.ecore#//Effect">
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//Effect/PERMIT"/>
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//Effect/DENY"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="Facpl2.ecore#//funID">
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//funID/EQUAL"/>
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//funID/N_EQUAL"/>
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//funID/LESS"/>
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//funID/LESS_EQ"/>
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//funID/GREATER"/>
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//funID/GREATER_EQ"/>
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//funID/IN"/>
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//funID/ADD"/>
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//funID/SUBTRACT"/>
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//funID/DIVIDE"/>
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//funID/MULTIPLY"/>
+    </genEnums>
+    <genClasses ecoreClass="Facpl2.ecore#//Facpl">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//Facpl/importEl"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//Facpl/declarations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//Facpl/policies"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//Facpl/requests"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//Facpl/main"/>
+    </genClasses>
+    <genClasses ecoreClass="Facpl2.ecore#//Import">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//Import/importURI"/>
+    </genClasses>
+    <genClasses ecoreClass="Facpl2.ecore#//MainFacpl">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//MainFacpl/extIndet"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//MainFacpl/genPackage"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Facpl2.ecore#//MainFacpl/refRequest"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//MainFacpl/paf"/>
+    </genClasses>
+    <genClasses ecoreClass="Facpl2.ecore#//FunDecl">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//FunDecl/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//FunDecl/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//FunDecl/args"/>
+    </genClasses>
+    <genClasses ecoreClass="Facpl2.ecore#//PAF">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//PAF/pep"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//PAF/pdp"/>
+    </genClasses>
+    <genClasses ecoreClass="Facpl2.ecore#//Request">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//Request/stub"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//Request/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//Request/attributes"/>
+    </genClasses>
+    <genClasses ecoreClass="Facpl2.ecore#//AttributeReq">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//AttributeReq/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//AttributeReq/value"/>
+    </genClasses>
+    <genClasses ecoreClass="Facpl2.ecore#//AttributeName">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//AttributeName/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//AttributeName/id"/>
+    </genClasses>
+    <genClasses ecoreClass="Facpl2.ecore#//PDP">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//PDP/pdpAlg"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//PDP/polSet"/>
+    </genClasses>
+    <genClasses ecoreClass="Facpl2.ecore#//FacplPolicy">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//FacplPolicy/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//FacplPolicy/target"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//FacplPolicy/obl"/>
+    </genClasses>
+    <genClasses ecoreClass="Facpl2.ecore#//AbstractPolicyIncl">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//AbstractPolicyIncl/newPolicy"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Facpl2.ecore#//AbstractPolicyIncl/refPol"/>
+    </genClasses>
+    <genClasses ecoreClass="Facpl2.ecore#//PolicySet">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//PolicySet/polSetAlg"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//PolicySet/policies"/>
+    </genClasses>
+    <genClasses ecoreClass="Facpl2.ecore#//Alg">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//Alg/idAlg"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//Alg/fStrategy"/>
+    </genClasses>
+    <genClasses ecoreClass="Facpl2.ecore#//Rule">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//Rule/effect"/>
+    </genClasses>
+    <genClasses ecoreClass="Facpl2.ecore#//Obligation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//Obligation/EvaluetedOn"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//Obligation/typeObl"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//Obligation/pepAction"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//Obligation/expr"/>
+    </genClasses>
+    <genClasses ecoreClass="Facpl2.ecore#//Expression"/>
+    <genClasses ecoreClass="Facpl2.ecore#//NotExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//NotExpression/arg"/>
+    </genClasses>
+    <genClasses ecoreClass="Facpl2.ecore#//Function">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//Function/functionId"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//Function/arg1"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//Function/arg2"/>
+    </genClasses>
+    <genClasses ecoreClass="Facpl2.ecore#//DeclaredFunction">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Facpl2.ecore#//DeclaredFunction/functionId"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//DeclaredFunction/args"/>
+    </genClasses>
+    <genClasses ecoreClass="Facpl2.ecore#//Bag">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//Bag/args"/>
+    </genClasses>
+    <genClasses ecoreClass="Facpl2.ecore#//StringLiteral">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//StringLiteral/value"/>
+    </genClasses>
+    <genClasses ecoreClass="Facpl2.ecore#//BooleanLiteral">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//BooleanLiteral/value"/>
+    </genClasses>
+    <genClasses ecoreClass="Facpl2.ecore#//IntLiteral">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//IntLiteral/value"/>
+    </genClasses>
+    <genClasses ecoreClass="Facpl2.ecore#//DoubleLiteral">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//DoubleLiteral/value"/>
+    </genClasses>
+    <genClasses ecoreClass="Facpl2.ecore#//DateLiteral">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//DateLiteral/value"/>
+    </genClasses>
+    <genClasses ecoreClass="Facpl2.ecore#//TimeLiteral">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//TimeLiteral/value"/>
+    </genClasses>
+    <genClasses ecoreClass="Facpl2.ecore#//AndExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//AndExpression/left"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//AndExpression/right"/>
+    </genClasses>
+    <genClasses ecoreClass="Facpl2.ecore#//OrExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//OrExpression/left"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//OrExpression/right"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

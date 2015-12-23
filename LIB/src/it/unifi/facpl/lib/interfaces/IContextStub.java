@@ -1,0 +1,9 @@
+package it.unifi.facpl.lib.interfaces;
+
+import it.unifi.facpl.lib.util.AttributeName;
+import it.unifi.facpl.lib.util.exception.MissingAttributeException;
+
+public interface IContextStub {
+	
+	Object getContextValues(AttributeName attribute) throws MissingAttributeException;
+}

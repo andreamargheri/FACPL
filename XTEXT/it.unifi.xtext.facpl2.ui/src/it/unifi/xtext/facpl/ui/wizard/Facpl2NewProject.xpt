@@ -1,0 +1,72 @@
+«IMPORT it::unifi::xtext::facpl::ui::wizard»
+
+«DEFINE main FOR Facpl2ProjectInfo»
+«EXPAND model FOR this»
+«ENDDEFINE»
+
+«DEFINE model FOR Facpl2ProjectInfo»
+«FILE "src-facpl/example/FACPL.fpl"-»
+
+// This is an example of Request
+
+Request:{ Name ( action / id , "READ" ) }
+
+// This is an example of Policy 
+
+PolicySet PSet { deny-unless-permit-greedy
+	target:
+	equal ( "READ" , action / id )
+	policies:
+	
+	Rule rule1 ( permit )
+
+}
+
+// This is the entry point for the evaluation
+
+PAS { 
+	Extended Indeterminate : false ;
+	Java Package : "foo" ;
+	Requests To Evaluate : Name ;
+	pep: deny-biased
+	pdp: permit-unless-deny
+
+	include PSet
+
+}
+
+«ENDFILE»
+
+«FILE "log4j/log4j.properties"-»
+
+log4j.rootLogger= DEBUG, consoleAppender
+
+#define the console appender
+log4j.appender.consoleAppender = org.apache.log4j.ConsoleAppender
+
+# now define the layout for the appender
+log4j.appender.consoleAppender.layout = org.apache.log4j.PatternLayout
+#%C{1}
+log4j.appender.consoleAppender.layout.ConversionPattern=%-4r [%t] %-5p %C{1} %x - %m%n
+#log4j.appender.consoleAppender.Threshold=INFO
+«ENDFILE»
+
+«FILE "src-xml/example/deny_all.xml"-»
+<Policy xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17
+	http://docs.oasis-open.org/xacml/3.0/xacml-core-v3-schema-wd-17.xsd"
+	PolicyId="DenyAll" Version="1.0"
+	RuleCombiningAlgId="urn:oasis:names:tc:xacml:3.0:rule-combining-algorithm:deny-overrides"
+	MaxDelegationDepth="1">
+	<Target />
+	<Rule RuleId="ruleName" Effect="Deny">
+	</Rule>
+</Policy>
+
+«ENDFILE»
+
+
+«ENDDEFINE»
+
+

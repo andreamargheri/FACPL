@@ -1,0 +1,179 @@
+grammar it.unifi.xtext.facpl.Facpl2 with org.eclipse.xtext.common.Terminals
+
+generate facpl2 "http://www.unifi.it/xtext/facpl/Facpl2"
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+
+Facpl:
+	importEl+=Import* &
+	declarations+=FunDecl* &
+	policies+=PolicySet* &
+	requests+=Request* &
+	main=MainFacpl?;
+	
+	//Import
+Import:
+	'import' importURI=STRING;
+
+	//Main
+MainFacpl:
+	'PAS' '{' 'Extended Indeterminate' ':' extIndet=BooleanLiteral ';'
+	('Java Package' ':' genPackage=STRING ';')?
+	('Requests To Evaluate' ':' (refRequest+=[Request] (',' refRequest+=[Request])*) ';')
+	paf=PAF '}';
+
+
+	//Function Declaration
+FunDecl:
+	'dec-fun' type=TypeLiteral name=ID "(" args+=TypeLiteral (',' args+=TypeLiteral) ")"
+;
+
+enum TypeLiteral:
+	Int | Double | Bool | String | DateTime | Bag
+;
+
+	//PAF - Policy Authorisation Framework
+PAF:
+	'pep:' pep=PEPAlg 'pdp:' pdp=PDP;
+
+enum PEPAlg:
+	BASE='base' | DENY='deny-biased' | PERMIT='permit-biased';
+
+	//Request
+Request:
+	'Request:' ('[' stub=STRING ']')? '{' name=ID attributes+=AttributeReq+ '}';
+
+AttributeReq:
+	'(' name=AttributeName ',' value+=Expression (',' value+=Expression)* ')';
+
+AttributeName:
+	category=STRING_O '/' id=STRING_O;
+
+STRING_O:
+	ID ((':' | '_' | '-' | '.') ID)*;
+
+	//PDP - POLICY
+PDP:
+	pdpAlg=Alg polSet+=AbstractPolicyIncl+;
+
+FacplPolicy:
+	PolicySet | Rule;
+
+AbstractPolicyIncl:
+	newPolicy=FacplPolicy | 'include' refPol=[PolicySet];
+
+PolicySet:
+	'PolicySet' name=ID '{' polSetAlg=Alg ('target:' target=Expression)? 'policies:'
+	policies+=(AbstractPolicyIncl)+ ('obl:' obl+=Obligation*)? '}';
+
+	//Algorithms (with fulfilment strategy)
+Alg:
+	idAlg=AlgLiteral ("-" fStrategy=FulfillmentStrategy)?;
+
+enum AlgLiteral:
+	ONLY_ONE='only-one-applicable' |
+	DENY_OVER='deny-overrides' | PERMIT_OVER='permit-overrides' | FIRST='first-applicable' |
+	DENY_UNLESS='deny-unless-permit' | PERMIT_UNLESS='permit-unless-deny' |
+	WEAK_CONS='weak-consensus' | STRONG_CONS='strong-consensus' |
+	CUSTOM_ALG='custom-algorithm';
+
+enum FulfillmentStrategy:
+	GREEDY='greedy' | ALL='all';
+
+Rule:
+	'Rule' name=ID '(' effect=Effect ('target:' target=Expression)? ('obl:' obl+=Obligation*)? ')';
+
+enum Effect:
+	PERMIT='permit' | DENY='deny';
+
+	//OBLIGATION
+Obligation:
+	'[' EvaluetedOn=Effect typeObl=('M' | 'O') pepAction=ID '(' (expr+=Expression (',' expr+=Expression)*)* ')' ']';
+
+	//EXPRESSION
+Expression:
+	AndExpression;
+
+AndExpression returns Expression:
+	OrExpression ({AndExpression.left=current} '&&' right=OrExpression)*;
+
+OrExpression returns Expression:
+	BasicExpression ({OrExpression.left=current} '||' right=BasicExpression)*;
+
+BasicExpression returns Expression:
+	Function | DeclaredFunction |'(' Expression ')' | NotExpression | Literals;
+
+NotExpression:
+	'!' arg=BasicExpression;
+
+Function:
+	functionId=funID '(' arg1=Expression ',' arg2=Expression ')';
+	
+	//Invocation of declared function 
+DeclaredFunction: 
+	functionId=[FunDecl] '(' args+=Expression* ')'
+;	
+	
+enum funID:
+	EQUAL='equal' | N_EQUAL='not-equal' |
+	LESS='less-than' | LESS_EQ='less-than-or-equal' |
+	GREATER='greater-than' | GREATER_EQ='greater-than-or-equal' |
+	IN='in' | ADD='addition' | SUBTRACT='subtract' | DIVIDE='divide' |
+	MULTIPLY='multiply';
+
+
+Literals returns Expression:
+	IntLiteral
+	| DoubleLiteral
+	| BooleanLiteral
+	| StringLiteral
+	| DateLiteral
+	| TimeLiteral
+	| AttributeName
+	| Bag;
+
+Bag:
+	'bag(' (args+=(Literals) (',' args+=(Literals))*) ')';
+
+StringLiteral:
+	value=STRING;
+
+BooleanLiteral:
+	value=BOOLEAN;
+
+IntLiteral:
+	value=INT;
+
+DoubleLiteral:
+	value=REAL;
+
+DateLiteral:
+	value=DATE;
+
+TimeLiteral:
+	value=TIME;
+
+	//Standard types
+terminal BOOLEAN returns ecore::EBoolean:
+	'true' | 'false';
+
+terminal INT returns ecore::EInt:
+	('0'..'9')+;
+
+terminal ML_COMMENT:
+	'/*'->'*/';
+
+terminal SL_COMMENT:
+	'//' !('\n' | '\r')* ('\r'? '\n')?;
+
+terminal DATE:
+	(INT '/' INT '/' INT);
+
+terminal TIME:
+	(INT ':' INT ':' INT);
+
+terminal REAL returns ecore::EDouble:
+	('+' | '-')? ('0'..'9')* ('.' ('0'..'9')+)?;
+
+terminal STRING:
+	'"' ('\\' ('b' | 't' | 'n' | 'f' | 'r' | '"' | "'" | '\\') | !('\\' | '"' | '/'))* '"' |
+	"'" ('\\' ('b' | 't' | 'n' | 'f' | 'r' | '"' | "'" | '\\') | !('\\' | "'" | '/'))* "'"; 
