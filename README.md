@@ -8,4 +8,4 @@ Extention of language FACPL:
 
 1. To use access control policies based on the past actions
 
-2. To use access control policies with over time control on the resources
+2. To use access control policies with over time control on the resources 
