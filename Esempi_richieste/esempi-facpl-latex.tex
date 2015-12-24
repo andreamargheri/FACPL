@@ -27,7 +27,7 @@ Policy example < permit-overrides
     Rule access ( 
       permit target: less-than(status/counter, 5))
     obl: 
-      [permit M add(int counter, 1)]
+      [permit M add(counter, 1)]
 >
 
 PAS { 
@@ -38,7 +38,7 @@ PAS {
   pep: deny-biased
   pdp: permit-unless-deny
   status: [(int counter = 0)]
-  include accessNumber
+  include example
 
 }
 	\end{verbatim}
@@ -109,7 +109,7 @@ PolicySet timeExample {  permit-overrides
   target:equal("Lucrezia",name/id)   
   policies: 
     Policy genericAccess < deny-overrides 
-      target:  less-than(status/lastAccess, today()) 
+      target:  less-than(status/lastAccess, system/date) 
         && equal("false", status/firstAccess) 
       rules: 
         Rule genericAccess 
@@ -121,7 +121,7 @@ PolicySet timeExample {  permit-overrides
         Rule firstAccess  
         (permit target: equal("read",action/id) ) >
     obl: 
-      [permit M sum-date(today + 30)]
+      [permit M sum-date(system/date + 30)]
 }
 
 PAS { 
@@ -131,7 +131,7 @@ PAS {
   Requests To Evaluate : Request1, Request2 ;
   pep: deny-biased
   pdp: permit-unless-deny
-  status: [(boolean firstAccess = false), (Date lastAccess)]
+  status: [(boolean firstAccess = true), (Date lastAccess)]
   include timeExample
 }
 
