@@ -1,7 +1,11 @@
+#FACPL
+
+The Formal Access Control Policy Language (FAPCL) is a formal language specifically developed for writing and evaluating access control policies. FACPL has a compact and intuitive syntax and is equipped with useful and easy-to-use developing tools.
+
 #FACPL Usage control branch
 
-Estensione del linguaggio FACPL:
+Extention of language FACPL:
 
-1. Per esprimere politiche di accesso alle risorse di un sistema di calcolo basate sul comportamento passato
+1. To use access control policies based on the past actions
 
-2. Per esprimere politiche di gestione dell'utilizzo continuativo delle risorse di un sistema di calcolo
+2. To use access control policies with over time control on the resources
