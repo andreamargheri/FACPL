@@ -18,6 +18,10 @@ class Z3Generator_Functions {
 		(ite (= x (mk-val true false false)) true false)
 	)
 	
+	(define-fun isBool ((x (TValue Bool))) Bool
+			(ite (or (isFalse x) (isTrue x)) true false)
+	)
+	
 	(define-fun FAnd ((x (TValue Bool)) (y (TValue Bool))) (TValue Bool)
 		(ite (and (isTrue x) (isTrue y))
 			(mk-val true false false)

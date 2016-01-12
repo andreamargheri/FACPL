@@ -14,6 +14,7 @@ import it.unifi.xtext.facpl.facpl2.DoubleLiteral;
 import it.unifi.xtext.facpl.facpl2.Expression;
 import it.unifi.xtext.facpl.facpl2.FacplPolicy;
 import it.unifi.xtext.facpl.facpl2.Function;
+import it.unifi.xtext.facpl.facpl2.FunctionDeclaration;
 import it.unifi.xtext.facpl.facpl2.IntLiteral;
 import it.unifi.xtext.facpl.facpl2.NotExpression;
 import it.unifi.xtext.facpl.facpl2.Obligation;
@@ -219,27 +220,33 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 		}
 	}
 
-	// DECLARED FUNCTIONs
+	// DECLARED FUNCTION Invocation
 	@Override
 	public FacplType caseDeclaredFunction(DeclaredFunction fun) {
+		if (fun.getFunctionId().getArgs().size() != fun.getArgs().size()) {
+			return FacplType.ERR;
+		}
 		
-		return toFacplType(fun.getFunctionId().getType());
-		
+		for (int i = 0; i <fun.getArgs().size(); i++){
+			//Iterate on arguments
+			FacplType t_inv = doSwitch(fun.getArgs().get(i));
+			
+			FacplType t_dec = FacplType.getFacplType(fun.getFunctionId().getArgs().get(i));
+			if (FacplType.combine(t_inv, t_dec).equals(FacplType.ERR)){
+				return FacplType.ERR;
+			}
+		}
+	
+		return FacplType.getFacplType(fun.getFunctionId().getType());
 	}
 	
-
-	private FacplType toFacplType(TypeLiteral type) {
-		switch (type) {
-		case BAG: return FacplType.BAG_NAME;
-		case BOOL: return FacplType.BOOLEAN;
-		case DOUBLE : return FacplType.DOUBLE;
-		case INT : return FacplType.INT;
-		case STRING : return FacplType.STRING;
-		case DATE_TIME : return FacplType.DATE;
-		default : 
-			return FacplType.BAG_NAME;
-		}	
+		
+	// DECLARED FUNCTION
+	@Override
+	public FacplType caseFunctionDeclaration(FunctionDeclaration fun) {
+		return FacplType.getFacplType(fun.getType());
 	}
+	
 
 	// FUNCTIONs
 	@Override

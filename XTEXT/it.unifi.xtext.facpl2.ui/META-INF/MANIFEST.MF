@@ -26,17 +26,9 @@ Import-Package: org.apache.log4j,
  org.eclipse.jdt.launching
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: it.unifi.xtext.facpl.ui.contentassist;uses:="org.eclipse.emf.ecore,org.eclipse.xtext.ui.editor.contentassist,org.eclipse.xtext",
- it.unifi.xtext.facpl.ui.contentassist.antlr;
-  uses:="it.unifi.xtext.facpl.ui.contentassist.antlr.internal,
-   org.eclipse.xtext.ui.codetemplates.ui.partialEditing,
-   org.eclipse.xtext.ui.editor.contentassist.antlr.internal,
-   it.unifi.xtext.facpl.services,
-   org.eclipse.xtext,
-   org.eclipse.xtext.ui.editor.contentassist.antlr",
+ it.unifi.xtext.facpl.ui.contentassist.antlr; uses:="it.unifi.xtext.facpl.ui.contentassist.antlr.internal,  org.eclipse.xtext.ui.codetemplates.ui.partialEditing,  org.eclipse.xtext.ui.editor.contentassist.antlr.internal,  it.unifi.xtext.facpl.services,  org.eclipse.xtext,  org.eclipse.xtext.ui.editor.contentassist.antlr",
  it.unifi.xtext.facpl.ui.internal;uses:="org.osgi.framework,com.google.inject,org.eclipse.ui.plugin",
- it.unifi.xtext.facpl.ui.quickfix;uses:="org.eclipse.xtext.ui.editor.quickfix"
+ it.unifi.xtext.facpl.ui.quickfix;uses:="org.eclipse.xtext.ui.editor.quickfix",
+ it.unifi.xtext.facpl.ui.contentassist.antlr.internal
 Bundle-Activator: it.unifi.xtext.facpl.ui.internal.Facpl2Activator
-Bundle-ClassPath: icons/,
- .,
- lib/jaxp-api-1.4.5.jar,
- lib/xacmlToFacpl.jar
+Bundle-ClassPath: icons/,.,lib/jaxp-api-1.4.5.jar,lib/xacmlToFacpl.jar

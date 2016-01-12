@@ -5,7 +5,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="importEl" upperBound="-1"
         eType="#//Import" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="declarations" upperBound="-1"
-        eType="#//FunDecl" containment="true"/>
+        eType="#//FunctionDeclaration" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="policies" upperBound="-1"
         eType="#//PolicySet" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="requests" upperBound="-1"
@@ -24,7 +24,7 @@
         upperBound="-1" eType="#//Request"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="paf" eType="#//PAF" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="FunDecl">
+  <eClassifiers xsi:type="ecore:EClass" name="FunctionDeclaration">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//TypeLiteral"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="args" unique="false" upperBound="-1"
@@ -133,7 +133,7 @@
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DeclaredFunction" eSuperTypes="#//Expression">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="functionId" eType="#//FunDecl"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="functionId" eType="#//FunctionDeclaration"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="args" upperBound="-1" eType="#//Expression"
         containment="true"/>
   </eClassifiers>

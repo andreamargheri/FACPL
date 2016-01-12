@@ -1,5 +1,8 @@
 package it.unifi.xtext.facpl.validation;
 
+import it.unifi.xtext.facpl.facpl2.TypeLiteral;
+import it.unifi.xtext.facpl.validation.FacplType;
+
 public enum FacplType {
 	INT, DOUBLE, STRING, BOOLEAN, DATE, BAG_INT, BAG_DOUBLE, BAG_STRING, BAG_BOOLEAN, BAG_DATE, BAG_NAME, NAME, ERR;
 
@@ -47,6 +50,7 @@ public enum FacplType {
 
 	/**
 	 * Return the BAG_* corresponding to the type * in input
+	 * 
 	 * @param f
 	 * @return
 	 */
@@ -71,6 +75,7 @@ public enum FacplType {
 
 	/**
 	 * Return the type * of the bag type BAG_* in input
+	 * 
 	 * @param f
 	 * @return
 	 */
@@ -90,5 +95,65 @@ public enum FacplType {
 			return null;
 		}
 	}
-	
+
+	public static boolean equalType(FacplType type, TypeLiteral literal) {
+		switch (literal) {
+		case BAG:
+			if (type.equals(BAG_BOOLEAN) || type.equals(BAG_DATE) || type.equals(BAG_DOUBLE) || type.equals(BAG_INT)
+					|| type.equals(BAG_NAME) || type.equals(BAG_STRING)) {
+				return true;
+			} else {
+				return false;
+			}
+		case BOOL:
+			if (type.equals(BOOLEAN))
+				return true;
+			else
+				return false;
+		case DOUBLE:
+			if (type.equals(DOUBLE))
+				return true;
+			else
+				return false;
+		case INT:
+			if (type.equals(INT))
+				return true;
+			else
+				return false;
+		case STRING:
+			if (type.equals(STRING))
+				return true;
+			else
+				return false;
+		case DATE_TIME:
+			if (type.equals(DATE))
+				return true;
+			else
+				return false;
+		default: 
+			return false;
+			
+		}
+	}
+
+	public static FacplType getFacplType(TypeLiteral literal) {
+		switch (literal) {
+		case BAG:
+			return FacplType.BAG_NAME;
+		case BOOL:
+			return FacplType.BOOLEAN;
+		case DOUBLE:
+			return FacplType.DOUBLE;
+		case INT:
+			return FacplType.INT;
+		case STRING:
+			return FacplType.STRING;
+		case DATE_TIME:
+			return FacplType.DATE;
+		default: 
+			return FacplType.NAME;
+		}
+	  
+	}
+
 }

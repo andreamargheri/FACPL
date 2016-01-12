@@ -2,7 +2,6 @@ package it.unifi.xtext.facpl.generator.util
 
 import it.unifi.xtext.facpl.facpl2.util.Facpl2Switch
 import it.unifi.xtext.facpl.validation.FacplType
-import java.util.LinkedList
 import it.unifi.xtext.facpl.facpl2.BooleanLiteral
 import it.unifi.xtext.facpl.facpl2.DoubleLiteral
 import it.unifi.xtext.facpl.facpl2.IntLiteral
@@ -24,7 +23,11 @@ import it.unifi.xtext.facpl.facpl2.Facpl
 import it.unifi.xtext.facpl.facpl2.AbstractPolicyIncl
 import it.unifi.xtext.facpl.validation.inference.FacplTypeInference
 import java.util.HashMap
+import it.unifi.xtext.facpl.facpl2.DeclaredFunction
 
+/**
+ * Collect constants used in a policy
+ */
 class PolicyConstant extends Facpl2Switch<Boolean> {
 
 	private HashMap<String, ConstraintConstant> constants;
@@ -33,12 +36,11 @@ class PolicyConstant extends Facpl2Switch<Boolean> {
 		this.constants = new HashMap<String, ConstraintConstant>()
 	}
 
-	def getConstants (){
+	def getConstants() {
 		return this.constants
 	}
-	
-	//FACPL CASEs
-	
+
+	// FACPL CASEs
 	override caseFacpl(Facpl object) {
 		var s = true
 		if (object.policies != null) {
@@ -132,6 +134,14 @@ class PolicyConstant extends Facpl2Switch<Boolean> {
 		}
 
 		throw new Exception()
+	}
+
+//Declared function invocation
+	override caseDeclaredFunction(DeclaredFunction f) {
+		for (arg : f.args) {
+			doSwitch(arg)
+		}
+		return true
 	}
 
 //Attribute name -> empty list of constants

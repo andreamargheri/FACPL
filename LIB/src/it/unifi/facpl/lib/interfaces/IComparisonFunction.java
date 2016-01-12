@@ -3,8 +3,8 @@ package it.unifi.facpl.lib.interfaces;
 import java.util.List;
 
 /**
- * Interface for match function e boolean function of condition
- * @author Andrea
+ * Comparison Functions
+ * @author Andrea Margheri
  *
  */
 public interface IComparisonFunction extends IExpressionFunction{

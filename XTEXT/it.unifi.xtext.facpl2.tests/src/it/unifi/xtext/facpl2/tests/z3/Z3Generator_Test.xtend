@@ -698,4 +698,28 @@ public class Z3Generator_Test extends AbstractXtextTests {
 
 	}
 
+	@Test
+	def void genDeclaredFunction(){
+		var model = parser.parse(
+			'''
+			dec-fun Bool F_Name (String, Int) 
+			dec-fun Bool F_Name2 (String, Bool)
+			dec-fun Bag F (Int, Int) 
+			
+			PolicySet Name {deny-unless-permit
+					target: F_Name(sub/id, "doctor")
+			  		policies: 
+			  			Rule r1 (permit )
+			}'''
+		)
+		
+		var String cns = generator.doGenerateZ3(model)
+		
+		val PrintWriter writer = new PrintWriter("z3_gen/decFun/file1.smt2", "UTF-8");
+		writer.println(cns);
+		writer.close();
+		
+	}
+	
+
 }

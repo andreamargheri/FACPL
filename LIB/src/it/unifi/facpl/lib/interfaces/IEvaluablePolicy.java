@@ -8,8 +8,9 @@ import it.unifi.facpl.lib.context.ContextRequest;
 import it.unifi.facpl.lib.enums.TargetDecision;
 
 /**
+ * Evaluation Methods for FACPL policies
  * @author Andrea Margheri 
- * Interface for Policy Set e  Rule
+ * 
  */
 public interface IEvaluablePolicy{
 	/**

@@ -31,6 +31,8 @@ import it.unifi.xtext.facpl.facpl2.Function
 import it.unifi.xtext.facpl.facpl2.Alg
 import it.unifi.xtext.facpl.facpl2.AlgLiteral
 import it.unifi.xtext.facpl.facpl2.FulfillmentStrategy
+import it.unifi.xtext.facpl.facpl2.DeclaredFunction
+import it.unifi.xtext.facpl.facpl2.FunctionDeclaration
 
 class Facpl2Generator_Menu {
 	
@@ -119,6 +121,14 @@ class Facpl2Generator_Menu {
 				for(pol : e.getPolicies){
 					fsa.generateFile(packageFolder + getNameFacplPolicy(pol)+".java", compilePolicy(pol,fsa))	
 				}
+			}
+			
+			/* Compiling Declared Functions */	
+			if (e.declarations != null){
+				for (dec : e.declarations){
+					fsa.generateFile(packageFolder + getNameFunction(dec.name)+".java", compileFunction(dec))
+				}
+				
 			}
 				
 			/* Compiling Main */
@@ -383,6 +393,18 @@ class Facpl2Generator_Menu {
 	def dispatch getExpression(Function exp)'''
 		new ExpressionFunction(it.unifi.facpl.lib.function.«Facpl2Generator_Name::getFunName(exp.functionId)».class, «getExpression(exp.arg1)»,«getExpression(exp.arg2)»)
 	'''
+	
+	def dispatch getExpression(DeclaredFunction exp)'''
+		new ExpressionFunction(«getNameFunction(exp.functionId.name)».class,
+		«IF exp.args.size > 0»
+			«FOR arg : exp.args SEPARATOR ','» 
+				«getExpression(arg)»
+			«ENDFOR»
+		«ELSE»
+			null
+		«ENDIF»
+		)
+	''' 
 			
 	// Basic EXPRESSION: int, double, boolean, string, date, attribute name, bag
 	def dispatch getExpression(IntLiteral e) {
@@ -419,8 +441,7 @@ class Facpl2Generator_Menu {
 			«getExpression(b)»
 		«ENDFOR»
 		)
-	'''
-		
+	'''	
 		
 	//----------------------------------------------------
 	// COMBINING ALGORITHM : custom + standard
@@ -582,6 +603,29 @@ class Facpl2Generator_Menu {
 		«getExpression(l)»
 		«ENDFOR»
 		)
+	'''
+	//----------------------------------------------------
+	//DECLARED FUNCTIONs 
+	//----------------------------------------------------
+	def String getNameFunction (String f_name)'''Function_«f_name»'''
+	
+	def compileFunction(FunctionDeclaration f)'''
+		«IF packageName != ""»package «packageName»«ENDIF»
+		
+		import java.util.List;
+		
+		import it.unifi.facpl.lib.interfaces.IExpressionFunction;
+		
+		public class «getNameFunction(f.name)» implements IExpressionFunction{
+		
+			@Override
+			public Object evaluateFunction(List<Object> args) throws Throwable {
+				
+				throw new Exception("TODO: auto-generated method stub");
+						
+			}
+		
+		}
 	'''
 	
 }

@@ -3,8 +3,8 @@ package it.unifi.facpl.lib.interfaces;
 import java.util.List;
 
 /**
- * All type of function for conditional eval or obligation expression
- * @author Andrea
+ * Function types for target and obligation expressions
+ * @author Andrea Margheri
  *
  */
 public interface IExpressionFunction {

@@ -38,6 +38,8 @@ import it.unifi.xtext.facpl.generator.generators.z3algorithms.Z3Generator_FirstA
 import it.unifi.xtext.facpl.generator.generators.z3algorithms.Z3Generator_OneApp
 import it.unifi.xtext.facpl.generator.generators.z3algorithms.Z3Generator_WeakCon
 import it.unifi.xtext.facpl.generator.generators.z3algorithms.Z3Generator_StrongCon
+import it.unifi.xtext.facpl.facpl2.DeclaredFunction
+import it.unifi.xtext.facpl.facpl2.FunctionDeclaration
 
 class Z3Generator {
 
@@ -53,8 +55,13 @@ class Z3Generator {
 	//TypeInference
 	private FacplTypeInference tInf
 	
+	//DeclaredFunction 
+	private StringBuffer dec_functions
+	private Boolean flag = false //if declared function occurs
 	
 	def void doGenerateFileZ3(Facpl resource, IFileSystemAccess fsa) throws Exception{
+
+//TODO
 
 		// pol can only be a PolicySet
 		fsa.generateFile("_full.smt2", doGenerateZ3(resource));
@@ -64,6 +71,16 @@ class Z3Generator {
 	def String doGenerateZ3(Facpl resource) throws Exception{
 
 		var StringBuffer str = new StringBuffer()
+		tInf = new FacplTypeInference()
+		
+		/* Compiling Declared Functions */
+		if (resource.declarations != null){
+			dec_functions = new StringBuffer()
+			for (dec : resource.declarations){
+				dec_functions.append(createDeclFunctionConstr(dec)+"\n")
+				flag = true
+			}
+		}
 
 		/* Compiling Policies that are declared out from the brackets of the Main */
 		if (resource.getPolicies != null) {
@@ -73,7 +90,6 @@ class Z3Generator {
 				 * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 				 */
 				// CHECK INFERENCE TYPES
-				tInf = new FacplTypeInference()
 				var FacplType type = tInf.doSwitch(pol)
 
 				if (type.equals(FacplType.ERR)) {
@@ -106,6 +122,7 @@ class Z3Generator {
 
 		return str.toString
 	}
+	
 
 /* ##############################################
  * General structure of the whole constraint file
@@ -121,7 +138,13 @@ def createMainConstraint(PolicySet pol) '''
 
 ;?????????????????????????
 
-;################### FUNCTION DECLARATIONs #######################
+«IF flag»
+;################### DECLARED FUNCTIONs of POLICY (TO BE IMPLEMENTED) ##################
+;#TODO: stub definitions for declared functions
+«dec_functions.toString»
+«ENDIF»
+
+;################### FACPL FUNCTION DECLARATIONs #######################
 «getFunctionDec()»
 ;################################ END DATATYPEs AND FUNCTIONs DECLARATION #############################
 
@@ -223,6 +246,7 @@ def dispatch getInternalPolicyConstr(Rule r)
 (define-fun cns_«r.name»_indet () Bool
 	(or 
 		(err cns_target_«r.name»)
+		(not (isBool cns_target_«r.name»))
 		(and 
 			(isTrue cns_target_«r.name»)
 			«IF r.effect.equals(Effect.PERMIT)»
@@ -315,6 +339,7 @@ def getFinalConstrPSet(String p_name)'''
 (define-fun cns_«p_name»_indet () Bool
 	(or 
 		(err cns_target_«p_name»)
+		(not (isBool cns_target_«p_name»))
 		(and (isTrue cns_target_«p_name») cns_«p_name»_cmb_final_indet)
 		(and 
 			(isTrue cns_target_«p_name»)
@@ -462,12 +487,12 @@ def getFinalConstrPSet(String p_name)'''
 			case DOUBLE: return "Real"
 			case INT: return "Int"
 			case STRING: return "String" // NB this type has to be declared!!!
-			case NAME: return "Bool" // TO BE USED EVERYWHERE WHERE NOT DECLARED!!!!
+			case NAME: return "Bool" // TO BE USED EVERYWHERE WHERE A TYPE IS NOT DECLARED!!!!
 			// Bag cases
 			case BAG_BOOLEAN: return "(Bag Bool)"
 			case BAG_INT: return "(Bag Int)"
 			case BAG_DOUBLE: return "(Bag Real)"
-			case BAG_NAME: return "(Bag Bool)" // TO BE USED EVERYWHERE WHERE NOT DECLARED!!!!
+			case BAG_NAME: return "(Bag Bool)" // TO BE USED EVERYWHERE WHERE A BAG IS NOT DECLARED!!!!
 			case BAG_STRING: return "(Bag String)"
 			// Not-Supported (?)
 			case BAG_DATE: throw new Exception("DATE NOT SUPPORTED ????")
@@ -537,7 +562,6 @@ def getFinalConstrPSet(String p_name)'''
 	def dispatch String getExpressionConst (Function f)
 	'''(«getFunctionName(f)» «getExpressionConst(f.arg1)» «getExpressionConst(f.arg2)»)'''
 	
-	
 	def getFunctionName(Function function) {
 		var type1 = tInf.doSwitch(function.arg1)
 		var type2 = tInf.doSwitch(function.arg2)
@@ -567,6 +591,12 @@ def getFinalConstrPSet(String p_name)'''
 		return s.replace('-','')
 	}
 	
+	//Declared Function
+	def dispatch String getExpressionConst (DeclaredFunction f)
+	'''(«getDeclaredFunctionName(f.functionId)» «IF f.args.size > 0»«FOR arg : f.args SEPARATOR ' '» «getExpressionConst(arg)» «ENDFOR»«ENDIF»)'''
+	
+	def getDeclaredFunctionName(FunctionDeclaration function)'''DeclFun_«function.name»'''
+	
 	//Literal 
 	def dispatch String getExpressionConst (BooleanLiteral e)
 	'''«getConstAttr(e.value.toString)»''' 
@@ -593,4 +623,26 @@ def getFinalConstrPSet(String p_name)'''
 	def dispatch String getExpressionConst (TimeLiteral e){
 		throw new Exception ("NOT SUPPORTED")
 	}
+	
+	
+	//-----------------------
+	//DEFINITION OF DECLARED FUNCTIONs
+	//-----------------------
+	def createDeclFunctionConstr(FunctionDeclaration f){
+		var type_return = tInf.doSwitch(f)
+		var str = new StringBuffer()
+		str.append("(declare-fun " + getDeclaredFunctionName(f) +" ( ")
+		//arguments
+		for (arg : f.args){
+			var type = FacplType::getFacplType(arg)
+			str.append("(TValue " +getType(type)+ ") ")
+		}
+		str.append(") ")
+		//return type	
+		str.append("(TValue " + getType(type_return)+ ")) \n")
+		//body of the method
+		return str.toString
+	}
+	
+	
 }
