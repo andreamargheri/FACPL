@@ -1,0 +1,6 @@
+/*
+ * Every request is evalauted as PERMIT
+ */
+Request:{Request1 
+(category/id, "value")
+} 

@@ -1,0 +1,16 @@
+
+import "first_policy_R.fpl"
+
+PAS { Extended Indeterminate : true ;
+	Java Package : "first_policy" ;
+	Requests To Evaluate : Request1 , Request2 , Request3 ;
+
+	pep: base
+	pdp: permit-overrides
+
+	PolicySet firstPolicy { permit-overrides
+		target: equal ( "4567-1" , resource / id ) policies:
+		Rule Rule1 ( permit target: equal ( "John" , subject / id ) && equal ( "read" , action / id ) )
+		Rule RuleDeny ( deny )
+	}
+}

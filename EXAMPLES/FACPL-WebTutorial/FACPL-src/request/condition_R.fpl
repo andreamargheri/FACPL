@@ -1,0 +1,23 @@
+/*
+ * Request1 : PERMIT
+ * Request2 : DENY
+ * Request3 : NOT-APPLICABLE
+ */
+Request:{Request1 
+(action/id, "read")
+(subject/id, "John")
+(resource/id,"4567-1")
+}
+
+Request:{Request2 
+(action/id, "write")
+(subject/id, "Tom")
+(resource/id,"4567-1")
+}
+
+Request:{Request3 
+(action/id, "checkout")
+(subject/id, "John")
+(resource/id,"5689-2")
+} 
+

@@ -1,0 +1,8 @@
+2015/02/03-18:26:51 -  Log: Not enough available resources for TYPE_2 VMs 
+2015/02/03-18:28:41 -  Log: Not enough available resources for TYPE_2 VMs 
+2015/03/20-09:56:48 -  Log: Not enough available resources for TYPE_2 VMs 
+2015/03/20-09:56:48 -  Log: Not enough available resources for TYPE_2 VMs 
+2015/03/20-09:57:37 -  Log: Not enough available resources for TYPE_2 VMs 
+2015/03/20-09:57:37 -  Log: Not enough available resources for TYPE_2 VMs 
+2015/03/20-09:58:19 -  Log: Not enough available resources for TYPE_2 VMs 
+2015/03/20-09:58:19 -  Log: Not enough available resources for TYPE_2 VMs 

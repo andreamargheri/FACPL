@@ -1,0 +1,51 @@
+
+
+PAS { Extended Indeterminate : true ;
+	Java Package : "e_Health" ;
+	Requests To Evaluate : Request1 ;
+
+	pep: base
+	pdp: only-one-applicable
+
+	PolicySet patientConsent { permit-overrides
+		target: equal ( "Alice" , resource / patient-id ) policies:
+
+		PolicySet ePre { permit-overrides
+			target: equal ( "ePrescription" , resource / type ) policies:
+			Rule readDoc ( permit target: equal ( "doctor" , subject / role ) && equal ( "read" , action / id ) 
+				&& in (subject / permission, bag("ePre-Access") ) )
+			Rule readPha1 ( permit target: equal ( "pharmacist" , subject / role ) && equal ( "read" , action / id ) 
+				&& in ( subject / permission, bag("ePre-Access") ) )
+
+			obl:
+			[ permit M log ( system / time , resource / type , subject / id , action / id ) ]
+		}
+
+		PolicySet eDis { permit-overrides
+			target: equal ( "eDispensation" , resource / type ) policies:
+			Rule readPha2 ( permit target: equal ( "pharmacist" , subject / role ) && equal ( "read" , action / id ) 
+				&& in (	subject / permission , bag( "eDis-Access" ) ) )
+
+			obl:
+			[ permit M log ( system / time , resource / type , subject / id , action / id ) ]
+		}
+
+		PolicySet denyAll { deny-overrides
+			policies:
+			Rule denyRule ( deny )
+		}
+
+		obl:
+		[ deny M mailTo ( resource / patient-id.mail , "Personal data requested by unauthorized subject" ) ]
+		[ permit O compress ( true ) ]
+	}
+}
+
+
+Request: { Request1 
+	( subject / id , "Marley" ) 
+	( resource / type , "ePrescription" ) 
+	( subject / role , "doctor" ) 
+	( subject / permission , "ePre-Access" , "ePre-Create" ) 
+	( action / id , "write" ) 
+}

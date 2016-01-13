@@ -1,0 +1,75 @@
+
+
+	PolicySet Create_Policies { deny-unless-permit
+		target:
+		equal ( "CREATE" , action / action-id )
+		policies:
+		PolicySet SLA_Type1 { deny-unless-permit
+			target:
+			(equal ( "P_1" , subject / profile-id ) || equal ( "P_2" , subject / profile-id )
+			) && equal ( "TYPE_1" , resource / vm-type )
+			policies:
+			Rule hyper_1 ( permit target:
+				less-than-or-equal ( 1 , system / hyper1.availableResources )
+				obl:
+				[ permit M create ( "HYPER_1" , system / vm-id , "TYPE_1" ) ]
+			)
+			Rule hyper_2 ( permit target:
+				less-than-or-equal ( 1 , system / hyper2.availableResources )
+				obl:
+				[ permit M create ( "HYPER_2" , system / vm-id , "TYPE_1" ) ]
+			)
+			obl:
+			[ deny O log ( "Not enough available resources for TYPE_1 VMs" ) ]
+		}
+		PolicySet SLA_Type2 { deny-unless-permit
+			target:
+			equal ( "P_2" , subject / profile-id ) && equal ( "TYPE_2" , resource / vm-type )
+			policies:
+			Rule hyper_1_create ( permit target:
+				less-than-or-equal ( 2 , system / hyper1.availableResources )
+				obl:
+				[ permit M create ( "HYPER_1" , system / vm-id , "TYPE_2" ) ]
+			)
+			Rule hyper_2_create ( permit target:
+				less-than-or-equal ( 2 , system / hyper2.availableResources )
+				obl:
+				[ permit M create ( "HYPER_2" , system / vm-id , "TYPE_2" ) ]
+			)
+			Rule hyper_1_freeze ( permit
+				target:
+				 (  ( equal ( 0 , system / hyper1.availableResources ) && less-than-or-equal ( 2 , system / hyper1.vm1-counter ) )
+				||
+				 ( equal ( 1 , system / hyper1.availableResources ) && less-than-or-equal ( 1 , system / hyper1.vm1-counter ) ) )
+				obl:
+				[ permit M freeze ( "HYPER_1" , subtract ( 2 , system / hyper1.availableResources ) , "TYPE_1" ) ]
+				[ permit M create ( "HYPER_1" , system / vm-id , "TYPE_2" ) ]
+			)
+			Rule hyper_2_freeze ( permit
+				target:
+				 (  ( equal ( 0 , system / hyper2.availableResources ) && less-than-or-equal ( 2 , system / hyper2.vm1-counter ) )
+				|| ( equal ( 1 , system / hyper2.availableResources ) && less-than-or-equal ( 1 , system / hyper2.vm1-counter ) ) )
+				obl:
+				[ permit M freeze ( "HYPER_2" , subtract ( 2 , system / hyper2.availableResources ) , "TYPE_1" ) ]
+				[ permit M create ( "HYPER_2" , system / vm-id , "TYPE_2" ) ]
+			)
+			obl:
+			[ deny O log ( "Not enough available resources for TYPE_2 VMs" ) ]
+		}
+	}
+	PolicySet Release_Policies { permit-overrides
+		target:
+		equal ( "RELEASE" , action / action-id ) && (
+			equal ( "P_1" , subject / profile-id ) || equal ( "P_2" , subject / profile-id )
+		)
+		policies: 
+		 Rule hyper_1_release ( permit 
+		 	target: in(resource/vm-id, system/hyper1.vm-ids)
+		 	obl: [permit M release("HYPER_1", resource/vm-id)]
+		 )
+		 Rule hyper_2_release ( permit 
+		 	target: in(resource/vm-id, system/hyper2.vm-ids)
+		 	obl: [permit M release("HYPER_2", resource/vm-id)]
+		 )  
+		}
+

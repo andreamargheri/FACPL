@@ -1,0 +1,14 @@
+
+import "permit_all_R.fpl"
+
+PAS { Extended Indeterminate : true ;
+	Java Package : "permit_all" ;
+	Requests To Evaluate : Request1 ;
+
+	pep: base
+	pdp: permit-overrides
+	PolicySet permitAll { deny-overrides
+		policies:
+		Rule Rule1 ( permit )
+	}
+}

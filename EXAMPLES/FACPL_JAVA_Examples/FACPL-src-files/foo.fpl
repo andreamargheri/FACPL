@@ -1,0 +1,30 @@
+
+ PAS {
+	 Extended Indeterminate : false ;
+	 Java Package : "foo" ;
+	 Requests To Evaluate : NameRequest ;
+
+	 pep: deny-biased
+ 	 pdp: permit-unless-deny
+
+	 PolicySet PolName { deny-unless-permit-greedy
+		 target: equal("value",category/id) 
+		 policies:
+ 		 Rule rule1 ( permit)
+	 }
+}
+
+
+PolicySet NamePolicySetOne { deny-overrides-greedy 
+ 	 policies: 
+	 PolicySet NamePolicySetTwo { deny-overrides 
+ 		 target: equal("value",category/id) 
+		 policies: 
+ 		 	 Rule ruleName (deny) 
+		 obl: } 
+ 	 obl: 
+ }
+ 
+ Request:{NameRequest 
+	 (category_attribute/id_attribute, "")} 
+

@@ -1,0 +1,26 @@
+PAS { 
+	Extended Indeterminate : false ;
+	Java Package : "foo" ;
+	Requests To Evaluate : Name ;
+	pep: deny-biased
+	pdp: permit-unless-deny
+
+	include PSet
+
+}
+
+dec-fun Bool F_Name (String, Int) 
+dec-fun Bag<Bool> F_Name2 (String, Bool) 
+dec-fun String F_Name3 (Bag<Bool>, Bag<Int>, Double)
+
+Request:{ Name ( action / id , "READ" ) }
+
+PolicySet PSet { deny-unless-permit-greedy 
+	target:
+		equal ( "READ" , action / id ) && F_Name("READ",4)
+	policies:
+		Rule rule1 (permit target: in(sub/id, F_Name2("foo", true)) && in(sub/id, bag(true, false)))
+
+}
+
+
