@@ -24,6 +24,8 @@ import it.unifi.xtext.facpl.facpl2.AbstractPolicyIncl
 import it.unifi.xtext.facpl.validation.inference.FacplTypeInference
 import java.util.HashMap
 import it.unifi.xtext.facpl.facpl2.DeclaredFunction
+import it.unifi.xtext.facpl.facpl2.FunctionDeclaration
+import it.unifi.xtext.facpl.facpl2.TypeLiteral
 
 /**
  * Collect constants used in a policy
@@ -43,13 +45,38 @@ class PolicyConstant extends Facpl2Switch<Boolean> {
 	// FACPL CASEs
 	override caseFacpl(Facpl object) {
 		var s = true
+		//check for string in policies
 		if (object.policies != null) {
 			for (pol : object.policies) {
 				s = s && doSwitch(pol)
 			}
 		}
+		//check if the type string is used by declared function 
+		if (object.declarations != null){
+			for (f : object.declarations){
+				s = s && doSwitch(f)
+			}
+		}
 		return s
 	}
+
+
+	/*
+	 * DECLARED FUNCTIONs
+	 */
+	override caseFunctionDeclaration(FunctionDeclaration f) {
+		for (el : f.args){
+			if (el.equals(TypeLiteral.STRING)){
+				val c = new ConstraintConstant(FacplType.STRING, "def_val", "def_val")
+				this.constants.put(c.att_name, c)
+			}
+		}
+		return true
+	}
+
+	/*
+	 * POLICIES
+	 */
 
 	override caseFacplPolicy(FacplPolicy object) {
 		if (object instanceof PolicySet) {
@@ -75,6 +102,7 @@ class PolicyConstant extends Facpl2Switch<Boolean> {
 		for (pol : object.policies) {
 			s = s && doSwitch(pol)
 		}
+		//check obligation
 		for (ob : object.obl) {
 			for (expr : ob.expr) {
 				s = s && doSwitch(expr)
@@ -88,6 +116,7 @@ class PolicyConstant extends Facpl2Switch<Boolean> {
 		if (object.target != null) {
 			s = s && doSwitch(object.target)
 		}
+		//check obligation
 		for (ob : object.obl) {
 			for (expr : ob.expr) {
 				s = s && doSwitch(expr)
@@ -100,7 +129,7 @@ class PolicyConstant extends Facpl2Switch<Boolean> {
 		return doSwitch(object)
 	}
 
-//merging list
+//merging list 
 	override caseAndExpression(AndExpression object) {
 		doSwitch(object.left)
 		doSwitch(object.right)
@@ -131,6 +160,9 @@ class PolicyConstant extends Facpl2Switch<Boolean> {
 		val FacplType t = tCheck.doSwitch(bag)
 
 		if (t.equals(FacplType.NAME)) {
+			
+		//TODO
+		
 		}
 
 		throw new Exception()

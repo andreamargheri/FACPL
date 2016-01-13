@@ -88,7 +88,7 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 		FacplType t;
 		if (p.getTarget() != null) {
 			t = doSwitch(p.getTarget());
-			if (p.equals(FacplType.ERR)) {
+			if (t.equals(FacplType.ERR)) {
 				return FacplType.ERR;
 			}
 		}
@@ -361,8 +361,12 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 						if (arg2.equals(FacplType.BAG_NAME)) {
 							// this.typeAssignments.add((AttributeName)
 							// fun.getArg1(),FacplType.getTypeBag(arg2) );
-							this.typeAssignments.addEquality((AttributeName) fun.getArg1(),
-									getAttributeNameFromBag((Bag) fun.getArg2()));
+							if (fun.getArg2() instanceof Bag) {
+								this.typeAssignments.addEquality((AttributeName) fun.getArg1(),
+										getAttributeNameFromBag((Bag) fun.getArg2()));
+							}else{
+								//the bag is returned by a declared function, hence do nothing  
+							}
 						} else {
 							// the bag literal has a type different from NAME
 							this.typeAssignments.add((AttributeName) fun.getArg1(), FacplType.getTypeBag(arg2));
@@ -390,7 +394,8 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 						}
 					}
 				}
-				//No attribute name occurs in the function. Check if the types are compatible
+				// No attribute name occurs in the function. Check if the types
+				// are compatible
 				if (arg1.equals(arg2) || arg1.equals(FacplType.getTypeBag(arg2))) {
 					return FacplType.BOOLEAN;
 				}
@@ -459,7 +464,7 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 					def = FacplType.NAME;
 			} else if (!t.equals(FacplType.ERR)) {
 				if (def == null) {
-					//first argument checked
+					// first argument checked
 					def = t;
 				} else {
 					// Int < Double
@@ -506,7 +511,7 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 
 	@Override
 	public FacplType caseDateLiteral(DateLiteral object) {
-		return FacplType.DATE;
+		return FacplType.DATETIME;
 	}
 
 	@Override
@@ -521,7 +526,7 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 
 	@Override
 	public FacplType caseTimeLiteral(TimeLiteral object) {
-		return FacplType.DATE;
+		return FacplType.DATETIME;
 	}
 
 	@Override

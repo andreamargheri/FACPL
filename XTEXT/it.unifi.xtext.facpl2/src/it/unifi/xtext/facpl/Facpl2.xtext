@@ -28,7 +28,9 @@ FunctionDeclaration:
 ;
 
 enum TypeLiteral:
-	Int | Double | Bool | String | DateTime | Bag
+	Int = 'Int' | Double = 'Double' | Bool = 'Bool' | String = 'String' | DateTime = 'Date' | 
+	BagInt = 'Bag<Int>' | BagDouble = 'Bag<Double>' | BagBool = 'Bag<Bool>' | BagString = 'Bag<String>' |
+	BagDateTime = 'Bag<DateTime>'
 ;
 
 	//PAF - Policy Authorisation Framework

@@ -6,7 +6,7 @@ public enum FacplType {
 	/**
 	 * TYPED -> it is used for typing a well-typed high-level element (e.g., policy, policy set, PAF)
 	 */
-	INT, DOUBLE, STRING, BOOLEAN, DATE, BAG_INT, BAG_DOUBLE, BAG_STRING, BAG_BOOLEAN, BAG_DATE, BAG_NAME, NAME, ERR, TYPED;
+	INT, DOUBLE, STRING, BOOLEAN, DATETIME, BAG_INT, BAG_DOUBLE, BAG_STRING, BAG_BOOLEAN, BAG_DATETIME, BAG_NAME, NAME, ERR, TYPED;
 
 	public static FacplType combine(FacplType f1, FacplType f2) {
 		if (f1.equals(f2)) {
@@ -41,7 +41,7 @@ public enum FacplType {
 			return true;
 		case BAG_STRING:
 			return true;
-		case BAG_DATE:
+		case BAG_DATETIME:
 			return true;
 		case BAG_NAME:
 			return true;
@@ -66,8 +66,8 @@ public enum FacplType {
 			return BAG_DOUBLE;
 		case STRING:
 			return BAG_STRING;
-		case DATE:
-			return BAG_DATE;
+		case DATETIME:
+			return BAG_DATETIME;
 		case NAME:
 			return BAG_NAME;
 		default:
@@ -91,8 +91,8 @@ public enum FacplType {
 			return DOUBLE;
 		case BAG_STRING:
 			return STRING;
-		case BAG_DATE:
-			return DATE;
+		case BAG_DATETIME:
+			return DATETIME;
 		default:
 			return null;
 		}
@@ -100,13 +100,38 @@ public enum FacplType {
 
 	public static boolean equalType(FacplType type, TypeLiteral literal) {
 		switch (literal) {
-		case BAG:
-			if (type.equals(BAG_BOOLEAN) || type.equals(BAG_DATE) || type.equals(BAG_DOUBLE) || type.equals(BAG_INT)
-					|| type.equals(BAG_NAME) || type.equals(BAG_STRING)) {
+		//bags
+		case BAG_BOOL:
+			if (type.equals(BAG_BOOLEAN) || type.equals(BAG_NAME) ) {
 				return true;
 			} else {
 				return false;
 			}
+		case BAG_DOUBLE:
+			if (type.equals(BAG_DOUBLE) || type.equals(BAG_NAME) ) {
+				return true;
+			} else {
+				return false;
+			}
+		case BAG_INT:
+			if (type.equals(BAG_INT) || type.equals(BAG_NAME) ) {
+				return true;
+			} else {
+				return false;
+			}
+		case BAG_STRING:
+			if (type.equals(BAG_STRING) || type.equals(BAG_NAME) ) {
+				return true;
+			} else {
+				return false;
+			}
+		case BAG_DATE_TIME:
+			if (type.equals(BAG_DATETIME) || type.equals(BAG_NAME) ) {
+				return true;
+			} else {
+				return false;
+			}
+		//literals	
 		case BOOL:
 			if (type.equals(BOOLEAN))
 				return true;
@@ -128,7 +153,7 @@ public enum FacplType {
 			else
 				return false;
 		case DATE_TIME:
-			if (type.equals(DATE))
+			if (type.equals(DATETIME))
 				return true;
 			else
 				return false;
@@ -140,8 +165,17 @@ public enum FacplType {
 
 	public static FacplType getFacplType(TypeLiteral literal) {
 		switch (literal) {
-		case BAG:
-			return FacplType.BAG_NAME;
+		case BAG_BOOL:
+			return FacplType.BAG_BOOLEAN;
+		case BAG_DATE_TIME:
+			return FacplType.BAG_DATETIME;
+		case BAG_DOUBLE: 
+			return FacplType.BAG_DOUBLE;
+		case BAG_INT: 
+			return FacplType.BAG_INT;
+		case BAG_STRING: 
+			return FacplType.BAG_STRING; 
+			//literals
 		case BOOL:
 			return FacplType.BOOLEAN;
 		case DOUBLE:
@@ -151,7 +185,7 @@ public enum FacplType {
 		case STRING:
 			return FacplType.STRING;
 		case DATE_TIME:
-			return FacplType.DATE;
+			return FacplType.DATETIME;
 		default: 
 			return FacplType.NAME;
 		}

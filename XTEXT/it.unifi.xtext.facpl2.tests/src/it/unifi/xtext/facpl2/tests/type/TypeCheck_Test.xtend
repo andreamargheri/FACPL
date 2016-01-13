@@ -394,7 +394,7 @@ class TypeCheck_Test {
 		model.assertError(
 			Facpl2Package::eINSTANCE.declaredFunction,
 			null,
-			"Type mismatch: expected (String) not (Int)"
+			"Type mismatch: expected (String) but was (Int)"
 		)
 
 		model = '''
@@ -457,8 +457,112 @@ class TypeCheck_Test {
 			null,
 			"Type mismatch: type for argument 'n/id' cannot be inferred"
 		)
+
+		model = '''
+		dec-fun Bool F_Name (String, Int)
 		
+		dec-fun Int F (Int, Int)
 		
+		PolicySet pSet {deny-unless-permit 
+		policies:
+		Rule name (permit target: equal(5,n/id) && F_Name(n/string,F(5, n/id)))
+		}'''.parse
+
+		model.assertNoErrors()
+
+		model = '''
+		dec-fun Bool F_Name (String, Double)
+		
+		dec-fun Int F (Int, Int)
+		
+		PolicySet pSet {deny-unless-permit 
+		policies:
+		Rule name (permit target: equal(5,n/id) && F_Name(n/string,F(5, n/id)))
+		}'''.parse
+
+		model.assertError(
+			Facpl2Package::eINSTANCE.declaredFunction,
+			null,
+			"Type mismatch: expected (String,Double) but was (String,Int)"
+		)
+
 	}
 
+	@Test
+	def void testBagFunDecl() {
+
+		var model = '''
+		dec-fun Bool F_Name (String, Int) 
+		
+		dec-fun Bag<Int> F (Int, Int) 
+		
+		PolicySet Name {deny-unless-permit
+				target: F_Name(sub/id, F(n/id, 5))
+						policies: 
+							Rule r1 (permit)
+		}'''.parse
+
+		model.assertError(
+			Facpl2Package::eINSTANCE.declaredFunction,
+			null,
+			"Type mismatch: expected (String,Int) but was (String,Bag_int)"
+		)
+
+		model = '''
+		dec-fun Bool F_Name (String, Int) 
+		
+		dec-fun Bag<Int> F (Int, Int) 
+		
+		PolicySet Name {deny-unless-permit
+				target: in(sub/id, F(n/id, 5))
+						policies: 
+							Rule r1 (permit)
+		}'''.parse
+
+		model.assertNoErrors
+
+		model = '''
+		dec-fun Bool F_Name (String, Int) 
+		
+		dec-fun Bag<Bool> F (Int, Int) 
+		
+		PolicySet Name {deny-unless-permit
+				target: in(sub/id, F(n/id, 5)) && equal(sub/id, 5)
+						policies: 
+							Rule r1 (permit)
+		}'''.parse
+
+		model.assertError(
+			Facpl2Package::eINSTANCE.function,
+			null,
+			"Expression cannot be typed"
+		)
+
+		model = '''
+		dec-fun Bool F_Name (String, Int)
+		
+		dec-fun Int F (Int, Int)
+		
+		PolicySet pSet {deny-unless-permit 
+		policies:
+		Rule name (permit target: equal(5,n/id) && F_Name(n/string,F(5, n/id)) || F_Name(n/string,F(n/id1, n/id3)))
+		}'''.parse
+
+		model.assertNoErrors
+
+		model = '''
+			dec-fun Bool F_Name (String, Int) 
+			
+			dec-fun Bag<Int> F (Int, Int) 
+			
+			PolicySet Name {deny-unless-permit
+					target: in(sub/id, F(n/id, 5))
+							policies: 
+								Rule r1 (permit)
+			}
+		'''.parse
+		
+		model.assertNoErrors
+		
+	}
 }

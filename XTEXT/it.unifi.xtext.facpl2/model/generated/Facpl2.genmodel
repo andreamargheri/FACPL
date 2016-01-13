@@ -13,7 +13,11 @@
       <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//TypeLiteral/Bool"/>
       <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//TypeLiteral/String"/>
       <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//TypeLiteral/DateTime"/>
-      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//TypeLiteral/Bag"/>
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//TypeLiteral/BagInt"/>
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//TypeLiteral/BagDouble"/>
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//TypeLiteral/BagBool"/>
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//TypeLiteral/BagString"/>
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//TypeLiteral/BagDateTime"/>
     </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="Facpl2.ecore#//PEPAlg">
       <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//PEPAlg/BASE"/>

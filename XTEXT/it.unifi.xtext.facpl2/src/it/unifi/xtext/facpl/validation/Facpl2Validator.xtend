@@ -575,6 +575,9 @@ class Facpl2Validator extends AbstractFacpl2Validator {
 									)
 									return
 								}
+								/*
+								 * MODIFY THIS CHECK IF IT IS NEEDED TO IMPLEMENT Sub-typing on method arguments
+								 */ 
 								if (!FacplType::equalType(type, dec.args.get(i))) {
 									flag = true
 								}
@@ -601,7 +604,7 @@ class Facpl2Validator extends AbstractFacpl2Validator {
 					}
 					if (flag) {
 						error(
-							"Type mismatch: expected (" + decl_fun_T + ") not (" + current_T + ")",
+							"Type mismatch: expected (" + decl_fun_T + ") but was (" + current_T + ")",
 							Facpl2Package.Literals.DECLARED_FUNCTION__FUNCTION_ID
 						)
 					}

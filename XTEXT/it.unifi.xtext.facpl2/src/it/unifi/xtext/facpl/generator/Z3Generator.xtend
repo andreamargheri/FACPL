@@ -90,6 +90,7 @@ class Z3Generator {
 				 * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 				 */
 				// CHECK INFERENCE TYPES
+				//check for the whole file ????????????????????????????????????????????????????????????
 				var FacplType type = tInf.doSwitch(pol)
 
 				if (type.equals(FacplType.ERR)) {
@@ -101,7 +102,8 @@ class Z3Generator {
 				// CALCULATE STRING AND ATTRIBUTE constants
 				val PolicyConstant tConst = new PolicyConstant()
 
-				tConst.doSwitch(pol)
+				//constants to check for the whole file
+				tConst.doSwitch(resource)
 
 				this.constants = tConst.constants 
 				
@@ -495,8 +497,8 @@ def getFinalConstrPSet(String p_name)'''
 			case BAG_NAME: return "(Bag Bool)" // TO BE USED EVERYWHERE WHERE A BAG IS NOT DECLARED!!!!
 			case BAG_STRING: return "(Bag String)"
 			// Not-Supported (?)
-			case BAG_DATE: throw new Exception("DATE NOT SUPPORTED ????")
-			case DATE: throw new Exception("DATE NOT SUPPORTED ????")
+			case BAG_DATETIME: throw new Exception("DATE NOT SUPPORTED ????")
+			case DATETIME: throw new Exception("DATE NOT SUPPORTED ????")
 			case ERR: throw new Exception("Policy not well-typed")
 		}
 	}
