@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import it.unifi.facpl.lib.function.comparison.AtLeastOneMemberOf;
-import it.unifi.facpl.lib.function.comparison.Subset;
+import it.unifi.facpl.lib.function.comparison.In;
 import it.unifi.facpl.lib.interfaces.IExpressionFunction;
 import it.unifi.facpl.lib.util.Bag;
 import it.unifi.facpl.lib.util.exception.UnsupportedTypeException;
@@ -55,7 +55,7 @@ public class ListFunction {
 	// StringSubset.java
 	@Test
 	public void testSubSet_Function_String() throws Throwable {
-		function = new Subset();
+		function = new In();
 		
 		list.clear();
 		list.add(b_equals);

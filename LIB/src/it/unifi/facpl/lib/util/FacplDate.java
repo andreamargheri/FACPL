@@ -13,7 +13,7 @@ public class FacplDate {
 			date = Util.parseDate(dateS);
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.err.append("Cannot parsing the input date and/or time value");
+			System.err.append("The input date and/or time value cannot be parsed");
 		}
 	}
 	
@@ -44,5 +44,10 @@ public class FacplDate {
 	
 	public boolean after(FacplDate obj){
 		return date.after(obj.getDate());
+	}
+	
+	@Override
+	public String toString() {
+		return this.date.toString();
 	}
 }

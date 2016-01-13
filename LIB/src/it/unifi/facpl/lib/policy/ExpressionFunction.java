@@ -11,7 +11,7 @@ import it.unifi.facpl.lib.context.ContextRequest;
 import it.unifi.facpl.lib.enums.ExpressionValue;
 import it.unifi.facpl.lib.interfaces.IExpressionFunction;
 import it.unifi.facpl.lib.util.AttributeName;
-import it.unifi.facpl.lib.util.Bag;
+import it.unifi.facpl.lib.util.FacplLiteralTypes;
 import it.unifi.facpl.lib.util.exception.MissingAttributeException;
 
 /**
@@ -66,23 +66,22 @@ public class ExpressionFunction {
 					// Add value BOTTOM for modeling the absence of attribute
 					values.add(ExpressionValue.BOTTOM);
 				}
-			}
-
-			// Expression
-			if (obj instanceof ExpressionFunction) {
+			}else if (obj instanceof ExpressionFunction) {
+				// Expression
 				values.add(((ExpressionFunction) obj).evaluateExpression(cxtRequest));
-			}
-
-			// Literals + Bag
-			if (obj instanceof Integer || obj instanceof String || obj instanceof Boolean || obj instanceof Double
-					|| obj instanceof Bag) {
+			}else if (FacplLiteralTypes.isFacplValue(obj)) {
+				// Literals
 				values.add(obj);
+			}else {
+				//Unexpected Type Arguments
+				l.debug("Unexpected Type Argument");
+				return ExpressionValue.ERROR;
 			}
 		}
 
 		l.debug("Evaluated Arguments: " + values.toString());
 
-		l.debug("Evaluate Expression: " + functionCond.getName());
+		l.debug("Evaluate Expression: " + functionCond.getSimpleName());
 
 		if (isBottom(values)) {
 			l.debug("One of the argument is BOTTOM. Return BOTTOM");

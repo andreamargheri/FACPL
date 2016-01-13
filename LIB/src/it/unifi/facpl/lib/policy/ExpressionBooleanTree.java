@@ -10,7 +10,7 @@ import it.unifi.facpl.lib.context.ContextRequest;
 import it.unifi.facpl.lib.enums.ExprBooleanConnector;
 import it.unifi.facpl.lib.enums.ExpressionValue;
 import it.unifi.facpl.lib.util.AttributeName;
-import it.unifi.facpl.lib.util.Bag;
+import it.unifi.facpl.lib.util.FacplLiteralTypes;
 import it.unifi.facpl.lib.util.exception.MissingAttributeException;
 
 public class ExpressionBooleanTree {
@@ -103,9 +103,7 @@ public class ExpressionBooleanTree {
 			// Root corresponds to a leaf -> return the function evaluation
 			return toExpressionValue(((ExpressionFunction) root).evaluateExpression(cxtRequest));
 
-		} else if (root instanceof Integer || root instanceof String || root instanceof Boolean
-				|| root instanceof Double || root instanceof Bag) {
-
+		} else if (FacplLiteralTypes.isFacplValue(root)) {
 			// literal value (argument of Expression)
 			return toExpressionValue(root);
 

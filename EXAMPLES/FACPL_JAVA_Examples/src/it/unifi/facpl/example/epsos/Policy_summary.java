@@ -47,7 +47,7 @@ public class Policy_summary extends PolicySet {
 			addTarget(new ExpressionBooleanTree(ExprBooleanConnector.AND,
 					new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class, "Read",
 							new AttributeName("action", "action-id")),
-					new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Subset.class,
+					new ExpressionFunction(it.unifi.facpl.lib.function.comparison.In.class,
 							new Bag("PRD-003", "PRD-005", "PRD-010", "PRD-016"),
 							new AttributeName("subject", "hl7.permission"))));
 

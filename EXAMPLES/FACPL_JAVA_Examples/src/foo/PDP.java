@@ -9,24 +9,25 @@ import java.util.LinkedList;
 import java.util.List;
 
 @SuppressWarnings("all")
-public class PDP{
-	private static List<FacplPolicy> policies; 
-		
-	private static void inizialize(){
-		//add policies
+public class PDP {
+	private static List<FacplPolicy> policies;
+
+	private static void inizialize() {
+		// add policies
 		policies = new LinkedList<FacplPolicy>();
-	policies.add(new PolicySet_NamePolicySetOne()); 
+		policies.add(new PolicySet_PolName());
 	}
-		
+
 	public static AuthorisationPDP evalRequest(ContextRequest request) {
-	if (policies== null)
-		inizialize();
-	Class<? extends IEvaluableAlgorithm> pdpAlg = it.unifi.facpl.lib.algorithm.PermitUnlessDeny.class;
-	//flag for choosing how manage indeterminate extended values
-	// True = when target INDETERMINATE combining algorithm run 
-	// False = when target INDETERMINATE evaluation return INDETERMINATE without running combining algorithm
-	Boolean extendedIndeterminate = false;
-	//main
-	return FacplAuthorisationSystem.doAuthorisation(pdpAlg, policies, request,extendedIndeterminate);
+		if (policies == null)
+			inizialize();
+		Class<? extends IEvaluableAlgorithm> pdpAlg = it.unifi.facpl.lib.algorithm.PermitUnlessDenyGreedy.class;
+		// flag for choosing how manage indeterminate extended values
+		// True = when target INDETERMINATE combining algorithm run
+		// False = when target INDETERMINATE evaluation return INDETERMINATE
+		// without running combining algorithm
+		Boolean extendedIndeterminate = false;
+		// main
+		return FacplAuthorisationSystem.doAuthorisation(pdpAlg, policies, request, extendedIndeterminate);
 	}
 }

@@ -62,7 +62,7 @@ public abstract class PolicySet extends FacplPolicy {
 
 				Method eval = algCombining.getDeclaredMethod("evaluate", params);
 
-				l.debug("Loading combining algorithm: " + algCombining.getName());
+				l.debug("Loading combining algorithm: " + algCombining.getSimpleName());
 				Object alg = algCombining.newInstance();
 				l.debug("Algorithm started on eval elements");
 

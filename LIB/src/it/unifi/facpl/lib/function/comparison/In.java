@@ -6,7 +6,7 @@ import java.util.List;
 import it.unifi.facpl.lib.interfaces.IComparisonFunction;
 import it.unifi.facpl.lib.util.Bag;
 
-public class Subset implements IComparisonFunction{
+public class In implements IComparisonFunction{
 
 	@Override
 	public Boolean evaluateFunction(List<Object> args) throws Throwable {

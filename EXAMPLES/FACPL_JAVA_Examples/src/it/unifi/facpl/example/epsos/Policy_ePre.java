@@ -51,7 +51,7 @@ public class Policy_ePre extends PolicySet {
 			addTarget(new ExpressionBooleanTree(ExprBooleanConnector.AND,
 					new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class, "Read",
 							new AttributeName("action", "action-id")),
-					new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Subset.class,
+					new ExpressionFunction(it.unifi.facpl.lib.function.comparison.In.class,
 							new Bag("PRD-004", "PRD-010"), new AttributeName("subject", "hl7.permission"))));
 
 			// Obligations
