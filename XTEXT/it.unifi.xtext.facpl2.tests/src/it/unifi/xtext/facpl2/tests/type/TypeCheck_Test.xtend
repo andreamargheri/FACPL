@@ -248,10 +248,15 @@ class TypeCheck_Test {
 		var model = '''
 		PolicySet pSet {deny-unless-permit 
 		policies:
-		Rule name (permit 
-		target: 
-			in(5, bag(5,5))
-		)
+		Rule name (permit target: in(5, bag(5,5))	)
+		}'''.parse
+
+		model.assertNoErrors
+
+		model = '''
+		PolicySet pSet {deny-unless-permit 
+		policies:
+		Rule name (permit target: in(true, bag(5,5))	)
 		}'''.parse
 
 		model.assertError(
@@ -259,9 +264,36 @@ class TypeCheck_Test {
 			null,
 			"Expression cannot be typed"
 		)
-	
-	}
 
+		model = '''
+		PolicySet pSet {deny-unless-permit 
+		policies:
+		Rule name (permit target: in(n/id, bag(5,5))	)
+		}'''.parse
+
+		model.assertNoErrors
+
+		model = '''
+		PolicySet pSet {deny-unless-permit 
+		policies:
+		Rule name (permit target: in(n/id, bag(5,5)) && equal(n/id, 5)	)
+		}'''.parse
+
+		model.assertNoErrors
+
+		model = '''
+		PolicySet pSet {deny-unless-permit 
+		policies:
+		Rule name (permit target: in(n/id, bag(5,5)) && equal(n/id, true)	)
+		}'''.parse
+
+		model.assertError(
+			Facpl2Package::eINSTANCE.function,
+			null,
+			"Expression cannot be typed"
+		)
+
+	}
 
 	@Test
 	def void testFunctionBag() {
@@ -297,7 +329,6 @@ class TypeCheck_Test {
 //			null,
 //			"Expression cannot be typed"
 //		)
-
 		model = '''
 		PolicySet pSet {deny-unless-permit 
 		policies:
@@ -319,8 +350,115 @@ class TypeCheck_Test {
 		}'''.parse
 
 		model.assertNoErrors
+
+	}
+
+	@Test
+	def void testFunctionEqual_Ext() {
+		var model = '''
+		PolicySet pSet {deny-unless-permit 
+		policies: 
+		Rule name (permit 
+		target: 
+			equal(5, n/id)
+		)
+		}'''.parse
+
+		model.assertNoErrors
+
+		model = '''
+		PolicySet pSet {deny-unless-permit 
+		policies: 
+		Rule name (permit target: equal(5, n/id))
+		Rule name1 (permit target: equal(true, n/id))
+		}'''.parse
+
+		model.assertError(
+			Facpl2Package::eINSTANCE.function,
+			null,
+			"Expression cannot be typed"
+		)
+	}
+
+	@Test
+	def void testDeclaredFunction() {
+
+		var model = '''
+		dec-fun Bool F_Name (String)
+		
+		PolicySet pSet {deny-unless-permit 
+		policies:
+		Rule name (permit target: F_Name(5))
+		}'''.parse
+
+		model.assertError(
+			Facpl2Package::eINSTANCE.declaredFunction,
+			null,
+			"Type mismatch: expected (String) not (Int)"
+		)
+
+		model = '''
+		dec-fun Bool F_Name (String, Bool)
+		
+		PolicySet pSet {deny-unless-permit 
+		policies:
+		Rule name (permit target: F_Name("5"))
+		}'''.parse
+
+		model.assertError(
+			Facpl2Package::eINSTANCE.declaredFunction,
+			null,
+			"Invalid number of arguments"
+		)
+
+		model = '''
+		dec-fun Bool F_Name (String, Bool)
+		
+		PolicySet pSet {deny-unless-permit 
+		policies:
+		Rule name (permit target: F_Name("foo",n/id))
+		}'''.parse
+
+		model.assertNoErrors
+
+		model = '''
+		dec-fun Bool F_Name (String, Bool)
+		
+		PolicySet pSet {deny-unless-permit 
+		policies:
+		Rule name (permit target: F_Name(n/id1,n/id))
+		}'''.parse
+
+		model.assertNoErrors
+		model = '''
+		dec-fun Bool F_Name (String, Bool)
+		
+		PolicySet pSet {deny-unless-permit 
+		policies:
+		Rule name (permit target: F_Name(n/id,n/id))
+		}'''.parse
+
+		model.assertError(
+			Facpl2Package::eINSTANCE.declaredFunction,
+			null,
+			"Type mismatch: type for argument 'n/id' cannot be inferred"
+		)
+
+		model = '''
+		dec-fun Bool F_Name (String, Bool)
+		
+		PolicySet pSet {deny-unless-permit 
+		policies:
+		Rule name (permit target: equal(5,n/id) && F_Name(n/string,n/id))
+		}'''.parse
+
+		model.assertError(
+			Facpl2Package::eINSTANCE.declaredFunction,
+			null,
+			"Type mismatch: type for argument 'n/id' cannot be inferred"
+		)
+		
 		
 	}
 
 }
-	

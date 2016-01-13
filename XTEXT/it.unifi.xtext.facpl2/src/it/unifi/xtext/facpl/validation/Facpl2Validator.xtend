@@ -38,6 +38,7 @@ import it.unifi.xtext.facpl.facpl2.AlgLiteral
 import it.unifi.xtext.facpl.validation.inference.FacplTypeInference
 import it.unifi.xtext.facpl.facpl2.DeclaredFunction
 import it.unifi.xtext.facpl.facpl2.FunctionDeclaration
+import it.unifi.xtext.facpl.facpl2.AttributeName
 
 /**
  * This class contains custom validation rules. 
@@ -537,7 +538,11 @@ class Facpl2Validator extends AbstractFacpl2Validator {
 		 */
 		@Check
 		def void checkInvokDeclFun(DeclaredFunction f) {
+			val tCheck = new FacplTypeInference()
 			val root = getRoot(f)
+			// check the whole policy for totally inferring attribute name types
+			tCheck.doSwitch(root)
+			// check the declaration 
 			for (dec : root.declarations) {
 				if (dec.name.equals(f.functionId.name)) {
 					// Check arity of invocation
@@ -547,23 +552,51 @@ class Facpl2Validator extends AbstractFacpl2Validator {
 							Facpl2Package.Literals.DECLARED_FUNCTION__FUNCTION_ID
 						)
 					}
-					var FacplTypeInference tCheck = new FacplTypeInference();
 					var flag = false
 					// Check type of arguments
 					var decl_fun_T = ""
 					var current_T = ""
 					for (var i = 0; i < f.args.size; i++) {
-						val FacplType type = tCheck.doSwitch(f.args.get(i))
-						if (!FacplType::equalType(type, dec.args.get(i))) {
-							flag = true
-						}
-						// create labels for error output
-						if (i > 0) {
-							decl_fun_T = decl_fun_T + "," + dec.args.get(i)
-							current_T = current_T + "," + f.args.get(i)
+						var type = tCheck.doSwitch(f.args.get(i))
+						// check if the argument is a name 
+						// if it is, check the inferred type and check that type
+						if (type.equals(FacplType.NAME)) {
+							type = tCheck.typeAssignments.getBound(f.args.get(i) as AttributeName);
+							if (type == null) {
+								// no constraint of the name is present. I.e., it can be anything
+							} else {
+								if (type.equals(FacplType.ERR)) {
+									// the type for the occurring name cannot be inferred 
+									error(
+										"Type mismatch: type for argument '" +
+											(f.args.get(i) as AttributeName).category + "/" +
+											(f.args.get(i) as AttributeName).id + "' cannot be inferred",
+										Facpl2Package.Literals.DECLARED_FUNCTION__FUNCTION_ID
+									)
+									return
+								}
+								if (!FacplType::equalType(type, dec.args.get(i))) {
+									flag = true
+								}
+							}
 						} else {
-							decl_fun_T = decl_fun_T + dec.args.get(i)
-							current_T = current_T + f.args.get(i)
+							if (!FacplType::equalType(type, dec.args.get(i))) {
+								flag = true
+							}
+						}
+						// create labels for error message
+						if (i > 0) {
+							decl_fun_T = decl_fun_T + "," + dec.args.get(i).toString
+							if (type == null)
+								current_T = current_T + ", ?"
+							else
+								current_T = current_T + "," + type.toString
+						} else {
+							decl_fun_T = decl_fun_T + dec.args.get(i).toString
+							if (type == null)
+								current_T = current_T + "?"
+							else
+								current_T = current_T + type.toString
 						}
 					}
 					if (flag) {
@@ -584,7 +617,9 @@ class Facpl2Validator extends AbstractFacpl2Validator {
 		 */
 		@Check
 		def void checkTarget(FacplPolicy policy) {
-			var FacplTypeInference tCheck = new FacplTypeInference();
+			val tCheck = new FacplTypeInference()
+			tCheck.doSwitch(getRoot(policy))
+
 			val FacplType type = tCheck.doSwitch(policy.target)
 			if (!type.equals(FacplType.BOOLEAN) && !type.equals(FacplType.NAME))
 				warning(
@@ -595,7 +630,9 @@ class Facpl2Validator extends AbstractFacpl2Validator {
 
 		@Check
 		def void checkBag(Bag bag) {
-			var FacplTypeInference tCheck = new FacplTypeInference();
+			val tCheck = new FacplTypeInference()
+			tCheck.doSwitch(getRoot(bag))
+
 			var FacplType t = tCheck.doSwitch(bag.getArgs().get(0));
 			for (Expression ob : bag.getArgs()) {
 				t = FacplType.combine(t, tCheck.doSwitch(ob));
@@ -606,25 +643,31 @@ class Facpl2Validator extends AbstractFacpl2Validator {
 
 		@Check
 		def void checkFunction(Function e) {
-			var FacplTypeInference tCheck = new FacplTypeInference();
+			val tCheck = new FacplTypeInference()
+			tCheck.doSwitch(getRoot(e))
+
 			var t = tCheck.doSwitch(e)
-			if (t.equals(FacplType::ERR)) {
+			if (t.equals(FacplType.ERR)) {
 				error("Expression cannot be typed", Facpl2Package.Literals.FUNCTION__FUNCTION_ID);
 			}
 		}
 
 		@Check
 		def void checkAndExpression(AndExpression e) {
-			var FacplTypeInference tCheck = new FacplTypeInference();
+			val tCheck = new FacplTypeInference()
+			tCheck.doSwitch(getRoot(e))
+
 			var t = tCheck.doSwitch(e)
-			if (t.equals(FacplType::ERR)) {
+			if (t.equals(FacplType.ERR)) {
 				error("Expression cannot be typed", Facpl2Package.Literals.AND_EXPRESSION__LEFT);
 			}
 		}
 
 		@Check
 		def void checkOrExpression(OrExpression e) {
-			var FacplTypeInference tCheck = new FacplTypeInference();
+			val tCheck = new FacplTypeInference()
+			tCheck.doSwitch(getRoot(e))
+
 			var t = tCheck.doSwitch(e)
 			if (t.equals(FacplType::ERR)) {
 				error("Expression cannot be typed", Facpl2Package.Literals.OR_EXPRESSION__LEFT);
@@ -633,40 +676,20 @@ class Facpl2Validator extends AbstractFacpl2Validator {
 
 		@Check
 		def void checkNotExpression(NotExpression e) {
-			var FacplTypeInference tCheck = new FacplTypeInference();
+			val tCheck = new FacplTypeInference()
+			tCheck.doSwitch(getRoot(e))
+
 			var t = tCheck.doSwitch(e)
 			if (t.equals(FacplType::ERR)) {
 				error("Expression cannot be typed", Facpl2Package.Literals.NOT_EXPRESSION__ARG);
 			}
 		}
 
-//	@Check
-//	def void checkArithExpression(ArithExpr e) {
-//		FacplTypeChecker tCheck = FacplTypeChecker.getInstance();
-//		FacplType t = tCheck.doSwitch(e);
-//		if (!t.equals(FacplType.INT) && !t.equals(FacplType.DOUBLE) && !t.equals(FacplType.NAME)) {
-//			error("Arguments must be numeric!", Facpl2Package.Literals.ARITH_EXPR__FUN, ARITHMETIC_EXPRESSION);
-//		} else if (e.getFun() == "mod" && t.equals(FacplType.DOUBLE) && !t.equals(FacplType.NAME)) {
-//			error("Function mod is defined only for int arguments", Facpl2Package.Literals.ARITH_EXPR__FUN,
-//					ARITHMETIC_MOD_EXPRESSION);
-//		}
-//	}
-//	@Check
-//	def void checkBagExpression(Bag e) {
-//		FacplTypeChecker tCheck = FacplTypeChecker.getInstance();
-//		FacplType t = tCheck.doSwitch(e);
-//		if (t.equals(FacplType.ERR)) {
-//			error("All bag elements must be string or structured names!", Facpl2Package.Literals.BAG__ARGS,
-//					BAG_EXPRESSION);
-//		}
-//	}
-//
-
-//TODO
-
 		@Check
 		def void checkAttributeRequestType(AttributeReq a) {
-			var FacplTypeInference tCheck = new FacplTypeInference();
+			val tCheck = new FacplTypeInference()
+			tCheck.doSwitch(getRoot(a))
+
 			var FacplType t = tCheck.doSwitch(a);
 			if (t.equals(FacplType.ERR)) {
 				error("All bag elements must be string or structured names!",

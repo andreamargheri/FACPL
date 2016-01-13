@@ -1,10 +1,12 @@
 package it.unifi.xtext.facpl.validation;
 
 import it.unifi.xtext.facpl.facpl2.TypeLiteral;
-import it.unifi.xtext.facpl.validation.FacplType;
 
 public enum FacplType {
-	INT, DOUBLE, STRING, BOOLEAN, DATE, BAG_INT, BAG_DOUBLE, BAG_STRING, BAG_BOOLEAN, BAG_DATE, BAG_NAME, NAME, ERR;
+	/**
+	 * TYPED -> it is used for typing a well-typed high-level element (e.g., policy, policy set, PAF)
+	 */
+	INT, DOUBLE, STRING, BOOLEAN, DATE, BAG_INT, BAG_DOUBLE, BAG_STRING, BAG_BOOLEAN, BAG_DATE, BAG_NAME, NAME, ERR, TYPED;
 
 	public static FacplType combine(FacplType f1, FacplType f2) {
 		if (f1.equals(f2)) {
@@ -156,4 +158,9 @@ public enum FacplType {
 	  
 	}
 
+	@Override
+	public String toString() {
+		return this.name().substring(0, 1).toUpperCase() + this.name().substring(1).toLowerCase();
+	}
+	
 }

@@ -126,9 +126,9 @@ class PolicyConstant extends Facpl2Switch<Boolean> {
 
 //BAG
 	override caseBag(Bag bag) {
-		val FacplTypeInference tInf = new FacplTypeInference()
+		val tCheck = new FacplTypeInference()
 
-		val FacplType t = tInf.doSwitch(bag)
+		val FacplType t = tCheck.doSwitch(bag)
 
 		if (t.equals(FacplType.NAME)) {
 		}

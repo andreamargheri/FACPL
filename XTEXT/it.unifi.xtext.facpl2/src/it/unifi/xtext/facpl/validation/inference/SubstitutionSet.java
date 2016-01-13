@@ -36,6 +36,9 @@ public class SubstitutionSet {
 					|| (getBound(var).equals(FacplType.DOUBLE) && type.equals(FacplType.INT))) {
 				this.substitution.put(_nameToString(var), FacplType.DOUBLE);
 			} else if (!getBound(var).equals(type)) {
+				//Type cannot be unified
+				//Put the inferred type of the variable as error
+				this.substitution.put(_nameToString(var), FacplType.ERR);
 				throw new Exception("Attribute Name Types cannot be unified");
 			}
 		} else {
@@ -52,6 +55,11 @@ public class SubstitutionSet {
 		return this.substitution.get(_nameToString(n)) != null;
 	}
 
+	/**
+	 * Return the inferred type for the attribute name in input
+	 * @param n
+	 * @return
+	 */
 	public FacplType getBound(AttributeName n) {
 		return this.substitution.get(_nameToString(n));
 	}
