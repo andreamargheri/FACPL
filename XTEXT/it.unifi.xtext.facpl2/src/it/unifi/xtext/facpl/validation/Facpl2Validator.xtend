@@ -3,42 +3,43 @@
  */
 package it.unifi.xtext.facpl.validation
 
-import it.unifi.xtext.facpl.facpl2.Facpl
-import it.unifi.xtext.facpl.facpl2.Import
-import org.eclipse.xtext.validation.Check
-import it.unifi.xtext.facpl.facpl2.Request
-import it.unifi.xtext.facpl.facpl2.PolicySet
 import com.google.common.base.Predicate
-import org.eclipse.emf.common.util.URI
-import org.eclipse.xtext.scoping.IGlobalScopeProvider
-import java.util.ArrayList
-import it.unifi.xtext.facpl.facpl2.FacplPolicy
-import it.unifi.xtext.facpl.facpl2.DateLiteral
-import org.eclipse.xtext.scoping.IScope
-import org.eclipse.xtext.resource.IEObjectDescription
 import com.google.inject.Inject
 import it.unifi.xtext.facpl.facpl2.AbstractPolicyIncl
-import it.unifi.xtext.facpl.facpl2.AttributeReq
-import org.eclipse.emf.ecore.EObject
-import it.unifi.xtext.facpl.facpl2.Rule
-import org.eclipse.emf.ecore.resource.Resource
-import it.unifi.xtext.facpl.facpl2.MainFacpl
-import it.unifi.xtext.facpl.facpl2.Facpl2Package
-import java.util.HashMap
-import org.eclipse.xtext.resource.XtextResourceSet
-import it.unifi.xtext.facpl.facpl2.AndExpression
-import it.unifi.xtext.facpl.facpl2.OrExpression
-import it.unifi.xtext.facpl.facpl2.NotExpression
-import it.unifi.xtext.facpl.facpl2.Function
-import it.unifi.xtext.facpl.facpl2.Expression
-import it.unifi.xtext.facpl.facpl2.Bag
 import it.unifi.xtext.facpl.facpl2.Alg
-import it.unifi.xtext.facpl.facpl2.FulfillmentStrategy
 import it.unifi.xtext.facpl.facpl2.AlgLiteral
-import it.unifi.xtext.facpl.validation.inference.FacplTypeInference
-import it.unifi.xtext.facpl.facpl2.DeclaredFunction
-import it.unifi.xtext.facpl.facpl2.FunctionDeclaration
+import it.unifi.xtext.facpl.facpl2.AndExpression
 import it.unifi.xtext.facpl.facpl2.AttributeName
+import it.unifi.xtext.facpl.facpl2.AttributeReq
+import it.unifi.xtext.facpl.facpl2.Bag
+import it.unifi.xtext.facpl.facpl2.DateLiteral
+import it.unifi.xtext.facpl.facpl2.DeclaredFunction
+import it.unifi.xtext.facpl.facpl2.Expression
+import it.unifi.xtext.facpl.facpl2.Facpl
+import it.unifi.xtext.facpl.facpl2.Facpl2Package
+import it.unifi.xtext.facpl.facpl2.FacplPolicy
+import it.unifi.xtext.facpl.facpl2.FulfillmentStrategy
+import it.unifi.xtext.facpl.facpl2.Function
+import it.unifi.xtext.facpl.facpl2.FunctionDeclaration
+import it.unifi.xtext.facpl.facpl2.Import
+import it.unifi.xtext.facpl.facpl2.MainFacpl
+import it.unifi.xtext.facpl.facpl2.NotExpression
+import it.unifi.xtext.facpl.facpl2.OrExpression
+import it.unifi.xtext.facpl.facpl2.PolicySet
+import it.unifi.xtext.facpl.facpl2.Request
+import it.unifi.xtext.facpl.facpl2.TimeLiteral
+import it.unifi.xtext.facpl.facpl2.funID
+import it.unifi.xtext.facpl.validation.inference.FacplTypeInference
+import java.util.ArrayList
+import java.util.HashMap
+import org.eclipse.emf.common.util.URI
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.xtext.resource.IEObjectDescription
+import org.eclipse.xtext.resource.XtextResourceSet
+import org.eclipse.xtext.scoping.IGlobalScopeProvider
+import org.eclipse.xtext.scoping.IScope
+import org.eclipse.xtext.validation.Check
 
 /**
  * This class contains custom validation rules. 
@@ -63,7 +64,8 @@ class Facpl2Validator extends AbstractFacpl2Validator {
 			if (el instanceof Request) {
 				if (el.getName().equals(request.getName())) {
 					if (flag) {
-						error("Duplicate request name " + request.getName(), Facpl2Package.Literals.REQUEST__NAME);
+						error("Duplicate request name '" + request.getName() + "'",
+							Facpl2Package.Literals.REQUEST__NAME);
 						return
 					}
 					flag = true;
@@ -83,7 +85,7 @@ class Facpl2Validator extends AbstractFacpl2Validator {
 			});
 		for (IEObjectDescription eOb : global.getAllElements()) {
 			if (eOb.getName().toString().equals(request.getName())) {
-				error("Duplicate request name " + request.getName() + " with file imported",
+				error("Duplicate request name '" + request.getName() + "' with file imported",
 					Facpl2Package.Literals.REQUEST__NAME);
 				return
 			}
@@ -92,36 +94,26 @@ class Facpl2Validator extends AbstractFacpl2Validator {
 
 	/*
 	 * ###################################################
-	 * Check Name Rules
+	 * Check Well-Formed Bag Attributes in Requests
 	 * ###################################################
 	 */
 	@Check
-	def void checkNameRule(Rule rule) {
-		var PolicySet pol = rule.eContainer().eContainer() as PolicySet;
-		var Boolean flag = false;
-		for (AbstractPolicyIncl r : pol.getPolicies()) {
-			if (r.getRefPol() != null) {
-				if (r.getRefPol().getName().equals(rule.getName())) {
-					error("Duplicate rule name " + rule.getName() + " with referenced policy " + pol.getName(),
-						Facpl2Package.Literals.FACPL_POLICY__NAME);
-					return
-				}
-			} else if (r.getNewPolicy() != null) {
+	def void checkAttributeRequestType(AttributeReq a) {
+		val tCheck = new FacplTypeInference()
+		tCheck.doSwitch(getRoot(a))
 
-				if (r.getNewPolicy().getName().equals(rule.getName())) {
-					if (flag) {
-						error("Duplicate rule name " + rule.getName() + " in policy " + pol.getName(),
-							Facpl2Package.Literals.FACPL_POLICY__NAME);
-						return
-					}
-					flag = true;
-				}
-			}
+		var FacplType t = tCheck.doSwitch(a);
+		if (t.equals(FacplType.ERR)) {
+			error("Type mismatch: all bag elements must be of the same type",
+				Facpl2Package.Literals.ATTRIBUTE_REQ__VALUE);
+		} else if (t.equals(FacplType.NAME)) {
+			error("Type mismatch: request attribute cannot be names", Facpl2Package.Literals.ATTRIBUTE_REQ__VALUE);
 		}
+
 	}
 
 	/* #######################################################
-	 * Check in global scope for policy/policySet name policy
+	 * Check in global scope for policySet name policy
 	 * #######################################################
 	 */
 	@Check
@@ -135,7 +127,7 @@ class Facpl2Validator extends AbstractFacpl2Validator {
 			});
 		for (IEObjectDescription eOb : global.getAllElements()) {
 			if (eOb.getName().getLastSegment().toString().equals(policy.getName())) {
-				error("Duplicate policy name " + policy.getName() +
+				error("Duplicate policy name '" + policy.getName() + "'" +
 					". A policy with the same name is defined in an imported file",
 					Facpl2Package.Literals.FACPL_POLICY__NAME);
 				return
@@ -144,7 +136,7 @@ class Facpl2Validator extends AbstractFacpl2Validator {
 	}
 
 	/* #############################################################
-	 * Check Policy Set / Policy Name Collisions in the local file
+	 * Check Policy Set / Rule Collisions in the local file
 	 * #############################################################
 	 */
 	@Check
@@ -177,7 +169,7 @@ class Facpl2Validator extends AbstractFacpl2Validator {
 					}
 
 		if (count > 1)
-			error("Duplicate policy name " + policy.getName(), Facpl2Package.Literals.FACPL_POLICY__NAME);
+			error("Duplicate policy name '" + policy.getName() + "'", Facpl2Package.Literals.FACPL_POLICY__NAME);
 
 	}
 
@@ -399,47 +391,36 @@ class Facpl2Validator extends AbstractFacpl2Validator {
 	 * ################################################### 
 	 */
 	/**
-	 * Check date-time format yyyy/MM/dd-HH:mm:ss
+	 * Check date format yyyy/MM/dd
 	 */
 	@Check
 	def void checkDate(DateLiteral date) {
 		var String sdate = date.getValue();
-		if (sdate.contains("-")) {
-			// date + time
-			var String err = "";
-			if (!checkDate(sdate.substring(0, sdate.indexOf("-"))))
-				err = "Error date value. Must be yyyy/MM/dd";
+		if (!checkDate(sdate))
+			error("Error date value. Must be yyyy/MM/dd", Facpl2Package.Literals.DATE_LITERAL__VALUE);
+	}
 
-			if (!checkTime(sdate.substring(sdate.indexOf("-") + 1, sdate.length())))
-				err = "\n Error time value. Must be HH:mm:ss";
-
-			if (err != "")
-				error(err, Facpl2Package.Literals.DATE_LITERAL__VALUE);
-		} else {
-			if (sdate.contains("/")) {
-				// date
-				if (!checkDate(sdate)) {
-					error("Error date value. Must be yyyy/MM/dd", Facpl2Package.Literals.DATE_LITERAL__VALUE);
-				}
-			} else {
-				// time
-				if (!checkTime(sdate)) {
-					error("Error time value. Must be HH:mm:ss", Facpl2Package.Literals.DATE_LITERAL__VALUE);
-				}
-			}
-		}
-
+	/**
+	 * Check time format HH:mm:ss
+	 */
+	@Check
+	def void checkTime(TimeLiteral time) {
+		var String stime = time.getValue();
+		if (!checkTime(stime))
+			error("Error time value. Must be HH:mm:ss", Facpl2Package.Literals.TIME_LITERAL__VALUE);
 	}
 
 	def boolean checkTime(String sdate) {
-		// time
-		if (!(sdate.charAt(2) == ':')) {
+		val int h_sep = sdate.indexOf(':');
+		val int m_sep = sdate.indexOf(':', 5)
+		if (h_sep == -1) {
 			return false;
 		} else {
-			if (!(sdate.charAt(5) == ':')) {
+			if (m_sep == -1) {
 				return false;
 			}
 		}
+
 		var String h = sdate.substring(0, 2);
 		var String m = sdate.substring(3, 5);
 		var String s = sdate.substring(6, 8);
@@ -453,8 +434,7 @@ class Facpl2Validator extends AbstractFacpl2Validator {
 		return false;
 	}
 
-	def Boolean checkDate(String sdate) {
-		// date
+	def boolean checkDate(String sdate) {
 		val int y_sep = sdate.indexOf('/');
 		val int m_sep = sdate.indexOf('/', 5)
 		if (y_sep == -1) {
@@ -577,7 +557,7 @@ class Facpl2Validator extends AbstractFacpl2Validator {
 								}
 								/*
 								 * MODIFY THIS CHECK IF IT IS NEEDED TO IMPLEMENT Sub-typing on method arguments
-								 */ 
+								 */
 								if (!FacplType::equalType(type, dec.args.get(i))) {
 									flag = true
 								}
@@ -626,7 +606,7 @@ class Facpl2Validator extends AbstractFacpl2Validator {
 			val FacplType type = tCheck.doSwitch(policy.target)
 			if (!type.equals(FacplType.BOOLEAN) && !type.equals(FacplType.NAME))
 				warning(
-					"Target Expression evaluates to a not-boolean value. This element evaluates to indetrminate",
+					"Target Expression evaluates to a not-boolean value. This element evaluates to indeterminate",
 					Facpl2Package.Literals.FACPL_POLICY__TARGET
 				)
 		}
@@ -652,6 +632,9 @@ class Facpl2Validator extends AbstractFacpl2Validator {
 			var t = tCheck.doSwitch(e)
 			if (t.equals(FacplType.ERR)) {
 				error("Expression cannot be typed", Facpl2Package.Literals.FUNCTION__FUNCTION_ID);
+			}
+			if (e.functionId.equals(funID.IN)){
+				info("Function 'in' expects (T,Bag<T>)",Facpl2Package.Literals.FUNCTION__FUNCTION_ID )	
 			}
 		}
 
@@ -688,16 +671,5 @@ class Facpl2Validator extends AbstractFacpl2Validator {
 			}
 		}
 
-		@Check
-		def void checkAttributeRequestType(AttributeReq a) {
-			val tCheck = new FacplTypeInference()
-			tCheck.doSwitch(getRoot(a))
-
-			var FacplType t = tCheck.doSwitch(a);
-			if (t.equals(FacplType.ERR)) {
-				error("All bag elements must be string or structured names!",
-					Facpl2Package.Literals.ATTRIBUTE_REQ__VALUE);
-			}
-		}
 	}
 	

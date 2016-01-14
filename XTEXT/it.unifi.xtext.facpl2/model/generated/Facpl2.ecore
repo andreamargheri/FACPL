@@ -35,7 +35,7 @@
     <eLiterals name="Double" value="1" literal="Double"/>
     <eLiterals name="Bool" value="2" literal="Bool"/>
     <eLiterals name="String" value="3" literal="String"/>
-    <eLiterals name="DateTime" value="4" literal="Date"/>
+    <eLiterals name="DateTime" value="4" literal="DateTime"/>
     <eLiterals name="BagInt" value="5" literal="Bag&lt;Int>"/>
     <eLiterals name="BagDouble" value="6" literal="Bag&lt;Double>"/>
     <eLiterals name="BagBool" value="7" literal="Bag&lt;Bool>"/>

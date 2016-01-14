@@ -14,6 +14,10 @@ import it.unifi.xtext.facpl.facpl2.Facpl2Package
 
 @RunWith(typeof(XtextRunner))
 @InjectWith(typeof(Facpl2InjectorProvider))
+
+/**
+ * Test draft used during development - NOT RUNNING
+ */
 class TypeInference {
 
 	@Inject extension ParseHelper<Facpl>

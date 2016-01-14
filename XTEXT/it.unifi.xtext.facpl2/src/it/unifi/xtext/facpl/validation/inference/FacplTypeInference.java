@@ -412,6 +412,9 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 						this.typeAssignments.addEquality((AttributeName) fun.getArg1(), (AttributeName) fun.getArg2());
 						this.typeAssignments.add((AttributeName) fun.getArg1(), FacplType.INT);
 						return FacplType.BOOLEAN;
+					} else if (arg2.equals(FacplType.DATETIME)) {
+						this.typeAssignments.add((AttributeName) fun.getArg1(), FacplType.DATETIME);
+						return FacplType.BOOLEAN;
 					}
 				} else if (arg2.equals(FacplType.NAME)) {
 					if (!arg1.equals(FacplType.NAME) && (arg1.equals(FacplType.INT) || arg1.equals(FacplType.DOUBLE))) {
@@ -420,6 +423,9 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 					} else if (arg1.equals(FacplType.NAME)) {
 						this.typeAssignments.addEquality((AttributeName) fun.getArg1(), (AttributeName) fun.getArg2());
 						this.typeAssignments.add((AttributeName) fun.getArg1(), FacplType.INT);
+						return FacplType.BOOLEAN;
+					} else if (arg1.equals(FacplType.DATETIME)){
+						this.typeAssignments.add((AttributeName) fun.getArg2(), FacplType.DATETIME);
 						return FacplType.BOOLEAN;
 					}
 				} else if (arg1.equals(arg2)) {
@@ -564,7 +570,11 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 	public FacplType caseAttributeReq(AttributeReq object) {
 		FacplType f = doSwitch(object.getValue().get(0));
 		for (Expression e : object.getValue()) {
-			f = FacplType.combine(f, doSwitch(e));
+			FacplType t = doSwitch(e);
+			if (t.equals(FacplType.NAME))
+				//Names are not accepted in requests. Returned immediately 
+				return t;
+			f = FacplType.combine(f, t);
 			if (f.equals(FacplType.ERR))
 				return FacplType.ERR;
 		}

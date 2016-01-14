@@ -33,6 +33,7 @@ import it.unifi.xtext.facpl.facpl2.AlgLiteral
 import it.unifi.xtext.facpl.facpl2.FulfillmentStrategy
 import it.unifi.xtext.facpl.facpl2.DeclaredFunction
 import it.unifi.xtext.facpl.facpl2.FunctionDeclaration
+import it.unifi.xtext.facpl.validation.FacplType
 
 class Facpl2Generator_Menu {
 	
@@ -552,7 +553,7 @@ class Facpl2Generator_Menu {
 		
 		import java.util.HashMap;
 		import it.unifi.facpl.lib.context.*;
-		import it.unifi.facpl.lib.util.Bag;
+		import it.unifi.facpl.lib.util.*;
 		
 		@SuppressWarnings("all")		
 		public class ContextRequest_«request.name» {
@@ -615,14 +616,33 @@ class Facpl2Generator_Menu {
 		import java.util.List;
 		
 		import it.unifi.facpl.lib.interfaces.IExpressionFunction;
+		import it.unifi.facpl.lib.util.*;
 		
+		@SuppressWarnings("all")
 		public class «getNameFunction(f.name)» implements IExpressionFunction{
 		
 			@Override
 			public Object evaluateFunction(List<Object> args) throws Throwable {
 				
-				throw new Exception("TODO: auto-generated method stub");
-						
+				if (args.size() == «f.args.size») {
+					«IF f.args.size > 0»		
+					if( 
+					«var i = -1»
+					«FOR arg:  f.args SEPARATOR ' && '»
+					args.get(«i = i +1») instanceof «Facpl2Generator_Name::getJavaType(FacplType::getFacplType(arg))»
+					«ENDFOR»
+					){
+							throw new Exception("TODO: auto-generated method stub");
+					}else{
+							throw new Exception("Illegal types of arguments");
+					}
+					«ELSE»
+					throw new Exception("TODO: auto-generated method stub");
+					«ENDIF»
+				} else {
+					throw new Exception("Illegal number of arguments");
+				}
+				
 			}
 		
 		}

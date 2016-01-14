@@ -13,7 +13,8 @@
 
 ;?????????????????????????
 
-;################### FUNCTION DECLARATIONs #######################
+
+;################### FACPL FUNCTION DECLARATIONs #######################
 ;####
 ;AUXILIARY-function Boolean
 ;####
@@ -24,6 +25,10 @@
 
 (define-fun isTrue ((x (TValue Bool))) Bool
 	(ite (= x (mk-val true false false)) true false)
+)
+
+(define-fun isBool ((x (TValue Bool))) Bool
+		(ite (or (isFalse x) (isTrue x)) true false)
 )
 
 (define-fun FAnd ((x (TValue Bool)) (y (TValue Bool))) (TValue Bool)
@@ -383,6 +388,7 @@
 (define-fun cns_r1_indet () Bool
 	(or 
 		(err cns_target_r1)
+		(not (isBool cns_target_r1))
 		(and 
 			(isTrue cns_target_r1)
 			(not cns_obl_permit_r1)
@@ -421,6 +427,7 @@ true
 (define-fun cns_r2_indet () Bool
 	(or 
 		(err cns_target_r2)
+		(not (isBool cns_target_r2))
 		(and 
 			(isTrue cns_target_r2)
 			(not cns_obl_deny_r2)
@@ -459,6 +466,7 @@ true
 (define-fun cns_r3_indet () Bool
 	(or 
 		(err cns_target_r3)
+		(not (isBool cns_target_r3))
 		(and 
 			(isTrue cns_target_r3)
 			(not cns_obl_deny_r3)
@@ -561,6 +569,7 @@ true
 (define-fun cns_Name_indet () Bool
 	(or 
 		(err cns_target_Name)
+		(not (isBool cns_target_Name))
 		(and (isTrue cns_target_Name) cns_Name_cmb_final_indet)
 		(and 
 			(isTrue cns_target_Name)

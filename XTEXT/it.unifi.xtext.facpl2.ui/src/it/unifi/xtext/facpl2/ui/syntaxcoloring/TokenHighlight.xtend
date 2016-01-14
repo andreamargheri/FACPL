@@ -78,7 +78,7 @@ class TokenHighlight implements ISemanticHighlightingCalculator {
 		ruleDate = grammarAccess.getDATERule();
 		ruleTime = grammarAccess.getTIMERule();
 		ruleTypeLiteral = grammarAccess.typeLiteralRule
-		ruleDecFun = grammarAccess.funDeclRule
+		ruleDecFun = grammarAccess.functionDeclarationRule
 	}	
 
 	override provideHighlightingFor(XtextResource resource,IHighlightedPositionAcceptor acceptor){

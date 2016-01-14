@@ -78,11 +78,11 @@ public class Z3Generator_Test extends AbstractXtextTests {
 		/*
 		 * Two Bool and Int
 		 */
-		model = parser.parse(
-			'''PolicySet Name {permit-overrides 
-  		policies: 
-  			Rule r1 (permit target: cat/id && equal(cat1/id,5))
-  	}'''
+		model = parser.parse('''
+			PolicySet Name {permit-overrides 
+					policies: 
+					Rule r1 (permit target: cat/id && equal(cat1/id,5))
+			}'''
 		)
 		cns = generator.doGenerateZ3(model)
 
@@ -702,90 +702,89 @@ public class Z3Generator_Test extends AbstractXtextTests {
 
 	@Test
 	def void genDeclaredFunction() {
-		try{
-		
-		var model = parser.parse('''
-		dec-fun Bool F_Name (String, Int) 
-		dec-fun Bool F_Name2 (String, Bool)
-		dec-fun Bag F (Int, Int) 
-		
-		PolicySet Name {deny-unless-permit
-				target: F_Name(sub/id, "doctor")
-						policies: 
-							Rule r1 (permit)
-		}''')
-
-		var flag = false
 		try {
-			generator.doGenerateZ3(model)
+
+			var model = parser.parse('''
+			dec-fun Bool F_Name (String, Int) 
+			dec-fun Bool F_Name2 (String, Bool)
+			dec-fun Bag F (Int, Int) 
+			
+			PolicySet Name {deny-unless-permit
+					target: F_Name(sub/id, "doctor")
+							policies: 
+								Rule r1 (permit)
+			}''')
+
+			var flag = false
+			try {
+				generator.doGenerateZ3(model)
+			} catch (Exception e) {
+				// the policy cannot be typed
+				assertEquals(true, true)
+				flag = true
+
+			}
+			if (!flag)
+				assertEquals(false, true)
+
+			// Second Test	
+			model = parser.parse(
+				'''
+				dec-fun Bool F_Name (String, Int) 
+				
+				dec-fun Bag<Int> F (Int, Int) 
+				
+				PolicySet Name {deny-unless-permit
+						target: F_Name(sub/id, 5)
+								policies: 
+									Rule r1 (permit)
+				}'''
+			)
+
+			var cns = generator.doGenerateZ3(model)
+
+			var PrintWriter writer = new PrintWriter("z3_gen/decFun/file1.smt2", "UTF-8");
+			writer.println(cns);
+			writer.close();
+
+			model = parser.parse(
+				'''
+				dec-fun Bool F_Name (String, Int) 
+				
+				dec-fun Bag<Int> F (Int, Int) 
+				
+				PolicySet Name {deny-unless-permit
+						target: in(sub/id, F(n/id, 5))
+								policies: 
+									Rule r1 (permit)
+				}'''
+			)
+
+			cns = generator.doGenerateZ3(model)
+
+			writer = new PrintWriter("z3_gen/decFun/file2.smt2", "UTF-8");
+			writer.println(cns);
+			writer.close();
+
+			model = parser.parse(
+				'''
+				dec-fun Bool F_Name (String, Int)
+				
+				dec-fun Int F (Int, Int)
+				
+				PolicySet pSet {deny-unless-permit 
+				policies:
+				Rule name (permit target: equal(5,n/id) && F_Name(n/string,F(5, n/id)) || F_Name(n/string,F(n/id1, n/id3)))
+				}'''
+			)
+
+			cns = generator.doGenerateZ3(model)
+
+			writer = new PrintWriter("z3_gen/decFun/file3.smt2", "UTF-8");
+			writer.println(cns);
+			writer.close();
+
 		} catch (Exception e) {
-			// the policy cannot be typed
-			assertEquals(true, true)
-			flag = true
-
-		}
-		if (!flag)
-			assertEquals(false, true)
-
-		// Second Test	
-		model = parser.parse(
-			'''
-			dec-fun Bool F_Name (String, Int) 
-			
-			dec-fun Bag<Int> F (Int, Int) 
-			
-			PolicySet Name {deny-unless-permit
-					target: F_Name(sub/id, 5)
-							policies: 
-								Rule r1 (permit)
-			}'''
-		)
-
-		var cns = generator.doGenerateZ3(model)
-
-		var PrintWriter writer = new PrintWriter("z3_gen/decFun/file1.smt2", "UTF-8");
-		writer.println(cns);
-		writer.close();
-	
-		model = parser.parse(
-			'''
-			dec-fun Bool F_Name (String, Int) 
-			
-			dec-fun Bag<Int> F (Int, Int) 
-			
-			PolicySet Name {deny-unless-permit
-					target: in(sub/id, F(n/id, 5))
-							policies: 
-								Rule r1 (permit)
-			}'''
-		)
-
-		cns = generator.doGenerateZ3(model)
-
-		writer = new PrintWriter("z3_gen/decFun/file2.smt2", "UTF-8");
-		writer.println(cns);
-		writer.close();
-
-		model = parser.parse(
-			'''
-			dec-fun Bool F_Name (String, Int)
-			
-			dec-fun Int F (Int, Int)
-			
-			PolicySet pSet {deny-unless-permit 
-			policies:
-			Rule name (permit target: equal(5,n/id) && F_Name(n/string,F(5, n/id)) || F_Name(n/string,F(n/id1, n/id3)))
-			}'''
-		)
-
-		cns = generator.doGenerateZ3(model)
-
-		writer = new PrintWriter("z3_gen/decFun/file3.smt2", "UTF-8");
-		writer.println(cns);
-		writer.close();
-		
-		
-		}catch(Exception e){
 			System.out.println(e.message)
 			assertEquals(false, true)
 		}

@@ -17,7 +17,7 @@
 ;#TODO: stub definitions for declared functions
 (declare-fun DeclFun_F_Name ( (TValue String) (TValue Int) ) (TValue Bool)) 
 
-(declare-fun DeclFun_F ( (TValue Int) (TValue Int) ) (TValue (Bag Bool))) 
+(declare-fun DeclFun_F ( (TValue Int) (TValue Int) ) (TValue (Bag Int))) 
 
 
 ;################### FACPL FUNCTION DECLARATIONs #######################

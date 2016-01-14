@@ -561,8 +561,155 @@ class TypeCheck_Test {
 								Rule r1 (permit)
 			}
 		'''.parse
-		
+
 		model.assertNoErrors
-		
+
 	}
+
+	@Test
+	def void checkDateTime() {
+
+		var model = '''
+		PolicySet Name {deny-unless-permit
+			policies: 
+				Rule r1 (permit target: equal(08:00:00, 09:00:00))
+		}'''.parse
+
+		model.assertNoErrors
+
+		model = '''
+		PolicySet Name {deny-unless-permit
+			policies: 
+				Rule r1 (permit target: greater-than(08:00:00, 09:00:00))
+		}'''.parse
+
+		model.assertNoErrors
+
+		model = '''
+		PolicySet Name {deny-unless-permit
+			policies: 
+				Rule r1 (permit target: greater-than(sys/date, 09:00:00))
+		}'''.parse
+
+		model.assertNoErrors
+
+		model = '''
+		PolicySet Name {deny-unless-permit
+			policies: 
+				Rule r1 (permit target: greater-than(2015/10/12, 09:00:00))
+		}'''.parse
+
+		model.assertNoErrors
+
+		model = '''
+		PolicySet Name {deny-unless-permit
+			policies: 
+				Rule r1 (permit target: greater-than(2015/10/12, n/id))
+				Rule r2 (deny target: equal(true, n/id)
+		}'''.parse
+
+		model.assertError(
+			Facpl2Package::eINSTANCE.function,
+			null,
+			"Expression cannot be typed"
+		)
+
+	}
+
+	@Test
+	def checkDateTime2() {
+
+		var model = '''
+		PolicySet Name {deny-unless-permit
+		policies:
+		Rule time ( permit 
+			target: greater-than-or-equal ( 01:00:00 , environment / time ) || less-than ( 06:00:00 , environment / time )			
+		)
+		}'''.parse
+
+		model.assertNoErrors
+
+		model = '''
+		PolicySet Name {deny-unless-permit
+		policies:
+		Rule time ( permit 
+			target: greater-than-or-equal ( 01:00:00 , n/id ) || less-than ( 06:00:00 , environment / time )			
+		)
+		Rule time2 (permit target: equal(n/id, 2015/12/12))
+		}'''.parse
+
+		model.assertNoErrors
+
+	}
+
+	@Test
+	def declaredFunctionDate() {
+
+		var model = '''
+		dec-fun Bool F (DateTime, DateTime)
+		
+		PolicySet Name {deny-unless-permit
+			policies: 
+				Rule r1 (permit target: F(08:00:00, 09:00:00))
+		}'''.parse
+
+		model.assertNoErrors
+
+		model = '''
+		dec-fun Bool F (DateTime, DateTime)
+		
+		PolicySet Name {deny-unless-permit
+			policies: 
+				Rule r1 (permit target: F(sys/env, 09:00:00))
+		}'''.parse
+
+		model.assertNoErrors
+
+		model = '''
+		dec-fun Int F (DateTime, DateTime)
+		
+		PolicySet Name {deny-unless-permit
+			policies: 
+				Rule r1 (permit target: F(sys/env, 09:00:00))
+		}'''.parse
+
+		model.assertWarning(
+			Facpl2Package::eINSTANCE.rule,
+			null,
+			"Target Expression evaluates to a not-boolean value. This element evaluates to indeterminate"
+		)
+
+		model = '''
+		dec-fun Bool F (DateTime, DateTime)
+		
+		PolicySet Name {deny-unless-permit
+			policies: 
+				Rule r1 (permit target: F(sys/env, 09:00:00) && equal(sys/env, true))
+		}'''.parse
+
+		model.assertError(
+			Facpl2Package::eINSTANCE.declaredFunction,
+			null,
+			"Type mismatch: type for argument 'sys/env' cannot be inferred"
+		)
+
+		model.assertError(
+			Facpl2Package::eINSTANCE.function,
+			null,
+			"Expression cannot be typed"
+		)
+
+		model = '''
+		dec-fun Bool F (DateTime, DateTime)
+		dec-fun DateTime F2 (Int, Int)
+		
+		PolicySet Name {deny-unless-permit
+			policies: 
+				Rule r1 (permit target: F(F2(5,sys/time), 09:00:00) && equal(sys/env, true))
+		}'''.parse
+
+		model.assertNoErrors
+
+	}
+
 }

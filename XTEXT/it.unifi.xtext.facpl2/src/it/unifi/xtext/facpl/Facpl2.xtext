@@ -28,7 +28,7 @@ FunctionDeclaration:
 ;
 
 enum TypeLiteral:
-	Int = 'Int' | Double = 'Double' | Bool = 'Bool' | String = 'String' | DateTime = 'Date' | 
+	Int = 'Int' | Double = 'Double' | Bool = 'Bool' | String = 'String' | DateTime = 'DateTime' | 
 	BagInt = 'Bag<Int>' | BagDouble = 'Bag<Double>' | BagBool = 'Bag<Bool>' | BagString = 'Bag<String>' |
 	BagDateTime = 'Bag<DateTime>'
 ;
@@ -45,7 +45,7 @@ Request:
 	'Request:' ('[' stub=STRING ']')? '{' name=ID attributes+=AttributeReq+ '}';
 
 AttributeReq:
-	'(' name=AttributeName ',' value+=Expression (',' value+=Expression)* ')';
+	'(' name=AttributeName ',' value+=Literals (',' value+=Literals)* ')';
 
 AttributeName:
 	category=STRING_O '/' id=STRING_O;
