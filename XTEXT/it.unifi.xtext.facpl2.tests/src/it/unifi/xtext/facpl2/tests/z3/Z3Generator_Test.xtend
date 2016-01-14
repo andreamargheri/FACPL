@@ -9,36 +9,34 @@ import it.unifi.xtext.facpl.facpl2.Facpl
 import org.eclipse.xtext.junit4.util.ParseHelper
 import com.google.inject.Inject
 import org.junit.Test
-import it.unifi.xtext.facpl.generator.Z3Generator
 import java.io.PrintWriter
 import org.eclipse.xtext.junit4.validation.ValidationTestHelper
+import it.unifi.xtext.facpl.generator.Z3Generator
 
 @InjectWith(typeof(Facpl2InjectorProvider))
 @RunWith(typeof(XtextRunner))
 public class Z3Generator_Test extends AbstractXtextTests {
 
-	@Inject
-	ParseHelper<Facpl> parser
+	@Inject extension ParseHelper<Facpl>
 
-	@Inject
-	Z3Generator generator
+	@Inject extension Z3Generator
 
-	@Inject
-	ValidationTestHelper validator
+	@Inject extension ValidationTestHelper
 
 	@Test
 	def void genAttribute() {
-		var model = parser.parse(
-			'''PolicySet Name {permit-overrides 
-  		policies: 
-  			Rule r1 (permit target: cat/id)
-  	}'''
-		)
+		var model = ('''
+		PolicySet Name {permit-overrides 
+		policies: 
+				Rule r1 (permit target: cat/id)
+		}''').parse
 
-		var String cns = generator.doGenerateZ3(model)
+		assertNoErrors(model)
+
+		var String cns = doGenerateZ3(model)
 
 		/*
-		 * Non assigned attribute considered as Bool
+		 * Non assigned attribute considered as Boolean
 		 */
 		if (cns.contains('''(declare-const n_cat/id (TValue Bool))''')) {
 			assertEquals(true, true)
@@ -49,13 +47,14 @@ public class Z3Generator_Test extends AbstractXtextTests {
 		/*
 		 * Two boolean attributes 
 		 */
-		model = parser.parse(
-			'''PolicySet Name {permit-overrides 
-  		policies: 
-  			Rule r1 (permit target: cat/id && cat1/id)
-  	}'''
-		)
-		cns = generator.doGenerateZ3(model)
+		model = ('''
+			PolicySet Name {permit-overrides 
+				policies: Rule r1 (permit target: cat/id && cat1/id)}
+		''').parse
+
+		assertNoErrors(model)
+
+		cns = doGenerateZ3(model)
 
 		if (cns.contains('''(declare-const n_cat1/id (TValue Bool))''') &&
 			cns.contains('''(declare-const n_cat/id (TValue Bool))''')) {
@@ -64,27 +63,34 @@ public class Z3Generator_Test extends AbstractXtextTests {
 			assertEquals(false, true)
 		}
 
-		/*
-		 * Failed Type Inference
-		 */
-		model = parser.parse(
-			'''PolicySet Name {permit-overrides 
-  		policies: 
-  			Rule r1 (permit target: addition(cat/id,cat1/id))
-  	}'''
-		)
-		assertNotNull("Policy Name is not well-typed", generator.doGenerateZ3(model))
+		model = ('''
+		PolicySet Name {permit-overrides 
+		policies: 
+			Rule r1 (permit target: addition(cat/id,cat1/id))
+		}'''
+		).parse
+
+		assertNoErrors(model)
 
 		/*
-		 * Two Bool and Int
+		 * Target has not type boolean, the SMT-LIB cannot be generated 
 		 */
-		model = parser.parse('''
-			PolicySet Name {permit-overrides 
-					policies: 
-					Rule r1 (permit target: cat/id && equal(cat1/id,5))
-			}'''
-		)
-		cns = generator.doGenerateZ3(model)
+		assertNotNull("Policy Name is not well-typed", doGenerateZ3(model))
+
+		/*
+		 * Two Boolean and Int
+		 */
+		model = (
+			'''
+		PolicySet Name {permit-overrides 
+		policies: 
+			Rule r1 (permit target: cat/id && equal(cat1/id,5))
+		}'''
+		).parse
+
+		assertNoErrors(model)
+
+		cns = doGenerateZ3(model)
 
 		if (cns.contains('''(declare-const n_cat1/id (TValue Int))''') &&
 			cns.contains('''(declare-const n_cat/id (TValue Bool))''')) {
@@ -96,19 +102,20 @@ public class Z3Generator_Test extends AbstractXtextTests {
 
 	@Test
 	def void genAttributeConstants() {
-		var model = parser.parse(
-			'''PolicySet Name {permit-overrides 
-  		policies: 
-  			Rule r1 (permit target: true)
-  	}'''
-		)
+		var model = ('''
+		PolicySet Name {permit-overrides 
+			policies: 
+				Rule r1 (permit target: true)
+		}'''
+		).parse
 
-		var String cns = generator.doGenerateZ3(model)
+		assertNoErrors(model)
 
-		System.out.println(cns)
+		var String cns = doGenerateZ3(model)
 
+//		System.out.println(cns)
 		/*
-		 * Non assigned attribute considered as Bool
+		 * Non assigned attribute considered as boolean
 		 */
 		if (cns.contains('''(declare-const const_true (TValue Bool))''')) {
 			assertEquals(true, true)
@@ -116,20 +123,21 @@ public class Z3Generator_Test extends AbstractXtextTests {
 			assertEquals(false, true)
 		}
 
-		model = parser.parse(
-			'''PolicySet Name {permit-overrides 
-  		policies: 
-  			Rule r1 (permit target: true
-  			obl: [permit M log(5,6.6,false, cat/id,"prova")]
-  	}'''
-		)
+		model = ('''
+		PolicySet Name {permit-overrides 
+		policies: 
+			Rule r1 (permit target: true
+			obl: [permit M log(5,6.6,false, cat/id,"prova")])
+		}'''
+		).parse
 
-		cns = generator.doGenerateZ3(model)
+		assertNoErrors(model)
 
-		System.out.println(cns)
+		cns = doGenerateZ3(model)
 
+//		System.out.println(cns)
 		/*
-		 * Non assigned attribute considered as Bool
+		 * Non assigned attribute are assumes of type Boolean
 		 */
 		if (cns.contains('''(declare-const const_true (TValue Bool))''') &&
 			cns.contains('''(declare-const const_6.6 (TValue Real))''') &&
@@ -144,21 +152,24 @@ public class Z3Generator_Test extends AbstractXtextTests {
 
 	@Test
 	def void genString() {
-		var model = parser.parse(
-			'''PolicySet Name {permit-overrides 
-  		policies: 
-  			Rule r1 (permit target: equal("prova",cat/id) && equal("doc","pharmacist") )
-  	}'''
-		)
+		var model = (
+		'''
+		PolicySet Name {permit-overrides 
+		policies: 
+			Rule r1 (permit target: equal("prova",cat/id) && equal("doc","pharmacist") )
+		}'''
+		).parse
 
-		var String cns = generator.doGenerateZ3(model)
+		assertNoErrors(model)
+
+		var String cns = doGenerateZ3(model)
 
 		System.out.println(cns)
 
 		/*
-		 * Non assigned attribute considered as Bool
+		 * Non assigned attribute considered as boolean
 		 */
-		if (cns.contains('''(declare-datatypes () ((String s_prova s_doc s_pharmacist )))''')) {
+		if (cns.contains('''(declare-datatypes () ((String s_prova s_pharmacist s_doc )))''')) {
 			assertEquals(true, true)
 		} else {
 			assertEquals(false, true)
@@ -166,545 +177,11 @@ public class Z3Generator_Test extends AbstractXtextTests {
 
 	}
 
-	/*
-	 * PERMIT-OVERRIDES
-	 */
-	@Test
-	def void genPolicy_PermiOver_Def() {
-		var model = parser.parse(
-			'''PolicySet Name {permit-overrides
-		target: false && true && cat/id && equal(cat/id1, 5.5) || greater-than(4, cat/num)
-  		policies: 
-  			Rule r1 (permit target: false && true && cat/id)
-  	}'''
-		)
-
-		var String cns = generator.doGenerateZ3(model)
-
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_PermitOver_Def.smt2", "UTF-8");
-		writer.println(cns);
-		writer.close();
-
-	}
-
-	@Test
-	def void genPolicy_PermitOver_Comb() {
-		var model = parser.parse(
-			'''PolicySet Name {permit-overrides
-		target: equal(sub/id, "doctor")
-  		policies: 
-  			Rule r1 (permit 
-  				target: equal(act/id, "write")
-  				obl: [permit M log (addition(5,sub/profile))])
-  	}'''
-		)
-
-		var String cns = generator.doGenerateZ3(model)
-
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_PermitOver_Comb.smt2", "UTF-8");
-		writer.println(cns);
-		writer.close();
-
-	}
-
-	@Test
-	def void genPolicy_PermitOver_Comb2() {
-		var model = parser.parse(
-			'''PolicySet Name {permit-overrides
-		target: equal(sub/id, "doctor")
-  		policies: 
-  			Rule r1 (permit 
-  				target: equal(act/id, "write")
-  				obl: [permit M log (addition(5,sub/profile))])
-  			Rule r2 (deny)
-  			Rule r3 (permit)
-  			Rule r4 (permit 
-  				target: equal(act/id, "write")
-  				obl: [permit M log (addition(5,sub/profile))])
-  	}'''
-		)
-
-		var String cns = generator.doGenerateZ3(model)
-
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_PermitOver_Comb2.smt2", "UTF-8");
-		writer.println(cns);
-		writer.close();
-
-	}
-
-	/*
-	 * DENY-OVERRIDES
-	 */
-	@Test
-	def void genPolicy_DenyOver_Def() {
-		var model = parser.parse(
-			'''PolicySet Name {deny-overrides
-		target: false && true && cat/id && equal(cat/id1, 5.5) || greater-than(4, cat/num)
-  		policies: 
-  			Rule r1 (permit target: false && true && cat/id)
-  	}'''
-		)
-
-		var String cns = generator.doGenerateZ3(model)
-
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_DenyOver_Def.smt2", "UTF-8");
-		writer.println(cns);
-		writer.close();
-
-	}
-
-	@Test
-	def void genPolicy_DenyOver_Comb() {
-		var model = parser.parse(
-			'''PolicySet Name {deny-overrides
-		target: equal(sub/id, "doctor")
-  		policies: 
-  			Rule r1 (permit 
-  				target: equal(act/id, "write")
-  				obl: [permit M log (addition(5,sub/profile))])
-  	}'''
-		)
-
-		var String cns = generator.doGenerateZ3(model)
-
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_DenyOver_Comb.smt2", "UTF-8");
-		writer.println(cns);
-		writer.close();
-
-	}
-
-	@Test
-	def void genPolicy_DenyOver_Comb2() {
-		var model = parser.parse(
-			'''PolicySet Name {deny-overrides
-		target: equal(sub/id, "doctor")
-  		policies: 
-  			Rule r1 (permit 
-  				target: equal(act/id, "write")
-  				obl: [permit M log (addition(5,sub/profile))])
-  			Rule r2 (deny)
-  			Rule r3 (permit)
-  			Rule r4 (permit 
-  				target: equal(act/id, "write")
-  				obl: [permit M log (addition(5,sub/profile))])
-  	}'''
-		)
-
-		var String cns = generator.doGenerateZ3(model)
-
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_DenyOver_Comb2.smt2", "UTF-8");
-		writer.println(cns);
-		writer.close();
-
-	}
-
-	/*
-	 * DENY-UNLESS-PERMIT
-	 */
-	@Test
-	def void genPolicy_DenyUnless_Def() {
-		var model = parser.parse(
-			'''PolicySet Name {deny-unless-permit
-		target: false && true && cat/id && equal(cat/id1, 5.5) || greater-than(4, cat/num)
-  		policies: 
-  			Rule r1 (permit target: false && true && cat/id)
-  	}'''
-		)
-
-		var String cns = generator.doGenerateZ3(model)
-
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_DenyUnless_Def.smt2", "UTF-8");
-		writer.println(cns);
-		writer.close();
-
-	}
-
-	@Test
-	def void genPolicy_DenyUnless_Comb() {
-		var model = parser.parse(
-			'''PolicySet Name {deny-unless-permit
-		target: equal(sub/id, "doctor")
-  		policies: 
-  			Rule r1 (permit 
-  				target: equal(act/id, "write")
-  				obl: [permit M log (addition(5,sub/profile))])
-  			Rule r2 (deny 
-  				target: equal(act/type, 5))
-  	}'''
-		)
-
-		var String cns = generator.doGenerateZ3(model)
-
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_DenyUnless_Comb.smt2", "UTF-8");
-		writer.println(cns);
-		writer.close();
-
-	}
-
-	@Test
-	def void genPolicy_DenyUnless_Comb2() {
-		var model = parser.parse(
-			'''PolicySet Name {deny-unless-permit
-		target: equal(sub/id, "doctor")
-  		policies: 
-  			Rule r1 (permit 
-  				target: equal(act/id, "write")
-  				obl: [permit M log (addition(5,sub/profile))])
-  			Rule r2 (deny 
-  				target: equal(act/type, 5))
-  			Rule r3 (deny 
-  				target: equal(act/type, 6))
-  	}'''
-		)
-
-		var String cns = generator.doGenerateZ3(model)
-
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_DenyUnless_Comb2.smt2", "UTF-8");
-		writer.println(cns);
-		writer.close();
-
-	}
-
-	/*
-	 * PERMIT-UNLESS-DENY
-	 */
-	@Test
-	def void genPolicy_PermitUnless_Def() {
-		var model = parser.parse(
-			'''PolicySet Name {permit-unless-deny
-		target: false && true && cat/id && equal(cat/id1, 5.5) || greater-than(4, cat/num)
-  		policies: 
-  			Rule r1 (permit target: false && true && cat/id)
-  	}'''
-		)
-
-		var String cns = generator.doGenerateZ3(model)
-
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_PermitUnless_Def.smt2", "UTF-8");
-		writer.println(cns);
-		writer.close();
-
-	}
-
-	@Test
-	def void genPolicy_PermitUnless_Comb() {
-		var model = parser.parse(
-			'''PolicySet Name {permit-unless-deny
-		target: equal(sub/id, "doctor")
-  		policies: 
-  			Rule r1 (permit 
-  				target: equal(act/id, "write")
-  				obl: [permit M log (addition(5,sub/profile))])
-  			Rule r2 (deny 
-  				target: equal(act/type, 5))
-  	}'''
-		)
-
-		var String cns = generator.doGenerateZ3(model)
-
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_PermitUnless_Comb.smt2", "UTF-8");
-		writer.println(cns);
-		writer.close();
-
-	}
-
-	@Test
-	def void genPolicy_PermitUnless_Comb2() {
-		var model = parser.parse(
-			'''PolicySet Name {permit-unless-deny
-		target: equal(sub/id, "doctor")
-  		policies: 
-  			Rule r1 (permit 
-  				target: equal(act/id, "write")
-  				obl: [permit M log (addition(5,sub/profile))])
-  			Rule r2 (deny 
-  				target: equal(act/type, 5))
-  			Rule r3 (deny 
-  				target: equal(act/type, 6))
-  	}'''
-		)
-
-		var String cns = generator.doGenerateZ3(model)
-
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_PermitUnless_Comb2.smt2", "UTF-8");
-		writer.println(cns);
-		writer.close();
-
-	}
-
-	/*
-	 * FIRST-APPLICABLE
-	 */
-	@Test
-	def void genPolicy_FirstApp_Def() {
-		var model = parser.parse(
-			'''PolicySet Name {first-applicable
-		target: false && true && cat/id && equal(cat/id1, 5.5) || greater-than(4, cat/num)
-  		policies: 
-  			Rule r1 (permit target: false && true && cat/id)
-  	}'''
-		)
-
-		var String cns = generator.doGenerateZ3(model)
-
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_FirstApp_Def.smt2", "UTF-8");
-		writer.println(cns);
-		writer.close();
-
-	}
-
-	@Test
-	def void genPolicy_FirstApp_Comb() {
-		var model = parser.parse(
-			'''PolicySet Name {first-applicable
-		target: equal(sub/id, "doctor")
-  		policies: 
-  			Rule r1 (permit 
-  				target: equal(act/id, "write")
-  				obl: [permit M log (addition(5,sub/profile))])
-  			Rule r2 (deny 
-  				target: equal(act/type, 5))
-  	}'''
-		)
-
-		var String cns = generator.doGenerateZ3(model)
-
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_FirstApp_Comb.smt2", "UTF-8");
-		writer.println(cns);
-		writer.close();
-
-	}
-
-	@Test
-	def void genPolicy_FirstApp_Comb2() {
-		var model = parser.parse(
-			'''PolicySet Name {first-applicable
-		target: equal(sub/id, "doctor")
-  		policies: 
-  			Rule r1 (permit 
-  				target: equal(act/id, "write")
-  				obl: [permit M log (addition(5,sub/profile))])
-  			Rule r2 (deny 
-  				target: equal(act/type, 5))
-  			Rule r3 (deny 
-  				target: equal(act/type, 6))
-  	}'''
-		)
-
-		var String cns = generator.doGenerateZ3(model)
-
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_FirstApp_Comb2.smt2", "UTF-8");
-		writer.println(cns);
-		writer.close();
-
-	}
-
-	/*
-	 * ONE-APPLICABLE
-	 */
-	@Test
-	def void genPolicy_OneApp_Def() {
-		var model = parser.parse(
-			'''PolicySet Name {only-one-applicable
-		target: false && true && cat/id && equal(cat/id1, 5.5) || greater-than(4, cat/num)
-  		policies: 
-  			Rule r1 (permit target: false && true && cat/id)
-  	}'''
-		)
-
-		var String cns = generator.doGenerateZ3(model)
-
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_OneApp_Def.smt2", "UTF-8");
-		writer.println(cns);
-		writer.close();
-
-	}
-
-	@Test
-	def void genPolicy_OneApp_Comb() {
-		var model = parser.parse(
-			'''PolicySet Name {only-one-applicable
-		target: equal(sub/id, "doctor")
-  		policies: 
-  			Rule r1 (permit 
-  				target: equal(act/id, "write")
-  				obl: [permit M log (addition(5,sub/profile))])
-  			Rule r2 (deny 
-  				target: equal(act/type, 5))
-  	}'''
-		)
-
-		var String cns = generator.doGenerateZ3(model)
-
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_OneApp_Comb.smt2", "UTF-8");
-		writer.println(cns);
-		writer.close();
-
-	}
-
-	@Test
-	def void genPolicy_OneApp_Comb2() {
-		var model = parser.parse(
-			'''PolicySet Name {only-one-applicable
-		target: equal(sub/id, "doctor")
-  		policies: 
-  			Rule r1 (permit 
-  				target: equal(act/id, "write")
-  				obl: [permit M log (addition(5,sub/profile))])
-  			Rule r2 (deny 
-  				target: equal(act/type, 5))
-  			Rule r3 (deny 
-  				target: equal(act/type, 6))
-  	}'''
-		)
-
-		var String cns = generator.doGenerateZ3(model)
-
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_OneApp_Comb2.smt2", "UTF-8");
-		writer.println(cns);
-		writer.close();
-
-	}
-
-	/*
-	 * WEAK-CONSENSUS
-	 */
-	@Test
-	def void genPolicy_WeakCon_Def() {
-		var model = parser.parse(
-			'''PolicySet Name {weak-consensus
-		target: false && true && cat/id && equal(cat/id1, 5.5) || greater-than(4, cat/num)
-  		policies: 
-  			Rule r1 (permit target: false && true && cat/id)
-  	}'''
-		)
-
-		var String cns = generator.doGenerateZ3(model)
-
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_Weak_Def.smt2", "UTF-8");
-		writer.println(cns);
-		writer.close();
-
-	}
-
-	@Test
-	def void genPolicy_WeakCon_Comb() {
-		var model = parser.parse(
-			'''PolicySet Name {weak-consensus
-		target: equal(sub/id, "doctor")
-  		policies: 
-  			Rule r1 (permit 
-  				target: equal(act/id, "write")
-  				obl: [permit M log (addition(5,sub/profile))])
-  			Rule r2 (deny 
-  				target: equal(act/type, 5))
-  	}'''
-		)
-
-		var String cns = generator.doGenerateZ3(model)
-
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_Weak_Comb.smt2", "UTF-8");
-		writer.println(cns);
-		writer.close();
-
-	}
-
-	@Test
-	def void genPolicy_WeakCon_Comb2() {
-		var model = parser.parse(
-			'''PolicySet Name {weak-consensus
-		target: equal(sub/id, "doctor")
-  		policies: 
-  			Rule r1 (permit 
-  				target: equal(act/id, "write")
-  				obl: [permit M log (addition(5,sub/profile))])
-  			Rule r2 (deny 
-  				target: equal(act/type, 5))
-  			Rule r3 (deny 
-  				target: equal(act/type, 6))
-  	}'''
-		)
-
-		var String cns = generator.doGenerateZ3(model)
-
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_Weak_Comb2.smt2", "UTF-8");
-		writer.println(cns);
-		writer.close();
-
-	}
-
-	/*
-	 * STRONG-CONSENSUS
-	 */
-	@Test
-	def void genPolicy_StrongCon_Def() {
-		var model = parser.parse(
-			'''PolicySet Name {strong-consensus
-		target: false && true && cat/id && equal(cat/id1, 5.5) || greater-than(4, cat/num)
-  		policies: 
-  			Rule r1 (permit target: false && true && cat/id)
-  	}'''
-		)
-
-		var String cns = generator.doGenerateZ3(model)
-
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_Strong_Def.smt2", "UTF-8");
-		writer.println(cns);
-		writer.close();
-
-	}
-
-	@Test
-	def void genPolicy_StrongCon_Comb() {
-		var model = parser.parse(
-			'''PolicySet Name {strong-consensus
-		target: equal(sub/id, "doctor")
-  		policies: 
-  			Rule r1 (permit 
-  				target: equal(act/id, "write")
-  				obl: [permit M log (addition(5,sub/profile))])
-  			Rule r2 (deny 
-  				target: equal(act/type, 5))
-  	}'''
-		)
-
-		var String cns = generator.doGenerateZ3(model)
-
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_Strong_Comb.smt2", "UTF-8");
-		writer.println(cns);
-		writer.close();
-
-	}
-
-	@Test
-	def void genPolicy_StrongCon_Comb2() {
-		var model = parser.parse(
-			'''PolicySet Name {strong-consensus
-		target: equal(sub/id, "doctor")
-  		policies: 
-  			Rule r1 (permit 
-  				target: equal(act/id, "write")
-  				obl: [permit M log (addition(5,sub/profile))])
-  			Rule r2 (deny 
-  				target: equal(act/type, 5))
-  			Rule r3 (deny 
-  				target: equal(act/type, 6))
-  	}'''
-		)
-
-		var String cns = generator.doGenerateZ3(model)
-
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_Strong_Comb2.smt2", "UTF-8");
-		writer.println(cns);
-		writer.close();
-
-	}
-
 	@Test
 	def void genDeclaredFunction() {
 		try {
 
-			var model = parser.parse('''
+			var model = ('''
 			dec-fun Bool F_Name (String, Int) 
 			dec-fun Bool F_Name2 (String, Bool)
 			dec-fun Bag F (Int, Int) 
@@ -713,11 +190,11 @@ public class Z3Generator_Test extends AbstractXtextTests {
 					target: F_Name(sub/id, "doctor")
 							policies: 
 								Rule r1 (permit)
-			}''')
+			}''').parse
 
 			var flag = false
 			try {
-				generator.doGenerateZ3(model)
+				doGenerateZ3(model)
 			} catch (Exception e) {
 				// the policy cannot be typed
 				assertEquals(true, true)
@@ -728,57 +205,57 @@ public class Z3Generator_Test extends AbstractXtextTests {
 				assertEquals(false, true)
 
 			// Second Test	
-			model = parser.parse(
+			model = (
 				'''
-				dec-fun Bool F_Name (String, Int) 
-				
-				dec-fun Bag<Int> F (Int, Int) 
-				
-				PolicySet Name {deny-unless-permit
-						target: F_Name(sub/id, 5)
-								policies: 
-									Rule r1 (permit)
-				}'''
-			)
+			dec-fun Bool F_Name (String, Int) 
+			
+			dec-fun Bag<Int> F (Int, Int) 
+			
+			PolicySet Name {deny-unless-permit
+				target: F_Name(sub/id, 5)
+					policies: 
+						Rule r1 (permit)
+			}''').parse
 
-			var cns = generator.doGenerateZ3(model)
+			var cns = doGenerateZ3(model)
 
 			var PrintWriter writer = new PrintWriter("z3_gen/decFun/file1.smt2", "UTF-8");
 			writer.println(cns);
 			writer.close();
 
-			model = parser.parse(
+			model = (
 				'''
-				dec-fun Bool F_Name (String, Int) 
-				
-				dec-fun Bag<Int> F (Int, Int) 
-				
-				PolicySet Name {deny-unless-permit
-						target: in(sub/id, F(n/id, 5))
-								policies: 
-									Rule r1 (permit)
-				}'''
-			)
+			dec-fun Bool F_Name (String, Int) 
+			
+			dec-fun Bag<Int> F (Int, Int) 
+			
+			PolicySet Name {deny-unless-permit
+					target: in(sub/id, F(n/id, 5))
+							policies: 
+								Rule r1 (permit)
+			}'''
+			).parse
 
-			cns = generator.doGenerateZ3(model)
+			cns = doGenerateZ3(model)
 
+//			System.out.println(cns)
 			writer = new PrintWriter("z3_gen/decFun/file2.smt2", "UTF-8");
 			writer.println(cns);
 			writer.close();
 
-			model = parser.parse(
+			model = (
 				'''
-				dec-fun Bool F_Name (String, Int)
-				
-				dec-fun Int F (Int, Int)
-				
-				PolicySet pSet {deny-unless-permit 
-				policies:
-				Rule name (permit target: equal(5,n/id) && F_Name(n/string,F(5, n/id)) || F_Name(n/string,F(n/id1, n/id3)))
-				}'''
-			)
+			dec-fun Bool F_Name (String, Int)
+			
+			dec-fun Int F (Int, Int)
+			
+			PolicySet pSet {deny-unless-permit 
+			policies:
+			Rule name (permit target: equal(5,n/id) && F_Name(n/string,F(5, n/id)) || F_Name(n/string,F(n/id1, n/id3)))
+			}'''
+			).parse
 
-			cns = generator.doGenerateZ3(model)
+			cns = doGenerateZ3(model)
 
 			writer = new PrintWriter("z3_gen/decFun/file3.smt2", "UTF-8");
 			writer.println(cns);
@@ -789,6 +266,23 @@ public class Z3Generator_Test extends AbstractXtextTests {
 			assertEquals(false, true)
 		}
 
+	}
+
+	@Test
+	def void genBags() {
+		
+		var model = (
+		'''
+		PolicySet pSet {deny-unless-permit 
+		policies:
+			Rule name (permit target: in(5,n/id) 
+		}''').parse
+
+		var cns = doGenerateZ3(model)
+
+		var writer = new PrintWriter("z3_gen/decBag/file1.smt2", "UTF-8");
+		writer.println(cns);
+		writer.close();
 	}
 
 }

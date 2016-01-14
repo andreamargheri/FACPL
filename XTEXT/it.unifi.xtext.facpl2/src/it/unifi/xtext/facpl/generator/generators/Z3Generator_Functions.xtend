@@ -6,10 +6,6 @@ class Z3Generator_Functions {
 	
 	def static getBoolFunctions() 
 	'''
-	;####
-	;AUXILIARY-function Boolean
-	;####
-	
 	(define-fun isFalse ((x (TValue Bool))) Bool
 		(ite (= x (mk-val false false false)) true false)
 	)
@@ -300,6 +296,65 @@ class Z3Generator_Functions {
 			(ite (or (err x) (err y))
 				(mk-val 0.0 false true)
 				(mk-val 0.0 true false)
+			)
+		)
+	)
+	'''
+	
+	def static getBagFunctions() '''
+	(define-fun isValBagInt ((x (TValue (Bag Int)))) Bool
+		(ite (and (not (bot x)) (not (err x))) true false)
+	)
+	
+	(define-fun isValBagReal ((x (TValue (Bag Real)))) Bool
+		(ite (and (not (bot x)) (not (err x))) true false)
+	)
+	
+	(define-fun isValBagBool ((x (TValue (Bag Bool)))) Bool
+		(ite (and (not (bot x)) (not (err x))) true false)
+	)
+	
+	(define-fun «funID.IN.toString»Bool ((x (TValue Bool)) (y (TValue (Bag Bool)))) (TValue Bool)
+		(ite (or (err x)(err y)) 
+			(mk-val false false true)
+			(ite (or (bot x) (bot y))
+				(mk-val false true false)
+				(ite (exists ((i Int))
+							(= (val x) (select (val y) i))
+					  )
+					(mk-val true false false)
+					(mk-val false false false)
+				)
+			)
+		)
+	)
+	
+	(define-fun «funID.IN.toString»Real ((x (TValue Real)) (y (TValue (Bag Real)))) (TValue Bool)
+		(ite (or (err x)(err y)) 
+			(mk-val false false true)
+			(ite (or (bot x) (bot y))
+				(mk-val false true false)
+				(ite (exists ((i Int))
+							(= (val x) (select (val y) i))
+					  )
+					(mk-val true false false)
+					(mk-val false false false)
+				)
+			)
+		)
+	)
+	
+	(define-fun «funID.IN.toString»Int ((x (TValue Int)) (y (TValue (Bag Int)))) (TValue Bool)
+		(ite (or (err x)(err y)) 
+			(mk-val false false true)
+			(ite (or (bot x) (bot y))
+				(mk-val false true false)
+				(ite (exists ((i Int))
+							(= (val x) (select (val y) i))
+					  )
+					(mk-val true false false)
+					(mk-val false false false)
+				)
 			)
 		)
 	)

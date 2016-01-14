@@ -712,4 +712,38 @@ class TypeCheck_Test {
 
 	}
 
+	@Test
+	def intFun() {
+
+		var model = '''
+			PolicySet Name {permit-overrides 
+				policies: 
+				Rule r1 (permit target: addition(cat/id,cat1/id))
+			}
+		'''.parse
+
+		model.assertNoErrors
+		
+		model.assertWarning(
+			Facpl2Package::eINSTANCE.rule,
+			null,
+			"Target Expression evaluates to a not-boolean value. This element evaluates to indeterminate"
+		)
+
+	}
+	
+	@Test
+	def oblFun(){
+		
+		var model = ('''
+		PolicySet Name {permit-overrides 
+		policies: 
+			Rule r1 (permit target: true
+			
+			obl: [permit M log(5,6.6,false, cat/id,"prova")])
+		}'''
+		).parse
+
+		assertNoErrors(model)
+	}
 }

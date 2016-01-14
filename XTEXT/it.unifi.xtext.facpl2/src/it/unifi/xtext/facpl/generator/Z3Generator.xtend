@@ -61,10 +61,8 @@ class Z3Generator {
 	
 	def void doGenerateFileZ3(Facpl resource, IFileSystemAccess fsa) throws Exception{
 
-//TODO
-
-		// pol can only be a PolicySet
-		fsa.generateFile("_full.smt2", doGenerateZ3(resource));
+	// pol can only be a PolicySet
+	fsa.generateFile("_full.smt2", doGenerateZ3(resource));
 
 	}
 
@@ -136,16 +134,12 @@ def createMainConstraint(PolicySet pol) '''
 ;################### STRING DECLARATIONs #######################
 «getStringDec()»
 «ENDIF»
-;################## BAG s
-
-;?????????????????????????
-
 «IF flag»
-;################### DECLARED FUNCTIONs of POLICY (TO BE IMPLEMENTED) ##################
+;################### FUNCTIONS DECLARED BY POLICY (TO BE IMPLEMENTED) ##################
 ;#TODO: stub definitions for declared functions
 «dec_functions.toString»
+;################### END FUNCTIONS DECLARED BY POLICY ##################
 «ENDIF»
-
 ;################### FACPL FUNCTION DECLARATIONs #######################
 «getFunctionDec()»
 ;################################ END DATATYPEs AND FUNCTIONs DECLARATION #############################
@@ -154,6 +148,8 @@ def createMainConstraint(PolicySet pol) '''
 «getAttributeDec()»
 ;################### CONSTANTs DECLARATIONs #######################
 «getConstantDec()»
+;################################ END ATTRIBUTEs AND CONSTANTs DECLARATION #############################
+
 «««		Building constraint of internal element of the policy
 «FOR el : pol.policies»
 	«getPolicyConstr(el)»
@@ -383,30 +379,7 @@ def getFinalConstrPSet(String p_name)'''
 	«getObligationConstr_Eff(obls,name, Effect.DENY)»
 	 
 	'''
-	
-//	def getObligationConstr_Eff (List<Obligation> obls, String name, Effect ef)
-//'''(define-fun cns_obl_«ef.toString»_«name» ()  Bool
-//	«IF obls.size > 0»
-//	(and 
-//		«var i = 0»
-//		«FOR o : obls»
-//			«IF o.evaluetedOn.equals(ef)»
-//				«i = i +1»
-//				«IF o.expr.size > 0»
-//				(and 
-//				«FOR e : o.expr»
-//						(not (bot «getExpressionConst(e)»))
-//						(not (err «getExpressionConst(e)»))
-//				«ENDFOR»
-//				)
-//				«ELSE»true«ENDIF»
-//			«ENDIF»
-//		«ENDFOR»
-//		«IF i == 0»
-//			true true
-//		«ENDIF»
-//	)«ELSE»true«ENDIF»)'''
-		
+			
 	def getObligationConstr_Eff (List<Obligation> obls, String name, Effect ef){
 		val StringBuffer str = new StringBuffer()
 		str.append("(define-fun cns_obl_"+ef.toString +"_"+ name +" ()  Bool\n")
@@ -450,6 +423,7 @@ def getFinalConstrPSet(String p_name)'''
 	 * ########################################################################
 	 */
 	// TODO NB !!!!!!!!!! -> isValueBag da parametrizzare rispetto al tipo della funzione
+	
 	// Returning the record datatype, the bag and the auxiliary functions
 	def getDatatypeDec(PolicySet pol) '''
 	;#######################
@@ -500,6 +474,9 @@ def getFinalConstrPSet(String p_name)'''
 			case BAG_DATETIME: throw new Exception("DATE NOT SUPPORTED ????")
 			case DATETIME: throw new Exception("DATE NOT SUPPORTED ????")
 			case ERR: throw new Exception("Policy not well-typed")
+			case TYPED: {
+				
+			}
 		}
 	}
 
@@ -540,9 +517,28 @@ def getFinalConstrPSet(String p_name)'''
 		)
 	)
 	
+	(define-fun isValBagString ((x (TValue (Bag String)))) Bool
+		(ite (and (not (bot x)) (not (err x))) true false)
+	)
+	
+	(define-fun «funID.IN.toString»String ((x (TValue String)) (y (TValue (Bag String)))) (TValue Bool)
+		(ite (or (err x)(err y)) 
+			(mk-val false false true)
+			(ite (or (bot x) (bot y))
+				(mk-val false true false)
+				(ite (exists ((i Int))
+							(= (val x) (select (val y) i))
+					  )
+					(mk-val true false false)
+					(mk-val false false false)
+				)
+			)
+		)
+	)
 	«ENDIF»	
 	«Z3Generator_Functions::getIntFunctions()»
 	«Z3Generator_Functions::getRealFunctions()»
+	«Z3Generator_Functions::getBagFunctions()»
 	'''
 	
 	//EXPRESSION 
@@ -583,10 +579,11 @@ def getFinalConstrPSet(String p_name)'''
 		}
 		
 		if (function.functionId.equals(funID.IN)){
-			throw new Exception("BAG TODO")
+			return getId(function.functionId.toString)+FacplType::getTypeBag(typeF)
 		}else{
 			return getId(function.functionId.toString)+getType(typeF)
 		}
+		
 	}
 	
 	def getId(String s){
@@ -612,11 +609,13 @@ def getFinalConstrPSet(String p_name)'''
 	def dispatch String getExpressionConst (StringLiteral e)
 	'''«getConstAttr(e.value.toString)»''' 
 	
-	//TODO
 	
 	def dispatch String getExpressionConst (Bag e){
 			throw new Exception ("NOT SUPPORTED")
 	}
+	
+
+	//TODO
 	
 	def dispatch String getExpressionConst (DateLiteral e){
 		throw new Exception ("NOT SUPPORTED")

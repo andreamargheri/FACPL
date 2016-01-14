@@ -9,22 +9,14 @@
 (define-sort Bag (T) (Array Int T)) 
 ;################### STRING DECLARATIONs #######################
  (declare-datatypes () ((String s_def_val )))
-;################## BAG s
-
-;?????????????????????????
-
-;################### DECLARED FUNCTIONs of POLICY (TO BE IMPLEMENTED) ##################
+;################### FUNCTIONS DECLARED BY POLICY (TO BE IMPLEMENTED) ##################
 ;#TODO: stub definitions for declared functions
 (declare-fun DeclFun_F_Name ( (TValue String) (TValue Int) ) (TValue Bool)) 
 
 (declare-fun DeclFun_F ( (TValue Int) (TValue Int) ) (TValue (Bag Int))) 
 
-
+;################### END FUNCTIONS DECLARED BY POLICY ##################
 ;################### FACPL FUNCTION DECLARATIONs #######################
-;####
-;AUXILIARY-function Boolean
-;####
-
 (define-fun isFalse ((x (TValue Bool))) Bool
 	(ite (= x (mk-val false false false)) true false)
 )
@@ -131,6 +123,24 @@
 	)
 )
 
+(define-fun isValBagString ((x (TValue (Bag String)))) Bool
+	(ite (and (not (bot x)) (not (err x))) true false)
+)
+
+(define-fun inString ((x (TValue String)) (y (TValue (Bag String)))) (TValue Bool)
+	(ite (or (err x)(err y)) 
+		(mk-val false false true)
+		(ite (or (bot x) (bot y))
+			(mk-val false true false)
+			(ite (exists ((i Int))
+						(= (val x) (select (val y) i))
+				  )
+				(mk-val true false false)
+				(mk-val false false false)
+			)
+		)
+	)
+)
 
 (define-fun isValInt ((x (TValue Int))) Bool
 	(ite (and (not (bot x)) (not (err x))) true false)
@@ -327,6 +337,62 @@
 		)
 	)
 )
+(define-fun isValBagInt ((x (TValue (Bag Int)))) Bool
+	(ite (and (not (bot x)) (not (err x))) true false)
+)
+
+(define-fun isValBagReal ((x (TValue (Bag Real)))) Bool
+	(ite (and (not (bot x)) (not (err x))) true false)
+)
+
+(define-fun isValBagBool ((x (TValue (Bag Bool)))) Bool
+	(ite (and (not (bot x)) (not (err x))) true false)
+)
+
+(define-fun inBool ((x (TValue Bool)) (y (TValue (Bag Bool)))) (TValue Bool)
+	(ite (or (err x)(err y)) 
+		(mk-val false false true)
+		(ite (or (bot x) (bot y))
+			(mk-val false true false)
+			(ite (exists ((i Int))
+						(= (val x) (select (val y) i))
+				  )
+				(mk-val true false false)
+				(mk-val false false false)
+			)
+		)
+	)
+)
+
+(define-fun inReal ((x (TValue Real)) (y (TValue (Bag Real)))) (TValue Bool)
+	(ite (or (err x)(err y)) 
+		(mk-val false false true)
+		(ite (or (bot x) (bot y))
+			(mk-val false true false)
+			(ite (exists ((i Int))
+						(= (val x) (select (val y) i))
+				  )
+				(mk-val true false false)
+				(mk-val false false false)
+			)
+		)
+	)
+)
+
+(define-fun inInt ((x (TValue Int)) (y (TValue (Bag Int)))) (TValue Bool)
+	(ite (or (err x)(err y)) 
+		(mk-val false false true)
+		(ite (or (bot x) (bot y))
+			(mk-val false true false)
+			(ite (exists ((i Int))
+						(= (val x) (select (val y) i))
+				  )
+				(mk-val true false false)
+				(mk-val false false false)
+			)
+		)
+	)
+)
 ;################################ END DATATYPEs AND FUNCTIONs DECLARATION #############################
 
 ;################### ATTRIBUTE DECLARATIONs #######################
@@ -344,6 +410,8 @@
 (assert (not (bot const_def_val))) 
 (assert (not (err const_def_val))) 
  
+;################################ END ATTRIBUTEs AND CONSTANTs DECLARATION #############################
+
 ;################### START CONSTRAINT RULE r1 #######################
 ;##### Rule Target
 (define-fun cns_target_r1 () (TValue Bool)	

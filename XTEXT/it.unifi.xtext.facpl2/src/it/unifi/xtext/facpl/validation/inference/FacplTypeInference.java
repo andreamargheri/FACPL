@@ -43,7 +43,7 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 	}
 
 	/*
-	 * TODO ?????????
+	 * TODO ?
 	 */
 	@Override
 	public FacplType caseImport(Import object) {
@@ -313,8 +313,10 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 						this.typeAssignments.add((AttributeName) fun.getArg1(), arg2);
 						return arg2;
 					} else if (arg2.equals(FacplType.NAME)) {
+						//both attribute names
 						this.typeAssignments.addEquality((AttributeName) fun.getArg1(), (AttributeName) fun.getArg2());
 						this.typeAssignments.add((AttributeName) fun.getArg1(), FacplType.INT);
+						this.typeAssignments.add((AttributeName) fun.getArg2(), FacplType.INT);
 						return FacplType.INT;
 					}
 				} else if (arg2.equals(FacplType.NAME)) {
@@ -322,8 +324,10 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 						this.typeAssignments.add((AttributeName) fun.getArg2(), arg1);
 						return arg1;
 					} else if (arg1.equals(FacplType.NAME)) {
+						//both attribute names
 						this.typeAssignments.addEquality((AttributeName) fun.getArg1(), (AttributeName) fun.getArg2());
 						this.typeAssignments.add((AttributeName) fun.getArg1(), FacplType.INT);
+						this.typeAssignments.add((AttributeName) fun.getArg2(), FacplType.INT);
 						return FacplType.INT;
 					}
 				} else if (arg1.equals(arg2)) {
@@ -346,7 +350,7 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 						this.typeAssignments.add((AttributeName) fun.getArg2(), arg1);
 						return FacplType.BOOLEAN;
 					} else if (arg1.equals(FacplType.NAME)) {
-						this.typeAssignments.addEquality((AttributeName) fun.getArg1(), (AttributeName) fun.getArg2());
+						this.typeAssignments.addEquality((AttributeName) fun.getArg2(), (AttributeName) fun.getArg2());
 						return FacplType.BOOLEAN;
 					}
 				} else if (arg1.equals(arg2)) {
@@ -409,8 +413,10 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 						this.typeAssignments.add((AttributeName) fun.getArg1(), arg2);
 						return FacplType.BOOLEAN;
 					} else if (arg2.equals(FacplType.NAME)) {
+						//both attribute names
 						this.typeAssignments.addEquality((AttributeName) fun.getArg1(), (AttributeName) fun.getArg2());
 						this.typeAssignments.add((AttributeName) fun.getArg1(), FacplType.INT);
+						this.typeAssignments.add((AttributeName) fun.getArg2(), FacplType.INT);
 						return FacplType.BOOLEAN;
 					} else if (arg2.equals(FacplType.DATETIME)) {
 						this.typeAssignments.add((AttributeName) fun.getArg1(), FacplType.DATETIME);
@@ -421,8 +427,10 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 						this.typeAssignments.add((AttributeName) fun.getArg2(), arg1);
 						return FacplType.BOOLEAN;
 					} else if (arg1.equals(FacplType.NAME)) {
+						//both attribute names
 						this.typeAssignments.addEquality((AttributeName) fun.getArg1(), (AttributeName) fun.getArg2());
 						this.typeAssignments.add((AttributeName) fun.getArg1(), FacplType.INT);
+						this.typeAssignments.add((AttributeName) fun.getArg2(), FacplType.INT);
 						return FacplType.BOOLEAN;
 					} else if (arg1.equals(FacplType.DATETIME)){
 						this.typeAssignments.add((AttributeName) fun.getArg2(), FacplType.DATETIME);

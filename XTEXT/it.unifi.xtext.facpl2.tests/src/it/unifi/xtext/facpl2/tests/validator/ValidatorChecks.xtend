@@ -13,6 +13,7 @@ import it.unifi.xtext.facpl.facpl2.Facpl2Package
 
 @RunWith(typeof(XtextRunner))
 @InjectWith(typeof(Facpl2InjectorProvider))
+
 class ValidatorChecks {
 
 	@Inject extension ParseHelper<Facpl>
