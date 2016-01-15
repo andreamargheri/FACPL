@@ -11,7 +11,7 @@ import it.unifi.xtext.facpl.facpl2.AlgLiteral
 import it.unifi.xtext.facpl.facpl2.AndExpression
 import it.unifi.xtext.facpl.facpl2.AttributeName
 import it.unifi.xtext.facpl.facpl2.AttributeReq
-import it.unifi.xtext.facpl.facpl2.Bag
+import it.unifi.xtext.facpl.facpl2.Set
 import it.unifi.xtext.facpl.facpl2.DateLiteral
 import it.unifi.xtext.facpl.facpl2.DeclaredFunction
 import it.unifi.xtext.facpl.facpl2.Expression
@@ -94,7 +94,7 @@ class Facpl2Validator extends AbstractFacpl2Validator {
 
 	/*
 	 * ###################################################
-	 * Check Well-Formed Bag Attributes in Requests
+	 * Check Well-Formed Set Attributes in Requests
 	 * ###################################################
 	 */
 	@Check
@@ -104,7 +104,7 @@ class Facpl2Validator extends AbstractFacpl2Validator {
 
 		var FacplType t = tCheck.doSwitch(a);
 		if (t.equals(FacplType.ERR)) {
-			error("Type mismatch: all bag elements must be of the same type",
+			error("Type mismatch: all Set elements must be of the same type",
 				Facpl2Package.Literals.ATTRIBUTE_REQ__VALUE);
 		} else if (t.equals(FacplType.NAME)) {
 			error("Type mismatch: request attribute cannot be names", Facpl2Package.Literals.ATTRIBUTE_REQ__VALUE);
@@ -466,7 +466,7 @@ class Facpl2Validator extends AbstractFacpl2Validator {
 			if ((atr.getName().getCategory().equals(a.getName().getCategory())) &&
 				(atr.getName().getId().equals(a.getName().getId()))) {
 				if (flag) {
-					error("Attributes with same names must be declared as Bag of values",
+					error("Attributes with same names must be declared as Set of values",
 						Facpl2Package.Literals.ATTRIBUTE_REQ__NAME);
 					return;
 				} else {
@@ -612,25 +612,25 @@ class Facpl2Validator extends AbstractFacpl2Validator {
 		}
 
 		@Check
-		def void checkBag(Bag bag) {
+		def void checkSet(Set Set) {
 			val tCheck = new FacplTypeInference()
-			tCheck.doSwitch(getRoot(bag))
+			tCheck.doSwitch(getRoot(Set))
 
-			//Type check on bag
-			var FacplType t = tCheck.doSwitch(bag.getArgs().get(0));
-			for (Expression ob : bag.getArgs()) {
+			//Type check on Set
+			var FacplType t = tCheck.doSwitch(Set.getArgs().get(0));
+			for (Expression ob : Set.getArgs()) {
 				t = FacplType.combine(t, tCheck.doSwitch(ob));
 			}
 			
 			if (t.equals(FacplType.ERR))
-				error("Bag elements have to be of the same type", Facpl2Package.Literals.BAG__ARGS)
+				error("Set elements have to be of the same type", Facpl2Package.Literals.SET__ARGS)
 			
-			//Avoid nested bags + Names cannot occurs in bags
-			for (Expression ob : bag.getArgs()) {
-				if (ob instanceof Bag )
-					error("Bags cannot contain other bags", Facpl2Package.Literals.BAG__ARGS)
+			//Avoid nested Sets + Names cannot occurs in Sets
+			for (Expression ob : Set.getArgs()) {
+				if (ob instanceof Set )
+					error("Sets cannot contain other Sets", Facpl2Package.Literals.SET__ARGS)
 				if (ob instanceof AttributeName)
-					error("Bags cannot contain attribute name", Facpl2Package.Literals.BAG__ARGS)
+					error("Sets cannot contain attribute name", Facpl2Package.Literals.SET__ARGS)
 			}	
 				
 		}
@@ -645,7 +645,7 @@ class Facpl2Validator extends AbstractFacpl2Validator {
 				error("Expression cannot be typed", Facpl2Package.Literals.FUNCTION__FUNCTION_ID);
 			}
 			if (e.functionId.equals(funID.IN)){
-				info("Function 'in' expects (T,Bag<T>)",Facpl2Package.Literals.FUNCTION__FUNCTION_ID )	
+				info("Function 'in' expects (T,Set<T>)",Facpl2Package.Literals.FUNCTION__FUNCTION_ID )	
 			}
 		}
 

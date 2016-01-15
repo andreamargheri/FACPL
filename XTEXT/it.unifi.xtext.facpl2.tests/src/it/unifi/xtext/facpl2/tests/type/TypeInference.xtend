@@ -472,30 +472,30 @@ class TypeInference {
 	}
 
 	@Test
-	def void checkBag() {
+	def void checkSet() {
 		var model = '''
 		PolicySet pSet {deny-unless-permit 
 		policies: 
 		Rule name (permit 
 		target: 
-			bag(cat/id1, cat/id2)
+			set(cat/id1, cat/id2)
 		)
 		}'''.parse
 
 		model.assertWarning(
-			Facpl2Package::eINSTANCE.bag,
+			Facpl2Package::eINSTANCE.set,
 			null,
-			FacplType.BAG_NAME.toString
+			FacplType.SET_NAME.toString
 		)
 
 		model.assertWarning(
-			Facpl2Package::eINSTANCE.bag,
+			Facpl2Package::eINSTANCE.set,
 			null,
 			"SUB:"
 		)
 
 		model.assertWarning(
-			Facpl2Package::eINSTANCE.bag,
+			Facpl2Package::eINSTANCE.set,
 			null,
 			"EQ:cat/id1 = cat/id2"
 		)
@@ -505,24 +505,24 @@ class TypeInference {
 		policies: 
 		Rule name (permit 
 		target: 
-			bag(cat/id1, cat/id2, cat/id3)
+			set(cat/id1, cat/id2, cat/id3)
 		)
 		}'''.parse
 
 		model.assertWarning(
-			Facpl2Package::eINSTANCE.bag,
+			Facpl2Package::eINSTANCE.set,
 			null,
-			FacplType.BAG_NAME.toString
+			FacplType.SET_NAME.toString
 		)
 
 		model.assertWarning(
-			Facpl2Package::eINSTANCE.bag,
+			Facpl2Package::eINSTANCE.set,
 			null,
 			"SUB:"
 		)
 
 		model.assertWarning(
-			Facpl2Package::eINSTANCE.bag,
+			Facpl2Package::eINSTANCE.set,
 			null,
 			"EQ:cat/id2 = cat/id3 cat/id1 = cat/id2"
 		)
@@ -532,24 +532,24 @@ class TypeInference {
 		policies: 
 		Rule name (permit 
 		target: 
-			bag(cat/id1, cat/id2, 5.5)
+			set(cat/id1, cat/id2, 5.5)
 		)
 		}'''.parse
 
 		model.assertWarning(
-			Facpl2Package::eINSTANCE.bag,
+			Facpl2Package::eINSTANCE.set,
 			null,
-			FacplType.BAG_DOUBLE.toString
+			FacplType.SET_DOUBLE.toString
 		)
 
 		model.assertWarning(
-			Facpl2Package::eINSTANCE.bag,
+			Facpl2Package::eINSTANCE.set,
 			null,
 			"SUB:cat/id2 -> DOUBLE cat/id1 -> DOUBLE"
 		)
 
 		model.assertWarning(
-			Facpl2Package::eINSTANCE.bag,
+			Facpl2Package::eINSTANCE.set,
 			null,
 			"EQ:"
 		)
@@ -559,12 +559,12 @@ class TypeInference {
 		policies: 
 		Rule name (permit 
 		target: 
-			bag(cat/id1, cat/id2, 5.5, true)
+			set(cat/id1, cat/id2, 5.5, true)
 		)
 		}'''.parse
 
 		model.assertWarning(
-			Facpl2Package::eINSTANCE.bag,
+			Facpl2Package::eINSTANCE.set,
 			null,
 			FacplType.ERR.toString
 		)
@@ -574,14 +574,14 @@ class TypeInference {
 		policies: 
 		Rule name (permit 
 		target: 
-			bag(cat/id1, cat/id2, 5.5) || cat/id1 
+			set(cat/id1, cat/id2, 5.5) || cat/id1 
 		)
 		}'''.parse
 
 		model.assertWarning(
-			Facpl2Package::eINSTANCE.bag,
+			Facpl2Package::eINSTANCE.set,
 			null,
-			FacplType.BAG_DOUBLE.toString
+			FacplType.SET_DOUBLE.toString
 		)
 
 		model.assertWarning(
@@ -599,7 +599,7 @@ class TypeInference {
 		policies: 
 		Rule name (permit 
 		target: 
-			in(cat/id3, bag(cat/id1, cat/id2))
+			in(cat/id3, set(cat/id1, cat/id2))
 		)
 		}'''.parse
 
@@ -610,9 +610,9 @@ class TypeInference {
 		)
 
 		model.assertWarning(
-			Facpl2Package::eINSTANCE.bag,
+			Facpl2Package::eINSTANCE.set,
 			null,
-			FacplType.BAG_NAME.toString
+			FacplType.SET_NAME.toString
 		)
 
 		model.assertWarning(
@@ -632,7 +632,7 @@ class TypeInference {
 		policies: 
 		Rule name (permit 
 		target: 
-			in(5.5, bag(cat/id1, cat/id2))
+			in(5.5, set(cat/id1, cat/id2))
 		)
 		}'''.parse
 
@@ -643,9 +643,9 @@ class TypeInference {
 		)
 
 		model.assertWarning(
-			Facpl2Package::eINSTANCE.bag,
+			Facpl2Package::eINSTANCE.set,
 			null,
-			FacplType.BAG_NAME.toString
+			FacplType.SET_NAME.toString
 		)
 
 		model.assertWarning(

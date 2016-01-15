@@ -23,7 +23,7 @@ import it.unifi.xtext.facpl.facpl2.StringLiteral
 import it.unifi.xtext.facpl.facpl2.TimeLiteral
 import it.unifi.xtext.facpl.facpl2.DateLiteral
 import it.unifi.xtext.facpl.facpl2.AttributeName
-import it.unifi.xtext.facpl.facpl2.Bag
+import it.unifi.xtext.facpl.facpl2.Set
 import it.unifi.xtext.facpl.facpl2.AndExpression
 import it.unifi.xtext.facpl.facpl2.OrExpression
 import it.unifi.xtext.facpl.facpl2.NotExpression
@@ -407,7 +407,7 @@ class Facpl2Generator_Menu {
 		)
 	''' 
 			
-	// Basic EXPRESSION: int, double, boolean, string, date, attribute name, bag
+	// Basic EXPRESSION: int, double, boolean, string, date, attribute name, Set
 	def dispatch getExpression(IntLiteral e) {
 		e.value
 	}
@@ -436,9 +436,9 @@ class Facpl2Generator_Menu {
 		new AttributeName("«attributeName.category.toString»","«attributeName.id.toString»") 
 	'''
 
-	def dispatch getExpression(Bag bag) '''
-		new Bag(
-		«FOR b : bag.args SEPARATOR ','»
+	def dispatch getExpression(Set Set) '''
+		new Set(
+		«FOR b : Set.args SEPARATOR ','»
 			«getExpression(b)»
 		«ENDFOR»
 		)
@@ -594,12 +594,12 @@ class Facpl2Generator_Menu {
 		if (list.size == 1){
 			return getExpression(list.get(0))
 		}else{
-			list.getBagDeclaration
+			list.getSetDeclaration
 		}
 	}
 	
-	def CharSequence getBagDeclaration(EList<Expression> list) '''
-		new Bag(
+	def CharSequence getSetDeclaration(EList<Expression> list) '''
+		new Set(
 		«FOR l: list SEPARATOR ','»
 		«getExpression(l)»
 		«ENDFOR»

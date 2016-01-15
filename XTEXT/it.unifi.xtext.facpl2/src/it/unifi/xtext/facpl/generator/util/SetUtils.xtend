@@ -1,7 +1,7 @@
 package it.unifi.xtext.facpl.generator.util
 
 import it.unifi.xtext.facpl.facpl2.AttributeName
-import it.unifi.xtext.facpl.facpl2.Bag
+import it.unifi.xtext.facpl.facpl2.Set
 import it.unifi.xtext.facpl.facpl2.BooleanLiteral
 import it.unifi.xtext.facpl.facpl2.DateLiteral
 import it.unifi.xtext.facpl.facpl2.DoubleLiteral
@@ -11,12 +11,12 @@ import it.unifi.xtext.facpl.facpl2.TimeLiteral
 import it.unifi.xtext.facpl.facpl2.util.Facpl2Switch
 
 /**
- * Pretty printing of Bags (it reports only the Literals forming a bag)
+ * Pretty printing of Sets (it reports only the Literals forming a Set)
  */
 class SetUtils extends Facpl2Switch<String> {
 
-//BAG
-	override caseBag(Bag bag) '''bag(«FOR arg : bag.args SEPARATOR ","»«doSwitch(arg)»«ENDFOR»)'''
+//Set
+	override caseSet(Set Set) '''Set(«FOR arg : Set.args SEPARATOR ","»«doSwitch(arg)»«ENDFOR»)'''
 
 //Attribute name -> empty list of constants
 	override caseAttributeName(AttributeName object) {

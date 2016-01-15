@@ -39,7 +39,7 @@ public class PolicySet_eDis extends PolicySet {
 											new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
 													"read", new AttributeName("action", "id"))))),
 					new ExpressionBooleanTree(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.In.class,
-							new AttributeName("subject", "permission"), new Bag("eDis-Access")))));
+							new AttributeName("subject", "permission"), new Set("eDis-Access")))));
 			// Obligations
 		}
 	}

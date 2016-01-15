@@ -30,7 +30,7 @@ public class PolicySet_firstPolicy_denyOverrides extends PolicySet {
 					new ExpressionBooleanTree(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
 							"John", new AttributeName("subject", "id"))),
 					new ExpressionBooleanTree(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.In.class,
-							new AttributeName("action", "id"), new Bag("read", "seek")))));
+							new AttributeName("action", "id"), new Set("read", "seek")))));
 			// Obligations
 		}
 	}
@@ -43,7 +43,7 @@ public class PolicySet_firstPolicy_denyOverrides extends PolicySet {
 			addEffect(Effect.DENY);
 			// Target
 			addTarget(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.In.class,
-					new AttributeName("action", "id"), new Bag("write", "checkout")));
+					new AttributeName("action", "id"), new Set("write", "checkout")));
 			// Obligations
 		}
 	}

@@ -123,7 +123,7 @@ class ValidatorChecks {
 		model.assertError(
 			Facpl2Package::eINSTANCE.attributeReq,
 			null,
-			"Type mismatch: all bag elements must be of the same type"
+			"Type mismatch: all set elements must be of the same type"
 		)
 
 		model = '''
@@ -199,11 +199,11 @@ class ValidatorChecks {
 	}
 
 	@Test
-	def void testBag() {
+	def void testSet() {
 		var model = '''
 			PolicySet pSet {deny-unless-permit 
 			policies:
-				Rule name (permit target: in(5,bag(5,6))) 
+				Rule name (permit target: in(5,set(5,6))) 
 			}
 		'''.parse
 
@@ -212,40 +212,40 @@ class ValidatorChecks {
 		model = '''
 			PolicySet pSet {deny-unless-permit 
 			policies:
-				Rule name (permit target: in(5,bag(5,true))) 
+				Rule name (permit target: in(5,set(5,true))) 
 			}
 		'''.parse
 
 		model.assertError(
-			Facpl2Package::eINSTANCE.bag,
+			Facpl2Package::eINSTANCE.set,
 			null,
-			"Bag elements have to be of the same type"
+			"Set elements have to be of the same type"
 		)
 		
 		model = '''
 			PolicySet pSet {deny-unless-permit 
 			policies:
-				Rule name (permit target: in(5,bag(5,n/id))) 
+				Rule name (permit target: in(5,set(5,n/id))) 
 			}
 		'''.parse
 
 		model.assertError(
-			Facpl2Package::eINSTANCE.bag,
+			Facpl2Package::eINSTANCE.set,
 			null,
-			"Bags cannot contain attribute name"
+			"Sets cannot contain attribute name"
 		)
 		
 		model = '''
 			PolicySet pSet {deny-unless-permit 
 			policies:
-				Rule name (permit target: in(5,bag(5,bag(true)))) 
+				Rule name (permit target: in(5,set(5,set(true)))) 
 			}
 		'''.parse
 
 		model.assertError(
-			Facpl2Package::eINSTANCE.bag,
+			Facpl2Package::eINSTANCE.set,
 			null,
-			"Bags cannot contain other bags"
+			"Sets cannot contain other sets"
 		)
 
 

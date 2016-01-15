@@ -11,10 +11,10 @@ PAS{
 		 target: equal("4567-1",resource/id)
 		 policies: 
 			Rule RuleCondition_P (permit target: equal("John",subject/id)
-				&&  in(action/id, bag("read","seek")) 
+				&&  in(action/id, set("read","seek")) 
 			)
 			Rule RuleCondition_D ( deny
-				target: in(action/id, bag("write","checkout"))
+				target: in(action/id, set("write","checkout"))
 			)  
 	}  
 }

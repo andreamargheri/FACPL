@@ -36,11 +36,11 @@
     <eLiterals name="Bool" value="2" literal="Bool"/>
     <eLiterals name="String" value="3" literal="String"/>
     <eLiterals name="DateTime" value="4" literal="DateTime"/>
-    <eLiterals name="BagInt" value="5" literal="Bag&lt;Int>"/>
-    <eLiterals name="BagDouble" value="6" literal="Bag&lt;Double>"/>
-    <eLiterals name="BagBool" value="7" literal="Bag&lt;Bool>"/>
-    <eLiterals name="BagString" value="8" literal="Bag&lt;String>"/>
-    <eLiterals name="BagDateTime" value="9" literal="Bag&lt;DateTime>"/>
+    <eLiterals name="SetInt" value="5" literal="Set&lt;Int>"/>
+    <eLiterals name="SetDouble" value="6" literal="Set&lt;Double>"/>
+    <eLiterals name="SetBool" value="7" literal="Set&lt;Bool>"/>
+    <eLiterals name="SetString" value="8" literal="Set&lt;String>"/>
+    <eLiterals name="SetDateTime" value="9" literal="Set&lt;DateTime>"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PAF">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="pep" eType="#//PEPAlg"/>
@@ -154,7 +154,7 @@
     <eLiterals name="DIVIDE" value="9" literal="divide"/>
     <eLiterals name="MULTIPLY" value="10" literal="multiply"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Bag" eSuperTypes="#//Expression">
+  <eClassifiers xsi:type="ecore:EClass" name="Set" eSuperTypes="#//Expression">
     <eStructuralFeatures xsi:type="ecore:EReference" name="args" upperBound="-1" eType="#//Expression"
         containment="true"/>
   </eClassifiers>

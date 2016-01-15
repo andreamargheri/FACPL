@@ -6,7 +6,7 @@ public enum FacplType {
 	/**
 	 * TYPED -> it is used for typing a well-typed high-level element (e.g., policy, policy set, PAF)
 	 */
-	INT, DOUBLE, STRING, BOOLEAN, DATETIME, BAG_INT, BAG_DOUBLE, BAG_STRING, BAG_BOOLEAN, BAG_DATETIME, BAG_NAME, NAME, ERR, TYPED;
+	INT, DOUBLE, STRING, BOOLEAN, DATETIME, SET_INT, SET_DOUBLE, SET_STRING, SET_BOOLEAN, SET_DATETIME, SET_NAME, NAME, ERR, TYPED;
 
 	public static FacplType combine(FacplType f1, FacplType f2) {
 		if (f1.equals(f2)) {
@@ -14,11 +14,11 @@ public enum FacplType {
 		} else if (f1.equals(INT) && f2.equals(DOUBLE) || f2.equals(INT) && f1.equals(DOUBLE)) {
 			// sub-typing for int < double
 			return DOUBLE;
-		} else if (isBag(f1) && !f2.equals(ERR)) {
-			// bag function
+		} else if (isSet(f1) && !f2.equals(ERR)) {
+			// SET function
 			return f1;
-		} else if (isBag(f2) && !f1.equals(ERR)) {
-			// bag function
+		} else if (isSet(f2) && !f1.equals(ERR)) {
+			// SET function
 			return f2;
 		} else {
 			// NAME is combined with all type, expected when there is an error
@@ -31,19 +31,19 @@ public enum FacplType {
 		}
 	}
 
-	public static boolean isBag(FacplType f2) {
+	public static boolean isSet(FacplType f2) {
 		switch (f2) {
-		case BAG_BOOLEAN:
+		case SET_BOOLEAN:
 			return true;
-		case BAG_INT:
+		case SET_INT:
 			return true;
-		case BAG_DOUBLE:
+		case SET_DOUBLE:
 			return true;
-		case BAG_STRING:
+		case SET_STRING:
 			return true;
-		case BAG_DATETIME:
+		case SET_DATETIME:
 			return true;
-		case BAG_NAME:
+		case SET_NAME:
 			return true;
 		default:
 			return false;
@@ -51,47 +51,47 @@ public enum FacplType {
 	}
 
 	/**
-	 * Return the BAG_* corresponding to the type * in input
+	 * Return the SET_* corresponding to the type * in input
 	 * 
 	 * @param f
 	 * @return
 	 */
-	public static FacplType getBagType(FacplType f) {
+	public static FacplType getSetType(FacplType f) {
 		switch (f) {
 		case BOOLEAN:
-			return BAG_BOOLEAN;
+			return SET_BOOLEAN;
 		case INT:
-			return BAG_INT;
+			return SET_INT;
 		case DOUBLE:
-			return BAG_DOUBLE;
+			return SET_DOUBLE;
 		case STRING:
-			return BAG_STRING;
+			return SET_STRING;
 		case DATETIME:
-			return BAG_DATETIME;
+			return SET_DATETIME;
 		case NAME:
-			return BAG_NAME;
+			return SET_NAME;
 		default:
 			return ERR;
 		}
 	}
 
 	/**
-	 * Return the type * of the bag type BAG_* in input
+	 * Return the type * of the SET type SET_* in input
 	 * 
 	 * @param f
 	 * @return
 	 */
-	public static FacplType getTypeBag(FacplType f) {
+	public static FacplType getTypeSet(FacplType f) {
 		switch (f) {
-		case BAG_BOOLEAN:
+		case SET_BOOLEAN:
 			return BOOLEAN;
-		case BAG_INT:
+		case SET_INT:
 			return INT;
-		case BAG_DOUBLE:
+		case SET_DOUBLE:
 			return DOUBLE;
-		case BAG_STRING:
+		case SET_STRING:
 			return STRING;
-		case BAG_DATETIME:
+		case SET_DATETIME:
 			return DATETIME;
 		default:
 			return null;
@@ -100,33 +100,33 @@ public enum FacplType {
 
 	public static boolean equalType(FacplType type, TypeLiteral literal) {
 		switch (literal) {
-		//bags
-		case BAG_BOOL:
-			if (type.equals(BAG_BOOLEAN) || type.equals(BAG_NAME) ) {
+		//SETs
+		case SET_BOOL:
+			if (type.equals(SET_BOOLEAN) || type.equals(SET_NAME) ) {
 				return true;
 			} else {
 				return false;
 			}
-		case BAG_DOUBLE:
-			if (type.equals(BAG_DOUBLE) || type.equals(BAG_NAME) ) {
+		case SET_DOUBLE:
+			if (type.equals(SET_DOUBLE) || type.equals(SET_NAME) ) {
 				return true;
 			} else {
 				return false;
 			}
-		case BAG_INT:
-			if (type.equals(BAG_INT) || type.equals(BAG_NAME) ) {
+		case SET_INT:
+			if (type.equals(SET_INT) || type.equals(SET_NAME) ) {
 				return true;
 			} else {
 				return false;
 			}
-		case BAG_STRING:
-			if (type.equals(BAG_STRING) || type.equals(BAG_NAME) ) {
+		case SET_STRING:
+			if (type.equals(SET_STRING) || type.equals(SET_NAME) ) {
 				return true;
 			} else {
 				return false;
 			}
-		case BAG_DATE_TIME:
-			if (type.equals(BAG_DATETIME) || type.equals(BAG_NAME) ) {
+		case SET_DATE_TIME:
+			if (type.equals(SET_DATETIME) || type.equals(SET_NAME) ) {
 				return true;
 			} else {
 				return false;
@@ -165,16 +165,16 @@ public enum FacplType {
 
 	public static FacplType getFacplType(TypeLiteral literal) {
 		switch (literal) {
-		case BAG_BOOL:
-			return FacplType.BAG_BOOLEAN;
-		case BAG_DATE_TIME:
-			return FacplType.BAG_DATETIME;
-		case BAG_DOUBLE: 
-			return FacplType.BAG_DOUBLE;
-		case BAG_INT: 
-			return FacplType.BAG_INT;
-		case BAG_STRING: 
-			return FacplType.BAG_STRING; 
+		case SET_BOOL:
+			return FacplType.SET_BOOLEAN;
+		case SET_DATE_TIME:
+			return FacplType.SET_DATETIME;
+		case SET_DOUBLE: 
+			return FacplType.SET_DOUBLE;
+		case SET_INT: 
+			return FacplType.SET_INT;
+		case SET_STRING: 
+			return FacplType.SET_STRING; 
 			//literals
 		case BOOL:
 			return FacplType.BOOLEAN;

@@ -2,7 +2,7 @@ package e_Health;
 
 import java.util.HashMap;
 import it.unifi.facpl.lib.context.*;
-import it.unifi.facpl.lib.util.Bag;
+import it.unifi.facpl.lib.util.Set;
 
 @SuppressWarnings("all")
 public class ContextRequest_Request1 {
@@ -21,7 +21,7 @@ public class ContextRequest_Request1 {
 		req_subject.put("id", "Marley");
 		req_resource.put("type", "ePrescription");
 		req_subject.put("role", "doctor");
-		req_subject.put("permission", new Bag("ePre-Access", "ePre-Create"));
+		req_subject.put("permission", new Set("ePre-Access", "ePre-Create"));
 		req_action.put("id", "write");
 		// add attributes to request
 		Request req = new Request("Request1");

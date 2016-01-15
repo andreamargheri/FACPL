@@ -2,11 +2,11 @@ package it.unifi.facpl.lib.util;
 
 import java.util.LinkedList;
 
-public class Bag {
+public class Set {
 	
 	private LinkedList<Object> bag_values;
 	
-	public Bag(Object...elements){
+	public Set(Object...elements){
 		this.bag_values = new LinkedList<Object>();
 		for (Object object : elements) {
 			bag_values.add(object);
@@ -36,7 +36,7 @@ public class Bag {
 		return bag_values.contains(object);
 	}
 	
-	public boolean contains(Bag bag) {
+	public boolean contains(Set bag) {
 		Boolean flag = true; 
 		for (Object el : bag.getBag_values()) {
 			flag = flag && bag_values.contains(el);

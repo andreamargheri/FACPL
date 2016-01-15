@@ -301,20 +301,20 @@ class Z3Generator_Functions {
 	)
 	'''
 	
-	def static getBagFunctions() '''
-	(define-fun isValBagInt ((x (TValue (Bag Int)))) Bool
+	def static getSetFunctions() '''
+	(define-fun isValSetInt ((x (TValue (Set Int)))) Bool
 		(ite (and (not (bot x)) (not (err x))) true false)
 	)
 	
-	(define-fun isValBagReal ((x (TValue (Bag Real)))) Bool
+	(define-fun isValSetReal ((x (TValue (Set Real)))) Bool
 		(ite (and (not (bot x)) (not (err x))) true false)
 	)
 	
-	(define-fun isValBagBool ((x (TValue (Bag Bool)))) Bool
+	(define-fun isValSetBool ((x (TValue (Set Bool)))) Bool
 		(ite (and (not (bot x)) (not (err x))) true false)
 	)
 	
-	(define-fun «funID.IN.toString»Bool ((x (TValue Bool)) (y (TValue (Bag Bool)))) (TValue Bool)
+	(define-fun «funID.IN.toString»Bool ((x (TValue Bool)) (y (TValue (Set Bool)))) (TValue Bool)
 		(ite (or (err x)(err y)) 
 			(mk-val false false true)
 			(ite (or (bot x) (bot y))
@@ -329,7 +329,7 @@ class Z3Generator_Functions {
 		)
 	)
 	
-	(define-fun «funID.IN.toString»Real ((x (TValue Real)) (y (TValue (Bag Real)))) (TValue Bool)
+	(define-fun «funID.IN.toString»Real ((x (TValue Real)) (y (TValue (Set Real)))) (TValue Bool)
 		(ite (or (err x)(err y)) 
 			(mk-val false false true)
 			(ite (or (bot x) (bot y))
@@ -344,7 +344,7 @@ class Z3Generator_Functions {
 		)
 	)
 	
-	(define-fun «funID.IN.toString»Int ((x (TValue Int)) (y (TValue (Bag Int)))) (TValue Bool)
+	(define-fun «funID.IN.toString»Int ((x (TValue Int)) (y (TValue (Set Int)))) (TValue Bool)
 		(ite (or (err x)(err y)) 
 			(mk-val false false true)
 			(ite (or (bot x) (bot y))

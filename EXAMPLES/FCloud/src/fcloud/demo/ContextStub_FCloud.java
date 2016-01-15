@@ -8,7 +8,7 @@ import java.util.Properties;
 
 import it.unifi.facpl.lib.interfaces.IContextStub;
 import it.unifi.facpl.lib.util.AttributeName;
-import it.unifi.facpl.lib.util.Bag;
+import it.unifi.facpl.lib.util.Set;
 import it.unifi.facpl.lib.util.exception.MissingAttributeException;
 
 @SuppressWarnings("all")
@@ -116,9 +116,9 @@ public class ContextStub_FCloud implements IContextStub {
 
 	}
 
-	private Bag getIDs(String hyper) {
+	private Set getIDs(String hyper) {
 		Properties prop = new Properties();
-		Bag bag = new Bag();
+		Set bag = new Set();
 		try {
 			prop.load(new FileInputStream(new File(absPath + File.separator + hyper + ".properties")));
 			Enumeration<?> iter = prop.propertyNames();

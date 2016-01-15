@@ -4,9 +4,9 @@
 (declare-datatypes (U) ((TValue (mk-val (val U)(bot Bool)(err Bool)))))
 
 ;#######################
-;BAG of elements of type T with attached an integer index
+;Set of elements of type T with attached an integer index
 ;#######################
-(define-sort Bag (T) (Array Int T)) 
+(define-sort Set (T) (Array Int T)) 
 ;################### FACPL FUNCTION DECLARATIONs #######################
 (define-fun isFalse ((x (TValue Bool))) Bool
 	(ite (= x (mk-val false false false)) true false)
@@ -292,19 +292,19 @@
 		)
 	)
 )
-(define-fun isValBagInt ((x (TValue (Bag Int)))) Bool
+(define-fun isValSetInt ((x (TValue (Set Int)))) Bool
 	(ite (and (not (bot x)) (not (err x))) true false)
 )
 
-(define-fun isValBagReal ((x (TValue (Bag Real)))) Bool
+(define-fun isValSetReal ((x (TValue (Set Real)))) Bool
 	(ite (and (not (bot x)) (not (err x))) true false)
 )
 
-(define-fun isValBagBool ((x (TValue (Bag Bool)))) Bool
+(define-fun isValSetBool ((x (TValue (Set Bool)))) Bool
 	(ite (and (not (bot x)) (not (err x))) true false)
 )
 
-(define-fun inBool ((x (TValue Bool)) (y (TValue (Bag Bool)))) (TValue Bool)
+(define-fun inBool ((x (TValue Bool)) (y (TValue (Set Bool)))) (TValue Bool)
 	(ite (or (err x)(err y)) 
 		(mk-val false false true)
 		(ite (or (bot x) (bot y))
@@ -319,7 +319,7 @@
 	)
 )
 
-(define-fun inReal ((x (TValue Real)) (y (TValue (Bag Real)))) (TValue Bool)
+(define-fun inReal ((x (TValue Real)) (y (TValue (Set Real)))) (TValue Bool)
 	(ite (or (err x)(err y)) 
 		(mk-val false false true)
 		(ite (or (bot x) (bot y))
@@ -334,7 +334,7 @@
 	)
 )
 
-(define-fun inInt ((x (TValue Int)) (y (TValue (Bag Int)))) (TValue Bool)
+(define-fun inInt ((x (TValue Int)) (y (TValue (Set Int)))) (TValue Bool)
 	(ite (or (err x)(err y)) 
 		(mk-val false false true)
 		(ite (or (bot x) (bot y))
@@ -358,7 +358,7 @@
 (assert (not (bot const_7))) 
 (assert (not (err const_7)))
  
-(declare-const const_set_1 (TValue (Bag Int)))
+(declare-const const_set_1 (TValue (Set Int)))
 (assert (not (bot const_set_1)))
 (assert (not (err const_set_1)))
 (assert (= (select (val const_set_1) 0) 5))
@@ -486,8 +486,3 @@ true
 )
 ;################### END TOP-LEVEL POLICY pSet CONSTRAINTs #########################
 
-
-(assert cns_pSet_permit)
-
-(check-sat)
-(get-model)

@@ -33,7 +33,7 @@ public class PolicySet_PSet extends PolicySet {
 							new ExpressionFunction(Function_F_Name2.class, "foo", true))),
 					new ExpressionBooleanTree(
 							new ExpressionFunction(it.unifi.facpl.lib.function.comparison.In.class,
-									new AttributeName("sub", "id"), new Bag(true, false)))));
+									new AttributeName("sub", "id"), new Set(true, false)))));
 			// Obligations
 		}
 	}

@@ -6,7 +6,7 @@ import it.unifi.xtext.facpl.facpl2.AbstractPolicyIncl;
 import it.unifi.xtext.facpl.facpl2.AndExpression;
 import it.unifi.xtext.facpl.facpl2.AttributeName;
 import it.unifi.xtext.facpl.facpl2.AttributeReq;
-import it.unifi.xtext.facpl.facpl2.Bag;
+import it.unifi.xtext.facpl.facpl2.Set;
 import it.unifi.xtext.facpl.facpl2.BooleanLiteral;
 import it.unifi.xtext.facpl.facpl2.DateLiteral;
 import it.unifi.xtext.facpl.facpl2.DeclaredFunction;
@@ -358,46 +358,46 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 			// IN
 			if (idFun.equals(funID.IN)) {
 				if (arg1.equals(FacplType.NAME)) {
-					if (FacplType.isBag(arg2)) {
-						if (arg2.equals(FacplType.BAG_NAME)) {
+					if (FacplType.isSet(arg2)) {
+						if (arg2.equals(FacplType.SET_NAME)) {
 							// this.typeAssignments.add((AttributeName)
-							// fun.getArg1(),FacplType.getTypeBag(arg2) );
-							if (fun.getArg2() instanceof Bag) {
+							// fun.getArg1(),FacplType.getTypeSet(arg2) );
+							if (fun.getArg2() instanceof Set) {
 								this.typeAssignments.addEquality((AttributeName) fun.getArg1(),
-										getAttributeNameFromBag((Bag) fun.getArg2()));
+										getAttributeNameFromSet((Set) fun.getArg2()));
 							}else{
-								//the bag is returned by a declared function, hence do nothing  
+								//the Set is returned by a declared function, hence do nothing  
 							}
 						} else {
-							// the bag literal has a type different from NAME
-							this.typeAssignments.add((AttributeName) fun.getArg1(), FacplType.getTypeBag(arg2));
+							// the Set literal has a type different from NAME
+							this.typeAssignments.add((AttributeName) fun.getArg1(), FacplType.getTypeSet(arg2));
 						}
 						return FacplType.BOOLEAN;
 					} else if (arg2.equals(FacplType.NAME)) {
 						this.typeAssignments.addEquality((AttributeName) fun.getArg1(), (AttributeName) fun.getArg2());
-						// signed arg2 as a bag element
-						this.typeAssignments.addBagName((AttributeName) fun.getArg2());
+						// signed arg2 as a Set element
+						this.typeAssignments.addSetName((AttributeName) fun.getArg2());
 						return FacplType.BOOLEAN;
 					}
 				} else {
 					if (!arg1.equals(FacplType.ERR)) {
 						// arg1 has a type
 						if (arg2.equals(FacplType.NAME)) {
-							// assert name in arg2 to be of the type BAG_* where
+							// assert name in arg2 to be of the type Set_* where
 							// * is the type of arg1
-							this.typeAssignments.add((AttributeName) fun.getArg2(), FacplType.getBagType(arg1));
+							this.typeAssignments.add((AttributeName) fun.getArg2(), FacplType.getSetType(arg1));
 							return FacplType.BOOLEAN;
-						} else if (arg2.equals(FacplType.BAG_NAME)) {
-							// assert one name within BAG_NAME of arg2 to be of
+						} else if (arg2.equals(FacplType.SET_NAME)) {
+							// assert one name within Set_NAME of arg2 to be of
 							// the type of arg1
-							this.typeAssignments.add(getAttributeNameFromBag((Bag) fun.getArg2()), arg1);
+							this.typeAssignments.add(getAttributeNameFromSet((Set) fun.getArg2()), arg1);
 							return FacplType.BOOLEAN;
 						}
 					}
 				}
 				// No attribute name occurs in the function. Check if the types
 				// are compatible
-				if (arg1.equals(arg2) || arg1.equals(FacplType.getTypeBag(arg2))) {
+				if (arg1.equals(arg2) || arg1.equals(FacplType.getTypeSet(arg2))) {
 					return FacplType.BOOLEAN;
 				}
 			}
@@ -447,12 +447,12 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 	}
 
 	/**
-	 * Return an attribute name present in the bag, null otherwise
+	 * Return an attribute name present in the Set, null otherwise
 	 * 
 	 * @param arg2
 	 * @return
 	 */
-	private AttributeName getAttributeNameFromBag(Bag arg) {
+	private AttributeName getAttributeNameFromSet(Set arg) {
 		AttributeName n = null;
 		for (Expression e : arg.getArgs()) {
 			if (e instanceof AttributeName)
@@ -463,13 +463,13 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 
 	// Literal
 	@Override
-	public FacplType caseBag(Bag bag) {
+	public FacplType caseSet(Set Set) {
 		FacplType def = null;
 		LinkedList<AttributeName> list = new LinkedList<AttributeName>();
-		for (Expression a : bag.getArgs()) {
+		for (Expression a : Set.getArgs()) {
 			FacplType t = doSwitch(a);
 			if (t.equals(FacplType.NAME)) {
-				//BAGs cannot contain Attribute Names
+				//Sets cannot contain Attribute Names
 				return FacplType.ERR;
 			} else if (!t.equals(FacplType.ERR)) {
 				if (def == null) {
@@ -497,7 +497,7 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 		// assignments
 		try {
 			if (!def.equals(FacplType.NAME)) {
-				// Type of BAG not equal to name, no need to use equalities
+				// Type of Set not equal to name, no need to use equalities
 				for (AttributeName el : list) {
 					this.typeAssignments.add(el, def);
 				}
@@ -507,7 +507,7 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 					this.typeAssignments.addEquality(list.get(i), list.get(i + 1));
 				}
 			}
-			return FacplType.getBagType(def);
+			return FacplType.getSetType(def);
 		} catch (Exception e) {
 			return FacplType.ERR;
 		}

@@ -25,7 +25,7 @@ import it.unifi.xtext.facpl.facpl2.IntLiteral
 import it.unifi.xtext.facpl.facpl2.StringLiteral
 import it.unifi.xtext.facpl.facpl2.TimeLiteral
 import it.unifi.xtext.facpl.facpl2.DateLiteral
-import it.unifi.xtext.facpl.facpl2.Bag
+import it.unifi.xtext.facpl.facpl2.Set
 import it.unifi.xtext.facpl.facpl2.Function
 import it.unifi.xtext.facpl.facpl2.funID
 import it.unifi.xtext.facpl.facpl2.DoubleLiteral
@@ -49,7 +49,7 @@ class Z3Generator {
 
 	// Declared Constants
 	private HashMap<String,ConstraintConstant> constants
-	private HashMap<String,String> bags
+	private HashMap<String,String> sets
 
 	// String Enumerations
 	private LinkedList<String> stringEls
@@ -106,7 +106,7 @@ class Z3Generator {
 				tConst.doSwitch(resource)
 
 				this.constants = tConst.constants 
-				this.bags = tConst.bags
+				this.sets = tConst.sets
 				
 				
 				this.stringEls = new LinkedList<String>()
@@ -426,7 +426,7 @@ def getFinalConstrPSet(String p_name)'''
 	 * Auxiliary Functions for Datatype, functions and attributes declarations 
 	 * ########################################################################
 	 */	
-	// Returning the record datatype, the bag and the auxiliary functions
+	// Returning the record datatype, the Set and the auxiliary functions
 	def getDatatypeDec(PolicySet pol) '''
 	;#######################
 	;RECORD DATATYPE with BOTTOM and ERROR
@@ -434,9 +434,9 @@ def getFinalConstrPSet(String p_name)'''
 	(declare-datatypes (U) ((TValue (mk-val (val U)(bot Bool)(err Bool)))))
 	
 	;#######################
-	;BAG of elements of type T with attached an integer index
+	;Set of elements of type T with attached an integer index
 	;#######################
-	(define-sort Bag (T) (Array Int T)) '''
+	(define-sort Set (T) (Array Int T)) '''
 
 	// Defining the enumeration type modeling string -> definition of equality and/or function in  
 	def getStringDec() 
@@ -466,14 +466,14 @@ def getFinalConstrPSet(String p_name)'''
 			case INT: return "Int"
 			case STRING: return "String" // NB this type has to be declared!!!
 			case NAME: return "Bool" // TO BE USED EVERYWHERE WHERE A TYPE IS NOT DECLARED!!!!
-			// Bag cases
-			case BAG_BOOLEAN: return "(Bag Bool)"
-			case BAG_INT: return "(Bag Int)"
-			case BAG_DOUBLE: return "(Bag Real)"
-			case BAG_NAME: return "(Bag Bool)" // TO BE USED EVERYWHERE WHERE A BAG IS NOT DECLARED!!!!
-			case BAG_STRING: return "(Bag String)"
+			// Set cases
+			case SET_BOOLEAN: return "(Set Bool)"
+			case SET_INT: return "(Set Int)"
+			case SET_DOUBLE: return "(Set Real)"
+			case SET_NAME: return "(Set Bool)" // TO BE USED EVERYWHERE WHERE A Set IS NOT DECLARED!!!!
+			case SET_STRING: return "(Set String)"
 			// Not-Supported (?)
-			case BAG_DATETIME: throw new Exception("DATE NOT SUPPORTED ????")
+			case SET_DATETIME: throw new Exception("DATE NOT SUPPORTED ????")
 			case DATETIME: throw new Exception("DATE NOT SUPPORTED ????")
 			case ERR: throw new Exception("Policy not well-typed")
 			case TYPED: {
@@ -486,8 +486,8 @@ def getFinalConstrPSet(String p_name)'''
 	def getConstantDec() 
 	'''«FOR cst : this.constants.values»
 		 
-		«IF FacplType.isBag(cst.type)»
-			«getBagConstantDec(cst)»
+		«IF FacplType.isSet(cst.type)»
+			«getSetConstantDec(cst)»
 		«ELSE»
 			(declare-const «getConstAttr(cst.att_name)» (TValue «getType(cst.type)»))
 			«IF cst.type.equals(FacplType.STRING)»
@@ -502,27 +502,27 @@ def getFinalConstrPSet(String p_name)'''
 	'''
 
 	/* ########################################
-	 * START DECLARATION BAGS
+	 * START DECLARATION SetS
 	 * ########################################
 	 */
-	def getBagConstantDec (ConstraintConstant cst){
+	def getSetConstantDec (ConstraintConstant cst){
 		val str = new StringBuffer()
-		val bag_id = getConstAttr(cst.att_name)
-		//Declaration Bag Element
-		str.append("(declare-const "+ bag_id +" (TValue "+getType(cst.type)+ "))\n")
-		str.append("(assert (not (bot "+ bag_id + ")))\n") 
-		str.append("(assert (not (err "+ bag_id + ")))\n")
+		val set_id = getConstAttr(cst.att_name)
+		//Declaration Set Element
+		str.append("(declare-const "+ set_id +" (TValue "+getType(cst.type)+ "))\n")
+		str.append("(assert (not (bot "+ set_id + ")))\n") 
+		str.append("(assert (not (err "+ set_id + ")))\n")
 		
 		//Assertion on the enclosing elements
-		for (var i = 0; i < (cst.value as Bag).args.size ; i ++){
-			str.append("(assert (= (select (val "+ bag_id + ") " + i + ") " + getExpressionValue((cst.value as Bag).args.get(i)) +"))\n")
+		for (var i = 0; i < (cst.value as Set).args.size ; i ++){
+			str.append("(assert (= (select (val "+ set_id + ") " + i + ") " + getExpressionValue((cst.value as Set).args.get(i)) +"))\n")
 		}
 		
 		//Assertion on the possible elements (i.e. no additional elements wrt the previous cannot be present)
 		str.append("(assert (forall ((i Int))\n")
 		str.append("\t (or \n")
-		for (var i = 0; i < (cst.value as Bag).args.size ; i ++){
-			str.append("\t\t (= (select (val "+ bag_id + ") i) " + getExpressionValue((cst.value as Bag).args.get(i)) +")\n")
+		for (var i = 0; i < (cst.value as Set).args.size ; i ++){
+			str.append("\t\t (= (select (val "+ set_id + ") i) " + getExpressionValue((cst.value as Set).args.get(i)) +")\n")
 		}
 		str.append("\t )\n")
 		str.append("))")
@@ -530,7 +530,7 @@ def getFinalConstrPSet(String p_name)'''
 	
 
 	/*
-	 * Methods used within bags -> elements are directly values and not TValue
+	 * Methods used within Sets -> elements are directly values and not TValue
 	 */
 	def dispatch String getExpressionValue (BooleanLiteral e)
 	'''«e.value.toString»''' 
@@ -555,7 +555,7 @@ def getFinalConstrPSet(String p_name)'''
 	/*
 	 * THESE CASES CANNOT OCCUR -> they are 
 	 */
-	def dispatch String getExpressionValue (Bag e){
+	def dispatch String getExpressionValue (Set e){
 		throw new Exception ("NOT SUPPORTED")
 	}
 
@@ -564,7 +564,7 @@ def getFinalConstrPSet(String p_name)'''
 	}
 
 	/* ########################################
-	 * END DECLARATION BAGS
+	 * END DECLARATION SetS
 	 * ########################################
 	 */
 
@@ -592,11 +592,11 @@ def getFinalConstrPSet(String p_name)'''
 		)
 	)
 	
-	(define-fun isValBagString ((x (TValue (Bag String)))) Bool
+	(define-fun isValSetString ((x (TValue (Set String)))) Bool
 		(ite (and (not (bot x)) (not (err x))) true false)
 	)
 	
-	(define-fun «funID.IN.toString»String ((x (TValue String)) (y (TValue (Bag String)))) (TValue Bool)
+	(define-fun «funID.IN.toString»String ((x (TValue String)) (y (TValue (Set String)))) (TValue Bool)
 		(ite (or (err x)(err y)) 
 			(mk-val false false true)
 			(ite (or (bot x) (bot y))
@@ -613,7 +613,7 @@ def getFinalConstrPSet(String p_name)'''
 	«ENDIF»	
 	«Z3Generator_Functions::getIntFunctions()»
 	«Z3Generator_Functions::getRealFunctions()»
-	«Z3Generator_Functions::getBagFunctions()»
+	«Z3Generator_Functions::getSetFunctions()»
 	'''
 	
 	//EXPRESSION 
@@ -653,7 +653,7 @@ def getFinalConstrPSet(String p_name)'''
 		}
 		
 		if (function.functionId.equals(funID.IN)){
-			return getId(function.functionId.toString)+FacplType::getTypeBag(typeF)
+			return getId(function.functionId.toString)+FacplType::getTypeSet(typeF)
 		}else{
 			return getId(function.functionId.toString)+getType(typeF)
 		}
@@ -672,7 +672,7 @@ def getFinalConstrPSet(String p_name)'''
 	
 	//Literal 
 	/*
-	 * Methods used everywhere apart from bags
+	 * Methods used everywhere apart from Sets
 	 */
 	def dispatch String getExpressionConst (BooleanLiteral e)
 	'''«getConstAttr(e.value.toString)»''' 
@@ -687,10 +687,10 @@ def getFinalConstrPSet(String p_name)'''
 	'''«getConstAttr(e.value.toString)»''' 
 	
 	
-	def dispatch String getExpressionConst (Bag e){
-		//check for the name of the bag wrt its string representation
+	def dispatch String getExpressionConst (Set e){
+		//check for the name of the Set wrt its string representation
 		val s = new SetUtils()
-		return getConstAttr(this.bags.get(s.doSwitch(e))).toString
+		return getConstAttr(this.sets.get(s.doSwitch(e))).toString
 	}
 	
 	//TODO

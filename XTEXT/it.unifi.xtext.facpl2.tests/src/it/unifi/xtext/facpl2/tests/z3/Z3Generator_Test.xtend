@@ -185,7 +185,7 @@ public class Z3Generator_Test extends AbstractXtextTests {
 			var model = ('''
 			dec-fun Bool F_Name (String, Int) 
 			dec-fun Bool F_Name2 (String, Bool)
-			dec-fun Bag<Int> F (Int, Int) 
+			dec-fun Set<Int> F (Int, Int) 
 			
 			PolicySet Name {deny-unless-permit
 					target: F_Name(sub/id, "doctor")
@@ -212,7 +212,7 @@ public class Z3Generator_Test extends AbstractXtextTests {
 				'''
 			dec-fun Bool F_Name (String, Int) 
 			
-			dec-fun Bag<Int> F (Int, Int) 
+			dec-fun Set<Int> F (Int, Int) 
 			
 			PolicySet Name {deny-unless-permit
 				target: F_Name(sub/id, 5)
@@ -232,7 +232,7 @@ public class Z3Generator_Test extends AbstractXtextTests {
 				'''
 			dec-fun Bool F_Name (String, Int) 
 			
-			dec-fun Bag<Int> F (Int, Int) 
+			dec-fun Set<Int> F (Int, Int) 
 			
 			PolicySet Name {deny-unless-permit
 					target: in(sub/id, F(n/id, 5))
@@ -279,7 +279,7 @@ public class Z3Generator_Test extends AbstractXtextTests {
 	}
 
 	@Test
-	def void attrBags() {
+	def void attrSets() {
 
 		var model = (
 		'''
@@ -296,15 +296,15 @@ public class Z3Generator_Test extends AbstractXtextTests {
 	}
 
 	@Test
-	def void constantBags() {
+	def void constantSets() {
 
 		/*
-		 * TestGeneration constants : 1 bag
+		 * TestGeneration constants : 1 set
 		 */
 		var model = ('''
 			PolicySet pSet {deny-unless-permit 
 			policies:
-				Rule name (permit target: in(5,bag(5,6))) 
+				Rule name (permit target: in(5,set(5,6))) 
 			}
 		''').parse
 
@@ -314,18 +314,18 @@ public class Z3Generator_Test extends AbstractXtextTests {
 
 		tConst.doSwitch(model)
 
-		assertEquals(tConst.bags.size, 1)
+		assertEquals(tConst.sets.size, 1)
 
 		assertEquals(tConst.constants.containsKey("set_1"), true)
 
 		/*
-		 * TestGeneration constants - 2 bags in the policy equal -> 1 bag constant
+		 * TestGeneration constants - 2 sets in the policy equal -> 1 set constant
 		 */
 		model = ('''
 			PolicySet pSet {deny-unless-permit 
 			policies:
-				Rule name (permit target: in(n/id,bag(true, false, false)))
-				Rule nam1 (deny target: in(true, bag(true, false, false))) 
+				Rule name (permit target: in(n/id,set(true, false, false)))
+				Rule nam1 (deny target: in(true, set(true, false, false))) 
 			}
 		''').parse
 
@@ -335,18 +335,18 @@ public class Z3Generator_Test extends AbstractXtextTests {
 
 		tConst.doSwitch(model)
 
-		assertEquals(tConst.bags.size, 1)
+		assertEquals(tConst.sets.size, 1)
 
 		assertEquals(tConst.constants.containsKey("set_1"), true)
 
 		/*
-		 * TestGeneration constants - 2 bags  -> 2 bag constants
+		 * TestGeneration constants - 2 sets  -> 2 set constants
 		 */
 		model = ('''
 			PolicySet pSet {deny-unless-permit 
 			policies:
-				Rule name (permit target: in(n/id,bag(true, false, false)))
-				Rule nam1 (deny target: in(true, bag(false, false))) 
+				Rule name (permit target: in(n/id,set(true, false, false)))
+				Rule nam1 (deny target: in(true, set(false, false))) 
 			}
 		''').parse
 
@@ -356,23 +356,23 @@ public class Z3Generator_Test extends AbstractXtextTests {
 
 		tConst.doSwitch(model)
 
-		assertEquals(tConst.bags.size, 2)
+		assertEquals(tConst.sets.size, 2)
 
 		assertEquals(tConst.constants.containsKey("set_1"), true)
 		assertEquals(tConst.constants.containsKey("set_2"), true)
 
 		/*
-		 * TestGeneration constants - 2 bags  -> 2 bag constants
+		 * TestGeneration constants - 2 sets  -> 2 set constants
 		 */
 		model = ('''
 			PolicySet pSet {deny-unless-permit 
 			policies:
-				Rule name (permit target: in(n/id,bag(true, false, false))) 
+				Rule name (permit target: in(n/id,set(true, false, false))) 
 			}
 			
 			PolicySet pSet1 {permit-unless-deny
 			policies: 
-				Rule nam1 (deny target: in(true, bag(false, false)))
+				Rule nam1 (deny target: in(true, set(false, false)))
 			}
 		''').parse
 
@@ -382,7 +382,7 @@ public class Z3Generator_Test extends AbstractXtextTests {
 
 		tConst.doSwitch(model)
 
-		assertEquals(tConst.bags.size, 2)
+		assertEquals(tConst.sets.size, 2)
 
 		assertEquals(tConst.constants.containsKey("set_1"), true)
 		assertEquals(tConst.constants.containsKey("set_2"), true)
@@ -390,12 +390,12 @@ public class Z3Generator_Test extends AbstractXtextTests {
 	}
 
 	@Test
-	def void genBags() {
+	def void genSets() {
 
 		var model = ('''
 			PolicySet pSet {deny-unless-permit 
 			policies:
-				Rule name (permit target: in(7,bag(5,6))) 
+				Rule name (permit target: in(7,set(5,6))) 
 			}
 		''').parse
 
@@ -408,13 +408,13 @@ public class Z3Generator_Test extends AbstractXtextTests {
 		/*
 		 * Non assigned attribute considered as boolean
 		 */
-		if (cns.contains('''(declare-const const_set_1 (TValue (Bag Int)))''')) {
+		if (cns.contains('''(declare-const const_set_1 (TValue (Set Int)))''')) {
 			assertEquals(true, true)
 		} else {
 			assertEquals(false, true)
 		}
 
-		val writer = new PrintWriter("z3_gen/decBag/file1_const.smt2", "UTF-8");
+		val writer = new PrintWriter("z3_gen/decSet/file1_const.smt2", "UTF-8");
 		writer.println(cns);
 		writer.close();
 

@@ -17,7 +17,6 @@ import it.unifi.xtext.facpl.facpl2.Function
 import it.unifi.xtext.facpl.facpl2.Rule
 
 import it.unifi.xtext.facpl.facpl2.PolicySet
-import it.unifi.xtext.facpl.facpl2.Bag
 import it.unifi.xtext.facpl.facpl2.FacplPolicy
 import it.unifi.xtext.facpl.facpl2.Facpl
 import it.unifi.xtext.facpl.facpl2.AbstractPolicyIncl
@@ -26,6 +25,7 @@ import java.util.HashMap
 import it.unifi.xtext.facpl.facpl2.DeclaredFunction
 import it.unifi.xtext.facpl.facpl2.FunctionDeclaration
 import it.unifi.xtext.facpl.facpl2.TypeLiteral
+import it.unifi.xtext.facpl.facpl2.Set
 
 /**
  * Collect constants used in a policy
@@ -39,20 +39,20 @@ class PolicyConstant extends Facpl2Switch<Boolean> {
 	 * -> String1 == string representation of bag
 	 * -> String2 == name of the bag
 	 */
-	private HashMap<String, String> bags;
+	private HashMap<String, String> sets;
 
 	new() {
 		this.constants = new HashMap<String, ConstraintConstant>()
 
-		this.bags = new HashMap<String, String>()
+		this.sets = new HashMap<String, String>()
 	}
 
 	def getConstants() {
 		return this.constants
 	}
 
-	def getBags() {
-		return this.bags
+	def getSets() {
+		return this.sets
 	}
 
 	// FACPL CASEs
@@ -164,21 +164,21 @@ class PolicyConstant extends Facpl2Switch<Boolean> {
 		return true
 	}
 
-//BAG
-	override caseBag(Bag bag) {
+//SET
+	override caseSet(Set set) {
 		val tCheck = new FacplTypeInference()
-		val FacplType t = tCheck.doSwitch(bag)
+		val FacplType t = tCheck.doSwitch(set)
 
-		if (!t.equals(FacplType.BAG_NAME)) {
+		if (!t.equals(FacplType.SET_NAME)) {
 			// A bag is identified with its toString
 			val setUtils = new SetUtils()
 
-			if (!this.bags.containsKey(setUtils.doSwitch(bag))) {
+			if (!this.sets.containsKey(setUtils.doSwitch(set))) {
 				// the bag is not in the set, hence it is added
-				val id = "set_" + (this.bags.size + 1).toString
-				this.bags.put(setUtils.doSwitch(bag), id)
+				val id = "set_" + (this.sets.size + 1).toString
+				this.sets.put(setUtils.doSwitch(set), id)
 
-				val c = new ConstraintConstant(t, id, bag)
+				val c = new ConstraintConstant(t, id, set)
 
 				this.constants.put(id, c)
 

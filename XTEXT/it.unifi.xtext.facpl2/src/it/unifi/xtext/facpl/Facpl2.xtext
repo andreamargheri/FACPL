@@ -29,8 +29,8 @@ FunctionDeclaration:
 
 enum TypeLiteral:
 	Int = 'Int' | Double = 'Double' | Bool = 'Bool' | String = 'String' | DateTime = 'DateTime' | 
-	BagInt = 'Bag<Int>' | BagDouble = 'Bag<Double>' | BagBool = 'Bag<Bool>' | BagString = 'Bag<String>' |
-	BagDateTime = 'Bag<DateTime>'
+	SetInt = 'Set<Int>' | SetDouble = 'Set<Double>' | SetBool = 'Set<Bool>' | SetString = 'Set<String>' |
+	SetDateTime = 'Set<DateTime>'
 ;
 
 	//PAF - Policy Authorisation Framework
@@ -131,10 +131,10 @@ Literals returns Expression:
 	| DateLiteral
 	| TimeLiteral
 	| AttributeName
-	| Bag;
+	| Set;
 
-Bag:
-	'bag(' (args+=(Literals) (',' args+=(Literals))*) ')';
+Set:
+	'set(' (args+=(Literals) (',' args+=(Literals))*) ')';
 
 StringLiteral:
 	value=STRING;

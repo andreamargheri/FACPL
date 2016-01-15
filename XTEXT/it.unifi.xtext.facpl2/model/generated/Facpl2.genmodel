@@ -13,11 +13,11 @@
       <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//TypeLiteral/Bool"/>
       <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//TypeLiteral/String"/>
       <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//TypeLiteral/DateTime"/>
-      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//TypeLiteral/BagInt"/>
-      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//TypeLiteral/BagDouble"/>
-      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//TypeLiteral/BagBool"/>
-      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//TypeLiteral/BagString"/>
-      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//TypeLiteral/BagDateTime"/>
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//TypeLiteral/SetInt"/>
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//TypeLiteral/SetDouble"/>
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//TypeLiteral/SetBool"/>
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//TypeLiteral/SetString"/>
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//TypeLiteral/SetDateTime"/>
     </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="Facpl2.ecore#//PEPAlg">
       <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//PEPAlg/BASE"/>
@@ -137,8 +137,8 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Facpl2.ecore#//DeclaredFunction/functionId"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//DeclaredFunction/args"/>
     </genClasses>
-    <genClasses ecoreClass="Facpl2.ecore#//Bag">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//Bag/args"/>
+    <genClasses ecoreClass="Facpl2.ecore#//Set">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//Set/args"/>
     </genClasses>
     <genClasses ecoreClass="Facpl2.ecore#//StringLiteral">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//StringLiteral/value"/>

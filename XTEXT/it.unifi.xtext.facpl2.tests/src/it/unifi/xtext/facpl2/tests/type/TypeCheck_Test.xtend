@@ -248,7 +248,7 @@ class TypeCheck_Test {
 		var model = '''
 		PolicySet pSet {deny-unless-permit 
 		policies:
-		Rule name (permit target: in(5, bag(5,5))	)
+		Rule name (permit target: in(5, set(5,5))	)
 		}'''.parse
 
 		model.assertNoErrors
@@ -256,7 +256,7 @@ class TypeCheck_Test {
 		model = '''
 		PolicySet pSet {deny-unless-permit 
 		policies:
-		Rule name (permit target: in(true, bag(5,5))	)
+		Rule name (permit target: in(true, set(5,5))	)
 		}'''.parse
 
 		model.assertError(
@@ -268,7 +268,7 @@ class TypeCheck_Test {
 		model = '''
 		PolicySet pSet {deny-unless-permit 
 		policies:
-		Rule name (permit target: in(n/id, bag(5,5))	)
+		Rule name (permit target: in(n/id, set(5,5))	)
 		}'''.parse
 
 		model.assertNoErrors
@@ -276,7 +276,7 @@ class TypeCheck_Test {
 		model = '''
 		PolicySet pSet {deny-unless-permit 
 		policies:
-		Rule name (permit target: in(n/id, bag(5,5)) && equal(n/id, 5)	)
+		Rule name (permit target: in(n/id, set(5,5)) && equal(n/id, 5)	)
 		}'''.parse
 
 		model.assertNoErrors
@@ -284,7 +284,7 @@ class TypeCheck_Test {
 		model = '''
 		PolicySet pSet {deny-unless-permit 
 		policies:
-		Rule name (permit target: in(n/id, bag(5,5)) && equal(n/id, true)	)
+		Rule name (permit target: in(n/id, set(5,5)) && equal(n/id, true)	)
 		}'''.parse
 
 		model.assertError(
@@ -296,14 +296,14 @@ class TypeCheck_Test {
 	}
 
 	@Test
-	def void testFunctionBag() {
+	def void testFunctionset() {
 
 		var model = '''
 		PolicySet pSet {deny-unless-permit 
 		policies:
 		Rule name (permit 
 		target: 
-			in(5, bag(5,5))
+			in(5, set(5,5))
 		)
 		}'''.parse
 
@@ -314,14 +314,14 @@ class TypeCheck_Test {
 		policies:
 		Rule name (permit 
 		target: 
-			in(5, bag(5,true))
+			in(5, set(5,true))
 		)
 		}'''.parse
 
 		model.assertError(
-			Facpl2Package::eINSTANCE.bag,
+			Facpl2Package::eINSTANCE.set,
 			null,
-			"Bag elements have to be of the same type"
+			"set elements have to be of the same type"
 		)
 
 //		model.assertError(
@@ -334,7 +334,7 @@ class TypeCheck_Test {
 		policies:
 		Rule name (permit 
 		target: 
-			in(bag(5), bag(5,10))
+			in(set(5), set(5,10))
 		)
 		}'''.parse
 
@@ -345,7 +345,7 @@ class TypeCheck_Test {
 		policies:
 		Rule name (permit 
 		target: 
-			in(cat/id, bag(5,10))
+			in(cat/id, set(5,10))
 		)
 		}'''.parse
 
@@ -489,12 +489,12 @@ class TypeCheck_Test {
 	}
 
 	@Test
-	def void testBagFunDecl() {
+	def void testsetFunDecl() {
 
 		var model = '''
 		dec-fun Bool F_Name (String, Int) 
 		
-		dec-fun Bag<Int> F (Int, Int) 
+		dec-fun Set<Int> F (Int, Int) 
 		
 		PolicySet Name {deny-unless-permit
 				target: F_Name(sub/id, F(n/id, 5))
@@ -505,13 +505,13 @@ class TypeCheck_Test {
 		model.assertError(
 			Facpl2Package::eINSTANCE.declaredFunction,
 			null,
-			"Type mismatch: expected (String,Int) but was (String,Bag_int)"
+			"Type mismatch: expected (String,Int) but was (String,set_int)"
 		)
 
 		model = '''
 		dec-fun Bool F_Name (String, Int) 
 		
-		dec-fun Bag<Int> F (Int, Int) 
+		dec-fun Set<Int> F (Int, Int) 
 		
 		PolicySet Name {deny-unless-permit
 				target: in(sub/id, F(n/id, 5))
@@ -524,7 +524,7 @@ class TypeCheck_Test {
 		model = '''
 		dec-fun Bool F_Name (String, Int) 
 		
-		dec-fun Bag<Bool> F (Int, Int) 
+		dec-fun Set<Bool> F (Int, Int) 
 		
 		PolicySet Name {deny-unless-permit
 				target: in(sub/id, F(n/id, 5)) && equal(sub/id, 5)
@@ -553,7 +553,7 @@ class TypeCheck_Test {
 		model = '''
 			dec-fun Bool F_Name (String, Int) 
 			
-			dec-fun Bag<Int> F (Int, Int) 
+			dec-fun Set<Int> F (Int, Int) 
 			
 			PolicySet Name {deny-unless-permit
 					target: in(sub/id, F(n/id, 5))

@@ -4,21 +4,12 @@
 (declare-datatypes (U) ((TValue (mk-val (val U)(bot Bool)(err Bool)))))
 
 ;#######################
-;BAG of elements of type T with attached an integer index
+;Set of elements of type T with attached an integer index
 ;#######################
-(define-sort Bag (T) (Array Int T)) 
+(define-sort Set (T) (Array Int T)) 
 ;################### STRING DECLARATIONs #######################
  (declare-datatypes () ((String s_write s_doctor )))
-;################## BAG s
-
-;?????????????????????????
-
-
 ;################### FACPL FUNCTION DECLARATIONs #######################
-;####
-;AUXILIARY-function Boolean
-;####
-
 (define-fun isFalse ((x (TValue Bool))) Bool
 	(ite (= x (mk-val false false false)) true false)
 )
@@ -125,6 +116,24 @@
 	)
 )
 
+(define-fun isValSetString ((x (TValue (Set String)))) Bool
+	(ite (and (not (bot x)) (not (err x))) true false)
+)
+
+(define-fun inString ((x (TValue String)) (y (TValue (Set String)))) (TValue Bool)
+	(ite (or (err x)(err y)) 
+		(mk-val false false true)
+		(ite (or (bot x) (bot y))
+			(mk-val false true false)
+			(ite (exists ((i Int))
+						(= (val x) (select (val y) i))
+				  )
+				(mk-val true false false)
+				(mk-val false false false)
+			)
+		)
+	)
+)
 
 (define-fun isValInt ((x (TValue Int))) Bool
 	(ite (and (not (bot x)) (not (err x))) true false)
@@ -321,6 +330,62 @@
 		)
 	)
 )
+(define-fun isValSetInt ((x (TValue (Set Int)))) Bool
+	(ite (and (not (bot x)) (not (err x))) true false)
+)
+
+(define-fun isValSetReal ((x (TValue (Set Real)))) Bool
+	(ite (and (not (bot x)) (not (err x))) true false)
+)
+
+(define-fun isValSetBool ((x (TValue (Set Bool)))) Bool
+	(ite (and (not (bot x)) (not (err x))) true false)
+)
+
+(define-fun inBool ((x (TValue Bool)) (y (TValue (Set Bool)))) (TValue Bool)
+	(ite (or (err x)(err y)) 
+		(mk-val false false true)
+		(ite (or (bot x) (bot y))
+			(mk-val false true false)
+			(ite (exists ((i Int))
+						(= (val x) (select (val y) i))
+				  )
+				(mk-val true false false)
+				(mk-val false false false)
+			)
+		)
+	)
+)
+
+(define-fun inReal ((x (TValue Real)) (y (TValue (Set Real)))) (TValue Bool)
+	(ite (or (err x)(err y)) 
+		(mk-val false false true)
+		(ite (or (bot x) (bot y))
+			(mk-val false true false)
+			(ite (exists ((i Int))
+						(= (val x) (select (val y) i))
+				  )
+				(mk-val true false false)
+				(mk-val false false false)
+			)
+		)
+	)
+)
+
+(define-fun inInt ((x (TValue Int)) (y (TValue (Set Int)))) (TValue Bool)
+	(ite (or (err x)(err y)) 
+		(mk-val false false true)
+		(ite (or (bot x) (bot y))
+			(mk-val false true false)
+			(ite (exists ((i Int))
+						(= (val x) (select (val y) i))
+				  )
+				(mk-val true false false)
+				(mk-val false false false)
+			)
+		)
+	)
+)
 ;################################ END DATATYPEs AND FUNCTIONs DECLARATION #############################
 
 ;################### ATTRIBUTE DECLARATIONs #######################
@@ -334,21 +399,23 @@
 (assert (not (and (bot n_sub/id) (err n_sub/id))))
  
 ;################### CONSTANTs DECLARATIONs #######################
+ 
 (declare-const const_5 (TValue Int))
 (assert (= (val const_5) 5))
 (assert (not (bot const_5))) 
-(assert (not (err const_5))) 
+(assert (not (err const_5)))
  
 (declare-const const_write (TValue String))
 (assert (= (val const_write) s_write))
 (assert (not (bot const_write))) 
-(assert (not (err const_write))) 
+(assert (not (err const_write)))
  
 (declare-const const_doctor (TValue String))
 (assert (= (val const_doctor) s_doctor))
 (assert (not (bot const_doctor))) 
-(assert (not (err const_doctor))) 
- 
+(assert (not (err const_doctor)))
+;################################ END ATTRIBUTEs AND CONSTANTs DECLARATION #############################
+
 ;################### START CONSTRAINT RULE r1 #######################
 ;##### Rule Target
 (define-fun cns_target_r1 () (TValue Bool)
@@ -461,3 +528,4 @@ true
 	)
 )
 ;################### END TOP-LEVEL POLICY Name CONSTRAINTs #########################
+

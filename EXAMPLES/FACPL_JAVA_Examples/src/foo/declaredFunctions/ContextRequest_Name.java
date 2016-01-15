@@ -2,7 +2,7 @@ package foo.declaredFunctions;
 
 import java.util.HashMap;
 import it.unifi.facpl.lib.context.*;
-import it.unifi.facpl.lib.util.Bag;
+import it.unifi.facpl.lib.util.Set;
 
 @SuppressWarnings("all")
 public class ContextRequest_Name {

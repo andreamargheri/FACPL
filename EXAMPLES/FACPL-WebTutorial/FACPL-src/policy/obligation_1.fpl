@@ -10,12 +10,12 @@ PAS { Extended Indeterminate : true ;
 
 	PolicySet obligation_1 { deny-overrides
 		target: equal ( "4567-1" , resource / id ) policies:
-		Rule RuleP ( permit target: equal ( "John" , subject / id ) && in ( action / id , bag( "read" , "seek" ) ) 
+		Rule RuleP ( permit target: equal ( "John" , subject / id ) && in ( action / id , set( "read" , "seek" ) ) 
 			
 			obl:
 			[ permit M action1 ( subject / name ) ]
 		)
-		Rule RuleD ( deny target: in ( action / id , bag( "write" , "checkout" ) ) 
+		Rule RuleD ( deny target: in ( action / id , set( "write" , "checkout" ) ) 
 			obl:
 			[ deny M action2 ( subject / name ) ]
 		)

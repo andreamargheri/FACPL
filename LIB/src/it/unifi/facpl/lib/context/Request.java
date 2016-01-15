@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import it.unifi.facpl.lib.util.AttributeName;
-import it.unifi.facpl.lib.util.Bag;
+import it.unifi.facpl.lib.util.Set;
 import it.unifi.facpl.lib.util.exception.MissingAttributeException;
 
 public class Request {
@@ -53,7 +53,7 @@ public class Request {
 			if (values == null){
 				throw new MissingAttributeException();
 			}
-			if (values instanceof Bag){
+			if (values instanceof Set){
 				l.debug("BAG values: "+ values.toString());
 			}else{
 				l.debug("Attribute values: "+ values.toString());

@@ -18,12 +18,12 @@ public class SubstitutionSet {
 
 	private HashMap<String, FacplType> substitution;
 	private HashMap<String, String> equalities;
-	private LinkedList<String> bag_Attributes;
+	private LinkedList<String> set_Attributes;
 
 	public SubstitutionSet() {
 		this.substitution = new HashMap<String, FacplType>();
 		this.equalities = new HashMap<String, String>();
-		this.bag_Attributes = new LinkedList<String>();
+		this.set_Attributes = new LinkedList<String>();
 	}
 
 	public HashMap<String, FacplType> getSubstitutions() {
@@ -65,12 +65,12 @@ public class SubstitutionSet {
 	}
 
 	
-	public void addBagName(AttributeName a){
-		this.bag_Attributes.add(_nameToString(a));
+	public void addSetName(AttributeName a){
+		this.set_Attributes.add(_nameToString(a));
 	}
 	
-	public LinkedList<String> getBag_Attributes() {
-		return bag_Attributes;
+	public LinkedList<String> getSet_Attributes() {
+		return set_Attributes;
 	}
 	
 	@Override

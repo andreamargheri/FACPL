@@ -24,7 +24,7 @@ public class FacplLiteralTypes {
 		return true;
 	else if (obj instanceof Double)
 		return true;
-	else if (obj instanceof Bag)
+	else if (obj instanceof Set)
 		return true;
 	else if (obj instanceof FacplDate) 
 		return true;

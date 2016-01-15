@@ -40,7 +40,7 @@ public class PolicySet_ePre extends PolicySet {
 											new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
 													"read", new AttributeName("action", "id"))))),
 					new ExpressionBooleanTree(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.In.class,
-							new AttributeName("subject", "permission"), new Bag("ePre-Access")))));
+							new AttributeName("subject", "permission"), new Set("ePre-Access")))));
 			// Obligations
 		}
 	}
@@ -63,7 +63,7 @@ public class PolicySet_ePre extends PolicySet {
 											new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
 													"read", new AttributeName("action", "id"))))),
 					new ExpressionBooleanTree(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.In.class,
-							new AttributeName("subject", "permission"), new Bag("ePre-Access")))));
+							new AttributeName("subject", "permission"), new Set("ePre-Access")))));
 			// Obligations
 		}
 	}

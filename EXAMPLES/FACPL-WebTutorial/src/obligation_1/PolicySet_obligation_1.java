@@ -32,7 +32,7 @@ public class PolicySet_obligation_1 extends PolicySet {
 					new ExpressionBooleanTree(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
 							"John", new AttributeName("subject", "id"))),
 					new ExpressionBooleanTree(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.In.class,
-							new AttributeName("action", "id"), new Bag("read", "seek")))));
+							new AttributeName("action", "id"), new Set("read", "seek")))));
 			// Obligations
 			addObligation(
 					new Obligation("action1", Effect.PERMIT, ObligationType.M, new AttributeName("subject", "name")));
@@ -47,7 +47,7 @@ public class PolicySet_obligation_1 extends PolicySet {
 			addEffect(Effect.DENY);
 			// Target
 			addTarget(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.In.class,
-					new AttributeName("action", "id"), new Bag("write", "checkout")));
+					new AttributeName("action", "id"), new Set("write", "checkout")));
 			// Obligations
 			addObligation(
 					new Obligation("action2", Effect.DENY, ObligationType.M, new AttributeName("subject", "name")));

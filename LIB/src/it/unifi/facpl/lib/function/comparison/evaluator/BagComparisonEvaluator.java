@@ -1,7 +1,7 @@
 package it.unifi.facpl.lib.function.comparison.evaluator;
 
 import it.unifi.facpl.lib.interfaces.IComparisonEvaluator;
-import it.unifi.facpl.lib.util.Bag;
+import it.unifi.facpl.lib.util.Set;
 import it.unifi.facpl.lib.util.exception.UnsupportedTypeException;
 
 /**
@@ -55,12 +55,12 @@ public class BagComparisonEvaluator implements IComparisonEvaluator {
 
 	@Override
 	public boolean isSubsetOf(Object o1, Object o2) throws Throwable {
-		if (o2 instanceof Bag) {
-			return ((Bag) o2).contains((Bag) o1);
-		} else if (((Bag) o1).getBag_values().size() == 1) {
+		if (o2 instanceof Set) {
+			return ((Set) o2).contains((Set) o1);
+		} else if (((Set) o1).getBag_values().size() == 1) {
 			// o2 of a different type, e.g. a literal, thus if the bag is formed
 			// by only one value they are compared each other
-			return ((Bag) o1).contains(o2);
+			return ((Set) o1).contains(o2);
 		} else {
 			throw new UnsupportedTypeException("Bag (with multiple items) vs"
 					+ o2.getClass().getName(), "Subset");
@@ -69,13 +69,13 @@ public class BagComparisonEvaluator implements IComparisonEvaluator {
 
 	@Override
 	public boolean isAtLestOneMemberOf(Object o1, Object o2) throws Throwable {
-		if (((Bag)o1).isEmpty()){
+		if (((Set)o1).isEmpty()){
 			return false;
 		}
-		if (o2 instanceof Bag) {
+		if (o2 instanceof Set) {
 			Boolean flag = false;
-			for (Object obj : ((Bag) o1).getBag_values()) {
-				if (((Bag) o2).contains(obj)) {
+			for (Object obj : ((Set) o1).getBag_values()) {
+				if (((Set) o2).contains(obj)) {
 					flag = true;
 					break;
 				}
@@ -85,7 +85,7 @@ public class BagComparisonEvaluator implements IComparisonEvaluator {
 			// o2 of a different type, e.g. a literal, thus if the bag is formed
 			// by only one value they are compared each other
 			Boolean flag = false;
-			for (Object obj : ((Bag) o1).getBag_values()) {
+			for (Object obj : ((Set) o1).getBag_values()) {
 				if (o2.equals(obj)) {
 					flag = true;
 					break;
