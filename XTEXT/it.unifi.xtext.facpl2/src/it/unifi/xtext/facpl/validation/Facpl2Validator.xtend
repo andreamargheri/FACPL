@@ -616,12 +616,23 @@ class Facpl2Validator extends AbstractFacpl2Validator {
 			val tCheck = new FacplTypeInference()
 			tCheck.doSwitch(getRoot(bag))
 
+			//Type check on bag
 			var FacplType t = tCheck.doSwitch(bag.getArgs().get(0));
 			for (Expression ob : bag.getArgs()) {
 				t = FacplType.combine(t, tCheck.doSwitch(ob));
 			}
+			
 			if (t.equals(FacplType.ERR))
 				error("Bag elements have to be of the same type", Facpl2Package.Literals.BAG__ARGS)
+			
+			//Avoid nested bags + Names cannot occurs in bags
+			for (Expression ob : bag.getArgs()) {
+				if (ob instanceof Bag )
+					error("Bags cannot contain other bags", Facpl2Package.Literals.BAG__ARGS)
+				if (ob instanceof AttributeName)
+					error("Bags cannot contain attribute name", Facpl2Package.Literals.BAG__ARGS)
+			}	
+				
 		}
 
 		@Check

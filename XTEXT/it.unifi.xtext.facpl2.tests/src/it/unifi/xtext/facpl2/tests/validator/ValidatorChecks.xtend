@@ -13,7 +13,6 @@ import it.unifi.xtext.facpl.facpl2.Facpl2Package
 
 @RunWith(typeof(XtextRunner))
 @InjectWith(typeof(Facpl2InjectorProvider))
-
 class ValidatorChecks {
 
 	@Inject extension ParseHelper<Facpl>
@@ -190,12 +189,65 @@ class ValidatorChecks {
 			null,
 			"Error time value. Must be HH:mm:ss"
 		)
-		
+
 		model.assertError(
 			Facpl2Package::eINSTANCE.dateLiteral,
 			null,
 			"Error date value. Must be yyyy/MM/dd"
 		)
+
+	}
+
+	@Test
+	def void testBag() {
+		var model = '''
+			PolicySet pSet {deny-unless-permit 
+			policies:
+				Rule name (permit target: in(5,bag(5,6))) 
+			}
+		'''.parse
+
+		assertNoErrors(model)
+
+		model = '''
+			PolicySet pSet {deny-unless-permit 
+			policies:
+				Rule name (permit target: in(5,bag(5,true))) 
+			}
+		'''.parse
+
+		model.assertError(
+			Facpl2Package::eINSTANCE.bag,
+			null,
+			"Bag elements have to be of the same type"
+		)
+		
+		model = '''
+			PolicySet pSet {deny-unless-permit 
+			policies:
+				Rule name (permit target: in(5,bag(5,n/id))) 
+			}
+		'''.parse
+
+		model.assertError(
+			Facpl2Package::eINSTANCE.bag,
+			null,
+			"Bags cannot contain attribute name"
+		)
+		
+		model = '''
+			PolicySet pSet {deny-unless-permit 
+			policies:
+				Rule name (permit target: in(5,bag(5,bag(true)))) 
+			}
+		'''.parse
+
+		model.assertError(
+			Facpl2Package::eINSTANCE.bag,
+			null,
+			"Bags cannot contain other bags"
+		)
+
 
 	}
 

@@ -12,6 +12,7 @@ import org.junit.Test
 import java.io.PrintWriter
 import org.eclipse.xtext.junit4.validation.ValidationTestHelper
 import it.unifi.xtext.facpl.generator.Z3Generator
+import it.unifi.xtext.facpl.generator.util.PolicyConstant
 
 @InjectWith(typeof(Facpl2InjectorProvider))
 @RunWith(typeof(XtextRunner))
@@ -184,13 +185,15 @@ public class Z3Generator_Test extends AbstractXtextTests {
 			var model = ('''
 			dec-fun Bool F_Name (String, Int) 
 			dec-fun Bool F_Name2 (String, Bool)
-			dec-fun Bag F (Int, Int) 
+			dec-fun Bag<Int> F (Int, Int) 
 			
 			PolicySet Name {deny-unless-permit
 					target: F_Name(sub/id, "doctor")
 							policies: 
 								Rule r1 (permit)
 			}''').parse
+
+			assertNoErrors(model)
 
 			var flag = false
 			try {
@@ -217,6 +220,8 @@ public class Z3Generator_Test extends AbstractXtextTests {
 						Rule r1 (permit)
 			}''').parse
 
+			assertNoErrors(model)
+
 			var cns = doGenerateZ3(model)
 
 			var PrintWriter writer = new PrintWriter("z3_gen/decFun/file1.smt2", "UTF-8");
@@ -236,6 +241,8 @@ public class Z3Generator_Test extends AbstractXtextTests {
 			}'''
 			).parse
 
+			assertNoErrors(model)
+
 			cns = doGenerateZ3(model)
 
 //			System.out.println(cns)
@@ -253,7 +260,10 @@ public class Z3Generator_Test extends AbstractXtextTests {
 			policies:
 			Rule name (permit target: equal(5,n/id) && F_Name(n/string,F(5, n/id)) || F_Name(n/string,F(n/id1, n/id3)))
 			}'''
+
 			).parse
+
+			assertNoErrors(model)
 
 			cns = doGenerateZ3(model)
 
@@ -269,8 +279,8 @@ public class Z3Generator_Test extends AbstractXtextTests {
 	}
 
 	@Test
-	def void genBags() {
-		
+	def void attrBags() {
+
 		var model = (
 		'''
 		PolicySet pSet {deny-unless-permit 
@@ -278,11 +288,136 @@ public class Z3Generator_Test extends AbstractXtextTests {
 			Rule name (permit target: in(5,n/id) 
 		}''').parse
 
-		var cns = doGenerateZ3(model)
+		/*
+		 * BAG contains attribute, cannot be typed 
+		 */
+		assertNotNull("Policy Name is not well-typed", doGenerateZ3(model))
 
-		var writer = new PrintWriter("z3_gen/decBag/file1.smt2", "UTF-8");
+	}
+
+	@Test
+	def void constantBags() {
+
+		/*
+		 * TestGeneration constants : 1 bag
+		 */
+		var model = ('''
+			PolicySet pSet {deny-unless-permit 
+			policies:
+				Rule name (permit target: in(5,bag(5,6))) 
+			}
+		''').parse
+
+		assertNoErrors(model)
+
+		var PolicyConstant tConst = new PolicyConstant
+
+		tConst.doSwitch(model)
+
+		assertEquals(tConst.bags.size, 1)
+
+		assertEquals(tConst.constants.containsKey("set_1"), true)
+
+		/*
+		 * TestGeneration constants - 2 bags in the policy equal -> 1 bag constant
+		 */
+		model = ('''
+			PolicySet pSet {deny-unless-permit 
+			policies:
+				Rule name (permit target: in(n/id,bag(true, false, false)))
+				Rule nam1 (deny target: in(true, bag(true, false, false))) 
+			}
+		''').parse
+
+		assertNoErrors(model)
+
+		tConst = new PolicyConstant
+
+		tConst.doSwitch(model)
+
+		assertEquals(tConst.bags.size, 1)
+
+		assertEquals(tConst.constants.containsKey("set_1"), true)
+
+		/*
+		 * TestGeneration constants - 2 bags  -> 2 bag constants
+		 */
+		model = ('''
+			PolicySet pSet {deny-unless-permit 
+			policies:
+				Rule name (permit target: in(n/id,bag(true, false, false)))
+				Rule nam1 (deny target: in(true, bag(false, false))) 
+			}
+		''').parse
+
+		assertNoErrors(model)
+
+		tConst = new PolicyConstant
+
+		tConst.doSwitch(model)
+
+		assertEquals(tConst.bags.size, 2)
+
+		assertEquals(tConst.constants.containsKey("set_1"), true)
+		assertEquals(tConst.constants.containsKey("set_2"), true)
+
+		/*
+		 * TestGeneration constants - 2 bags  -> 2 bag constants
+		 */
+		model = ('''
+			PolicySet pSet {deny-unless-permit 
+			policies:
+				Rule name (permit target: in(n/id,bag(true, false, false))) 
+			}
+			
+			PolicySet pSet1 {permit-unless-deny
+			policies: 
+				Rule nam1 (deny target: in(true, bag(false, false)))
+			}
+		''').parse
+
+		assertNoErrors(model)
+
+		tConst = new PolicyConstant
+
+		tConst.doSwitch(model)
+
+		assertEquals(tConst.bags.size, 2)
+
+		assertEquals(tConst.constants.containsKey("set_1"), true)
+		assertEquals(tConst.constants.containsKey("set_2"), true)
+
+	}
+
+	@Test
+	def void genBags() {
+
+		var model = ('''
+			PolicySet pSet {deny-unless-permit 
+			policies:
+				Rule name (permit target: in(7,bag(5,6))) 
+			}
+		''').parse
+
+		assertNoErrors(model)
+
+		var String cns = doGenerateZ3(model)
+
+//		System.out.println(cns)
+
+		/*
+		 * Non assigned attribute considered as boolean
+		 */
+		if (cns.contains('''(declare-const const_set_1 (TValue (Bag Int)))''')) {
+			assertEquals(true, true)
+		} else {
+			assertEquals(false, true)
+		}
+
+		val writer = new PrintWriter("z3_gen/decBag/file1_const.smt2", "UTF-8");
 		writer.println(cns);
 		writer.close();
+
 	}
 
 }

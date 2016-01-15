@@ -14,7 +14,6 @@ import it.unifi.xtext.facpl.facpl2.Facpl2Package
 
 @RunWith(typeof(XtextRunner))
 @InjectWith(typeof(Facpl2InjectorProvider))
-
 /**
  * Test draft used during development - NOT RUNNING
  */
@@ -24,20 +23,19 @@ class TypeInference {
 	@Inject extension ValidationTestHelper
 
 	@Test
-	def void testPolicy(){
+	def void testPolicy() {
 		var model = '''PolicySet Name {permit-overrides 
   		policies: 
   			Rule r1 (permit target: equal("prova",cat/id) && equal("doc","pharmacist") )
   	}'''.parse
-  	
-  		model.assertWarning(
+
+		model.assertWarning(
 			Facpl2Package::eINSTANCE.andExpression,
 			null,
 			FacplType.BOOLEAN.toString
 		)
-  	
-	}
 
+	}
 
 	@Test
 	def void testFunctionINT() {
@@ -610,13 +608,13 @@ class TypeInference {
 			null,
 			FacplType.BOOLEAN.toString
 		)
-	
+
 		model.assertWarning(
 			Facpl2Package::eINSTANCE.bag,
 			null,
 			FacplType.BAG_NAME.toString
 		)
-	
+
 		model.assertWarning(
 			Facpl2Package::eINSTANCE.function,
 			null,
@@ -643,13 +641,13 @@ class TypeInference {
 			null,
 			FacplType.BOOLEAN.toString
 		)
-	
+
 		model.assertWarning(
 			Facpl2Package::eINSTANCE.bag,
 			null,
 			FacplType.BAG_NAME.toString
 		)
-	
+
 		model.assertWarning(
 			Facpl2Package::eINSTANCE.function,
 			null,
@@ -662,9 +660,6 @@ class TypeInference {
 			"EQ:cat/id1 = cat/id2"
 		)
 
-		
-
 	}
 
 }
-	

@@ -34,39 +34,51 @@ class PolicyConstant extends Facpl2Switch<Boolean> {
 
 	private HashMap<String, ConstraintConstant> constants;
 
+	/*
+	 * <String1, String2>  
+	 * -> String1 == string representation of bag
+	 * -> String2 == name of the bag
+	 */
+	private HashMap<String, String> bags;
+
 	new() {
 		this.constants = new HashMap<String, ConstraintConstant>()
+
+		this.bags = new HashMap<String, String>()
 	}
 
 	def getConstants() {
 		return this.constants
 	}
 
+	def getBags() {
+		return this.bags
+	}
+
 	// FACPL CASEs
 	override caseFacpl(Facpl object) {
 		var s = true
-		//check for string in policies
+		// check for string in policies
 		if (object.policies != null) {
 			for (pol : object.policies) {
 				s = s && doSwitch(pol)
 			}
 		}
-		//check if the type string is used by declared function 
-		if (object.declarations != null){
-			for (f : object.declarations){
+		// check if the type string is used by declared function 
+		if (object.declarations != null) {
+			for (f : object.declarations) {
 				s = s && doSwitch(f)
 			}
 		}
 		return s
 	}
 
-
 	/*
 	 * DECLARED FUNCTIONs
 	 */
 	override caseFunctionDeclaration(FunctionDeclaration f) {
-		for (el : f.args){
-			if (el.equals(TypeLiteral.STRING)){
+		for (el : f.args) {
+			if (el.equals(TypeLiteral.STRING)) {
 				val c = new ConstraintConstant(FacplType.STRING, "def_val", "def_val")
 				this.constants.put(c.att_name, c)
 			}
@@ -77,7 +89,6 @@ class PolicyConstant extends Facpl2Switch<Boolean> {
 	/*
 	 * POLICIES
 	 */
-
 	override caseFacplPolicy(FacplPolicy object) {
 		if (object instanceof PolicySet) {
 			return doSwitch(object as PolicySet)
@@ -102,7 +113,7 @@ class PolicyConstant extends Facpl2Switch<Boolean> {
 		for (pol : object.policies) {
 			s = s && doSwitch(pol)
 		}
-		//check obligation
+		// check obligation
 		for (ob : object.obl) {
 			for (expr : ob.expr) {
 				s = s && doSwitch(expr)
@@ -116,7 +127,7 @@ class PolicyConstant extends Facpl2Switch<Boolean> {
 		if (object.target != null) {
 			s = s && doSwitch(object.target)
 		}
-		//check obligation
+		// check obligation
 		for (ob : object.obl) {
 			for (expr : ob.expr) {
 				s = s && doSwitch(expr)
@@ -156,16 +167,31 @@ class PolicyConstant extends Facpl2Switch<Boolean> {
 //BAG
 	override caseBag(Bag bag) {
 		val tCheck = new FacplTypeInference()
-
 		val FacplType t = tCheck.doSwitch(bag)
 
-		if (t.equals(FacplType.NAME)) {
-			
-		//TODO
-		
+		if (!t.equals(FacplType.BAG_NAME)) {
+			// A bag is identified with its toString
+			val setUtils = new SetUtils()
+
+			if (!this.bags.containsKey(setUtils.doSwitch(bag))) {
+				// the bag is not in the set, hence it is added
+				val id = "set_" + (this.bags.size + 1).toString
+				this.bags.put(setUtils.doSwitch(bag), id)
+
+				val c = new ConstraintConstant(t, id, bag)
+
+				this.constants.put(id, c)
+
+			} else {
+				// the bag is already addressed as it is equal to another occurring before 
+			}
+
+		} else {
+			// if types are checked before the generation this case cannot happen
+			throw new Exception("Bags containing attribute names are not supported")
 		}
 
-		throw new Exception()
+		return true
 	}
 
 //Declared function invocation

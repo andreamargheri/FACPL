@@ -40,6 +40,7 @@ import it.unifi.xtext.facpl.generator.generators.z3algorithms.Z3Generator_WeakCo
 import it.unifi.xtext.facpl.generator.generators.z3algorithms.Z3Generator_StrongCon
 import it.unifi.xtext.facpl.facpl2.DeclaredFunction
 import it.unifi.xtext.facpl.facpl2.FunctionDeclaration
+import it.unifi.xtext.facpl.generator.util.SetUtils
 
 class Z3Generator {
 
@@ -48,6 +49,7 @@ class Z3Generator {
 
 	// Declared Constants
 	private HashMap<String,ConstraintConstant> constants
+	private HashMap<String,String> bags
 
 	// String Enumerations
 	private LinkedList<String> stringEls
@@ -104,6 +106,8 @@ class Z3Generator {
 				tConst.doSwitch(resource)
 
 				this.constants = tConst.constants 
+				this.bags = tConst.bags
+				
 				
 				this.stringEls = new LinkedList<String>()
 				for( el : this.constants.values){
@@ -421,9 +425,7 @@ def getFinalConstrPSet(String p_name)'''
 	/* ########################################################################
 	 * Auxiliary Functions for Datatype, functions and attributes declarations 
 	 * ########################################################################
-	 */
-	// TODO NB !!!!!!!!!! -> isValueBag da parametrizzare rispetto al tipo della funzione
-	
+	 */	
 	// Returning the record datatype, the bag and the auxiliary functions
 	def getDatatypeDec(PolicySet pol) '''
 	;#######################
@@ -481,7 +483,12 @@ def getFinalConstrPSet(String p_name)'''
 	}
 
 	// Constants used in Expressions + Obligations
-	def getConstantDec() '''«FOR cst : this.constants.values»
+	def getConstantDec() 
+	'''«FOR cst : this.constants.values»
+		 
+		«IF FacplType.isBag(cst.type)»
+			«getBagConstantDec(cst)»
+		«ELSE»
 			(declare-const «getConstAttr(cst.att_name)» (TValue «getType(cst.type)»))
 			«IF cst.type.equals(FacplType.STRING)»
 			(assert (= (val «getConstAttr(cst.att_name)») s_«cst.value»))
@@ -489,12 +496,80 @@ def getFinalConstrPSet(String p_name)'''
 			(assert (= (val «getConstAttr(cst.att_name)») «cst.value»))
 			«ENDIF»
 			(assert (not (bot «getConstAttr(cst.att_name)»))) 
-			(assert (not (err «getConstAttr(cst.att_name)»))) 
-			 
+			(assert (not (err «getConstAttr(cst.att_name)»)))
+		«ENDIF» 
 		«ENDFOR»
 	'''
 
-	// Constraint Function modeling FACPL
+	/* ########################################
+	 * START DECLARATION BAGS
+	 * ########################################
+	 */
+	def getBagConstantDec (ConstraintConstant cst){
+		val str = new StringBuffer()
+		val bag_id = getConstAttr(cst.att_name)
+		//Declaration Bag Element
+		str.append("(declare-const "+ bag_id +" (TValue "+getType(cst.type)+ "))\n")
+		str.append("(assert (not (bot "+ bag_id + ")))\n") 
+		str.append("(assert (not (err "+ bag_id + ")))\n")
+		
+		//Assertion on the enclosing elements
+		for (var i = 0; i < (cst.value as Bag).args.size ; i ++){
+			str.append("(assert (= (select (val "+ bag_id + ") " + i + ") " + getExpressionValue((cst.value as Bag).args.get(i)) +"))\n")
+		}
+		
+		//Assertion on the possible elements (i.e. no additional elements wrt the previous cannot be present)
+		str.append("(assert (forall ((i Int))\n")
+		str.append("\t (or \n")
+		for (var i = 0; i < (cst.value as Bag).args.size ; i ++){
+			str.append("\t\t (= (select (val "+ bag_id + ") i) " + getExpressionValue((cst.value as Bag).args.get(i)) +")\n")
+		}
+		str.append("\t )\n")
+		str.append("))")
+	}
+	
+
+	/*
+	 * Methods used within bags -> elements are directly values and not TValue
+	 */
+	def dispatch String getExpressionValue (BooleanLiteral e)
+	'''«e.value.toString»''' 
+	
+	def dispatch String getExpressionValue (IntLiteral e)
+	'''«e.value.toString»''' 
+	
+	def dispatch String getExpressionValue (DoubleLiteral e)
+	'''«e.value.toString»''' 
+	
+	def dispatch String getExpressionValue (StringLiteral e)
+	'''s_«e.value.toString»''' 
+	
+	def dispatch String getExpressionValue (DateLiteral e){
+		throw new Exception ("NOT SUPPORTED")
+	}
+	
+	def dispatch String getExpressionValue (TimeLiteral e){
+		throw new Exception ("NOT SUPPORTED")
+	}
+
+	/*
+	 * THESE CASES CANNOT OCCUR -> they are 
+	 */
+	def dispatch String getExpressionValue (Bag e){
+		throw new Exception ("NOT SUPPORTED")
+	}
+
+	def dispatch String getExpressionValue (AttributeName e){
+		throw new Exception ("NOT SUPPORTED")
+	}
+
+	/* ########################################
+	 * END DECLARATION BAGS
+	 * ########################################
+	 */
+
+
+	// Constraint Functions modeling FACPL
 	def getFunctionDec() '''
 	«Z3Generator_Functions::getBoolFunctions()»
 	«Z3Generator_Functions::getEqualityFunctions()»
@@ -542,7 +617,6 @@ def getFinalConstrPSet(String p_name)'''
 	'''
 	
 	//EXPRESSION 
-	
 	def dispatch String getExpressionConst(AndExpression e)
 	'''(FAnd «getExpressionConst(e.left)» «getExpressionConst(e.right)»)'''
 	
@@ -597,6 +671,9 @@ def getFinalConstrPSet(String p_name)'''
 	def getDeclaredFunctionName(FunctionDeclaration function)'''DeclFun_«function.name»'''
 	
 	//Literal 
+	/*
+	 * Methods used everywhere apart from bags
+	 */
 	def dispatch String getExpressionConst (BooleanLiteral e)
 	'''«getConstAttr(e.value.toString)»''' 
 	
@@ -611,10 +688,11 @@ def getFinalConstrPSet(String p_name)'''
 	
 	
 	def dispatch String getExpressionConst (Bag e){
-			throw new Exception ("NOT SUPPORTED")
+		//check for the name of the bag wrt its string representation
+		val s = new SetUtils()
+		return getConstAttr(this.bags.get(s.doSwitch(e))).toString
 	}
 	
-
 	//TODO
 	
 	def dispatch String getExpressionConst (DateLiteral e){

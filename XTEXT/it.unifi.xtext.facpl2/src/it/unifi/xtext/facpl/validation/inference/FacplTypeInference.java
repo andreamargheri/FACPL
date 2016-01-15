@@ -42,9 +42,6 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 		return typeAssignments;
 	}
 
-	/*
-	 * TODO ?
-	 */
 	@Override
 	public FacplType caseImport(Import object) {
 		// TODO Auto-generated method stub
@@ -472,10 +469,8 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 		for (Expression a : bag.getArgs()) {
 			FacplType t = doSwitch(a);
 			if (t.equals(FacplType.NAME)) {
-				// AttributeName
-				list.add((AttributeName) a);
-				if (def == null)
-					def = FacplType.NAME;
+				//BAGs cannot contain Attribute Names
+				return FacplType.ERR;
 			} else if (!t.equals(FacplType.ERR)) {
 				if (def == null) {
 					// first argument checked
