@@ -107,13 +107,14 @@ public class AuthorisationPDP {
 	public String toString() {
 		StringBuffer text = new StringBuffer();
 		text.append("Decision: " + decision.toString());
-		text.append("; Obligations: ");
+		text.append("Obligations: ");
 		if (obligation != null) {
 			for (FulfilledObligation obl : obligation) {
 				text.append(obl.toString());
 			}
+		}else{
+			text.append("[]");
 		}
-		text.append(";");
 		return text.toString();
 	}
 

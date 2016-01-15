@@ -227,7 +227,8 @@ class Facpl2Generator_Menu {
 				result.append("PEP Decision=\n " + resPEP.toString()+"\n");
 				result.append("---------------------------------------------------\n");
 			}
-«««			ShowResult.showResult(result);
+			System.out.println(result.toString());
+			ShowResult.showResult(result);
 		}
 	''' 
 	

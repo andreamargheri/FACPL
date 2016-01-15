@@ -25,12 +25,12 @@ class Facpl2Generator_Name {
 	
 	def static getJavaType (FacplType t){
 		switch (t){
-			case SET_BOOLEAN: return "Bag"
-			case SET_DATETIME: return "Bag"
-			case SET_DOUBLE: return "Bag"
-			case SET_INT: return "Bag"
-			case SET_NAME: return "Bag"
-			case SET_STRING: return "Bag"
+			case SET_BOOLEAN: return "Set"
+			case SET_DATETIME: return "Set"
+			case SET_DOUBLE: return "Set"
+			case SET_INT: return "Set"
+			case SET_NAME: return "Set"
+			case SET_STRING: return "Set"
 			case BOOLEAN: return "Boolean"
 			case DATETIME: return "FacplDate"
 			case DOUBLE: return "Double"

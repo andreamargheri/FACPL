@@ -13,9 +13,9 @@ PAS { Extended Indeterminate : true ;
 		PolicySet ePre { permit-overrides
 			target: equal ( "ePrescription" , resource / type ) policies:
 			Rule readDoc ( permit target: equal ( "doctor" , subject / role ) && equal ( "read" , action / id ) 
-				&& in (subject / permission, bag("ePre-Access") ) )
+				&& in (subject / permission, set("ePre-Access") ) )
 			Rule readPha1 ( permit target: equal ( "pharmacist" , subject / role ) && equal ( "read" , action / id ) 
-				&& in ( subject / permission, bag("ePre-Access") ) )
+				&& in ( subject / permission, set("ePre-Access") ) )
 
 			obl:
 			[ permit M log ( system / time , resource / type , subject / id , action / id ) ]
@@ -24,7 +24,7 @@ PAS { Extended Indeterminate : true ;
 		PolicySet eDis { permit-overrides
 			target: equal ( "eDispensation" , resource / type ) policies:
 			Rule readPha2 ( permit target: equal ( "pharmacist" , subject / role ) && equal ( "read" , action / id ) 
-				&& in (	subject / permission , bag( "eDis-Access" ) ) )
+				&& in (	subject / permission , set( "eDis-Access" ) ) )
 
 			obl:
 			[ permit M log ( system / time , resource / type , subject / id , action / id ) ]
