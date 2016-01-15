@@ -19,6 +19,7 @@ import org.eclipse.xtext.ui.editor.outline.impl.EStructuralFeatureNode
 import it.unifi.xtext.facpl.facpl2.AbstractPolicyIncl
 import it.unifi.xtext.facpl.facpl2.PolicySet
 import org.eclipse.xtext.ui.editor.outline.IOutlineNode
+import it.unifi.xtext.facpl.facpl2.FunctionDeclaration
 
 /**
  * Customization of the default outline structure.
@@ -45,6 +46,10 @@ class Facpl2OutlineTreeProvider extends org.eclipse.xtext.ui.editor.outline.impl
 		return imageHelper.getImage("main.gif");
 	}
 
+	def Image _image(FunctionDeclaration e) {
+		return imageHelper.getImage("main.gif");
+	}
+
 	def Image _image(Import e) {
 		return imageHelper.getImage("Import.gif");
 	}
@@ -66,6 +71,14 @@ class Facpl2OutlineTreeProvider extends org.eclipse.xtext.ui.editor.outline.impl
 			for (Request r : facpl.getRequests()) {
 				createEStructuralFeatureNode(parentNode, r, Facpl2Package.Literals.REQUEST__NAME, _image(r),
 					"req : " + r.getName(), true);
+			}
+		}
+
+		// function declaration
+		if (facpl.declarations != null) {
+			for (f : facpl.declarations) {
+				createEStructuralFeatureNode(parentNode, f, Facpl2Package.Literals.FUNCTION__FUNCTION_ID, _image(f),
+					"fun :" + f.name, true);
 			}
 		}
 
