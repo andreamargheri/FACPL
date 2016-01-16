@@ -5,7 +5,7 @@ import it.unifi.xtext.facpl.validation.FacplType
 
 class Facpl2Generator_Name {
 
-	// Exression Functions
+	// Expression Functions
 	def static getFunName(funID str) {
 		
 		switch (str) {

@@ -29,7 +29,7 @@ public enum FacplType {
 			} else
 				return ERR;
 		}
-	}
+	} 
 
 	public static boolean isSet(FacplType f2) {
 		switch (f2) {

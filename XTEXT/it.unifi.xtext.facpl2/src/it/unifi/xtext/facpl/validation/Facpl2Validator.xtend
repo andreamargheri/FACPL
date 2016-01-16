@@ -64,7 +64,7 @@ class Facpl2Validator extends AbstractFacpl2Validator {
 			if (el instanceof Request) {
 				if (el.getName().equals(request.getName())) {
 					if (flag) {
-						error("Duplicate request name '" + request.getName() + "'",
+			 			error("Duplicate request name '" + request.getName() + "'",
 							Facpl2Package.Literals.REQUEST__NAME);
 						return
 					}

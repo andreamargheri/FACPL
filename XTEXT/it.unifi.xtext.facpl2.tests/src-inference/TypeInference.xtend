@@ -1,5 +1,3 @@
-package it.unifi.xtext.facpl2.tests.type
-
 import com.google.inject.Inject
 import it.unifi.xtext.facpl.Facpl2InjectorProvider
 import it.unifi.xtext.facpl.facpl2.Facpl
@@ -22,7 +20,7 @@ class TypeInference {
 	@Inject extension ParseHelper<Facpl>
 	@Inject extension ValidationTestHelper
 
-	@Test
+//	@Test
 	def void testPolicy() {
 		var model = '''PolicySet Name {permit-overrides 
   		policies: 
@@ -37,7 +35,7 @@ class TypeInference {
 
 	}
 
-	@Test
+//	@Test
 	def void testFunctionINT() {
 
 		var model = '''
@@ -90,7 +88,7 @@ class TypeInference {
 
 	}
 
-	@Test
+//	@Test
 	def void testFunctionBOOL() {
 
 		var model = '''
@@ -157,7 +155,7 @@ class TypeInference {
 		)
 	}
 
-	@Test
+//	@Test
 	def void testFunctionLESSGRE() {
 
 		var model = '''
@@ -245,7 +243,7 @@ class TypeInference {
 
 	}
 
-	@Test
+//	@Test
 	def void checkUnAssigned() {
 
 		var model = '''
@@ -310,7 +308,7 @@ class TypeInference {
 //			"SUB:cat/id1 -> null"
 //		)
 //	}
-	@Test
+//	@Test
 	def void checkAnd() {
 
 		var model = '''
@@ -341,7 +339,7 @@ class TypeInference {
 		)
 	}
 
-	@Test
+//	@Test
 	def void checkOr() {
 
 		var model = '''
@@ -403,7 +401,7 @@ class TypeInference {
 
 	}
 
-	@Test
+//	@Test
 	def void checkNot() {
 
 		var model = '''
@@ -471,7 +469,7 @@ class TypeInference {
 
 	}
 
-	@Test
+//	@Test
 	def void checkSet() {
 		var model = '''
 		PolicySet pSet {deny-unless-permit 
@@ -591,7 +589,7 @@ class TypeInference {
 		)
 	}
 
-	@Test
+//	@Test
 	def void checkInFunction() {
 
 		var model = '''

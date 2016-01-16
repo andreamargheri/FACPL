@@ -6,8 +6,7 @@
       provider-name="Andrea Margheri">
 
    <description>
-      Eclipse Plugin for developing access control policy with FACPL
- (Formal Access Control Policy Language)
+      Eclipse Plugin supporting the specification, analysis and enforcement of FACPL policies
    </description>
 
    <license url="http://www.eclipse.org/legal/epl-v10.html">
