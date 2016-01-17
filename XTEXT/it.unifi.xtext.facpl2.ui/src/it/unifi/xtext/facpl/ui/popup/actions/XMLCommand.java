@@ -1,6 +1,7 @@
 package it.unifi.xtext.facpl.ui.popup.actions;
 
 import it.unifi.xtext.facpl.generator.XMLGenerator;
+import it.unifi.xtext.facpl.validation.Facpl2Xacml_Validator;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,13 +18,19 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.xtext.builder.EclipseResourceFileSystemAccess2;
 import org.eclipse.xtext.generator.IFileSystemAccess;
 import org.eclipse.xtext.generator.OutputConfiguration;
 import org.eclipse.xtext.resource.IResourceDescriptions;
 import org.eclipse.xtext.ui.resource.IResourceSetProvider;
+import it.unifi.xtext.facpl.facpl2.Facpl;
+import it.unifi.xtext.facpl.facpl2.PolicySet;
+import it.unifi.xtext.facpl.facpl2.Request;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -39,11 +46,15 @@ public class XMLCommand extends AbstractHandler implements IHandler {
 	@Inject
 	IResourceSetProvider resourceSetProvider;
 
-	@Inject 
-	//private IFileSystemAccess fileAccess;
+	@Inject
+	// private IFileSystemAccess fileAccess;
 	private Provider<EclipseResourceFileSystemAccess2> fileAccessProvider;
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
+		 
+		Shell activeShell = HandlerUtil.getActiveShell(event);
+		
+		
 		IEditorPart activeEditor = HandlerUtil.getActiveEditor(event);
 		IFile file = (IFile) activeEditor.getEditorInput().getAdapter(IFile.class);
 		IProject project = file.getProject();
@@ -78,9 +89,44 @@ public class XMLCommand extends AbstractHandler implements IHandler {
 		URI uri = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
 		ResourceSet rs = resourceSetProvider.get(project);
 		Resource r = rs.getResource(uri, true);
-
-		generator.doGenerate(r, fsa);
-
+ 
+		//Video text with info on compiled policies 
+		StringBuffer str = new StringBuffer();
+		
+		//Test if well-formed for XACML translation
+		Facpl2Xacml_Validator xacml_val = new Facpl2Xacml_Validator();
+		
+		for(Object e: r.getContents()) {
+			if (e instanceof Facpl){
+			
+				if (((Facpl) e).getPolicies() != null){
+					for (PolicySet p : ((Facpl) e).getPolicies()){
+						if (xacml_val.isXACML_FormedPolicy(p).equals(true)){
+							generator.doGenerateFileXACML_Pol(p, fsa);
+						}else {
+							str.append("Policy " + p.getName() + " does not respect the restriction for the generation of XACML code! Check FACPL's Guide\n");
+						}
+					}
+				}
+				if (((Facpl) e).getRequests() != null){
+					for (Request req : ((Facpl) e).getRequests()){
+						generator.doGenerateFileXACML_Req(req, fsa);
+					}
+				}
+			}
+		}
+		
+		if (str.toString().equals("")){
+			//All elements compiled successfully
+			
+			MessageDialog.openInformation(activeShell, "XACML Translation", "Info for you");
+			
+		}else {
+			//Some elements not compiled successfully
+			MessageDialog.openWarning(activeShell, "XACML Translation", "Info for you");
+		}
+		
+		
 		return null;
 	}
 

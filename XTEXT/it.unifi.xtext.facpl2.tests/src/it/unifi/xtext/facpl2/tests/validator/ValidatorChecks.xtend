@@ -86,6 +86,21 @@ class ValidatorChecks {
 			"Duplicate policy name 'r1'"
 		)
 
+		model = '''
+		PolicySet Name {deny-unless-permit 
+			target: equal(true,cat/id) && less-than(4,n/id)
+			policies: 
+				Rule r1 (permit target: cat/id)
+				Rule r2 (permit target: cat/id)
+				PolicySet Name2 {deny-unless-permit 
+							target: equal(false,cat/id) 
+							policies:
+							Rule r4 (permit target: equal(addition(5,5),n/num))
+				}
+		}'''.parse
+		
+		assertNoErrors(model)
+
 	}
 
 	@Test
