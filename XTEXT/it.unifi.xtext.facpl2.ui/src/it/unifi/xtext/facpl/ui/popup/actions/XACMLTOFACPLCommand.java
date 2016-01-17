@@ -1,7 +1,5 @@
 package it.unifi.xtext.facpl.ui.popup.actions;
 
-import it.unifi.xtext.facpl.ui.popup.actions.XACMLToFACPL.ParserxacmlToFacplEntryPoint;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,6 +22,8 @@ import org.eclipse.xtext.ui.resource.IResourceSetProvider;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
+
+import it.unifi.xtext.facpl.ui.popup.actions.XACMLToFACPL.ParserxacmlToFacplEntryPoint;
 
 public class XACMLTOFACPLCommand extends AbstractHandler implements IHandler {
 

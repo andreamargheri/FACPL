@@ -1,8 +1,5 @@
 package it.unifi.xtext.facpl.ui.popup.actions;
 
-import it.unifi.xtext.facpl.generator.XMLGenerator;
-import it.unifi.xtext.facpl.validation.Facpl2Xacml_Validator;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,19 +18,21 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.xtext.builder.EclipseResourceFileSystemAccess2;
 import org.eclipse.xtext.generator.IFileSystemAccess;
 import org.eclipse.xtext.generator.OutputConfiguration;
 import org.eclipse.xtext.resource.IResourceDescriptions;
 import org.eclipse.xtext.ui.resource.IResourceSetProvider;
-import it.unifi.xtext.facpl.facpl2.Facpl;
-import it.unifi.xtext.facpl.facpl2.PolicySet;
-import it.unifi.xtext.facpl.facpl2.Request;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
+
+import it.unifi.xtext.facpl.facpl2.Facpl;
+import it.unifi.xtext.facpl.facpl2.PolicySet;
+import it.unifi.xtext.facpl.facpl2.Request;
+import it.unifi.xtext.facpl.generator.XMLGenerator;
+import it.unifi.xtext.facpl.validation.Facpl2Xacml_Validator;
 
 public class XMLCommand extends AbstractHandler implements IHandler {
 

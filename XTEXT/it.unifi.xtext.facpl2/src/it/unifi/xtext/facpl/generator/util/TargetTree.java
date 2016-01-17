@@ -26,6 +26,7 @@ public class TargetTree {
 		child.add(el);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public TargetTree clone() {
 		TargetTree tclone = new TargetTree(root.toString());
@@ -161,8 +162,6 @@ public class TargetTree {
 				}
 				for (TargetTree el : fix.getChild()) { // Fix children
 					// one for each child of fix node
-					// System.out.println("copia figli:"+copyAnd.toString());
-					// System.out.println("figlio in pi�:"+el.print());
 					TargetTree r = new TargetTree(Connector.AND, copyAnd, el);
 					// System.out.println("add child "+ r.print());
 					dad.addChild(r);

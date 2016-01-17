@@ -607,7 +607,7 @@
       </wizard>
     
       <wizard
-            category="it.unifi.xtext.facpl.ui"
+            category="org.eclipse.xtext.projectwiz"
             class="it.unifi.xtext.facpl.ui.Facpl2ExecutableExtensionFactory:it.unifi.xtext.facpl.ui.wizard.Facpl2NewProjectWizard"
             icon="icons/Facpl.png"
             id="it.unifi.xtext.facpl.ui.wizard.Facpl2NewProjectWizard"

@@ -1,8 +1,6 @@
 package it.unifi.xtext.facpl.ui.popup.actions;
 
 
-import it.unifi.xtext.facpl.generator.Facpl2Generator_Menu;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,6 +26,8 @@ import org.eclipse.xtext.ui.resource.XtextResourceSetProvider;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
+
+import it.unifi.xtext.facpl.generator.Facpl2Generator_Menu;
 
 public class GenerateFacplCode extends AbstractHandler implements IHandler {
 

@@ -1,8 +1,6 @@
 package it.unifi.xtext.facpl.ui.popup.actions;
 
 
-import it.unifi.xtext.facpl.generator.Facpl2Generator_Menu;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,7 +9,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder; 
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -27,6 +25,8 @@ import org.eclipse.xtext.ui.resource.XtextResourceSetProvider;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
+
+import it.unifi.xtext.facpl.generator.Facpl2Generator_Menu;
 
 public class GenerateEditorFacplCode extends AbstractHandler implements IHandler {
 
