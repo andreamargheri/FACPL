@@ -133,11 +133,11 @@ public class XMLCommand extends AbstractHandler implements IHandler {
 		if (str.toString().equals("")){
 			//All elements compiled successfully
 			
-			MessageDialog.openInformation(activeShell, "XACML Translation", "All policies and/or requests translated");
+			MessageDialog.openInformation(activeShell, "Generate XACML", "All XACML files generated!");
 			
 		}else {
 			//Some elements not compiled successfully
-			MessageDialog.openWarning(activeShell, "XACML Translation", str.toString() + "\n Check FACPL's Guide");
+			MessageDialog.openWarning(activeShell, "Generate XACML", str.toString() + "\n Check FACPL's Guide");
 		}
 		
 		

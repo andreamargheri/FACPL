@@ -16,6 +16,8 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.xtext.builder.EclipseResourceFileSystemAccess2;
@@ -42,6 +44,8 @@ public class GenerateEditorFacplCode extends AbstractHandler implements IHandler
 	private Provider<EclipseResourceFileSystemAccess2> fileAccessProvider;
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
+		Shell activeShell = HandlerUtil.getActiveShell(event);
+		
 		IEditorPart activeEditor = HandlerUtil.getActiveEditor(event);
 		IFile file = (IFile) activeEditor.getEditorInput().getAdapter(IFile.class);
 		IProject project = file.getProject();
@@ -79,6 +83,8 @@ public class GenerateEditorFacplCode extends AbstractHandler implements IHandler
 
 		generator.doGenerateFacpl(r, fsa, "");
 
+		MessageDialog.openInformation(activeShell, "Generate Java Code", "All Java classes generated!");
+		
 		return null;
 	}
 

@@ -47,12 +47,12 @@ public class SMTLIBCommand extends AbstractHandler implements IHandler {
 	private Provider<EclipseResourceFileSystemAccess2> fileAccessProvider;
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		 
+
 		Shell activeShell = HandlerUtil.getActiveShell(event);
-		
-		
+
 		IEditorPart activeEditor = HandlerUtil.getActiveEditor(event);
-		IFile file = (IFile) activeEditor.getEditorInput().getAdapter(IFile.class);
+		IFile file = (IFile) activeEditor.getEditorInput().getAdapter(
+				IFile.class);
 		IProject project = file.getProject();
 
 		IFolder srcGenFolder = project.getFolder("src-smtlib");
@@ -66,8 +66,9 @@ public class SMTLIBCommand extends AbstractHandler implements IHandler {
 
 		final EclipseResourceFileSystemAccess2 fsa = fileAccessProvider.get();
 
-		//OUTPUTConfiguration
-		OutputConfiguration onceOutput = new OutputConfiguration(IFileSystemAccess.DEFAULT_OUTPUT);
+		// OUTPUTConfiguration
+		OutputConfiguration onceOutput = new OutputConfiguration(
+				IFileSystemAccess.DEFAULT_OUTPUT);
 		onceOutput.setDescription("Output Folder");
 		onceOutput.setOutputDirectory("./src-smtlib");
 		onceOutput.setOverrideExistingResources(true);
@@ -75,30 +76,33 @@ public class SMTLIBCommand extends AbstractHandler implements IHandler {
 		onceOutput.setCleanUpDerivedResources(true);
 		onceOutput.setSetDerivedProperty(true);
 
-		Map<String,OutputConfiguration> output = new HashMap<String,OutputConfiguration>();
+		Map<String, OutputConfiguration> output = new HashMap<String, OutputConfiguration>();
 		output.put("DEFAULT_OUTPUT", onceOutput);
 		fsa.setOutputConfigurations(output);
 
 		fsa.setMonitor(new NullProgressMonitor());
 		fsa.setProject(project);
 
-		URI uri = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
+		URI uri = URI.createPlatformResourceURI(file.getFullPath().toString(),
+				true);
 		ResourceSet rs = resourceSetProvider.get(project);
 		Resource r = rs.getResource(uri, true);
- 			
-		for(Object e: r.getContents()) {
-			if (e instanceof Facpl){
-				//Call SMTLIB generation
-				try{
-				generator.doGenerateFileZ3((Facpl) e, fsa);
-				
-				MessageDialog.openInformation(activeShell, "SMTLIB Translation", "All policies translated");
-				}catch (Exception ex){
-					MessageDialog.openWarning(activeShell, "SMTLIB Translation", ex.getMessage());
+
+		for (Object e : r.getContents()) {
+			if (e instanceof Facpl) {
+				// Call SMTLIB generation
+				try {
+					generator.doGenerateFileZ3((Facpl) e, fsa);
+
+					MessageDialog.openInformation(activeShell,
+							"Generate SMT-LIB", "All SMT-LIB code generated!");
+				} catch (Exception ex) {
+					MessageDialog.openWarning(activeShell,
+							"Generate SMT-LIB", ex.getMessage());
 				}
 			}
 		}
-		
+
 		return null;
 	}
 

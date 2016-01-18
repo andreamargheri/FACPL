@@ -20,7 +20,7 @@ import org.eclipse.xtext.junit4.AbstractXtextTests
 class XACMLtranslation_Test extends AbstractXtextTests {
 
 	@Inject extension ParseHelper<Facpl>
-
+	
 	@Inject extension XMLGenerator
 
 	@Inject extension ValidationTestHelper
@@ -64,9 +64,8 @@ class XACMLtranslation_Test extends AbstractXtextTests {
 
 		model = '''
 		PolicySet Name {deny-unless-permit 
-			target: equal(true,cat/id) && less-than(4,n/id)
 			policies: 
-				Rule r1 (permit target: cat/id)
+				Rule r1 (permit target: less-than(4,addition(4,5)))
 				Rule r2 (permit target: cat/id)
 		}'''.parse
 
@@ -149,7 +148,7 @@ class XACMLtranslation_Test extends AbstractXtextTests {
 		val writer = new PrintWriter(file_id, "UTF-8");
 		writer.println(xacml);
 		writer.close();
- 
+  
 		/*
 		 * Test if the XACML policy is well-formed
 		 */

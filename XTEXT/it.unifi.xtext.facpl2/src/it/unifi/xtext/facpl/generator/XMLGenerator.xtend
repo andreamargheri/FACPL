@@ -206,7 +206,7 @@ class XMLGenerator {
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17
 		http://docs.oasis-open.org/xacml/3.0/xacml-core-v3-schema-wd-17.xsd"
-	PolicyId="PolicyEnclosingRule«rule.name»"
+	PolicyId="PolicyEnclosingRule_«rule.name»"
 	Version="1.0"
 	RuleCombiningAlgId="urn:oasis:names:tc:xacml:3.0:policy-combining-algorithm:permit-overrides"
 	MaxDelegationDepth="1">
@@ -675,7 +675,7 @@ class XMLGenerator {
 		}
 
 		// arithmetic function
-		if (id.equals("add")) {
+		if (id.equals("addition")) {
 			if (type.equals(FacplType::INT)) {
 				return "urn:oasis:names:tc:xacml:1.0:function:integer-add"
 			}

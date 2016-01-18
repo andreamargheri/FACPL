@@ -1,0 +1,23 @@
+PolicySet Name { deny-unless-permit-greedy
+target: ((equal(true , cat/id)))&&((less-than(4.0 , n/id)))
+policies: 
+PolicySet PolicyEnclosingRuler1 { permit-overrides-greedy
+policies: 
+Rule r1 (permit  target: cat/id
+)
+}
+PolicySet PolicyEnclosingRuler2 { permit-overrides-greedy
+policies: 
+Rule r2 (permit  target: cat/id
+)
+}
+PolicySet Name2 { deny-unless-permit-greedy
+target: ((equal(false , cat/id)))
+policies: 
+PolicySet PolicyEnclosingRuler4 { permit-overrides-greedy
+policies: 
+Rule r4 (permit  target: equal(addition(5.0, 5.0), n/num)
+)
+}
+}
+}

@@ -1,0 +1,4 @@
+PolicySet policy_deny_all { permit-overrides-greedy
+policies: 
+Rule SimpleRule1 (deny )
+}
