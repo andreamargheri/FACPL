@@ -41,6 +41,7 @@ import it.unifi.xtext.facpl.generator.generators.z3algorithms.Z3Generator_Strong
 import it.unifi.xtext.facpl.facpl2.DeclaredFunction
 import it.unifi.xtext.facpl.facpl2.FunctionDeclaration
 import it.unifi.xtext.facpl.generator.util.SetUtils
+import it.unifi.xtext.facpl.facpl2.FacplPolicy
 
 class Z3Generator {
 
@@ -61,16 +62,35 @@ class Z3Generator {
 	private StringBuffer dec_functions
 	private Boolean flag = false //if declared function occurs
 	
+	/**
+	 * EntryPoint for menu command
+	 */
 	def void doGenerateFileZ3(Facpl resource, IFileSystemAccess fsa) throws Exception{
 
-	// pol can only be a PolicySet
-	fsa.generateFile("_full.smt2", doGenerateZ3(resource));
+		/* Type checks + Initialization of constants and various */
+		initialiseFacplResource(resource)
+	
+		/* Compiling policies */
+		if (resource.getPolicies != null) {
+			for (pol : resource.getPolicies) {
+				fsa.generateFile(pol.getName + ".smt2", createMainConstraint(pol));
+			}
+		}
+		if (resource.main != null){
+			if (resource.main.paf.pdp != null){
+				for (pol : resource.main.paf.pdp.polSet){
+					if (pol.newPolicy != null){
+						fsa.generateFile(pol.newPolicy.getName + ".smt2", createMainConstraint(pol.newPolicy));
+					}
+					//Referred policies are not combined
+				}
+			}
+		}
 
 	}
 
-	def String doGenerateZ3(Facpl resource) throws Exception{
-
-		var StringBuffer str = new StringBuffer()
+	def void initialiseFacplResource (Facpl resource) throws Exception{
+		
 		tInf = new FacplTypeInference()
 		
 		/* Compiling Declared Functions */
@@ -81,45 +101,49 @@ class Z3Generator {
 				flag = true
 			}
 		}
+		
+		/*  Check TYPE INFERENCE */
+		var FacplType type = tInf.doSwitch(resource)
+
+		if (type.equals(FacplType.ERR)) {
+			throw new Exception("FACPL code is not well-typed");
+		}
+
+		this.attribute_Types = tInf.typeAssignments;
+
+		/* Calculate STRING AND ATTRIBUTE constants */
+		val PolicyConstant tConst = new PolicyConstant()
+
+		//constants to check for the whole file
+		tConst.doSwitch(resource)
+
+		this.constants = tConst.constants 
+		this.sets = tConst.sets
+		
+		
+		this.stringEls = new LinkedList<String>()
+		for( el : this.constants.values){
+			if (el.type.equals(FacplType.STRING)){
+				//add string constants
+				stringEls.add(el.value.toString)
+			}
+		}
+
+	}
+
+	/**
+	 * Stub for testing
+	 */
+	def String doGenerateZ3_Test(Facpl resource) throws Exception{
+
+		var StringBuffer str = new StringBuffer()
+		
+		/* Type checks + Initialization of constants and various */
+		initialiseFacplResource(resource)
 
 		/* Compiling Policies that are declared out from the brackets of the Main */
 		if (resource.getPolicies != null) {
 			for (pol : resource.getPolicies) {
-
-				/*
-				 * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-				 */
-				// CHECK INFERENCE TYPES
-				//check for the whole file ????????????????????????????????????????????????????????????
-				var FacplType type = tInf.doSwitch(pol)
-
-				if (type.equals(FacplType.ERR)) {
-					throw new Exception("Policy " + pol.name + " is not well-typed");
-				}
-
-				this.attribute_Types = tInf.typeAssignments;
-
-				// CALCULATE STRING AND ATTRIBUTE constants
-				val PolicyConstant tConst = new PolicyConstant()
-
-				//constants to check for the whole file
-				tConst.doSwitch(resource)
-
-				this.constants = tConst.constants 
-				this.sets = tConst.sets
-				
-				
-				this.stringEls = new LinkedList<String>()
-				for( el : this.constants.values){
-					if (el.type.equals(FacplType.STRING)){
-						//add string constants
-						stringEls.add(el.value.toString)
-					}
-				}
-
-				/*
-				 * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-				 */
 				str.append(createMainConstraint(pol))
 			}
 		}
@@ -132,7 +156,7 @@ class Z3Generator {
  * General structure of the whole constraint file
  * ##############################################
  */
-def createMainConstraint(PolicySet pol) '''
+def createMainConstraint(FacplPolicy pol) '''
 «getDatatypeDec(pol)»
 «IF this.stringEls.size > 0»
 ;################### STRING DECLARATIONs #######################
@@ -155,9 +179,11 @@ def createMainConstraint(PolicySet pol) '''
 ;################################ END ATTRIBUTEs AND CONSTANTs DECLARATION #############################
 
 «««		Building constraint of internal element of the policy
-«FOR el : pol.policies»
-	«getPolicyConstr(el)»
-«ENDFOR»
+«IF pol instanceof PolicySet»
+	«FOR el : pol.policies»
+		«getPolicyConstr(el)»
+	«ENDFOR»
+«ENDIF»
 ;################################ TOP-LEVEL POLICY «pol.name» CONSTRAINTs ###########################
 «««	Creating the constraint of the policy set
 ;##### Policy Target
@@ -173,11 +199,13 @@ def createMainConstraint(PolicySet pol) '''
 	«getObligationConstr(pol.obl,pol.name)»
 «ENDIF»
 «««	STEP 3 -> get constraint of Combining Algorithm
+«IF pol instanceof PolicySet»
 ;##### Policy Combining Algorithm
 «getCombiningAlgorithmConstr(pol)»
+«ENDIF»
 «««	STEP 4 -> building up the four constraints modelling the policy
 ;##### Policy Final Constraints
-«getFinalConstrPSet(pol.name)»
+«getFinalConstrPSet(pol.name,pol)»
 ;################### END TOP-LEVEL POLICY «pol.name» CONSTRAINTs #########################
 '''
 
@@ -268,6 +296,12 @@ def dispatch getInternalPolicyConstr(Rule r)
 def dispatch getInternalPolicyConstr(PolicySet pol) 
 '''
 ;################### START CONSTRAINT POLICY SET «pol.name» #######################
+«««		Building constraint of internal element of the policy
+«IF pol instanceof PolicySet»
+	«FOR el : pol.policies»
+		«getPolicyConstr(el)»
+	«ENDFOR»
+«ENDIF»
 «««	Creating the constraint of the policy set
 ««« STEP 1 -> get constraint of the target
 ;##### Policy Target
@@ -288,7 +322,7 @@ def dispatch getInternalPolicyConstr(PolicySet pol)
 «getCombiningAlgorithmConstr(pol)»
 «««	STEP 4 -> building up the four constraints modelling the policy
 ;##### Policy Constraints
-«getFinalConstrPSet(pol.name)»
+«getFinalConstrPSet(pol.name,pol)»
 
 ;################### END CONSTRAINT POLICY SET «pol.name» #########################
 '''
@@ -313,12 +347,12 @@ def dispatch getInternalPolicyConstr(PolicySet pol)
 		}
 	}
 
-def getFinalConstrPSet(String p_name)'''
+def getFinalConstrPSet(String p_name,FacplPolicy pol)'''
 ;PERMIT
 (define-fun cns_«p_name»_permit () Bool
 	(and 
 		(isTrue cns_target_«p_name»)
-		cns_«p_name»_cmb_final_permit
+		«IF pol instanceof PolicySet»cns_«p_name»_cmb_final_permit«ENDIF»
 		cns_obl_permit_«p_name»
 	)
 )
@@ -326,7 +360,7 @@ def getFinalConstrPSet(String p_name)'''
 (define-fun cns_«p_name»_deny () Bool
 	(and 
 		(isTrue cns_target_«p_name»)
-		cns_«p_name»_cmb_final_deny
+		«IF pol instanceof PolicySet»cns_«p_name»_cmb_final_deny«ENDIF»
 		cns_obl_deny_«p_name»
 	)
 )
@@ -334,7 +368,7 @@ def getFinalConstrPSet(String p_name)'''
 (define-fun cns_«p_name»_notApp () Bool
 	(or
 		(or (isFalse cns_target_«p_name») (bot cns_target_«p_name»))
-		(and (isTrue cns_target_«p_name») cns_«p_name»_cmb_final_notApp)
+		«IF pol instanceof PolicySet»(and (isTrue cns_target_«p_name») cns_«p_name»_cmb_final_notApp)«ENDIF»
 	)
 )
 ;INDET
@@ -342,15 +376,17 @@ def getFinalConstrPSet(String p_name)'''
 	(or 
 		(err cns_target_«p_name»)
 		(not (isBool cns_target_«p_name»))
+		«IF pol instanceof PolicySet»
 		(and (isTrue cns_target_«p_name») cns_«p_name»_cmb_final_indet)
+		«ENDIF»
 		(and 
 			(isTrue cns_target_«p_name»)
-			cns_«p_name»_cmb_final_permit
+			«IF pol instanceof PolicySet»cns_«p_name»_cmb_final_permit«ENDIF»
 			(not cns_obl_permit_«p_name»)
 		)
 		(and 
 			(isTrue cns_target_«p_name»)
-			cns_«p_name»_cmb_final_deny
+			«IF pol instanceof PolicySet»cns_«p_name»_cmb_final_deny«ENDIF»
 			(not cns_obl_deny_«p_name»)
 		)
 	)
@@ -396,8 +432,8 @@ def getFinalConstrPSet(String p_name)'''
 					if (o.expr.size > 0){
 						str.append("(and\n ") 
 						for (e : o.expr){
-								str.append("\t\t (not (bot"+ getExpressionConst(e)+"))")
-								str.append("\t\t (not (err"+ getExpressionConst(e)+ "))")
+								str.append("\t\t (not (bot "+ getExpressionConst(e)+"))")
+								str.append("\t\t (not (err "+ getExpressionConst(e)+ "))")
 						}
 						str.append(")\n")
 					}else{
@@ -427,7 +463,7 @@ def getFinalConstrPSet(String p_name)'''
 	 * ########################################################################
 	 */	
 	// Returning the record datatype, the Set and the auxiliary functions
-	def getDatatypeDec(PolicySet pol) '''
+	def getDatatypeDec(FacplPolicy pol) '''
 	;#######################
 	;RECORD DATATYPE with BOTTOM and ERROR
 	;#######################

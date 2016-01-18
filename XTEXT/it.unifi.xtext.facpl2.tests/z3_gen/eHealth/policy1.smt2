@@ -8,7 +8,7 @@
 ;#######################
 (define-sort Set (T) (Array Int T)) 
 ;################### STRING DECLARATIONs #######################
- (declare-datatypes () ((String s_e-Pre-Write s_pharmacist s_write s_read s_e-Pre-Read s_doctor )))
+ (declare-datatypes () ((String s_doctor s_read s_e-Pre-Write s_e-Pre-Read s_pharmacist s_write )))
 ;################### FACPL FUNCTION DECLARATIONs #######################
 (define-fun isFalse ((x (TValue Bool))) Bool
 	(ite (= x (mk-val false false false)) true false)
@@ -389,6 +389,15 @@
 ;################################ END DATATYPEs AND FUNCTIONs DECLARATION #############################
 
 ;################### ATTRIBUTE DECLARATIONs #######################
+(declare-const n_subject/id (TValue Bool))
+(assert (not (and (bot n_subject/id) (err n_subject/id))))
+ 
+(declare-const n_resource/type (TValue Bool))
+(assert (not (and (bot n_resource/type) (err n_resource/type))))
+ 
+(declare-const n_action/id (TValue String))
+(assert (not (and (bot n_action/id) (err n_action/id))))
+ 
 (declare-const n_system/time (TValue Bool))
 (assert (not (and (bot n_system/time) (err n_system/time))))
  
@@ -398,21 +407,27 @@
 (declare-const n_subject/permission (TValue (Set String)))
 (assert (not (and (bot n_subject/permission) (err n_subject/permission))))
  
-(declare-const n_action/id (TValue String))
-(assert (not (and (bot n_action/id) (err n_action/id))))
- 
-(declare-const n_subject/id (TValue Bool))
-(assert (not (and (bot n_subject/id) (err n_subject/id))))
- 
-(declare-const n_resource/type (TValue Bool))
-(assert (not (and (bot n_resource/type) (err n_resource/type))))
- 
 ;################### CONSTANTs DECLARATIONs #######################
+ 
+(declare-const const_doctor (TValue String))
+(assert (= (val const_doctor) s_doctor))
+(assert (not (bot const_doctor))) 
+(assert (not (err const_doctor)))
+ 
+(declare-const const_read (TValue String))
+(assert (= (val const_read) s_read))
+(assert (not (bot const_read))) 
+(assert (not (err const_read)))
  
 (declare-const const_e-Pre-Write (TValue String))
 (assert (= (val const_e-Pre-Write) s_e-Pre-Write))
 (assert (not (bot const_e-Pre-Write))) 
 (assert (not (err const_e-Pre-Write)))
+ 
+(declare-const const_e-Pre-Read (TValue String))
+(assert (= (val const_e-Pre-Read) s_e-Pre-Read))
+(assert (not (bot const_e-Pre-Read))) 
+(assert (not (err const_e-Pre-Read)))
  
 (declare-const const_pharmacist (TValue String))
 (assert (= (val const_pharmacist) s_pharmacist))
@@ -423,21 +438,6 @@
 (assert (= (val const_write) s_write))
 (assert (not (bot const_write))) 
 (assert (not (err const_write)))
- 
-(declare-const const_read (TValue String))
-(assert (= (val const_read) s_read))
-(assert (not (bot const_read))) 
-(assert (not (err const_read)))
- 
-(declare-const const_e-Pre-Read (TValue String))
-(assert (= (val const_e-Pre-Read) s_e-Pre-Read))
-(assert (not (bot const_e-Pre-Read))) 
-(assert (not (err const_e-Pre-Read)))
- 
-(declare-const const_doctor (TValue String))
-(assert (= (val const_doctor) s_doctor))
-(assert (not (bot const_doctor))) 
-(assert (not (err const_doctor)))
 ;################################ END ATTRIBUTEs AND CONSTANTs DECLARATION #############################
 
 ;################### START CONSTRAINT RULE write #######################

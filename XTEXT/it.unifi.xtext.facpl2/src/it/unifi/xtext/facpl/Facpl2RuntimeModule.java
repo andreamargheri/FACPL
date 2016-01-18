@@ -11,6 +11,5 @@ public class Facpl2RuntimeModule extends it.unifi.xtext.facpl.AbstractFacpl2Runt
 	@Override
 	public Class<? extends org.eclipse.xtext.scoping.IGlobalScopeProvider> bindIGlobalScopeProvider() {
 		return org.eclipse.xtext.scoping.impl.ImportUriGlobalScopeProvider.class;
-	}
-		
+	}		
 }

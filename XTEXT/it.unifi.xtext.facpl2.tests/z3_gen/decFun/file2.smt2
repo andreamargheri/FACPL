@@ -396,11 +396,11 @@
 ;################################ END DATATYPEs AND FUNCTIONs DECLARATION #############################
 
 ;################### ATTRIBUTE DECLARATIONs #######################
-(declare-const n_n/id (TValue Int))
-(assert (not (and (bot n_n/id) (err n_n/id))))
- 
 (declare-const n_sub/id (TValue Int))
 (assert (not (and (bot n_sub/id) (err n_sub/id))))
+ 
+(declare-const n_n/id (TValue Int))
+(assert (not (and (bot n_n/id) (err n_n/id))))
  
 ;################### CONSTANTs DECLARATIONs #######################
  

@@ -9,6 +9,9 @@ public enum FacplType {
 	INT, DOUBLE, STRING, BOOLEAN, DATETIME, SET_INT, SET_DOUBLE, SET_STRING, SET_BOOLEAN, SET_DATETIME, SET_NAME, NAME, ERR, TYPED;
 
 	public static FacplType combine(FacplType f1, FacplType f2) {
+		if (f1 == null || f2 == null){
+			return null;
+		}
 		if (f1.equals(f2)) {
 			return f1;
 		} else if (f1.equals(INT) && f2.equals(DOUBLE) || f2.equals(INT) && f1.equals(DOUBLE)) {

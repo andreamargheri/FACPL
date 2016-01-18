@@ -353,11 +353,6 @@
 ;################### ATTRIBUTE DECLARATIONs #######################
 ;################### CONSTANTs DECLARATIONs #######################
  
-(declare-const const_7 (TValue Int))
-(assert (= (val const_7) 7))
-(assert (not (bot const_7))) 
-(assert (not (err const_7)))
- 
 (declare-const const_set_1 (TValue (Set Int)))
 (assert (not (bot const_set_1)))
 (assert (not (err const_set_1)))
@@ -369,6 +364,11 @@
 		 (= (select (val const_set_1) i) 6)
 	 )
 ))
+ 
+(declare-const const_7 (TValue Int))
+(assert (= (val const_7) 7))
+(assert (not (bot const_7))) 
+(assert (not (err const_7)))
 ;################################ END ATTRIBUTEs AND CONSTANTs DECLARATION #############################
 
 ;################### START CONSTRAINT RULE name #######################

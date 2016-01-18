@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<plugin>
+
+  <extension point="org.eclipse.emf.ecore.generated_package">
+    <package 
+       uri = "http://www.unifi.it/xtext/facpl/Facpl2" 
+       class = "it.unifi.xtext.facpl.facpl2.Facpl2Package"
+       genModel = "model/generated/Facpl2.genmodel" /> 
+	
+  </extension>
+
+
+
+</plugin>

@@ -498,6 +498,21 @@
 	               </reference>
 	            </visibleWhen>
         </command>
+         <command
+               commandId="it.unifi.xtext.facpl.ui.popup.actions.SMTLIBCommand"
+               icon="icons/blue.png"
+               style="push">
+        	 <visibleWhen
+	                  checkEnabled="false">
+	               <reference
+	                     definitionId="it.unifi.xtext.facpl.Facpl2.Editor.opened">
+	               </reference>
+	            </visibleWhen>
+        </command>
+        <separator
+                  name="additions"
+                  visible="true">
+       	</separator>
         <command
             commandId="it.unifi.xtext.facpl.ui.popup.actions.XMLCommand"
             icon="icons/blue.png"
@@ -550,6 +565,14 @@
      </handler>   
   </extension>
   
+   <extension
+        point="org.eclipse.ui.handlers">
+     <handler
+           class="it.unifi.xtext.facpl.ui.Facpl2ExecutableExtensionFactory:it.unifi.xtext.facpl.ui.popup.actions.SMTLIBCommand"
+           commandId="it.unifi.xtext.facpl.ui.popup.actions.SMTLIBCommand">
+     </handler>   
+  </extension>
+  
   <extension
         point="org.eclipse.ui.handlers">
      <handler
@@ -562,17 +585,24 @@
   <!--command-->
   <extension
         point="org.eclipse.ui.commands">
-        <command name="Generate Java From FACPL"
+        <command name="Generate Java Code From FACPL"
               id="it.unifi.xtext.facpl.ui.popup.actions.GenerateCommand">
         </command>
   </extension>
   
   <extension
         point="org.eclipse.ui.commands">
-        <command name="Generate Java From FACPL"
+        <command name="Generate Java Code From FACPL"
               id="it.unifi.xtext.facpl.ui.popup.actions.GenerateEditorCommand">
         </command>
   </extension>
+    
+  <extension
+        point="org.eclipse.ui.commands">
+        <command name="Generate SMT-LIB code From FACPL"
+              id="it.unifi.xtext.facpl.ui.popup.actions.SMTLIBCommand">
+        </command>
+  </extension>  
     
   <extension
         point="org.eclipse.ui.commands">
@@ -607,7 +637,7 @@
       </wizard>
     
       <wizard
-            category="org.eclipse.xtext.projectwiz"
+            category="it.unifi.xtext.facpl.ui"
             class="it.unifi.xtext.facpl.ui.Facpl2ExecutableExtensionFactory:it.unifi.xtext.facpl.ui.wizard.Facpl2NewProjectWizard"
             icon="icons/Facpl.png"
             id="it.unifi.xtext.facpl.ui.wizard.Facpl2NewProjectWizard"
@@ -640,6 +670,10 @@
          	<command
            	commandId="it.unifi.xtext.facpl.ui.popup.actions.GenerateEditorCommand"
            	style="push">
+        	</command>
+        	<command
+               commandId="it.unifi.xtext.facpl.ui.popup.actions.SMTLIBCommand"
+               style="push">
         	</command>
         	<separator
                   name="additions"

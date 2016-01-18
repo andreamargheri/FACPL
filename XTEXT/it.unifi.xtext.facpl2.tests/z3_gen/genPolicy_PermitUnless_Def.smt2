@@ -362,25 +362,25 @@
  
 ;################### CONSTANTs DECLARATIONs #######################
  
-(declare-const const_5.5 (TValue Real))
-(assert (= (val const_5.5) 5.5))
-(assert (not (bot const_5.5))) 
-(assert (not (err const_5.5)))
- 
 (declare-const const_4 (TValue Int))
 (assert (= (val const_4) 4))
 (assert (not (bot const_4))) 
 (assert (not (err const_4)))
+ 
+(declare-const const_false (TValue Bool))
+(assert (= (val const_false) false))
+(assert (not (bot const_false))) 
+(assert (not (err const_false)))
  
 (declare-const const_true (TValue Bool))
 (assert (= (val const_true) true))
 (assert (not (bot const_true))) 
 (assert (not (err const_true)))
  
-(declare-const const_false (TValue Bool))
-(assert (= (val const_false) false))
-(assert (not (bot const_false))) 
-(assert (not (err const_false)))
+(declare-const const_5.5 (TValue Real))
+(assert (= (val const_5.5) 5.5))
+(assert (not (bot const_5.5))) 
+(assert (not (err const_5.5)))
 ;################################ END ATTRIBUTEs AND CONSTANTs DECLARATION #############################
 
 ;################### START CONSTRAINT RULE r1 #######################

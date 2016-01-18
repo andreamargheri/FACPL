@@ -107,9 +107,14 @@ class XMLGenerator {
 	/**
 	 * COMMANDS for interaction with ECLIPSE MENU -> Policies
 	 */
-	 def void doGenerateFileXACML_Pol (PolicySet p,IFileSystemAccess fsa){
-	 	fsa.generateFile(p.name + ".xml", doGenerateXACML(p))
+	 def void doGenerateFileXACML_Pol (FacplPolicy p,IFileSystemAccess fsa){
+ 		fsa.generateFile(p.name + ".xml", doGenerateXACML(p))
 	 }
+	
+//	def dispatch doGenerateFileXACML_Pol (Rule p,IFileSystemAccess fsa){
+//	 	fsa.generateFile(p.name + ".xml", doGenerateXACML(p))
+//	 }
+//	 
 	 
 	 /**
 	 * COMMANDS for interaction with ECLIPSE MENU -> Requests

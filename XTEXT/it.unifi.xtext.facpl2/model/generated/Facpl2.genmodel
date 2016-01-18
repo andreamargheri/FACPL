@@ -3,8 +3,8 @@
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/it.unifi.xtext.facpl2/src-gen" editDirectory="/it.unifi.xtext.facpl2.edit/src"
     editorDirectory="/it.unifi.xtext.facpl2.editor/src" modelPluginID="it.unifi.xtext.facpl2"
     forceOverwrite="true" modelName="Facpl2" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
-    complianceLevel="6.0" copyrightFields="false" editPluginID="it.unifi.xtext.facpl2.edit"
-    editorPluginID="it.unifi.xtext.facpl2.editor" runtimeVersion="2.11">
+    complianceLevel="5.0" copyrightFields="false" editPluginID="it.unifi.xtext.facpl2.edit"
+    editorPluginID="it.unifi.xtext.facpl2.editor" runtimeVersion="2.10">
   <genPackages prefix="Facpl2" basePackage="it.unifi.xtext.facpl" disposableProviderFactory="true"
       fileExtensions="fpl" ecorePackage="Facpl2.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="Facpl2.ecore#//TypeLiteral">

@@ -28,17 +28,13 @@ import org.eclipse.xtext.ui.resource.IResourceSetProvider;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
-import it.unifi.xtext.facpl.facpl2.AbstractPolicyIncl;
 import it.unifi.xtext.facpl.facpl2.Facpl;
-import it.unifi.xtext.facpl.facpl2.PolicySet;
-import it.unifi.xtext.facpl.facpl2.Request;
-import it.unifi.xtext.facpl.generator.XMLGenerator;
-import it.unifi.xtext.facpl.validation.Facpl2Xacml_Validator;
+import it.unifi.xtext.facpl.generator.Z3Generator;
 
-public class XMLCommand extends AbstractHandler implements IHandler {
+public class SMTLIBCommand extends AbstractHandler implements IHandler {
 
 	@Inject
-	private XMLGenerator generator;
+	private Z3Generator generator;
 
 	@Inject
 	IResourceDescriptions resourceDescriptions;
@@ -59,7 +55,7 @@ public class XMLCommand extends AbstractHandler implements IHandler {
 		IFile file = (IFile) activeEditor.getEditorInput().getAdapter(IFile.class);
 		IProject project = file.getProject();
 
-		IFolder srcGenFolder = project.getFolder("src-xml");
+		IFolder srcGenFolder = project.getFolder("src-smtlib");
 		if (!srcGenFolder.exists()) {
 			try {
 				srcGenFolder.create(true, true, new NullProgressMonitor());
@@ -73,7 +69,7 @@ public class XMLCommand extends AbstractHandler implements IHandler {
 		//OUTPUTConfiguration
 		OutputConfiguration onceOutput = new OutputConfiguration(IFileSystemAccess.DEFAULT_OUTPUT);
 		onceOutput.setDescription("Output Folder");
-		onceOutput.setOutputDirectory("./src-xml");
+		onceOutput.setOutputDirectory("./src-smtlib");
 		onceOutput.setOverrideExistingResources(true);
 		onceOutput.setCreateOutputDirectory(true);
 		onceOutput.setCleanUpDerivedResources(true);
@@ -89,57 +85,19 @@ public class XMLCommand extends AbstractHandler implements IHandler {
 		URI uri = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
 		ResourceSet rs = resourceSetProvider.get(project);
 		Resource r = rs.getResource(uri, true);
- 
-		//Video text with info on compiled policies 
-		StringBuffer str = new StringBuffer();
-		
-		//Test if well-formed for XACML translation
-		Facpl2Xacml_Validator xacml_val = new Facpl2Xacml_Validator();
-		
+ 			
 		for(Object e: r.getContents()) {
 			if (e instanceof Facpl){
-			
-				if (((Facpl) e).getPolicies() != null){
-					for (PolicySet p : ((Facpl) e).getPolicies()){
-						if (xacml_val.isXACML_FormedPolicy(p).equals(true)){
-							generator.doGenerateFileXACML_Pol(p, fsa);
-						}else {
-							str.append("Policy " + p.getName() + " does not respect the restriction for the generation of XACML code! Check FACPL's Guide\n");
-						}
-					}
-				}
-				if (((Facpl) e).getRequests() != null){
-					for (Request req : ((Facpl) e).getRequests()){
-						generator.doGenerateFileXACML_Req(req, fsa);
-					}
-				}
-				if (((Facpl) e).getMain()!= null){
-					if (((Facpl) e).getMain().getPaf() != null){
-						for (AbstractPolicyIncl p : ((Facpl) e).getMain().getPaf().getPdp().getPolSet()){
-							if (p.getNewPolicy()!= null){
-								if (xacml_val.isXACML_FormedPolicy(p.getNewPolicy()).equals(true)){
-									generator.doGenerateFileXACML_Pol(p.getNewPolicy(), fsa);
-								}else {
-									str.append("Policy '" + p.getNewPolicy().getName() + "' does not respect the restriction for the generation of XACML code!\n");
-								}
-							} 
-							//ref policy is not translated	
-						}
-					}
+				//Call SMTLIB generation
+				try{
+				generator.doGenerateFileZ3((Facpl) e, fsa);
+				
+				MessageDialog.openInformation(activeShell, "SMTLIB Translation", "All policies translated");
+				}catch (Exception ex){
+					MessageDialog.openWarning(activeShell, "SMTLIB Translation", ex.getMessage());
 				}
 			}
 		}
-		
-		if (str.toString().equals("")){
-			//All elements compiled successfully
-			
-			MessageDialog.openInformation(activeShell, "XACML Translation", "All policies and/or requests translated");
-			
-		}else {
-			//Some elements not compiled successfully
-			MessageDialog.openWarning(activeShell, "XACML Translation", str.toString() + "\n Check FACPL's Guide");
-		}
-		
 		
 		return null;
 	}

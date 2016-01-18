@@ -8,7 +8,7 @@
 ;#######################
 (define-sort Set (T) (Array Int T)) 
 ;################### STRING DECLARATIONs #######################
- (declare-datatypes () ((String s_write s_doctor )))
+ (declare-datatypes () ((String s_doctor s_write )))
 ;################### FACPL FUNCTION DECLARATIONs #######################
 (define-fun isFalse ((x (TValue Bool))) Bool
 	(ite (= x (mk-val false false false)) true false)
@@ -389,16 +389,21 @@
 ;################################ END DATATYPEs AND FUNCTIONs DECLARATION #############################
 
 ;################### ATTRIBUTE DECLARATIONs #######################
-(declare-const n_sub/profile (TValue Int))
-(assert (not (and (bot n_sub/profile) (err n_sub/profile))))
+(declare-const n_sub/id (TValue String))
+(assert (not (and (bot n_sub/id) (err n_sub/id))))
  
 (declare-const n_act/id (TValue String))
 (assert (not (and (bot n_act/id) (err n_act/id))))
  
-(declare-const n_sub/id (TValue String))
-(assert (not (and (bot n_sub/id) (err n_sub/id))))
+(declare-const n_sub/profile (TValue Int))
+(assert (not (and (bot n_sub/profile) (err n_sub/profile))))
  
 ;################### CONSTANTs DECLARATIONs #######################
+ 
+(declare-const const_doctor (TValue String))
+(assert (= (val const_doctor) s_doctor))
+(assert (not (bot const_doctor))) 
+(assert (not (err const_doctor)))
  
 (declare-const const_5 (TValue Int))
 (assert (= (val const_5) 5))
@@ -409,11 +414,6 @@
 (assert (= (val const_write) s_write))
 (assert (not (bot const_write))) 
 (assert (not (err const_write)))
- 
-(declare-const const_doctor (TValue String))
-(assert (= (val const_doctor) s_doctor))
-(assert (not (bot const_doctor))) 
-(assert (not (err const_doctor)))
 ;################################ END ATTRIBUTEs AND CONSTANTs DECLARATION #############################
 
 ;################### START CONSTRAINT RULE r1 #######################

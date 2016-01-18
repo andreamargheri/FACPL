@@ -34,7 +34,7 @@ public class Z3Generator_Test extends AbstractXtextTests {
 
 		assertNoErrors(model)
 
-		var String cns = doGenerateZ3(model)
+		var String cns = doGenerateZ3_Test(model)
 
 		/*
 		 * Non assigned attribute considered as Boolean
@@ -55,7 +55,7 @@ public class Z3Generator_Test extends AbstractXtextTests {
 
 		assertNoErrors(model)
 
-		cns = doGenerateZ3(model)
+		cns = doGenerateZ3_Test(model)
 
 		if (cns.contains('''(declare-const n_cat1/id (TValue Bool))''') &&
 			cns.contains('''(declare-const n_cat/id (TValue Bool))''')) {
@@ -76,7 +76,7 @@ public class Z3Generator_Test extends AbstractXtextTests {
 		/*
 		 * Target has not type boolean, the SMT-LIB cannot be generated 
 		 */
-		assertNotNull("Policy Name is not well-typed", doGenerateZ3(model))
+		assertNotNull("Policy Name is not well-typed", doGenerateZ3_Test(model))
 
 		/*
 		 * Two Boolean and Int
@@ -91,7 +91,7 @@ public class Z3Generator_Test extends AbstractXtextTests {
 
 		assertNoErrors(model)
 
-		cns = doGenerateZ3(model)
+		cns = doGenerateZ3_Test(model)
 
 		if (cns.contains('''(declare-const n_cat1/id (TValue Int))''') &&
 			cns.contains('''(declare-const n_cat/id (TValue Bool))''')) {
@@ -112,7 +112,7 @@ public class Z3Generator_Test extends AbstractXtextTests {
 
 		assertNoErrors(model)
 
-		var String cns = doGenerateZ3(model)
+		var String cns = doGenerateZ3_Test(model)
 
 //		System.out.println(cns)
 		/*
@@ -134,7 +134,7 @@ public class Z3Generator_Test extends AbstractXtextTests {
 
 		assertNoErrors(model)
 
-		cns = doGenerateZ3(model)
+		cns = doGenerateZ3_Test(model)
 
 //		System.out.println(cns)
 		/*
@@ -163,7 +163,7 @@ public class Z3Generator_Test extends AbstractXtextTests {
 
 		assertNoErrors(model)
 
-		var String cns = doGenerateZ3(model)
+		var String cns = doGenerateZ3_Test(model)
 
 		System.out.println(cns)
 
@@ -197,7 +197,7 @@ public class Z3Generator_Test extends AbstractXtextTests {
 
 			var flag = false
 			try {
-				doGenerateZ3(model)
+				doGenerateZ3_Test(model)
 			} catch (Exception e) {
 				// the policy cannot be typed
 				assertEquals(true, true)
@@ -222,7 +222,7 @@ public class Z3Generator_Test extends AbstractXtextTests {
 
 			assertNoErrors(model)
 
-			var cns = doGenerateZ3(model)
+			var cns = doGenerateZ3_Test(model)
 
 			var PrintWriter writer = new PrintWriter("z3_gen/decFun/file1.smt2", "UTF-8");
 			writer.println(cns);
@@ -243,7 +243,7 @@ public class Z3Generator_Test extends AbstractXtextTests {
 
 			assertNoErrors(model)
 
-			cns = doGenerateZ3(model)
+			cns = doGenerateZ3_Test(model)
 
 //			System.out.println(cns)
 			writer = new PrintWriter("z3_gen/decFun/file2.smt2", "UTF-8");
@@ -265,7 +265,7 @@ public class Z3Generator_Test extends AbstractXtextTests {
 
 			assertNoErrors(model)
 
-			cns = doGenerateZ3(model)
+			cns = doGenerateZ3_Test(model)
 
 			writer = new PrintWriter("z3_gen/decFun/file3.smt2", "UTF-8");
 			writer.println(cns);
@@ -291,7 +291,7 @@ public class Z3Generator_Test extends AbstractXtextTests {
 		/*
 		 * BAG contains attribute, cannot be typed 
 		 */
-		assertNotNull("Policy Name is not well-typed", doGenerateZ3(model))
+		assertNotNull("Policy Name is not well-typed", doGenerateZ3_Test(model))
 
 	}
 
@@ -401,7 +401,7 @@ public class Z3Generator_Test extends AbstractXtextTests {
 
 		assertNoErrors(model)
 
-		var String cns = doGenerateZ3(model)
+		var String cns = doGenerateZ3_Test(model)
 
 //		System.out.println(cns)
 
@@ -439,7 +439,7 @@ public class Z3Generator_Test extends AbstractXtextTests {
 		 
 		assertNoErrors(model)
 
-		var String cns = doGenerateZ3(model)
+		var String cns = doGenerateZ3_Test(model)
 		 
 		val writer = new PrintWriter("z3_gen/eHealth/policy1.smt2", "UTF-8");
 		writer.println(cns);

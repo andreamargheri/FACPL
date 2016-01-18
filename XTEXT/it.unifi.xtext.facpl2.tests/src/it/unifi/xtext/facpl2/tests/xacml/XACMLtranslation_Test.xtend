@@ -149,7 +149,7 @@ class XACMLtranslation_Test extends AbstractXtextTests {
 		val writer = new PrintWriter(file_id, "UTF-8");
 		writer.println(xacml);
 		writer.close();
-
+ 
 		/*
 		 * Test if the XACML policy is well-formed
 		 */
