@@ -12,13 +12,6 @@ import org.w3c.dom.Document;
 import it.unifi.xacmlToFacpl.parser.XacmlParser;
 
 public class ParserxacmlToFacplEntryPoint {
-
-//	public static void main(String[] args) throws Exception {
-//		String st = translate("source/policy.xml");
-//		System.out.println(st);
-//		translate("source/epSOS_policySet.xml");
-//		translate("source/request1.xml");
-//	}
 	
 	public static String translate(IFile file) throws Exception{
 		Logger l = Logger.getLogger(ParserxacmlToFacplEntryPoint.class);

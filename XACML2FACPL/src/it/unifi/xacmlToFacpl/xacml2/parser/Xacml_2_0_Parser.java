@@ -94,15 +94,11 @@ public class Xacml_2_0_Parser {
 			el = (JAXBElement<?>) obj;
 			// call policy parser or request parser
 			if (el.getValue() instanceof PolicySetType) {
-//				st.append("{ \n pep: base \n pdp: permit-overrides \n");
 				l.trace("PolicySet Item");
 				this.parsePolicy((PolicySetType) el.getValue(), st);
-//				st.append("\n }");
 			} else if (el.getValue() instanceof PolicyType) {
-//				st.append("{ \n pep: base \n pdp: permit-overrides \n");
 				l.trace("Policy Item");
 				this.parsePolicy((PolicyType) el.getValue(), st);
-//				st.append("\n }");
 			} else if (el.getValue() instanceof RequestType) {
 				l.trace("Request Item");
 				this.parseRequest((RequestType) el.getValue(), st);
@@ -113,10 +109,6 @@ public class Xacml_2_0_Parser {
 			// exception not a XACML Policy or request
 			throw new JAXBException("No XACML Policy or Request to parse");
 		}
-
-		// Marshaller m = jc.createMarshaller();
-		// m.marshal(obj, System.out);
-		//
 		return st;
 	}
 
@@ -132,7 +124,8 @@ public class Xacml_2_0_Parser {
 	private StringBuffer parsePolicy(PolicySetType polSet, StringBuffer st) {
 		// PolicySet
 		if (polSet.getPolicySetId() != "") {
-			st.append("PolicySet " + parseID_Name(polSet.getPolicySetId()) + " { ");
+			st.append("PolicySet " + parseID_Name(polSet.getPolicySetId())
+					+ " { ");
 		} else {
 			// add unique name to polSet
 			l.debug("No policySet identifier. Chosen a default one");
@@ -170,8 +163,8 @@ public class Xacml_2_0_Parser {
 			if (p.getValue() instanceof IdReferenceType) {
 				l.trace("Found a Reference");
 				st.append("include ");
-				st.append(parseID_Name(((IdReferenceType) p.getValue()).getValue())
-						+ "\n");
+				st.append(parseID_Name(((IdReferenceType) p.getValue())
+						.getValue()) + "\n");
 			}
 		}
 
@@ -202,11 +195,11 @@ public class Xacml_2_0_Parser {
 	protected StringBuffer parsePolicy(PolicyType policy, StringBuffer st) {
 		// Policy
 		if (policy.getPolicyId() != "") {
-			st.append("Policy " + parseID_Name(policy.getPolicyId()) + " < ");
+			st.append("PolicySet " + parseID_Name(policy.getPolicyId()) + " { ");
 		} else {
 			// add unique name to polSet
 			l.debug("No policy identifier. Chosen a default one");
-			st.append("Policy policy_" + id + " < ");
+			st.append("Policy policy_" + id + " { ");
 			id++;
 		}
 		st.append(getCombingAlgName(policy.getRuleCombiningAlgId()) + "\n");
@@ -223,7 +216,7 @@ public class Xacml_2_0_Parser {
 				st.append("target: " + s.trim() + "\n");
 
 		}
-		st.append("rules: \n");
+		st.append("policies: \n");
 		// rules
 		for (Object r : policy
 				.getCombinerParametersOrRuleCombinerParametersOrVariableDefinition()) {
@@ -244,7 +237,7 @@ public class Xacml_2_0_Parser {
 		// st.append("obl: " +
 		// parseObls(policy.getObligationExpressions(),policy.getAdviceExpressions())+"\n");
 		// }
-		st.append(">");
+		st.append("}");
 		l.trace("End Policy Parsing");
 		return st;
 	}
@@ -269,7 +262,20 @@ public class Xacml_2_0_Parser {
 				s.append("target: " + st.trim() + "\n");
 
 		}
+		/* Condition is attached to the target */
 		if (r.getCondition() != null) {
+			if (r.getTarget() != null) {
+				if (r.getTarget().getSubjects() != null
+						|| r.getTarget().getActions() != null
+						|| r.getTarget().getEnvironments() != null
+						|| r.getTarget().getResources() != null) {
+					s.append(" && ");
+				} else {
+					s.append(" target: ");
+				}
+			} else {
+				s.append(" target: ");
+			}
 			s.append("condition: " + parseCondition(r.getCondition()) + "\n");
 		}
 
@@ -290,21 +296,21 @@ public class Xacml_2_0_Parser {
 
 	private String getCombingAlgName(String algId) {
 		if (algId.contains("ordered-permit")) {
-			return "ordered-permit-overrides";
+			return "permit-overrides-greedy";
 		} else if (algId.contains("ordered-deny")) {
-			return "ordered-deny-overrides";
+			return "deny-overrides-greedy";
 		} else if (algId.contains("permit-overrides")) {
-			return "permit-overrides";
+			return "permit-overrides-greedy";
 		} else if (algId.contains("deny-overrides")) {
-			return "deny-overrides";
+			return "deny-overrides-greedy";
 		} else if (algId.contains("first")) {
-			return "first-applicable";
+			return "first-applicable-greedy";
 		} else if (algId.contains("only-one")) {
-			return "only-one-applicable";
+			return "only-one-applicable-greedy";
 		} else if (algId.contains("permit-unless")) {
-			return "permit-unless-deny";
+			return "permit-unless-deny-greedy";
 		} else if (algId.contains("deny-unless")) {
-			return "deny-unless-permit";
+			return "deny-unless-permit-greedy";
 		}
 		return "custom-algorithm";
 	}
@@ -669,14 +675,14 @@ public class Xacml_2_0_Parser {
 
 		} else if (ob instanceof SubjectAttributeDesignatorType) {
 			s.append(parseDesignator((AttributeDesignatorType) ob, SUBJECT_ID));
-		} 
-//		else if (ob instanceof ResourceAttributeDesignatorType) {
-//			s.append(parseDesignator((AttributeDesignatorType) ob, RESOURCE_ID));
-//		} else if (ob instanceof EnvironmentAttributeDesignatorType) {
-//			s.append(parseDesignator((AttributeDesignatorType) ob, ENV_ID));
-//		} else if (ob instanceof ActionAttributeDesignatorType) {
-//			s.append(parseDesignator((AttributeDesignatorType) ob, ACTION_ID));
-//		}
+		}
+		// else if (ob instanceof ResourceAttributeDesignatorType) {
+		// s.append(parseDesignator((AttributeDesignatorType) ob, RESOURCE_ID));
+		// } else if (ob instanceof EnvironmentAttributeDesignatorType) {
+		// s.append(parseDesignator((AttributeDesignatorType) ob, ENV_ID));
+		// } else if (ob instanceof ActionAttributeDesignatorType) {
+		// s.append(parseDesignator((AttributeDesignatorType) ob, ACTION_ID));
+		// }
 		else {
 
 			l.debug("Type of expression not supported"
@@ -838,27 +844,29 @@ public class Xacml_2_0_Parser {
 	 */
 	private String parseID(String id) {
 		// replace all ":" in string
-		if (Character.isDigit(id.charAt(0))){
+		if (Character.isDigit(id.charAt(0))) {
 			id = "id_" + id;
 		}
 		id = id.substring(id.lastIndexOf(":") + 1);
 		return id.replace(':', '_').replace(' ', '_').replace('.', '_');
 
 	}
-	
+
 	/**
-	 * Remove xacml namespace and return the identifier Available for Element Name
+	 * Remove xacml namespace and return the identifier Available for Element
+	 * Name
 	 * 
 	 * @param id
 	 * @return
 	 */
 	private String parseID_Name(String id) {
 		// replace all ":" in string
-		if (Character.isDigit(id.charAt(0))){
+		if (Character.isDigit(id.charAt(0))) {
 			id = "id_" + id;
 		}
 		id = id.substring(id.lastIndexOf(":") + 1);
-		return id.replace(':', '_').replace(' ', '_').replace('.', '_').replace("-", "_");
+		return id.replace(':', '_').replace(' ', '_').replace('.', '_')
+				.replace("-", "_");
 
 	}
 
@@ -960,8 +968,8 @@ public class Xacml_2_0_Parser {
 		for (SubjectType s : request.getSubject()) {
 			for (AttributeType a : s.getAttribute()) {
 				String datatype = a.getDataType();
-				st.append("(" + SUBJECT_ID + "/" + parseID_Name(a.getAttributeId())
-						+ ", ");
+				st.append("(" + SUBJECT_ID + "/"
+						+ parseID_Name(a.getAttributeId()) + ", ");
 				for (AttributeValueType val : a.getAttributeValue()) {
 					st.append(parseValueR(val, datatype));
 				}
@@ -972,8 +980,8 @@ public class Xacml_2_0_Parser {
 		for (ResourceType s : request.getResource()) {
 			for (AttributeType a : s.getAttribute()) {
 				String datatype = a.getDataType();
-				st.append("(" + RESOURCE_ID + "/" + parseID_Name(a.getAttributeId())
-						+ ", ");
+				st.append("(" + RESOURCE_ID + "/"
+						+ parseID_Name(a.getAttributeId()) + ", ");
 				for (AttributeValueType val : a.getAttributeValue()) {
 					st.append(parseValueR(val, datatype));
 				}
@@ -982,7 +990,8 @@ public class Xacml_2_0_Parser {
 		}
 		// Environment
 		for (AttributeType a : request.getEnvironment().getAttribute()) {
-			st.append("(" + ENV_ID + "/" + parseID_Name(a.getAttributeId()) + ", ");
+			st.append("(" + ENV_ID + "/" + parseID_Name(a.getAttributeId())
+					+ ", ");
 			String datatype = a.getDataType();
 			for (AttributeValueType val : a.getAttributeValue()) {
 				st.append(parseValueR(val, datatype));

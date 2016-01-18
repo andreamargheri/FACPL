@@ -12,6 +12,7 @@ public class Facpl2ProjectCreatorCustom extends Facpl2ProjectCreator {
 	protected List<String> getRequiredBundles() {
 		List<String> s=  super.getRequiredBundles();
 		s.add("FACPL_Library");
+//		s.add("XacmlToFacpl");
 		return s;
 	}
 

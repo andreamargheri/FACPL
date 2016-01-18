@@ -16,6 +16,8 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -50,59 +52,66 @@ public class SMTLIBCommand extends AbstractHandler implements IHandler {
 
 		Shell activeShell = HandlerUtil.getActiveShell(event);
 
-		IEditorPart activeEditor = HandlerUtil.getActiveEditor(event);
-		IFile file = (IFile) activeEditor.getEditorInput().getAdapter(
-				IFile.class);
-		IProject project = file.getProject();
+		ISelection selection = HandlerUtil.getCurrentSelection(event);
+		if (selection instanceof IStructuredSelection) {
+			IStructuredSelection structuredSelection = (IStructuredSelection) selection;
+			Object firstElement = structuredSelection.getFirstElement();
+			if (firstElement instanceof IFile) {
+				IFile file = (IFile) firstElement;
+				IProject project = file.getProject();
 
-		IFolder srcGenFolder = project.getFolder("src-smtlib");
-		if (!srcGenFolder.exists()) {
-			try {
-				srcGenFolder.create(true, true, new NullProgressMonitor());
-			} catch (CoreException e) {
-				e.printStackTrace();
-			}
-		}
+				IFolder srcGenFolder = project.getFolder("src-smtlib");
+				if (!srcGenFolder.exists()) {
+					try {
+						srcGenFolder.create(true, true,
+								new NullProgressMonitor());
+					} catch (CoreException e) {
+						e.printStackTrace();
+					}
+				}
 
-		final EclipseResourceFileSystemAccess2 fsa = fileAccessProvider.get();
+				final EclipseResourceFileSystemAccess2 fsa = fileAccessProvider
+						.get();
 
-		// OUTPUTConfiguration
-		OutputConfiguration onceOutput = new OutputConfiguration(
-				IFileSystemAccess.DEFAULT_OUTPUT);
-		onceOutput.setDescription("Output Folder");
-		onceOutput.setOutputDirectory("./src-smtlib");
-		onceOutput.setOverrideExistingResources(true);
-		onceOutput.setCreateOutputDirectory(true);
-		onceOutput.setCleanUpDerivedResources(true);
-		onceOutput.setSetDerivedProperty(true);
+				// OUTPUTConfiguration
+				OutputConfiguration onceOutput = new OutputConfiguration(
+						IFileSystemAccess.DEFAULT_OUTPUT);
+				onceOutput.setDescription("Output Folder");
+				onceOutput.setOutputDirectory("./src-smtlib");
+				onceOutput.setOverrideExistingResources(true);
+				onceOutput.setCreateOutputDirectory(true);
+				onceOutput.setCleanUpDerivedResources(true);
+				onceOutput.setSetDerivedProperty(true);
 
-		Map<String, OutputConfiguration> output = new HashMap<String, OutputConfiguration>();
-		output.put("DEFAULT_OUTPUT", onceOutput);
-		fsa.setOutputConfigurations(output);
+				Map<String, OutputConfiguration> output = new HashMap<String, OutputConfiguration>();
+				output.put("DEFAULT_OUTPUT", onceOutput);
+				fsa.setOutputConfigurations(output);
 
-		fsa.setMonitor(new NullProgressMonitor());
-		fsa.setProject(project);
+				fsa.setMonitor(new NullProgressMonitor());
+				fsa.setProject(project);
 
-		URI uri = URI.createPlatformResourceURI(file.getFullPath().toString(),
-				true);
-		ResourceSet rs = resourceSetProvider.get(project);
-		Resource r = rs.getResource(uri, true);
+				URI uri = URI.createPlatformResourceURI(file.getFullPath()
+						.toString(), true);
+				ResourceSet rs = resourceSetProvider.get(project);
+				Resource r = rs.getResource(uri, true);
 
-		for (Object e : r.getContents()) {
-			if (e instanceof Facpl) {
-				// Call SMTLIB generation
-				try {
-					generator.doGenerateFileZ3((Facpl) e, fsa);
+				for (Object e : r.getContents()) {
+					if (e instanceof Facpl) {
+						// Call SMTLIB generation
+						try {
+							generator.doGenerateFileZ3((Facpl) e, fsa);
 
-					MessageDialog.openInformation(activeShell,
-							"Generate SMT-LIB", "All SMT-LIB code generated!");
-				} catch (Exception ex) {
-					MessageDialog.openWarning(activeShell,
-							"Generate SMT-LIB", ex.getMessage());
+							MessageDialog.openInformation(activeShell,
+									"Generate SMT-LIB",
+									"All SMT-LIB code generated!");
+						} catch (Exception ex) {
+							MessageDialog.openWarning(activeShell,
+									"Generate SMT-LIB", ex.getMessage());
+						}
+					}
 				}
 			}
 		}
-
 		return null;
 	}
 
