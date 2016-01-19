@@ -338,34 +338,6 @@
 			</command>
 		</menuContribution>
 	</extension>
-    <!-- quickfix marker resolution generator for it.unifi.xtext.facpl.Facpl2 -->
-    <extension
-            point="org.eclipse.ui.ide.markerResolution">
-        <markerResolutionGenerator
-            class="it.unifi.xtext.facpl.ui.Facpl2ExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-            markerType="it.unifi.xtext.facpl.ui.facpl2.check.fast">
-            <attribute
-                name="FIXABLE_KEY"
-                value="true">
-            </attribute>
-        </markerResolutionGenerator>
-        <markerResolutionGenerator
-            class="it.unifi.xtext.facpl.ui.Facpl2ExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-            markerType="it.unifi.xtext.facpl.ui.facpl2.check.normal">
-            <attribute
-                name="FIXABLE_KEY"
-                value="true">
-            </attribute>
-        </markerResolutionGenerator>
-        <markerResolutionGenerator
-            class="it.unifi.xtext.facpl.ui.Facpl2ExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-            markerType="it.unifi.xtext.facpl.ui.facpl2.check.expensive">
-            <attribute
-                name="FIXABLE_KEY"
-                value="true">
-            </attribute>
-        </markerResolutionGenerator>
-    </extension>
    	<!-- Rename Refactoring -->
 	<extension point="org.eclipse.ui.handlers">
 		<handler 

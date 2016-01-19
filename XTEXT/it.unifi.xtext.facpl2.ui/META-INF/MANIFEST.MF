@@ -42,7 +42,6 @@ Export-Package: it.unifi.xtext.facpl.ui.contentassist;uses:="org.eclipse.emf.eco
  it.unifi.xtext.facpl.ui.internal;uses:="org.osgi.framework,com.google.inject,org.eclipse.ui.plugin",
  it.unifi.xtext.facpl.ui.quickfix;uses:="org.eclipse.xtext.ui.editor.quickfix"
 Bundle-Activator: it.unifi.xtext.facpl.ui.internal.Facpl2Activator
-Bundle-ClassPath: lib/xacml2facpl.jar,
- icons/,
- .,
+Bundle-ClassPath: .,
+ lib/xacml2facpl.jar,
  lib/jaxp-api-1.4.5.jar
