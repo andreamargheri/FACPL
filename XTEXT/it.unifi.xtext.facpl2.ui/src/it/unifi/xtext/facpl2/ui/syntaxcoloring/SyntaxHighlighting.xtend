@@ -20,7 +20,7 @@ class SyntaxHighlighting extends DefaultHighlightingConfiguration {
 	public static final String NUMBER = "number";
 	public static final String STRUCT_NAME = "structured name";
 	public static final String DATETIME = "datetime";
-	public static final String BAG = "bag";
+	public static final String SET = "set";
 	public static final String MAIN = "main";
 
 	override configure(IHighlightingConfigurationAcceptor acceptor) {
@@ -36,7 +36,7 @@ class SyntaxHighlighting extends DefaultHighlightingConfiguration {
 		acceptor.acceptDefaultHighlighting(STRING_ID, "String_ID", stringTextStyle());
 		acceptor.acceptDefaultHighlighting(NUMBER, "Number", numberTextStyle());
 		acceptor.acceptDefaultHighlighting(STRUCT_NAME, "Structured Name", attributeTextStyle());
-		acceptor.acceptDefaultHighlighting(BAG, "Bag value", stringBagStyle());
+		acceptor.acceptDefaultHighlighting(SET, "Set value", stringSetStyle());
 		acceptor.acceptDefaultHighlighting(MAIN, "Main option", stringMainStyle());
 		acceptor.acceptDefaultHighlighting(DATETIME, "DateTime", dateStyle());
 	}
@@ -95,7 +95,7 @@ class SyntaxHighlighting extends DefaultHighlightingConfiguration {
 //		textStyle.setColor(new RGB(42, 0, 255));
 //		return textStyle;
 //	}
-	def TextStyle stringBagStyle() {
+	def TextStyle stringSetStyle() {
 		var TextStyle textStyle = defaultTextStyle().copy();
 		textStyle.setColor(new RGB(131, 111, 255));
 		textStyle.setStyle(SWT.ITALIC);

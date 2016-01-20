@@ -5,7 +5,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="importEl" upperBound="-1"
         eType="#//Import" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="declarations" upperBound="-1"
-        eType="#//FunDecl" containment="true"/>
+        eType="#//FunctionDeclaration" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="policies" upperBound="-1"
         eType="#//PolicySet" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="requests" upperBound="-1"
@@ -24,7 +24,7 @@
         upperBound="-1" eType="#//Request"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="paf" eType="#//PAF" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="FunDecl">
+  <eClassifiers xsi:type="ecore:EClass" name="FunctionDeclaration">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//TypeLiteral"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="args" unique="false" upperBound="-1"
@@ -36,7 +36,11 @@
     <eLiterals name="Bool" value="2" literal="Bool"/>
     <eLiterals name="String" value="3" literal="String"/>
     <eLiterals name="DateTime" value="4" literal="DateTime"/>
-    <eLiterals name="Bag" value="5" literal="Bag"/>
+    <eLiterals name="SetInt" value="5" literal="Set&lt;Int>"/>
+    <eLiterals name="SetDouble" value="6" literal="Set&lt;Double>"/>
+    <eLiterals name="SetBool" value="7" literal="Set&lt;Bool>"/>
+    <eLiterals name="SetString" value="8" literal="Set&lt;String>"/>
+    <eLiterals name="SetDateTime" value="9" literal="Set&lt;DateTime>"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PAF">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="pep" eType="#//PEPAlg"/>
@@ -133,7 +137,7 @@
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DeclaredFunction" eSuperTypes="#//Expression">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="functionId" eType="#//FunDecl"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="functionId" eType="#//FunctionDeclaration"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="args" upperBound="-1" eType="#//Expression"
         containment="true"/>
   </eClassifiers>
@@ -150,7 +154,7 @@
     <eLiterals name="DIVIDE" value="9" literal="divide"/>
     <eLiterals name="MULTIPLY" value="10" literal="multiply"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Bag" eSuperTypes="#//Expression">
+  <eClassifiers xsi:type="ecore:EClass" name="Set" eSuperTypes="#//Expression">
     <eStructuralFeatures xsi:type="ecore:EReference" name="args" upperBound="-1" eType="#//Expression"
         containment="true"/>
   </eClassifiers>

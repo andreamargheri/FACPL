@@ -6,28 +6,32 @@ import it.unifi.xtext.facpl.facpl2.AbstractPolicyIncl;
 import it.unifi.xtext.facpl.facpl2.AndExpression;
 import it.unifi.xtext.facpl.facpl2.AttributeName;
 import it.unifi.xtext.facpl.facpl2.AttributeReq;
-import it.unifi.xtext.facpl.facpl2.Bag;
 import it.unifi.xtext.facpl.facpl2.BooleanLiteral;
 import it.unifi.xtext.facpl.facpl2.DateLiteral;
 import it.unifi.xtext.facpl.facpl2.DeclaredFunction;
 import it.unifi.xtext.facpl.facpl2.DoubleLiteral;
 import it.unifi.xtext.facpl.facpl2.Expression;
+import it.unifi.xtext.facpl.facpl2.Facpl;
 import it.unifi.xtext.facpl.facpl2.FacplPolicy;
 import it.unifi.xtext.facpl.facpl2.Function;
+import it.unifi.xtext.facpl.facpl2.FunctionDeclaration;
+import it.unifi.xtext.facpl.facpl2.Import;
 import it.unifi.xtext.facpl.facpl2.IntLiteral;
 import it.unifi.xtext.facpl.facpl2.NotExpression;
 import it.unifi.xtext.facpl.facpl2.Obligation;
 import it.unifi.xtext.facpl.facpl2.OrExpression;
 import it.unifi.xtext.facpl.facpl2.PolicySet;
 import it.unifi.xtext.facpl.facpl2.Rule;
+import it.unifi.xtext.facpl.facpl2.Set;
 import it.unifi.xtext.facpl.facpl2.StringLiteral;
-import it.unifi.xtext.facpl.facpl2.TypeLiteral;
+import it.unifi.xtext.facpl.facpl2.TimeLiteral;
 import it.unifi.xtext.facpl.facpl2.funID;
 import it.unifi.xtext.facpl.facpl2.util.Facpl2Switch;
 import it.unifi.xtext.facpl.validation.FacplType;
 
 public class FacplTypeInference extends Facpl2Switch<FacplType> {
 
+	// private static FacplTypeInference instance;
 	private SubstitutionSet typeAssignments;
 
 	public FacplTypeInference() {
@@ -36,6 +40,38 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 
 	public SubstitutionSet getTypeAssignments() {
 		return typeAssignments;
+	}
+
+	@Override
+	public FacplType caseImport(Import object) {
+		// TODO Auto-generated method stub
+		return super.caseImport(object);
+	}
+
+	@Override
+	public FacplType caseFacpl(Facpl f) {
+		for (PolicySet p : f.getPolicies()) {
+			FacplType t = doSwitch(p);
+			if (t.equals(FacplType.ERR))
+				return FacplType.ERR;
+		}
+		return FacplType.TYPED;
+	}
+
+	@Override
+	public FacplType caseAbstractPolicyIncl(AbstractPolicyIncl p) {
+		FacplType t;
+		if (p.getNewPolicy() != null) {
+			t = doSwitch(p.getNewPolicy());
+			if (t.equals(FacplType.ERR))
+				return FacplType.ERR;
+		}
+		if (p.getRefPol() != null) {
+			t = doSwitch(p.getRefPol());
+			if (t.equals(FacplType.ERR))
+				return FacplType.ERR;
+		}
+		return FacplType.TYPED;
 	}
 
 	/*
@@ -49,7 +85,7 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 		FacplType t;
 		if (p.getTarget() != null) {
 			t = doSwitch(p.getTarget());
-			if (p.equals(FacplType.ERR)) {
+			if (t.equals(FacplType.ERR)) {
 				return FacplType.ERR;
 			}
 		}
@@ -157,7 +193,7 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 					this.typeAssignments.add((AttributeName) exp.getRight(), FacplType.BOOLEAN);
 					return FacplType.BOOLEAN;
 				}
-			} else if (arg1.equals(arg2)){
+			} else if (arg1.equals(arg2)) {
 				return FacplType.BOOLEAN;
 			}
 
@@ -192,7 +228,7 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 					this.typeAssignments.add((AttributeName) exp.getRight(), FacplType.BOOLEAN);
 					return FacplType.BOOLEAN;
 				}
-			}else if (arg1.equals(arg2)){
+			} else if (arg1.equals(arg2)) {
 				return FacplType.BOOLEAN;
 			}
 
@@ -219,26 +255,40 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 		}
 	}
 
-	// DECLARED FUNCTIONs
+	// DECLARED FUNCTION Invocation
 	@Override
 	public FacplType caseDeclaredFunction(DeclaredFunction fun) {
-		
-		return toFacplType(fun.getFunctionId().getType());
-		
-	}
-	
+		if (fun.getFunctionId().getArgs().size() != fun.getArgs().size()) {
+			return FacplType.ERR;
+		}
 
-	private FacplType toFacplType(TypeLiteral type) {
-		switch (type) {
-		case BAG: return FacplType.BAG_NAME;
-		case BOOL: return FacplType.BOOLEAN;
-		case DOUBLE : return FacplType.DOUBLE;
-		case INT : return FacplType.INT;
-		case STRING : return FacplType.STRING;
-		case DATE_TIME : return FacplType.DATE;
-		default : 
-			return FacplType.BAG_NAME;
-		}	
+		for (int i = 0; i < fun.getArgs().size(); i++) {
+			// Iterate on arguments
+			FacplType t_inf = doSwitch(fun.getArgs().get(i));
+
+			FacplType t_dec = FacplType.getFacplType(fun.getFunctionId().getArgs().get(i));
+			FacplType t_combined = FacplType.combine(t_inf, t_dec);
+			if (t_combined.equals(FacplType.ERR)) {
+				return FacplType.ERR;
+			} else if (t_inf.equals(FacplType.NAME)) {
+				// add in type-assignment the inferred type if a name is
+				// occurring (the inferred type is that of function declaration)
+				try {
+					this.typeAssignments.add((AttributeName) fun.getArgs().get(i), t_combined);
+				} catch (Exception e) {
+					// type assignment cannot be done due to a conflicting type
+					// assertion
+					return FacplType.ERR;
+				}
+			}
+		}
+		return FacplType.getFacplType(fun.getFunctionId().getType());
+	}
+
+	// DECLARED FUNCTION
+	@Override
+	public FacplType caseFunctionDeclaration(FunctionDeclaration fun) {
+		return FacplType.getFacplType(fun.getType());
 	}
 
 	// FUNCTIONs
@@ -248,7 +298,7 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 		FacplType arg2 = doSwitch(fun.getArg2());
 
 		funID idFun = fun.getFunctionId();
-		
+
 		try {
 			// Math Functions: ADD, DIVIDE, SUBTRACT, MULTIPLY
 			if (idFun.equals(funID.ADD) || idFun.equals(funID.DIVIDE) || idFun.equals(funID.SUBTRACT)
@@ -260,8 +310,10 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 						this.typeAssignments.add((AttributeName) fun.getArg1(), arg2);
 						return arg2;
 					} else if (arg2.equals(FacplType.NAME)) {
+						//both attribute names
 						this.typeAssignments.addEquality((AttributeName) fun.getArg1(), (AttributeName) fun.getArg2());
 						this.typeAssignments.add((AttributeName) fun.getArg1(), FacplType.INT);
+						this.typeAssignments.add((AttributeName) fun.getArg2(), FacplType.INT);
 						return FacplType.INT;
 					}
 				} else if (arg2.equals(FacplType.NAME)) {
@@ -269,11 +321,13 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 						this.typeAssignments.add((AttributeName) fun.getArg2(), arg1);
 						return arg1;
 					} else if (arg1.equals(FacplType.NAME)) {
+						//both attribute names
 						this.typeAssignments.addEquality((AttributeName) fun.getArg1(), (AttributeName) fun.getArg2());
 						this.typeAssignments.add((AttributeName) fun.getArg1(), FacplType.INT);
+						this.typeAssignments.add((AttributeName) fun.getArg2(), FacplType.INT);
 						return FacplType.INT;
 					}
-				}else if (arg1.equals(arg2)){
+				} else if (arg1.equals(arg2)) {
 					return arg1;
 				}
 
@@ -293,10 +347,10 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 						this.typeAssignments.add((AttributeName) fun.getArg2(), arg1);
 						return FacplType.BOOLEAN;
 					} else if (arg1.equals(FacplType.NAME)) {
-						this.typeAssignments.addEquality((AttributeName) fun.getArg1(), (AttributeName) fun.getArg2());
+						this.typeAssignments.addEquality((AttributeName) fun.getArg2(), (AttributeName) fun.getArg2());
 						return FacplType.BOOLEAN;
 					}
-				} else if (arg1.equals(arg2)){
+				} else if (arg1.equals(arg2)) {
 					return FacplType.BOOLEAN;
 				}
 			}
@@ -304,40 +358,46 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 			// IN
 			if (idFun.equals(funID.IN)) {
 				if (arg1.equals(FacplType.NAME)) {
-					if (FacplType.isBag(arg2)) {
-						if (arg2.equals(FacplType.BAG_NAME)) {
+					if (FacplType.isSet(arg2)) {
+						if (arg2.equals(FacplType.SET_NAME)) {
 							// this.typeAssignments.add((AttributeName)
-							// fun.getArg1(),FacplType.getTypeBag(arg2) );
-							this.typeAssignments.addEquality((AttributeName) fun.getArg1(),
-									getAttributeNameFromBag((Bag) fun.getArg2()));
+							// fun.getArg1(),FacplType.getTypeSet(arg2) );
+							if (fun.getArg2() instanceof Set) {
+								this.typeAssignments.addEquality((AttributeName) fun.getArg1(),
+										getAttributeNameFromSet((Set) fun.getArg2()));
+							}else{
+								//the Set is returned by a declared function, hence do nothing  
+							}
 						} else {
-							// the bag literal has a type different from NAME
-							this.typeAssignments.add((AttributeName) fun.getArg1(), FacplType.getTypeBag(arg2));
+							// the Set literal has a type different from NAME
+							this.typeAssignments.add((AttributeName) fun.getArg1(), FacplType.getTypeSet(arg2));
 						}
 						return FacplType.BOOLEAN;
 					} else if (arg2.equals(FacplType.NAME)) {
 						this.typeAssignments.addEquality((AttributeName) fun.getArg1(), (AttributeName) fun.getArg2());
-						// signed arg2 as a bag element
-						this.typeAssignments.addBagName((AttributeName) fun.getArg2());
+						// signed arg2 as a Set element
+						this.typeAssignments.addSetName((AttributeName) fun.getArg2());
 						return FacplType.BOOLEAN;
 					}
 				} else {
 					if (!arg1.equals(FacplType.ERR)) {
 						// arg1 has a type
 						if (arg2.equals(FacplType.NAME)) {
-							// assert name in arg2 to be of the type BAG_* where
+							// assert name in arg2 to be of the type Set_* where
 							// * is the type of arg1
-							this.typeAssignments.add((AttributeName) fun.getArg2(), FacplType.getBagType(arg1));
+							this.typeAssignments.add((AttributeName) fun.getArg2(), FacplType.getSetType(arg1));
 							return FacplType.BOOLEAN;
-						} else if (arg2.equals(FacplType.BAG_NAME)) {
-							// assert one name within BAG_NAME of arg2 to be of
+						} else if (arg2.equals(FacplType.SET_NAME)) {
+							// assert one name within Set_NAME of arg2 to be of
 							// the type of arg1
-							this.typeAssignments.add(getAttributeNameFromBag((Bag) fun.getArg2()), arg1);
+							this.typeAssignments.add(getAttributeNameFromSet((Set) fun.getArg2()), arg1);
 							return FacplType.BOOLEAN;
 						}
 					}
-				} 
-				if (arg1.equals(arg2)){
+				}
+				// No attribute name occurs in the function. Check if the types
+				// are compatible
+				if (arg1.equals(arg2) || arg1.equals(FacplType.getTypeSet(arg2))) {
 					return FacplType.BOOLEAN;
 				}
 			}
@@ -350,8 +410,13 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 						this.typeAssignments.add((AttributeName) fun.getArg1(), arg2);
 						return FacplType.BOOLEAN;
 					} else if (arg2.equals(FacplType.NAME)) {
+						//both attribute names
 						this.typeAssignments.addEquality((AttributeName) fun.getArg1(), (AttributeName) fun.getArg2());
 						this.typeAssignments.add((AttributeName) fun.getArg1(), FacplType.INT);
+						this.typeAssignments.add((AttributeName) fun.getArg2(), FacplType.INT);
+						return FacplType.BOOLEAN;
+					} else if (arg2.equals(FacplType.DATETIME)) {
+						this.typeAssignments.add((AttributeName) fun.getArg1(), FacplType.DATETIME);
 						return FacplType.BOOLEAN;
 					}
 				} else if (arg2.equals(FacplType.NAME)) {
@@ -359,28 +424,35 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 						this.typeAssignments.add((AttributeName) fun.getArg2(), arg1);
 						return FacplType.BOOLEAN;
 					} else if (arg1.equals(FacplType.NAME)) {
+						//both attribute names
 						this.typeAssignments.addEquality((AttributeName) fun.getArg1(), (AttributeName) fun.getArg2());
 						this.typeAssignments.add((AttributeName) fun.getArg1(), FacplType.INT);
+						this.typeAssignments.add((AttributeName) fun.getArg2(), FacplType.INT);
+						return FacplType.BOOLEAN;
+					} else if (arg1.equals(FacplType.DATETIME)){
+						this.typeAssignments.add((AttributeName) fun.getArg2(), FacplType.DATETIME);
 						return FacplType.BOOLEAN;
 					}
-				} else if (arg1.equals(arg2)){
+				} else if (arg1.equals(arg2)) {
 					return FacplType.BOOLEAN;
 				}
 			}
 			return FacplType.ERR;
 
 		} catch (Exception e) {
+			// type assignment cannot be done due to a conflicting type
+			// assertion
 			return FacplType.ERR;
 		}
 	}
 
 	/**
-	 * Return an attribute name present in the bag, null otherwise
+	 * Return an attribute name present in the Set, null otherwise
 	 * 
 	 * @param arg2
 	 * @return
 	 */
-	private AttributeName getAttributeNameFromBag(Bag arg) {
+	private AttributeName getAttributeNameFromSet(Set arg) {
 		AttributeName n = null;
 		for (Expression e : arg.getArgs()) {
 			if (e instanceof AttributeName)
@@ -391,28 +463,31 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 
 	// Literal
 	@Override
-	public FacplType caseBag(Bag bag) {
+	public FacplType caseSet(Set Set) {
 		FacplType def = null;
 		LinkedList<AttributeName> list = new LinkedList<AttributeName>();
-		for (Expression a : bag.getArgs()) {
+		for (Expression a : Set.getArgs()) {
 			FacplType t = doSwitch(a);
 			if (t.equals(FacplType.NAME)) {
-				// AttributeName
-				list.add((AttributeName) a);
-				if (def == null)
-					def = FacplType.NAME;
+				//Sets cannot contain Attribute Names
+				return FacplType.ERR;
 			} else if (!t.equals(FacplType.ERR)) {
-				// Int < Double
-				if ((def.equals(FacplType.INT) && t.equals(FacplType.DOUBLE))
-						|| (def.equals(FacplType.DOUBLE) && t.equals(FacplType.INT))) {
-					def = FacplType.DOUBLE;
-					break;
-				}
-				// Unification Check
-				if (def.equals(FacplType.NAME) || def.equals(t)) {
+				if (def == null) {
+					// first argument checked
 					def = t;
 				} else {
-					return FacplType.ERR;
+					// Int < Double
+					if ((def.equals(FacplType.INT) && t.equals(FacplType.DOUBLE))
+							|| (def.equals(FacplType.DOUBLE) && t.equals(FacplType.INT))) {
+						def = FacplType.DOUBLE;
+						break;
+					}
+					// Unification Check
+					if (def.equals(FacplType.NAME) || def.equals(t)) {
+						def = t;
+					} else {
+						return FacplType.ERR;
+					}
 				}
 			} else {
 				return FacplType.ERR;
@@ -422,7 +497,7 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 		// assignments
 		try {
 			if (!def.equals(FacplType.NAME)) {
-				// Type of BAG not equal to name, no need to use equalities
+				// Type of Set not equal to name, no need to use equalities
 				for (AttributeName el : list) {
 					this.typeAssignments.add(el, def);
 				}
@@ -432,7 +507,7 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 					this.typeAssignments.addEquality(list.get(i), list.get(i + 1));
 				}
 			}
-			return FacplType.getBagType(def);
+			return FacplType.getSetType(def);
 		} catch (Exception e) {
 			return FacplType.ERR;
 		}
@@ -445,7 +520,7 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 
 	@Override
 	public FacplType caseDateLiteral(DateLiteral object) {
-		return FacplType.DATE;
+		return FacplType.DATETIME;
 	}
 
 	@Override
@@ -456,6 +531,11 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 	@Override
 	public FacplType caseIntLiteral(IntLiteral object) {
 		return FacplType.INT;
+	}
+
+	@Override
+	public FacplType caseTimeLiteral(TimeLiteral object) {
+		return FacplType.DATETIME;
 	}
 
 	@Override
@@ -484,16 +564,20 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 	public String toEq() {
 		return this.typeAssignments.toEq();
 	}
-	
+
 	/*
-	 * This case is used only as TypeCheck, it is not used as Type Inferece
+	 * This case is used only as TypeCheck, it is not used as Type Inference
 	 */
-	
+
 	@Override
 	public FacplType caseAttributeReq(AttributeReq object) {
 		FacplType f = doSwitch(object.getValue().get(0));
 		for (Expression e : object.getValue()) {
-			f = FacplType.combine(f, doSwitch(e));
+			FacplType t = doSwitch(e);
+			if (t.equals(FacplType.NAME))
+				//Names are not accepted in requests. Returned immediately 
+				return t;
+			f = FacplType.combine(f, t);
 			if (f.equals(FacplType.ERR))
 				return FacplType.ERR;
 		}

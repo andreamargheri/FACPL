@@ -18,12 +18,12 @@ public class SubstitutionSet {
 
 	private HashMap<String, FacplType> substitution;
 	private HashMap<String, String> equalities;
-	private LinkedList<String> bag_Attributes;
+	private LinkedList<String> set_Attributes;
 
 	public SubstitutionSet() {
 		this.substitution = new HashMap<String, FacplType>();
 		this.equalities = new HashMap<String, String>();
-		this.bag_Attributes = new LinkedList<String>();
+		this.set_Attributes = new LinkedList<String>();
 	}
 
 	public HashMap<String, FacplType> getSubstitutions() {
@@ -36,6 +36,9 @@ public class SubstitutionSet {
 					|| (getBound(var).equals(FacplType.DOUBLE) && type.equals(FacplType.INT))) {
 				this.substitution.put(_nameToString(var), FacplType.DOUBLE);
 			} else if (!getBound(var).equals(type)) {
+				//Type cannot be unified
+				//Put the inferred type of the variable as error
+				this.substitution.put(_nameToString(var), FacplType.ERR);
 				throw new Exception("Attribute Name Types cannot be unified");
 			}
 		} else {
@@ -52,17 +55,22 @@ public class SubstitutionSet {
 		return this.substitution.get(_nameToString(n)) != null;
 	}
 
+	/**
+	 * Return the inferred type for the attribute name in input
+	 * @param n
+	 * @return
+	 */
 	public FacplType getBound(AttributeName n) {
 		return this.substitution.get(_nameToString(n));
 	}
 
 	
-	public void addBagName(AttributeName a){
-		this.bag_Attributes.add(_nameToString(a));
+	public void addSetName(AttributeName a){
+		this.set_Attributes.add(_nameToString(a));
 	}
 	
-	public LinkedList<String> getBag_Attributes() {
-		return bag_Attributes;
+	public LinkedList<String> getSet_Attributes() {
+		return set_Attributes;
 	}
 	
 	@Override

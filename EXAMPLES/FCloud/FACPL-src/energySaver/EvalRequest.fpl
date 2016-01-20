@@ -1,0 +1,19 @@
+import 'EnergySaver.fpl'
+import 'Request_Cloud.fpl'
+
+
+
+PAS{
+	Extended Indeterminate: false;
+	Java Package : "energySaver";
+	Requests To Evaluate: RequestCreate, RequestCreate, RequestCreate, RequestCreateP,  RequestRelease, RequestReleaseN; 
+	
+	pep:	deny-biased
+	pdp:	permit-overrides
+	
+	PolicySet CloudSystem { deny-unless-permit 
+ 	 	policies: 
+ 	 		include Create_Policies
+ 	 		include Release_Policies
+ 	 }
+}

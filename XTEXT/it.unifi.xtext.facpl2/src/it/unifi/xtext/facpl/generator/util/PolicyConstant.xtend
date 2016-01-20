@@ -2,7 +2,6 @@ package it.unifi.xtext.facpl.generator.util
 
 import it.unifi.xtext.facpl.facpl2.util.Facpl2Switch
 import it.unifi.xtext.facpl.validation.FacplType
-import java.util.LinkedList
 import it.unifi.xtext.facpl.facpl2.BooleanLiteral
 import it.unifi.xtext.facpl.facpl2.DoubleLiteral
 import it.unifi.xtext.facpl.facpl2.IntLiteral
@@ -18,37 +17,78 @@ import it.unifi.xtext.facpl.facpl2.Function
 import it.unifi.xtext.facpl.facpl2.Rule
 
 import it.unifi.xtext.facpl.facpl2.PolicySet
-import it.unifi.xtext.facpl.facpl2.Bag
 import it.unifi.xtext.facpl.facpl2.FacplPolicy
 import it.unifi.xtext.facpl.facpl2.Facpl
 import it.unifi.xtext.facpl.facpl2.AbstractPolicyIncl
 import it.unifi.xtext.facpl.validation.inference.FacplTypeInference
 import java.util.HashMap
+import it.unifi.xtext.facpl.facpl2.DeclaredFunction
+import it.unifi.xtext.facpl.facpl2.FunctionDeclaration
+import it.unifi.xtext.facpl.facpl2.TypeLiteral
+import it.unifi.xtext.facpl.facpl2.Set
 
+/**
+ * Collect constants used in a policy
+ */
 class PolicyConstant extends Facpl2Switch<Boolean> {
 
 	private HashMap<String, ConstraintConstant> constants;
 
+	/*
+	 * <String1, String2>  
+	 * -> String1 == string representation of bag
+	 * -> String2 == name of the bag
+	 */
+	private HashMap<String, String> sets;
+
 	new() {
 		this.constants = new HashMap<String, ConstraintConstant>()
+
+		this.sets = new HashMap<String, String>()
 	}
 
-	def getConstants (){
+	def getConstants() {
 		return this.constants
 	}
-	
-	//FACPL CASEs
-	
+
+	def getSets() {
+		return this.sets
+	}
+
+	// FACPL CASEs
 	override caseFacpl(Facpl object) {
 		var s = true
+		// check for string in policies
 		if (object.policies != null) {
 			for (pol : object.policies) {
 				s = s && doSwitch(pol)
 			}
 		}
+		// check if the type string is used by declared function 
+		if (object.declarations != null) {
+			for (f : object.declarations) {
+				s = s && doSwitch(f)
+			}
+		}
 		return s
 	}
 
+	/*
+	 * DECLARED FUNCTIONs
+	 */
+	override caseFunctionDeclaration(FunctionDeclaration f) {
+		for (el : f.args) {
+			if (el.equals(TypeLiteral.STRING)) {
+				val c = new ConstraintConstant(FacplType.STRING, "def_val", "def_val")
+				this.constants.put(c.att_name, c)
+			}
+		}
+		return true
+	}
+
+	/*
+	 * POLICIES
+	 */
 	override caseFacplPolicy(FacplPolicy object) {
 		if (object instanceof PolicySet) {
 			return doSwitch(object as PolicySet)
@@ -73,6 +113,7 @@ class PolicyConstant extends Facpl2Switch<Boolean> {
 		for (pol : object.policies) {
 			s = s && doSwitch(pol)
 		}
+		// check obligation
 		for (ob : object.obl) {
 			for (expr : ob.expr) {
 				s = s && doSwitch(expr)
@@ -86,6 +127,7 @@ class PolicyConstant extends Facpl2Switch<Boolean> {
 		if (object.target != null) {
 			s = s && doSwitch(object.target)
 		}
+		// check obligation
 		for (ob : object.obl) {
 			for (expr : ob.expr) {
 				s = s && doSwitch(expr)
@@ -98,7 +140,7 @@ class PolicyConstant extends Facpl2Switch<Boolean> {
 		return doSwitch(object)
 	}
 
-//merging list
+//merging list 
 	override caseAndExpression(AndExpression object) {
 		doSwitch(object.left)
 		doSwitch(object.right)
@@ -122,16 +164,42 @@ class PolicyConstant extends Facpl2Switch<Boolean> {
 		return true
 	}
 
-//BAG
-	override caseBag(Bag bag) {
-		val FacplTypeInference tInf = new FacplTypeInference()
+//SET
+	override caseSet(Set set) {
+		val tCheck = new FacplTypeInference()
+		val FacplType t = tCheck.doSwitch(set)
 
-		val FacplType t = tInf.doSwitch(bag)
+		if (!t.equals(FacplType.SET_NAME)) {
+			// A bag is identified with its toString
+			val setUtils = new SetUtils()
 
-		if (t.equals(FacplType.NAME)) {
+			if (!this.sets.containsKey(setUtils.doSwitch(set))) {
+				// the bag is not in the set, hence it is added
+				val id = "set_" + (this.sets.size + 1).toString
+				this.sets.put(setUtils.doSwitch(set), id)
+
+				val c = new ConstraintConstant(t, id, set)
+
+				this.constants.put(id, c)
+
+			} else {
+				// the bag is already addressed as it is equal to another occurring before 
+			}
+
+		} else {
+			// if types are checked before the generation this case cannot happen
+			throw new Exception("Bags containing attribute names are not supported")
 		}
 
-		throw new Exception()
+		return true
+	}
+
+//Declared function invocation
+	override caseDeclaredFunction(DeclaredFunction f) {
+		for (arg : f.args) {
+			doSwitch(arg)
+		}
+		return true
 	}
 
 //Attribute name -> empty list of constants

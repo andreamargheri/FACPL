@@ -25,7 +25,7 @@ import it.unifi.xtext.facpl.facpl2.IntLiteral
 import it.unifi.xtext.facpl.facpl2.StringLiteral
 import it.unifi.xtext.facpl.facpl2.TimeLiteral
 import it.unifi.xtext.facpl.facpl2.DateLiteral
-import it.unifi.xtext.facpl.facpl2.Bag
+import it.unifi.xtext.facpl.facpl2.Set
 import it.unifi.xtext.facpl.facpl2.Function
 import it.unifi.xtext.facpl.facpl2.funID
 import it.unifi.xtext.facpl.facpl2.DoubleLiteral
@@ -38,6 +38,10 @@ import it.unifi.xtext.facpl.generator.generators.z3algorithms.Z3Generator_FirstA
 import it.unifi.xtext.facpl.generator.generators.z3algorithms.Z3Generator_OneApp
 import it.unifi.xtext.facpl.generator.generators.z3algorithms.Z3Generator_WeakCon
 import it.unifi.xtext.facpl.generator.generators.z3algorithms.Z3Generator_StrongCon
+import it.unifi.xtext.facpl.facpl2.DeclaredFunction
+import it.unifi.xtext.facpl.facpl2.FunctionDeclaration
+import it.unifi.xtext.facpl.generator.util.SetUtils
+import it.unifi.xtext.facpl.facpl2.FacplPolicy
 
 class Z3Generator {
 
@@ -46,6 +50,7 @@ class Z3Generator {
 
 	// Declared Constants
 	private HashMap<String,ConstraintConstant> constants
+	private HashMap<String,String> sets
 
 	// String Enumerations
 	private LinkedList<String> stringEls
@@ -53,75 +58,117 @@ class Z3Generator {
 	//TypeInference
 	private FacplTypeInference tInf
 	
+	//DeclaredFunction 
+	private StringBuffer dec_functions
+	private Boolean flag = false //if declared function occurs
 	
+	/**
+	 * EntryPoint for menu command
+	 */
 	def void doGenerateFileZ3(Facpl resource, IFileSystemAccess fsa) throws Exception{
 
-		// pol can only be a PolicySet
-		fsa.generateFile("_full.smt2", doGenerateZ3(resource));
+		/* Type checks + Initialization of constants and various */
+		initialiseFacplResource(resource)
+	
+		/* Compiling policies */
+		if (resource.getPolicies != null) {
+			for (pol : resource.getPolicies) {
+				fsa.generateFile(pol.getName + ".smt2", createMainConstraint(pol));
+			}
+		}
+		if (resource.main != null){
+			if (resource.main.paf.pdp != null){
+				for (pol : resource.main.paf.pdp.polSet){
+					if (pol.newPolicy != null){
+						fsa.generateFile(pol.newPolicy.getName + ".smt2", createMainConstraint(pol.newPolicy));
+					}
+					//Referred policies are not combined
+				}
+			}
+		}
 
 	}
 
-	def String doGenerateZ3(Facpl resource) throws Exception{
+	def void initialiseFacplResource (Facpl resource) throws Exception{
+		
+		tInf = new FacplTypeInference()
+		
+		/* Compiling Declared Functions */
+		if (resource.declarations != null){
+			dec_functions = new StringBuffer()
+			for (dec : resource.declarations){
+				dec_functions.append(createDeclFunctionConstr(dec)+"\n")
+				flag = true
+			}
+		}
+		
+		/*  Check TYPE INFERENCE */
+		var FacplType type = tInf.doSwitch(resource)
+
+		if (type.equals(FacplType.ERR)) {
+			throw new Exception("FACPL code is not well-typed");
+		}
+
+		this.attribute_Types = tInf.typeAssignments;
+
+		/* Calculate STRING AND ATTRIBUTE constants */
+		val PolicyConstant tConst = new PolicyConstant()
+
+		//constants to check for the whole file
+		tConst.doSwitch(resource)
+
+		this.constants = tConst.constants 
+		this.sets = tConst.sets
+		
+		
+		this.stringEls = new LinkedList<String>()
+		for( el : this.constants.values){
+			if (el.type.equals(FacplType.STRING)){
+				//add string constants
+				stringEls.add(el.value.toString)
+			}
+		}
+
+	}
+
+	/**
+	 * Stub for testing
+	 */
+	def String doGenerateZ3_Test(Facpl resource) throws Exception{
 
 		var StringBuffer str = new StringBuffer()
+		
+		/* Type checks + Initialization of constants and various */
+		initialiseFacplResource(resource)
 
 		/* Compiling Policies that are declared out from the brackets of the Main */
 		if (resource.getPolicies != null) {
 			for (pol : resource.getPolicies) {
-
-				/*
-				 * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-				 */
-				// CHECK INFERENCE TYPES
-				tInf = new FacplTypeInference()
-				var FacplType type = tInf.doSwitch(pol)
-
-				if (type.equals(FacplType.ERR)) {
-					throw new Exception("Policy " + pol.name + " is not well-typed");
-				}
-
-				this.attribute_Types = tInf.typeAssignments;
-
-				// CALCULATE STRING AND ATTRIBUTE constants
-				val PolicyConstant tConst = new PolicyConstant()
-
-				tConst.doSwitch(pol)
-
-				this.constants = tConst.constants 
-				
-				this.stringEls = new LinkedList<String>()
-				for( el : this.constants.values){
-					if (el.type.equals(FacplType.STRING)){
-						//add string constants
-						stringEls.add(el.value.toString)
-					}
-				}
-
-				/*
-				 * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-				 */
 				str.append(createMainConstraint(pol))
 			}
 		}
 
 		return str.toString
 	}
+	
 
 /* ##############################################
  * General structure of the whole constraint file
  * ##############################################
  */
-def createMainConstraint(PolicySet pol) '''
+def createMainConstraint(FacplPolicy pol) '''
 «getDatatypeDec(pol)»
 «IF this.stringEls.size > 0»
 ;################### STRING DECLARATIONs #######################
 «getStringDec()»
 «ENDIF»
-;################## BAG s
-
-;?????????????????????????
-
-;################### FUNCTION DECLARATIONs #######################
+«IF flag»
+;################### FUNCTIONS DECLARED BY POLICY (TO BE IMPLEMENTED) ##################
+;#TODO: stub definitions for declared functions
+«dec_functions.toString»
+;################### END FUNCTIONS DECLARED BY POLICY ##################
+«ENDIF»
+;################### FACPL FUNCTION DECLARATIONs #######################
 «getFunctionDec()»
 ;################################ END DATATYPEs AND FUNCTIONs DECLARATION #############################
 
@@ -129,10 +176,14 @@ def createMainConstraint(PolicySet pol) '''
 «getAttributeDec()»
 ;################### CONSTANTs DECLARATIONs #######################
 «getConstantDec()»
+;################################ END ATTRIBUTEs AND CONSTANTs DECLARATION #############################
+
 «««		Building constraint of internal element of the policy
-«FOR el : pol.policies»
-	«getPolicyConstr(el)»
-«ENDFOR»
+«IF pol instanceof PolicySet»
+	«FOR el : pol.policies»
+		«getPolicyConstr(el)»
+	«ENDFOR»
+«ENDIF»
 ;################################ TOP-LEVEL POLICY «pol.name» CONSTRAINTs ###########################
 «««	Creating the constraint of the policy set
 ;##### Policy Target
@@ -148,11 +199,13 @@ def createMainConstraint(PolicySet pol) '''
 	«getObligationConstr(pol.obl,pol.name)»
 «ENDIF»
 «««	STEP 3 -> get constraint of Combining Algorithm
+«IF pol instanceof PolicySet»
 ;##### Policy Combining Algorithm
 «getCombiningAlgorithmConstr(pol)»
+«ENDIF»
 «««	STEP 4 -> building up the four constraints modelling the policy
 ;##### Policy Final Constraints
-«getFinalConstrPSet(pol.name)»
+«getFinalConstrPSet(pol.name,pol)»
 ;################### END TOP-LEVEL POLICY «pol.name» CONSTRAINTs #########################
 '''
 
@@ -223,6 +276,7 @@ def dispatch getInternalPolicyConstr(Rule r)
 (define-fun cns_«r.name»_indet () Bool
 	(or 
 		(err cns_target_«r.name»)
+		(not (isBool cns_target_«r.name»))
 		(and 
 			(isTrue cns_target_«r.name»)
 			«IF r.effect.equals(Effect.PERMIT)»
@@ -242,6 +296,12 @@ def dispatch getInternalPolicyConstr(Rule r)
 def dispatch getInternalPolicyConstr(PolicySet pol) 
 '''
 ;################### START CONSTRAINT POLICY SET «pol.name» #######################
+«««		Building constraint of internal element of the policy
+«IF pol instanceof PolicySet»
+	«FOR el : pol.policies»
+		«getPolicyConstr(el)»
+	«ENDFOR»
+«ENDIF»
 «««	Creating the constraint of the policy set
 ««« STEP 1 -> get constraint of the target
 ;##### Policy Target
@@ -262,7 +322,7 @@ def dispatch getInternalPolicyConstr(PolicySet pol)
 «getCombiningAlgorithmConstr(pol)»
 «««	STEP 4 -> building up the four constraints modelling the policy
 ;##### Policy Constraints
-«getFinalConstrPSet(pol.name)»
+«getFinalConstrPSet(pol.name,pol)»
 
 ;################### END CONSTRAINT POLICY SET «pol.name» #########################
 '''
@@ -287,12 +347,12 @@ def dispatch getInternalPolicyConstr(PolicySet pol)
 		}
 	}
 
-def getFinalConstrPSet(String p_name)'''
+def getFinalConstrPSet(String p_name,FacplPolicy pol)'''
 ;PERMIT
 (define-fun cns_«p_name»_permit () Bool
 	(and 
 		(isTrue cns_target_«p_name»)
-		cns_«p_name»_cmb_final_permit
+		«IF pol instanceof PolicySet»cns_«p_name»_cmb_final_permit«ENDIF»
 		cns_obl_permit_«p_name»
 	)
 )
@@ -300,7 +360,7 @@ def getFinalConstrPSet(String p_name)'''
 (define-fun cns_«p_name»_deny () Bool
 	(and 
 		(isTrue cns_target_«p_name»)
-		cns_«p_name»_cmb_final_deny
+		«IF pol instanceof PolicySet»cns_«p_name»_cmb_final_deny«ENDIF»
 		cns_obl_deny_«p_name»
 	)
 )
@@ -308,22 +368,25 @@ def getFinalConstrPSet(String p_name)'''
 (define-fun cns_«p_name»_notApp () Bool
 	(or
 		(or (isFalse cns_target_«p_name») (bot cns_target_«p_name»))
-		(and (isTrue cns_target_«p_name») cns_«p_name»_cmb_final_notApp)
+		«IF pol instanceof PolicySet»(and (isTrue cns_target_«p_name») cns_«p_name»_cmb_final_notApp)«ENDIF»
 	)
 )
 ;INDET
 (define-fun cns_«p_name»_indet () Bool
 	(or 
 		(err cns_target_«p_name»)
+		(not (isBool cns_target_«p_name»))
+		«IF pol instanceof PolicySet»
 		(and (isTrue cns_target_«p_name») cns_«p_name»_cmb_final_indet)
+		«ENDIF»
 		(and 
 			(isTrue cns_target_«p_name»)
-			cns_«p_name»_cmb_final_permit
+			«IF pol instanceof PolicySet»cns_«p_name»_cmb_final_permit«ENDIF»
 			(not cns_obl_permit_«p_name»)
 		)
 		(and 
 			(isTrue cns_target_«p_name»)
-			cns_«p_name»_cmb_final_deny
+			«IF pol instanceof PolicySet»cns_«p_name»_cmb_final_deny«ENDIF»
 			(not cns_obl_deny_«p_name»)
 		)
 	)
@@ -356,30 +419,7 @@ def getFinalConstrPSet(String p_name)'''
 	«getObligationConstr_Eff(obls,name, Effect.DENY)»
 	 
 	'''
-	
-//	def getObligationConstr_Eff (List<Obligation> obls, String name, Effect ef)
-//'''(define-fun cns_obl_«ef.toString»_«name» ()  Bool
-//	«IF obls.size > 0»
-//	(and 
-//		«var i = 0»
-//		«FOR o : obls»
-//			«IF o.evaluetedOn.equals(ef)»
-//				«i = i +1»
-//				«IF o.expr.size > 0»
-//				(and 
-//				«FOR e : o.expr»
-//						(not (bot «getExpressionConst(e)»))
-//						(not (err «getExpressionConst(e)»))
-//				«ENDFOR»
-//				)
-//				«ELSE»true«ENDIF»
-//			«ENDIF»
-//		«ENDFOR»
-//		«IF i == 0»
-//			true true
-//		«ENDIF»
-//	)«ELSE»true«ENDIF»)'''
-		
+			
 	def getObligationConstr_Eff (List<Obligation> obls, String name, Effect ef){
 		val StringBuffer str = new StringBuffer()
 		str.append("(define-fun cns_obl_"+ef.toString +"_"+ name +" ()  Bool\n")
@@ -392,8 +432,8 @@ def getFinalConstrPSet(String p_name)'''
 					if (o.expr.size > 0){
 						str.append("(and\n ") 
 						for (e : o.expr){
-								str.append("\t\t (not (bot"+ getExpressionConst(e)+"))")
-								str.append("\t\t (not (err"+ getExpressionConst(e)+ "))")
+								str.append("\t\t (not (bot "+ getExpressionConst(e)+"))")
+								str.append("\t\t (not (err "+ getExpressionConst(e)+ "))")
 						}
 						str.append(")\n")
 					}else{
@@ -421,19 +461,18 @@ def getFinalConstrPSet(String p_name)'''
 	/* ########################################################################
 	 * Auxiliary Functions for Datatype, functions and attributes declarations 
 	 * ########################################################################
-	 */
-	// TODO NB !!!!!!!!!! -> isValueBag da parametrizzare rispetto al tipo della funzione
-	// Returning the record datatype, the bag and the auxiliary functions
-	def getDatatypeDec(PolicySet pol) '''
+	 */	
+	// Returning the record datatype, the Set and the auxiliary functions
+	def getDatatypeDec(FacplPolicy pol) '''
 	;#######################
 	;RECORD DATATYPE with BOTTOM and ERROR
 	;#######################
 	(declare-datatypes (U) ((TValue (mk-val (val U)(bot Bool)(err Bool)))))
 	
 	;#######################
-	;BAG of elements of type T with attached an integer index
+	;Set of elements of type T with attached an integer index
 	;#######################
-	(define-sort Bag (T) (Array Int T)) '''
+	(define-sort Set (T) (Array Int T)) '''
 
 	// Defining the enumeration type modeling string -> definition of equality and/or function in  
 	def getStringDec() 
@@ -462,22 +501,30 @@ def getFinalConstrPSet(String p_name)'''
 			case DOUBLE: return "Real"
 			case INT: return "Int"
 			case STRING: return "String" // NB this type has to be declared!!!
-			case NAME: return "Bool" // TO BE USED EVERYWHERE WHERE NOT DECLARED!!!!
-			// Bag cases
-			case BAG_BOOLEAN: return "(Bag Bool)"
-			case BAG_INT: return "(Bag Int)"
-			case BAG_DOUBLE: return "(Bag Real)"
-			case BAG_NAME: return "(Bag Bool)" // TO BE USED EVERYWHERE WHERE NOT DECLARED!!!!
-			case BAG_STRING: return "(Bag String)"
+			case NAME: return "Bool" // TO BE USED EVERYWHERE WHERE A TYPE IS NOT DECLARED!!!!
+			// Set cases
+			case SET_BOOLEAN: return "(Set Bool)"
+			case SET_INT: return "(Set Int)"
+			case SET_DOUBLE: return "(Set Real)"
+			case SET_NAME: return "(Set Bool)" // TO BE USED EVERYWHERE WHERE A Set IS NOT DECLARED!!!!
+			case SET_STRING: return "(Set String)"
 			// Not-Supported (?)
-			case BAG_DATE: throw new Exception("DATE NOT SUPPORTED ????")
-			case DATE: throw new Exception("DATE NOT SUPPORTED ????")
+			case SET_DATETIME: throw new Exception("DATE NOT SUPPORTED ????")
+			case DATETIME: throw new Exception("DATE NOT SUPPORTED ????")
 			case ERR: throw new Exception("Policy not well-typed")
+			case TYPED: {
+				
+			}
 		}
 	}
 
 	// Constants used in Expressions + Obligations
-	def getConstantDec() '''«FOR cst : this.constants.values»
+	def getConstantDec() 
+	'''«FOR cst : this.constants.values»
+		 
+		«IF FacplType.isSet(cst.type)»
+			«getSetConstantDec(cst)»
+		«ELSE»
 			(declare-const «getConstAttr(cst.att_name)» (TValue «getType(cst.type)»))
 			«IF cst.type.equals(FacplType.STRING)»
 			(assert (= (val «getConstAttr(cst.att_name)») s_«cst.value»))
@@ -485,12 +532,80 @@ def getFinalConstrPSet(String p_name)'''
 			(assert (= (val «getConstAttr(cst.att_name)») «cst.value»))
 			«ENDIF»
 			(assert (not (bot «getConstAttr(cst.att_name)»))) 
-			(assert (not (err «getConstAttr(cst.att_name)»))) 
-			 
+			(assert (not (err «getConstAttr(cst.att_name)»)))
+		«ENDIF» 
 		«ENDFOR»
 	'''
 
-	// Constraint Function modeling FACPL
+	/* ########################################
+	 * START DECLARATION SetS
+	 * ########################################
+	 */
+	def getSetConstantDec (ConstraintConstant cst){
+		val str = new StringBuffer()
+		val set_id = getConstAttr(cst.att_name)
+		//Declaration Set Element
+		str.append("(declare-const "+ set_id +" (TValue "+getType(cst.type)+ "))\n")
+		str.append("(assert (not (bot "+ set_id + ")))\n") 
+		str.append("(assert (not (err "+ set_id + ")))\n")
+		
+		//Assertion on the enclosing elements
+		for (var i = 0; i < (cst.value as Set).args.size ; i ++){
+			str.append("(assert (= (select (val "+ set_id + ") " + i + ") " + getExpressionValue((cst.value as Set).args.get(i)) +"))\n")
+		}
+		
+		//Assertion on the possible elements (i.e. no additional elements wrt the previous cannot be present)
+		str.append("(assert (forall ((i Int))\n")
+		str.append("\t (or \n")
+		for (var i = 0; i < (cst.value as Set).args.size ; i ++){
+			str.append("\t\t (= (select (val "+ set_id + ") i) " + getExpressionValue((cst.value as Set).args.get(i)) +")\n")
+		}
+		str.append("\t )\n")
+		str.append("))")
+	}
+	
+
+	/*
+	 * Methods used within Sets -> elements are directly values and not TValue
+	 */
+	def dispatch String getExpressionValue (BooleanLiteral e)
+	'''«e.value.toString»''' 
+	
+	def dispatch String getExpressionValue (IntLiteral e)
+	'''«e.value.toString»''' 
+	
+	def dispatch String getExpressionValue (DoubleLiteral e)
+	'''«e.value.toString»''' 
+	
+	def dispatch String getExpressionValue (StringLiteral e)
+	'''s_«e.value.toString»''' 
+	
+	def dispatch String getExpressionValue (DateLiteral e){
+		throw new Exception ("NOT SUPPORTED")
+	}
+	
+	def dispatch String getExpressionValue (TimeLiteral e){
+		throw new Exception ("NOT SUPPORTED")
+	}
+
+	/*
+	 * THESE CASES CANNOT OCCUR -> they are 
+	 */
+	def dispatch String getExpressionValue (Set e){
+		throw new Exception ("NOT SUPPORTED")
+	}
+
+	def dispatch String getExpressionValue (AttributeName e){
+		throw new Exception ("NOT SUPPORTED")
+	}
+
+	/* ########################################
+	 * END DECLARATION SetS
+	 * ########################################
+	 */
+
+
+	// Constraint Functions modeling FACPL
 	def getFunctionDec() '''
 	«Z3Generator_Functions::getBoolFunctions()»
 	«Z3Generator_Functions::getEqualityFunctions()»
@@ -513,13 +628,31 @@ def getFinalConstrPSet(String p_name)'''
 		)
 	)
 	
+	(define-fun isValSetString ((x (TValue (Set String)))) Bool
+		(ite (and (not (bot x)) (not (err x))) true false)
+	)
+	
+	(define-fun «funID.IN.toString»String ((x (TValue String)) (y (TValue (Set String)))) (TValue Bool)
+		(ite (or (err x)(err y)) 
+			(mk-val false false true)
+			(ite (or (bot x) (bot y))
+				(mk-val false true false)
+				(ite (exists ((i Int))
+							(= (val x) (select (val y) i))
+					  )
+					(mk-val true false false)
+					(mk-val false false false)
+				)
+			)
+		)
+	)
 	«ENDIF»	
 	«Z3Generator_Functions::getIntFunctions()»
 	«Z3Generator_Functions::getRealFunctions()»
+	«Z3Generator_Functions::getSetFunctions()»
 	'''
 	
 	//EXPRESSION 
-	
 	def dispatch String getExpressionConst(AndExpression e)
 	'''(FAnd «getExpressionConst(e.left)» «getExpressionConst(e.right)»)'''
 	
@@ -536,7 +669,6 @@ def getFinalConstrPSet(String p_name)'''
 	//Function
 	def dispatch String getExpressionConst (Function f)
 	'''(«getFunctionName(f)» «getExpressionConst(f.arg1)» «getExpressionConst(f.arg2)»)'''
-	
 	
 	def getFunctionName(Function function) {
 		var type1 = tInf.doSwitch(function.arg1)
@@ -557,17 +689,27 @@ def getFinalConstrPSet(String p_name)'''
 		}
 		
 		if (function.functionId.equals(funID.IN)){
-			throw new Exception("BAG TODO")
+			return getId(function.functionId.toString)+FacplType::getTypeSet(typeF)
 		}else{
 			return getId(function.functionId.toString)+getType(typeF)
 		}
+		
 	}
 	
 	def getId(String s){
 		return s.replace('-','')
 	}
 	
+	//Declared Function
+	def dispatch String getExpressionConst (DeclaredFunction f)
+	'''(«getDeclaredFunctionName(f.functionId)» «IF f.args.size > 0»«FOR arg : f.args SEPARATOR ' '» «getExpressionConst(arg)» «ENDFOR»«ENDIF»)'''
+	
+	def getDeclaredFunctionName(FunctionDeclaration function)'''DeclFun_«function.name»'''
+	
 	//Literal 
+	/*
+	 * Methods used everywhere apart from Sets
+	 */
 	def dispatch String getExpressionConst (BooleanLiteral e)
 	'''«getConstAttr(e.value.toString)»''' 
 	
@@ -580,11 +722,14 @@ def getFinalConstrPSet(String p_name)'''
 	def dispatch String getExpressionConst (StringLiteral e)
 	'''«getConstAttr(e.value.toString)»''' 
 	
-	//TODO
 	
-	def dispatch String getExpressionConst (Bag e){
-			throw new Exception ("NOT SUPPORTED")
+	def dispatch String getExpressionConst (Set e){
+		//check for the name of the Set wrt its string representation
+		val s = new SetUtils()
+		return getConstAttr(this.sets.get(s.doSwitch(e))).toString
 	}
+	
+	//TODO
 	
 	def dispatch String getExpressionConst (DateLiteral e){
 		throw new Exception ("NOT SUPPORTED")
@@ -593,4 +738,26 @@ def getFinalConstrPSet(String p_name)'''
 	def dispatch String getExpressionConst (TimeLiteral e){
 		throw new Exception ("NOT SUPPORTED")
 	}
+	
+	
+	//-----------------------
+	//DEFINITION OF DECLARED FUNCTIONs
+	//-----------------------
+	def createDeclFunctionConstr(FunctionDeclaration f){
+		var type_return = tInf.doSwitch(f)
+		var str = new StringBuffer()
+		str.append("(declare-fun " + getDeclaredFunctionName(f) +" ( ")
+		//arguments
+		for (arg : f.args){
+			var type = FacplType::getFacplType(arg)
+			str.append("(TValue " +getType(type)+ ") ")
+		}
+		str.append(") ")
+		//return type	
+		str.append("(TValue " + getType(type_return)+ ")) \n")
+		//body of the method
+		return str.toString
+	}
+	
+	
 }

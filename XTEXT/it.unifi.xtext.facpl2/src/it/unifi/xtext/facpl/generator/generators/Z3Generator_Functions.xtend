@@ -6,16 +6,16 @@ class Z3Generator_Functions {
 	
 	def static getBoolFunctions() 
 	'''
-	;####
-	;AUXILIARY-function Boolean
-	;####
-	
 	(define-fun isFalse ((x (TValue Bool))) Bool
 		(ite (= x (mk-val false false false)) true false)
 	)
 	
 	(define-fun isTrue ((x (TValue Bool))) Bool
 		(ite (= x (mk-val true false false)) true false)
+	)
+	
+	(define-fun isBool ((x (TValue Bool))) Bool
+			(ite (or (isFalse x) (isTrue x)) true false)
 	)
 	
 	(define-fun FAnd ((x (TValue Bool)) (y (TValue Bool))) (TValue Bool)
@@ -296,6 +296,65 @@ class Z3Generator_Functions {
 			(ite (or (err x) (err y))
 				(mk-val 0.0 false true)
 				(mk-val 0.0 true false)
+			)
+		)
+	)
+	'''
+	
+	def static getSetFunctions() '''
+	(define-fun isValSetInt ((x (TValue (Set Int)))) Bool
+		(ite (and (not (bot x)) (not (err x))) true false)
+	)
+	
+	(define-fun isValSetReal ((x (TValue (Set Real)))) Bool
+		(ite (and (not (bot x)) (not (err x))) true false)
+	)
+	
+	(define-fun isValSetBool ((x (TValue (Set Bool)))) Bool
+		(ite (and (not (bot x)) (not (err x))) true false)
+	)
+	
+	(define-fun «funID.IN.toString»Bool ((x (TValue Bool)) (y (TValue (Set Bool)))) (TValue Bool)
+		(ite (or (err x)(err y)) 
+			(mk-val false false true)
+			(ite (or (bot x) (bot y))
+				(mk-val false true false)
+				(ite (exists ((i Int))
+							(= (val x) (select (val y) i))
+					  )
+					(mk-val true false false)
+					(mk-val false false false)
+				)
+			)
+		)
+	)
+	
+	(define-fun «funID.IN.toString»Real ((x (TValue Real)) (y (TValue (Set Real)))) (TValue Bool)
+		(ite (or (err x)(err y)) 
+			(mk-val false false true)
+			(ite (or (bot x) (bot y))
+				(mk-val false true false)
+				(ite (exists ((i Int))
+							(= (val x) (select (val y) i))
+					  )
+					(mk-val true false false)
+					(mk-val false false false)
+				)
+			)
+		)
+	)
+	
+	(define-fun «funID.IN.toString»Int ((x (TValue Int)) (y (TValue (Set Int)))) (TValue Bool)
+		(ite (or (err x)(err y)) 
+			(mk-val false false true)
+			(ite (or (bot x) (bot y))
+				(mk-val false true false)
+				(ite (exists ((i Int))
+							(= (val x) (select (val y) i))
+					  )
+					(mk-val true false false)
+					(mk-val false false false)
+				)
 			)
 		)
 	)

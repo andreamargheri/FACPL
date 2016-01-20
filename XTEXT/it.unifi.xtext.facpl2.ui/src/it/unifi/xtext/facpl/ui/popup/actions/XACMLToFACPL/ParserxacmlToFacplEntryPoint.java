@@ -1,8 +1,6 @@
 package it.unifi.xtext.facpl.ui.popup.actions.XACMLToFACPL;
 
 
-import it.unifi.xacmlToFacpl.parser.XacmlParser;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -11,14 +9,9 @@ import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IFile;
 import org.w3c.dom.Document;
 
-public class ParserxacmlToFacplEntryPoint {
+import it.unifi.xacmlToFacpl.parser.XacmlParser;
 
-//	public static void main(String[] args) throws Exception {
-//		String st = translate("source/policy.xml");
-//		System.out.println(st);
-//		translate("source/epSOS_policySet.xml");
-//		translate("source/request1.xml");
-//	}
+public class ParserxacmlToFacplEntryPoint {
 	
 	public static String translate(IFile file) throws Exception{
 		Logger l = Logger.getLogger(ParserxacmlToFacplEntryPoint.class);

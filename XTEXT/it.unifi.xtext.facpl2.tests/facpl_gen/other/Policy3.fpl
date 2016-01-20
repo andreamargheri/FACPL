@@ -1,0 +1,13 @@
+Request:{ Request_1
+( subject/countrycode, "GR")
+( subject/subject-id, "Dr. Elliot Pharmacist")
+( subject/organization, "HOSPITAL")
+( subject/organization-id, "2624")
+( subject/purposeofuse, "TREATEMENT")
+( subject/role, "pharmacist")
+( subject/starttime, 1299231604331.0)
+( subject/permission, "urn:oasis:names:tc:xspa:1.0:subject:hl7:permission:PRD-004", "urn:oasis:names:tc:xspa:1.0:subject:hl7:permission:PRD-006", "urn:oasis:names:tc:xspa:1.0:subject:hl7:permission:PRD-046")
+( resource/resource-id, "34133-9")
+( resource/email, "patient@mail.com")
+( action/action-id, "Read")
+}

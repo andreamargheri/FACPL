@@ -1,0 +1,26 @@
+/*
+ * Request1 : PERMIT - 2 obligations (all defined for permit effect)
+ * Request2 : DENY - 2 obligation (the one of the polSet and the one of the policy obligation_2)
+ * Request3 : DENY - 3 obligations (all defined for deny effect)
+ */
+Request:{Request1 
+(action/id, "read")
+(subject/id, "John")
+(subject/name, "Wilson")
+(resource/id,"4567-1")
+}
+
+Request:{Request2 
+(action/id, "write")
+(subject/id, "Tom")
+(subject/name, "Winter")
+(resource/id,"4567-1")
+}
+
+Request:{Request3 
+(action/id, "checkout")
+(subject/id, "Mark")
+(subject/name,"Wilson")
+(resource/id,"4567-1")
+} 
+

@@ -3,39 +3,43 @@
  */
 package it.unifi.xtext.facpl.validation
 
-import it.unifi.xtext.facpl.facpl2.Facpl
-import it.unifi.xtext.facpl.facpl2.Import
-import org.eclipse.xtext.validation.Check
-import it.unifi.xtext.facpl.facpl2.Request
-import it.unifi.xtext.facpl.facpl2.PolicySet
 import com.google.common.base.Predicate
-import org.eclipse.emf.common.util.URI
-import org.eclipse.xtext.scoping.IGlobalScopeProvider
-import java.util.ArrayList
-import it.unifi.xtext.facpl.facpl2.FacplPolicy
-import it.unifi.xtext.facpl.facpl2.DateLiteral
-import org.eclipse.xtext.scoping.IScope
-import org.eclipse.xtext.resource.IEObjectDescription
 import com.google.inject.Inject
 import it.unifi.xtext.facpl.facpl2.AbstractPolicyIncl
-import it.unifi.xtext.facpl.facpl2.AttributeReq
-import org.eclipse.emf.ecore.EObject
-import it.unifi.xtext.facpl.facpl2.Rule
-import org.eclipse.emf.ecore.resource.Resource
-import it.unifi.xtext.facpl.facpl2.MainFacpl
-import it.unifi.xtext.facpl.facpl2.Facpl2Package
-import java.util.HashMap
-import org.eclipse.xtext.resource.XtextResourceSet
-import it.unifi.xtext.facpl.facpl2.AndExpression
-import it.unifi.xtext.facpl.facpl2.OrExpression
-import it.unifi.xtext.facpl.facpl2.NotExpression
-import it.unifi.xtext.facpl.facpl2.Function
-import it.unifi.xtext.facpl.facpl2.Expression
-import it.unifi.xtext.facpl.facpl2.Bag
 import it.unifi.xtext.facpl.facpl2.Alg
-import it.unifi.xtext.facpl.facpl2.FulfillmentStrategy
 import it.unifi.xtext.facpl.facpl2.AlgLiteral
+import it.unifi.xtext.facpl.facpl2.AndExpression
+import it.unifi.xtext.facpl.facpl2.AttributeName
+import it.unifi.xtext.facpl.facpl2.AttributeReq
+import it.unifi.xtext.facpl.facpl2.Set
+import it.unifi.xtext.facpl.facpl2.DateLiteral
+import it.unifi.xtext.facpl.facpl2.DeclaredFunction
+import it.unifi.xtext.facpl.facpl2.Expression
+import it.unifi.xtext.facpl.facpl2.Facpl
+import it.unifi.xtext.facpl.facpl2.Facpl2Package
+import it.unifi.xtext.facpl.facpl2.FacplPolicy
+import it.unifi.xtext.facpl.facpl2.FulfillmentStrategy
+import it.unifi.xtext.facpl.facpl2.Function
+import it.unifi.xtext.facpl.facpl2.FunctionDeclaration
+import it.unifi.xtext.facpl.facpl2.Import
+import it.unifi.xtext.facpl.facpl2.MainFacpl
+import it.unifi.xtext.facpl.facpl2.NotExpression
+import it.unifi.xtext.facpl.facpl2.OrExpression
+import it.unifi.xtext.facpl.facpl2.PolicySet
+import it.unifi.xtext.facpl.facpl2.Request
+import it.unifi.xtext.facpl.facpl2.TimeLiteral
+import it.unifi.xtext.facpl.facpl2.funID
 import it.unifi.xtext.facpl.validation.inference.FacplTypeInference
+import java.util.ArrayList
+import java.util.HashMap
+import org.eclipse.emf.common.util.URI
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.xtext.resource.IEObjectDescription
+import org.eclipse.xtext.resource.XtextResourceSet
+import org.eclipse.xtext.scoping.IGlobalScopeProvider
+import org.eclipse.xtext.scoping.IScope
+import org.eclipse.xtext.validation.Check
 
 /**
  * This class contains custom validation rules. 
@@ -52,8 +56,6 @@ class Facpl2Validator extends AbstractFacpl2Validator {
 	 * Check Name Requests
 	 * ###################################################
 	 */
-	
-
 	@Check
 	def void checkNameRequest(Request request) {
 		var Facpl a = getRoot(request);
@@ -62,7 +64,8 @@ class Facpl2Validator extends AbstractFacpl2Validator {
 			if (el instanceof Request) {
 				if (el.getName().equals(request.getName())) {
 					if (flag) {
-						error("Duplicate request name " + request.getName(), Facpl2Package.Literals.REQUEST__NAME);
+			 			error("Duplicate request name '" + request.getName() + "'",
+							Facpl2Package.Literals.REQUEST__NAME);
 						return
 					}
 					flag = true;
@@ -82,46 +85,35 @@ class Facpl2Validator extends AbstractFacpl2Validator {
 			});
 		for (IEObjectDescription eOb : global.getAllElements()) {
 			if (eOb.getName().toString().equals(request.getName())) {
-				error("Duplicate request name " + request.getName() + " with file imported",
+				error("Duplicate request name '" + request.getName() + "' with file imported",
 					Facpl2Package.Literals.REQUEST__NAME);
 				return
 			}
 		}
 	}
-	
-	
+
 	/*
 	 * ###################################################
-	 * Check Name Rules
+	 * Check Well-Formed Set Attributes in Requests
 	 * ###################################################
 	 */
 	@Check
-	def void checkNameRule(Rule rule) {
-		var PolicySet pol = rule.eContainer().eContainer() as PolicySet;
-		var Boolean flag = false;
-		for (AbstractPolicyIncl r : pol.getPolicies()) {
-			if (r.getRefPol() != null) {
-				if (r.getRefPol().getName().equals(rule.getName())) {
-					error("Duplicate rule name " + rule.getName() + " with referenced policy " + pol.getName(),
-						Facpl2Package.Literals.FACPL_POLICY__NAME);
-					return
-				}
-			} else if (r.getNewPolicy() != null) {
+	def void checkAttributeRequestType(AttributeReq a) {
+		val tCheck = new FacplTypeInference()
+		tCheck.doSwitch(getRoot(a))
 
-				if (r.getNewPolicy().getName().equals(rule.getName())) {
-					if (flag) {
-						error("Duplicate rule name " + rule.getName() + " in policy " + pol.getName(),
-							Facpl2Package.Literals.FACPL_POLICY__NAME);
-						return
-					}
-					flag = true;
-				}
-			}
+		var FacplType t = tCheck.doSwitch(a);
+		if (t.equals(FacplType.ERR)) {
+			error("Type mismatch: all Set elements must be of the same type",
+				Facpl2Package.Literals.ATTRIBUTE_REQ__VALUE);
+		} else if (t.equals(FacplType.NAME)) {
+			error("Type mismatch: request attribute cannot be names", Facpl2Package.Literals.ATTRIBUTE_REQ__VALUE);
 		}
+
 	}
 
 	/* #######################################################
-	 * Check in global scope for policy/policySet name policy
+	 * Check in global scope for policySet name policy
 	 * #######################################################
 	 */
 	@Check
@@ -135,7 +127,7 @@ class Facpl2Validator extends AbstractFacpl2Validator {
 			});
 		for (IEObjectDescription eOb : global.getAllElements()) {
 			if (eOb.getName().getLastSegment().toString().equals(policy.getName())) {
-				error("Duplicate policy name " + policy.getName() +
+				error("Duplicate policy name '" + policy.getName() + "'" +
 					". A policy with the same name is defined in an imported file",
 					Facpl2Package.Literals.FACPL_POLICY__NAME);
 				return
@@ -144,7 +136,7 @@ class Facpl2Validator extends AbstractFacpl2Validator {
 	}
 
 	/* #############################################################
-	 * Check Policy Set / Policy Name Collisions in the local file
+	 * Check Policy Set / Rule Collisions in the local file
 	 * #############################################################
 	 */
 	@Check
@@ -177,7 +169,7 @@ class Facpl2Validator extends AbstractFacpl2Validator {
 					}
 
 		if (count > 1)
-			error("Duplicate policy name " + policy.getName(), Facpl2Package.Literals.FACPL_POLICY__NAME);
+			error("Duplicate policy name '" + policy.getName() + "'", Facpl2Package.Literals.FACPL_POLICY__NAME);
 
 	}
 
@@ -199,8 +191,6 @@ class Facpl2Validator extends AbstractFacpl2Validator {
 	/*
 	 * ###################################################
 	 */
-
-
 	/* ###################################################
 	 * LOOP DEPENDECIES WITHIN POLICY SET
 	 * ###################################################
@@ -327,8 +317,6 @@ class Facpl2Validator extends AbstractFacpl2Validator {
 	/* 
 	 * ###################################################
 	 */
-
-
 	/*
 	 * Utility
 	 */
@@ -398,53 +386,41 @@ class Facpl2Validator extends AbstractFacpl2Validator {
 			}
 		}
 	}
-	
+
 	/*
 	 * ################################################### 
 	 */
-
 	/**
-	 * Check date-time format yyyy/MM/dd-HH:mm:ss
+	 * Check date format yyyy/MM/dd
 	 */
 	@Check
 	def void checkDate(DateLiteral date) {
 		var String sdate = date.getValue();
-		if (sdate.contains("-")) {
-			// date + time
-			var String err = "";
-			if (!checkDate(sdate.substring(0, sdate.indexOf("-"))))
-				err = "Error date value. Must be yyyy/MM/dd";
+		if (!checkDate(sdate))
+			error("Error date value. Must be yyyy/MM/dd", Facpl2Package.Literals.DATE_LITERAL__VALUE);
+	}
 
-			if (!checkTime(sdate.substring(sdate.indexOf("-") + 1, sdate.length())))
-				err = "\n Error time value. Must be HH:mm:ss";
-
-			if (err != "")
-				error(err, Facpl2Package.Literals.DATE_LITERAL__VALUE);
-		} else {
-			if (sdate.contains("/")) {
-				// date
-				if (!checkDate(sdate)) {
-					error("Error date value. Must be yyyy/MM/dd", Facpl2Package.Literals.DATE_LITERAL__VALUE);
-				}
-			} else {
-				// time
-				if (!checkTime(sdate)) {
-					error("Error time value. Must be HH:mm:ss", Facpl2Package.Literals.DATE_LITERAL__VALUE);
-				}
-			}
-		}
-
+	/**
+	 * Check time format HH:mm:ss
+	 */
+	@Check
+	def void checkTime(TimeLiteral time) {
+		var String stime = time.getValue();
+		if (!checkTime(stime))
+			error("Error time value. Must be HH:mm:ss", Facpl2Package.Literals.TIME_LITERAL__VALUE);
 	}
 
 	def boolean checkTime(String sdate) {
-		// time
-		if (!(sdate.charAt(2) == ':')) {
+		val int h_sep = sdate.indexOf(':');
+		val int m_sep = sdate.indexOf(':', 5)
+		if (h_sep == -1) {
 			return false;
 		} else {
-			if (!(sdate.charAt(5) == ':')) {
+			if (m_sep == -1) {
 				return false;
 			}
 		}
+
 		var String h = sdate.substring(0, 2);
 		var String m = sdate.substring(3, 5);
 		var String s = sdate.substring(6, 8);
@@ -458,8 +434,7 @@ class Facpl2Validator extends AbstractFacpl2Validator {
 		return false;
 	}
 
-	def Boolean checkDate(String sdate) {
-		// date
+	def boolean checkDate(String sdate) {
 		val int y_sep = sdate.indexOf('/');
 		val int m_sep = sdate.indexOf('/', 5)
 		if (y_sep == -1) {
@@ -491,7 +466,7 @@ class Facpl2Validator extends AbstractFacpl2Validator {
 			if ((atr.getName().getCategory().equals(a.getName().getCategory())) &&
 				(atr.getName().getId().equals(a.getName().getId()))) {
 				if (flag) {
-					error("Attributes with same names must be declared as Bag of values",
+					error("Attributes with same names must be declared as Set of values",
 						Facpl2Package.Literals.ATTRIBUTE_REQ__NAME);
 					return;
 				} else {
@@ -501,7 +476,6 @@ class Facpl2Validator extends AbstractFacpl2Validator {
 		}
 	}
 
-
 	/**
 	 * Warning for fulfilment strategies for consensus algorithm 
 	 */
@@ -510,182 +484,203 @@ class Facpl2Validator extends AbstractFacpl2Validator {
 		if (alg.FStrategy != null) {
 			if (alg.FStrategy.equals(FulfillmentStrategy.GREEDY)) {
 				if (alg.idAlg.equals(AlgLiteral.FIRST) || alg.idAlg.equals(AlgLiteral.ONLY_ONE) ||
-					alg.idAlg.equals(AlgLiteral.WEAK_CONS)) {
-					warning(
-						"Algorithms first-applicable, only-one-applicable and weak-consensus have the same implementation with or without greedy option",
-						Facpl2Package.Literals.ALG__FSTRATEGY
-					)
+					alg.idAlg.equals(AlgLiteral.
+						WEAK_CONS)) {
+						warning(
+							"Algorithms first-applicable, only-one-applicable and weak-consensus have the same implementation with or without greedy option",
+							Facpl2Package.Literals.ALG__FSTRATEGY
+						)
+					}
 				}
 			}
 		}
-	}
 
-
-/*
- * ###########################################################
- * TYPE CHECKs
- * ###########################################################
- */
-
-
-	@Check
-	def void checkTarget(FacplPolicy policy) {
-		var FacplTypeInference tCheck = new FacplTypeInference();
-		val FacplType type = tCheck.doSwitch(policy.target)
-		if (!type.equals(FacplType.BOOLEAN) && !type.equals(FacplType.NAME))
-			warning(
-				"Target Expression evaluates to a not-boolean value. This element evaluates to indetrminate",
-				Facpl2Package.Literals.FACPL_POLICY__TARGET
-			)
-	}
-
-	@Check
-	def void checkBagUniqueness(Bag bag) {
-		var FacplTypeInference tCheck = new FacplTypeInference();
-		var FacplType t = tCheck.doSwitch(bag.getArgs().get(0));
-		for (Expression ob : bag.getArgs()) {
-			t = FacplType.combine(t, tCheck.doSwitch(ob));
+		/**
+		 * Check uniqueness of function names 
+		 */
+		@Check
+		def void checkNameDeclFun(FunctionDeclaration f) {
+			val root = getRoot(f)
+			var i = 0
+			for (dec : root.declarations) {
+				if (dec.name == f.name)
+					i++
+			}
+			if (i > 1)
+				error(
+					"Duplicate function name " + f.name,
+					Facpl2Package.Literals.FUNCTION_DECLARATION__NAME
+				)
 		}
-		if (t.equals(FacplType.ERR))
-			error("Bag elements have to be of the same type", Facpl2Package.Literals.BAG__ARGS)
-	}
 
+		/**
+		 * Check for function invocation
+		 */
+		@Check
+		def void checkInvokDeclFun(DeclaredFunction f) {
+			val tCheck = new FacplTypeInference()
+			val root = getRoot(f)
+			// check the whole policy for totally inferring attribute name types
+			tCheck.doSwitch(root)
+			// check the declaration 
+			for (dec : root.declarations) {
+				if (dec.name.equals(f.functionId.name)) {
+					// Check arity of invocation
+					if (dec.args.size != f.args.size) {
+						error(
+							"Invalid number of arguments",
+							Facpl2Package.Literals.DECLARED_FUNCTION__FUNCTION_ID
+						)
+					}
+					var flag = false
+					// Check type of arguments
+					var decl_fun_T = ""
+					var current_T = ""
+					for (var i = 0; i < f.args.size; i++) {
+						var type = tCheck.doSwitch(f.args.get(i))
+						// check if the argument is a name 
+						// if it is, check the inferred type and check that type
+						if (type.equals(FacplType.NAME)) {
+							type = tCheck.typeAssignments.getBound(f.args.get(i) as AttributeName);
+							if (type == null) {
+								// no constraint of the name is present. I.e., it can be anything
+							} else {
+								if (type.equals(FacplType.ERR)) {
+									// the type for the occurring name cannot be inferred 
+									error(
+										"Type mismatch: type for argument '" +
+											(f.args.get(i) as AttributeName).category + "/" +
+											(f.args.get(i) as AttributeName).id + "' cannot be inferred",
+										Facpl2Package.Literals.DECLARED_FUNCTION__FUNCTION_ID
+									)
+									return
+								}
+								/*
+								 * MODIFY THIS CHECK IF IT IS NEEDED TO IMPLEMENT Sub-typing on method arguments
+								 */
+								if (!FacplType::equalType(type, dec.args.get(i))) {
+									flag = true
+								}
+							}
+						} else {
+							if (!FacplType::equalType(type, dec.args.get(i))) {
+								flag = true
+							}
+						}
+						// create labels for error message
+						if (i > 0) {
+							decl_fun_T = decl_fun_T + "," + dec.args.get(i).toString
+							if (type == null)
+								current_T = current_T + ", ?"
+							else
+								current_T = current_T + "," + type.toString
+						} else {
+							decl_fun_T = decl_fun_T + dec.args.get(i).toString
+							if (type == null)
+								current_T = current_T + "?"
+							else
+								current_T = current_T + type.toString
+						}
+					}
+					if (flag) {
+						error(
+							"Type mismatch: expected (" + decl_fun_T + ") but was (" + current_T + ")",
+							Facpl2Package.Literals.DECLARED_FUNCTION__FUNCTION_ID
+						)
+					}
+				}
+			}
+			return
+		}
+
+		/*
+		 * ###########################################################
+		 * TYPE CHECKs
+		 * ###########################################################
+		 */
+		@Check
+		def void checkTarget(FacplPolicy policy) {
+			val tCheck = new FacplTypeInference()
+			tCheck.doSwitch(getRoot(policy))
+
+			val FacplType type = tCheck.doSwitch(policy.target)
+			if (!type.equals(FacplType.BOOLEAN) && !type.equals(FacplType.NAME))
+				warning(
+					"Target Expression evaluates to a not-boolean value. This element evaluates to indeterminate",
+					Facpl2Package.Literals.FACPL_POLICY__TARGET
+				)
+		}
+
+		@Check
+		def void checkSet(Set Set) {
+			val tCheck = new FacplTypeInference()
+			tCheck.doSwitch(getRoot(Set))
+
+			//Type check on Set
+			var FacplType t = tCheck.doSwitch(Set.getArgs().get(0));
+			for (Expression ob : Set.getArgs()) {
+				t = FacplType.combine(t, tCheck.doSwitch(ob));
+			}
+			
+			if (t.equals(FacplType.ERR))
+				error("Set elements have to be of the same type", Facpl2Package.Literals.SET__ARGS)
+			
+			//Avoid nested Sets + Names cannot occurs in Sets
+			for (Expression ob : Set.getArgs()) {
+				if (ob instanceof Set )
+					error("Sets cannot contain other Sets", Facpl2Package.Literals.SET__ARGS)
+				if (ob instanceof AttributeName)
+					error("Sets cannot contain attribute name", Facpl2Package.Literals.SET__ARGS)
+			}	
+				
+		}
+
+		@Check
+		def void checkFunction(Function e) {
+			val tCheck = new FacplTypeInference()
+			tCheck.doSwitch(getRoot(e))
+
+			var t = tCheck.doSwitch(e)
+			if (t.equals(FacplType.ERR)) {
+				error("Expression cannot be typed", Facpl2Package.Literals.FUNCTION__FUNCTION_ID);
+			}
+			if (e.functionId.equals(funID.IN)){
+				info("Function 'in' expects (T,Set<T>)",Facpl2Package.Literals.FUNCTION__FUNCTION_ID )	
+			}
+		}
+
+		@Check
+		def void checkAndExpression(AndExpression e) {
+			val tCheck = new FacplTypeInference()
+			tCheck.doSwitch(getRoot(e))
+
+			var t = tCheck.doSwitch(e)
+			if (t.equals(FacplType.ERR)) {
+				error("Expression cannot be typed", Facpl2Package.Literals.AND_EXPRESSION__LEFT);
+			}
+		}
+
+		@Check
+		def void checkOrExpression(OrExpression e) {
+			val tCheck = new FacplTypeInference()
+			tCheck.doSwitch(getRoot(e))
+
+			var t = tCheck.doSwitch(e)
+			if (t.equals(FacplType::ERR)) {
+				error("Expression cannot be typed", Facpl2Package.Literals.OR_EXPRESSION__LEFT);
+			}
+		}
+
+		@Check
+		def void checkNotExpression(NotExpression e) {
+			val tCheck = new FacplTypeInference()
+			tCheck.doSwitch(getRoot(e))
+
+			var t = tCheck.doSwitch(e)
+			if (t.equals(FacplType::ERR)) {
+				error("Expression cannot be typed", Facpl2Package.Literals.NOT_EXPRESSION__ARG);
+			}
+		}
+
+	}
 	
-	@Check
-	def void checkFunction(Function e) {
-		var FacplTypeInference tCheck = new FacplTypeInference();
-		var t = tCheck.doSwitch(e)
-		if (t.equals(FacplType::ERR)) {
-			error("Expression cannot be typed", Facpl2Package.Literals.FUNCTION__FUNCTION_ID);
-		}
-	}
-
-	@Check
-	def void checkAndExpression(AndExpression e) {
-		var FacplTypeInference tCheck = new FacplTypeInference();
-		var t = tCheck.doSwitch(e)
-		if (t.equals(FacplType::ERR)) {
-			error("Expression cannot be typed", Facpl2Package.Literals.AND_EXPRESSION__LEFT);
-		}
-	}
-
-	@Check
-	def void checkOrExpression(OrExpression e) {
-		var FacplTypeInference tCheck = new FacplTypeInference();
-		var t = tCheck.doSwitch(e)
-		if (t.equals(FacplType::ERR)) {
-			error("Expression cannot be typed", Facpl2Package.Literals.OR_EXPRESSION__LEFT);
-		}
-	}
-
-	@Check
-	def void checkNotExpression(NotExpression e) {
-		var FacplTypeInference tCheck = new FacplTypeInference();
-		var t = tCheck.doSwitch(e)
-		if (t.equals(FacplType::ERR)) {
-			error("Expression cannot be typed", Facpl2Package.Literals.NOT_EXPRESSION__ARG);
-		}
-	}
-
-//	@Check
-//	def void checkArithExpression(ArithExpr e) {
-//		FacplTypeChecker tCheck = FacplTypeChecker.getInstance();
-//		FacplType t = tCheck.doSwitch(e);
-//		if (!t.equals(FacplType.INT) && !t.equals(FacplType.DOUBLE) && !t.equals(FacplType.NAME)) {
-//			error("Arguments must be numeric!", Facpl2Package.Literals.ARITH_EXPR__FUN, ARITHMETIC_EXPRESSION);
-//		} else if (e.getFun() == "mod" && t.equals(FacplType.DOUBLE) && !t.equals(FacplType.NAME)) {
-//			error("Function mod is defined only for int arguments", Facpl2Package.Literals.ARITH_EXPR__FUN,
-//					ARITHMETIC_MOD_EXPRESSION);
-//		}
-//	}
-//	@Check
-//	def void checkBagExpression(Bag e) {
-//		FacplTypeChecker tCheck = FacplTypeChecker.getInstance();
-//		FacplType t = tCheck.doSwitch(e);
-//		if (t.equals(FacplType.ERR)) {
-//			error("All bag elements must be string or structured names!", Facpl2Package.Literals.BAG__ARGS,
-//					BAG_EXPRESSION);
-//		}
-//	}
-//
-	@Check
-	def void checkAttributeRequestType(AttributeReq a) {
-		var FacplTypeChecker tCheck = FacplTypeChecker.getInstance();
-		var FacplType t = tCheck.doSwitch(a);
-		if (t.equals(FacplType.ERR)) {
-		error("All bag elements must be string or structured names!", Facpl2Package.Literals.ATTRIBUTE_REQ__VALUE);
-		}
-	}
-
-//	// TYPE INFERENCE
-//	@Check
-//	def void inferTypeExpression(Function e) {
-//		var FacplTypeInference tInf = new FacplTypeInference()
-//
-//		var FacplType type = tInf.doSwitch(e)
-//
-//		warning(type.toString, Facpl2Package.Literals.FUNCTION__FUNCTION_ID)
-//		warning("SUB:" + tInf.typeAssignments.toString.trim, Facpl2Package.Literals.FUNCTION__FUNCTION_ID)
-//		warning("EQ:" + tInf.typeAssignments.toEq.trim, Facpl2Package.Literals.FUNCTION__FUNCTION_ID)
-//	}
-//
-//	@Check
-//	def void inferTypeAnd(AndExpression e) {
-//
-//		var FacplTypeInference tInf = new FacplTypeInference()
-//		var FacplType type = tInf.doSwitch(e)
-//
-//		warning(type.toString, Facpl2Package.Literals.AND_EXPRESSION__LEFT)
-//		warning("SUB:" + tInf.typeAssignments.toString.trim, Facpl2Package.Literals.AND_EXPRESSION__LEFT)
-//		warning("EQ:" + tInf.typeAssignments.toEq.trim, Facpl2Package.Literals.AND_EXPRESSION__LEFT)
-//
-//	}
-//
-//	@Check
-//	def void inferTypeOr(OrExpression e) {
-//
-//		var FacplTypeInference tInf = new FacplTypeInference()
-//		var FacplType type = tInf.doSwitch(e)
-//
-//		warning(type.toString, Facpl2Package.Literals.OR_EXPRESSION__LEFT)
-//		warning("SUB:" + tInf.typeAssignments.toString.trim, Facpl2Package.Literals.OR_EXPRESSION__LEFT)
-//		warning("EQ:" + tInf.typeAssignments.toEq.trim, Facpl2Package.Literals.OR_EXPRESSION__LEFT)
-//
-//	}
-//
-//	@Check
-//	def void inferTypeNot(NotExpression e) {
-//
-//		var FacplTypeInference tInf = new FacplTypeInference()
-//		var FacplType type = tInf.doSwitch(e)
-//
-//		warning(type.toString, Facpl2Package.Literals.NOT_EXPRESSION__ARG)
-//		warning("SUB:" + tInf.typeAssignments.toString.trim, Facpl2Package.Literals.NOT_EXPRESSION__ARG)
-//		warning("EQ:" + tInf.typeAssignments.toEq.trim, Facpl2Package.Literals.NOT_EXPRESSION__ARG)
-//	}
-//
-//	@Check
-//	def void inferBag(Bag e) {
-//
-//		var FacplTypeInference tInf = new FacplTypeInference()
-//		var FacplType type = tInf.doSwitch(e)
-//
-//		warning(type.toString, Facpl2Package.Literals.BAG__ARGS)
-//		warning("SUB:" + tInf.typeAssignments.toString.trim, Facpl2Package.Literals.BAG__ARGS)
-//		warning("EQ:" + tInf.typeAssignments.toEq.trim, Facpl2Package.Literals.BAG__ARGS)
-//
-//	}
-
-//	@Check
-//	def void inferTypeAttr(AttributeName e) {
-//
-//		var FacplTypeInference tInf = new FacplTypeInference()
-//
-//		var FacplType type = tInf.doSwitch(e)
-//
-//		warning(type.toString, Facpl2Package.Literals.ATTRIBUTE_NAME__ID)
-//		warning("SUB:" + tInf.typeAssignments.toString.trim, Facpl2Package.Literals.ATTRIBUTE_NAME__ID)
-//		warning("EQ:" + tInf.typeAssignments.toEq.trim, Facpl2Package.Literals.ATTRIBUTE_NAME__ID)
-//
-//	}
-} 

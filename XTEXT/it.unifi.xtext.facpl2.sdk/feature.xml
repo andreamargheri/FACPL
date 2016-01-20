@@ -6,8 +6,7 @@
       provider-name="Andrea Margheri">
 
    <description>
-      Eclipse Plugin for developing access control policy with FACPL
- (Formal Access Control Policy Language)
+      Eclipse Plugin supporting the specification, analysis and enforcement of FACPL policies
    </description>
 
    <license url="http://www.eclipse.org/legal/epl-v10.html">
@@ -83,6 +82,10 @@ Everyone is permitted to copy and distribute copies of this Agreement, but in or
 This Agreement is governed by the laws of the State of New York and the intellectual property laws of the United States of America. No party to this Agreement will bring a legal action under this Agreement more than one year after the cause of action arose. Each party waives its rights to a jury trial in any resulting litigation.
    </license>
 
+   <url>
+      <discovery label="New discovery site" url="http://facpl.sf.net"/>
+   </url>
+
    <requires>
       <import plugin="org.eclipse.xtext"/>
       <import plugin="org.eclipse.equinox.common" version="3.5.0" match="greaterOrEqual"/>
@@ -112,6 +115,12 @@ This Agreement is governed by the laws of the State of New York and the intellec
    </requires>
 
    <plugin
+         id="FACPL_Library"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
          id="it.unifi.xtext.facpl2"
          download-size="0"
          install-size="0"
@@ -126,9 +135,10 @@ This Agreement is governed by the laws of the State of New York and the intellec
          unpack="false"/>
 
    <plugin
-         id="FACPL_Library"
+         id="FACPL_Dependecies"
          download-size="0"
          install-size="0"
-         version="0.0.0"/>
+         version="0.0.0"
+         unpack="false"/>
 
 </feature>

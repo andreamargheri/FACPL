@@ -4,24 +4,20 @@
 (declare-datatypes (U) ((TValue (mk-val (val U)(bot Bool)(err Bool)))))
 
 ;#######################
-;BAG of elements of type T with attached an integer index
+;Set of elements of type T with attached an integer index
 ;#######################
-(define-sort Bag (T) (Array Int T)) 
-;################## BAG s
-
-;?????????????????????????
-
-;################### FUNCTION DECLARATIONs #######################
-;####
-;AUXILIARY-function Boolean
-;####
-
+(define-sort Set (T) (Array Int T)) 
+;################### FACPL FUNCTION DECLARATIONs #######################
 (define-fun isFalse ((x (TValue Bool))) Bool
 	(ite (= x (mk-val false false false)) true false)
 )
 
 (define-fun isTrue ((x (TValue Bool))) Bool
 	(ite (= x (mk-val true false false)) true false)
+)
+
+(define-fun isBool ((x (TValue Bool))) Bool
+		(ite (or (isFalse x) (isTrue x)) true false)
 )
 
 (define-fun FAnd ((x (TValue Bool)) (y (TValue Bool))) (TValue Bool)
@@ -296,6 +292,62 @@
 		)
 	)
 )
+(define-fun isValSetInt ((x (TValue (Set Int)))) Bool
+	(ite (and (not (bot x)) (not (err x))) true false)
+)
+
+(define-fun isValSetReal ((x (TValue (Set Real)))) Bool
+	(ite (and (not (bot x)) (not (err x))) true false)
+)
+
+(define-fun isValSetBool ((x (TValue (Set Bool)))) Bool
+	(ite (and (not (bot x)) (not (err x))) true false)
+)
+
+(define-fun inBool ((x (TValue Bool)) (y (TValue (Set Bool)))) (TValue Bool)
+	(ite (or (err x)(err y)) 
+		(mk-val false false true)
+		(ite (or (bot x) (bot y))
+			(mk-val false true false)
+			(ite (exists ((i Int))
+						(= (val x) (select (val y) i))
+				  )
+				(mk-val true false false)
+				(mk-val false false false)
+			)
+		)
+	)
+)
+
+(define-fun inReal ((x (TValue Real)) (y (TValue (Set Real)))) (TValue Bool)
+	(ite (or (err x)(err y)) 
+		(mk-val false false true)
+		(ite (or (bot x) (bot y))
+			(mk-val false true false)
+			(ite (exists ((i Int))
+						(= (val x) (select (val y) i))
+				  )
+				(mk-val true false false)
+				(mk-val false false false)
+			)
+		)
+	)
+)
+
+(define-fun inInt ((x (TValue Int)) (y (TValue (Set Int)))) (TValue Bool)
+	(ite (or (err x)(err y)) 
+		(mk-val false false true)
+		(ite (or (bot x) (bot y))
+			(mk-val false true false)
+			(ite (exists ((i Int))
+						(= (val x) (select (val y) i))
+				  )
+				(mk-val true false false)
+				(mk-val false false false)
+			)
+		)
+	)
+)
 ;################################ END DATATYPEs AND FUNCTIONs DECLARATION #############################
 
 ;################### ATTRIBUTE DECLARATIONs #######################
@@ -309,26 +361,28 @@
 (assert (not (and (bot n_cat/id) (err n_cat/id))))
  
 ;################### CONSTANTs DECLARATIONs #######################
-(declare-const const_5.5 (TValue Real))
-(assert (= (val const_5.5) 5.5))
-(assert (not (bot const_5.5))) 
-(assert (not (err const_5.5))) 
  
 (declare-const const_4 (TValue Int))
 (assert (= (val const_4) 4))
 (assert (not (bot const_4))) 
-(assert (not (err const_4))) 
- 
-(declare-const const_true (TValue Bool))
-(assert (= (val const_true) true))
-(assert (not (bot const_true))) 
-(assert (not (err const_true))) 
+(assert (not (err const_4)))
  
 (declare-const const_false (TValue Bool))
 (assert (= (val const_false) false))
 (assert (not (bot const_false))) 
-(assert (not (err const_false))) 
+(assert (not (err const_false)))
  
+(declare-const const_true (TValue Bool))
+(assert (= (val const_true) true))
+(assert (not (bot const_true))) 
+(assert (not (err const_true)))
+ 
+(declare-const const_5.5 (TValue Real))
+(assert (= (val const_5.5) 5.5))
+(assert (not (bot const_5.5))) 
+(assert (not (err const_5.5)))
+;################################ END ATTRIBUTEs AND CONSTANTs DECLARATION #############################
+
 ;################### START CONSTRAINT RULE r1 #######################
 ;##### Rule Target
 (define-fun cns_target_r1 () (TValue Bool)
@@ -360,6 +414,7 @@ true
 (define-fun cns_r1_indet () Bool
 	(or 
 		(err cns_target_r1)
+		(not (isBool cns_target_r1))
 		(and 
 			(isTrue cns_target_r1)
 			(not cns_obl_permit_r1)
@@ -427,6 +482,7 @@ true
 (define-fun cns_Name_indet () Bool
 	(or 
 		(err cns_target_Name)
+		(not (isBool cns_target_Name))
 		(and (isTrue cns_target_Name) cns_Name_cmb_final_indet)
 		(and 
 			(isTrue cns_target_Name)

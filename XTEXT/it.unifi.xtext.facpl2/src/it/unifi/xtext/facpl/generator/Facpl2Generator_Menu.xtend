@@ -23,7 +23,7 @@ import it.unifi.xtext.facpl.facpl2.StringLiteral
 import it.unifi.xtext.facpl.facpl2.TimeLiteral
 import it.unifi.xtext.facpl.facpl2.DateLiteral
 import it.unifi.xtext.facpl.facpl2.AttributeName
-import it.unifi.xtext.facpl.facpl2.Bag
+import it.unifi.xtext.facpl.facpl2.Set
 import it.unifi.xtext.facpl.facpl2.AndExpression
 import it.unifi.xtext.facpl.facpl2.OrExpression
 import it.unifi.xtext.facpl.facpl2.NotExpression
@@ -31,6 +31,9 @@ import it.unifi.xtext.facpl.facpl2.Function
 import it.unifi.xtext.facpl.facpl2.Alg
 import it.unifi.xtext.facpl.facpl2.AlgLiteral
 import it.unifi.xtext.facpl.facpl2.FulfillmentStrategy
+import it.unifi.xtext.facpl.facpl2.DeclaredFunction
+import it.unifi.xtext.facpl.facpl2.FunctionDeclaration
+import it.unifi.xtext.facpl.validation.FacplType
 
 class Facpl2Generator_Menu {
 	
@@ -119,6 +122,14 @@ class Facpl2Generator_Menu {
 				for(pol : e.getPolicies){
 					fsa.generateFile(packageFolder + getNameFacplPolicy(pol)+".java", compilePolicy(pol,fsa))	
 				}
+			}
+			
+			/* Compiling Declared Functions */	
+			if (e.declarations != null){
+				for (dec : e.declarations){
+					fsa.generateFile(packageFolder + getNameFunction(dec.name)+".java", compileFunction(dec))
+				}
+				
 			}
 				
 			/* Compiling Main */
@@ -216,7 +227,8 @@ class Facpl2Generator_Menu {
 				result.append("PEP Decision=\n " + resPEP.toString()+"\n");
 				result.append("---------------------------------------------------\n");
 			}
-«««			ShowResult.showResult(result);
+			System.out.println(result.toString());
+			ShowResult.showResult(result);
 		}
 	''' 
 	
@@ -383,8 +395,20 @@ class Facpl2Generator_Menu {
 	def dispatch getExpression(Function exp)'''
 		new ExpressionFunction(it.unifi.facpl.lib.function.«Facpl2Generator_Name::getFunName(exp.functionId)».class, «getExpression(exp.arg1)»,«getExpression(exp.arg2)»)
 	'''
+	
+	def dispatch getExpression(DeclaredFunction exp)'''
+		new ExpressionFunction(«getNameFunction(exp.functionId.name)».class,
+		«IF exp.args.size > 0»
+			«FOR arg : exp.args SEPARATOR ','» 
+				«getExpression(arg)»
+			«ENDFOR»
+		«ELSE»
+			null
+		«ENDIF»
+		)
+	''' 
 			
-	// Basic EXPRESSION: int, double, boolean, string, date, attribute name, bag
+	// Basic EXPRESSION: int, double, boolean, string, date, attribute name, Set
 	def dispatch getExpression(IntLiteral e) {
 		e.value
 	}
@@ -413,14 +437,13 @@ class Facpl2Generator_Menu {
 		new AttributeName("«attributeName.category.toString»","«attributeName.id.toString»") 
 	'''
 
-	def dispatch getExpression(Bag bag) '''
-		new Bag(
-		«FOR b : bag.args SEPARATOR ','»
+	def dispatch getExpression(Set Set) '''
+		new Set(
+		«FOR b : Set.args SEPARATOR ','»
 			«getExpression(b)»
 		«ENDFOR»
 		)
-	'''
-		
+	'''	
 		
 	//----------------------------------------------------
 	// COMBINING ALGORITHM : custom + standard
@@ -531,7 +554,7 @@ class Facpl2Generator_Menu {
 		
 		import java.util.HashMap;
 		import it.unifi.facpl.lib.context.*;
-		import it.unifi.facpl.lib.util.Bag;
+		import it.unifi.facpl.lib.util.*;
 		
 		@SuppressWarnings("all")		
 		public class ContextRequest_«request.name» {
@@ -572,16 +595,58 @@ class Facpl2Generator_Menu {
 		if (list.size == 1){
 			return getExpression(list.get(0))
 		}else{
-			list.getBagDeclaration
+			list.getSetDeclaration
 		}
 	}
 	
-	def CharSequence getBagDeclaration(EList<Expression> list) '''
-		new Bag(
+	def CharSequence getSetDeclaration(EList<Expression> list) '''
+		new Set(
 		«FOR l: list SEPARATOR ','»
 		«getExpression(l)»
 		«ENDFOR»
 		)
+	'''
+	//----------------------------------------------------
+	//DECLARED FUNCTIONs 
+	//----------------------------------------------------
+	def String getNameFunction (String f_name)'''Function_«f_name»'''
+	
+	def compileFunction(FunctionDeclaration f)'''
+		«IF packageName != ""»package «packageName»«ENDIF»
+		
+		import java.util.List;
+		
+		import it.unifi.facpl.lib.interfaces.IExpressionFunction;
+		import it.unifi.facpl.lib.util.*;
+		
+		@SuppressWarnings("all")
+		public class «getNameFunction(f.name)» implements IExpressionFunction{
+		
+			@Override
+			public Object evaluateFunction(List<Object> args) throws Throwable {
+				
+				if (args.size() == «f.args.size») {
+					«IF f.args.size > 0»		
+					if( 
+					«var i = -1»
+					«FOR arg:  f.args SEPARATOR ' && '»
+					args.get(«i = i +1») instanceof «Facpl2Generator_Name::getJavaType(FacplType::getFacplType(arg))»
+					«ENDFOR»
+					){
+							throw new Exception("TODO: auto-generated method stub");
+					}else{
+							throw new Exception("Illegal types of arguments");
+					}
+					«ELSE»
+					throw new Exception("TODO: auto-generated method stub");
+					«ENDIF»
+				} else {
+					throw new Exception("Illegal number of arguments");
+				}
+				
+			}
+		
+		}
 	'''
 	
 }

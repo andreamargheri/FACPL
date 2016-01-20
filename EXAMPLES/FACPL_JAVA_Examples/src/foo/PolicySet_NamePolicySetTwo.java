@@ -9,20 +9,10 @@ public class PolicySet_NamePolicySetTwo extends PolicySet {
 	public PolicySet_NamePolicySetTwo() {
 		addId("NamePolicySetTwo");
 		// Algorithm Combining
-		addCombiningAlg(it.unifi.facpl.lib.algorithm.DenyOverrides.class);
+		addCombiningAlg(it.unifi.facpl.lib.algorithm.DenyOverridesGreedy.class);
 		// Target
-		addTarget(
-				new ExpressionBooleanTree(ExprBooleanConnector.NOT,
-						new ExpressionBooleanTree(
-								new ExpressionBooleanTree(ExprBooleanConnector.AND,
-										new ExpressionBooleanTree(new ExpressionFunction(
-												it.unifi.facpl.lib.function.comparison.Equal.class,
-												new AttributeName("category", "id"), 5)),
-								new ExpressionBooleanTree(new ExpressionBooleanTree(ExprBooleanConnector.NOT,
-										new ExpressionBooleanTree(new ExpressionFunction(
-												it.unifi.facpl.lib.function.comparison.Equal.class,
-												new AttributeName("category", "id"),
-												new AttributeName("category", "id")))))))));
+		addTarget(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class, "value",
+				new AttributeName("category", "id")));
 		// PolElements
 		addPolicyElement(new Rule_ruleName());
 		// Obligation

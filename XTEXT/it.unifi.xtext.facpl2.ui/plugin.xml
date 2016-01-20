@@ -338,34 +338,6 @@
 			</command>
 		</menuContribution>
 	</extension>
-    <!-- quickfix marker resolution generator for it.unifi.xtext.facpl.Facpl2 -->
-    <extension
-            point="org.eclipse.ui.ide.markerResolution">
-        <markerResolutionGenerator
-            class="it.unifi.xtext.facpl.ui.Facpl2ExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-            markerType="it.unifi.xtext.facpl.ui.facpl2.check.fast">
-            <attribute
-                name="FIXABLE_KEY"
-                value="true">
-            </attribute>
-        </markerResolutionGenerator>
-        <markerResolutionGenerator
-            class="it.unifi.xtext.facpl.ui.Facpl2ExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-            markerType="it.unifi.xtext.facpl.ui.facpl2.check.normal">
-            <attribute
-                name="FIXABLE_KEY"
-                value="true">
-            </attribute>
-        </markerResolutionGenerator>
-        <markerResolutionGenerator
-            class="it.unifi.xtext.facpl.ui.Facpl2ExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-            markerType="it.unifi.xtext.facpl.ui.facpl2.check.expensive">
-            <attribute
-                name="FIXABLE_KEY"
-                value="true">
-            </attribute>
-        </markerResolutionGenerator>
-    </extension>
    	<!-- Rename Refactoring -->
 	<extension point="org.eclipse.ui.handlers">
 		<handler 
@@ -448,6 +420,19 @@
             </visibleWhen>
         </command>
         <command
+               commandId="it.unifi.xtext.facpl.ui.popup.actions.SMTLIBCommand"
+               style="push">
+        	 <visibleWhen
+                  checkEnabled="false">
+                  <iterate>
+       		<adapt type="org.eclipse.core.resources.IResource">
+          		<test property="org.eclipse.core.resources.name" 
+                value="*.fpl"/>
+       		</adapt>
+    			</iterate>
+            </visibleWhen>
+        </command>
+        <command
            commandId="it.unifi.xtext.facpl.ui.popup.actions.XMLCommand"
            style="push">
              <visibleWhen
@@ -498,8 +483,23 @@
 	               </reference>
 	            </visibleWhen>
         </command>
+         <command
+               commandId="it.unifi.xtext.facpl.ui.popup.actions.SMTLIBEditorCommand"
+               icon="icons/blue.png"
+               style="push">
+        	 <visibleWhen
+	                  checkEnabled="false">
+	               <reference
+	                     definitionId="it.unifi.xtext.facpl.Facpl2.Editor.opened">
+	               </reference>
+	            </visibleWhen>
+        </command>
+        <separator
+                  name="additions"
+                  visible="true">
+       	</separator>
         <command
-            commandId="it.unifi.xtext.facpl.ui.popup.actions.XMLCommand"
+            commandId="it.unifi.xtext.facpl.ui.popup.actions.XMLEditorCommand"
             icon="icons/blue.png"
             style="push">
             <visibleWhen
@@ -509,17 +509,6 @@
 	               </reference>
 	            </visibleWhen>
         </command>
-        <command
-               commandId="it.unifi.xtext.facpl.ui.popup.actions.XACMLTOFACPLCommand"
-               style="push">
-               <visibleWhen
-                     checkEnabled="false">
-                     <adapt type="org.eclipse.core.resources.IResource">
-          				<test property="org.eclipse.core.resources.name" 
-                		value="*.xml"/>
-       				</adapt>
-               </visibleWhen>
-        	</command>
         </menu>
     </menuContribution>
 </extension>
@@ -549,6 +538,32 @@
            commandId="it.unifi.xtext.facpl.ui.popup.actions.XMLCommand">
      </handler>   
   </extension>
+
+ <extension
+        point="org.eclipse.ui.handlers">
+     <handler
+           class="it.unifi.xtext.facpl.ui.Facpl2ExecutableExtensionFactory:it.unifi.xtext.facpl.ui.popup.actions.XMLEditorCommand"
+           commandId="it.unifi.xtext.facpl.ui.popup.actions.XMLEditorCommand">
+     </handler>   
+  </extension>
+ 
+  
+   <extension
+        point="org.eclipse.ui.handlers">
+     <handler
+           class="it.unifi.xtext.facpl.ui.Facpl2ExecutableExtensionFactory:it.unifi.xtext.facpl.ui.popup.actions.SMTLIBCommand"
+           commandId="it.unifi.xtext.facpl.ui.popup.actions.SMTLIBCommand">
+     </handler>   
+  </extension>
+  
+  
+   <extension
+        point="org.eclipse.ui.handlers">
+     <handler
+           class="it.unifi.xtext.facpl.ui.Facpl2ExecutableExtensionFactory:it.unifi.xtext.facpl.ui.popup.actions.SMTLIBEditorCommand"
+           commandId="it.unifi.xtext.facpl.ui.popup.actions.SMTLIBEditorCommand">
+     </handler>   
+  </extension>
   
   <extension
         point="org.eclipse.ui.handlers">
@@ -562,22 +577,43 @@
   <!--command-->
   <extension
         point="org.eclipse.ui.commands">
-        <command name="Generate Java From FACPL"
+        <command name="Generate Java Code From FACPL"
               id="it.unifi.xtext.facpl.ui.popup.actions.GenerateCommand">
         </command>
   </extension>
   
   <extension
         point="org.eclipse.ui.commands">
-        <command name="Generate Java From FACPL"
+        <command name="Generate Java Code From FACPL"
               id="it.unifi.xtext.facpl.ui.popup.actions.GenerateEditorCommand">
         </command>
   </extension>
     
   <extension
         point="org.eclipse.ui.commands">
+        <command name="Generate SMT-LIB code From FACPL"
+              id="it.unifi.xtext.facpl.ui.popup.actions.SMTLIBCommand">
+        </command>
+  </extension>  
+  
+  <extension
+        point="org.eclipse.ui.commands">
+        <command name="Generate SMT-LIB code From FACPL"
+              id="it.unifi.xtext.facpl.ui.popup.actions.SMTLIBEditorCommand">
+        </command>
+  </extension>  
+    
+  <extension
+        point="org.eclipse.ui.commands">
         <command name="Generate XACML Code From FACPL"
               id="it.unifi.xtext.facpl.ui.popup.actions.XMLCommand">
+        </command>
+  </extension>
+
+  <extension
+        point="org.eclipse.ui.commands">
+        <command name="Generate XACML Code From FACPL"
+              id="it.unifi.xtext.facpl.ui.popup.actions.XMLEditorCommand">
         </command>
   </extension>
   
@@ -629,32 +665,51 @@
    </extension>-->
 
 
- <!-- menu botton -->
+ <!-- menu top botton -->
 	<extension
          point="org.eclipse.ui.menus">
       <menuContribution
             allPopups="false"
             locationURI="menu:org.eclipse.ui.main.menu?after=window">
-            <menu 
-             label="Facpl">
+            <menu  label="Facpl">
          	<command
            	commandId="it.unifi.xtext.facpl.ui.popup.actions.GenerateEditorCommand"
            	style="push">
-        	</command>
-        	<separator
-                  name="additions"
-                  visible="true">
-       		</separator>
-       		<command
-               commandId="it.unifi.xtext.facpl.ui.popup.actions.XMLCommand"
-               style="push">
-        	</command>
-        	<visibleWhen
+           	<visibleWhen
                checkEnabled="false">
                	<reference
 	                     definitionId="it.unifi.xtext.facpl.Facpl2.Editor.opened">
 	            </reference>
         	</visibleWhen>
+        	</command>
+        	
+        	<command
+               commandId="it.unifi.xtext.facpl.ui.popup.actions.SMTLIBCommand"
+               style="push">
+               <visibleWhen
+               checkEnabled="false">
+               	<reference
+	                     definitionId="it.unifi.xtext.facpl.Facpl2.Editor.opened">
+	            </reference>
+        	</visibleWhen>
+        	</command>
+        	
+        	<separator
+                  name="additions"
+                  visible="true">
+       		</separator>
+       		
+       		<command
+               commandId="it.unifi.xtext.facpl.ui.popup.actions.XMLCommand"
+               style="push">
+               <visibleWhen
+               checkEnabled="false">
+               	<reference
+	                     definitionId="it.unifi.xtext.facpl.Facpl2.Editor.opened">
+	            </reference>
+        		</visibleWhen>
+        	</command>
+        	
         	<command
                commandId="it.unifi.xtext.facpl.ui.popup.actions.XACMLTOFACPLCommand"
                style="push">

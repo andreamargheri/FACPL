@@ -40,7 +40,7 @@ class TokenHighlight implements ISemanticHighlightingCalculator {
 
 	private ParserRule ruleRequest;
 
-	private Object ruleBag;
+	private Object ruleset;
 
 	private TerminalRule ruleDate;
 
@@ -74,11 +74,11 @@ class TokenHighlight implements ISemanticHighlightingCalculator {
 		ruleBool = grammarAccess.getBooleanLiteralRule();
 		ruleAttributeName = grammarAccess.getAttributeNameRule();
 		ruleRequest = grammarAccess.getRequestRule();
-		ruleBag = grammarAccess.getBagRule();
+		ruleset = grammarAccess.getSetRule();
 		ruleDate = grammarAccess.getDATERule();
 		ruleTime = grammarAccess.getTIMERule();
 		ruleTypeLiteral = grammarAccess.typeLiteralRule
-		ruleDecFun = grammarAccess.funDeclRule
+		ruleDecFun = grammarAccess.functionDeclarationRule
 	}	
 
 	override provideHighlightingFor(XtextResource resource,IHighlightedPositionAcceptor acceptor){
@@ -139,9 +139,9 @@ class TokenHighlight implements ISemanticHighlightingCalculator {
 				if (rule == ruleTime ){
 					acceptor.addPosition(node.getOffset(), node.getLength(), SyntaxHighlighting.DATETIME);
 				}
-				//bag
-				if (rule == ruleBag ){
-					acceptor.addPosition(node.getOffset(), 10, SyntaxHighlighting.BAG);
+				//set
+				if (rule == ruleset ){
+					acceptor.addPosition(node.getOffset(), 10, SyntaxHighlighting.SET);
 				}
 			}
 			if(o instanceof Keyword){

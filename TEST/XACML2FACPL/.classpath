@@ -3,7 +3,11 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/XacmlToFacpl"/>
-	<classpathentry kind="lib" path="/Users/Andrea/Documents/Workspaces/ECLIPSE/PROJECTS/FACPL/FACPL-LIB/RESOURCES/junit-4.11.jar"/>
+<<<<<<< Updated upstream
+=======
+	<classpathentry kind="lib" path="/Users/Andrea/Documents/Workspaces/ECLIPSE/PROJECTS/FACPL/FACPL-DEV/TEST/LIB/RESOURCES/junit-4.11.jar"/>
+>>>>>>> Stashed changes
 	<classpathentry kind="lib" path="/Users/Andrea/Documents/Workspaces/ECLIPSE/PROJECTS/FACPL/FACPL-XTEXT/LIB/xtext_old.jar"/>
+	<classpathentry kind="lib" path="/Facpl_Library_Test/RESOURCES/junit-4.11.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

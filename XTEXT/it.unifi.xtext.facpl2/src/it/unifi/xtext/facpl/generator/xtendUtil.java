@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.xtext.resource.XtextResourceSet;
- 
+
 import it.unifi.xtext.facpl.facpl2.AttributeReq;
 import it.unifi.xtext.facpl.facpl2.Request;
 import it.unifi.xtext.facpl.generator.util.Connector;

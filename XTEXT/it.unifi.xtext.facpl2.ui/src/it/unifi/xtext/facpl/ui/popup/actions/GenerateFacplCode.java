@@ -1,8 +1,6 @@
 package it.unifi.xtext.facpl.ui.popup.actions;
 
 
-import it.unifi.xtext.facpl.generator.Facpl2Generator_Menu;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,8 +16,10 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.xtext.builder.EclipseResourceFileSystemAccess2;
 import org.eclipse.xtext.generator.IFileSystemAccess;
@@ -28,6 +28,8 @@ import org.eclipse.xtext.ui.resource.XtextResourceSetProvider;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
+
+import it.unifi.xtext.facpl.generator.Facpl2Generator_Menu;
 
 public class GenerateFacplCode extends AbstractHandler implements IHandler {
 
@@ -43,6 +45,8 @@ public class GenerateFacplCode extends AbstractHandler implements IHandler {
 	private Provider<EclipseResourceFileSystemAccess2> fileAccessProvider;
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
+		Shell activeShell = HandlerUtil.getActiveShell(event);
+
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
 		if (selection instanceof IStructuredSelection) {
 			IStructuredSelection structuredSelection = (IStructuredSelection) selection;
@@ -83,6 +87,8 @@ public class GenerateFacplCode extends AbstractHandler implements IHandler {
 				Resource r = rs.getResource(uri, true);
 
 				generator.doGenerateFacpl(r, fsa, "");
+				
+				MessageDialog.openInformation(activeShell, "Generate Java Code", "All Java classes generated!");
 			}
 		}
 		return null;

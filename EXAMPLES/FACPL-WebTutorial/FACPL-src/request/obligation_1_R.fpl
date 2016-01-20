@@ -1,0 +1,25 @@
+/*
+ * Request1 : PERMIT
+ * Request2 : INDETERMINATE - impossible to fulfill obligation
+ * Request3 : DENY
+ */
+Request:{Request1 
+(action/id, "read")
+(subject/id, "John")
+(subject/name, "Wilson")
+(resource/id,"4567-1")
+}
+
+Request:{Request2 
+(action/id, "write")
+(subject/id, "Tom")
+(resource/id,"4567-1")
+}
+
+Request:{Request3 
+(action/id, "checkout")
+(subject/id, "John")
+(subject/name,"Wilson")
+(resource/id,"4567-1")
+} 
+

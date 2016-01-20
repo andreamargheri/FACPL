@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Request xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17 
+	http://docs.oasis-open.org/xacml/3.0/xacml-core-v3-schema-wd-17.xsd"
+	CombinedDecision="false" ReturnPolicyIdList="false">
+	<Attributes
+		Category="urn:oasis:names:tc:xacml:3.0:attribute-category:subject">
+		<Attribute IncludeInResult="false" 
+			AttributeId="urn:oasis:names:tc:xacml:3.0:subject:countrycode">
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">GR</AttributeValue>
+		</Attribute>
+		<Attribute IncludeInResult="false" 
+			AttributeId="urn:oasis:names:tc:xacml:3.0:subject:subject-id">
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Dr. Marley</AttributeValue>
+		</Attribute>
+		<Attribute IncludeInResult="false" 
+			AttributeId="urn:oasis:names:tc:xacml:3.0:subject:organization">
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">HOSPITAL</AttributeValue>
+		</Attribute>
+		<Attribute IncludeInResult="false" 
+			AttributeId="urn:oasis:names:tc:xacml:3.0:subject:organization-id">
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">2624</AttributeValue>
+		</Attribute>
+		<Attribute IncludeInResult="false"
+			AttributeId="urn:oasis:names:tc:xacml:1.0:subject:purposeofuse">
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">TREATEMENT</AttributeValue>
+		</Attribute>
+		<Attribute IncludeInResult="false"
+			AttributeId="urn:oasis:names:tc:xacml:1.0:subject:role">
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">medical doctor</AttributeValue>
+		</Attribute>
+		<Attribute IncludeInResult="false" 
+			AttributeId="urn:oasis:names:tc:xacml:3.0:subject:starttime">
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#integer">1299231601160</AttributeValue>
+		</Attribute>
+		<Attribute IncludeInResult="false" 
+			AttributeId="urn:oasis:names:tc:xspa:1.0:subject:hl7:permission">
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#anyURI">
+			urn:oasis:names:tc:xspa:1.0:subject:hl7:permission:PRD-003
+			</AttributeValue>
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#anyURI">
+			urn:oasis:names:tc:xspa:1.0:subject:hl7:permission:PRD-004
+			</AttributeValue>
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#anyURI">
+			urn:oasis:names:tc:xspa:1.0:subject:hl7:permission:PRD-005
+			</AttributeValue>
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#anyURI">
+			urn:oasis:names:tc:xspa:1.0:subject:hl7:permission:PRD-006
+			</AttributeValue>
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#anyURI">
+			urn:oasis:names:tc:xspa:1.0:subject:hl7:permission:PRD-010
+			</AttributeValue>
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#anyURI">
+			urn:oasis:names:tc:xspa:1.0:subject:hl7:permission:PRD-016
+			</AttributeValue>
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#anyURI">
+			urn:oasis:names:tc:xspa:1.0:subject:hl7:permission:PRD-046
+			</AttributeValue>
+			</Attribute>
+	</Attributes>
+	<Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource">
+		<Attribute IncludeInResult="false"
+			AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id">
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#anyURI">34133-9</AttributeValue>
+		</Attribute>
+		<Attribute IncludeInResult="false"
+			AttributeId="urn:oasis:names:tx:xacml:3.0:resource:resouce-id:email">
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#anyURI">patient@mail.com</AttributeValue>
+		</Attribute>
+	</Attributes>
+	<Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action">
+		<Attribute IncludeInResult="false"
+			AttributeId="urn:oasis:names:tc:xacml:3.0:action:action-id">
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Read</AttributeValue>
+		</Attribute>
+	</Attributes>
+</Request> 

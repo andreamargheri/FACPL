@@ -13,7 +13,11 @@
       <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//TypeLiteral/Bool"/>
       <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//TypeLiteral/String"/>
       <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//TypeLiteral/DateTime"/>
-      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//TypeLiteral/Bag"/>
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//TypeLiteral/SetInt"/>
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//TypeLiteral/SetDouble"/>
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//TypeLiteral/SetBool"/>
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//TypeLiteral/SetString"/>
+      <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//TypeLiteral/SetDateTime"/>
     </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="Facpl2.ecore#//PEPAlg">
       <genEnumLiterals ecoreEnumLiteral="Facpl2.ecore#//PEPAlg/BASE"/>
@@ -68,10 +72,10 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Facpl2.ecore#//MainFacpl/refRequest"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//MainFacpl/paf"/>
     </genClasses>
-    <genClasses ecoreClass="Facpl2.ecore#//FunDecl">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//FunDecl/type"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//FunDecl/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//FunDecl/args"/>
+    <genClasses ecoreClass="Facpl2.ecore#//FunctionDeclaration">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//FunctionDeclaration/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//FunctionDeclaration/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//FunctionDeclaration/args"/>
     </genClasses>
     <genClasses ecoreClass="Facpl2.ecore#//PAF">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//PAF/pep"/>
@@ -133,8 +137,8 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Facpl2.ecore#//DeclaredFunction/functionId"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//DeclaredFunction/args"/>
     </genClasses>
-    <genClasses ecoreClass="Facpl2.ecore#//Bag">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//Bag/args"/>
+    <genClasses ecoreClass="Facpl2.ecore#//Set">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//Set/args"/>
     </genClasses>
     <genClasses ecoreClass="Facpl2.ecore#//StringLiteral">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//StringLiteral/value"/>
