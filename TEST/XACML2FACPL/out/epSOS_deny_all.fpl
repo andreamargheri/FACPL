@@ -1,8 +1,0 @@
-{pep:base 
- pdp: permit-overrides 
-Policy policy_deny_all < permit-overrides
-rules: 
-Rule SimpleRule1 (deny obl: )
-
-obl: 
->}
