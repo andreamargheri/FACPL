@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import it.unifi.facpl.lib.context.AuthorisationPDP;
 import it.unifi.facpl.lib.context.AuthorisationPEP;
 import it.unifi.facpl.lib.context.FulfilledObligation;
-import it.unifi.facpl.lib.context.FulfilledObligationStatus;
+import it.unifi.facpl.lib.enums.EnforcementAlgorithm;
 import it.unifi.facpl.lib.enums.ObligationType;
 import it.unifi.facpl.lib.enums.StandardDecision;
 import it.unifi.facpl.lib.interfaces.IPepAction;
@@ -25,7 +25,13 @@ public class PEP {
 	// Reference to Classes modeling Obligation Actions
 	private static HashMap<String, Class<? extends IPepAction>> pepAction;
 
-	public static AuthorisationPEP doEnforcement(String alg, AuthorisationPDP authPDP) {
+	private EnforcementAlgorithm alg;
+
+	public PEP(EnforcementAlgorithm alg) {
+		this.alg = alg;
+	}
+
+	public AuthorisationPEP doEnforcement(AuthorisationPDP authPDP) {
 
 		Logger l = LoggerFactory.getLogger(PEP.class);
 		l.debug("Start PEP enforcement for request: " + authPDP.getId());
@@ -36,15 +42,17 @@ public class PEP {
 			// inizializePepAction();
 		}
 		try {
-			AuthorisationPEP decPEP;
-			if (alg.equals("base")) {
+			AuthorisationPEP decPEP = null;
+			StandardDecision dec = authPDP.getStandardDecision();
+			switch (this.alg) {
+			case BASE:
 				l.debug("Chosen Enforcement Algorithm " + alg.toString());
-				StandardDecision dec = authPDP.getStandardDecision();
+
 				if (dec.equals(StandardDecision.DENY) || dec.equals(StandardDecision.PERMIT)) {
 					for (FulfilledObligation obl : authPDP.getObligation()) {
 						// if any error throw exception
 						try {
-							dischargeObligations(obl);
+							this.dischargeObligation(obl);
 						} catch (Throwable t) {
 							// t.printStackTrace();
 							l.debug("Obligation Evaluation Failed");
@@ -62,16 +70,18 @@ public class PEP {
 					l.debug("No Obligations to discharge. Enforcement completed");
 					decPEP = new AuthorisationPEP(authPDP.getId(), dec);
 				}
-			} else if (alg.equals("deny-biased")) {
+				break;
+
+			case DENY_BIASED:
 				l.debug("Chosen Enforcement Algorithm " + alg.toString());
-				StandardDecision dec = authPDP.getStandardDecision();
-				// permit -> eval obligations
+				// permit -> evaluate obligations
 				// otherwise or error -> return deny
+
 				if (dec.equals(StandardDecision.PERMIT)) {
 					for (FulfilledObligation obl : authPDP.getObligation()) {
 						try {
 							// if any error throw exception
-							dischargeObligations(obl);
+							this.dischargeObligation(obl);
 						} catch (Throwable t) {
 							// t.printStackTrace();
 							l.debug("Obligation Evaluation Failed");
@@ -87,16 +97,14 @@ public class PEP {
 					l.debug("No Obligations to discharge. Enforcement completed");
 					decPEP = new AuthorisationPEP(authPDP.getId(), StandardDecision.DENY);
 				}
-			} else if (alg.equals("permit-biased")) {
-				l.debug("Chosen Enforcement Algorithm " + alg.toString());
-				StandardDecision dec = authPDP.getStandardDecision();
-				// deny -> eval obligations
-				// otherwise or error -> return permit
+				break;
+
+			case PERMIT_BIASED:
 				if (dec.equals(StandardDecision.DENY)) {
 					for (FulfilledObligation obl : authPDP.getObligation()) {
 						try {
 							// if any error throw exception
-							dischargeObligations(obl);
+							this.dischargeObligation(obl);
 						} catch (Throwable t) {
 							// t.printStackTrace();
 							l.debug("Obligations Evaluation Failed");
@@ -112,12 +120,12 @@ public class PEP {
 					l.debug("No Obligations to discharge. Enforcement completed");
 					decPEP = new AuthorisationPEP(authPDP.getId(), StandardDecision.PERMIT);
 				}
-			} else {
-				throw new Exception("Undefined PEP Algorithm");
+				break;
 			}
 
 			l.debug("Enforced Decision:" + decPEP.toString());
 			return decPEP;
+
 		} catch (Throwable t) {
 			// return indeterminate for undefined algorithm or others
 			l.debug("Unhandled Exception. Enforced Decision: INDETERMINATE");
@@ -131,7 +139,7 @@ public class PEP {
 	 * @param obl
 	 * @throws Throwable
 	 */
-	private static void dischargeObligations(FulfilledObligation obl) throws Throwable {
+	private void dischargeObligation(FulfilledObligation obl) throws Throwable {
 		Logger l = LoggerFactory.getLogger(PEP.class);
 		try {
 			// discharge obligation
@@ -164,15 +172,7 @@ public class PEP {
 		}
 	}
 
-	private static void dischargeObligations(FulfilledObligationStatus obl) throws Throwable {
-
-		/**
-		 * 
-		 */
-
-	}
-
-	public static void addPEPActions(HashMap<String, Class<? extends IPepAction>> classPepActions) {
+	public void addPEPActions(HashMap<String, Class<? extends IPepAction>> classPepActions) {
 		Logger l = LoggerFactory.getLogger(PEP.class);
 		l.debug("Add standard actions");
 
@@ -181,26 +181,11 @@ public class PEP {
 		pepAction.put("log", it.unifi.facpl.lib.pepFunction.Log.class);
 		pepAction.put("compress", it.unifi.facpl.lib.pepFunction.Compress.class);
 
-		// load from custom file PepAction
-		try {
-			for (Class<? extends IPepAction> f : classPepActions.values()) {
-
-				Class<?> params[] = new Class[0];
-
-				Method eval = f.getDeclaredMethod("addPepActions", params);
-
-				Object pepAction_load = f.newInstance();
-
-				@SuppressWarnings("all")
-				HashMap<String, Class<? extends IPepAction>> hash = (HashMap<String, Class<? extends IPepAction>>) eval
-						.invoke(pepAction_load, null);
-
-				if (hash != null) {
-					pepAction.putAll(hash);
-				}
+		if (classPepActions != null) {
+			for (String key : classPepActions.keySet()) {
+				l.debug("Add action " + key);
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+			pepAction.putAll(classPepActions);
 		}
 
 	}

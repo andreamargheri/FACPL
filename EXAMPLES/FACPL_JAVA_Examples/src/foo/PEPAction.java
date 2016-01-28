@@ -8,8 +8,6 @@ import it.unifi.facpl.lib.interfaces.IPepAction;
 @SuppressWarnings("all")
 public class PEPAction {
 
-	public PEPAction() {
-	}
 
 	public static HashMap<String, Class<? extends IPepAction>> getPepActions() {
 		/*
