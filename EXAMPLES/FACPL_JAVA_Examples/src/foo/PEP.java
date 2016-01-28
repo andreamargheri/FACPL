@@ -13,10 +13,10 @@ public class PEP {
 
 	/*
 	 * ENTRY POINT FOR EVALUATION
-	 */
+	 */ 
 	public static void main(String[] args) {
 		// initialize PEP
-		FacplAuthorisationSystem.inizializePepActions(PEPAction.class);
+		FacplAuthorisationSystem.inizializePepActions(PEPAction.getPepActions()); 
 		// log
 		StringBuffer result = new StringBuffer();
 		// request

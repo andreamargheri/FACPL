@@ -122,6 +122,40 @@ class XACMLtranslation_Test extends AbstractXtextTests {
 		assertEquals(stubCheckXACML(model, "Obl"), true)
 
 	}
+	
+	
+	@Test
+	def checkEHealth(){
+		var model = '''
+		PolicySet patientConsent { permit-overrides
+			target: equal ( "Alice" , resource / patient-id ) 
+			policies:
+			PolicySet ePre { permit-overrides - all
+				target:equal("e-Prescription",resource/type)
+				policies:
+				Rule writeDoc ( permit target: equal ( subject / role , "doctor" ) 
+					&& equal ( action / id , "write" ) 
+					&& in ("e-Pre-Write" , subject / permission ) 
+					&& in ( "e-Pre-Read" , subject / permission ) )
+				Rule readDoc ( permit target: equal ( subject / role , "doctor" )
+					&& equal ( action / id , "read" ) 
+					&& in ( "e-Pre-Read", subject / permission ) )
+				Rule readPha ( permit target: equal ( subject / role , "pharmacist" ) 
+					&& equal ( action / id , "read" ) 
+					&& in ("e-Pre-Read" , subject / permission ) )
+				obl:
+				[ permit M log ( system / time , resource / type , subject / id , action / id ) ]
+			}
+			Rule denyRule ( deny )
+			obl:
+			[ deny M mailTo ( resource / patient-id.mail , "Data requested by unauthorized subject" ) ]
+			[ permit O compress ( ) ]
+		}
+		'''.parse
+		
+		assertEquals(stubCheckXACML(model, "eHealth"), true)
+		
+	}
 
 	/**
 	 * Aux methods for checking XACML policies

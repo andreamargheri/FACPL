@@ -746,4 +746,21 @@ class TypeCheck_Test {
 
 		assertNoErrors(model)
 	}
+	
+	@Test
+	def setString(){
+		var model ='''
+		PolicySet Name {permit-overrides
+		target: in ( subject / fedoraRole ,	set( "researcher" , "professor" , "administrator" )) 
+				policies: 
+				Rule id_1 ( deny target: ( ( equal ( "urn:fedora:names:fedora:2.1:action:id-getDatastreamDissemination" , action / id
+								) ) ) && ( ( equal ( "demo:11" , resource / resource_id ) && equal ( "DS1" , resource / id ) ) || ( equal (
+									"demo:11" , resource / resource_id ) && equal ( "RIGHTS1" , resource / id ) ) ) &&
+									 ! ( in ( subject / fedoraRole ,
+								set( "researcher" , "professor" , "administrator" ) ) ) 
+							)
+		}'''.parse
+		
+		assertNoErrors(model)
+	}
 }

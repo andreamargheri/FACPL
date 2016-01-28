@@ -1,4 +1,4 @@
-package it.unifi.facpl.system.status;
+package it.unifi.facpl.lib.function.comparison.evaluator;
 
 import it.unifi.facpl.lib.interfaces.IComparisonEvaluator;
 
@@ -51,5 +51,8 @@ public class ListComparisonEvaluator implements IComparisonEvaluator {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	
+	
 
 }

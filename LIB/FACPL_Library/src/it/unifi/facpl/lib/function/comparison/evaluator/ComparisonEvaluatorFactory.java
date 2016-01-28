@@ -16,6 +16,9 @@ public class ComparisonEvaluatorFactory {
 
 	private HashMap<Class<?>, IComparisonEvaluator> table;
 
+	/**
+	 * Initialization of the evaluators -> NB to add reference otherwise exception
+	 */
 	private ComparisonEvaluatorFactory() {
 		this.table = new HashMap<Class<?>, IComparisonEvaluator>();
 		
@@ -25,6 +28,9 @@ public class ComparisonEvaluatorFactory {
 		this.table.put(String.class, StringComparisonEvaluator.getInstance());
 		this.table.put(Boolean.class, BooleanComparisonEvaluator.getInstance());
 		this.table.put(FacplDate.class, DateComparisonEvaluator.getInstance());
+		
+		this.table.put(List.class, ListComparisonEvalutor.getInstace());
+		
 	}
 
 	public static synchronized ComparisonEvaluatorFactory getInstance() {

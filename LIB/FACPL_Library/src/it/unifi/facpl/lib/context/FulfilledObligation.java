@@ -12,10 +12,11 @@ import it.unifi.facpl.lib.enums.ObligationType;
  */
 public class FulfilledObligation {
 
-	private Effect evaluatedOn;
-	private ObligationType type;	
+	protected Effect evaluatedOn;
+	protected ObligationType type;
+	protected LinkedList<Object> arguments;
 	private String pepAction;
-	private LinkedList<Object> arguments;
+	
 	
 	public FulfilledObligation(Effect effect, ObligationType typeObl, String pepAction) {
 		this.type = typeObl;
@@ -24,6 +25,10 @@ public class FulfilledObligation {
 		this.arguments = new LinkedList<Object>();
 	}
 	
+	public FulfilledObligation() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public void addArg(Object object){
 		if (this.arguments == null){
 			this.arguments = new LinkedList<Object>();

@@ -1,1 +1,0 @@
-Questo set di intefacce verra' implementato dalle nuove pepaction per gestire le operazioni sui nuovi tipi.

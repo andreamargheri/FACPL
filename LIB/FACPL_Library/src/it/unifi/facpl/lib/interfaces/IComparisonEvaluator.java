@@ -1,5 +1,7 @@
 package it.unifi.facpl.lib.interfaces;
 
+import java.util.List;
+
 /**
  * Comparison to implement by the supported datatypes
  * @author Andrea Margheri
@@ -43,4 +45,9 @@ public interface IComparisonEvaluator  {
 	
 	public boolean isAtLestOneMemberOf (Object o1, Object o2) throws Throwable;
 	
+	/*
+	 * List operators
+	 */
+	
+	public boolean isListElement(List<?> list, Object o2) throws Throwable;
 }
