@@ -29,13 +29,13 @@ import org.eclipse.xtext.ui.resource.XtextResourceSetProvider;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
-import it.unifi.xtext.facpl.generator.Facpl2Generator_Menu;
+import it.unifi.xtext.facpl.generator.Facpl2Generator;
 
 public class GenerateFacplCode extends AbstractHandler implements IHandler {
 
 
 	@Inject
-	private Facpl2Generator_Menu generator;
+	private Facpl2Generator generator;
 
 	@Inject
 	XtextResourceSetProvider resourceSetProvider;
@@ -86,7 +86,7 @@ public class GenerateFacplCode extends AbstractHandler implements IHandler {
 				ResourceSet rs = resourceSetProvider.get(project);
 				Resource r = rs.getResource(uri, true);
 
-				generator.doGenerateFacpl(r, fsa, "");
+				generator.doGenerate(r, fsa);
 				
 				MessageDialog.openInformation(activeShell, "Generate Java Code", "All Java classes generated!");
 			}

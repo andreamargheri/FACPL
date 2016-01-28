@@ -36,8 +36,8 @@ public class SubstitutionSet {
 					|| (getBound(var).equals(FacplType.DOUBLE) && type.equals(FacplType.INT))) {
 				this.substitution.put(_nameToString(var), FacplType.DOUBLE);
 			} else if (!getBound(var).equals(type)) {
-				//Type cannot be unified
-				//Put the inferred type of the variable as error
+				// Type cannot be unified
+				// Put the inferred type of the variable as error
 				this.substitution.put(_nameToString(var), FacplType.ERR);
 				throw new Exception("Attribute Name Types cannot be unified");
 			}
@@ -48,7 +48,7 @@ public class SubstitutionSet {
 
 	public void addEquality(AttributeName n1, AttributeName n2) {
 		this.equalities.put(_nameToString(n1), _nameToString(n2));
-//		this.equalities.put(_nameToString(n2), _nameToString(n1));
+		// this.equalities.put(_nameToString(n2), _nameToString(n1));
 	}
 
 	public boolean isBounded(AttributeName n) {
@@ -57,6 +57,7 @@ public class SubstitutionSet {
 
 	/**
 	 * Return the inferred type for the attribute name in input
+	 * 
 	 * @param n
 	 * @return
 	 */
@@ -64,15 +65,14 @@ public class SubstitutionSet {
 		return this.substitution.get(_nameToString(n));
 	}
 
-	
-	public void addSetName(AttributeName a){
+	public void addSetName(AttributeName a) {
 		this.set_Attributes.add(_nameToString(a));
 	}
-	
+
 	public LinkedList<String> getSet_Attributes() {
 		return set_Attributes;
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuffer str = new StringBuffer();

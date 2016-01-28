@@ -126,45 +126,102 @@ class Facpl2Generator implements IGenerator {
 			if (e.getMain != null){
 				
 				/* Generating Main File of PDP and PEP (Policies possibly defined within the PDP are compiled as well*/
-				fsa.generateFile(packageFolder +"PDP.java",compilePDPMain(e.getMain,fsa))
-				fsa.generateFile(packageFolder +"PEP.java",compilePEP(e.getMain))
+				
+				fsa.generateFile(packageFolder +"MainFACPL.java",compileMain(e.getMain,fsa))
 				fsa.generateFile(packageFolder +"PEPAction.java",compilePEPAction)
 			}
 				
 		}
 	}
 	
-	
 	//----------------------------------------------------
-	//PEP
+	//PDP
 	//----------------------------------------------------
-	def CharSequence compilePEP(MainFacpl m) '''
+	def CharSequence compileMain(MainFacpl main, IFileSystemAccess fsa)'''
 	«IF packageName != ""»package «packageName»«ENDIF»
 	
-	import javax.swing.JOptionPane;
-	
-	import it.unifi.facpl.lib.context.*;
+	import it.unifi.facpl.lib.policy.*;
 	import it.unifi.facpl.system.*;
+	import it.unifi.facpl.lib.context.*;
+	import it.unifi.facpl.lib.interfaces.*;
+	import it.unifi.facpl.lib.enums.*;
 	import it.unifi.facpl.lib.util.*;
-	
+	import java.lang.reflect.Method;
 	import java.util.LinkedList;
+	import java.util.List;
 	
 	@SuppressWarnings("all")
-	public class PEP {
+	public class MainFACPL{
+		 	
+		private PDP pdp;
+		private PEP pep;
+			
+		public MainFACPL() {
+			// defined list of policies included in the PDP
+			LinkedList<FacplPolicy> policies = new LinkedList<FacplPolicy>();
+			«FOR p : main.paf.pdp.polSet»
+«««		Firt row adds the name of the policy. The next IF is needed to compile policies possibly defined in the PDP
+			policies.add(new «IF p.refPol == null»«getNameFacplPolicy(p.newPolicy)»«ELSE»«getNameFacplPolicy(p.refPol)»«ENDIF»()); 
+			«ENDFOR»
+			this.pdp = new PDP(«getAlgName(main.paf.pdp.pdpAlg.idAlg,fsa)»«IF main.paf.pdp.pdpAlg.FStrategy!= null»«IF main.paf.pdp.pdpAlg.FStrategy.equals(FulfillmentStrategy.GREEDY)»Greedy«ENDIF»«ENDIF».class, policies, «IF main.extIndet != null»«getExpression(main.extIndet)»«ELSE»false«ENDIF»);
+			
+			this.pep = new PEP(EnforcementAlgorithm.«main.paf.pep.literal.replace('-','_').toUpperCase»);
+				
+			this.pep.addPEPActions(PEPAction.getPepActions());
+		}
+			
+		/*
+		*ENTRY POINT FOR EVALUATION
+		*/
+		public static void main(String[] args){
+			//Initialise Authorisation System
+			MainFACPL system = new MainFACPL();
+			
+			//log
+			StringBuffer result = new StringBuffer();
+			//request
+			LinkedList<ContextRequest> requests = new LinkedList<ContextRequest>();
+			«FOR r : main.refRequest»
+			requests.add(ContextRequest_«r.name».getContextReq());
+			«ENDFOR»
+			for (ContextRequest rcxt : requests) {
+				result.append("---------------------------------------------------\n");
+				AuthorisationPDP resPDP = system.pdp.doAuthorisation(rcxt);
+				result.append("Request: "+ resPDP.getId() + "\n\n");
+				result.append("PDP Decision=\n " + resPDP.toString()+"\n\n");
+				//enforce decision
+				AuthorisationPEP resPEP = system.pep.doEnforcement(resPDP);
+				result.append("PEP Decision=\n " + resPEP.toString()+"\n");
+				result.append("---------------------------------------------------\n");
+			}
+			System.out.println(result.toString());
+			ShowResult.showResult(result);
+		}	
 		
-		«IF m != null»
-			«compileMainPEP(m)»
-		«ENDIF»
+		«FOR p : main.paf.pdp.polSet»
+			«IF p.newPolicy != null»
+				«IF p.newPolicy instanceof PolicySet»
+				«fsa.generateFile(packageFolder + getNameFacplPolicy(p.newPolicy)+".java",compilePolicy(p.newPolicy,fsa))»
+				«ELSE»
+				«compilePolicy(p.newPolicy as Rule, fsa)»			
+				«ENDIF»
+			«ENDIF»
+		«ENDFOR»
 		
-		public static AuthorisationPEP enforceDecision(AuthorisationPDP pdpRes) {
-			//algrothm for PEP
-			String alg = "«m.paf.pep.literal»";	
-			//call enforcement 
-			return FacplAuthorisationSystem.doEnforcement(alg,pdpRes);
+		public PDP getPdp() {
+			return pdp;
+		}
+			
+		public PEP getPep() {
+			return pep;
 		}
 		
 	}
 	'''
+	
+	//----------------------------------------------------
+	//PEP-ACTIONS
+	//----------------------------------------------------
 	def CharSequence compilePEPAction() '''
 	«IF packageName != ""»package «packageName»«ENDIF»
 	
@@ -174,99 +231,19 @@ class Facpl2Generator implements IGenerator {
 	@SuppressWarnings("all")
 	public class PEPAction{
 
-		public PEPAction (){	
-		}
-		
-		public HashMap<String,Class<? extends IPepAction>> addPepActions(){
-			/*Set your own pep action e.g.
-			*HashMap<String,Class<? extends IPepAction>> pepAction = new HashMap<String,Class<? extends IPepAction>>();
-			*pepAction.put("action", Action.class);
-			*return pepAction;
-			*/
+	    public static HashMap<String, Class<? extends IPepAction>> getPepActions() {
+			/*
+			 * Set your own pep action e.g. HashMap<String,Class<? extends
+			 * IPepAction>> pepAction = new HashMap<String,Class<? extends
+			 * IPepAction>>(); pepAction.put("action", Action.class); return
+			 * pepAction;
+			 */
 			return null;
 		}
 		
 	}
 	'''
-	
-	//----------------------------------------------------
-	//MAIN for request evaluation 
-	//----------------------------------------------------
-	def CharSequence compileMainPEP(MainFacpl main) '''
-	
-		/*
-		*ENTRY POINT FOR EVALUATION
-		*/
-		public static void main(String[] args){
-			//initialize PEP
-			FacplAuthorisationSystem.inizializePepActions(PEPAction.class);
-			//log
-			StringBuffer result = new StringBuffer();
-			//request
-			LinkedList<ContextRequest> requests = new LinkedList<ContextRequest>();
-			«FOR r : main.refRequest»
-				requests.add(ContextRequest_«r.name».getContextReq());
-			«ENDFOR»
-			for (ContextRequest rcxt : requests) {
-				result.append("---------------------------------------------------\n");
-				AuthorisationPDP resPDP = PDP.evalRequest(rcxt);
-				result.append("Request: "+ resPDP.getId() + "\n\n");
-				result.append("PDP Decision=\n " + resPDP.toString()+"\n\n");
-				//enforce decision
-				AuthorisationPEP resPEP = enforceDecision(resPDP);
-				result.append("PEP Decision=\n " + resPEP.toString()+"\n");
-				result.append("---------------------------------------------------\n");
-			}
-			System.out.println(result.toString());
-			ShowResult.showResult(result);
-		}
-	''' 
-	
-	
-	//----------------------------------------------------
-	//PDP
-	//----------------------------------------------------
-	def CharSequence compilePDPMain(MainFacpl m,IFileSystemAccess fsa)'''
-	«IF packageName != ""»package «packageName»«ENDIF»
-	
-	import it.unifi.facpl.lib.policy.*;
-	import it.unifi.facpl.system.*;
-	import it.unifi.facpl.lib.context.*;
-	import it.unifi.facpl.lib.interfaces.*;
-	import java.lang.reflect.Method;
-	import java.util.LinkedList;
-	import java.util.List;
-	
-	@SuppressWarnings("all")
-	public class PDP{
-		private static List<FacplPolicy> policies; 
-			
-		private static void inizialize(){
-			//add policies
-			policies = new LinkedList<FacplPolicy>();
-		«FOR p : m.paf.pdp.polSet»
-«««		Firt row adds the name of the policy. The next IF is needed to compile policies possibly defined in the PDP
-				policies.add(new «IF p.refPol == null»«getNameFacplPolicy(p.newPolicy)»«ELSE»«getNameFacplPolicy(p.refPol)»«ENDIF»()); 
-				«IF p.refPol == null»
-				«fsa.generateFile(packageFolder + getNameFacplPolicy(p.newPolicy)+".java",compilePolicy(p.newPolicy,fsa))»
-				«ENDIF»
-		«ENDFOR»	
-		}
-			
-		public static AuthorisationPDP evalRequest(ContextRequest request) {
-		if (policies== null)
-			inizialize();
-		Class<? extends IEvaluableAlgorithm> pdpAlg = «getAlgName(m.paf.pdp.pdpAlg.idAlg,fsa)»«IF m.paf.pdp.pdpAlg.FStrategy!= null»«IF m.paf.pdp.pdpAlg.FStrategy.equals(FulfillmentStrategy.GREEDY)»Greedy«ENDIF»«ENDIF».class;
-		//flag for choosing how manage indeterminate extended values
-		// True = when target INDETERMINATE combining algorithm run 
-		// False = when target INDETERMINATE evaluation return INDETERMINATE without running combining algorithm
-		Boolean extendedIndeterminate = «IF m != null»«getExpression(m.extIndet)»«ELSE»false«ENDIF»;
-		//main
-		return FacplAuthorisationSystem.doAuthorisation(pdpAlg, policies, request,extendedIndeterminate);
-		}
-	}
-	'''
-	
+
 	//----------------------------------------------------
 	//POLICIES Names
 	//----------------------------------------------------

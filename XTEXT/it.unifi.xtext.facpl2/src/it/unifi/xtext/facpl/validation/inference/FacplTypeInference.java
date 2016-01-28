@@ -310,7 +310,7 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 						this.typeAssignments.add((AttributeName) fun.getArg1(), arg2);
 						return arg2;
 					} else if (arg2.equals(FacplType.NAME)) {
-						//both attribute names
+						// both attribute names
 						this.typeAssignments.addEquality((AttributeName) fun.getArg1(), (AttributeName) fun.getArg2());
 						this.typeAssignments.add((AttributeName) fun.getArg1(), FacplType.INT);
 						this.typeAssignments.add((AttributeName) fun.getArg2(), FacplType.INT);
@@ -321,7 +321,7 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 						this.typeAssignments.add((AttributeName) fun.getArg2(), arg1);
 						return arg1;
 					} else if (arg1.equals(FacplType.NAME)) {
-						//both attribute names
+						// both attribute names
 						this.typeAssignments.addEquality((AttributeName) fun.getArg1(), (AttributeName) fun.getArg2());
 						this.typeAssignments.add((AttributeName) fun.getArg1(), FacplType.INT);
 						this.typeAssignments.add((AttributeName) fun.getArg2(), FacplType.INT);
@@ -365,8 +365,9 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 							if (fun.getArg2() instanceof Set) {
 								this.typeAssignments.addEquality((AttributeName) fun.getArg1(),
 										getAttributeNameFromSet((Set) fun.getArg2()));
-							}else{
-								//the Set is returned by a declared function, hence do nothing  
+							} else {
+								// the Set is returned by a declared function,
+								// hence do nothing
 							}
 						} else {
 							// the Set literal has a type different from NAME
@@ -410,7 +411,7 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 						this.typeAssignments.add((AttributeName) fun.getArg1(), arg2);
 						return FacplType.BOOLEAN;
 					} else if (arg2.equals(FacplType.NAME)) {
-						//both attribute names
+						// both attribute names
 						this.typeAssignments.addEquality((AttributeName) fun.getArg1(), (AttributeName) fun.getArg2());
 						this.typeAssignments.add((AttributeName) fun.getArg1(), FacplType.INT);
 						this.typeAssignments.add((AttributeName) fun.getArg2(), FacplType.INT);
@@ -424,12 +425,12 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 						this.typeAssignments.add((AttributeName) fun.getArg2(), arg1);
 						return FacplType.BOOLEAN;
 					} else if (arg1.equals(FacplType.NAME)) {
-						//both attribute names
+						// both attribute names
 						this.typeAssignments.addEquality((AttributeName) fun.getArg1(), (AttributeName) fun.getArg2());
 						this.typeAssignments.add((AttributeName) fun.getArg1(), FacplType.INT);
 						this.typeAssignments.add((AttributeName) fun.getArg2(), FacplType.INT);
 						return FacplType.BOOLEAN;
-					} else if (arg1.equals(FacplType.DATETIME)){
+					} else if (arg1.equals(FacplType.DATETIME)) {
 						this.typeAssignments.add((AttributeName) fun.getArg2(), FacplType.DATETIME);
 						return FacplType.BOOLEAN;
 					}
@@ -469,7 +470,7 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 		for (Expression a : Set.getArgs()) {
 			FacplType t = doSwitch(a);
 			if (t.equals(FacplType.NAME)) {
-				//Sets cannot contain Attribute Names
+				// Sets cannot contain Attribute Names
 				return FacplType.ERR;
 			} else if (!t.equals(FacplType.ERR)) {
 				if (def == null) {
@@ -575,7 +576,7 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 		for (Expression e : object.getValue()) {
 			FacplType t = doSwitch(e);
 			if (t.equals(FacplType.NAME))
-				//Names are not accepted in requests. Returned immediately 
+				// Names are not accepted in requests. Returned immediately
 				return t;
 			f = FacplType.combine(f, t);
 			if (f.equals(FacplType.ERR))
