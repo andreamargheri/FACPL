@@ -6,10 +6,7 @@ import it.unifi.facpl.lib.interfaces.IPepAction;
 @SuppressWarnings("all")
 public class PEPAction {
 
-	public PEPAction() {
-	}
-
-	public HashMap<String, Class<? extends IPepAction>> addPepActions() {
+	public static HashMap<String, Class<? extends IPepAction>> getPepActions() {
 		/*
 		 * Set your own pep action e.g. HashMap<String,Class<? extends
 		 * IPepAction>> pepAction = new HashMap<String,Class<? extends

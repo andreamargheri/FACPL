@@ -106,7 +106,7 @@ public class AuthorisationPDP {
 	@Override
 	public String toString() {
 		StringBuffer text = new StringBuffer();
-		text.append("Decision: " + decision.toString());
+		text.append("Decision: " + decision.toString() + " ");
 		text.append("Obligations: ");
 		if (obligation != null) {
 			for (FulfilledObligation obl : obligation) {
