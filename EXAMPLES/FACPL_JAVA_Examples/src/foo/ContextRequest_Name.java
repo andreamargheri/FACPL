@@ -1,4 +1,4 @@
-package foo.declaredFunctions;
+package foo;
 
 import java.util.HashMap;
 import it.unifi.facpl.lib.context.*;

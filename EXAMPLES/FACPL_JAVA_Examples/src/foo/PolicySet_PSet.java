@@ -1,4 +1,4 @@
-package foo.declaredFunctions;
+package foo;
 
 import it.unifi.facpl.lib.policy.*;
 import it.unifi.facpl.lib.enums.*;
