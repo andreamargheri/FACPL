@@ -1,0 +1,16 @@
+
+PolicySet Create_Policies { permit-overrides
+	target: equal ( "CREATE" , action / action-id ) policies:
+	PolicySet SLA_Type1 { deny-unless-permit
+		target: ( equal ( "P_1" , subject / profile-id ) || equal ( "P_2" , subject / profile-id ) ) && equal ( "TYPE_1" ,
+			resource / vm-type ) policies:
+		Rule hyper_1 ( permit target: less-than-or-equal ( 1 , system / hyper1.availableResources ) obl:
+			[ permit M create ( "HYPER_1" , system / vm-id , "TYPE_1" ) ]
+		)
+		Rule hyper_2 ( permit target: less-than-or-equal ( 1 , system / hyper2.availableResources ) obl:
+			[ permit M create ( "HYPER_2" , system / vm-id , "TYPE_1" ) ]
+		)
+		obl:
+		[ deny O warning ( "Not enough available resources for TYPE_1 VMs" ) ]
+	}
+}

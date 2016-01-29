@@ -35,6 +35,7 @@ class Facpl2Xacml_Validator extends Facpl2Switch<Boolean> {
 	 * Not supported by XACML
 	 */
 	override caseNotExpression(NotExpression object) {
+		
 		return false
 	}
 
@@ -42,10 +43,12 @@ class Facpl2Xacml_Validator extends Facpl2Switch<Boolean> {
 	 * Check for a Policy target -> FIRST-> Attribute-Name SECOND -> Literal
 	 */
 	override caseFunction(Function object) {
-		if (object.arg2 instanceof AttributeName && isLiteral(object.arg1))
+		if (isLiteral(object.arg1) && object.arg2 instanceof AttributeName ){
 			return true
-		else
+		}else{
+			System.out.println("Function not well-formed: " + object.arg1.toString());
 			return false
+		}
 	}
 
 	def Boolean isLiteral(Expression e) {
@@ -117,14 +120,18 @@ class Facpl2Xacml_Validator extends Facpl2Switch<Boolean> {
 	}
 
 	def dispatch Boolean isXACML_FormedPolicy(Rule p) {
+		/*
+		 * No restriction on the expression of rule target
+		 */
 		return true
 	}
 
 	def Boolean isXACML_Formed(Facpl f) {
 		if (f.policies != null) {
 			for (p : f.policies) {
-				if (!isXACML_FormedPolicy(p))
+				if (!isXACML_FormedPolicy(p)){
 					return false
+				}
 			}
 		}
 		return true

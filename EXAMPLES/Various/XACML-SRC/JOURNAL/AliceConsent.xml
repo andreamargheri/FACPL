@@ -1,0 +1,423 @@
+<PolicySet xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17
+	http://docs.oasis-open.org/xacml/3.0/xacml-core-v3-schema-wd-17.xsd"
+	PolicySetId="AliceConsent" Version="1.0"
+	PolicyCombiningAlgId="urn:oasis:names:tc:xacml:3.0:policy-combining-algorithm:permit-overrides"
+	MaxDelegationDepth="1">
+	<Target>
+		<AnyOf>
+			<AllOf>
+				<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+						Alice
+					</AttributeValue>
+					<AttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#anyURI"
+						MustBePresent="false"
+						Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+						AttributeId="urn:oasis:names:tc:xacml:1.0:resource:patient-id" />
+				</Match>
+			</AllOf>
+		</AnyOf>
+	</Target>
+	<PolicySet PolicySetId="ePre" Version="1.0"
+		PolicyCombiningAlgId="urn:oasis:names:tc:xacml:3.0:policy-combining-algorithm:permit-overrides">
+		<Target>
+			<AnyOf>
+				<AllOf>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+							e-Prescription
+						</AttributeValue>
+						<AttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#anyURI"
+							MustBePresent="false"
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+							AttributeId="urn:oasis:names:tc:xacml:1.0:resource:type" />
+					</Match>
+				</AllOf>
+			</AnyOf>
+		</Target>
+		<Policy PolicyId="PolicyEnclosingRulewrite" Version="1.0"
+			RuleCombiningAlgId="urn:oasis:names:tc:xacml:3.0:policy-combining-algorithm:permit-overrides"
+			MaxDelegationDepth="1">
+			<Target />
+			<Rule RuleId="write" Effect="Permit">
+				<Target />
+				<Condition>
+					<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:and">
+						<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:and">
+							<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:and">
+								<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+									<AttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#anyURI"
+										MustBePresent="false"
+										Category="urn:oasis:names:tc:xacml:3.0:attribute-category:subject"
+										AttributeId="urn:oasis:names:tc:xacml:1.0:subject:role" />
+									<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+										doctor
+									</AttributeValue>
+								</Apply>
+								<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+									<AttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#anyURI"
+										MustBePresent="false"
+										Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action"
+										AttributeId="urn:oasis:names:tc:xacml:1.0:action:id" />
+									<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+										write
+									</AttributeValue>
+								</Apply>
+							</Apply>
+							<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-subset">
+								<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+									e-Pre-Write
+								</AttributeValue>
+								<AttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#anyURI"
+									MustBePresent="false"
+									Category="urn:oasis:names:tc:xacml:3.0:attribute-category:subject"
+									AttributeId="urn:oasis:names:tc:xacml:1.0:subject:permission" />
+							</Apply>
+						</Apply>
+						<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-subset">
+							<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+								e-Pre-Read
+							</AttributeValue>
+							<AttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#anyURI"
+								MustBePresent="false"
+								Category="urn:oasis:names:tc:xacml:3.0:attribute-category:subject"
+								AttributeId="urn:oasis:names:tc:xacml:1.0:subject:permission" />
+						</Apply>
+					</Apply>
+				</Condition>
+			</Rule>
+		</Policy>
+		<Policy PolicyId="PolicyEnclosingRuleread" Version="1.0"
+			RuleCombiningAlgId="urn:oasis:names:tc:xacml:3.0:policy-combining-algorithm:permit-overrides"
+			MaxDelegationDepth="1">
+			<Target />
+			<Rule RuleId="read" Effect="Permit">
+				<Target />
+				<Condition>
+					<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:and">
+						<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:and">
+							<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+								<AttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#anyURI"
+									MustBePresent="false"
+									Category="urn:oasis:names:tc:xacml:3.0:attribute-category:subject"
+									AttributeId="urn:oasis:names:tc:xacml:1.0:subject:role" />
+								<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+									doctor
+								</AttributeValue>
+							</Apply>
+							<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+								<AttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#anyURI"
+									MustBePresent="false"
+									Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action"
+									AttributeId="urn:oasis:names:tc:xacml:1.0:action:id" />
+								<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+									read
+								</AttributeValue>
+							</Apply>
+						</Apply>
+						<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-subset">
+							<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+								e-Pre-Read
+							</AttributeValue>
+							<AttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#anyURI"
+								MustBePresent="false"
+								Category="urn:oasis:names:tc:xacml:3.0:attribute-category:subject"
+								AttributeId="urn:oasis:names:tc:xacml:1.0:subject:permission" />
+						</Apply>
+					</Apply>
+				</Condition>
+			</Rule>
+		</Policy>
+		<Policy PolicyId="PolicyEnclosingRulepha" Version="1.0"
+			RuleCombiningAlgId="urn:oasis:names:tc:xacml:3.0:policy-combining-algorithm:permit-overrides"
+			MaxDelegationDepth="1">
+			<Target />
+			<Rule RuleId="pha" Effect="Permit">
+				<Target />
+				<Condition>
+					<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:and">
+						<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:and">
+							<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+								<AttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#anyURI"
+									MustBePresent="false"
+									Category="urn:oasis:names:tc:xacml:3.0:attribute-category:subject"
+									AttributeId="urn:oasis:names:tc:xacml:1.0:subject:role" />
+								<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+									pharmacist
+								</AttributeValue>
+							</Apply>
+							<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+								<AttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#anyURI"
+									MustBePresent="false"
+									Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action"
+									AttributeId="urn:oasis:names:tc:xacml:1.0:action:id" />
+								<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+									read
+								</AttributeValue>
+							</Apply>
+						</Apply>
+						<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-subset">
+							<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+								e-Pre-Read
+							</AttributeValue>
+							<AttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#anyURI"
+								MustBePresent="false"
+								Category="urn:oasis:names:tc:xacml:3.0:attribute-category:subject"
+								AttributeId="urn:oasis:names:tc:xacml:1.0:subject:permission" />
+						</Apply>
+					</Apply>
+				</Condition>
+			</Rule>
+		</Policy>
+		<ObligationExpressions>
+			<ObligationExpression ObligationId="log"
+				FulfillOn="Permit">
+				<AttributeAssignmentExpression
+					AttributeId="urn:oasis:names:tc:xaml:3.0:argument">
+					<AttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#anyURI"
+						MustBePresent="false"
+						Category="urn:oasis:names:tc:xacml:3.0:attribute-category:system"
+						AttributeId="urn:oasis:names:tc:xacml:3.0:system:time" />
+				</AttributeAssignmentExpression>
+				<AttributeAssignmentExpression
+					AttributeId="urn:oasis:names:tc:xaml:3.0:argument">
+					<AttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#anyURI"
+						MustBePresent="false"
+						Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+						AttributeId="urn:oasis:names:tc:xacml:1.0:resource:type" />
+				</AttributeAssignmentExpression>
+				<AttributeAssignmentExpression
+					AttributeId="urn:oasis:names:tc:xaml:3.0:argument">
+					<AttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#anyURI"
+						MustBePresent="false"
+						Category="urn:oasis:names:tc:xacml:3.0:attribute-category:subject"
+						AttributeId="urn:oasis:names:tc:xacml:1.0:subject:id" />
+				</AttributeAssignmentExpression>
+				<AttributeAssignmentExpression
+					AttributeId="urn:oasis:names:tc:xaml:3.0:argument">
+					<AttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#anyURI"
+						MustBePresent="false"
+						Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action"
+						AttributeId="urn:oasis:names:tc:xacml:1.0:action:id" />
+				</AttributeAssignmentExpression>
+			</ObligationExpression>
+		</ObligationExpressions>
+	</PolicySet>
+	<PolicySet PolicySetId="eDis" Version="1.0"
+		PolicyCombiningAlgId="urn:oasis:names:tc:xacml:3.0:policy-combining-algorithm:permit-overrides">
+		<Target>
+			<AnyOf>
+				<AllOf>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+							e-Dispensation
+						</AttributeValue>
+						<AttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#anyURI"
+							MustBePresent="false"
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+							AttributeId="urn:oasis:names:tc:xacml:1.0:resource:type" />
+					</Match>
+				</AllOf>
+			</AnyOf>
+		</Target>
+		<Policy PolicyId="PolicyEnclosingRulewriteDis" Version="1.0"
+			RuleCombiningAlgId="urn:oasis:names:tc:xacml:3.0:policy-combining-algorithm:permit-overrides"
+			MaxDelegationDepth="1">
+			<Target />
+			<Rule RuleId="writeDis" Effect="Permit">
+				<Target />
+				<Condition>
+					<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:and">
+						<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:and">
+							<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:and">
+								<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+									<AttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#anyURI"
+										MustBePresent="false"
+										Category="urn:oasis:names:tc:xacml:3.0:attribute-category:subject"
+										AttributeId="urn:oasis:names:tc:xacml:1.0:subject:role" />
+									<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+										doctor
+									</AttributeValue>
+								</Apply>
+								<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+									<AttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#anyURI"
+										MustBePresent="false"
+										Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action"
+										AttributeId="urn:oasis:names:tc:xacml:1.0:action:id" />
+									<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+										write
+									</AttributeValue>
+								</Apply>
+							</Apply>
+							<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-subset">
+								<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+									e-Dis-Write
+								</AttributeValue>
+								<AttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#anyURI"
+									MustBePresent="false"
+									Category="urn:oasis:names:tc:xacml:3.0:attribute-category:subject"
+									AttributeId="urn:oasis:names:tc:xacml:1.0:subject:permission" />
+							</Apply>
+						</Apply>
+						<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-subset">
+							<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+								e-Dis-Read
+							</AttributeValue>
+							<AttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#anyURI"
+								MustBePresent="false"
+								Category="urn:oasis:names:tc:xacml:3.0:attribute-category:subject"
+								AttributeId="urn:oasis:names:tc:xacml:1.0:subject:permission" />
+						</Apply>
+					</Apply>
+				</Condition>
+			</Rule>
+		</Policy>
+		<Policy PolicyId="PolicyEnclosingRulereadDis" Version="1.0"
+			RuleCombiningAlgId="urn:oasis:names:tc:xacml:3.0:policy-combining-algorithm:permit-overrides"
+			MaxDelegationDepth="1">
+			<Target />
+			<Rule RuleId="readDis" Effect="Permit">
+				<Target />
+				<Condition>
+					<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:and">
+						<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:and">
+							<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+								<AttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#anyURI"
+									MustBePresent="false"
+									Category="urn:oasis:names:tc:xacml:3.0:attribute-category:subject"
+									AttributeId="urn:oasis:names:tc:xacml:1.0:subject:role" />
+								<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+									doctor
+								</AttributeValue>
+							</Apply>
+							<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+								<AttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#anyURI"
+									MustBePresent="false"
+									Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action"
+									AttributeId="urn:oasis:names:tc:xacml:1.0:action:id" />
+								<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+									read
+								</AttributeValue>
+							</Apply>
+						</Apply>
+						<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-subset">
+							<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+								e-Dis-Read
+							</AttributeValue>
+							<AttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#anyURI"
+								MustBePresent="false"
+								Category="urn:oasis:names:tc:xacml:3.0:attribute-category:subject"
+								AttributeId="urn:oasis:names:tc:xacml:1.0:subject:permission" />
+						</Apply>
+					</Apply>
+				</Condition>
+			</Rule>
+		</Policy>
+		<Policy PolicyId="PolicyEnclosingRulephaDis" Version="1.0"
+			RuleCombiningAlgId="urn:oasis:names:tc:xacml:3.0:policy-combining-algorithm:permit-overrides"
+			MaxDelegationDepth="1">
+			<Target />
+			<Rule RuleId="phaDis" Effect="Permit">
+				<Target />
+				<Condition>
+					<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:and">
+						<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:and">
+							<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+								<AttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#anyURI"
+									MustBePresent="false"
+									Category="urn:oasis:names:tc:xacml:3.0:attribute-category:subject"
+									AttributeId="urn:oasis:names:tc:xacml:1.0:subject:role" />
+								<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+									pharmacist
+								</AttributeValue>
+							</Apply>
+							<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+								<AttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#anyURI"
+									MustBePresent="false"
+									Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action"
+									AttributeId="urn:oasis:names:tc:xacml:1.0:action:id" />
+								<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+									read
+								</AttributeValue>
+							</Apply>
+						</Apply>
+						<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-subset">
+							<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+								e-Dis-Read
+							</AttributeValue>
+							<AttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#anyURI"
+								MustBePresent="false"
+								Category="urn:oasis:names:tc:xacml:3.0:attribute-category:subject"
+								AttributeId="urn:oasis:names:tc:xacml:1.0:subject:permission" />
+						</Apply>
+					</Apply>
+				</Condition>
+			</Rule>
+		</Policy>
+		<ObligationExpressions>
+			<ObligationExpression ObligationId="log"
+				FulfillOn="Permit">
+				<AttributeAssignmentExpression
+					AttributeId="urn:oasis:names:tc:xaml:3.0:argument">
+					<AttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#anyURI"
+						MustBePresent="false"
+						Category="urn:oasis:names:tc:xacml:3.0:attribute-category:system"
+						AttributeId="urn:oasis:names:tc:xacml:3.0:system:time" />
+				</AttributeAssignmentExpression>
+				<AttributeAssignmentExpression
+					AttributeId="urn:oasis:names:tc:xaml:3.0:argument">
+					<AttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#anyURI"
+						MustBePresent="false"
+						Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+						AttributeId="urn:oasis:names:tc:xacml:1.0:resource:type" />
+				</AttributeAssignmentExpression>
+				<AttributeAssignmentExpression
+					AttributeId="urn:oasis:names:tc:xaml:3.0:argument">
+					<AttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#anyURI"
+						MustBePresent="false"
+						Category="urn:oasis:names:tc:xacml:3.0:attribute-category:subject"
+						AttributeId="urn:oasis:names:tc:xacml:1.0:subject:id" />
+				</AttributeAssignmentExpression>
+				<AttributeAssignmentExpression
+					AttributeId="urn:oasis:names:tc:xaml:3.0:argument">
+					<AttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#anyURI"
+						MustBePresent="false"
+						Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action"
+						AttributeId="urn:oasis:names:tc:xacml:1.0:action:id" />
+				</AttributeAssignmentExpression>
+			</ObligationExpression>
+		</ObligationExpressions>
+	</PolicySet>
+	<Policy PolicyId="PolicyEnclosingRuleruleDeny" Version="1.0"
+		RuleCombiningAlgId="urn:oasis:names:tc:xacml:3.0:policy-combining-algorithm:permit-overrides"
+		MaxDelegationDepth="1">
+		<Target />
+		<Rule RuleId="ruleDeny" Effect="Deny">
+			<Target />
+		</Rule>
+	</Policy>
+	<ObligationExpressions>
+		<ObligationExpression ObligationId="mail"
+			FulfillOn="Deny">
+			<AttributeAssignmentExpression
+				AttributeId="urn:oasis:names:tc:xaml:3.0:argument">
+				<AttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#anyURI"
+					MustBePresent="false"
+					Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+					AttributeId="urn:oasis:names:tc:xacml:1.0:resource:patient-mail" />
+			</AttributeAssignmentExpression>
+			<AttributeAssignmentExpression
+				AttributeId="urn:oasis:names:tc:xaml:3.0:argument">
+				<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+					Data request by unauthorised subject
+				</AttributeValue>
+			</AttributeAssignmentExpression>
+		</ObligationExpression>
+	</ObligationExpressions>
+	<AdviceExpressions>
+		<AdviceExpression AdviceId="compress" AppliesTo="Permit">
+		</AdviceExpression>
+	</AdviceExpressions>
+</PolicySet>
