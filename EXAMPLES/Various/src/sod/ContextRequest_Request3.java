@@ -1,4 +1,4 @@
-package Devrim;
+package sod;
 
 import java.util.HashMap;
 import it.unifi.facpl.lib.context.*;

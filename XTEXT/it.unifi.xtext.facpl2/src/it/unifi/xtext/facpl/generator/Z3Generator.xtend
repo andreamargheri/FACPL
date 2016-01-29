@@ -432,8 +432,8 @@ def getFinalConstrPSet(String p_name,FacplPolicy pol)'''
 					if (o.expr.size > 0){
 						str.append("(and\n ") 
 						for (e : o.expr){
-								str.append("\t\t (not (bot "+ getExpressionConst(e)+"))")
-								str.append("\t\t (not (err "+ getExpressionConst(e)+ "))")
+								str.append("\t\t (not (bot "+ getExpressionConst(e)+"))\n")
+								str.append("\t\t (not (err "+ getExpressionConst(e)+ "))\n")
 						}
 						str.append(")\n")
 					}else{

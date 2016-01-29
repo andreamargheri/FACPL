@@ -8,7 +8,7 @@
 ;#######################
 (define-sort Set (T) (Array Int T)) 
 ;################### STRING DECLARATIONs #######################
- (declare-datatypes () ((String s_doctor s_read s_e-Pre-Write s_e-Pre-Read s_pharmacist s_write )))
+ (declare-datatypes () ((String s_doctor s_e-Prescription s_read s_e-Pre-Write s_e-Pre-Read s_pharmacist s_write )))
 ;################### FACPL FUNCTION DECLARATIONs #######################
 (define-fun isFalse ((x (TValue Bool))) Bool
 	(ite (= x (mk-val false false false)) true false)
@@ -392,7 +392,7 @@
 (declare-const n_subject/id (TValue Bool))
 (assert (not (and (bot n_subject/id) (err n_subject/id))))
  
-(declare-const n_resource/type (TValue Bool))
+(declare-const n_resource/type (TValue String))
 (assert (not (and (bot n_resource/type) (err n_resource/type))))
  
 (declare-const n_action/id (TValue String))
@@ -413,6 +413,11 @@
 (assert (= (val const_doctor) s_doctor))
 (assert (not (bot const_doctor))) 
 (assert (not (err const_doctor)))
+ 
+(declare-const const_e-Prescription (TValue String))
+(assert (= (val const_e-Prescription) s_e-Prescription))
+(assert (not (bot const_e-Prescription))) 
+(assert (not (err const_e-Prescription)))
  
 (declare-const const_read (TValue String))
 (assert (= (val const_read) s_read))
@@ -559,13 +564,21 @@ true
 ;################### END CONSTRAINT RULE pha #########################
 ;################################ TOP-LEVEL POLICY ePre CONSTRAINTs ###########################
 ;##### Policy Target
-(define-fun cns_target_ePre () (TValue Bool)	
-	(mk-val true false false) 
+(define-fun cns_target_ePre () (TValue Bool)
+	(equalString const_e-Prescription n_resource/type)
 )
 ;##### Policy Obligations
 (define-fun cns_obl_permit_ePre ()  Bool
 	 (and (and
- 		 (not (botn_system/time))		 (not (errn_system/time))		 (not (botn_resource/type))		 (not (errn_resource/type))		 (not (botn_subject/id))		 (not (errn_subject/id))		 (not (botn_action/id))		 (not (errn_action/id)))
+ 		 (not (bot n_system/time))
+		 (not (err n_system/time))
+		 (not (bot n_resource/type))
+		 (not (err n_resource/type))
+		 (not (bot n_subject/id))
+		 (not (err n_subject/id))
+		 (not (bot n_action/id))
+		 (not (err n_action/id))
+)
 ))
  
 (define-fun cns_obl_deny_ePre ()  Bool

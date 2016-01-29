@@ -1,4 +1,4 @@
-package Devrim;
+package sod;
 
 import it.unifi.facpl.lib.policy.*;
 import it.unifi.facpl.lib.enums.*;
