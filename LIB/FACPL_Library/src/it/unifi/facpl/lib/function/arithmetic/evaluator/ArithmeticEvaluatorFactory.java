@@ -25,7 +25,7 @@ public class ArithmeticEvaluatorFactory {
 
 	public static synchronized ArithmeticEvaluatorFactory getInstance() {
 		if (instance == null) {
-			instance = new ArithmeticEvaluatorFactory();
+			instance = new ArithmeticEvaluatorFactory(); 
 		}
 		return instance;
 	}
