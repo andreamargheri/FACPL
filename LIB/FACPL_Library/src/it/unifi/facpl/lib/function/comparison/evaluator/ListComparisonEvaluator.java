@@ -1,5 +1,6 @@
 package it.unifi.facpl.lib.function.comparison.evaluator;
 
+import java.util.Date;
 import java.util.List;
 
 import it.unifi.facpl.lib.interfaces.IComparisonEvaluator;
@@ -27,14 +28,18 @@ public class ListComparisonEvaluator implements IComparisonEvaluator {
 	
 	@Override
 	public boolean areEquals(Object o1, Object o2) throws Throwable {
-		// si vedra'
+		if (o1 instanceof List<?>) {
+			return o1.equals(o2);
+		}
 		return false;
 	}
 
 	@Override
 	public boolean areNotEquals(Object o1, Object o2) throws Throwable {
-		// si vedra'
-		return false;
+		if (o1 instanceof List<?>) {
+			return !(o1.equals(o2));
+		}
+		return !false;
 	}
 
 	@Override
@@ -73,8 +78,15 @@ public class ListComparisonEvaluator implements IComparisonEvaluator {
 
 	@Override
 	public boolean isListElement(List<?> list, Object o2) throws Throwable {
-		//da implementare
-		return false;
+		boolean dummy = false;
+		for (Object o:list) {
+			dummy = o.equals(o2);
+			if (dummy) {
+				return dummy;
+			}
+		}
+		return false;		
+		
 	}
 	
 	
