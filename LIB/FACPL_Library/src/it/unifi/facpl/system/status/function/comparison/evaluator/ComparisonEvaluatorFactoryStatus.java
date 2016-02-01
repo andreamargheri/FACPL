@@ -3,20 +3,20 @@ package it.unifi.facpl.system.status.function.comparison.evaluator;
 import java.util.HashMap;
 import java.util.List;
 
-import it.unifi.facpl.lib.interfaces.IComparisonEvaluator;
 import it.unifi.facpl.lib.util.FacplDate;
 import it.unifi.facpl.lib.util.exception.UnsupportedTypeException;
+import it.unifi.facpl.lib.interfaces.IComparisonEvaluatorStatus;
 
 public class ComparisonEvaluatorFactoryStatus {
 	private static ComparisonEvaluatorFactoryStatus instance;
 
-	private HashMap<Class<?>, IComparisonEvaluator> table;
+	private HashMap<Class<?>, IComparisonEvaluatorStatus> table;
 
 	/**
 	 * Initialization of the evaluators -> NB to add reference otherwise exception
 	 */
 	private ComparisonEvaluatorFactoryStatus() {
-		this.table = new HashMap<Class<?>, IComparisonEvaluator>();
+		this.table = new HashMap<Class<?>, IComparisonEvaluatorStatus>();
 		
 		//initialisation
 		this.table.put(Integer.class, NumberComparisonEvaluatorStatus.getInstance());
@@ -35,10 +35,10 @@ public class ComparisonEvaluatorFactoryStatus {
 		return instance;
 	}
 
-	public IComparisonEvaluator getEvaluator(Object o) throws Exception {
+	public IComparisonEvaluatorStatus getEvaluator(Object o) throws Exception {
 
 		try{
-			IComparisonEvaluator evaluator = table.get(o.getClass());
+			IComparisonEvaluatorStatus evaluator = table.get(o.getClass());
 			if (evaluator == null) {
 				// evaluator = new DefaultComparisonEvaluator();
 				System.err.println("No comparison fucntion available for data type "+ o.getClass().getName());

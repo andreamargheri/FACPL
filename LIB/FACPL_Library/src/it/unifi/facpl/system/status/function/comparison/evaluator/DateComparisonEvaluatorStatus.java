@@ -1,5 +1,78 @@
 package it.unifi.facpl.system.status.function.comparison.evaluator;
 
-public interface DateComparisonEvaluatorStatus {
+import java.util.List;
+
+import it.unifi.facpl.lib.interfaces.IComparisonEvaluatorStatus;
+
+
+public class DateComparisonEvaluatorStatus implements IComparisonEvaluatorStatus{
+
+	
+	private static DateComparisonEvaluatorStatus instance; 
+	
+	private DateComparisonEvaluatorStatus(){
+		
+	}
+	
+	public static DateComparisonEvaluatorStatus getInstance(){
+		if (instance == null){
+			instance = new DateComparisonEvaluatorStatus();
+		}
+		return instance;
+	}
+	
+	@Override
+	public boolean areEquals(Object o1, Object o2) throws Throwable {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean areNotEquals(Object o1, Object o2) throws Throwable {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isLessThan(Object o1, Object o2) throws Throwable {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isLessThanOrEqual(Object o1, Object o2) throws Throwable {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isGreaterThan(Object o1, Object o2) throws Throwable {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isGreateThanOrEqual(Object o1, Object o2) throws Throwable {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isSubsetOf(Object o1, Object o2) throws Throwable {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isAtLestOneMemberOf(Object o1, Object o2) throws Throwable {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isListElement(List<?> list, Object o2) throws Throwable {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 }

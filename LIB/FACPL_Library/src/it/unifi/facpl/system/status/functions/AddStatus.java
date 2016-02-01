@@ -15,9 +15,8 @@ public class AddStatus implements IExpressionFunctionStatus {
 				Object o1 = args.get(0);
 				Object o2 = args.get(1);
 
-				ArithmeticEvaluatorStatus evaluator;// = ArithmeticEvaluatorFactoryStatus.getInstance().getEvaluator(o1);
-				//return evaluator.add(o1, o2);
-				return o1; //da cancellare dopo aver riscritto evaluator
+				ArithmeticEvaluatorStatus evaluator = ArithmeticEvaluatorFactoryStatus.getInstance().getEvaluator(o1);
+				return evaluator.add(o1, o2);
 			} else {
 				throw new Exception("Illegal number of arguments");
 			}
