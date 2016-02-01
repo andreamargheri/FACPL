@@ -1,5 +1,7 @@
 package it.unifi.facpl.lib.function.comparison.evaluator;
 
+import java.util.List;
+
 import it.unifi.facpl.lib.interfaces.IComparisonEvaluator;
 import it.unifi.facpl.lib.util.exception.UnsupportedTypeException;
 
@@ -119,6 +121,12 @@ public class NumberComparisonEvaluator implements IComparisonEvaluator {
 	public boolean isAtLestOneMemberOf(Object o1, Object o2) throws Throwable {
 		throw new UnsupportedTypeException("Numeric", "At-Least-One-Member-Of");
 	}
+	@Override
+	public boolean isListElement(List<?> list, Object o2) throws Throwable {
+		throw new UnsupportedTypeException("Numeric", "Is-List-Element");
+
+	}
+
 	
 
 }

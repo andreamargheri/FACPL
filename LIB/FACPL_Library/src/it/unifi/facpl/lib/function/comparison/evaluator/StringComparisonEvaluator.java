@@ -13,6 +13,7 @@
 package it.unifi.facpl.lib.function.comparison.evaluator;
 
 import java.util.Date;
+import java.util.List;
 
 import it.unifi.facpl.lib.interfaces.IComparisonEvaluator;
 import it.unifi.facpl.lib.util.exception.UnsupportedTypeException;
@@ -88,5 +89,11 @@ public class StringComparisonEvaluator implements IComparisonEvaluator {
 	public boolean isAtLestOneMemberOf(Object o1, Object o2) throws Throwable {
 		throw new UnsupportedTypeException("String", "At-Least-One-Member-Of");
 	}
+	@Override
+	public boolean isListElement(List<?> list, Object o2) throws Throwable {
+		throw new UnsupportedTypeException("String", "Is-List-Element");
+
+	}
+
 
 }

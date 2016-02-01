@@ -1,6 +1,7 @@
 package it.unifi.facpl.lib.function.comparison.evaluator;
 
 import java.util.HashMap;
+import java.util.List;
 
 import it.unifi.facpl.lib.interfaces.IComparisonEvaluator;
 import it.unifi.facpl.lib.util.FacplDate;
@@ -28,8 +29,7 @@ public class ComparisonEvaluatorFactory {
 		this.table.put(String.class, StringComparisonEvaluator.getInstance());
 		this.table.put(Boolean.class, BooleanComparisonEvaluator.getInstance());
 		this.table.put(FacplDate.class, DateComparisonEvaluator.getInstance());
-		
-		this.table.put(List.class, ListComparisonEvalutor.getInstace());
+		this.table.put(List.class, ListComparisonEvaluator.getInstance()); 
 		
 	}
 

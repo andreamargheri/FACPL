@@ -12,6 +12,8 @@
  */
 package it.unifi.facpl.lib.function.comparison.evaluator;
 
+import java.util.List;
+
 import it.unifi.facpl.lib.interfaces.IComparisonEvaluator;
 import it.unifi.facpl.lib.util.exception.UnsupportedTypeException;
 
@@ -83,5 +85,11 @@ public class BooleanComparisonEvaluator implements IComparisonEvaluator{
 	public boolean isAtLestOneMemberOf(Object o1, Object o2) throws Throwable {
 		throw new UnsupportedTypeException("Boolean", "At-Least-One-Member-Of");
 	}
+	@Override
+	public boolean isListElement(List<?> list, Object o2) throws Throwable {
+		throw new UnsupportedTypeException("Boolean", "Is-List-Element");
+
+	}
+
 
 }
