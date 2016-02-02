@@ -34,7 +34,7 @@ public class ArithmeticEvaluatorFactoryStatus {
 				System.err.println("No comparison fucntion available for data type "+ o.getClass().getName());
 				throw new Exception("No comparison fucntion available for data type "+ o.getClass().getName());
 			}
-			return evaluator;
+			return evaluator; //ritorna il valutatore alla funzione
 		}catch (UnsupportedTypeException e){
 			System.err.println(e.getMessage());
 			throw e;

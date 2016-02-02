@@ -12,14 +12,27 @@ import it.unifi.facpl.lib.enums.FacplStatusType;
 public class StatusAttribute {
 
 	private String id;
-	private FacplStatusType type;
-	/**
-	 * @param id
-	 * @param type
-	 */
+	private FacplStatusType type; //meglio cosi' o sottoclassi per ogni tipo? 
+	private String value;
+
 	public StatusAttribute(String id, FacplStatusType type) {
 		this.id = id;
 		this.type = type;
+		value = "";
+	}
+	
+	public StatusAttribute(String id, FacplStatusType type, String value) {
+		this.id = id;
+		this.type = type;
+		this.value = value;
+	}
+	
+	
+	public String getValue() {
+		return value;
+	}
+	public void setValue(String value) {
+		this.value = value;
 	}
 	/**
 	 * @return the id

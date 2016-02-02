@@ -1,24 +1,13 @@
 package it.unifi.facpl.system.status.functions;
 
-import java.util.List;
-
-import it.unifi.facpl.system.status.function.arithmetic.evaluator.ArithmeticEvaluatorFactoryStatus;
+import it.unifi.facpl.system.status.StatusAttribute;
 import it.unifi.facpl.system.status.function.arithmetic.evaluator.ArithmeticEvaluatorStatus;
 import it.unifi.facpl.system.status.functions.evalutor.IExpressionFunctionStatus;
 
-public class AddStatus implements IExpressionFunctionStatus {
+public class AddStatus extends MathOperationStatus implements IExpressionFunctionStatus {
 
-		public Object evaluateFunction(List<Object> args) throws Throwable {
-			
-			if (args.size() == 2) {
-
-				Object o1 = args.get(0);
-				Object o2 = args.get(1);
-
-				ArithmeticEvaluatorStatus evaluator = ArithmeticEvaluatorFactoryStatus.getInstance().getEvaluator(o1);
-				return evaluator.add(o1, o2);
-			} else {
-				throw new Exception("Illegal number of arguments");
-			}
-		}
+	@Override
+	protected void op(ArithmeticEvaluatorStatus ev,StatusAttribute s1, Object o2) throws Throwable {
+		ev.add(s1, o2);
+	}
 }

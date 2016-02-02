@@ -1,7 +1,9 @@
 package it.unifi.facpl.system.status.function.arithmetic.evaluator;
 
+import it.unifi.facpl.lib.enums.FacplStatusType;
 import it.unifi.facpl.lib.function.arithmetic.evaluator.NumberArithmeticEvaluator;
 import it.unifi.facpl.lib.util.exception.UnsupportedTypeException;
+import it.unifi.facpl.system.status.StatusAttribute;
 
 public class NumberArithmeticEvaluatorStatus  implements ArithmeticEvaluatorStatus{
 
@@ -17,90 +19,76 @@ public class NumberArithmeticEvaluatorStatus  implements ArithmeticEvaluatorStat
 		}
 		return instance;
 	}
+
+	@Override
+	public void add(StatusAttribute o1, Object o2) throws Throwable {
+		if (o1.getType() == FacplStatusType.INT )  {
+			Integer value = Integer.parseInt(o1.getValue());
+			Integer newValue = value+(int)o2;
+			o1.setValue(newValue.toString());
+		}
+		else if (o1.getType() == FacplStatusType.DOUBLE) {
+			Double value = Double.parseDouble(o1.getValue());
+			Double newValue = value+(double)o2;
+			o1.setValue(newValue.toString());
+		}
+		else {
+			throw new UnsupportedTypeException("Number", "Add");
+		}
+	}
+
+	@Override
+	public void divide(StatusAttribute o1, Object o2) throws Throwable {
+		if (o1.getType() == FacplStatusType.INT )  {
+			Integer value = Integer.parseInt(o1.getValue());
+			Integer newValue = value/(int)o2;
+			o1.setValue(newValue.toString());
+		}
+		else if (o1.getType() == FacplStatusType.DOUBLE) {
+			Double value = Double.parseDouble(o1.getValue());
+			Double newValue = value/(double)o2;
+			o1.setValue(newValue.toString());
+		}
+		else {
+			throw new UnsupportedTypeException("Number", "Add");
+		}
+	}
+
+	@Override
+	public void multiply(StatusAttribute o1, Object o2) throws Throwable {
+		if (o1.getType() == FacplStatusType.INT )  {
+			Integer value = Integer.parseInt(o1.getValue());
+			Integer newValue = value/(int)o2;
+			o1.setValue(newValue.toString());
+		}
+		else if (o1.getType() == FacplStatusType.DOUBLE) {
+			Double value = Double.parseDouble(o1.getValue());
+			Double newValue = value*(double)o2;
+			o1.setValue(newValue.toString());
+		}
+		else {
+			throw new UnsupportedTypeException("Number", "Add");
+		}
+	}
+
+	@Override
+	public void subtract(StatusAttribute o1, Object o2) throws Throwable {
+		if (o1.getType() == FacplStatusType.INT )  {
+			Integer value = Integer.parseInt(o1.getValue());
+			Integer newValue = value/(int)o2;
+			o1.setValue(newValue.toString());
+		}
+		else if (o1.getType() == FacplStatusType.DOUBLE) {
+			Double value = Double.parseDouble(o1.getValue());
+			Double newValue = value-(double)o2;
+			o1.setValue(newValue.toString());
+		}
+		else {
+			throw new UnsupportedTypeException("Number", "Add");
+		}
+	}
 	
-	@Override
-	public Number add(Object o1, Object o2) throws Throwable {
-		if (o1 instanceof Integer){
-			if (o2 instanceof Integer)
-				return (Integer)o1 + (Integer)o2;
-			else
-				return (Integer)o1 + (Double)o2;
-		}else if (o1 instanceof Double){
-			if (o2 instanceof Integer)
-				return (Double)o1 + (Integer)o2;
-			else
-				return (Double)o1 + (Double)o2;
-		}
-		throw new UnsupportedTypeException("Number", "Add");
-	}
 
-	@Override
-	public Number divide(Object o1, Object o2) throws Throwable {
-		if (o1 instanceof Integer){
-			if (o2 instanceof Integer)
-				return (Integer)o1 / (Integer)o2;
-			else
-				return (Integer)o1 / (Double)o2;
-		}else if (o1 instanceof Double){
-			if (o2 instanceof Integer)
-				return (Double)o1 / (Integer)o2;
-			else
-				return (Double)o1 / (Double)o2;
-		}
-		throw new UnsupportedTypeException("Number", "Divide");
-	}
-
-	@Override
-	public Number multiply(Object o1, Object o2) throws Throwable {
-		if (o1 instanceof Integer){
-			if (o2 instanceof Integer)
-				return (Integer)o1 * (Integer)o2;
-			else
-				return (Integer)o1 * (Double)o2;
-		}else if (o1 instanceof Double){
-			if (o2 instanceof Integer)
-				return (Double)o1 * (Integer)o2;
-			else
-				return (Double)o1 * (Double)o2;
-		}
-		throw new UnsupportedTypeException("Number", "Multiply");
-	}
-
-	@Override
-	public Number subtract(Object o1, Object o2) throws Throwable {
-		if (o1 instanceof Integer){
-			if (o2 instanceof Integer)
-				return (Integer)o1 - (Integer)o2;
-			else
-				return (Integer)o1 - (Double)o2;
-		}else if (o1 instanceof Double){
-			if (o2 instanceof Integer)
-				return (Double)o1 - (Integer)o2;
-			else
-				return (Double)o1 - (Double)o2;
-		}
-		throw new UnsupportedTypeException("Number", "Subtract");
-	}
-
-	@Override
-	public Number abs(Object o1) throws Throwable {
-		if (o1 instanceof Integer )
-			return  Math.abs((Integer)o1) ;
-		if (o1 instanceof Double )
-			return  Math.abs((Double)o1) ;
-	throw new UnsupportedTypeException("Number", "Mod");
-	}
-
-	/**
-	 * Defined only for Integer values
-	 */
-	
-	@Override
-	public Number mod(Object o1, Object o2) throws Throwable {
-		if (o1 instanceof Integer && o2 instanceof Integer)
-				return  (Integer)o1 % (Integer)o2;
-		throw new UnsupportedTypeException("Number", "Mod");
-	}
 
 
 }

@@ -1,22 +1,20 @@
 package it.unifi.facpl.system.status.function.arithmetic.evaluator;
 
+import com.sun.mail.imap.protocol.Status;
+
+import it.unifi.facpl.system.status.StatusAttribute;
+
 public interface ArithmeticEvaluatorStatus {
-	
-	public Number add (Object o1, Object o2) throws Throwable;
-	
-	public Number divide (Object o1, Object o2) throws Throwable;
-	
-	public Number multiply (Object o1, Object o2) throws Throwable;
-	
-	public Number subtract (Object o1, Object o2) throws Throwable;
-	
-	public Number mod (Object o1, Object o2) throws Throwable;
-	
 	/*
-	 * Unary Operators
+	 * o1: statusattribute
+	 * o2: value
 	 */
+	public void add (StatusAttribute o1, Object o2) throws Throwable;
 	
-	public Number abs (Object o1) throws Throwable;
+	public void divide (StatusAttribute o1, Object o2) throws Throwable;
 	
+	public void multiply (StatusAttribute o1, Object o2) throws Throwable;
 	
+	public void subtract (StatusAttribute o1, Object o2) throws Throwable;
+
 }
