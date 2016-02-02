@@ -1,0 +1,1648 @@
+
+PolicySet RPSlist { first-applicable-all
+	policies:
+	PolicySet RPSlist_0 { first-applicable-all
+		target: ( ( equal ( "conference_rc" , resource / resource-class ) ) ) policies:
+		PolicySet RPSlist_0_0 { first-applicable-all
+			policies:
+			PolicySet RPSlist_0_0_0 { first-applicable-all
+				target: ( ( equal ( "read" , action / action-type ) ) || ( equal ( "write" , action / action-type ) ) ) && ( (
+						equal ( "admin" , subject / role ) ) ) policies:
+				Rule RPSlist_0_0_0_r_1 ( permit )
+			}
+			PolicySet RPSlist_0_0_1 { first-applicable-all
+				target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) ) ) policies:
+				Rule RPSlist_0_0_1_r_1 ( permit )
+			}
+			PolicySet RPSlist_0_0_2 { first-applicable-all
+				target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) && equal (
+							"true" , subject / isMeeting ) ) ) policies:
+				Rule RPSlist_0_0_2_r_1 ( permit )
+			}
+			PolicySet RPSlist_0_0_3 { first-applicable-all
+				policies:
+				Rule RPSlist_0_0_3_r_1 ( deny )
+			}
+		}
+	}
+	PolicySet RPSlist_1 { first-applicable-all
+		target: ( ( equal ( "conferenceInfo_rc" , resource / resource-class ) ) ) policies:
+		PolicySet RPSlist_1_0 { first-applicable-all
+			policies:
+			PolicySet RPSlist_1_0_0 { first-applicable-all
+				target: ( ( equal ( "read" , action / action-type ) ) ) policies:
+				Rule RPSlist_1_0_0_r_1 ( permit )
+			}
+			PolicySet RPSlist_1_0_1 { first-applicable-all
+				policies:
+				PolicySet RPSlist_1_0_1_0 { first-applicable-all
+					target: ( ( equal ( "read" , action / action-type ) ) || ( equal ( "write" , action / action-type ) ) ) && ( (
+							equal ( "admin" , subject / role ) ) ) policies:
+					Rule RPSlist_1_0_1_0_r_1 ( permit )
+				}
+				PolicySet RPSlist_1_0_1_1 { first-applicable-all
+					target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) ) ) policies:
+					Rule RPSlist_1_0_1_1_r_1 ( permit )
+				}
+				PolicySet RPSlist_1_0_1_2 { first-applicable-all
+					target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) && equal (
+								"true" , subject / isMeeting ) ) ) policies:
+					Rule RPSlist_1_0_1_2_r_1 ( permit )
+				}
+				PolicySet RPSlist_1_0_1_3 { first-applicable-all
+					policies:
+					Rule RPSlist_1_0_1_3_r_1 ( deny )
+				}
+			}
+		}
+	}
+	PolicySet RPSlist_2 { first-applicable-all
+		target: ( ( equal ( "pcMember_rc" , resource / resource-class ) ) ) policies:
+		PolicySet RPSlist_2_0 { first-applicable-all
+			policies:
+			PolicySet RPSlist_2_0_0 { first-applicable-all
+				target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) ) ) policies:
+				Rule RPSlist_2_0_0_r_1 ( permit )
+			}
+			PolicySet RPSlist_2_0_1 { first-applicable-all
+				target: ( ( equal ( "write" , action / action-type ) ) || ( equal ( "create" , action / action-type ) ) ) && ( (
+						equal ( "admin" , subject / role ) ) ) policies:
+				Rule RPSlist_2_0_1_r_1 ( permit )
+			}
+			PolicySet RPSlist_2_0_2 { first-applicable-all
+				target: ( ( equal ( "pc-member" , subject / role ) && equal ( "true" , subject / isEq-subjUserId-resUserId ) ) )
+				policies:
+				Rule RPSlist_2_0_2_r_1 ( deny )
+			}
+			PolicySet RPSlist_2_0_3 { first-applicable-all
+				target: ( ( equal ( "delete" , action / action-type ) ) ) && ( ( equal ( "admin" , subject / role ) ) ) policies:
+				Rule RPSlist_2_0_3_r_1 ( permit )
+			}
+			PolicySet RPSlist_2_0_4 { first-applicable-all
+				policies:
+				PolicySet RPSlist_2_0_4_0 { first-applicable-all
+					target: ( ( equal ( "read" , action / action-type ) ) || ( equal ( "write" , action / action-type ) ) ) && ( (
+							equal ( "admin" , subject / role ) ) ) policies:
+					Rule RPSlist_2_0_4_0_r_1 ( permit )
+				}
+				PolicySet RPSlist_2_0_4_1 { first-applicable-all
+					target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) ) ) policies:
+					Rule RPSlist_2_0_4_1_r_1 ( permit )
+				}
+				PolicySet RPSlist_2_0_4_2 { first-applicable-all
+					target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) && equal (
+								"true" , subject / isMeeting ) ) ) policies:
+					Rule RPSlist_2_0_4_2_r_1 ( permit )
+				}
+				PolicySet RPSlist_2_0_4_3 { first-applicable-all
+					policies:
+					Rule RPSlist_2_0_4_3_r_1 ( deny )
+				}
+			}
+		}
+	}
+	PolicySet RPSlist_3 { first-applicable-all
+		target: ( ( equal ( "pcMember-assignments_rc" , resource / resource-class ) ) ) policies:
+		PolicySet RPSlist_3_0 { first-applicable-all
+			policies:
+			PolicySet RPSlist_3_0_0 { first-applicable-all
+				target: ( ( equal ( "read" , action / action-type ) ) || ( equal ( "write" , action / action-type ) ) ) && ( (
+						equal ( "pc-chair" , subject / role ) ) ) policies:
+				Rule RPSlist_3_0_0_r_1 ( permit )
+			}
+			PolicySet RPSlist_3_0_1 { first-applicable-all
+				target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) && equal (
+							"true" , subject / isEq-subjUserId-resUserId ) ) ) policies:
+				Rule RPSlist_3_0_1_r_1 ( permit )
+			}
+			PolicySet RPSlist_3_0_2 { first-applicable-all
+				policies:
+				Rule RPSlist_3_0_2_r_1 ( deny )
+			}
+			PolicySet RPSlist_3_0_3 { first-applicable-all
+				policies:
+				PolicySet RPSlist_3_0_3_0 { first-applicable-all
+					target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) ) )
+					policies:
+					Rule RPSlist_3_0_3_0_r_1 ( permit )
+				}
+				PolicySet RPSlist_3_0_3_1 { first-applicable-all
+					target: ( ( equal ( "write" , action / action-type ) ) || ( equal ( "create" , action / action-type ) ) ) && ( (
+							equal ( "admin" , subject / role ) ) ) policies:
+					Rule RPSlist_3_0_3_1_r_1 ( permit )
+				}
+				PolicySet RPSlist_3_0_3_2 { first-applicable-all
+					target: ( ( equal ( "pc-member" , subject / role ) && equal ( "true" , subject / isEq-subjUserId-resUserId ) ) )
+					policies:
+					Rule RPSlist_3_0_3_2_r_1 ( deny )
+				}
+				PolicySet RPSlist_3_0_3_3 { first-applicable-all
+					target: ( ( equal ( "delete" , action / action-type ) ) ) && ( ( equal ( "admin" , subject / role ) ) ) policies:
+					Rule RPSlist_3_0_3_3_r_1 ( permit )
+				}
+				PolicySet RPSlist_3_0_3_4 { first-applicable-all
+					policies:
+					PolicySet RPSlist_3_0_3_4_0 { first-applicable-all
+						target: ( ( equal ( "read" , action / action-type ) ) || ( equal ( "write" , action / action-type ) ) ) && ( (
+								equal ( "admin" , subject / role ) ) ) policies:
+						Rule RPSlist_3_0_3_4_0_r_1 ( permit )
+					}
+					PolicySet RPSlist_3_0_3_4_1 { first-applicable-all
+						target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) ) )
+						policies:
+						Rule RPSlist_3_0_3_4_1_r_1 ( permit )
+					}
+					PolicySet RPSlist_3_0_3_4_2 { first-applicable-all
+						target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) && equal (
+									"true" , subject / isMeeting ) ) ) policies:
+						Rule RPSlist_3_0_3_4_2_r_1 ( permit )
+					}
+					PolicySet RPSlist_3_0_3_4_3 { first-applicable-all
+						policies:
+						Rule RPSlist_3_0_3_4_3_r_1 ( deny )
+					}
+				}
+			}
+		}
+	}
+	PolicySet RPSlist_4 { first-applicable-all
+		target: ( ( equal ( "pcMember-conflicts_rc" , resource / resource-class ) ) ) policies:
+		PolicySet RPSlist_4_0 { first-applicable-all
+			policies:
+			PolicySet RPSlist_4_0_0 { first-applicable-all
+				target: ( ( equal ( "read" , action / action-type ) ) || ( equal ( "write" , action / action-type ) ) ) && ( (
+						equal ( "pc-chair" , subject / role ) ) ) policies:
+				Rule RPSlist_4_0_0_r_1 ( permit )
+			}
+			PolicySet RPSlist_4_0_1 { first-applicable-all
+				target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) && equal (
+							"true" , subject / isEq-subjUserId-resUserId ) ) ) policies:
+				Rule RPSlist_4_0_1_r_1 ( permit )
+			}
+			PolicySet RPSlist_4_0_2 { first-applicable-all
+				policies:
+				Rule RPSlist_4_0_2_r_1 ( deny )
+			}
+			PolicySet RPSlist_4_0_3 { first-applicable-all
+				policies:
+				PolicySet RPSlist_4_0_3_0 { first-applicable-all
+					target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) ) )
+					policies:
+					Rule RPSlist_4_0_3_0_r_1 ( permit )
+				}
+				PolicySet RPSlist_4_0_3_1 { first-applicable-all
+					target: ( ( equal ( "write" , action / action-type ) ) || ( equal ( "create" , action / action-type ) ) ) && ( (
+							equal ( "admin" , subject / role ) ) ) policies:
+					Rule RPSlist_4_0_3_1_r_1 ( permit )
+				}
+				PolicySet RPSlist_4_0_3_2 { first-applicable-all
+					target: ( ( equal ( "pc-member" , subject / role ) && equal ( "true" , subject / isEq-subjUserId-resUserId ) ) )
+					policies:
+					Rule RPSlist_4_0_3_2_r_1 ( deny )
+				}
+				PolicySet RPSlist_4_0_3_3 { first-applicable-all
+					target: ( ( equal ( "delete" , action / action-type ) ) ) && ( ( equal ( "admin" , subject / role ) ) ) policies:
+					Rule RPSlist_4_0_3_3_r_1 ( permit )
+				}
+				PolicySet RPSlist_4_0_3_4 { first-applicable-all
+					policies:
+					PolicySet RPSlist_4_0_3_4_0 { first-applicable-all
+						target: ( ( equal ( "read" , action / action-type ) ) || ( equal ( "write" , action / action-type ) ) ) && ( (
+								equal ( "admin" , subject / role ) ) ) policies:
+						Rule RPSlist_4_0_3_4_0_r_1 ( permit )
+					}
+					PolicySet RPSlist_4_0_3_4_1 { first-applicable-all
+						target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) ) )
+						policies:
+						Rule RPSlist_4_0_3_4_1_r_1 ( permit )
+					}
+					PolicySet RPSlist_4_0_3_4_2 { first-applicable-all
+						target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) && equal (
+									"true" , subject / isMeeting ) ) ) policies:
+						Rule RPSlist_4_0_3_4_2_r_1 ( permit )
+					}
+					PolicySet RPSlist_4_0_3_4_3 { first-applicable-all
+						policies:
+						Rule RPSlist_4_0_3_4_3_r_1 ( deny )
+					}
+				}
+			}
+		}
+	}
+	PolicySet RPSlist_5 { first-applicable-all
+		target: ( ( equal ( "pcMember-assignmentCount_rc" , resource / resource-class ) ) ) policies:
+		PolicySet RPSlist_5_0 { first-applicable-all
+			policies:
+			PolicySet RPSlist_5_0_0 { first-applicable-all
+				policies:
+				PolicySet RPSlist_5_0_0_0 { first-applicable-all
+					target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) ) )
+					policies:
+					Rule RPSlist_5_0_0_0_r_1 ( permit )
+				}
+				PolicySet RPSlist_5_0_0_1 { first-applicable-all
+					target: ( ( equal ( "write" , action / action-type ) ) || ( equal ( "create" , action / action-type ) ) ) && ( (
+							equal ( "admin" , subject / role ) ) ) policies:
+					Rule RPSlist_5_0_0_1_r_1 ( permit )
+				}
+				PolicySet RPSlist_5_0_0_2 { first-applicable-all
+					target: ( ( equal ( "pc-member" , subject / role ) && equal ( "true" , subject / isEq-subjUserId-resUserId ) ) )
+					policies:
+					Rule RPSlist_5_0_0_2_r_1 ( deny )
+				}
+				PolicySet RPSlist_5_0_0_3 { first-applicable-all
+					target: ( ( equal ( "delete" , action / action-type ) ) ) && ( ( equal ( "admin" , subject / role ) ) ) policies:
+					Rule RPSlist_5_0_0_3_r_1 ( permit )
+				}
+				PolicySet RPSlist_5_0_0_4 { first-applicable-all
+					policies:
+					PolicySet RPSlist_5_0_0_4_0 { first-applicable-all
+						target: ( ( equal ( "read" , action / action-type ) ) || ( equal ( "write" , action / action-type ) ) ) && ( (
+								equal ( "admin" , subject / role ) ) ) policies:
+						Rule RPSlist_5_0_0_4_0_r_1 ( permit )
+					}
+					PolicySet RPSlist_5_0_0_4_1 { first-applicable-all
+						target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) ) )
+						policies:
+						Rule RPSlist_5_0_0_4_1_r_1 ( permit )
+					}
+					PolicySet RPSlist_5_0_0_4_2 { first-applicable-all
+						target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) && equal (
+									"true" , subject / isMeeting ) ) ) policies:
+						Rule RPSlist_5_0_0_4_2_r_1 ( permit )
+					}
+					PolicySet RPSlist_5_0_0_4_3 { first-applicable-all
+						policies:
+						Rule RPSlist_5_0_0_4_3_r_1 ( deny )
+					}
+				}
+			}
+		}
+	}
+	PolicySet RPSlist_6 { first-applicable-all
+		target: ( ( equal ( "pcMember-info_rc" , resource / resource-class ) ) ) policies:
+		PolicySet RPSlist_6_0 { first-applicable-all
+			policies:
+			PolicySet RPSlist_6_0_0 { first-applicable-all
+				target: ( ( equal ( "read" , action / action-type ) ) || ( equal ( "write" , action / action-type ) ) ) && ( (
+						equal ( "pc-chair" , subject / role ) ) ) policies:
+				Rule RPSlist_6_0_0_r_1 ( permit )
+			}
+			PolicySet RPSlist_6_0_1 { first-applicable-all
+				target: ( ( equal ( "read" , action / action-type ) ) || ( equal ( "write" , action / action-type ) ) ) && ( (
+						equal ( "pc-member" , subject / role ) && equal ( "true" , subject / isEq-subjUserId-resUserId ) ) ) policies:
+				Rule RPSlist_6_0_1_r_1 ( permit )
+			}
+			PolicySet RPSlist_6_0_2 { first-applicable-all
+				policies:
+				Rule RPSlist_6_0_2_r_1 ( deny )
+			}
+			PolicySet RPSlist_6_0_3 { first-applicable-all
+				policies:
+				PolicySet RPSlist_6_0_3_0 { first-applicable-all
+					target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) ) )
+					policies:
+					Rule RPSlist_6_0_3_0_r_1 ( permit )
+				}
+				PolicySet RPSlist_6_0_3_1 { first-applicable-all
+					target: ( ( equal ( "write" , action / action-type ) ) || ( equal ( "create" , action / action-type ) ) ) && ( (
+							equal ( "admin" , subject / role ) ) ) policies:
+					Rule RPSlist_6_0_3_1_r_1 ( permit )
+				}
+				PolicySet RPSlist_6_0_3_2 { first-applicable-all
+					target: ( ( equal ( "pc-member" , subject / role ) && equal ( "true" , subject / isEq-subjUserId-resUserId ) ) )
+					policies:
+					Rule RPSlist_6_0_3_2_r_1 ( deny )
+				}
+				PolicySet RPSlist_6_0_3_3 { first-applicable-all
+					target: ( ( equal ( "delete" , action / action-type ) ) ) && ( ( equal ( "admin" , subject / role ) ) ) policies:
+					Rule RPSlist_6_0_3_3_r_1 ( permit )
+				}
+				PolicySet RPSlist_6_0_3_4 { first-applicable-all
+					policies:
+					PolicySet RPSlist_6_0_3_4_0 { first-applicable-all
+						target: ( ( equal ( "read" , action / action-type ) ) || ( equal ( "write" , action / action-type ) ) ) && ( (
+								equal ( "admin" , subject / role ) ) ) policies:
+						Rule RPSlist_6_0_3_4_0_r_1 ( permit )
+					}
+					PolicySet RPSlist_6_0_3_4_1 { first-applicable-all
+						target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) ) )
+						policies:
+						Rule RPSlist_6_0_3_4_1_r_1 ( permit )
+					}
+					PolicySet RPSlist_6_0_3_4_2 { first-applicable-all
+						target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) && equal (
+									"true" , subject / isMeeting ) ) ) policies:
+						Rule RPSlist_6_0_3_4_2_r_1 ( permit )
+					}
+					PolicySet RPSlist_6_0_3_4_3 { first-applicable-all
+						policies:
+						Rule RPSlist_6_0_3_4_3_r_1 ( deny )
+					}
+				}
+			}
+		}
+	}
+	PolicySet RPSlist_7 { first-applicable-all
+		target: ( ( equal ( "pcMember-info-password_rc" , resource / resource-class ) ) ) policies:
+		PolicySet RPSlist_7_0 { first-applicable-all
+			policies:
+			PolicySet RPSlist_7_0_0 { first-applicable-all
+				target: ( ( equal ( "write" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) && equal (
+							"true" , subject / isEq-subjUserId-resUserId ) ) ) policies:
+				Rule RPSlist_7_0_0_r_1 ( permit )
+			}
+			PolicySet RPSlist_7_0_1 { first-applicable-all
+				target: ( ( equal ( "write" , action / action-type ) ) ) && ( ( equal ( "admin" , subject / role ) ) ) && ( ( equal
+						( "false" , resource / isPending ) ) ) policies:
+				Rule RPSlist_7_0_1_r_1 ( permit )
+			}
+			PolicySet RPSlist_7_0_2 { first-applicable-all
+				policies:
+				Rule RPSlist_7_0_2_r_1 ( deny )
+			}
+			PolicySet RPSlist_7_0_3 { first-applicable-all
+				policies:
+				PolicySet RPSlist_7_0_3_0 { first-applicable-all
+					target: ( ( equal ( "read" , action / action-type ) ) || ( equal ( "write" , action / action-type ) ) ) && ( (
+							equal ( "pc-chair" , subject / role ) ) ) policies:
+					Rule RPSlist_7_0_3_0_r_1 ( permit )
+				}
+				PolicySet RPSlist_7_0_3_1 { first-applicable-all
+					target: ( ( equal ( "read" , action / action-type ) ) || ( equal ( "write" , action / action-type ) ) ) && ( (
+							equal ( "pc-member" , subject / role ) && equal ( "true" , subject / isEq-subjUserId-resUserId ) ) ) policies:
+					Rule RPSlist_7_0_3_1_r_1 ( permit )
+				}
+				PolicySet RPSlist_7_0_3_2 { first-applicable-all
+					policies:
+					Rule RPSlist_7_0_3_2_r_1 ( deny )
+				}
+				PolicySet RPSlist_7_0_3_3 { first-applicable-all
+					policies:
+					PolicySet RPSlist_7_0_3_3_0 { first-applicable-all
+						target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) ) )
+						policies:
+						Rule RPSlist_7_0_3_3_0_r_1 ( permit )
+					}
+					PolicySet RPSlist_7_0_3_3_1 { first-applicable-all
+						target: ( ( equal ( "write" , action / action-type ) ) || ( equal ( "create" , action / action-type ) ) ) && ( (
+								equal ( "admin" , subject / role ) ) ) policies:
+						Rule RPSlist_7_0_3_3_1_r_1 ( permit )
+					}
+					PolicySet RPSlist_7_0_3_3_2 { first-applicable-all
+						target: ( ( equal ( "pc-member" , subject / role ) && equal ( "true" , subject / isEq-subjUserId-resUserId ) ) )
+						policies:
+						Rule RPSlist_7_0_3_3_2_r_1 ( deny )
+					}
+					PolicySet RPSlist_7_0_3_3_3 { first-applicable-all
+						target: ( ( equal ( "delete" , action / action-type ) ) ) && ( ( equal ( "admin" , subject / role ) ) ) policies:
+						Rule RPSlist_7_0_3_3_3_r_1 ( permit )
+					}
+					PolicySet RPSlist_7_0_3_3_4 { first-applicable-all
+						policies:
+						PolicySet RPSlist_7_0_3_3_4_0 { first-applicable-all
+							target: ( ( equal ( "read" , action / action-type ) ) || ( equal ( "write" , action / action-type ) ) ) && ( (
+									equal ( "admin" , subject / role ) ) ) policies:
+							Rule RPSlist_7_0_3_3_4_0_r_1 ( permit )
+						}
+						PolicySet RPSlist_7_0_3_3_4_1 { first-applicable-all
+							target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) ) )
+							policies:
+							Rule RPSlist_7_0_3_3_4_1_r_1 ( permit )
+						}
+						PolicySet RPSlist_7_0_3_3_4_2 { first-applicable-all
+							target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) && equal (
+										"true" , subject / isMeeting ) ) ) policies:
+							Rule RPSlist_7_0_3_3_4_2_r_1 ( permit )
+						}
+						PolicySet RPSlist_7_0_3_3_4_3 { first-applicable-all
+							policies:
+							Rule RPSlist_7_0_3_3_4_3_r_1 ( deny )
+						}
+					}
+				}
+			}
+		}
+	}
+	PolicySet RPSlist_8 { first-applicable-all
+		target: ( ( equal ( "pcMember-info-isChairFlag_rc" , resource / resource-class ) ) ) policies:
+		PolicySet RPSlist_8_0 { first-applicable-all
+			policies:
+			PolicySet RPSlist_8_0_0 { first-applicable-all
+				target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) ) ) policies:
+				Rule RPSlist_8_0_0_r_1 ( permit )
+			}
+			PolicySet RPSlist_8_0_1 { first-applicable-all
+				target: ( ( equal ( "pc-member" , subject / role ) && equal ( "true" , subject / isEq-subjUserId-resUserId ) ) )
+				policies:
+				Rule RPSlist_8_0_1_r_1 ( deny )
+			}
+			PolicySet RPSlist_8_0_2 { first-applicable-all
+				target: ( ( equal ( "write" , action / action-type ) ) ) && ( ( equal ( "admin" , subject / role ) ) ) policies:
+				Rule RPSlist_8_0_2_r_1 ( permit )
+			}
+			PolicySet RPSlist_8_0_3 { first-applicable-all
+				policies:
+				Rule RPSlist_8_0_3_r_1 ( deny )
+			}
+			PolicySet RPSlist_8_0_4 { first-applicable-all
+				policies:
+				PolicySet RPSlist_8_0_4_0 { first-applicable-all
+					target: ( ( equal ( "read" , action / action-type ) ) || ( equal ( "write" , action / action-type ) ) ) && ( (
+							equal ( "pc-chair" , subject / role ) ) ) policies:
+					Rule RPSlist_8_0_4_0_r_1 ( permit )
+				}
+				PolicySet RPSlist_8_0_4_1 { first-applicable-all
+					target: ( ( equal ( "read" , action / action-type ) ) || ( equal ( "write" , action / action-type ) ) ) && ( (
+							equal ( "pc-member" , subject / role ) && equal ( "true" , subject / isEq-subjUserId-resUserId ) ) ) policies:
+					Rule RPSlist_8_0_4_1_r_1 ( permit )
+				}
+				PolicySet RPSlist_8_0_4_2 { first-applicable-all
+					policies:
+					Rule RPSlist_8_0_4_2_r_1 ( deny )
+				}
+				PolicySet RPSlist_8_0_4_3 { first-applicable-all
+					policies:
+					PolicySet RPSlist_8_0_4_3_0 { first-applicable-all
+						target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) ) )
+						policies:
+						Rule RPSlist_8_0_4_3_0_r_1 ( permit )
+					}
+					PolicySet RPSlist_8_0_4_3_1 { first-applicable-all
+						target: ( ( equal ( "write" , action / action-type ) ) || ( equal ( "create" , action / action-type ) ) ) && ( (
+								equal ( "admin" , subject / role ) ) ) policies:
+						Rule RPSlist_8_0_4_3_1_r_1 ( permit )
+					}
+					PolicySet RPSlist_8_0_4_3_2 { first-applicable-all
+						target: ( ( equal ( "pc-member" , subject / role ) && equal ( "true" , subject / isEq-subjUserId-resUserId ) ) )
+						policies:
+						Rule RPSlist_8_0_4_3_2_r_1 ( deny )
+					}
+					PolicySet RPSlist_8_0_4_3_3 { first-applicable-all
+						target: ( ( equal ( "delete" , action / action-type ) ) ) && ( ( equal ( "admin" , subject / role ) ) ) policies:
+						Rule RPSlist_8_0_4_3_3_r_1 ( permit )
+					}
+					PolicySet RPSlist_8_0_4_3_4 { first-applicable-all
+						policies:
+						PolicySet RPSlist_8_0_4_3_4_0 { first-applicable-all
+							target: ( ( equal ( "read" , action / action-type ) ) || ( equal ( "write" , action / action-type ) ) ) && ( (
+									equal ( "admin" , subject / role ) ) ) policies:
+							Rule RPSlist_8_0_4_3_4_0_r_1 ( permit )
+						}
+						PolicySet RPSlist_8_0_4_3_4_1 { first-applicable-all
+							target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) ) )
+							policies:
+							Rule RPSlist_8_0_4_3_4_1_r_1 ( permit )
+						}
+						PolicySet RPSlist_8_0_4_3_4_2 { first-applicable-all
+							target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) && equal (
+										"true" , subject / isMeeting ) ) ) policies:
+							Rule RPSlist_8_0_4_3_4_2_r_1 ( permit )
+						}
+						PolicySet RPSlist_8_0_4_3_4_3 { first-applicable-all
+							policies:
+							Rule RPSlist_8_0_4_3_4_3_r_1 ( deny )
+						}
+					}
+				}
+			}
+		}
+	}
+	PolicySet RPSlist_9 { first-applicable-all
+		target: ( ( equal ( "paper_rc" , resource / resource-class ) ) ) policies:
+		PolicySet RPSlist_9_0 { first-applicable-all
+			policies:
+			PolicySet RPSlist_9_0_0 { first-applicable-all
+				target: ( ( equal ( "delete" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) ) )
+				policies:
+				Rule RPSlist_9_0_0_r_1 ( permit )
+			}
+			PolicySet RPSlist_9_0_1 { first-applicable-all
+				target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) ) ) && ( (
+						equal ( "true" , resource / isEq-meetingPaper-resId ) ) ) policies:
+				Rule RPSlist_9_0_1_r_1 ( permit )
+			}
+			PolicySet RPSlist_9_0_2 { first-applicable-all
+				target: ( ( equal ( "create" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) ) )
+				policies:
+				Rule RPSlist_9_0_2_r_1 ( permit )
+			}
+			PolicySet RPSlist_9_0_3 { first-applicable-all
+				policies:
+				PolicySet RPSlist_9_0_3_0 { first-applicable-all
+					target: ( ( equal ( "read" , action / action-type ) ) || ( equal ( "write" , action / action-type ) ) ) && ( (
+							equal ( "admin" , subject / role ) ) ) policies:
+					Rule RPSlist_9_0_3_0_r_1 ( permit )
+				}
+				PolicySet RPSlist_9_0_3_1 { first-applicable-all
+					target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) ) ) policies:
+					Rule RPSlist_9_0_3_1_r_1 ( permit )
+				}
+				PolicySet RPSlist_9_0_3_2 { first-applicable-all
+					target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) && equal (
+								"true" , subject / isMeeting ) ) ) policies:
+					Rule RPSlist_9_0_3_2_r_1 ( permit )
+				}
+				PolicySet RPSlist_9_0_3_3 { first-applicable-all
+					policies:
+					Rule RPSlist_9_0_3_3_r_1 ( deny )
+				}
+			}
+		}
+	}
+	PolicySet RPSlist_10 { first-applicable-all
+		target: ( ( equal ( "paper-submission-info_rc" , resource / resource-class ) ) ) policies:
+		PolicySet RPSlist_10_0 { first-applicable-all
+			policies:
+			PolicySet RPSlist_10_0_0 { first-applicable-all
+				policies:
+				PolicySet RPSlist_10_0_0_0 { first-applicable-all
+					target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) ) || ( equal
+							( "pc-member" , subject / role ) ) ) policies:
+					Rule RPSlist_10_0_0_0_r_1 ( permit )
+				}
+				PolicySet RPSlist_10_0_0_1 { first-applicable-all
+					target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "subreviewer" , subject / role ) && equal (
+								"true" , subject / isEq-subjUserId-resUserId ) ) ) policies:
+					Rule RPSlist_10_0_0_1_r_1 ( permit )
+				}
+				PolicySet RPSlist_10_0_0_2 { first-applicable-all
+					policies:
+					PolicySet RPSlist_10_0_0_2_0 { first-applicable-all
+						target: ( ( equal ( "delete" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) ) )
+						policies:
+						Rule RPSlist_10_0_0_2_0_r_1 ( permit )
+					}
+					PolicySet RPSlist_10_0_0_2_1 { first-applicable-all
+						target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) ) ) && ( (
+								equal ( "true" , resource / isEq-meetingPaper-resId ) ) ) policies:
+						Rule RPSlist_10_0_0_2_1_r_1 ( permit )
+					}
+					PolicySet RPSlist_10_0_0_2_2 { first-applicable-all
+						target: ( ( equal ( "create" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) ) )
+						policies:
+						Rule RPSlist_10_0_0_2_2_r_1 ( permit )
+					}
+					PolicySet RPSlist_10_0_0_2_3 { first-applicable-all
+						policies:
+						PolicySet RPSlist_10_0_0_2_3_0 { first-applicable-all
+							target: ( ( equal ( "read" , action / action-type ) ) || ( equal ( "write" , action / action-type ) ) ) && ( (
+									equal ( "admin" , subject / role ) ) ) policies:
+							Rule RPSlist_10_0_0_2_3_0_r_1 ( permit )
+						}
+						PolicySet RPSlist_10_0_0_2_3_1 { first-applicable-all
+							target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) ) )
+							policies:
+							Rule RPSlist_10_0_0_2_3_1_r_1 ( permit )
+						}
+						PolicySet RPSlist_10_0_0_2_3_2 { first-applicable-all
+							target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) && equal (
+										"true" , subject / isMeeting ) ) ) policies:
+							Rule RPSlist_10_0_0_2_3_2_r_1 ( permit )
+						}
+						PolicySet RPSlist_10_0_0_2_3_3 { first-applicable-all
+							policies:
+							Rule RPSlist_10_0_0_2_3_3_r_1 ( deny )
+						}
+					}
+				}
+			}
+		}
+	}
+	PolicySet RPSlist_11 { first-applicable-all
+		target: ( ( equal ( "paper-submission_rc" , resource / resource-class ) ) ) policies:
+		PolicySet RPSlist_11_0 { first-applicable-all
+			policies:
+			PolicySet RPSlist_11_0_0 { first-applicable-all
+				target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) ) || ( equal (
+							"pc-member" , subject / role ) ) ) policies:
+				Rule RPSlist_11_0_0_r_1 ( permit )
+			}
+			PolicySet RPSlist_11_0_1 { first-applicable-all
+				target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "subreviewer" , subject / role ) && equal (
+							"true" , subject / isEq-subjUserId-resUserId ) ) ) policies:
+				Rule RPSlist_11_0_1_r_1 ( permit )
+			}
+			PolicySet RPSlist_11_0_2 { first-applicable-all
+				policies:
+				PolicySet RPSlist_11_0_2_0 { first-applicable-all
+					target: ( ( equal ( "delete" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) ) )
+					policies:
+					Rule RPSlist_11_0_2_0_r_1 ( permit )
+				}
+				PolicySet RPSlist_11_0_2_1 { first-applicable-all
+					target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) ) ) && ( (
+							equal ( "true" , resource / isEq-meetingPaper-resId ) ) ) policies:
+					Rule RPSlist_11_0_2_1_r_1 ( permit )
+				}
+				PolicySet RPSlist_11_0_2_2 { first-applicable-all
+					target: ( ( equal ( "create" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) ) )
+					policies:
+					Rule RPSlist_11_0_2_2_r_1 ( permit )
+				}
+				PolicySet RPSlist_11_0_2_3 { first-applicable-all
+					policies:
+					PolicySet RPSlist_11_0_2_3_0 { first-applicable-all
+						target: ( ( equal ( "read" , action / action-type ) ) || ( equal ( "write" , action / action-type ) ) ) && ( (
+								equal ( "admin" , subject / role ) ) ) policies:
+						Rule RPSlist_11_0_2_3_0_r_1 ( permit )
+					}
+					PolicySet RPSlist_11_0_2_3_1 { first-applicable-all
+						target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) ) )
+						policies:
+						Rule RPSlist_11_0_2_3_1_r_1 ( permit )
+					}
+					PolicySet RPSlist_11_0_2_3_2 { first-applicable-all
+						target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) && equal (
+									"true" , subject / isMeeting ) ) ) policies:
+						Rule RPSlist_11_0_2_3_2_r_1 ( permit )
+					}
+					PolicySet RPSlist_11_0_2_3_3 { first-applicable-all
+						policies:
+						Rule RPSlist_11_0_2_3_3_r_1 ( deny )
+					}
+				}
+			}
+		}
+	}
+	PolicySet RPSlist_12 { first-applicable-all
+		target: ( ( equal ( "paper-submission-file_rc" , resource / resource-class ) ) ) policies:
+		PolicySet RPSlist_12_0 { first-applicable-all
+			policies:
+			PolicySet RPSlist_12_0_0 { first-applicable-all
+				policies:
+				PolicySet RPSlist_12_0_0_0 { first-applicable-all
+					target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) ) || ( equal
+							( "pc-member" , subject / role ) ) ) policies:
+					Rule RPSlist_12_0_0_0_r_1 ( permit )
+				}
+				PolicySet RPSlist_12_0_0_1 { first-applicable-all
+					target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "subreviewer" , subject / role ) && equal (
+								"true" , subject / isEq-subjUserId-resUserId ) ) ) policies:
+					Rule RPSlist_12_0_0_1_r_1 ( permit )
+				}
+				PolicySet RPSlist_12_0_0_2 { first-applicable-all
+					policies:
+					PolicySet RPSlist_12_0_0_2_0 { first-applicable-all
+						target: ( ( equal ( "delete" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) ) )
+						policies:
+						Rule RPSlist_12_0_0_2_0_r_1 ( permit )
+					}
+					PolicySet RPSlist_12_0_0_2_1 { first-applicable-all
+						target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) ) ) && ( (
+								equal ( "true" , resource / isEq-meetingPaper-resId ) ) ) policies:
+						Rule RPSlist_12_0_0_2_1_r_1 ( permit )
+					}
+					PolicySet RPSlist_12_0_0_2_2 { first-applicable-all
+						target: ( ( equal ( "create" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) ) )
+						policies:
+						Rule RPSlist_12_0_0_2_2_r_1 ( permit )
+					}
+					PolicySet RPSlist_12_0_0_2_3 { first-applicable-all
+						policies:
+						PolicySet RPSlist_12_0_0_2_3_0 { first-applicable-all
+							target: ( ( equal ( "read" , action / action-type ) ) || ( equal ( "write" , action / action-type ) ) ) && ( (
+									equal ( "admin" , subject / role ) ) ) policies:
+							Rule RPSlist_12_0_0_2_3_0_r_1 ( permit )
+						}
+						PolicySet RPSlist_12_0_0_2_3_1 { first-applicable-all
+							target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) ) )
+							policies:
+							Rule RPSlist_12_0_0_2_3_1_r_1 ( permit )
+						}
+						PolicySet RPSlist_12_0_0_2_3_2 { first-applicable-all
+							target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) && equal (
+										"true" , subject / isMeeting ) ) ) policies:
+							Rule RPSlist_12_0_0_2_3_2_r_1 ( permit )
+						}
+						PolicySet RPSlist_12_0_0_2_3_3 { first-applicable-all
+							policies:
+							Rule RPSlist_12_0_0_2_3_3_r_1 ( deny )
+						}
+					}
+				}
+			}
+		}
+	}
+	PolicySet RPSlist_13 { first-applicable-all
+		target: ( ( equal ( "paper-decision_rc" , resource / resource-class ) ) ) policies:
+		PolicySet RPSlist_13_0 { first-applicable-all
+			policies:
+			PolicySet RPSlist_13_0_0 { first-applicable-all
+				target: ( ( equal ( "read" , action / action-type ) ) || ( equal ( "write" , action / action-type ) ) ) && ( (
+						equal ( "pc-chair" , subject / role ) && equal ( "true" , subject / isSubjectsMeeting ) ) ) policies:
+				Rule RPSlist_13_0_0_r_1 ( permit )
+			}
+			PolicySet RPSlist_13_0_1 { first-applicable-all
+				policies:
+				PolicySet RPSlist_13_0_1_0 { first-applicable-all
+					target: ( ( equal ( "delete" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) ) )
+					policies:
+					Rule RPSlist_13_0_1_0_r_1 ( permit )
+				}
+				PolicySet RPSlist_13_0_1_1 { first-applicable-all
+					target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) ) ) && ( (
+							equal ( "true" , resource / isEq-meetingPaper-resId ) ) ) policies:
+					Rule RPSlist_13_0_1_1_r_1 ( permit )
+				}
+				PolicySet RPSlist_13_0_1_2 { first-applicable-all
+					target: ( ( equal ( "create" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) ) )
+					policies:
+					Rule RPSlist_13_0_1_2_r_1 ( permit )
+				}
+				PolicySet RPSlist_13_0_1_3 { first-applicable-all
+					policies:
+					PolicySet RPSlist_13_0_1_3_0 { first-applicable-all
+						target: ( ( equal ( "read" , action / action-type ) ) || ( equal ( "write" , action / action-type ) ) ) && ( (
+								equal ( "admin" , subject / role ) ) ) policies:
+						Rule RPSlist_13_0_1_3_0_r_1 ( permit )
+					}
+					PolicySet RPSlist_13_0_1_3_1 { first-applicable-all
+						target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) ) )
+						policies:
+						Rule RPSlist_13_0_1_3_1_r_1 ( permit )
+					}
+					PolicySet RPSlist_13_0_1_3_2 { first-applicable-all
+						target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) && equal (
+									"true" , subject / isMeeting ) ) ) policies:
+						Rule RPSlist_13_0_1_3_2_r_1 ( permit )
+					}
+					PolicySet RPSlist_13_0_1_3_3 { first-applicable-all
+						policies:
+						Rule RPSlist_13_0_1_3_3_r_1 ( deny )
+					}
+				}
+			}
+		}
+	}
+	PolicySet RPSlist_14 { first-applicable-all
+		target: ( ( equal ( "paper-conflicts_rc" , resource / resource-class ) ) ) policies:
+		PolicySet RPSlist_14_0 { first-applicable-all
+			policies:
+			PolicySet RPSlist_14_0_0 { first-applicable-all
+				target: ( ( equal ( "read" , action / action-type ) ) || ( equal ( "write" , action / action-type ) ) ) && ( (
+						equal ( "pc-chair" , subject / role ) ) || ( equal ( "admin" , subject / role ) ) ) policies:
+				Rule RPSlist_14_0_0_r_1 ( permit )
+			}
+			PolicySet RPSlist_14_0_1 { first-applicable-all
+				target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) && equal (
+							"true" , subject / isConflicted ) ) ) policies:
+				Rule RPSlist_14_0_1_r_1 ( permit )
+			}
+			PolicySet RPSlist_14_0_2 { first-applicable-all
+				target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) && equal (
+							"true" , subject / isMeeting ) ) ) policies:
+				Rule RPSlist_14_0_2_r_1 ( permit )
+			}
+			PolicySet RPSlist_14_0_3 { first-applicable-all
+				target: ( ( equal ( "true" , subject / isConflicted ) ) ) policies:
+				Rule RPSlist_14_0_3_r_1 ( deny )
+			}
+			PolicySet RPSlist_14_0_4 { first-applicable-all
+				policies:
+				PolicySet RPSlist_14_0_4_0 { first-applicable-all
+					target: ( ( equal ( "delete" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) ) )
+					policies:
+					Rule RPSlist_14_0_4_0_r_1 ( permit )
+				}
+				PolicySet RPSlist_14_0_4_1 { first-applicable-all
+					target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) ) ) && ( (
+							equal ( "true" , resource / isEq-meetingPaper-resId ) ) ) policies:
+					Rule RPSlist_14_0_4_1_r_1 ( permit )
+				}
+				PolicySet RPSlist_14_0_4_2 { first-applicable-all
+					target: ( ( equal ( "create" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) ) )
+					policies:
+					Rule RPSlist_14_0_4_2_r_1 ( permit )
+				}
+				PolicySet RPSlist_14_0_4_3 { first-applicable-all
+					policies:
+					PolicySet RPSlist_14_0_4_3_0 { first-applicable-all
+						target: ( ( equal ( "read" , action / action-type ) ) || ( equal ( "write" , action / action-type ) ) ) && ( (
+								equal ( "admin" , subject / role ) ) ) policies:
+						Rule RPSlist_14_0_4_3_0_r_1 ( permit )
+					}
+					PolicySet RPSlist_14_0_4_3_1 { first-applicable-all
+						target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) ) )
+						policies:
+						Rule RPSlist_14_0_4_3_1_r_1 ( permit )
+					}
+					PolicySet RPSlist_14_0_4_3_2 { first-applicable-all
+						target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) && equal (
+									"true" , subject / isMeeting ) ) ) policies:
+						Rule RPSlist_14_0_4_3_2_r_1 ( permit )
+					}
+					PolicySet RPSlist_14_0_4_3_3 { first-applicable-all
+						policies:
+						Rule RPSlist_14_0_4_3_3_r_1 ( deny )
+					}
+				}
+			}
+		}
+	}
+	PolicySet RPSlist_15 { first-applicable-all
+		target: ( ( equal ( "paper-assignments_rc" , resource / resource-class ) ) ) policies:
+		PolicySet RPSlist_15_0 { first-applicable-all
+			policies:
+			PolicySet RPSlist_15_0_0 { first-applicable-all
+				target: ( ( equal ( "read" , action / action-type ) ) || ( equal ( "write" , action / action-type ) ) ) && ( (
+						equal ( "pc-chair" , subject / role ) ) || ( equal ( "admin" , subject / role ) ) ) policies:
+				Rule RPSlist_15_0_0_r_1 ( permit )
+			}
+			PolicySet RPSlist_15_0_1 { first-applicable-all
+				target: ( ( equal ( "true" , subject / isConflicted ) ) ) policies:
+				Rule RPSlist_15_0_1_r_1 ( deny )
+			}
+			PolicySet RPSlist_15_0_2 { first-applicable-all
+				target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "true" , subject / isSubjectsMeeting ) &&
+						equal ( "pc-chair" , subject / role ) ) ) && ( ( equal ( "true" , resource / isEq-meetingPaper-resId ) ) )
+				policies:
+				Rule RPSlist_15_0_2_r_1 ( permit )
+			}
+			PolicySet RPSlist_15_0_3 { first-applicable-all
+				target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "true" , subject / isSubjectsMeeting ) ) )
+				policies:
+				Rule RPSlist_15_0_3_r_1 ( deny )
+			}
+			PolicySet RPSlist_15_0_4 { first-applicable-all
+				policies:
+				Rule RPSlist_15_0_4_r_1 ( deny )
+			}
+			PolicySet RPSlist_15_0_5 { first-applicable-all
+				policies:
+				PolicySet RPSlist_15_0_5_0 { first-applicable-all
+					target: ( ( equal ( "delete" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) ) )
+					policies:
+					Rule RPSlist_15_0_5_0_r_1 ( permit )
+				}
+				PolicySet RPSlist_15_0_5_1 { first-applicable-all
+					target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) ) ) && ( (
+							equal ( "true" , resource / isEq-meetingPaper-resId ) ) ) policies:
+					Rule RPSlist_15_0_5_1_r_1 ( permit )
+				}
+				PolicySet RPSlist_15_0_5_2 { first-applicable-all
+					target: ( ( equal ( "create" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) ) )
+					policies:
+					Rule RPSlist_15_0_5_2_r_1 ( permit )
+				}
+				PolicySet RPSlist_15_0_5_3 { first-applicable-all
+					policies:
+					PolicySet RPSlist_15_0_5_3_0 { first-applicable-all
+						target: ( ( equal ( "read" , action / action-type ) ) || ( equal ( "write" , action / action-type ) ) ) && ( (
+								equal ( "admin" , subject / role ) ) ) policies:
+						Rule RPSlist_15_0_5_3_0_r_1 ( permit )
+					}
+					PolicySet RPSlist_15_0_5_3_1 { first-applicable-all
+						target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) ) )
+						policies:
+						Rule RPSlist_15_0_5_3_1_r_1 ( permit )
+					}
+					PolicySet RPSlist_15_0_5_3_2 { first-applicable-all
+						target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) && equal (
+									"true" , subject / isMeeting ) ) ) policies:
+						Rule RPSlist_15_0_5_3_2_r_1 ( permit )
+					}
+					PolicySet RPSlist_15_0_5_3_3 { first-applicable-all
+						policies:
+						Rule RPSlist_15_0_5_3_3_r_1 ( deny )
+					}
+				}
+			}
+		}
+	}
+	PolicySet RPSlist_16 { first-applicable-all
+		target: ( ( equal ( "paper-review_rc" , resource / resource-class ) ) ) policies:
+		PolicySet RPSlist_16_0 { first-applicable-all
+			policies:
+			PolicySet RPSlist_16_0_0 { first-applicable-all
+				target: ( ( equal ( "pc-chair" , subject / role ) && equal ( "false" , subject / isConflicted ) ) ) policies:
+				Rule RPSlist_16_0_0_r_1 ( permit )
+			}
+			PolicySet RPSlist_16_0_1 { first-applicable-all
+				target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) && equal (
+							"true" , subject / isSubjectsMeeting ) ) ) && ( ( equal ( "true" , resource / isEq-meetingPaper-resId ) ) )
+				policies:
+				Rule RPSlist_16_0_1_r_1 ( permit )
+			}
+			PolicySet RPSlist_16_0_2 { first-applicable-all
+				target: ( ( equal ( "create" , action / action-type ) ) || ( equal ( "delete" , action / action-type ) ) ) && ( (
+						equal ( "pc-chair" , subject / role ) ) ) policies:
+				Rule RPSlist_16_0_2_r_1 ( permit )
+			}
+			PolicySet RPSlist_16_0_3 { first-applicable-all
+				target: ( ( equal ( "true" , subject / isConflicted ) ) ) policies:
+				Rule RPSlist_16_0_3_r_1 ( deny )
+			}
+			PolicySet RPSlist_16_0_4 { first-applicable-all
+				target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) && equal (
+							"false" , subject / isConflicted ) ) ) policies:
+				Rule RPSlist_16_0_4_r_1 ( permit target: ( ( equal ( "true" , subject / isEq-subjUserId-resUserId ) ) ) )
+				Rule RPSlist_16_0_4_r_2 ( permit target: ( ( equal ( "discussion" , resource / phase ) ) ) )
+				Rule RPSlist_16_0_4_r_3 ( permit target: ( ( equal ( "true" , subject / subjReviewsThisResPaper ) && equal ( "true"
+								, subject / hasSubmittedReviewForResPaper ) ) ) )
+				Rule RPSlist_16_0_4_r_4 ( permit target: ( ( equal ( "true" , resource / isSeeUnassignedAllowed ) ) ) )
+				Rule RPSlist_16_0_4_r_5 ( deny )
+			}
+			PolicySet RPSlist_16_0_5 { first-applicable-all
+				policies:
+				PolicySet RPSlist_16_0_5_0 { first-applicable-all
+					target: ( ( equal ( "delete" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) ) )
+					policies:
+					Rule RPSlist_16_0_5_0_r_1 ( permit )
+				}
+				PolicySet RPSlist_16_0_5_1 { first-applicable-all
+					target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) ) ) && ( (
+							equal ( "true" , resource / isEq-meetingPaper-resId ) ) ) policies:
+					Rule RPSlist_16_0_5_1_r_1 ( permit )
+				}
+				PolicySet RPSlist_16_0_5_2 { first-applicable-all
+					target: ( ( equal ( "create" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) ) )
+					policies:
+					Rule RPSlist_16_0_5_2_r_1 ( permit )
+				}
+				PolicySet RPSlist_16_0_5_3 { first-applicable-all
+					policies:
+					PolicySet RPSlist_16_0_5_3_0 { first-applicable-all
+						target: ( ( equal ( "read" , action / action-type ) ) || ( equal ( "write" , action / action-type ) ) ) && ( (
+								equal ( "admin" , subject / role ) ) ) policies:
+						Rule RPSlist_16_0_5_3_0_r_1 ( permit )
+					}
+					PolicySet RPSlist_16_0_5_3_1 { first-applicable-all
+						target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) ) )
+						policies:
+						Rule RPSlist_16_0_5_3_1_r_1 ( permit )
+					}
+					PolicySet RPSlist_16_0_5_3_2 { first-applicable-all
+						target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) && equal (
+									"true" , subject / isMeeting ) ) ) policies:
+						Rule RPSlist_16_0_5_3_2_r_1 ( permit )
+					}
+					PolicySet RPSlist_16_0_5_3_3 { first-applicable-all
+						policies:
+						Rule RPSlist_16_0_5_3_3_r_1 ( deny )
+					}
+				}
+			}
+		}
+	}
+	PolicySet RPSlist_17 { first-applicable-all
+		target: ( ( equal ( "paper-review-info_rc" , resource / resource-class ) ) ) policies:
+		PolicySet RPSlist_17_0 { first-applicable-all
+			policies:
+			PolicySet RPSlist_17_0_0 { first-applicable-all
+				target: ( ( equal ( "pc-chair" , subject / role ) ) ) policies:
+				Rule RPSlist_17_0_0_r_1 ( permit )
+			}
+			PolicySet RPSlist_17_0_1 { first-applicable-all
+				policies:
+				PolicySet RPSlist_17_0_1_0 { first-applicable-all
+					target: ( ( equal ( "pc-chair" , subject / role ) && equal ( "false" , subject / isConflicted ) ) ) policies:
+					Rule RPSlist_17_0_1_0_r_1 ( permit )
+				}
+				PolicySet RPSlist_17_0_1_1 { first-applicable-all
+					target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) && equal (
+								"true" , subject / isSubjectsMeeting ) ) ) && ( ( equal ( "true" , resource / isEq-meetingPaper-resId ) ) )
+					policies:
+					Rule RPSlist_17_0_1_1_r_1 ( permit )
+				}
+				PolicySet RPSlist_17_0_1_2 { first-applicable-all
+					target: ( ( equal ( "create" , action / action-type ) ) || ( equal ( "delete" , action / action-type ) ) ) && ( (
+							equal ( "pc-chair" , subject / role ) ) ) policies:
+					Rule RPSlist_17_0_1_2_r_1 ( permit )
+				}
+				PolicySet RPSlist_17_0_1_3 { first-applicable-all
+					target: ( ( equal ( "true" , subject / isConflicted ) ) ) policies:
+					Rule RPSlist_17_0_1_3_r_1 ( deny )
+				}
+				PolicySet RPSlist_17_0_1_4 { first-applicable-all
+					target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) && equal (
+								"false" , subject / isConflicted ) ) ) policies:
+					Rule RPSlist_17_0_1_4_r_1 ( permit target: ( ( equal ( "true" , subject / isEq-subjUserId-resUserId ) ) ) )
+					Rule RPSlist_17_0_1_4_r_2 ( permit target: ( ( equal ( "discussion" , resource / phase ) ) ) )
+					Rule RPSlist_17_0_1_4_r_3 ( permit target: ( ( equal ( "true" , subject / subjReviewsThisResPaper ) && equal (
+									"true" , subject / hasSubmittedReviewForResPaper ) ) ) )
+					Rule RPSlist_17_0_1_4_r_4 ( permit target: ( ( equal ( "true" , resource / isSeeUnassignedAllowed ) ) ) )
+					Rule RPSlist_17_0_1_4_r_5 ( deny )
+				}
+				PolicySet RPSlist_17_0_1_5 { first-applicable-all
+					policies:
+					PolicySet RPSlist_17_0_1_5_0 { first-applicable-all
+						target: ( ( equal ( "delete" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) ) )
+						policies:
+						Rule RPSlist_17_0_1_5_0_r_1 ( permit )
+					}
+					PolicySet RPSlist_17_0_1_5_1 { first-applicable-all
+						target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) ) ) && ( (
+								equal ( "true" , resource / isEq-meetingPaper-resId ) ) ) policies:
+						Rule RPSlist_17_0_1_5_1_r_1 ( permit )
+					}
+					PolicySet RPSlist_17_0_1_5_2 { first-applicable-all
+						target: ( ( equal ( "create" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) ) )
+						policies:
+						Rule RPSlist_17_0_1_5_2_r_1 ( permit )
+					}
+					PolicySet RPSlist_17_0_1_5_3 { first-applicable-all
+						policies:
+						PolicySet RPSlist_17_0_1_5_3_0 { first-applicable-all
+							target: ( ( equal ( "read" , action / action-type ) ) || ( equal ( "write" , action / action-type ) ) ) && ( (
+									equal ( "admin" , subject / role ) ) ) policies:
+							Rule RPSlist_17_0_1_5_3_0_r_1 ( permit )
+						}
+						PolicySet RPSlist_17_0_1_5_3_1 { first-applicable-all
+							target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) ) )
+							policies:
+							Rule RPSlist_17_0_1_5_3_1_r_1 ( permit )
+						}
+						PolicySet RPSlist_17_0_1_5_3_2 { first-applicable-all
+							target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) && equal (
+										"true" , subject / isMeeting ) ) ) policies:
+							Rule RPSlist_17_0_1_5_3_2_r_1 ( permit )
+						}
+						PolicySet RPSlist_17_0_1_5_3_3 { first-applicable-all
+							policies:
+							Rule RPSlist_17_0_1_5_3_3_r_1 ( deny )
+						}
+					}
+				}
+			}
+		}
+	}
+	PolicySet RPSlist_18 { first-applicable-all
+		target: ( ( equal ( "paper-review-content_rc" , resource / resource-class ) ) ) policies:
+		PolicySet RPSlist_18_0 { first-applicable-all
+			policies:
+			PolicySet RPSlist_18_0_0 { first-applicable-all
+				target: ( ( equal ( "write" , action / action-type ) ) || ( equal ( "create" , action / action-type ) ) || ( equal
+						( "delete" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) && equal ( "true" , subject
+							/ isEq-subjUserId-resUserId ) ) ) policies:
+				Rule RPSlist_18_0_0_r_1 ( permit )
+			}
+			PolicySet RPSlist_18_0_1 { first-applicable-all
+				target: ( ( equal ( "create" , action / action-type ) ) ) && ( ( equal ( "subreviewer" , subject / role ) && equal
+						( "true" , subject / isEq-subjUserId-resUserId ) ) ) policies:
+				Rule RPSlist_18_0_1_r_1 ( permit )
+			}
+			PolicySet RPSlist_18_0_2 { first-applicable-all
+				policies:
+				PolicySet RPSlist_18_0_2_0 { first-applicable-all
+					target: ( ( equal ( "pc-chair" , subject / role ) && equal ( "false" , subject / isConflicted ) ) ) policies:
+					Rule RPSlist_18_0_2_0_r_1 ( permit )
+				}
+				PolicySet RPSlist_18_0_2_1 { first-applicable-all
+					target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) && equal (
+								"true" , subject / isSubjectsMeeting ) ) ) && ( ( equal ( "true" , resource / isEq-meetingPaper-resId ) ) )
+					policies:
+					Rule RPSlist_18_0_2_1_r_1 ( permit )
+				}
+				PolicySet RPSlist_18_0_2_2 { first-applicable-all
+					target: ( ( equal ( "create" , action / action-type ) ) || ( equal ( "delete" , action / action-type ) ) ) && ( (
+							equal ( "pc-chair" , subject / role ) ) ) policies:
+					Rule RPSlist_18_0_2_2_r_1 ( permit )
+				}
+				PolicySet RPSlist_18_0_2_3 { first-applicable-all
+					target: ( ( equal ( "true" , subject / isConflicted ) ) ) policies:
+					Rule RPSlist_18_0_2_3_r_1 ( deny )
+				}
+				PolicySet RPSlist_18_0_2_4 { first-applicable-all
+					target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) && equal (
+								"false" , subject / isConflicted ) ) ) policies:
+					Rule RPSlist_18_0_2_4_r_1 ( permit target: ( ( equal ( "true" , subject / isEq-subjUserId-resUserId ) ) ) )
+					Rule RPSlist_18_0_2_4_r_2 ( permit target: ( ( equal ( "discussion" , resource / phase ) ) ) )
+					Rule RPSlist_18_0_2_4_r_3 ( permit target: ( ( equal ( "true" , subject / subjReviewsThisResPaper ) && equal (
+									"true" , subject / hasSubmittedReviewForResPaper ) ) ) )
+					Rule RPSlist_18_0_2_4_r_4 ( permit target: ( ( equal ( "true" , resource / isSeeUnassignedAllowed ) ) ) )
+					Rule RPSlist_18_0_2_4_r_5 ( deny )
+				}
+				PolicySet RPSlist_18_0_2_5 { first-applicable-all
+					policies:
+					PolicySet RPSlist_18_0_2_5_0 { first-applicable-all
+						target: ( ( equal ( "delete" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) ) )
+						policies:
+						Rule RPSlist_18_0_2_5_0_r_1 ( permit )
+					}
+					PolicySet RPSlist_18_0_2_5_1 { first-applicable-all
+						target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) ) ) && ( (
+								equal ( "true" , resource / isEq-meetingPaper-resId ) ) ) policies:
+						Rule RPSlist_18_0_2_5_1_r_1 ( permit )
+					}
+					PolicySet RPSlist_18_0_2_5_2 { first-applicable-all
+						target: ( ( equal ( "create" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) ) )
+						policies:
+						Rule RPSlist_18_0_2_5_2_r_1 ( permit )
+					}
+					PolicySet RPSlist_18_0_2_5_3 { first-applicable-all
+						policies:
+						PolicySet RPSlist_18_0_2_5_3_0 { first-applicable-all
+							target: ( ( equal ( "read" , action / action-type ) ) || ( equal ( "write" , action / action-type ) ) ) && ( (
+									equal ( "admin" , subject / role ) ) ) policies:
+							Rule RPSlist_18_0_2_5_3_0_r_1 ( permit )
+						}
+						PolicySet RPSlist_18_0_2_5_3_1 { first-applicable-all
+							target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) ) )
+							policies:
+							Rule RPSlist_18_0_2_5_3_1_r_1 ( permit )
+						}
+						PolicySet RPSlist_18_0_2_5_3_2 { first-applicable-all
+							target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) && equal (
+										"true" , subject / isMeeting ) ) ) policies:
+							Rule RPSlist_18_0_2_5_3_2_r_1 ( permit )
+						}
+						PolicySet RPSlist_18_0_2_5_3_3 { first-applicable-all
+							policies:
+							Rule RPSlist_18_0_2_5_3_3_r_1 ( deny )
+						}
+					}
+				}
+			}
+		}
+	}
+	PolicySet RPSlist_19 { first-applicable-all
+		target: ( ( equal ( "paper-review-info-submissionStatus_rc" , resource / resource-class ) ) ) policies:
+		PolicySet RPSlist_19_0 { first-applicable-all
+			policies:
+			PolicySet RPSlist_19_0_0 { first-applicable-all
+				target: ( ( equal ( "write" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) && equal (
+							"true" , subject / isEq-subjUserId-resUserId ) && equal ( "true" , subject / isReviewContentInPlace ) ) )
+				policies:
+				Rule RPSlist_19_0_0_r_1 ( permit )
+			}
+			PolicySet RPSlist_19_0_1 { first-applicable-all
+				policies:
+				PolicySet RPSlist_19_0_1_0 { first-applicable-all
+					target: ( ( equal ( "pc-chair" , subject / role ) ) ) policies:
+					Rule RPSlist_19_0_1_0_r_1 ( permit )
+				}
+				PolicySet RPSlist_19_0_1_1 { first-applicable-all
+					policies:
+					PolicySet RPSlist_19_0_1_1_0 { first-applicable-all
+						target: ( ( equal ( "pc-chair" , subject / role ) && equal ( "false" , subject / isConflicted ) ) ) policies:
+						Rule RPSlist_19_0_1_1_0_r_1 ( permit )
+					}
+					PolicySet RPSlist_19_0_1_1_1 { first-applicable-all
+						target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) && equal (
+									"true" , subject / isSubjectsMeeting ) ) ) && ( ( equal ( "true" , resource / isEq-meetingPaper-resId ) ) )
+						policies:
+						Rule RPSlist_19_0_1_1_1_r_1 ( permit )
+					}
+					PolicySet RPSlist_19_0_1_1_2 { first-applicable-all
+						target: ( ( equal ( "create" , action / action-type ) ) || ( equal ( "delete" , action / action-type ) ) ) && ( (
+								equal ( "pc-chair" , subject / role ) ) ) policies:
+						Rule RPSlist_19_0_1_1_2_r_1 ( permit )
+					}
+					PolicySet RPSlist_19_0_1_1_3 { first-applicable-all
+						target: ( ( equal ( "true" , subject / isConflicted ) ) ) policies:
+						Rule RPSlist_19_0_1_1_3_r_1 ( deny )
+					}
+					PolicySet RPSlist_19_0_1_1_4 { first-applicable-all
+						target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) && equal (
+									"false" , subject / isConflicted ) ) ) policies:
+						Rule RPSlist_19_0_1_1_4_r_1 ( permit target: ( ( equal ( "true" , subject / isEq-subjUserId-resUserId ) ) ) )
+						Rule RPSlist_19_0_1_1_4_r_2 ( permit target: ( ( equal ( "discussion" , resource / phase ) ) ) )
+						Rule RPSlist_19_0_1_1_4_r_3 ( permit target: ( ( equal ( "true" , subject / subjReviewsThisResPaper ) && equal (
+										"true" , subject / hasSubmittedReviewForResPaper ) ) ) )
+						Rule RPSlist_19_0_1_1_4_r_4 ( permit target: ( ( equal ( "true" , resource / isSeeUnassignedAllowed ) ) ) )
+						Rule RPSlist_19_0_1_1_4_r_5 ( deny )
+					}
+					PolicySet RPSlist_19_0_1_1_5 { first-applicable-all
+						policies:
+						PolicySet RPSlist_19_0_1_1_5_0 { first-applicable-all
+							target: ( ( equal ( "delete" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) ) )
+							policies:
+							Rule RPSlist_19_0_1_1_5_0_r_1 ( permit )
+						}
+						PolicySet RPSlist_19_0_1_1_5_1 { first-applicable-all
+							target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) ) ) && ( (
+									equal ( "true" , resource / isEq-meetingPaper-resId ) ) ) policies:
+							Rule RPSlist_19_0_1_1_5_1_r_1 ( permit )
+						}
+						PolicySet RPSlist_19_0_1_1_5_2 { first-applicable-all
+							target: ( ( equal ( "create" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) ) )
+							policies:
+							Rule RPSlist_19_0_1_1_5_2_r_1 ( permit )
+						}
+						PolicySet RPSlist_19_0_1_1_5_3 { first-applicable-all
+							policies:
+							PolicySet RPSlist_19_0_1_1_5_3_0 { first-applicable-all
+								target: ( ( equal ( "read" , action / action-type ) ) || ( equal ( "write" , action / action-type ) ) ) && ( (
+										equal ( "admin" , subject / role ) ) ) policies:
+								Rule RPSlist_19_0_1_1_5_3_0_r_1 ( permit )
+							}
+							PolicySet RPSlist_19_0_1_1_5_3_1 { first-applicable-all
+								target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) ) )
+								policies:
+								Rule RPSlist_19_0_1_1_5_3_1_r_1 ( permit )
+							}
+							PolicySet RPSlist_19_0_1_1_5_3_2 { first-applicable-all
+								target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) && equal
+										( "true" , subject / isMeeting ) ) ) policies:
+								Rule RPSlist_19_0_1_1_5_3_2_r_1 ( permit )
+							}
+							PolicySet RPSlist_19_0_1_1_5_3_3 { first-applicable-all
+								policies:
+								Rule RPSlist_19_0_1_1_5_3_3_r_1 ( deny )
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	PolicySet RPSlist_20 { first-applicable-all
+		target: ( ( equal ( "paper-review-content-rating_rc" , resource / resource-class ) ) ) policies:
+		PolicySet RPSlist_20_0 { first-applicable-all
+			policies:
+			PolicySet RPSlist_20_0_0 { first-applicable-all
+				policies:
+				PolicySet RPSlist_20_0_0_0 { first-applicable-all
+					target: ( ( equal ( "write" , action / action-type ) ) || ( equal ( "create" , action / action-type ) ) || ( equal
+							( "delete" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) && equal ( "true" ,
+								subject / isEq-subjUserId-resUserId ) ) ) policies:
+					Rule RPSlist_20_0_0_0_r_1 ( permit )
+				}
+				PolicySet RPSlist_20_0_0_1 { first-applicable-all
+					target: ( ( equal ( "create" , action / action-type ) ) ) && ( ( equal ( "subreviewer" , subject / role ) && equal
+							( "true" , subject / isEq-subjUserId-resUserId ) ) ) policies:
+					Rule RPSlist_20_0_0_1_r_1 ( permit )
+				}
+				PolicySet RPSlist_20_0_0_2 { first-applicable-all
+					policies:
+					PolicySet RPSlist_20_0_0_2_0 { first-applicable-all
+						target: ( ( equal ( "pc-chair" , subject / role ) && equal ( "false" , subject / isConflicted ) ) ) policies:
+						Rule RPSlist_20_0_0_2_0_r_1 ( permit )
+					}
+					PolicySet RPSlist_20_0_0_2_1 { first-applicable-all
+						target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) && equal (
+									"true" , subject / isSubjectsMeeting ) ) ) && ( ( equal ( "true" , resource / isEq-meetingPaper-resId ) ) )
+						policies:
+						Rule RPSlist_20_0_0_2_1_r_1 ( permit )
+					}
+					PolicySet RPSlist_20_0_0_2_2 { first-applicable-all
+						target: ( ( equal ( "create" , action / action-type ) ) || ( equal ( "delete" , action / action-type ) ) ) && ( (
+								equal ( "pc-chair" , subject / role ) ) ) policies:
+						Rule RPSlist_20_0_0_2_2_r_1 ( permit )
+					}
+					PolicySet RPSlist_20_0_0_2_3 { first-applicable-all
+						target: ( ( equal ( "true" , subject / isConflicted ) ) ) policies:
+						Rule RPSlist_20_0_0_2_3_r_1 ( deny )
+					}
+					PolicySet RPSlist_20_0_0_2_4 { first-applicable-all
+						target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) && equal (
+									"false" , subject / isConflicted ) ) ) policies:
+						Rule RPSlist_20_0_0_2_4_r_1 ( permit target: ( ( equal ( "true" , subject / isEq-subjUserId-resUserId ) ) ) )
+						Rule RPSlist_20_0_0_2_4_r_2 ( permit target: ( ( equal ( "discussion" , resource / phase ) ) ) )
+						Rule RPSlist_20_0_0_2_4_r_3 ( permit target: ( ( equal ( "true" , subject / subjReviewsThisResPaper ) && equal (
+										"true" , subject / hasSubmittedReviewForResPaper ) ) ) )
+						Rule RPSlist_20_0_0_2_4_r_4 ( permit target: ( ( equal ( "true" , resource / isSeeUnassignedAllowed ) ) ) )
+						Rule RPSlist_20_0_0_2_4_r_5 ( deny )
+					}
+					PolicySet RPSlist_20_0_0_2_5 { first-applicable-all
+						policies:
+						PolicySet RPSlist_20_0_0_2_5_0 { first-applicable-all
+							target: ( ( equal ( "delete" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) ) )
+							policies:
+							Rule RPSlist_20_0_0_2_5_0_r_1 ( permit )
+						}
+						PolicySet RPSlist_20_0_0_2_5_1 { first-applicable-all
+							target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) ) ) && ( (
+									equal ( "true" , resource / isEq-meetingPaper-resId ) ) ) policies:
+							Rule RPSlist_20_0_0_2_5_1_r_1 ( permit )
+						}
+						PolicySet RPSlist_20_0_0_2_5_2 { first-applicable-all
+							target: ( ( equal ( "create" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) ) )
+							policies:
+							Rule RPSlist_20_0_0_2_5_2_r_1 ( permit )
+						}
+						PolicySet RPSlist_20_0_0_2_5_3 { first-applicable-all
+							policies:
+							PolicySet RPSlist_20_0_0_2_5_3_0 { first-applicable-all
+								target: ( ( equal ( "read" , action / action-type ) ) || ( equal ( "write" , action / action-type ) ) ) && ( (
+										equal ( "admin" , subject / role ) ) ) policies:
+								Rule RPSlist_20_0_0_2_5_3_0_r_1 ( permit )
+							}
+							PolicySet RPSlist_20_0_0_2_5_3_1 { first-applicable-all
+								target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) ) )
+								policies:
+								Rule RPSlist_20_0_0_2_5_3_1_r_1 ( permit )
+							}
+							PolicySet RPSlist_20_0_0_2_5_3_2 { first-applicable-all
+								target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) && equal
+										( "true" , subject / isMeeting ) ) ) policies:
+								Rule RPSlist_20_0_0_2_5_3_2_r_1 ( permit )
+							}
+							PolicySet RPSlist_20_0_0_2_5_3_3 { first-applicable-all
+								policies:
+								Rule RPSlist_20_0_0_2_5_3_3_r_1 ( deny )
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	PolicySet RPSlist_21 { first-applicable-all
+		target: ( ( equal ( "paper-review-content-commentsAll_rc" , resource / resource-class ) ) ) policies:
+		PolicySet RPSlist_21_0 { first-applicable-all
+			policies:
+			PolicySet RPSlist_21_0_0 { first-applicable-all
+				policies:
+				PolicySet RPSlist_21_0_0_0 { first-applicable-all
+					target: ( ( equal ( "write" , action / action-type ) ) || ( equal ( "create" , action / action-type ) ) || ( equal
+							( "delete" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) && equal ( "true" ,
+								subject / isEq-subjUserId-resUserId ) ) ) policies:
+					Rule RPSlist_21_0_0_0_r_1 ( permit )
+				}
+				PolicySet RPSlist_21_0_0_1 { first-applicable-all
+					target: ( ( equal ( "create" , action / action-type ) ) ) && ( ( equal ( "subreviewer" , subject / role ) && equal
+							( "true" , subject / isEq-subjUserId-resUserId ) ) ) policies:
+					Rule RPSlist_21_0_0_1_r_1 ( permit )
+				}
+				PolicySet RPSlist_21_0_0_2 { first-applicable-all
+					policies:
+					PolicySet RPSlist_21_0_0_2_0 { first-applicable-all
+						target: ( ( equal ( "pc-chair" , subject / role ) && equal ( "false" , subject / isConflicted ) ) ) policies:
+						Rule RPSlist_21_0_0_2_0_r_1 ( permit )
+					}
+					PolicySet RPSlist_21_0_0_2_1 { first-applicable-all
+						target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) && equal (
+									"true" , subject / isSubjectsMeeting ) ) ) && ( ( equal ( "true" , resource / isEq-meetingPaper-resId ) ) )
+						policies:
+						Rule RPSlist_21_0_0_2_1_r_1 ( permit )
+					}
+					PolicySet RPSlist_21_0_0_2_2 { first-applicable-all
+						target: ( ( equal ( "create" , action / action-type ) ) || ( equal ( "delete" , action / action-type ) ) ) && ( (
+								equal ( "pc-chair" , subject / role ) ) ) policies:
+						Rule RPSlist_21_0_0_2_2_r_1 ( permit )
+					}
+					PolicySet RPSlist_21_0_0_2_3 { first-applicable-all
+						target: ( ( equal ( "true" , subject / isConflicted ) ) ) policies:
+						Rule RPSlist_21_0_0_2_3_r_1 ( deny )
+					}
+					PolicySet RPSlist_21_0_0_2_4 { first-applicable-all
+						target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) && equal (
+									"false" , subject / isConflicted ) ) ) policies:
+						Rule RPSlist_21_0_0_2_4_r_1 ( permit target: ( ( equal ( "true" , subject / isEq-subjUserId-resUserId ) ) ) )
+						Rule RPSlist_21_0_0_2_4_r_2 ( permit target: ( ( equal ( "discussion" , resource / phase ) ) ) )
+						Rule RPSlist_21_0_0_2_4_r_3 ( permit target: ( ( equal ( "true" , subject / subjReviewsThisResPaper ) && equal (
+										"true" , subject / hasSubmittedReviewForResPaper ) ) ) )
+						Rule RPSlist_21_0_0_2_4_r_4 ( permit target: ( ( equal ( "true" , resource / isSeeUnassignedAllowed ) ) ) )
+						Rule RPSlist_21_0_0_2_4_r_5 ( deny )
+					}
+					PolicySet RPSlist_21_0_0_2_5 { first-applicable-all
+						policies:
+						PolicySet RPSlist_21_0_0_2_5_0 { first-applicable-all
+							target: ( ( equal ( "delete" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) ) )
+							policies:
+							Rule RPSlist_21_0_0_2_5_0_r_1 ( permit )
+						}
+						PolicySet RPSlist_21_0_0_2_5_1 { first-applicable-all
+							target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) ) ) && ( (
+									equal ( "true" , resource / isEq-meetingPaper-resId ) ) ) policies:
+							Rule RPSlist_21_0_0_2_5_1_r_1 ( permit )
+						}
+						PolicySet RPSlist_21_0_0_2_5_2 { first-applicable-all
+							target: ( ( equal ( "create" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) ) )
+							policies:
+							Rule RPSlist_21_0_0_2_5_2_r_1 ( permit )
+						}
+						PolicySet RPSlist_21_0_0_2_5_3 { first-applicable-all
+							policies:
+							PolicySet RPSlist_21_0_0_2_5_3_0 { first-applicable-all
+								target: ( ( equal ( "read" , action / action-type ) ) || ( equal ( "write" , action / action-type ) ) ) && ( (
+										equal ( "admin" , subject / role ) ) ) policies:
+								Rule RPSlist_21_0_0_2_5_3_0_r_1 ( permit )
+							}
+							PolicySet RPSlist_21_0_0_2_5_3_1 { first-applicable-all
+								target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) ) )
+								policies:
+								Rule RPSlist_21_0_0_2_5_3_1_r_1 ( permit )
+							}
+							PolicySet RPSlist_21_0_0_2_5_3_2 { first-applicable-all
+								target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) && equal
+										( "true" , subject / isMeeting ) ) ) policies:
+								Rule RPSlist_21_0_0_2_5_3_2_r_1 ( permit )
+							}
+							PolicySet RPSlist_21_0_0_2_5_3_3 { first-applicable-all
+								policies:
+								Rule RPSlist_21_0_0_2_5_3_3_r_1 ( deny )
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	PolicySet RPSlist_22 { first-applicable-all
+		target: ( ( equal ( "paper-review-content-commentsPc_rc" , resource / resource-class ) ) ) policies:
+		PolicySet RPSlist_22_0 { first-applicable-all
+			policies:
+			PolicySet RPSlist_22_0_0 { first-applicable-all
+				policies:
+				PolicySet RPSlist_22_0_0_0 { first-applicable-all
+					target: ( ( equal ( "write" , action / action-type ) ) || ( equal ( "create" , action / action-type ) ) || ( equal
+							( "delete" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) && equal ( "true" ,
+								subject / isEq-subjUserId-resUserId ) ) ) policies:
+					Rule RPSlist_22_0_0_0_r_1 ( permit )
+				}
+				PolicySet RPSlist_22_0_0_1 { first-applicable-all
+					target: ( ( equal ( "create" , action / action-type ) ) ) && ( ( equal ( "subreviewer" , subject / role ) && equal
+							( "true" , subject / isEq-subjUserId-resUserId ) ) ) policies:
+					Rule RPSlist_22_0_0_1_r_1 ( permit )
+				}
+				PolicySet RPSlist_22_0_0_2 { first-applicable-all
+					policies:
+					PolicySet RPSlist_22_0_0_2_0 { first-applicable-all
+						target: ( ( equal ( "pc-chair" , subject / role ) && equal ( "false" , subject / isConflicted ) ) ) policies:
+						Rule RPSlist_22_0_0_2_0_r_1 ( permit )
+					}
+					PolicySet RPSlist_22_0_0_2_1 { first-applicable-all
+						target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) && equal (
+									"true" , subject / isSubjectsMeeting ) ) ) && ( ( equal ( "true" , resource / isEq-meetingPaper-resId ) ) )
+						policies:
+						Rule RPSlist_22_0_0_2_1_r_1 ( permit )
+					}
+					PolicySet RPSlist_22_0_0_2_2 { first-applicable-all
+						target: ( ( equal ( "create" , action / action-type ) ) || ( equal ( "delete" , action / action-type ) ) ) && ( (
+								equal ( "pc-chair" , subject / role ) ) ) policies:
+						Rule RPSlist_22_0_0_2_2_r_1 ( permit )
+					}
+					PolicySet RPSlist_22_0_0_2_3 { first-applicable-all
+						target: ( ( equal ( "true" , subject / isConflicted ) ) ) policies:
+						Rule RPSlist_22_0_0_2_3_r_1 ( deny )
+					}
+					PolicySet RPSlist_22_0_0_2_4 { first-applicable-all
+						target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) && equal (
+									"false" , subject / isConflicted ) ) ) policies:
+						Rule RPSlist_22_0_0_2_4_r_1 ( permit target: ( ( equal ( "true" , subject / isEq-subjUserId-resUserId ) ) ) )
+						Rule RPSlist_22_0_0_2_4_r_2 ( permit target: ( ( equal ( "discussion" , resource / phase ) ) ) )
+						Rule RPSlist_22_0_0_2_4_r_3 ( permit target: ( ( equal ( "true" , subject / subjReviewsThisResPaper ) && equal (
+										"true" , subject / hasSubmittedReviewForResPaper ) ) ) )
+						Rule RPSlist_22_0_0_2_4_r_4 ( permit target: ( ( equal ( "true" , resource / isSeeUnassignedAllowed ) ) ) )
+						Rule RPSlist_22_0_0_2_4_r_5 ( deny )
+					}
+					PolicySet RPSlist_22_0_0_2_5 { first-applicable-all
+						policies:
+						PolicySet RPSlist_22_0_0_2_5_0 { first-applicable-all
+							target: ( ( equal ( "delete" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) ) )
+							policies:
+							Rule RPSlist_22_0_0_2_5_0_r_1 ( permit )
+						}
+						PolicySet RPSlist_22_0_0_2_5_1 { first-applicable-all
+							target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) ) ) && ( (
+									equal ( "true" , resource / isEq-meetingPaper-resId ) ) ) policies:
+							Rule RPSlist_22_0_0_2_5_1_r_1 ( permit )
+						}
+						PolicySet RPSlist_22_0_0_2_5_2 { first-applicable-all
+							target: ( ( equal ( "create" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) ) )
+							policies:
+							Rule RPSlist_22_0_0_2_5_2_r_1 ( permit )
+						}
+						PolicySet RPSlist_22_0_0_2_5_3 { first-applicable-all
+							policies:
+							PolicySet RPSlist_22_0_0_2_5_3_0 { first-applicable-all
+								target: ( ( equal ( "read" , action / action-type ) ) || ( equal ( "write" , action / action-type ) ) ) && ( (
+										equal ( "admin" , subject / role ) ) ) policies:
+								Rule RPSlist_22_0_0_2_5_3_0_r_1 ( permit )
+							}
+							PolicySet RPSlist_22_0_0_2_5_3_1 { first-applicable-all
+								target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) ) )
+								policies:
+								Rule RPSlist_22_0_0_2_5_3_1_r_1 ( permit )
+							}
+							PolicySet RPSlist_22_0_0_2_5_3_2 { first-applicable-all
+								target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) && equal
+										( "true" , subject / isMeeting ) ) ) policies:
+								Rule RPSlist_22_0_0_2_5_3_2_r_1 ( permit )
+							}
+							PolicySet RPSlist_22_0_0_2_5_3_3 { first-applicable-all
+								policies:
+								Rule RPSlist_22_0_0_2_5_3_3_r_1 ( deny )
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	PolicySet RPSlist_23 { first-applicable-all
+		target: ( ( equal ( "paper-review-info-reviewer_rc" , resource / resource-class ) ) ) policies:
+		PolicySet RPSlist_23_0 { first-applicable-all
+			policies:
+			PolicySet RPSlist_23_0_0 { first-applicable-all
+				policies:
+				PolicySet RPSlist_23_0_0_0 { first-applicable-all
+					target: ( ( equal ( "pc-chair" , subject / role ) ) ) policies:
+					Rule RPSlist_23_0_0_0_r_1 ( permit )
+				}
+				PolicySet RPSlist_23_0_0_1 { first-applicable-all
+					policies:
+					PolicySet RPSlist_23_0_0_1_0 { first-applicable-all
+						target: ( ( equal ( "pc-chair" , subject / role ) && equal ( "false" , subject / isConflicted ) ) ) policies:
+						Rule RPSlist_23_0_0_1_0_r_1 ( permit )
+					}
+					PolicySet RPSlist_23_0_0_1_1 { first-applicable-all
+						target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) && equal (
+									"true" , subject / isSubjectsMeeting ) ) ) && ( ( equal ( "true" , resource / isEq-meetingPaper-resId ) ) )
+						policies:
+						Rule RPSlist_23_0_0_1_1_r_1 ( permit )
+					}
+					PolicySet RPSlist_23_0_0_1_2 { first-applicable-all
+						target: ( ( equal ( "create" , action / action-type ) ) || ( equal ( "delete" , action / action-type ) ) ) && ( (
+								equal ( "pc-chair" , subject / role ) ) ) policies:
+						Rule RPSlist_23_0_0_1_2_r_1 ( permit )
+					}
+					PolicySet RPSlist_23_0_0_1_3 { first-applicable-all
+						target: ( ( equal ( "true" , subject / isConflicted ) ) ) policies:
+						Rule RPSlist_23_0_0_1_3_r_1 ( deny )
+					}
+					PolicySet RPSlist_23_0_0_1_4 { first-applicable-all
+						target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) && equal (
+									"false" , subject / isConflicted ) ) ) policies:
+						Rule RPSlist_23_0_0_1_4_r_1 ( permit target: ( ( equal ( "true" , subject / isEq-subjUserId-resUserId ) ) ) )
+						Rule RPSlist_23_0_0_1_4_r_2 ( permit target: ( ( equal ( "discussion" , resource / phase ) ) ) )
+						Rule RPSlist_23_0_0_1_4_r_3 ( permit target: ( ( equal ( "true" , subject / subjReviewsThisResPaper ) && equal (
+										"true" , subject / hasSubmittedReviewForResPaper ) ) ) )
+						Rule RPSlist_23_0_0_1_4_r_4 ( permit target: ( ( equal ( "true" , resource / isSeeUnassignedAllowed ) ) ) )
+						Rule RPSlist_23_0_0_1_4_r_5 ( deny )
+					}
+					PolicySet RPSlist_23_0_0_1_5 { first-applicable-all
+						policies:
+						PolicySet RPSlist_23_0_0_1_5_0 { first-applicable-all
+							target: ( ( equal ( "delete" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) ) )
+							policies:
+							Rule RPSlist_23_0_0_1_5_0_r_1 ( permit )
+						}
+						PolicySet RPSlist_23_0_0_1_5_1 { first-applicable-all
+							target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) ) ) && ( (
+									equal ( "true" , resource / isEq-meetingPaper-resId ) ) ) policies:
+							Rule RPSlist_23_0_0_1_5_1_r_1 ( permit )
+						}
+						PolicySet RPSlist_23_0_0_1_5_2 { first-applicable-all
+							target: ( ( equal ( "create" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) ) )
+							policies:
+							Rule RPSlist_23_0_0_1_5_2_r_1 ( permit )
+						}
+						PolicySet RPSlist_23_0_0_1_5_3 { first-applicable-all
+							policies:
+							PolicySet RPSlist_23_0_0_1_5_3_0 { first-applicable-all
+								target: ( ( equal ( "read" , action / action-type ) ) || ( equal ( "write" , action / action-type ) ) ) && ( (
+										equal ( "admin" , subject / role ) ) ) policies:
+								Rule RPSlist_23_0_0_1_5_3_0_r_1 ( permit )
+							}
+							PolicySet RPSlist_23_0_0_1_5_3_1 { first-applicable-all
+								target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) ) )
+								policies:
+								Rule RPSlist_23_0_0_1_5_3_1_r_1 ( permit )
+							}
+							PolicySet RPSlist_23_0_0_1_5_3_2 { first-applicable-all
+								target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) && equal
+										( "true" , subject / isMeeting ) ) ) policies:
+								Rule RPSlist_23_0_0_1_5_3_2_r_1 ( permit )
+							}
+							PolicySet RPSlist_23_0_0_1_5_3_3 { first-applicable-all
+								policies:
+								Rule RPSlist_23_0_0_1_5_3_3_r_1 ( deny )
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	PolicySet RPSlist_24 { first-applicable-all
+		target: ( ( equal ( "isMeetingFlag_rc" , resource / resource-class ) ) ) policies:
+		PolicySet RPSlist_24_0 { first-applicable-all
+			policies:
+			PolicySet RPSlist_24_0_0 { first-applicable-all
+				target: ( ( equal ( "read" , action / action-type ) ) || ( equal ( "write" , action / action-type ) ) ) && ( (
+						equal ( "pc-chair" , subject / role ) ) ) policies:
+				Rule RPSlist_24_0_0_r_1 ( permit )
+			}
+			PolicySet RPSlist_24_0_1 { first-applicable-all
+				target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) ) ) policies:
+				Rule RPSlist_24_0_1_r_1 ( permit )
+			}
+			PolicySet RPSlist_24_0_2 { first-applicable-all
+				policies:
+				PolicySet RPSlist_24_0_2_0 { first-applicable-all
+					target: ( ( equal ( "read" , action / action-type ) ) || ( equal ( "write" , action / action-type ) ) ) && ( (
+							equal ( "admin" , subject / role ) ) ) policies:
+					Rule RPSlist_24_0_2_0_r_1 ( permit )
+				}
+				PolicySet RPSlist_24_0_2_1 { first-applicable-all
+					target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-chair" , subject / role ) ) ) policies:
+					Rule RPSlist_24_0_2_1_r_1 ( permit )
+				}
+				PolicySet RPSlist_24_0_2_2 { first-applicable-all
+					target: ( ( equal ( "read" , action / action-type ) ) ) && ( ( equal ( "pc-member" , subject / role ) && equal (
+								"true" , subject / isMeeting ) ) ) policies:
+					Rule RPSlist_24_0_2_2_r_1 ( permit )
+				}
+				PolicySet RPSlist_24_0_2_3 { first-applicable-all
+					policies:
+					Rule RPSlist_24_0_2_3_r_1 ( deny )
+				}
+			}
+		}
+	}
+}

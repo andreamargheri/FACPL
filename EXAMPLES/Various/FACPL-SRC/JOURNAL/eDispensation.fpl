@@ -1,0 +1,24 @@
+PolicySet AliceEDispensation {permit-overrides-all
+	target: equal("Alice",resource/patient-id)		
+	policies:
+	PolicySet eDis { permit-overrides-all 
+	 	 target: equal("e-Dispensation",resource/type)
+	  	 policies: 
+	 		Rule writeDis (permit target: equal(subject/role, "doctor") && equal(action/id, "write")
+	 			&& in ("e-Dis-Write", subject/permission)
+	 			&& in ("e-Dis-Read", subject/permission)
+	 		)
+	 		Rule readDis (permit target: equal(subject/role, "doctor") && equal(action/id, "read")
+	 			&& in ("e-Dis-Read", subject/permission)
+	 		)
+	 		Rule phaDis (permit target: equal(subject/role, "pharmacist") && equal(action/id, "read")
+	 			&& in ("e-Dis-Read", subject/permission))
+	 	  obl: 
+	 	  [permit M log(system/time, resource/type,subject/id, action/id)]
+	}
+ 	Rule ruleDeny (deny)
+	obl: 
+	  	[deny M mail(resource/patient-mail, "Data request by unauthorised subject")]
+	  	[permit O compress()]
+}
+ 

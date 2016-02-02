@@ -606,4 +606,33 @@ class Z3Generator_Alg extends AbstractXtextTests {
 
 	}
 
+@Test
+	def void genPolicy_EHealth() {
+		var model = ('''
+			PolicySet ePre { permit-overrides-all 
+					 target: equal("e-Prescription", resource/type)
+					 policies: 
+						Rule write (permit target: equal(subject/role, "doctor") && equal(action/id, "write")
+							&& in ("e-Pre-Write", subject/permission)
+							&& in ("e-Pre-Read", subject/permission)
+						)
+						Rule read (permit target: equal(subject/role, "doctor") && equal(action/id, "read")
+							&& in ("e-Pre-Read", subject/permission)
+						)
+						Rule pha (permit target: equal(subject/role, "pharmacist") && equal(action/id, "read")
+							&& in ("e-Pre-Read", subject/permission))
+						  obl: 
+						  [permit M log(system/time, resource/type,subject/id, action/id)]
+				}
+			''').parse
+				assertNoErrors(model)
+
+		var String cns = doGenerateZ3_Test(model)
+
+		val PrintWriter writer = new PrintWriter("z3_gen/eHealth/ePre.smt2", "UTF-8");
+		writer.println(cns);
+		writer.close();
+
+	}
+
 }

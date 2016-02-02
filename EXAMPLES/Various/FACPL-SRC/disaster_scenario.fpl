@@ -1,0 +1,40 @@
+
+
+
+PAS { 
+	 
+	Extended Indeterminate : false ; 
+	Java Package : "isola2014" ; 
+	Requests To Evaluate: NameRequest;
+	
+	pep: base
+
+	pdp: permit-unless-deny
+	
+	PolicySet Explorer { permit-unless-deny
+		policies:
+		Rule stopExploration ( permit 
+			target: equal ( "qry" , action/action-id ) 
+					&& equal("victimPerceived", action/item)
+			obl: [permit M put("stop")]
+				 [permit M put("role", "rescuer")])
+		Rule batteryLevel ( deny 
+			target: equal ( "qry" , action/action-id ) 
+					&& equal("isMoving", action/item)
+					&& greater-than (20, subject/batteryLevel)
+			obl: [deny M put("direction")])
+	}
+	
+	PolicySet Rescuer { permit-unless-deny 
+ 	 policies: 
+ 	 	 Rule victimFound (permit 
+ 	 	 	target: equal ( "qry" , action/action-id ) 
+ 	 	 			&& equal("position", action/item)
+ 	 	 	obl: [permit M put("stop")] ) 
+	 }
+
+} 
+
+
+Request:{ NameRequest ( category_attribute / id_attribute , "" ) } 
+

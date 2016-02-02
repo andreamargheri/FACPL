@@ -4,12 +4,13 @@ import it.unifi.xtext.facpl.facpl2.TypeLiteral;
 
 public enum FacplType {
 	/**
-	 * TYPED -> it is used for typing a well-typed high-level element (e.g., policy, policy set, PAF)
+	 * TYPED -> it is used for typing a well-typed high-level element (e.g.,
+	 * policy, policy set, PAF)
 	 */
 	INT, DOUBLE, STRING, BOOLEAN, DATETIME, SET_INT, SET_DOUBLE, SET_STRING, SET_BOOLEAN, SET_DATETIME, SET_NAME, NAME, ERR, TYPED;
 
 	public static FacplType combine(FacplType f1, FacplType f2) {
-		if (f1 == null || f2 == null){
+		if (f1 == null || f2 == null) {
 			return null;
 		}
 		if (f1.equals(f2)) {
@@ -32,7 +33,7 @@ public enum FacplType {
 			} else
 				return ERR;
 		}
-	} 
+	}
 
 	public static boolean isSet(FacplType f2) {
 		switch (f2) {
@@ -103,38 +104,38 @@ public enum FacplType {
 
 	public static boolean equalType(FacplType type, TypeLiteral literal) {
 		switch (literal) {
-		//SETs
+		// SETs
 		case SET_BOOL:
-			if (type.equals(SET_BOOLEAN) || type.equals(SET_NAME) ) {
+			if (type.equals(SET_BOOLEAN) || type.equals(SET_NAME)) {
 				return true;
 			} else {
 				return false;
 			}
 		case SET_DOUBLE:
-			if (type.equals(SET_DOUBLE) || type.equals(SET_NAME) ) {
+			if (type.equals(SET_DOUBLE) || type.equals(SET_NAME)) {
 				return true;
 			} else {
 				return false;
 			}
 		case SET_INT:
-			if (type.equals(SET_INT) || type.equals(SET_NAME) ) {
+			if (type.equals(SET_INT) || type.equals(SET_NAME)) {
 				return true;
 			} else {
 				return false;
 			}
 		case SET_STRING:
-			if (type.equals(SET_STRING) || type.equals(SET_NAME) ) {
+			if (type.equals(SET_STRING) || type.equals(SET_NAME)) {
 				return true;
 			} else {
 				return false;
 			}
 		case SET_DATE_TIME:
-			if (type.equals(SET_DATETIME) || type.equals(SET_NAME) ) {
+			if (type.equals(SET_DATETIME) || type.equals(SET_NAME)) {
 				return true;
 			} else {
 				return false;
 			}
-		//literals	
+			// literals
 		case BOOL:
 			if (type.equals(BOOLEAN))
 				return true;
@@ -160,9 +161,9 @@ public enum FacplType {
 				return true;
 			else
 				return false;
-		default: 
+		default:
 			return false;
-			
+
 		}
 	}
 
@@ -172,13 +173,13 @@ public enum FacplType {
 			return FacplType.SET_BOOLEAN;
 		case SET_DATE_TIME:
 			return FacplType.SET_DATETIME;
-		case SET_DOUBLE: 
+		case SET_DOUBLE:
 			return FacplType.SET_DOUBLE;
-		case SET_INT: 
+		case SET_INT:
 			return FacplType.SET_INT;
-		case SET_STRING: 
-			return FacplType.SET_STRING; 
-			//literals
+		case SET_STRING:
+			return FacplType.SET_STRING;
+		// literals
 		case BOOL:
 			return FacplType.BOOLEAN;
 		case DOUBLE:
@@ -189,15 +190,15 @@ public enum FacplType {
 			return FacplType.STRING;
 		case DATE_TIME:
 			return FacplType.DATETIME;
-		default: 
+		default:
 			return FacplType.NAME;
 		}
-	  
+
 	}
 
 	@Override
 	public String toString() {
 		return this.name().substring(0, 1).toUpperCase() + this.name().substring(1).toLowerCase();
 	}
-	
+
 }
