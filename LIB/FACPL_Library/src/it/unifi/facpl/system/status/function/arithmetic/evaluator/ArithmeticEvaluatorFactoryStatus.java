@@ -16,6 +16,7 @@ public class ArithmeticEvaluatorFactoryStatus {
 		//initialisation
 		this.table.put(Integer.class, NumberArithmeticEvaluatorStatus.getInstance());
 		this.table.put(Double.class, NumberArithmeticEvaluatorStatus.getInstance());
+		this.table.put(Boolean.class, NumberArithmeticEvaluatorStatus.getInstance());
 	}
 
 	public static synchronized ArithmeticEvaluatorFactoryStatus getInstance() {
