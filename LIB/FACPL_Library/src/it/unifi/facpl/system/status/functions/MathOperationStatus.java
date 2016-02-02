@@ -7,7 +7,7 @@ import it.unifi.facpl.system.status.function.arithmetic.evaluator.ArithmeticEval
 import it.unifi.facpl.system.status.function.arithmetic.evaluator.ArithmeticEvaluatorStatus;
 import it.unifi.facpl.system.status.functions.evalutor.IExpressionFunctionStatus;
 
-public abstract class MathOperationStatus {
+public abstract class MathOperationStatus  implements IExpressionFunctionStatus {
 
 	public MathOperationStatus() {
 		super();
