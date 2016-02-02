@@ -16,5 +16,7 @@ public interface ArithmeticEvaluatorStatus {
 	public void multiply (StatusAttribute o1, Object o2) throws Throwable;
 	
 	public void subtract (StatusAttribute o1, Object o2) throws Throwable;
+	
+	public void flag(StatusAttribute o1, Object o2) throws Throwable; //e' per i booleani, per comodita' e' inserito nelle aritmetiche
 
 }

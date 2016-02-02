@@ -50,7 +50,7 @@ public class NumberArithmeticEvaluatorStatus  implements ArithmeticEvaluatorStat
 			o1.setValue(newValue.toString());
 		}
 		else {
-			throw new UnsupportedTypeException("Number", "Add");
+			throw new UnsupportedTypeException("Number", "div");
 		}
 	}
 
@@ -67,7 +67,7 @@ public class NumberArithmeticEvaluatorStatus  implements ArithmeticEvaluatorStat
 			o1.setValue(newValue.toString());
 		}
 		else {
-			throw new UnsupportedTypeException("Number", "Add");
+			throw new UnsupportedTypeException("Number", "mul");
 		}
 	}
 
@@ -84,8 +84,21 @@ public class NumberArithmeticEvaluatorStatus  implements ArithmeticEvaluatorStat
 			o1.setValue(newValue.toString());
 		}
 		else {
-			throw new UnsupportedTypeException("Number", "Add");
+			throw new UnsupportedTypeException("Number", "sub");
 		}
+	}
+
+	@Override
+	public void flag(StatusAttribute o1, Object o2) throws Throwable {
+		if (o1.getType() == FacplStatusType.BOOLEAN && o2 instanceof Boolean )  {
+			Boolean newValue = (Boolean)o2;
+			o1.setValue(newValue.toString());
+			
+		}
+		else {
+			throw new UnsupportedTypeException("Boolean", "Flag");
+		}
+		
 	}
 	
 

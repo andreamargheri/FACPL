@@ -1,4 +1,4 @@
-package it.unifi.facpl.system.status.functions.evalutor;
+package it.unifi.facpl.system.status.functions.evaluator;
 
 import java.util.List;
 
