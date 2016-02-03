@@ -5,7 +5,7 @@ import java.util.List;
 import it.unifi.facpl.system.status.StatusAttribute;
 import it.unifi.facpl.system.status.function.arithmetic.evaluator.ArithmeticEvaluatorFactoryStatus;
 import it.unifi.facpl.system.status.function.arithmetic.evaluator.ArithmeticEvaluatorStatus;
-import it.unifi.facpl.system.status.functions.evaluator.IExpressionFunctionStatus;
+import it.unifi.facpl.system.status.function.arithmetic.evaluator.IExpressionFunctionStatus;
 
 public abstract class MathOperationStatus  implements IExpressionFunctionStatus {
 

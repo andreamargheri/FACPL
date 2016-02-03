@@ -3,11 +3,12 @@ package it.unifi.facpl.lib.function.comparison;
 
 import java.util.List;
 
+import it.unifi.facpl.lib.interfaces.IComparisonEvaluator;
 import it.unifi.facpl.lib.interfaces.IComparisonFunction;
 import it.unifi.facpl.lib.util.Set;
 
-public class AtLeastOneMemberOf implements IComparisonFunction {
-
+public class AtLeastOneMemberOf extends AbstractComparison{
+	//non usa evaluator, si vedra' in seguito come fare refactoring
 	@Override
 	public Boolean evaluateFunction(List<Object> args) throws Throwable {
 		if (args.size()==2){
@@ -49,5 +50,11 @@ public class AtLeastOneMemberOf implements IComparisonFunction {
 		}else{
 			throw new Exception("Illegal number of arguments");
 		}
+	}
+
+	@Override
+	protected Boolean op(IComparisonEvaluator ev, Object o1, Object o2) throws Throwable {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

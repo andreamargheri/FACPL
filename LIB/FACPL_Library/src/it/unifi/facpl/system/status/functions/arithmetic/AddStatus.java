@@ -2,7 +2,7 @@ package it.unifi.facpl.system.status.functions.arithmetic;
 
 import it.unifi.facpl.system.status.StatusAttribute;
 import it.unifi.facpl.system.status.function.arithmetic.evaluator.ArithmeticEvaluatorStatus;
-import it.unifi.facpl.system.status.functions.evaluator.IExpressionFunctionStatus;
+import it.unifi.facpl.system.status.function.arithmetic.evaluator.IExpressionFunctionStatus;
 
 public class AddStatus extends MathOperationStatus {
 

@@ -35,6 +35,4 @@ public class Status {
 	//eventualmente altri metodi
 	//050910828
 	
-	
-
 }

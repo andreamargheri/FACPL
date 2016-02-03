@@ -2,22 +2,24 @@ package it.unifi.facpl.lib.interfaces;
 
 import java.util.List;
 
+import it.unifi.facpl.system.status.StatusAttribute;
+
 public interface IComparisonEvaluatorStatus {
 	/*
 	 * Boolean Comparison
 	 */
 
-	public boolean areEquals( Object o1 , Object o2 ) throws Throwable;
+	public boolean areEquals( StatusAttribute s1, Object o1 , StatusAttribute s2, Object o2 ) throws Throwable;
 	
-	public boolean areNotEquals( Object o1 , Object o2 ) throws Throwable;
+	public boolean areNotEquals( StatusAttribute s1, Object o1 , StatusAttribute s2, Object o2 ) throws Throwable;
 	
-	public boolean isLessThan( Object o1 , Object o2 ) throws Throwable;
+	public boolean isLessThan( StatusAttribute s1, Object o1 , StatusAttribute s2, Object o2 ) throws Throwable;
 	
-	public boolean isLessThanOrEqual( Object o1 , Object o2 ) throws Throwable;
+	public boolean isLessThanOrEqual( StatusAttribute s1, Object o1 , StatusAttribute s2, Object o2 ) throws Throwable;
 	
-	public boolean isGreaterThan( Object o1 , Object o2 ) throws Throwable;
+	public boolean isGreaterThan( StatusAttribute s1, Object o1 , StatusAttribute s2, Object o2 ) throws Throwable;
 	
-	public boolean isGreateThanOrEqual( Object o1 , Object o2 ) throws Throwable;
+	public boolean isGreateThanOrEqual( StatusAttribute s1, Object o1 , StatusAttribute s2, Object o2) throws Throwable;
 	
 	//NOT DEFINED BY EVALUATOR -> TO USE Class ExpressionBooleanTree
 	
@@ -35,13 +37,13 @@ public interface IComparisonEvaluatorStatus {
 	 * Set operators
 	 */
 	
-	public boolean isSubsetOf(Object o1, Object o2) throws Throwable;
+	public boolean isSubsetOf(StatusAttribute s1, Object o1 , StatusAttribute s2, Object o2) throws Throwable;
 	
-	public boolean isAtLestOneMemberOf (Object o1, Object o2) throws Throwable;
+	public boolean isAtLestOneMemberOf (StatusAttribute s1, Object o1 , StatusAttribute s2, Object o2) throws Throwable;
 	
 	/*
 	 * List operators
 	 */
 	
-	public boolean isListElement(List<?> list, Object o2) throws Throwable;
+	public boolean isListElement(List<?> list, Object o2) throws Throwable; //si fara' in seguito
 }

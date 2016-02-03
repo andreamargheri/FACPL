@@ -7,21 +7,12 @@ import it.unifi.facpl.lib.function.comparison.evaluator.ComparisonEvaluatorFacto
 import it.unifi.facpl.lib.interfaces.IComparisonEvaluator;
 import it.unifi.facpl.lib.interfaces.IComparisonFunction;
 
-public class LessThanOrEqual implements IComparisonFunction{
+public class LessThanOrEqual extends AbstractComparison{
+
 
 	@Override
-	public Boolean evaluateFunction(List<Object> args) throws Throwable {
-
-		if (args.size() == 2){
-			Object o1 = args.get(0);
-			Object o2 = args.get(1);
-
-			IComparisonEvaluator evaluator = ComparisonEvaluatorFactory.getInstance().getEvaluator(o1);
-			return evaluator.isLessThanOrEqual( o1 , o2 );
-
-		}else{
-			throw new Exception("Illegal number of arguments");
-		}
+	protected Boolean op(IComparisonEvaluator ev, Object o1, Object o2) throws Throwable {
+		return ev.isLessThanOrEqual( o1 , o2 );
 	}
-	
+
 }

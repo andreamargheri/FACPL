@@ -7,7 +7,10 @@ import it.unifi.facpl.lib.interfaces.IComparisonFunction;
 import it.unifi.facpl.lib.util.Set;
 
 public class In implements IComparisonFunction{
-
+	/*
+	 * come AtLeastOneMemberOf
+	 * 
+	 */
 	@Override
 	public Boolean evaluateFunction(List<Object> args) throws Throwable {
 		//bag vs string, bag vs bag , string vs bag

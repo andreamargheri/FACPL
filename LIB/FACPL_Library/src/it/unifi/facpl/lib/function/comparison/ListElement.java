@@ -13,20 +13,10 @@ import it.unifi.facpl.lib.interfaces.IComparisonFunction;
  * @author Andrea
  *
  */
-public class ListElement implements IComparisonFunction {
+public class ListElement extends AbstractComparison {
+
 	@Override
-	
-	public Boolean evaluateFunction(List<Object> args) throws Throwable {
-		if (args.size() == 2) {
-			
-			Object o1 = args.get(0);
-			Object o2 = args.get(1);
-			
-			IComparisonEvaluator evaluator = ComparisonEvaluatorFactory.getInstance().getEvaluator(o1);
-			return evaluator.isListElement( (List<?>) o1 , o2 ); //perche' il cast?!?
-			
-		} else {
-			throw new Exception("Illegal number of arguments");
-		}
+	protected Boolean op(IComparisonEvaluator ev, Object o1, Object o2) throws Throwable {
+		return ev.isListElement( (List<?>) o1 , o2 );
 	}
 }
