@@ -16,35 +16,26 @@ public abstract class AbstractComparison  implements IComparisonFunction {
 
 	@Override
 	public Boolean evaluateFunction(List<Object> args) throws Throwable {
-	
-		if (args.size() == 2){
-			Object o1 = args.get(0);
-			Object o2 = args.get(1);
-	
-			IComparisonEvaluator evaluator = ComparisonEvaluatorFactory.getInstance().getEvaluator(o1);
-			return op(evaluator, o1, o2);
-			
-		}
 		/* potrebbe essere un'idea riutilizzare la struttura gia' presente
 		 * estraendo dagli attributi i valori che ci servono e facendoli comparare come prima
 		 * [DA CHIEDERE]
-		 * args[0] = 1 SA
-		 * args[1] = value del 1
-		 * args[2] = 2 SA
-		 * args[3] = value del 2
 		 */
-		if (args.size() == 4) {
+		if (args.size() == 2){
 			Object o1, o2;
-			if (args.get(0) instanceof StatusAttribute && args.get(2) instanceof StatusAttribute) {
-				o1 = ((StatusAttribute)args.get(0)).getValue();
-				o2 = ((StatusAttribute)args.get(2)).getValue();
+			o1 = args.get(0) instanceof StatusAttribute? ((StatusAttribute)args.get(0)).getValue() : args.get(0);
+			o2 = args.get(1) instanceof StatusAttribute? ((StatusAttribute)args.get(1)).getValue() : args.get(1);
+			if (!(o1 instanceof StatusAttribute) ^ !(o2 instanceof StatusAttribute) ) {
+				throw new Exception("One is attribute and other no");
+				/*
+				 * magari fare mix dei due casi ovvero:
+				 * args[0]: StatusAttribute
+				 * args[1]: valore
+				 * si estrae il valore da args[0] e si confronta con args[1] o viceversa
+				 */
 			}
-			else  {
-				throw new UnsupportedTypeException();
-			}
-	
 			IComparisonEvaluator evaluator = ComparisonEvaluatorFactory.getInstance().getEvaluator(o1);
 			return op(evaluator, o1, o2);
+			
 		}
 		else
 		{
