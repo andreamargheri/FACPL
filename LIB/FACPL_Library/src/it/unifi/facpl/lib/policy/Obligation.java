@@ -15,6 +15,7 @@ import it.unifi.facpl.lib.interfaces.IObligationElement;
 import it.unifi.facpl.lib.util.AttributeName;
 import it.unifi.facpl.lib.util.exception.FulfillmentFailed;
 import it.unifi.facpl.lib.util.exception.MissingAttributeException;
+import it.unifi.facpl.system.status.function.arithmetic.evaluator.IExpressionFunctionStatus;
 
 /**
  *
@@ -33,12 +34,12 @@ public class Obligation implements IObligationElement{
 	 * cambia la valutazione
 	 */
 
-	private String pepFunction;
+	private IExpressionFunctionStatus pepAction;
 
 	private LinkedList<Object> argsFunction; //ExpresisonBooleanTree, Expression,  Attribute Names, Literals
 
-	public Obligation(String pepFunction,Effect evaluatedOn, ObligationType type, Object...args){
-		this.pepFunction = pepFunction;
+	public Obligation(IExpressionFunctionStatus pepAction,Effect evaluatedOn, ObligationType type, Object...args){
+		this.pepAction = pepAction;
 		this.evaluatedOn = evaluatedOn;
 		this.typeObl = type;
 		this.argsFunction = new LinkedList<Object>();
@@ -49,13 +50,17 @@ public class Obligation implements IObligationElement{
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see it.unifi.facpl.lib.policy.IObligation#getObligationValue(it.unifi.facpl.lib.context.ContextRequest)
+	 */
 	@Override
 	public AbstractFulfilledObligation getObligationValue(ContextRequest cxtRequest) throws FulfillmentFailed { 
 		Logger l = LoggerFactory.getLogger(Obligation.class);
 	
-		l.debug("Fulfilling Obligation " +this.pepFunction.toString() + "...");
-		//AbstractFulfilledObligation obl = new FullfilledObbligation(this.evaluatedOn,this.typeObl,this.pepFunction);
-		AbstractFulfilledObligation obl = new FullfilledObbligation(this.evaluatedOn,this.typeObl,this.pepFunction);
+		l.debug("Fulfilling Obligation " +this.pepAction.toString() + "...");
+		//AbstractFulfilledObligation obl = new FullfilledObbligation(this.evaluatedOn,this.typeObl,this.pepAction);
+		AbstractFulfilledObligation obl = new FullfilledObbligation(this.evaluatedOn,this.typeObl,this.pepAction); 
+		//da correggere dopo
 
 		//Fulfill arguments for PEP Function
 		for (Object arg : argsFunction) {
@@ -66,7 +71,7 @@ public class Obligation implements IObligationElement{
 				
 				if (res.equals(ExpressionValue.BOTTOM) || res.equals(ExpressionValue.ERROR)){
 					//Fulfillment of Obligation failed
-					throw new FulfillmentFailed();
+					throw new FulfillmentFailed(); //eccezione semplice - no problem
 				}
 				//Evaluation ok -> add value in the arguments
 				obl.addArg(res);
@@ -103,10 +108,13 @@ public class Obligation implements IObligationElement{
 		return obl;
 	}
 
+
+	@Override
 	public Effect getEvaluatedOn() {
 		return evaluatedOn;
 	}
 
+	@Override
 	public ObligationType getTypeObl() {
 		return typeObl;
 	}

@@ -14,6 +14,10 @@ public abstract class MathOperationStatus  implements IExpressionFunctionStatus 
 	}
 
 
+	public void evaluateFunction() throws Throwable {
+		// TODO Auto-generated method stub
+		
+	}
 
 	public void evaluateFunction(List<Object> args) throws Throwable {
 

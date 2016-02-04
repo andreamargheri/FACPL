@@ -11,4 +11,5 @@ public class DivStatus extends MathOperationStatus {
 
 	}
 
+	
 }

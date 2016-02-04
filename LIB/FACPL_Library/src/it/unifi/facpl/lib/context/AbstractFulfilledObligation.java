@@ -4,6 +4,9 @@ import java.util.LinkedList;
 
 import it.unifi.facpl.lib.enums.Effect;
 import it.unifi.facpl.lib.enums.ObligationType;
+import it.unifi.facpl.lib.interfaces.IExpressionFunction;
+import it.unifi.facpl.system.status.StatusAttribute;
+import it.unifi.facpl.system.status.function.arithmetic.evaluator.IExpressionFunctionStatus;
 
 /**
  * 
@@ -15,14 +18,15 @@ public abstract class AbstractFulfilledObligation {
 	protected Effect evaluatedOn;
 	protected ObligationType type;
 	protected LinkedList<Object> arguments;
-	private String pepAction; //dare un tipo a questo
+	protected IExpressionFunctionStatus pepAction; //dare un tipo a questo
+	protected StatusAttribute s;
 	/*
 	 * questa e' l'obbligation valutata astratta
 	 * bisogna differenziare tra obbligation fullfilled di stato e obbligation fullfilled NON di stato
 	 * implementare il metodo evaluateObl()
 	 */
 	
-	public AbstractFulfilledObligation(Effect effect, ObligationType typeObl, String pepAction) {
+	public AbstractFulfilledObligation(Effect effect, ObligationType typeObl, IExpressionFunctionStatus pepAction) {
 		this.type = typeObl;
 		this.evaluatedOn = effect;
 		this.pepAction = pepAction;
@@ -30,8 +34,10 @@ public abstract class AbstractFulfilledObligation {
 	}
 	
 	public AbstractFulfilledObligation() {
-		// TODO Auto-generated constructor stub
+		
 	}
+	
+	public abstract void setStatusAttribute(StatusAttribute s) throws Exception;
 
 	public void addArg(Object object){
 		if (this.arguments == null){
@@ -46,7 +52,7 @@ public abstract class AbstractFulfilledObligation {
 	public ObligationType getType() {
 		return type;
 	}
-	public String getPepAction() {
+	public IExpressionFunctionStatus getPepAction() {
 		return pepAction;
 	}
 	public LinkedList<Object> getArguments() {
@@ -62,7 +68,7 @@ public abstract class AbstractFulfilledObligation {
 	 * Eval by PEP
 	 * @return
 	 */
-	public abstract AbstractFulfilledObligation evaluateObl() throws Exception;
+	public abstract AbstractFulfilledObligation evaluateObl() throws Throwable;
 	
 	
 }

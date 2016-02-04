@@ -28,17 +28,22 @@ public class PEP {
 
 	private EnforcementAlgorithm alg;
 	private FacplStatus status;
+	
 	public PEP(EnforcementAlgorithm alg) {
 		this.alg = alg;
 		this.status = new FacplStatus("status");
 	}
+	/*
+	 * eventualmente potrebbe servire
+	 * se gli venisse passato direttamente uno status gia' fatto
+	 */
 	public PEP(EnforcementAlgorithm alg, FacplStatus status) {
 		this.alg = alg;
 		this.status = status;
 		
 	}
 
-
+	
 	public AuthorisationPEP doEnforcement(AuthorisationPDP authPDP) {
 
 		Logger l = LoggerFactory.getLogger(PEP.class);
