@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import it.unifi.facpl.lib.context.AuthorisationPDP;
-import it.unifi.facpl.lib.context.FulfilledObligation;
+import it.unifi.facpl.lib.context.AbstractFulfilledObligation;
 import it.unifi.facpl.lib.enums.TargetDecision;
 import it.unifi.facpl.lib.interfaces.IEvaluablePolicy;
 
@@ -32,7 +32,7 @@ public class EvaluableElementStub {
 	 * @param dt decision result
 	 * @param obls list of obligations for each AbstractEvaluableElement
 	 */
-	public void setElements(List<AuthorisationPDP> dt,List<TargetDecision> mt,  List<FulfilledObligation> obls) {
+	public void setElements(List<AuthorisationPDP> dt,List<TargetDecision> mt,  List<AbstractFulfilledObligation> obls) {
 		for (int i = 0; i < dt.size(); i++){
 				elements.add(new AbstractEvaluableElement(dt.get(i),mt.get(i), obls));
 			}

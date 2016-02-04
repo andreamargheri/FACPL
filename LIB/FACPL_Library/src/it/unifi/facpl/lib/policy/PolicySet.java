@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import it.unifi.facpl.lib.context.AuthorisationPDP;
 import it.unifi.facpl.lib.context.ContextRequest;
-import it.unifi.facpl.lib.context.FulfilledObligation;
+import it.unifi.facpl.lib.context.AbstractFulfilledObligation;
 import it.unifi.facpl.lib.enums.Effect;
 import it.unifi.facpl.lib.enums.ExtendedDecision;
 import it.unifi.facpl.lib.enums.TargetDecision;
@@ -80,7 +80,7 @@ public abstract class PolicySet extends FacplPolicy {
 
 			try {
 
-				LinkedList<FulfilledObligation> listObl = null;
+				LinkedList<AbstractFulfilledObligation> listObl = null;
 				if (auth.getDecision().equals(ExtendedDecision.PERMIT)) {
 					listObl = this.evaluateObl(Effect.PERMIT, cxtRequest);
 				} else if (auth.getDecision().equals(ExtendedDecision.DENY)) {

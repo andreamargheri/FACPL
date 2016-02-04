@@ -5,8 +5,9 @@ import java.util.LinkedList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import it.unifi.facpl.lib.context.AbstractFulfilledObligation;
 import it.unifi.facpl.lib.context.ContextRequest;
-import it.unifi.facpl.lib.context.FulfilledObligation;
+import it.unifi.facpl.lib.context.FullfilledObbligation;
 import it.unifi.facpl.lib.enums.Effect;
 import it.unifi.facpl.lib.enums.ExpressionValue;
 import it.unifi.facpl.lib.enums.ObligationType;
@@ -43,11 +44,12 @@ public class Obligation implements IObligationElement{
 	}
 
 	@Override
-	public FulfilledObligation getObligationValue(ContextRequest cxtRequest) throws FulfillmentFailed { 
+	public AbstractFulfilledObligation getObligationValue(ContextRequest cxtRequest) throws FulfillmentFailed { 
 		Logger l = LoggerFactory.getLogger(Obligation.class);
 	
 		l.debug("Fulfilling Obligation " +this.pepFunction.toString() + "...");
-		FulfilledObligation obl = new FulfilledObligation(this.evaluatedOn,this.typeObl,this.pepFunction);
+		//AbstractFulfilledObligation obl = new FullfilledObbligation(this.evaluatedOn,this.typeObl,this.pepFunction);
+		AbstractFulfilledObligation obl = new FullfilledObbligation(this.evaluatedOn,this.typeObl,this.pepFunction);
 
 		//Fulfill arguments for PEP Function
 		for (Object arg : argsFunction) {

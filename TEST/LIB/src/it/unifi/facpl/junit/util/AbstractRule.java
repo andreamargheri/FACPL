@@ -3,7 +3,7 @@ package it.unifi.facpl.junit.util;
 import java.util.LinkedList;
 
 import it.unifi.facpl.lib.context.ContextRequest;
-import it.unifi.facpl.lib.context.FulfilledObligation;
+import it.unifi.facpl.lib.context.AbstractFulfilledObligation;
 import it.unifi.facpl.lib.enums.Effect;
 import it.unifi.facpl.lib.enums.TargetDecision;
 import it.unifi.facpl.lib.policy.Rule;
@@ -51,13 +51,13 @@ public class AbstractRule extends Rule {
 	}
 	
 	@Override
-	protected LinkedList<FulfilledObligation> evaluateObl(Effect effect, ContextRequest cxtRequest)
+	protected LinkedList<AbstractFulfilledObligation> evaluateObl(Effect effect, ContextRequest cxtRequest)
 			throws FulfillmentFailed {
 	
 		if (err_obl){
 			throw new FulfillmentFailed();
 		}else{
-			return new LinkedList<FulfilledObligation>();
+			return new LinkedList<AbstractFulfilledObligation>();
 		}
 	}
 

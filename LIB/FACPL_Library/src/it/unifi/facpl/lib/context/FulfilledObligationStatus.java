@@ -11,7 +11,7 @@ import it.unifi.facpl.lib.interfaces.IPepActionStatus;
  * @author Andrea Margheri
  *
  */
-public class FulfilledObligationStatus extends FulfilledObligation {
+public class FulfilledObligationStatus extends AbstractFulfilledObligation {
 
 	private Class < ? extends IPepActionStatus> pepAction; 
 	
@@ -21,6 +21,13 @@ public class FulfilledObligationStatus extends FulfilledObligation {
 		super.type = typeObl;
 		super.evaluatedOn = effect;
 		this.pepAction = pepAction;
+	}
+
+
+	@Override
+	public AbstractFulfilledObligation evaluateObl() throws Exception {
+		// TODO da implementare
+		return null;
 	}
 	
 	

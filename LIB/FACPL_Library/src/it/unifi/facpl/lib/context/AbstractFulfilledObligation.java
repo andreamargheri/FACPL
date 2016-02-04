@@ -10,7 +10,7 @@ import it.unifi.facpl.lib.enums.ObligationType;
  * @author Andrea
  * Obligation gia valutata dal PDP
  */
-public class FulfilledObligation {
+public abstract class AbstractFulfilledObligation {
 
 	protected Effect evaluatedOn;
 	protected ObligationType type;
@@ -18,14 +18,14 @@ public class FulfilledObligation {
 	private String pepAction;
 	
 	
-	public FulfilledObligation(Effect effect, ObligationType typeObl, String pepAction) {
+	public AbstractFulfilledObligation(Effect effect, ObligationType typeObl, String pepAction) {
 		this.type = typeObl;
 		this.evaluatedOn = effect;
 		this.pepAction = pepAction;
 		this.arguments = new LinkedList<Object>();
 	}
 	
-	public FulfilledObligation() {
+	public AbstractFulfilledObligation() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -58,10 +58,7 @@ public class FulfilledObligation {
 	 * Eval by PEP
 	 * @return
 	 */
-	public FulfilledObligation evaluateObl() {
-		// Esegue l'azione del PEP
-		return null;
-	}
+	public abstract AbstractFulfilledObligation evaluateObl() throws Exception;
 	
 	
 }

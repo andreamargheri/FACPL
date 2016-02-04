@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import it.unifi.facpl.lib.context.AuthorisationPDP;
 import it.unifi.facpl.lib.context.ContextRequest;
-import it.unifi.facpl.lib.context.FulfilledObligation;
+import it.unifi.facpl.lib.context.AbstractFulfilledObligation;
 import it.unifi.facpl.lib.enums.ExtendedDecision;
 import it.unifi.facpl.lib.interfaces.IEvaluableAlgorithm;
 import it.unifi.facpl.lib.interfaces.IEvaluablePolicy;
@@ -23,8 +23,8 @@ public class StrongConsensus implements IEvaluableAlgorithm{
 		Logger l = LoggerFactory.getLogger(StrongConsensus.class);
 		l.debug("-> STRONG CONSENSUS started");
 		
-		LinkedList<FulfilledObligation> obligationDeny = new LinkedList<FulfilledObligation>();
-		LinkedList<FulfilledObligation> obligationPermit = new LinkedList<FulfilledObligation>();
+		LinkedList<AbstractFulfilledObligation> obligationDeny = new LinkedList<AbstractFulfilledObligation>();
+		LinkedList<AbstractFulfilledObligation> obligationPermit = new LinkedList<AbstractFulfilledObligation>();
 			
 		int numOfPermit = 0; 
 		int numOfDeny = 0;

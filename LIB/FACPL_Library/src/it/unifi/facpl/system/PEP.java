@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import it.unifi.facpl.lib.context.AuthorisationPDP;
 import it.unifi.facpl.lib.context.AuthorisationPEP;
-import it.unifi.facpl.lib.context.FulfilledObligation;
+import it.unifi.facpl.lib.context.AbstractFulfilledObligation;
 import it.unifi.facpl.lib.enums.EnforcementAlgorithm;
 import it.unifi.facpl.lib.enums.ObligationType;
 import it.unifi.facpl.lib.enums.StandardDecision;
@@ -49,7 +49,7 @@ public class PEP {
 				l.debug("Chosen Enforcement Algorithm " + alg.toString());
 
 				if (dec.equals(StandardDecision.DENY) || dec.equals(StandardDecision.PERMIT)) {
-					for (FulfilledObligation obl : authPDP.getObligation()) {
+					for (AbstractFulfilledObligation obl : authPDP.getObligation()) {
 						// if any error throw exception
 						try {
 							this.dischargeObligation(obl);
@@ -78,7 +78,7 @@ public class PEP {
 				// otherwise or error -> return deny
 
 				if (dec.equals(StandardDecision.PERMIT)) {
-					for (FulfilledObligation obl : authPDP.getObligation()) {
+					for (AbstractFulfilledObligation obl : authPDP.getObligation()) {
 						try {
 							// if any error throw exception
 							this.dischargeObligation(obl);
@@ -101,7 +101,7 @@ public class PEP {
 
 			case PERMIT_BIASED:
 				if (dec.equals(StandardDecision.DENY)) {
-					for (FulfilledObligation obl : authPDP.getObligation()) {
+					for (AbstractFulfilledObligation obl : authPDP.getObligation()) {
 						try {
 							// if any error throw exception
 							this.dischargeObligation(obl);
@@ -139,7 +139,7 @@ public class PEP {
 	 * @param obl
 	 * @throws Throwable
 	 */
-	private void dischargeObligation(FulfilledObligation obl) throws Throwable {
+	private void dischargeObligation(AbstractFulfilledObligation obl) throws Throwable {
 		Logger l = LoggerFactory.getLogger(PEP.class);
 		try {
 			// discharge obligation

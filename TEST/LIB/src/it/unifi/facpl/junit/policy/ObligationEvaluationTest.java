@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import it.unifi.facpl.junit.util.request.ContextRequest_NoContext;
 import it.unifi.facpl.lib.context.ContextRequest;
-import it.unifi.facpl.lib.context.FulfilledObligation;
+import it.unifi.facpl.lib.context.AbstractFulfilledObligation;
 import it.unifi.facpl.lib.enums.Effect;
 import it.unifi.facpl.lib.enums.ObligationType;
 import it.unifi.facpl.lib.policy.Obligation;
@@ -17,7 +17,7 @@ public class ObligationEvaluationTest {
 
 	private Obligation o1, o2, o3, o4;
 	private ContextRequest req1;
-	private FulfilledObligation value1, value2, value3;
+	private AbstractFulfilledObligation value1, value2, value3;
 
 	@Before
 	public void setUp() {

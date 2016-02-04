@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import it.unifi.facpl.lib.context.ContextRequest;
-import it.unifi.facpl.lib.context.FulfilledObligation;
+import it.unifi.facpl.lib.context.AbstractFulfilledObligation;
 import it.unifi.facpl.lib.enums.Effect;
 import it.unifi.facpl.lib.enums.ExpressionValue;
 import it.unifi.facpl.lib.enums.TargetDecision;
@@ -82,8 +82,8 @@ public abstract class FacplPolicy implements IEvaluablePolicy{
 		return dec; 
 	}
 
-	protected LinkedList<FulfilledObligation> evaluateObl(Effect effect, ContextRequest cxtRequest) throws FulfillmentFailed{
-		LinkedList<FulfilledObligation> fuliflledObls = new LinkedList<FulfilledObligation>();
+	protected LinkedList<AbstractFulfilledObligation> evaluateObl(Effect effect, ContextRequest cxtRequest) throws FulfillmentFailed{
+		LinkedList<AbstractFulfilledObligation> fuliflledObls = new LinkedList<AbstractFulfilledObligation>();
 		Logger l = LoggerFactory.getLogger(FacplPolicy.class);
 		l.debug(idElement+ "- Start obligation eval");
 		

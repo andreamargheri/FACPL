@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import it.unifi.facpl.lib.context.AuthorisationPDP;
 import it.unifi.facpl.lib.context.ContextRequest;
-import it.unifi.facpl.lib.context.FulfilledObligation;
+import it.unifi.facpl.lib.context.AbstractFulfilledObligation;
 import it.unifi.facpl.lib.enums.ExtendedDecision;
 import it.unifi.facpl.lib.interfaces.IEvaluableAlgorithm;
 import it.unifi.facpl.lib.interfaces.IEvaluablePolicy;
@@ -32,7 +32,7 @@ public class PermitOverridesGreedy implements IEvaluableAlgorithm{
 		Boolean atLeastOneErrorDP= false;
 		Boolean atLeastOneDeny = false;
 		
-		LinkedList<FulfilledObligation> obligationDeny = new LinkedList<FulfilledObligation>();
+		LinkedList<AbstractFulfilledObligation> obligationDeny = new LinkedList<AbstractFulfilledObligation>();
 		
 		AuthorisationPDP dr = new AuthorisationPDP();
 		for (IEvaluablePolicy el : elements) {

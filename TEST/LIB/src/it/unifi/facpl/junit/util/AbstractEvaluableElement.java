@@ -4,7 +4,7 @@ import java.util.List;
 
 import it.unifi.facpl.lib.context.AuthorisationPDP;
 import it.unifi.facpl.lib.context.ContextRequest;
-import it.unifi.facpl.lib.context.FulfilledObligation;
+import it.unifi.facpl.lib.context.AbstractFulfilledObligation;
 import it.unifi.facpl.lib.enums.TargetDecision;
 import it.unifi.facpl.lib.interfaces.IEvaluablePolicy;
 
@@ -29,11 +29,11 @@ public class AbstractEvaluableElement implements IEvaluablePolicy {
 	}
 
 	public AbstractEvaluableElement(AuthorisationPDP d, TargetDecision m,
-			List<FulfilledObligation> obls) {
+			List<AbstractFulfilledObligation> obls) {
 		this.m = m;
 		//NB attention to the pointer for obligations
 		this.d = new AuthorisationPDP(d.getDecision());
-		for (FulfilledObligation o : obls) {
+		for (AbstractFulfilledObligation o : obls) {
 			if (o.getEvaluatedOn().toString().equals(d.getDecision().toString()))
 				this.d.addObligation(o);
 		}

@@ -15,8 +15,9 @@ import it.unifi.facpl.lib.algorithm.FirstApplicable;
 import it.unifi.facpl.lib.algorithm.OnlyOneApplicable;
 import it.unifi.facpl.lib.algorithm.PermitOverridesGreedy;
 import it.unifi.facpl.lib.algorithm.PermitUnlessDeny;
+import it.unifi.facpl.lib.context.AbstractFulfilledObligation;
 import it.unifi.facpl.lib.context.AuthorisationPDP;
-import it.unifi.facpl.lib.context.FulfilledObligation;
+import it.unifi.facpl.lib.context.FullfilledObbligation;
 import it.unifi.facpl.lib.enums.Effect;
 import it.unifi.facpl.lib.enums.ExtendedDecision;
 import it.unifi.facpl.lib.enums.ObligationType;
@@ -34,8 +35,8 @@ public class CombiningAlgObligation {
 
 	static private Integer nList = 10;
 
-	private FulfilledObligation o1, o2, o3, o4;
-	private LinkedList<FulfilledObligation> obl_allPermit, obl_allDeny,
+	private AbstractFulfilledObligation o1, o2, o3, o4;
+	private LinkedList<AbstractFulfilledObligation> obl_allPermit, obl_allDeny,
 			obl_various, obl_allAdvice;
 
 	private IEvaluableAlgorithm alg;
@@ -48,30 +49,30 @@ public class CombiningAlgObligation {
 	@Before
 	public void setUp() {
 		// obligation
-		o1 = new FulfilledObligation(Effect.PERMIT, ObligationType.M, "mailTo");
+		o1 = new FullfilledObbligation(Effect.PERMIT, ObligationType.M, "mailTo");
 
-		o2 = new FulfilledObligation(Effect.DENY, ObligationType.M, "mailTo");
+		o2 = new FullfilledObbligation(Effect.DENY, ObligationType.M, "mailTo");
 
-		o3 = new FulfilledObligation(Effect.PERMIT, ObligationType.O, "mailTo");
+		o3 = new FullfilledObbligation(Effect.PERMIT, ObligationType.O, "mailTo");
 
-		o4 = new FulfilledObligation(Effect.DENY, ObligationType.O, "mailTo");
+		o4 = new FullfilledObbligation(Effect.DENY, ObligationType.O, "mailTo");
 
 		// create obligation lists
-		obl_allPermit = new LinkedList<FulfilledObligation>();
+		obl_allPermit = new LinkedList<AbstractFulfilledObligation>();
 		obl_allPermit.add(o1);
 		obl_allPermit.add(o1);
 		obl_allPermit.add(o1);
 
-		obl_allDeny = new LinkedList<FulfilledObligation>();
+		obl_allDeny = new LinkedList<AbstractFulfilledObligation>();
 		obl_allDeny.add(o2);
 		obl_allDeny.add(o2);
 		obl_allDeny.add(o2);
 
-		obl_various = new LinkedList<FulfilledObligation>();
+		obl_various = new LinkedList<AbstractFulfilledObligation>();
 		obl_various.add(o1);
 		obl_various.add(o2);
 
-		obl_allAdvice = new LinkedList<FulfilledObligation>();
+		obl_allAdvice = new LinkedList<AbstractFulfilledObligation>();
 		obl_allAdvice.add(o3);
 		obl_allAdvice.add(o4);
 

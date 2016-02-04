@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import it.unifi.facpl.lib.context.AuthorisationPDP;
 import it.unifi.facpl.lib.context.ContextRequest;
-import it.unifi.facpl.lib.context.FulfilledObligation;
+import it.unifi.facpl.lib.context.AbstractFulfilledObligation;
 import it.unifi.facpl.lib.enums.ExtendedDecision;
 import it.unifi.facpl.lib.interfaces.IEvaluableAlgorithm;
 import it.unifi.facpl.lib.interfaces.IEvaluablePolicy;
@@ -29,7 +29,7 @@ public class PermitUnlessDenyGreedy implements IEvaluableAlgorithm{
 		Logger l = LoggerFactory.getLogger(PermitUnlessDenyGreedy.class);
 		l.debug("-> PERMIT UNLESS DENY-GREEDY started");
 		
-		LinkedList<FulfilledObligation> obls_permit = new LinkedList<FulfilledObligation>();
+		LinkedList<AbstractFulfilledObligation> obls_permit = new LinkedList<AbstractFulfilledObligation>();
 		
 		AuthorisationPDP dr = new AuthorisationPDP();
 		for (IEvaluablePolicy el : elements) {

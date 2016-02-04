@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import it.unifi.facpl.lib.context.AuthorisationPDP;
 import it.unifi.facpl.lib.context.ContextRequest;
-import it.unifi.facpl.lib.context.FulfilledObligation;
+import it.unifi.facpl.lib.context.AbstractFulfilledObligation;
 import it.unifi.facpl.lib.enums.ExtendedDecision;
 import it.unifi.facpl.lib.interfaces.IEvaluableAlgorithm;
 import it.unifi.facpl.lib.interfaces.IEvaluablePolicy;
@@ -27,7 +27,7 @@ public class DenyUnlessPermit implements IEvaluableAlgorithm {
 		Logger l = LoggerFactory.getLogger(DenyUnlessPermit.class);
 		l.debug("-> DENY UNLESS PERMIT started");
 
-		LinkedList<FulfilledObligation> obls_deny = new LinkedList<FulfilledObligation>();
+		LinkedList<AbstractFulfilledObligation> obls_deny = new LinkedList<AbstractFulfilledObligation>();
 
 		Boolean atLeastOnePermit = false;
 

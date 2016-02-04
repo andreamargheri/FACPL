@@ -16,22 +16,22 @@ public class AuthorisationPDP {
 	private String id;
 
 	private ExtendedDecision decision;
-	private LinkedList<FulfilledObligation> obligation;
+	private LinkedList<AbstractFulfilledObligation> obligation;
 
 	// Constructors
 
 	public AuthorisationPDP() {
-		this.obligation = new LinkedList<FulfilledObligation>();
+		this.obligation = new LinkedList<AbstractFulfilledObligation>();
 	}
 
-	public AuthorisationPDP(ExtendedDecision decision, LinkedList<FulfilledObligation> obligations) {
+	public AuthorisationPDP(ExtendedDecision decision, LinkedList<AbstractFulfilledObligation> obligations) {
 		this.decision = decision;
 		this.obligation = obligations;
 	}
 
 	public AuthorisationPDP(ExtendedDecision decision) {
 		this.decision = decision;
-		this.obligation = new LinkedList<FulfilledObligation>();
+		this.obligation = new LinkedList<AbstractFulfilledObligation>();
 	}
 
 	// DECISION
@@ -67,21 +67,21 @@ public class AuthorisationPDP {
 
 	// OBLIGATION
 
-	public void addObligation(FulfilledObligation obligation) {
+	public void addObligation(AbstractFulfilledObligation obligation) {
 		if (this.obligation == null) {
-			this.obligation = new LinkedList<FulfilledObligation>();
+			this.obligation = new LinkedList<AbstractFulfilledObligation>();
 		}
 		this.obligation.add(obligation);
 	}
 
-	public void addObligation(List<FulfilledObligation> obligation) {
+	public void addObligation(List<AbstractFulfilledObligation> obligation) {
 		if (this.obligation == null) {
-			this.obligation = new LinkedList<FulfilledObligation>();
+			this.obligation = new LinkedList<AbstractFulfilledObligation>();
 		}
 		this.obligation.addAll(obligation);
 	}
 
-	public void setObligation(LinkedList<FulfilledObligation> obligations) {
+	public void setObligation(LinkedList<AbstractFulfilledObligation> obligations) {
 		this.obligation = obligations;
 	}
 
@@ -89,7 +89,7 @@ public class AuthorisationPDP {
 		this.obligation.clear();
 	}
 
-	public LinkedList<FulfilledObligation> getObligation() {
+	public LinkedList<AbstractFulfilledObligation> getObligation() {
 		return obligation;
 	}
 
@@ -109,7 +109,7 @@ public class AuthorisationPDP {
 		text.append("Decision: " + decision.toString() + " ");
 		text.append("Obligations: ");
 		if (obligation != null) {
-			for (FulfilledObligation obl : obligation) {
+			for (AbstractFulfilledObligation obl : obligation) {
 				text.append(obl.toString());
 			}
 		}else{

@@ -1,7 +1,7 @@
 package it.unifi.facpl.lib.interfaces;
 
 import it.unifi.facpl.lib.context.ContextRequest;
-import it.unifi.facpl.lib.context.FulfilledObligation;
+import it.unifi.facpl.lib.context.AbstractFulfilledObligation;
 
 /**
  * Evaluation method for obligation
@@ -10,6 +10,6 @@ import it.unifi.facpl.lib.context.FulfilledObligation;
  */
 public interface IObligationElement {
 
-	FulfilledObligation getObligationValue(ContextRequest cxtRequest) throws Throwable;
+	AbstractFulfilledObligation getObligationValue(ContextRequest cxtRequest) throws Throwable;
 
 }
