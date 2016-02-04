@@ -8,11 +8,11 @@ import it.unifi.facpl.system.status.StatusAttribute;
 public class NumberArithmeticEvaluatorStatus  implements ArithmeticEvaluatorStatus{
 
 	private static NumberArithmeticEvaluatorStatus instance; 
-	
+
 	private NumberArithmeticEvaluatorStatus(){
-		
+
 	}
-	
+
 	public static NumberArithmeticEvaluatorStatus getInstance(){
 		if (instance == null){
 			instance = new NumberArithmeticEvaluatorStatus();
@@ -93,14 +93,14 @@ public class NumberArithmeticEvaluatorStatus  implements ArithmeticEvaluatorStat
 		if (o1.getType() == FacplStatusType.BOOLEAN && o2 instanceof Boolean )  {
 			Boolean newValue = (Boolean)o2;
 			o1.setValue(newValue.toString());
-			
+
 		}
 		else {
 			throw new UnsupportedTypeException("Boolean", "Flag");
 		}
-		
+
 	}
-	
+
 
 
 

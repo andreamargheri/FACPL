@@ -12,7 +12,7 @@ public class ArithmeticEvaluatorFactoryStatus {
 
 	private ArithmeticEvaluatorFactoryStatus() {
 		this.table = new HashMap<Class<?>, ArithmeticEvaluatorStatus>();
-		
+
 		//initialisation
 		this.table.put(Integer.class, NumberArithmeticEvaluatorStatus.getInstance());
 		this.table.put(Double.class, NumberArithmeticEvaluatorStatus.getInstance());

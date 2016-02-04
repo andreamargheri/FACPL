@@ -8,11 +8,11 @@ import it.unifi.facpl.lib.util.exception.UnsupportedTypeException;
 public class NumberComparisonEvaluator implements IComparisonEvaluator {
 
 	private static NumberComparisonEvaluator instance; 
-	
+
 	private NumberComparisonEvaluator(){
-		
+
 	}
-	
+
 	public static NumberComparisonEvaluator getInstance(){
 		if (instance == null){
 			instance = new NumberComparisonEvaluator();
@@ -127,6 +127,6 @@ public class NumberComparisonEvaluator implements IComparisonEvaluator {
 
 	}
 
-	
+
 
 }
