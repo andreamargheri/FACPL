@@ -15,8 +15,12 @@ public abstract class AbstractFulfilledObligation {
 	protected Effect evaluatedOn;
 	protected ObligationType type;
 	protected LinkedList<Object> arguments;
-	private String pepAction;
-	
+	private String pepAction; //dare un tipo a questo
+	/*
+	 * questa e' l'obbligation valutata astratta
+	 * bisogna differenziare tra obbligation fullfilled di stato e obbligation fullfilled NON di stato
+	 * implementare il metodo evaluateObl()
+	 */
 	
 	public AbstractFulfilledObligation(Effect effect, ObligationType typeObl, String pepAction) {
 		this.type = typeObl;

@@ -3,14 +3,14 @@ package it.unifi.facpl.system.status;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Status {
+public class FacplStatus {
 	
 	private List<StatusAttribute> attributeList;
 	private String id;
 	/**
 	 * @param id
 	 */
-	public Status(String id) {
+	public FacplStatus(String id) {
 		attributeList = new ArrayList<StatusAttribute>();
 		this.id = id;
 	}
@@ -19,7 +19,7 @@ public class Status {
 	 * @param attributeList
 	 * @param id
 	 */
-	public Status(List<StatusAttribute> attributeList, String id) {
+	public FacplStatus(List<StatusAttribute> attributeList, String id) {
 		this.attributeList = attributeList;
 		this.id = id;
 	}

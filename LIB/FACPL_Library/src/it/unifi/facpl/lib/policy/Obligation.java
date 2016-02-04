@@ -26,6 +26,12 @@ public class Obligation implements IObligationElement{
 	private Effect evaluatedOn;
 
 	private ObligationType typeObl;
+	/*
+	 * aggiungere un tipo: [enum]
+	 * 1: obbligation di stato
+	 * 2: obbligation non di stato
+	 * cambia la valutazione
+	 */
 
 	private String pepFunction;
 

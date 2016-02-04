@@ -7,13 +7,14 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import it.unifi.facpl.lib.context.AbstractFulfilledObligation;
 import it.unifi.facpl.lib.context.AuthorisationPDP;
 import it.unifi.facpl.lib.context.AuthorisationPEP;
-import it.unifi.facpl.lib.context.AbstractFulfilledObligation;
 import it.unifi.facpl.lib.enums.EnforcementAlgorithm;
 import it.unifi.facpl.lib.enums.ObligationType;
 import it.unifi.facpl.lib.enums.StandardDecision;
 import it.unifi.facpl.lib.interfaces.IPepAction;
+import it.unifi.facpl.system.status.FacplStatus;
 
 /**
  * 
@@ -26,10 +27,17 @@ public class PEP {
 	private static HashMap<String, Class<? extends IPepAction>> pepAction;
 
 	private EnforcementAlgorithm alg;
-
+	private FacplStatus status;
 	public PEP(EnforcementAlgorithm alg) {
 		this.alg = alg;
+		this.status = new FacplStatus("status");
 	}
+	public PEP(EnforcementAlgorithm alg, FacplStatus status) {
+		this.alg = alg;
+		this.status = status;
+		
+	}
+
 
 	public AuthorisationPEP doEnforcement(AuthorisationPDP authPDP) {
 
