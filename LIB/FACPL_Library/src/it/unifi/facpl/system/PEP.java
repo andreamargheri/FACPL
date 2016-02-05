@@ -28,7 +28,7 @@ public class PEP {
 
 	private EnforcementAlgorithm alg;
 	private FacplStatus status;
-	
+	//implementare lo stato
 	public PEP(EnforcementAlgorithm alg) {
 		this.alg = alg;
 		this.status = new FacplStatus("status");
@@ -154,12 +154,12 @@ public class PEP {
 		try {
 			// discharge obligation
 			// retrieve pepActionClass
-			Class<? extends IPepAction> classAction = pepAction.get(obl.getPepAction());
+			Class<? extends IPepAction> classAction = pepAction.get((String)obl.getPepAction());
 
 			if (classAction == null) {
-				l.debug("Undefined PEP action \"" + obl.getPepAction() + "\"");
+				l.debug("Undefined PEP action \"" + (String)obl.getPepAction() + "\"");
 
-				throw new Exception("Undefined " + obl.getPepAction() + " PEP Action");
+				throw new Exception("Undefined " + (String)obl.getPepAction() + " PEP Action");
 			}
 
 			Class<?> params[] = new Class[1];
@@ -181,10 +181,10 @@ public class PEP {
 			l.debug("Exception ignored. Obligation is optional");
 		}
 	}
-
+	
 	public void addPEPActions(HashMap<String, Class<? extends IPepAction>> classPepActions) {
 		Logger l = LoggerFactory.getLogger(PEP.class);
-		l.debug("Add standard actions");
+		l.debug("Add standard actions"); //stile factory delle funzioni
 
 		pepAction = new HashMap<String, Class<? extends IPepAction>>();
 		pepAction.put("mail", it.unifi.facpl.lib.pepFunction.MailTo.class);

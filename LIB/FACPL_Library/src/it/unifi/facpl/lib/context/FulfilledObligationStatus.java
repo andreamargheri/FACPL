@@ -14,11 +14,11 @@ import it.unifi.facpl.system.status.function.arithmetic.evaluator.IExpressionFun
  */
 public class FulfilledObligationStatus extends AbstractFulfilledObligation {
 
+	private IExpressionFunctionStatus pepFunction;
 	
-	
-	
-	public FulfilledObligationStatus(Effect effect, ObligationType typeObl, IExpressionFunctionStatus pepAction) {
-		super(effect, typeObl, pepAction);
+	public FulfilledObligationStatus(Effect effect, ObligationType typeObl, IExpressionFunctionStatus pepFunction) {
+		super(effect, typeObl);
+		this.pepFunction = pepFunction;
 	}
 	
 
@@ -26,6 +26,16 @@ public class FulfilledObligationStatus extends AbstractFulfilledObligation {
 	public AbstractFulfilledObligation evaluateObl() throws Throwable {
 		this.pepFunction.evaluateFunction(this.getArgsStatus()); 
 		return this;
+	}
+	@Override
+	public String toString() {
+		return evaluatedOn + " " + type.toString() + " " + pepFunction.toString() + "(" + arguments.toString() + ")";
+	}
+
+
+	@Override
+	public Object getPepAction() {
+		return this.pepFunction;
 	}
 
 

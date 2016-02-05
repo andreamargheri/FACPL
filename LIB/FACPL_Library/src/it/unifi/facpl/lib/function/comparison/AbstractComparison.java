@@ -17,24 +17,15 @@ public abstract class AbstractComparison  implements IComparisonFunction {
 
 	@Override
 	public Boolean evaluateFunction(List<Object> args) throws Throwable {
-		/* 
-		 * potrebbe essere un'idea riutilizzare la struttura gia' presente
-		 * estraendo dagli attributi i valori che ci servono e facendoli comparare come prima
-		 * [DA CHIEDERE]
-		 */
+
 		if (args.size() == 2){
 			Object o1, o2;
 			o1 = args.get(0) instanceof StatusAttribute? 
 					this.convertType((StatusAttribute)args.get(0)): args.get(0);
-					o2 = args.get(1) instanceof StatusAttribute? 
-							this.convertType((StatusAttribute)args.get(1)): args.get(1);
-
-							/*
-							 * NEL CASO IL VALORE SIA RICAVATO DA UNO STATUS ATTRIBUTE E' UNA STRINGA, QUINDI ANDREBBE FATTO UN CONTROLLO 
-							 * ED EVENTUALMENTE UN CAST
-							 */
-							IComparisonEvaluator evaluator = ComparisonEvaluatorFactory.getInstance().getEvaluator(o1);
-							return op(evaluator, o1, o2);
+			o2 = args.get(1) instanceof StatusAttribute? 
+					this.convertType((StatusAttribute)args.get(1)): args.get(1);
+			IComparisonEvaluator evaluator = ComparisonEvaluatorFactory.getInstance().getEvaluator(o1);
+			return op(evaluator, o1, o2);
 
 		}
 		else

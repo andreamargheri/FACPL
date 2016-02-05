@@ -15,8 +15,6 @@ public abstract class AbstractFulfilledObligation {
 	protected Effect evaluatedOn;
 	protected ObligationType type;
 	protected LinkedList<Object> arguments;
-	protected IExpressionFunctionStatus pepFunction;
-	protected String pepAction;
 	protected LinkedList<Object> argsStatus;
 	/*
 	 * questa e' l'obbligation valutata astratta bisogna differenziare tra
@@ -24,19 +22,13 @@ public abstract class AbstractFulfilledObligation {
 	 * implementare il metodo evaluateObl()
 	 */
 
-	public AbstractFulfilledObligation(Effect effect, ObligationType typeObl, IExpressionFunctionStatus pepAction) {
+	public AbstractFulfilledObligation(Effect effect, ObligationType typeObl) {
 		this.type = typeObl;
 		this.evaluatedOn = effect;
-		this.pepFunction = pepAction;
 		this.arguments = new LinkedList<Object>();
 	}
 
-	public AbstractFulfilledObligation(Effect effect, ObligationType typeObl, String pepAction) {
-		this.type = typeObl;
-		this.evaluatedOn = effect;
-		this.pepAction = pepAction;
-		this.arguments = new LinkedList<Object>();
-	}
+
 
 	public AbstractFulfilledObligation() {
 
@@ -64,9 +56,7 @@ public abstract class AbstractFulfilledObligation {
 		return type;
 	}
 
-	public IExpressionFunctionStatus getPepAction() {
-		return pepFunction;
-	}
+	public abstract Object getPepAction();
 
 	public LinkedList<Object> getArguments() {
 		return arguments;
@@ -76,10 +66,6 @@ public abstract class AbstractFulfilledObligation {
 		return argsStatus;
 	}
 
-	@Override
-	public String toString() {
-		return evaluatedOn + " " + type.toString() + " " + pepFunction.toString() + "(" + arguments.toString() + ")";
-	}
 
 	/**
 	 * Eval by PEP
