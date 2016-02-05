@@ -5,7 +5,6 @@
 // Generated on: 2013.01.22 at 04:37:38 PM CET 
 //
 
-
 package it.unifi.jaxb.xacml.lib;
 
 import java.util.ArrayList;
@@ -16,11 +15,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for AllOfType complex type.
+ * <p>
+ * Java class for AllOfType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="AllOfType">
@@ -37,41 +38,40 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "AllOfType", propOrder = {
-    "match"
-})
+@XmlType(name = "AllOfType", propOrder = { "match" })
 public class AllOfType {
 
-    @XmlElement(name = "Match", required = true)
-    protected List<MatchType> match;
+	@XmlElement(name = "Match", required = true)
+	protected List<MatchType> match;
 
-    /**
-     * Gets the value of the match property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the match property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getMatch().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link MatchType }
-     * 
-     * 
-     */
-    public List<MatchType> getMatch() {
-        if (match == null) {
-            match = new ArrayList<MatchType>();
-        }
-        return this.match;
-    }
+	/**
+	 * Gets the value of the match property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a
+	 * snapshot. Therefore any modification you make to the returned list will
+	 * be present inside the JAXB object. This is why there is not a
+	 * <CODE>set</CODE> method for the match property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * 
+	 * <pre>
+	 * getMatch().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link MatchType
+	 * }
+	 * 
+	 * 
+	 */
+	public List<MatchType> getMatch() {
+		if (match == null) {
+			match = new ArrayList<MatchType>();
+		}
+		return this.match;
+	}
 
 }

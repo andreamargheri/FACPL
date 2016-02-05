@@ -19,7 +19,6 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.xtext.builder.EclipseResourceFileSystemAccess2;
 import org.eclipse.xtext.generator.IFileSystemAccess;
@@ -67,19 +66,16 @@ public class XMLCommand extends AbstractHandler implements IHandler {
 				IFolder srcGenFolder = project.getFolder("src-xml");
 				if (!srcGenFolder.exists()) {
 					try {
-						srcGenFolder.create(true, true,
-								new NullProgressMonitor());
+						srcGenFolder.create(true, true, new NullProgressMonitor());
 					} catch (CoreException e) {
 						e.printStackTrace();
 					}
 				}
 
-				final EclipseResourceFileSystemAccess2 fsa = fileAccessProvider
-						.get();
+				final EclipseResourceFileSystemAccess2 fsa = fileAccessProvider.get();
 
 				// OUTPUTConfiguration
-				OutputConfiguration onceOutput = new OutputConfiguration(
-						IFileSystemAccess.DEFAULT_OUTPUT);
+				OutputConfiguration onceOutput = new OutputConfiguration(IFileSystemAccess.DEFAULT_OUTPUT);
 				onceOutput.setDescription("Output Folder");
 				onceOutput.setOutputDirectory("./src-xml");
 				onceOutput.setOverrideExistingResources(true);
@@ -94,8 +90,7 @@ public class XMLCommand extends AbstractHandler implements IHandler {
 				fsa.setMonitor(new NullProgressMonitor());
 				fsa.setProject(project);
 
-				URI uri = URI.createPlatformResourceURI(file.getFullPath()
-						.toString(), true);
+				URI uri = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
 				ResourceSet rs = resourceSetProvider.get(project);
 				Resource r = rs.getResource(uri, true);
 
@@ -110,12 +105,10 @@ public class XMLCommand extends AbstractHandler implements IHandler {
 
 						if (((Facpl) e).getPolicies() != null) {
 							for (PolicySet p : ((Facpl) e).getPolicies()) {
-								if (xacml_val.isXACML_FormedPolicy(p).equals(
-										true)) {
+								if (xacml_val.isXACML_FormedPolicy(p).equals(true)) {
 									generator.doGenerateFileXACML_Pol(p, fsa);
 								} else {
-									str.append("Policy "
-											+ p.getName()
+									str.append("Policy " + p.getName()
 											+ " does not respect the restriction for the generation of XACML code! Check FACPL's Guide\n");
 								}
 							}
@@ -127,18 +120,12 @@ public class XMLCommand extends AbstractHandler implements IHandler {
 						}
 						if (((Facpl) e).getMain() != null) {
 							if (((Facpl) e).getMain().getPaf() != null) {
-								for (AbstractPolicyIncl p : ((Facpl) e)
-										.getMain().getPaf().getPdp()
-										.getPolSet()) {
+								for (AbstractPolicyIncl p : ((Facpl) e).getMain().getPaf().getPdp().getPolSet()) {
 									if (p.getNewPolicy() != null) {
-										if (xacml_val.isXACML_FormedPolicy(
-												p.getNewPolicy()).equals(true)) {
-											generator.doGenerateFileXACML_Pol(
-													p.getNewPolicy(), fsa);
+										if (xacml_val.isXACML_FormedPolicy(p.getNewPolicy()).equals(true)) {
+											generator.doGenerateFileXACML_Pol(p.getNewPolicy(), fsa);
 										} else {
-											str.append("Policy '"
-													+ p.getNewPolicy()
-															.getName()
+											str.append("Policy '" + p.getNewPolicy().getName()
 													+ "' does not respect the restriction for the generation of XACML code!\n");
 										}
 									}
@@ -152,13 +139,11 @@ public class XMLCommand extends AbstractHandler implements IHandler {
 				if (str.toString().equals("")) {
 					// All elements compiled successfully
 
-					MessageDialog.openInformation(activeShell,
-							"Generate XACML", "All XACML files generated!");
+					MessageDialog.openInformation(activeShell, "Generate XACML", "All XACML files generated!");
 
 				} else {
 					// Some elements not compiled successfully
-					MessageDialog.openWarning(activeShell, "Generate XACML",
-							str.toString() + "\n Check FACPL's Guide");
+					MessageDialog.openWarning(activeShell, "Generate XACML", str.toString() + "\n Check FACPL's Guide");
 				}
 
 			}

@@ -1,93 +1,65 @@
-package it.unifi.xtext.facpl.generator
+package it.unifi.xtext.facpl.generator.generators
 
-import org.eclipse.xtext.generator.IFileSystemAccess
-import it.unifi.xtext.facpl.facpl2.Facpl
-import it.unifi.xtext.facpl.facpl2.PolicySet
-import it.unifi.xtext.facpl.facpl2.Expression
-import it.unifi.xtext.facpl.facpl2.Obligation
-import java.util.List
 import it.unifi.xtext.facpl.facpl2.AbstractPolicyIncl
+import it.unifi.xtext.facpl.facpl2.AndExpression
+import it.unifi.xtext.facpl.facpl2.AttributeName
+import it.unifi.xtext.facpl.facpl2.BooleanLiteral
+import it.unifi.xtext.facpl.facpl2.DateLiteral
+import it.unifi.xtext.facpl.facpl2.DeclaredFunction
+import it.unifi.xtext.facpl.facpl2.DoubleLiteral
+import it.unifi.xtext.facpl.facpl2.Effect
+import it.unifi.xtext.facpl.facpl2.Expression
+import it.unifi.xtext.facpl.facpl2.FacplPolicy
+import it.unifi.xtext.facpl.facpl2.Function
+import it.unifi.xtext.facpl.facpl2.FunctionDeclaration
+import it.unifi.xtext.facpl.facpl2.IntLiteral
+import it.unifi.xtext.facpl.facpl2.NotExpression
+import it.unifi.xtext.facpl.facpl2.Obligation
+import it.unifi.xtext.facpl.facpl2.OrExpression
+import it.unifi.xtext.facpl.facpl2.PolicySet
 import it.unifi.xtext.facpl.facpl2.Rule
+import it.unifi.xtext.facpl.facpl2.Set
+import it.unifi.xtext.facpl.facpl2.StringLiteral
+import it.unifi.xtext.facpl.facpl2.TimeLiteral
+import it.unifi.xtext.facpl.facpl2.funID
+import it.unifi.xtext.facpl.generator.generators.smt.algorithms.SMT_LIBGenerator_DenyOver
+import it.unifi.xtext.facpl.generator.generators.smt.algorithms.SMT_LIBGenerator_DenyUnless
+import it.unifi.xtext.facpl.generator.generators.smt.algorithms.SMT_LIBGenerator_FirstApp
+import it.unifi.xtext.facpl.generator.generators.smt.algorithms.SMT_LIBGenerator_OneApp
+import it.unifi.xtext.facpl.generator.generators.smt.algorithms.SMT_LIBGenerator_PermitOver
+import it.unifi.xtext.facpl.generator.generators.smt.algorithms.SMT_LIBGenerator_PermitUnless
+import it.unifi.xtext.facpl.generator.generators.smt.algorithms.SMT_LIBGenerator_StrongCon
+import it.unifi.xtext.facpl.generator.generators.smt.algorithms.SMT_LIBGenerator_WeakCon
+import it.unifi.xtext.facpl.generator.util.ConstraintConstant
+import it.unifi.xtext.facpl.generator.util.SetUtils
 import it.unifi.xtext.facpl.validation.FacplType
 import it.unifi.xtext.facpl.validation.inference.FacplTypeInference
 import it.unifi.xtext.facpl.validation.inference.SubstitutionSet
-import it.unifi.xtext.facpl.generator.util.PolicyConstant
-import it.unifi.xtext.facpl.generator.util.ConstraintConstant
-import java.util.LinkedList
-import it.unifi.xtext.facpl.generator.generators.Z3Generator_Functions
-import it.unifi.xtext.facpl.facpl2.AndExpression
-import it.unifi.xtext.facpl.facpl2.OrExpression
-import it.unifi.xtext.facpl.facpl2.NotExpression
-import it.unifi.xtext.facpl.facpl2.BooleanLiteral
 import java.util.HashMap
-import it.unifi.xtext.facpl.facpl2.AttributeName
-import it.unifi.xtext.facpl.facpl2.IntLiteral
-import it.unifi.xtext.facpl.facpl2.StringLiteral
-import it.unifi.xtext.facpl.facpl2.TimeLiteral
-import it.unifi.xtext.facpl.facpl2.DateLiteral
-import it.unifi.xtext.facpl.facpl2.Set
-import it.unifi.xtext.facpl.facpl2.Function
-import it.unifi.xtext.facpl.facpl2.funID
-import it.unifi.xtext.facpl.facpl2.DoubleLiteral
-import it.unifi.xtext.facpl.facpl2.Effect
-import it.unifi.xtext.facpl.generator.generators.z3algorithms.Z3Generator_PermitOver
-import it.unifi.xtext.facpl.generator.generators.z3algorithms.Z3Generator_DenyUnless
-import it.unifi.xtext.facpl.generator.generators.z3algorithms.Z3Generator_PermitUnless
-import it.unifi.xtext.facpl.generator.generators.z3algorithms.Z3Generator_DenyOver
-import it.unifi.xtext.facpl.generator.generators.z3algorithms.Z3Generator_FirstApp
-import it.unifi.xtext.facpl.generator.generators.z3algorithms.Z3Generator_OneApp
-import it.unifi.xtext.facpl.generator.generators.z3algorithms.Z3Generator_WeakCon
-import it.unifi.xtext.facpl.generator.generators.z3algorithms.Z3Generator_StrongCon
-import it.unifi.xtext.facpl.facpl2.DeclaredFunction
-import it.unifi.xtext.facpl.facpl2.FunctionDeclaration
-import it.unifi.xtext.facpl.generator.util.SetUtils
-import it.unifi.xtext.facpl.facpl2.FacplPolicy
+import java.util.LinkedList
+import java.util.List
+import it.unifi.xtext.facpl.generator.util.PolicyConstant
+import it.unifi.xtext.facpl.facpl2.Facpl
 
-class Z3Generator {
+class SMT_LIBGenerator_Code {
 
 	// Typing assertions for Attributes
-	private SubstitutionSet attribute_Types;
+	protected SubstitutionSet attribute_Types;
 
 	// Declared Constants
-	private HashMap<String,ConstraintConstant> constants
-	private HashMap<String,String> sets
+	protected HashMap<String,ConstraintConstant> constants
+	protected HashMap<String,String> sets
 
 	// String Enumerations
-	private LinkedList<String> stringEls
+	protected LinkedList<String> stringEls
 	
 	//TypeInference
-	private FacplTypeInference tInf
+	protected FacplTypeInference tInf
 	
 	//DeclaredFunction 
-	private StringBuffer dec_functions
-	private Boolean flag = false //if declared function occurs
-	
-	/**
-	 * EntryPoint for menu command
-	 */
-	def void doGenerateFileZ3(Facpl resource, IFileSystemAccess fsa) throws Exception{
+	protected StringBuffer dec_functions
+	protected Boolean flag = false //if declared function occurs
 
-		/* Type checks + Initialization of constants and various */
-		initialiseFacplResource(resource)
-	
-		/* Compiling policies */
-		if (resource.getPolicies != null) {
-			for (pol : resource.getPolicies) {
-				fsa.generateFile(pol.getName + ".smt2", createMainConstraint(pol));
-			}
-		}
-		if (resource.main != null){
-			if (resource.main.paf.pdp != null){
-				for (pol : resource.main.paf.pdp.polSet){
-					if (pol.newPolicy != null){
-						fsa.generateFile(pol.newPolicy.getName + ".smt2", createMainConstraint(pol.newPolicy));
-					}
-					//Referred policies are not combined
-				}
-			}
-		}
-
-	}
 
 	def void initialiseFacplResource (Facpl resource) throws Exception{
 		
@@ -131,27 +103,7 @@ class Z3Generator {
 
 	}
 
-	/**
-	 * Stub for testing
-	 */
-	def String doGenerateZ3_Test(Facpl resource) throws Exception{
-
-		var StringBuffer str = new StringBuffer()
-		
-		/* Type checks + Initialization of constants and various */
-		initialiseFacplResource(resource)
-
-		/* Compiling Policies that are declared out from the brackets of the Main */
-		if (resource.getPolicies != null) {
-			for (pol : resource.getPolicies) {
-				str.append(createMainConstraint(pol))
-			}
-		}
-
-		return str.toString
-	}
 	
-
 /* ##############################################
  * General structure of the whole constraint file
  * ##############################################
@@ -162,7 +114,7 @@ def createMainConstraint(FacplPolicy pol) '''
 ;################### STRING DECLARATIONs #######################
 «getStringDec()»
 «ENDIF»
-«IF flag»
+«IF flag» 
 ;################### FUNCTIONS DECLARED BY POLICY (TO BE IMPLEMENTED) ##################
 ;#TODO: stub definitions for declared functions
 «dec_functions.toString»
@@ -214,15 +166,15 @@ def createMainConstraint(FacplPolicy pol) '''
  * Internal Rule/PolicySet 
  * ##############################################
  */
-def getPolicyConstr(AbstractPolicyIncl pol) throws Exception {
+def CharSequence getPolicyConstr(AbstractPolicyIncl pol) throws Exception {
 	if (pol.refPol != null) {
-		getInternalPolicyConstr(pol.refPol)
+		return getInternalPolicyConstr(pol.refPol)
 	} else if (pol.newPolicy != null) {
 	//	Generate the constraint of the internal policy (rule or policy set)
 		if (pol.newPolicy instanceof Rule) {
-			getInternalPolicyConstr(pol.newPolicy as Rule)
+			return getInternalPolicyConstr(pol.newPolicy as Rule)
 		} else if (pol.newPolicy instanceof PolicySet) {
-			getInternalPolicyConstr(pol.newPolicy as PolicySet)
+			return getInternalPolicyConstr(pol.newPolicy as PolicySet)
 		}
 	}
 }
@@ -332,14 +284,14 @@ def dispatch getInternalPolicyConstr(PolicySet pol)
 	 */	
 	def getCombiningAlgorithmConstr(PolicySet p) {
 		switch p.polSetAlg.idAlg{
-			case PERMIT_OVER : new Z3Generator_PermitOver().combine(p)
-			case DENY_OVER : new Z3Generator_DenyOver().combine(p)
-			case DENY_UNLESS : new Z3Generator_DenyUnless().combine(p)
-			case PERMIT_UNLESS : new Z3Generator_PermitUnless().combine(p)
-			case FIRST : new Z3Generator_FirstApp().combine(p) 
-			case ONLY_ONE : new Z3Generator_OneApp().combine(p)
-			case WEAK_CONS : new Z3Generator_WeakCon().combine(p)
-			case STRONG_CONS : new Z3Generator_StrongCon().combine(p)
+			case PERMIT_OVER : new SMT_LIBGenerator_PermitOver().combine(p)
+			case DENY_OVER : new SMT_LIBGenerator_DenyOver().combine(p)
+			case DENY_UNLESS : new SMT_LIBGenerator_DenyUnless().combine(p)
+			case PERMIT_UNLESS : new SMT_LIBGenerator_PermitUnless().combine(p)
+			case FIRST : new SMT_LIBGenerator_FirstApp().combine(p) 
+			case ONLY_ONE : new SMT_LIBGenerator_OneApp().combine(p)
+			case WEAK_CONS : new SMT_LIBGenerator_WeakCon().combine(p)
+			case STRONG_CONS : new SMT_LIBGenerator_StrongCon().combine(p)
 			 
 			default: {
 				
@@ -607,8 +559,8 @@ def getFinalConstrPSet(String p_name,FacplPolicy pol)'''
 
 	// Constraint Functions modeling FACPL
 	def getFunctionDec() '''
-	«Z3Generator_Functions::getBoolFunctions()»
-	«Z3Generator_Functions::getEqualityFunctions()»
+	«SMT_LIBGenerator_Functions::getBoolFunctions()»
+	«SMT_LIBGenerator_Functions::getEqualityFunctions()»
 	«IF this.stringEls.size > 0»
 	
 	(define-fun isValString ((x (TValue String))) Bool
@@ -647,9 +599,9 @@ def getFinalConstrPSet(String p_name,FacplPolicy pol)'''
 		)
 	)
 	«ENDIF»	
-	«Z3Generator_Functions::getIntFunctions()»
-	«Z3Generator_Functions::getRealFunctions()»
-	«Z3Generator_Functions::getSetFunctions()»
+	«SMT_LIBGenerator_Functions::getIntFunctions()»
+	«SMT_LIBGenerator_Functions::getRealFunctions()»
+	«SMT_LIBGenerator_Functions::getSetFunctions()»
 	'''
 	
 	//EXPRESSION 

@@ -51,10 +51,9 @@ public class XMLEditorCommand extends AbstractHandler implements IHandler {
 	private Provider<EclipseResourceFileSystemAccess2> fileAccessProvider;
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		 
+
 		Shell activeShell = HandlerUtil.getActiveShell(event);
-		
-		
+
 		IEditorPart activeEditor = HandlerUtil.getActiveEditor(event);
 		IFile file = (IFile) activeEditor.getEditorInput().getAdapter(IFile.class);
 		IProject project = file.getProject();
@@ -70,7 +69,7 @@ public class XMLEditorCommand extends AbstractHandler implements IHandler {
 
 		final EclipseResourceFileSystemAccess2 fsa = fileAccessProvider.get();
 
-		//OUTPUTConfiguration
+		// OUTPUTConfiguration
 		OutputConfiguration onceOutput = new OutputConfiguration(IFileSystemAccess.DEFAULT_OUTPUT);
 		onceOutput.setDescription("Output Folder");
 		onceOutput.setOutputDirectory("./src-xml");
@@ -79,7 +78,7 @@ public class XMLEditorCommand extends AbstractHandler implements IHandler {
 		onceOutput.setCleanUpDerivedResources(true);
 		onceOutput.setSetDerivedProperty(true);
 
-		Map<String,OutputConfiguration> output = new HashMap<String,OutputConfiguration>();
+		Map<String, OutputConfiguration> output = new HashMap<String, OutputConfiguration>();
 		output.put("DEFAULT_OUTPUT", onceOutput);
 		fsa.setOutputConfigurations(output);
 
@@ -89,58 +88,59 @@ public class XMLEditorCommand extends AbstractHandler implements IHandler {
 		URI uri = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
 		ResourceSet rs = resourceSetProvider.get(project);
 		Resource r = rs.getResource(uri, true);
- 
-		//Video text with info on compiled policies 
+
+		// Video text with info on compiled policies
 		StringBuffer str = new StringBuffer();
-		
-		//Test if well-formed for XACML translation
+
+		// Test if well-formed for XACML translation
 		Facpl2Xacml_Validator xacml_val = new Facpl2Xacml_Validator();
-		
-		for(Object e: r.getContents()) {
-			if (e instanceof Facpl){
-			
-				if (((Facpl) e).getPolicies() != null){
-					for (PolicySet p : ((Facpl) e).getPolicies()){
-						if (xacml_val.isXACML_FormedPolicy(p).equals(true)){
+
+		for (Object e : r.getContents()) {
+			if (e instanceof Facpl) {
+
+				if (((Facpl) e).getPolicies() != null) {
+					for (PolicySet p : ((Facpl) e).getPolicies()) {
+						if (xacml_val.isXACML_FormedPolicy(p).equals(true)) {
 							generator.doGenerateFileXACML_Pol(p, fsa);
-						}else {
-							str.append("Policy " + p.getName() + " does not respect the restriction for the generation of XACML code! Check FACPL's Guide\n");
+						} else {
+							str.append("Policy " + p.getName()
+									+ " does not respect the restriction for the generation of XACML code! Check FACPL's Guide\n");
 						}
 					}
 				}
-				if (((Facpl) e).getRequests() != null){
-					for (Request req : ((Facpl) e).getRequests()){
+				if (((Facpl) e).getRequests() != null) {
+					for (Request req : ((Facpl) e).getRequests()) {
 						generator.doGenerateFileXACML_Req(req, fsa);
 					}
 				}
-				if (((Facpl) e).getMain()!= null){
-					if (((Facpl) e).getMain().getPaf() != null){
-						for (AbstractPolicyIncl p : ((Facpl) e).getMain().getPaf().getPdp().getPolSet()){
-							if (p.getNewPolicy()!= null){
-								if (xacml_val.isXACML_FormedPolicy(p.getNewPolicy()).equals(true)){
+				if (((Facpl) e).getMain() != null) {
+					if (((Facpl) e).getMain().getPaf() != null) {
+						for (AbstractPolicyIncl p : ((Facpl) e).getMain().getPaf().getPdp().getPolSet()) {
+							if (p.getNewPolicy() != null) {
+								if (xacml_val.isXACML_FormedPolicy(p.getNewPolicy()).equals(true)) {
 									generator.doGenerateFileXACML_Pol(p.getNewPolicy(), fsa);
-								}else {
-									str.append("Policy '" + p.getNewPolicy().getName() + "' does not respect the restriction for the generation of XACML code!\n");
+								} else {
+									str.append("Policy '" + p.getNewPolicy().getName()
+											+ "' does not respect the restriction for the generation of XACML code!\n");
 								}
-							} 
-							//ref policy is not translated	
+							}
+							// ref policy is not translated
 						}
 					}
 				}
 			}
 		}
-		
-		if (str.toString().equals("")){
-			//All elements compiled successfully
-			
+
+		if (str.toString().equals("")) {
+			// All elements compiled successfully
+
 			MessageDialog.openInformation(activeShell, "Generate XACML", "All XACML files generated!");
-			
-		}else {
-			//Some elements not compiled successfully
+
+		} else {
+			// Some elements not compiled successfully
 			MessageDialog.openWarning(activeShell, "Generate XACML", str.toString() + "\n Check FACPL's Guide");
 		}
-		
-		
+
 		return null;
 	}
 

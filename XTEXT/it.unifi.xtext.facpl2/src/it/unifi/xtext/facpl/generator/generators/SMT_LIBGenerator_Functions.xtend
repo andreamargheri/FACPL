@@ -2,7 +2,7 @@ package it.unifi.xtext.facpl.generator.generators
 
 import it.unifi.xtext.facpl.facpl2.funID
 
-class Z3Generator_Functions {
+class SMT_LIBGenerator_Functions {
 	
 	def static getBoolFunctions() 
 	'''

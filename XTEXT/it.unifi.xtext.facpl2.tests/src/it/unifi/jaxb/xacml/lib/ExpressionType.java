@@ -5,7 +5,6 @@
 // Generated on: 2013.01.22 at 04:37:38 PM CET 
 //
 
-
 package it.unifi.jaxb.xacml.lib;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,11 +12,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for ExpressionType complex type.
+ * <p>
+ * Java class for ExpressionType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ExpressionType">
@@ -32,14 +33,8 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ExpressionType")
-@XmlSeeAlso({
-    AttributeDesignatorType.class,
-    VariableReferenceType.class,
-    ApplyType.class,
-    FunctionType.class,
-    AttributeSelectorType.class
-})
+@XmlSeeAlso({ AttributeDesignatorType.class, VariableReferenceType.class, ApplyType.class, FunctionType.class,
+		AttributeSelectorType.class })
 public abstract class ExpressionType {
-
 
 }

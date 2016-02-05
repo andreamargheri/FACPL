@@ -73,15 +73,7 @@ class Facpl2Generator implements IGenerator {
 					//name package for java class
 					packageName = packageFolder.replace("/",".")
 					packageName = packageName.substring(0,packageName.length-1) + ';'
-				}else{
-					//no main declaration (the following is needed because the variable is static)
-					packageName = ""
-					packageFolder = ""
 				}
-			}else{
-				//no main declaration (following is needed because the variable is static)
-				packageName = ""
-				packageFolder = ""
 			}
 					 
 			/* Compiling Requests */

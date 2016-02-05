@@ -5,7 +5,6 @@
 // Generated on: 2013.01.22 at 04:37:38 PM CET 
 //
 
-
 package it.unifi.jaxb.xacml.lib;
 
 import java.util.ArrayList;
@@ -17,9 +16,12 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- * <p>Java class for AnyOfType complex type.
+ * <p>
+ * Java class for AnyOfType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="AnyOfType">
@@ -36,41 +38,40 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "AnyOfType", propOrder = {
-    "allOf"
-})
+@XmlType(name = "AnyOfType", propOrder = { "allOf" })
 public class AnyOfType {
 
-    @XmlElement(name = "AllOf", required = true)
-    protected List<AllOfType> allOf;
+	@XmlElement(name = "AllOf", required = true)
+	protected List<AllOfType> allOf;
 
-    /**
-     * Gets the value of the allOf property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the allOf property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getAllOf().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link AllOfType }
-     * 
-     * 
-     */
-    public List<AllOfType> getAllOf() {
-        if (allOf == null) {
-            allOf = new ArrayList<AllOfType>();
-        }
-        return this.allOf;
-    }
+	/**
+	 * Gets the value of the allOf property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a
+	 * snapshot. Therefore any modification you make to the returned list will
+	 * be present inside the JAXB object. This is why there is not a
+	 * <CODE>set</CODE> method for the allOf property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * 
+	 * <pre>
+	 * getAllOf().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link AllOfType
+	 * }
+	 * 
+	 * 
+	 */
+	public List<AllOfType> getAllOf() {
+		if (allOf == null) {
+			allOf = new ArrayList<AllOfType>();
+		}
+		return this.allOf;
+	}
 
 }

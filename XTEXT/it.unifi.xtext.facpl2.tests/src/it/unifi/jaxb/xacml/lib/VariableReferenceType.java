@@ -5,7 +5,6 @@
 // Generated on: 2013.01.22 at 04:37:38 PM CET 
 //
 
-
 package it.unifi.jaxb.xacml.lib;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,9 +13,12 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- * <p>Java class for VariableReferenceType complex type.
+ * <p>
+ * Java class for VariableReferenceType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="VariableReferenceType">
@@ -32,35 +34,30 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "VariableReferenceType")
-public class VariableReferenceType
-    extends ExpressionType
-{
+public class VariableReferenceType extends ExpressionType {
 
-    @XmlAttribute(name = "VariableId", required = true)
-    protected String variableId;
+	@XmlAttribute(name = "VariableId", required = true)
+	protected String variableId;
 
-    /**
-     * Gets the value of the variableId property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getVariableId() {
-        return variableId;
-    }
+	/**
+	 * Gets the value of the variableId property.
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
+	public String getVariableId() {
+		return variableId;
+	}
 
-    /**
-     * Sets the value of the variableId property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setVariableId(String value) {
-        this.variableId = value;
-    }
+	/**
+	 * Sets the value of the variableId property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link String }
+	 * 
+	 */
+	public void setVariableId(String value) {
+		this.variableId = value;
+	}
 
 }

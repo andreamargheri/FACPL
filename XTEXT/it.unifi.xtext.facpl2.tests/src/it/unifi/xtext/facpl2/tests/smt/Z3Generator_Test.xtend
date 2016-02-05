@@ -1,4 +1,4 @@
-package it.unifi.xtext.facpl2.tests.z3
+package it.unifi.xtext.facpl2.tests.smt
 
 import org.junit.runner.RunWith
 import org.eclipse.xtext.junit4.InjectWith
@@ -11,16 +11,16 @@ import com.google.inject.Inject
 import org.junit.Test
 import java.io.PrintWriter
 import org.eclipse.xtext.junit4.validation.ValidationTestHelper
-import it.unifi.xtext.facpl.generator.Z3Generator
+import it.unifi.xtext.facpl.generator.SMT_LIBGenerator
 import it.unifi.xtext.facpl.generator.util.PolicyConstant
 
 @InjectWith(typeof(Facpl2InjectorProvider))
 @RunWith(typeof(XtextRunner))
-public class Z3Generator_Test extends AbstractXtextTests {
+public class SMT_LIBGenerator_Test extends AbstractXtextTests {
 
 	@Inject extension ParseHelper<Facpl>
 
-	@Inject extension Z3Generator
+	@Inject extension SMT_LIBGenerator
 
 	@Inject extension ValidationTestHelper
 
@@ -34,7 +34,7 @@ public class Z3Generator_Test extends AbstractXtextTests {
 
 		assertNoErrors(model)
 
-		var String cns = doGenerateZ3_Test(model)
+		var String cns = doGenerateSMT_LIB_Test(model)
 
 		/*
 		 * Non assigned attribute considered as Boolean
@@ -55,7 +55,7 @@ public class Z3Generator_Test extends AbstractXtextTests {
 
 		assertNoErrors(model)
 
-		cns = doGenerateZ3_Test(model)
+		cns = doGenerateSMT_LIB_Test(model)
 
 		if (cns.contains('''(declare-const n_cat1/id (TValue Bool))''') &&
 			cns.contains('''(declare-const n_cat/id (TValue Bool))''')) {
@@ -76,7 +76,7 @@ public class Z3Generator_Test extends AbstractXtextTests {
 		/*
 		 * Target has not type boolean, the SMT-LIB cannot be generated 
 		 */
-		assertNotNull("Policy Name is not well-typed", doGenerateZ3_Test(model))
+		assertNotNull("Policy Name is not well-typed", doGenerateSMT_LIB_Test(model))
 
 		/*
 		 * Two Boolean and Int
@@ -91,7 +91,7 @@ public class Z3Generator_Test extends AbstractXtextTests {
 
 		assertNoErrors(model)
 
-		cns = doGenerateZ3_Test(model)
+		cns = doGenerateSMT_LIB_Test(model)
 
 		if (cns.contains('''(declare-const n_cat1/id (TValue Int))''') &&
 			cns.contains('''(declare-const n_cat/id (TValue Bool))''')) {
@@ -112,7 +112,7 @@ public class Z3Generator_Test extends AbstractXtextTests {
 
 		assertNoErrors(model)
 
-		var String cns = doGenerateZ3_Test(model)
+		var String cns = doGenerateSMT_LIB_Test(model)
 
 //		System.out.println(cns)
 		/*
@@ -134,7 +134,7 @@ public class Z3Generator_Test extends AbstractXtextTests {
 
 		assertNoErrors(model)
 
-		cns = doGenerateZ3_Test(model)
+		cns = doGenerateSMT_LIB_Test(model)
 
 //		System.out.println(cns)
 		/*
@@ -163,7 +163,7 @@ public class Z3Generator_Test extends AbstractXtextTests {
 
 		assertNoErrors(model)
 
-		var String cns = doGenerateZ3_Test(model)
+		var String cns = doGenerateSMT_LIB_Test(model)
 
 		System.out.println(cns)
 
@@ -197,7 +197,7 @@ public class Z3Generator_Test extends AbstractXtextTests {
 
 			var flag = false
 			try {
-				doGenerateZ3_Test(model)
+				doGenerateSMT_LIB_Test(model)
 			} catch (Exception e) {
 				// the policy cannot be typed
 				assertEquals(true, true)
@@ -222,9 +222,9 @@ public class Z3Generator_Test extends AbstractXtextTests {
 
 			assertNoErrors(model)
 
-			var cns = doGenerateZ3_Test(model)
+			var cns = doGenerateSMT_LIB_Test(model)
 
-			var PrintWriter writer = new PrintWriter("z3_gen/decFun/file1.smt2", "UTF-8");
+			var PrintWriter writer = new PrintWriter("SMT_LIB_gen/decFun/file1.smt2", "UTF-8");
 			writer.println(cns);
 			writer.close();
 
@@ -243,10 +243,10 @@ public class Z3Generator_Test extends AbstractXtextTests {
 
 			assertNoErrors(model)
 
-			cns = doGenerateZ3_Test(model)
+			cns = doGenerateSMT_LIB_Test(model)
 
 //			System.out.println(cns)
-			writer = new PrintWriter("z3_gen/decFun/file2.smt2", "UTF-8");
+			writer = new PrintWriter("SMT_LIB_gen/decFun/file2.smt2", "UTF-8");
 			writer.println(cns);
 			writer.close();
 
@@ -265,9 +265,9 @@ public class Z3Generator_Test extends AbstractXtextTests {
 
 			assertNoErrors(model)
 
-			cns = doGenerateZ3_Test(model)
+			cns = doGenerateSMT_LIB_Test(model)
 
-			writer = new PrintWriter("z3_gen/decFun/file3.smt2", "UTF-8");
+			writer = new PrintWriter("SMT_LIB_gen/decFun/file3.smt2", "UTF-8");
 			writer.println(cns);
 			writer.close();
 
@@ -291,7 +291,7 @@ public class Z3Generator_Test extends AbstractXtextTests {
 		/*
 		 * BAG contains attribute, cannot be typed 
 		 */
-		assertNotNull("Policy Name is not well-typed", doGenerateZ3_Test(model))
+		assertNotNull("Policy Name is not well-typed", doGenerateSMT_LIB_Test(model))
 
 	}
 
@@ -401,7 +401,7 @@ public class Z3Generator_Test extends AbstractXtextTests {
 
 		assertNoErrors(model)
 
-		var String cns = doGenerateZ3_Test(model)
+		var String cns = doGenerateSMT_LIB_Test(model)
 
 //		System.out.println(cns)
 
@@ -414,7 +414,7 @@ public class Z3Generator_Test extends AbstractXtextTests {
 			assertEquals(false, true)
 		}
 
-		val writer = new PrintWriter("z3_gen/decSet/file1_const.smt2", "UTF-8");
+		val writer = new PrintWriter("SMT_LIB_gen/decSet/file1_const.smt2", "UTF-8");
 		writer.println(cns);
 		writer.close();
 	}

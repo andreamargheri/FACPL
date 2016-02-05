@@ -1,6 +1,5 @@
 package it.unifi.xtext.facpl.ui.popup.actions;
 
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,20 +31,19 @@ import it.unifi.xtext.facpl.generator.Facpl2Generator;
 
 public class GenerateEditorFacplCode extends AbstractHandler implements IHandler {
 
-
 	@Inject
 	private Facpl2Generator generator;
 
 	@Inject
 	XtextResourceSetProvider resourceSetProvider;
 
-	@Inject 
-	//private IFileSystemAccess fileAccess;
+	@Inject
+	// private IFileSystemAccess fileAccess;
 	private Provider<EclipseResourceFileSystemAccess2> fileAccessProvider;
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		Shell activeShell = HandlerUtil.getActiveShell(event);
-		
+
 		IEditorPart activeEditor = HandlerUtil.getActiveEditor(event);
 		IFile file = (IFile) activeEditor.getEditorInput().getAdapter(IFile.class);
 		IProject project = file.getProject();
@@ -61,7 +59,7 @@ public class GenerateEditorFacplCode extends AbstractHandler implements IHandler
 
 		final EclipseResourceFileSystemAccess2 fsa = fileAccessProvider.get();
 
-		//OUTPUTConfiguration
+		// OUTPUTConfiguration
 		OutputConfiguration onceOutput = new OutputConfiguration(IFileSystemAccess.DEFAULT_OUTPUT);
 		onceOutput.setDescription("Output Folder");
 		onceOutput.setOutputDirectory("./src");
@@ -70,7 +68,7 @@ public class GenerateEditorFacplCode extends AbstractHandler implements IHandler
 		onceOutput.setCleanUpDerivedResources(true);
 		onceOutput.setSetDerivedProperty(true);
 
-		Map<String,OutputConfiguration> output = new HashMap<String,OutputConfiguration>();
+		Map<String, OutputConfiguration> output = new HashMap<String, OutputConfiguration>();
 		output.put("DEFAULT_OUTPUT", onceOutput);
 		fsa.setOutputConfigurations(output);
 
@@ -84,7 +82,7 @@ public class GenerateEditorFacplCode extends AbstractHandler implements IHandler
 		generator.doGenerate(r, fsa);
 
 		MessageDialog.openInformation(activeShell, "Generate Java Code", "All Java classes generated!");
-		
+
 		return null;
 	}
 

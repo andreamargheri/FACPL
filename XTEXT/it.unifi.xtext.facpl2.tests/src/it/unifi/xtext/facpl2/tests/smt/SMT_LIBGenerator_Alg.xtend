@@ -1,4 +1,4 @@
-package it.unifi.xtext.facpl2.tests.z3
+package it.unifi.xtext.facpl2.tests.smt
 
 import org.eclipse.xtext.junit4.AbstractXtextTests
 import it.unifi.xtext.facpl.Facpl2InjectorProvider
@@ -7,7 +7,7 @@ import org.junit.runner.RunWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.junit.Test
 import com.google.inject.Inject
-import it.unifi.xtext.facpl.generator.Z3Generator
+import it.unifi.xtext.facpl.generator.SMT_LIBGenerator
 import org.eclipse.xtext.junit4.validation.ValidationTestHelper
 import org.eclipse.xtext.junit4.util.ParseHelper
 import it.unifi.xtext.facpl.facpl2.Facpl
@@ -15,11 +15,11 @@ import java.io.PrintWriter
 
 @InjectWith(typeof(Facpl2InjectorProvider))
 @RunWith(typeof(XtextRunner))
-class Z3Generator_Alg extends AbstractXtextTests {
+class SMT_LIBGenerator_Alg extends AbstractXtextTests {
 
 	@Inject extension ParseHelper<Facpl>
 
-	@Inject extension Z3Generator
+	@Inject extension SMT_LIBGenerator
 
 	@Inject extension ValidationTestHelper
 
@@ -39,9 +39,9 @@ class Z3Generator_Alg extends AbstractXtextTests {
 
 		assertNoErrors(model)
 
-		var String cns = doGenerateZ3_Test(model)
+		var String cns = doGenerateSMT_LIB_Test(model)
 
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_PermitOver_Def.smt2", "UTF-8");
+		val PrintWriter writer = new PrintWriter("SMT_LIB_gen/genPolicy_PermitOver_Def.smt2", "UTF-8");
 		writer.println(cns);
 		writer.close();
 
@@ -62,9 +62,9 @@ class Z3Generator_Alg extends AbstractXtextTests {
 
 		assertNoErrors(model)
 
-		var String cns = doGenerateZ3_Test(model)
+		var String cns = doGenerateSMT_LIB_Test(model)
 
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_PermitOver_Comb.smt2", "UTF-8");
+		val PrintWriter writer = new PrintWriter("SMT_LIB_gen/genPolicy_PermitOver_Comb.smt2", "UTF-8");
 		writer.println(cns);
 		writer.close();
 
@@ -88,9 +88,9 @@ class Z3Generator_Alg extends AbstractXtextTests {
 		)
 		assertNoErrors(model)
 
-		var String cns = doGenerateZ3_Test(model)
+		var String cns = doGenerateSMT_LIB_Test(model)
 
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_PermitOver_Comb2.smt2", "UTF-8");
+		val PrintWriter writer = new PrintWriter("SMT_LIB_gen/genPolicy_PermitOver_Comb2.smt2", "UTF-8");
 		writer.println(cns);
 		writer.close();
 
@@ -111,9 +111,9 @@ class Z3Generator_Alg extends AbstractXtextTests {
 
 		assertNoErrors(model)
 
-		var String cns = doGenerateZ3_Test(model)
+		var String cns = doGenerateSMT_LIB_Test(model)
 
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_DenyOver_Def.smt2", "UTF-8");
+		val PrintWriter writer = new PrintWriter("SMT_LIB_gen/genPolicy_DenyOver_Def.smt2", "UTF-8");
 		writer.println(cns);
 		writer.close();
 
@@ -133,9 +133,9 @@ class Z3Generator_Alg extends AbstractXtextTests {
 
 		assertNoErrors(model)
 
-		var String cns = doGenerateZ3_Test(model)
+		var String cns = doGenerateSMT_LIB_Test(model)
 
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_DenyOver_Comb.smt2", "UTF-8");
+		val PrintWriter writer = new PrintWriter("SMT_LIB_gen/genPolicy_DenyOver_Comb.smt2", "UTF-8");
 		writer.println(cns);
 		writer.close();
 
@@ -160,9 +160,9 @@ class Z3Generator_Alg extends AbstractXtextTests {
 
 		assertNoErrors(model)
 
-		var String cns = doGenerateZ3_Test(model)
+		var String cns = doGenerateSMT_LIB_Test(model)
 
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_DenyOver_Comb2.smt2", "UTF-8");
+		val PrintWriter writer = new PrintWriter("SMT_LIB_gen/genPolicy_DenyOver_Comb2.smt2", "UTF-8");
 		writer.println(cns);
 		writer.close();
 
@@ -183,9 +183,9 @@ class Z3Generator_Alg extends AbstractXtextTests {
 
 		assertNoErrors(model)
 
-		var String cns = doGenerateZ3_Test(model)
+		var String cns = doGenerateSMT_LIB_Test(model)
 
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_DenyUnless_Def.smt2", "UTF-8");
+		val PrintWriter writer = new PrintWriter("SMT_LIB_gen/genPolicy_DenyUnless_Def.smt2", "UTF-8");
 		writer.println(cns);
 		writer.close();
 
@@ -207,9 +207,9 @@ class Z3Generator_Alg extends AbstractXtextTests {
 
 		assertNoErrors(model)
 
-		var String cns = doGenerateZ3_Test(model)
+		var String cns = doGenerateSMT_LIB_Test(model)
 
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_DenyUnless_Comb.smt2", "UTF-8");
+		val PrintWriter writer = new PrintWriter("SMT_LIB_gen/genPolicy_DenyUnless_Comb.smt2", "UTF-8");
 		writer.println(cns);
 		writer.close();
 
@@ -233,9 +233,9 @@ class Z3Generator_Alg extends AbstractXtextTests {
 
 		assertNoErrors(model)
 
-		var String cns = doGenerateZ3_Test(model)
+		var String cns = doGenerateSMT_LIB_Test(model)
 
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_DenyUnless_Comb2.smt2", "UTF-8");
+		val PrintWriter writer = new PrintWriter("SMT_LIB_gen/genPolicy_DenyUnless_Comb2.smt2", "UTF-8");
 		writer.println(cns);
 		writer.close();
 
@@ -256,9 +256,9 @@ class Z3Generator_Alg extends AbstractXtextTests {
 
 		assertNoErrors(model)
 
-		var String cns = doGenerateZ3_Test(model)
+		var String cns = doGenerateSMT_LIB_Test(model)
 
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_PermitUnless_Def.smt2", "UTF-8");
+		val PrintWriter writer = new PrintWriter("SMT_LIB_gen/genPolicy_PermitUnless_Def.smt2", "UTF-8");
 		writer.println(cns);
 		writer.close();
 
@@ -280,9 +280,9 @@ class Z3Generator_Alg extends AbstractXtextTests {
 
 		assertNoErrors(model)
 
-		var String cns = doGenerateZ3_Test(model)
+		var String cns = doGenerateSMT_LIB_Test(model)
 
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_PermitUnless_Comb.smt2", "UTF-8");
+		val PrintWriter writer = new PrintWriter("SMT_LIB_gen/genPolicy_PermitUnless_Comb.smt2", "UTF-8");
 		writer.println(cns);
 		writer.close();
 
@@ -306,9 +306,9 @@ class Z3Generator_Alg extends AbstractXtextTests {
 
 		assertNoErrors(model)
 
-		var String cns = doGenerateZ3_Test(model)
+		var String cns = doGenerateSMT_LIB_Test(model)
 
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_PermitUnless_Comb2.smt2", "UTF-8");
+		val PrintWriter writer = new PrintWriter("SMT_LIB_gen/genPolicy_PermitUnless_Comb2.smt2", "UTF-8");
 		writer.println(cns);
 		writer.close();
 
@@ -329,9 +329,9 @@ class Z3Generator_Alg extends AbstractXtextTests {
 
 		assertNoErrors(model)
 
-		var String cns = doGenerateZ3_Test(model)
+		var String cns = doGenerateSMT_LIB_Test(model)
 
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_FirstApp_Def.smt2", "UTF-8");
+		val PrintWriter writer = new PrintWriter("SMT_LIB_gen/genPolicy_FirstApp_Def.smt2", "UTF-8");
 		writer.println(cns);
 		writer.close();
 
@@ -353,9 +353,9 @@ class Z3Generator_Alg extends AbstractXtextTests {
 
 		assertNoErrors(model)
 
-		var String cns = doGenerateZ3_Test(model)
+		var String cns = doGenerateSMT_LIB_Test(model)
 
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_FirstApp_Comb.smt2", "UTF-8");
+		val PrintWriter writer = new PrintWriter("SMT_LIB_gen/genPolicy_FirstApp_Comb.smt2", "UTF-8");
 		writer.println(cns);
 		writer.close();
 
@@ -379,9 +379,9 @@ class Z3Generator_Alg extends AbstractXtextTests {
 
 		assertNoErrors(model)
 
-		var String cns = doGenerateZ3_Test(model)
+		var String cns = doGenerateSMT_LIB_Test(model)
 
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_FirstApp_Comb2.smt2", "UTF-8");
+		val PrintWriter writer = new PrintWriter("SMT_LIB_gen/genPolicy_FirstApp_Comb2.smt2", "UTF-8");
 		writer.println(cns);
 		writer.close();
 
@@ -402,9 +402,9 @@ class Z3Generator_Alg extends AbstractXtextTests {
 
 		assertNoErrors(model)
 
-		var String cns = doGenerateZ3_Test(model)
+		var String cns = doGenerateSMT_LIB_Test(model)
 
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_OneApp_Def.smt2", "UTF-8");
+		val PrintWriter writer = new PrintWriter("SMT_LIB_gen/genPolicy_OneApp_Def.smt2", "UTF-8");
 		writer.println(cns);
 		writer.close();
 
@@ -426,9 +426,9 @@ class Z3Generator_Alg extends AbstractXtextTests {
 
 		assertNoErrors(model)
 
-		var String cns = doGenerateZ3_Test(model)
+		var String cns = doGenerateSMT_LIB_Test(model)
 
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_OneApp_Comb.smt2", "UTF-8");
+		val PrintWriter writer = new PrintWriter("SMT_LIB_gen/genPolicy_OneApp_Comb.smt2", "UTF-8");
 		writer.println(cns);
 		writer.close();
 
@@ -452,9 +452,9 @@ class Z3Generator_Alg extends AbstractXtextTests {
 
 		assertNoErrors(model)
 
-		var String cns = doGenerateZ3_Test(model)
+		var String cns = doGenerateSMT_LIB_Test(model)
 
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_OneApp_Comb2.smt2", "UTF-8");
+		val PrintWriter writer = new PrintWriter("SMT_LIB_gen/genPolicy_OneApp_Comb2.smt2", "UTF-8");
 		writer.println(cns);
 		writer.close();
 
@@ -475,9 +475,9 @@ class Z3Generator_Alg extends AbstractXtextTests {
 
 		assertNoErrors(model)
 
-		var String cns = doGenerateZ3_Test(model)
+		var String cns = doGenerateSMT_LIB_Test(model)
 
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_Weak_Def.smt2", "UTF-8");
+		val PrintWriter writer = new PrintWriter("SMT_LIB_gen/genPolicy_Weak_Def.smt2", "UTF-8");
 		writer.println(cns);
 		writer.close();
 
@@ -499,9 +499,9 @@ class Z3Generator_Alg extends AbstractXtextTests {
 
 		assertNoErrors(model)
 
-		var String cns = doGenerateZ3_Test(model)
+		var String cns = doGenerateSMT_LIB_Test(model)
 
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_Weak_Comb.smt2", "UTF-8");
+		val PrintWriter writer = new PrintWriter("SMT_LIB_gen/genPolicy_Weak_Comb.smt2", "UTF-8");
 		writer.println(cns);
 		writer.close();
 
@@ -525,9 +525,9 @@ class Z3Generator_Alg extends AbstractXtextTests {
 
 		assertNoErrors(model)
 
-		var String cns = doGenerateZ3_Test(model)
+		var String cns = doGenerateSMT_LIB_Test(model)
 
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_Weak_Comb2.smt2", "UTF-8");
+		val PrintWriter writer = new PrintWriter("SMT_LIB_gen/genPolicy_Weak_Comb2.smt2", "UTF-8");
 		writer.println(cns);
 		writer.close();
 
@@ -548,9 +548,9 @@ class Z3Generator_Alg extends AbstractXtextTests {
 
 		assertNoErrors(model)
 
-		var String cns = doGenerateZ3_Test(model)
+		var String cns = doGenerateSMT_LIB_Test(model)
 
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_Strong_Def.smt2", "UTF-8");
+		val PrintWriter writer = new PrintWriter("SMT_LIB_gen/genPolicy_Strong_Def.smt2", "UTF-8");
 		writer.println(cns);
 		writer.close();
 
@@ -572,9 +572,9 @@ class Z3Generator_Alg extends AbstractXtextTests {
 
 		assertNoErrors(model)
 
-		var String cns = doGenerateZ3_Test(model)
+		var String cns = doGenerateSMT_LIB_Test(model)
 
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_Strong_Comb.smt2", "UTF-8");
+		val PrintWriter writer = new PrintWriter("SMT_LIB_gen/genPolicy_Strong_Comb.smt2", "UTF-8");
 		writer.println(cns);
 		writer.close();
 
@@ -598,9 +598,9 @@ class Z3Generator_Alg extends AbstractXtextTests {
 
 		assertNoErrors(model)
 
-		var String cns = doGenerateZ3_Test(model)
+		var String cns = doGenerateSMT_LIB_Test(model)
 
-		val PrintWriter writer = new PrintWriter("z3_gen/genPolicy_Strong_Comb2.smt2", "UTF-8");
+		val PrintWriter writer = new PrintWriter("SMT_LIB_gen/genPolicy_Strong_Comb2.smt2", "UTF-8");
 		writer.println(cns);
 		writer.close();
 
@@ -627,9 +627,9 @@ class Z3Generator_Alg extends AbstractXtextTests {
 			''').parse
 				assertNoErrors(model)
 
-		var String cns = doGenerateZ3_Test(model)
+		var String cns = doGenerateSMT_LIB_Test(model)
 
-		val PrintWriter writer = new PrintWriter("z3_gen/eHealth/ePre.smt2", "UTF-8");
+		val PrintWriter writer = new PrintWriter("SMT_LIB_gen/eHealth/ePre.smt2", "UTF-8");
 		writer.println(cns);
 		writer.close();
 

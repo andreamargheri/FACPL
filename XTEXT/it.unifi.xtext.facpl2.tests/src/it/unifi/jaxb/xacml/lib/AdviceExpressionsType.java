@@ -5,7 +5,6 @@
 // Generated on: 2013.01.22 at 04:37:38 PM CET 
 //
 
-
 package it.unifi.jaxb.xacml.lib;
 
 import java.util.ArrayList;
@@ -16,11 +15,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for AdviceExpressionsType complex type.
+ * <p>
+ * Java class for AdviceExpressionsType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="AdviceExpressionsType">
@@ -37,41 +38,40 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "AdviceExpressionsType", propOrder = {
-    "adviceExpression"
-})
+@XmlType(name = "AdviceExpressionsType", propOrder = { "adviceExpression" })
 public class AdviceExpressionsType {
 
-    @XmlElement(name = "AdviceExpression", required = true)
-    protected List<AdviceExpressionType> adviceExpression;
+	@XmlElement(name = "AdviceExpression", required = true)
+	protected List<AdviceExpressionType> adviceExpression;
 
-    /**
-     * Gets the value of the adviceExpression property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the adviceExpression property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getAdviceExpression().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link AdviceExpressionType }
-     * 
-     * 
-     */
-    public List<AdviceExpressionType> getAdviceExpression() {
-        if (adviceExpression == null) {
-            adviceExpression = new ArrayList<AdviceExpressionType>();
-        }
-        return this.adviceExpression;
-    }
+	/**
+	 * Gets the value of the adviceExpression property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a
+	 * snapshot. Therefore any modification you make to the returned list will
+	 * be present inside the JAXB object. This is why there is not a
+	 * <CODE>set</CODE> method for the adviceExpression property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * 
+	 * <pre>
+	 * getAdviceExpression().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link AdviceExpressionType }
+	 * 
+	 * 
+	 */
+	public List<AdviceExpressionType> getAdviceExpression() {
+		if (adviceExpression == null) {
+			adviceExpression = new ArrayList<AdviceExpressionType>();
+		}
+		return this.adviceExpression;
+	}
 
 }

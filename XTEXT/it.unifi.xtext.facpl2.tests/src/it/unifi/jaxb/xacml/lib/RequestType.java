@@ -5,7 +5,6 @@
 // Generated on: 2013.01.22 at 04:37:38 PM CET 
 //
 
-
 package it.unifi.jaxb.xacml.lib;
 
 import java.util.ArrayList;
@@ -18,9 +17,12 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- * <p>Java class for RequestType complex type.
+ * <p>
+ * Java class for RequestType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="RequestType">
@@ -41,131 +43,122 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "RequestType", propOrder = {
-    "requestDefaults",
-    "attributes",
-    "multiRequests"
-})
+@XmlType(name = "RequestType", propOrder = { "requestDefaults", "attributes", "multiRequests" })
 public class RequestType {
 
-    @XmlElement(name = "RequestDefaults")
-    protected RequestDefaultsType requestDefaults;
-    @XmlElement(name = "Attributes", required = true)
-    protected List<AttributesType> attributes;
-    @XmlElement(name = "MultiRequests")
-    protected MultiRequestsType multiRequests;
-    @XmlAttribute(name = "ReturnPolicyIdList", required = true)
-    protected boolean returnPolicyIdList;
-    @XmlAttribute(name = "CombinedDecision", required = true)
-    protected boolean combinedDecision;
+	@XmlElement(name = "RequestDefaults")
+	protected RequestDefaultsType requestDefaults;
+	@XmlElement(name = "Attributes", required = true)
+	protected List<AttributesType> attributes;
+	@XmlElement(name = "MultiRequests")
+	protected MultiRequestsType multiRequests;
+	@XmlAttribute(name = "ReturnPolicyIdList", required = true)
+	protected boolean returnPolicyIdList;
+	@XmlAttribute(name = "CombinedDecision", required = true)
+	protected boolean combinedDecision;
 
-    /**
-     * Gets the value of the requestDefaults property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link RequestDefaultsType }
-     *     
-     */
-    public RequestDefaultsType getRequestDefaults() {
-        return requestDefaults;
-    }
+	/**
+	 * Gets the value of the requestDefaults property.
+	 * 
+	 * @return possible object is {@link RequestDefaultsType }
+	 * 
+	 */
+	public RequestDefaultsType getRequestDefaults() {
+		return requestDefaults;
+	}
 
-    /**
-     * Sets the value of the requestDefaults property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link RequestDefaultsType }
-     *     
-     */
-    public void setRequestDefaults(RequestDefaultsType value) {
-        this.requestDefaults = value;
-    }
+	/**
+	 * Sets the value of the requestDefaults property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link RequestDefaultsType }
+	 * 
+	 */
+	public void setRequestDefaults(RequestDefaultsType value) {
+		this.requestDefaults = value;
+	}
 
-    /**
-     * Gets the value of the attributes property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the attributes property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getAttributes().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link AttributesType }
-     * 
-     * 
-     */
-    public List<AttributesType> getAttributes() {
-        if (attributes == null) {
-            attributes = new ArrayList<AttributesType>();
-        }
-        return this.attributes;
-    }
+	/**
+	 * Gets the value of the attributes property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a
+	 * snapshot. Therefore any modification you make to the returned list will
+	 * be present inside the JAXB object. This is why there is not a
+	 * <CODE>set</CODE> method for the attributes property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * 
+	 * <pre>
+	 * getAttributes().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link AttributesType }
+	 * 
+	 * 
+	 */
+	public List<AttributesType> getAttributes() {
+		if (attributes == null) {
+			attributes = new ArrayList<AttributesType>();
+		}
+		return this.attributes;
+	}
 
-    /**
-     * Gets the value of the multiRequests property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link MultiRequestsType }
-     *     
-     */
-    public MultiRequestsType getMultiRequests() {
-        return multiRequests;
-    }
+	/**
+	 * Gets the value of the multiRequests property.
+	 * 
+	 * @return possible object is {@link MultiRequestsType }
+	 * 
+	 */
+	public MultiRequestsType getMultiRequests() {
+		return multiRequests;
+	}
 
-    /**
-     * Sets the value of the multiRequests property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link MultiRequestsType }
-     *     
-     */
-    public void setMultiRequests(MultiRequestsType value) {
-        this.multiRequests = value;
-    }
+	/**
+	 * Sets the value of the multiRequests property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link MultiRequestsType }
+	 * 
+	 */
+	public void setMultiRequests(MultiRequestsType value) {
+		this.multiRequests = value;
+	}
 
-    /**
-     * Gets the value of the returnPolicyIdList property.
-     * 
-     */
-    public boolean isReturnPolicyIdList() {
-        return returnPolicyIdList;
-    }
+	/**
+	 * Gets the value of the returnPolicyIdList property.
+	 * 
+	 */
+	public boolean isReturnPolicyIdList() {
+		return returnPolicyIdList;
+	}
 
-    /**
-     * Sets the value of the returnPolicyIdList property.
-     * 
-     */
-    public void setReturnPolicyIdList(boolean value) {
-        this.returnPolicyIdList = value;
-    }
+	/**
+	 * Sets the value of the returnPolicyIdList property.
+	 * 
+	 */
+	public void setReturnPolicyIdList(boolean value) {
+		this.returnPolicyIdList = value;
+	}
 
-    /**
-     * Gets the value of the combinedDecision property.
-     * 
-     */
-    public boolean isCombinedDecision() {
-        return combinedDecision;
-    }
+	/**
+	 * Gets the value of the combinedDecision property.
+	 * 
+	 */
+	public boolean isCombinedDecision() {
+		return combinedDecision;
+	}
 
-    /**
-     * Sets the value of the combinedDecision property.
-     * 
-     */
-    public void setCombinedDecision(boolean value) {
-        this.combinedDecision = value;
-    }
+	/**
+	 * Sets the value of the combinedDecision property.
+	 * 
+	 */
+	public void setCombinedDecision(boolean value) {
+		this.combinedDecision = value;
+	}
 
 }

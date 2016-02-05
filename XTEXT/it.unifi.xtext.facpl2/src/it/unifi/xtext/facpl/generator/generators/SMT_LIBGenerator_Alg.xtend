@@ -5,7 +5,7 @@ import it.unifi.xtext.facpl.facpl2.PolicySet
 /**
  * Abstract Methods for the Combination of constraints
  */
-abstract class Z3Generator_Alg {
+abstract class SMT_LIBGenerator_Alg {
 	private int n_step;
 
 	def CharSequence combine(PolicySet p) {

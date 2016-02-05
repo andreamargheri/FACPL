@@ -1,4 +1,4 @@
-package it.unifi.xtext.facpl2.tests.z3
+package it.unifi.xtext.facpl2.tests.smt
 
 import org.junit.runner.RunWith
 import org.eclipse.xtext.junit4.InjectWith

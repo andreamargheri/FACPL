@@ -5,7 +5,6 @@
 // Generated on: 2013.01.22 at 04:37:38 PM CET 
 //
 
-
 package it.unifi.jaxb.xacml.lib;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,12 +13,13 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
-
 /**
- * <p>Java class for AttributeSelectorType complex type.
+ * <p>
+ * Java class for AttributeSelectorType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="AttributeSelectorType">
@@ -39,134 +39,120 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "AttributeSelectorType")
-public class AttributeSelectorType
-    extends ExpressionType
-{
+public class AttributeSelectorType extends ExpressionType {
 
-    @XmlAttribute(name = "Category", required = true)
-    @XmlSchemaType(name = "anyURI")
-    protected String category;
-    @XmlAttribute(name = "ContextSelectorId")
-    @XmlSchemaType(name = "anyURI")
-    protected String contextSelectorId;
-    @XmlAttribute(name = "Path", required = true)
-    protected String path;
-    @XmlAttribute(name = "DataType", required = true)
-    @XmlSchemaType(name = "anyURI")
-    protected String dataType;
-    @XmlAttribute(name = "MustBePresent", required = true)
-    protected boolean mustBePresent;
+	@XmlAttribute(name = "Category", required = true)
+	@XmlSchemaType(name = "anyURI")
+	protected String category;
+	@XmlAttribute(name = "ContextSelectorId")
+	@XmlSchemaType(name = "anyURI")
+	protected String contextSelectorId;
+	@XmlAttribute(name = "Path", required = true)
+	protected String path;
+	@XmlAttribute(name = "DataType", required = true)
+	@XmlSchemaType(name = "anyURI")
+	protected String dataType;
+	@XmlAttribute(name = "MustBePresent", required = true)
+	protected boolean mustBePresent;
 
-    /**
-     * Gets the value of the category property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getCategory() {
-        return category;
-    }
+	/**
+	 * Gets the value of the category property.
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
+	public String getCategory() {
+		return category;
+	}
 
-    /**
-     * Sets the value of the category property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setCategory(String value) {
-        this.category = value;
-    }
+	/**
+	 * Sets the value of the category property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link String }
+	 * 
+	 */
+	public void setCategory(String value) {
+		this.category = value;
+	}
 
-    /**
-     * Gets the value of the contextSelectorId property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getContextSelectorId() {
-        return contextSelectorId;
-    }
+	/**
+	 * Gets the value of the contextSelectorId property.
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
+	public String getContextSelectorId() {
+		return contextSelectorId;
+	}
 
-    /**
-     * Sets the value of the contextSelectorId property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setContextSelectorId(String value) {
-        this.contextSelectorId = value;
-    }
+	/**
+	 * Sets the value of the contextSelectorId property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link String }
+	 * 
+	 */
+	public void setContextSelectorId(String value) {
+		this.contextSelectorId = value;
+	}
 
-    /**
-     * Gets the value of the path property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getPath() {
-        return path;
-    }
+	/**
+	 * Gets the value of the path property.
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
+	public String getPath() {
+		return path;
+	}
 
-    /**
-     * Sets the value of the path property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setPath(String value) {
-        this.path = value;
-    }
+	/**
+	 * Sets the value of the path property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link String }
+	 * 
+	 */
+	public void setPath(String value) {
+		this.path = value;
+	}
 
-    /**
-     * Gets the value of the dataType property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getDataType() {
-        return dataType;
-    }
+	/**
+	 * Gets the value of the dataType property.
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
+	public String getDataType() {
+		return dataType;
+	}
 
-    /**
-     * Sets the value of the dataType property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setDataType(String value) {
-        this.dataType = value;
-    }
+	/**
+	 * Sets the value of the dataType property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link String }
+	 * 
+	 */
+	public void setDataType(String value) {
+		this.dataType = value;
+	}
 
-    /**
-     * Gets the value of the mustBePresent property.
-     * 
-     */
-    public boolean isMustBePresent() {
-        return mustBePresent;
-    }
+	/**
+	 * Gets the value of the mustBePresent property.
+	 * 
+	 */
+	public boolean isMustBePresent() {
+		return mustBePresent;
+	}
 
-    /**
-     * Sets the value of the mustBePresent property.
-     * 
-     */
-    public void setMustBePresent(boolean value) {
-        this.mustBePresent = value;
-    }
+	/**
+	 * Sets the value of the mustBePresent property.
+	 * 
+	 */
+	public void setMustBePresent(boolean value) {
+		this.mustBePresent = value;
+	}
 
 }

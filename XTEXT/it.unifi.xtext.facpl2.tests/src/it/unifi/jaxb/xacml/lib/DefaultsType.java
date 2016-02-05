@@ -5,7 +5,6 @@
 // Generated on: 2013.01.22 at 04:37:38 PM CET 
 //
 
-
 package it.unifi.jaxb.xacml.lib;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,11 +13,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for DefaultsType complex type.
+ * <p>
+ * Java class for DefaultsType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="DefaultsType">
@@ -37,37 +38,32 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "DefaultsType", propOrder = {
-    "xPathVersion"
-})
+@XmlType(name = "DefaultsType", propOrder = { "xPathVersion" })
 public class DefaultsType {
 
-    @XmlElement(name = "XPathVersion")
-    @XmlSchemaType(name = "anyURI")
-    protected String xPathVersion;
+	@XmlElement(name = "XPathVersion")
+	@XmlSchemaType(name = "anyURI")
+	protected String xPathVersion;
 
-    /**
-     * Gets the value of the xPathVersion property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getXPathVersion() {
-        return xPathVersion;
-    }
+	/**
+	 * Gets the value of the xPathVersion property.
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
+	public String getXPathVersion() {
+		return xPathVersion;
+	}
 
-    /**
-     * Sets the value of the xPathVersion property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setXPathVersion(String value) {
-        this.xPathVersion = value;
-    }
+	/**
+	 * Sets the value of the xPathVersion property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link String }
+	 * 
+	 */
+	public void setXPathVersion(String value) {
+		this.xPathVersion = value;
+	}
 
 }

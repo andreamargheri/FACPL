@@ -24,9 +24,10 @@ import org.eclipse.ui.dialogs.ContainerSelectionDialog;
 /**
  * @author Andrea Margheri
  * 
- * The "New" wizard page allows setting the container for the new file as well
- * as the file name. The page will only accept file name without the extension
- * OR with the extension that matches the expected one (fpl).
+ *         The "New" wizard page allows setting the container for the new file
+ *         as well as the file name. The page will only accept file name without
+ *         the extension OR with the extension that matches the expected one
+ *         (fpl).
  */
 
 public class NewFacplFileWizardPage extends WizardPage {
@@ -39,7 +40,7 @@ public class NewFacplFileWizardPage extends WizardPage {
 	private Button checkPDP;
 	private Button checkMain;
 	private Button checkRequest;
-	
+
 	/**
 	 * Constructor for SampleNewWizardPage.
 	 * 
@@ -48,7 +49,8 @@ public class NewFacplFileWizardPage extends WizardPage {
 	public NewFacplFileWizardPage(ISelection selection) {
 		super("wizardPage");
 		setTitle("New FACPL File Wizard");
-		setDescription("This wizard creates a new file with *.fpl extension that can be opened by a multi-page editor.");
+		setDescription(
+				"This wizard creates a new file with *.fpl extension that can be opened by a multi-page editor.");
 		this.selection = selection;
 	}
 
@@ -82,7 +84,7 @@ public class NewFacplFileWizardPage extends WizardPage {
 		});
 		label = new Label(container, SWT.NULL);
 		label.setText("&File name:");
-		
+
 		fileText = new Text(container, SWT.BORDER | SWT.SINGLE);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		fileText.setLayoutData(gd);
@@ -91,38 +93,35 @@ public class NewFacplFileWizardPage extends WizardPage {
 				dialogChanged();
 			}
 		});
-		
+
 		new Label(container, SWT.SINGLE);
 		Label labelCheck = new Label(container, SWT.COLOR_BLUE);
 		labelCheck.setText("Choose Kind of File");
-		
-		
+
 		new Label(container, SWT.SINGLE);
 		new Label(container, SWT.SINGLE);
-		
-		
+
 		Label labelPDP = new Label(container, SWT.NONE);
 		labelPDP.setText("Policy");
 		checkPDP = new Button(container, SWT.CHECK);
 		checkPDP.setSelection(false);
 		labelPDP.setLayoutData(gd);
-		
+
 		new Label(container, SWT.SINGLE);
-		
-		
+
 		Label labelOption = new Label(container, SWT.NONE);
 		labelOption.setText("Main For Requests Evalution");
 		checkMain = new Button(container, SWT.CHECK);
 		checkMain.setSelection(false);
-		
+
 		new Label(container, SWT.SINGLE);
-				
+
 		Label labelReq = new Label(container, SWT.NONE);
 		labelReq.setText("Request");
 		checkRequest = new Button(container, SWT.CHECK);
 		checkRequest.setSelection(false);
 		labelReq.setLayoutData(gd);
-		
+
 		initialize();
 		dialogChanged();
 		setControl(container);
@@ -133,8 +132,7 @@ public class NewFacplFileWizardPage extends WizardPage {
 	 */
 
 	private void initialize() {
-		if (selection != null && selection.isEmpty() == false
-				&& selection instanceof IStructuredSelection) {
+		if (selection != null && selection.isEmpty() == false && selection instanceof IStructuredSelection) {
 			IStructuredSelection ssel = (IStructuredSelection) selection;
 			if (ssel.size() > 1)
 				return;
@@ -157,9 +155,8 @@ public class NewFacplFileWizardPage extends WizardPage {
 	 */
 
 	private void handleBrowse() {
-		ContainerSelectionDialog dialog = new ContainerSelectionDialog(
-				getShell(), ResourcesPlugin.getWorkspace().getRoot(), false,
-				"Select new file container");
+		ContainerSelectionDialog dialog = new ContainerSelectionDialog(getShell(),
+				ResourcesPlugin.getWorkspace().getRoot(), false, "Select new file container");
 		if (dialog.open() == ContainerSelectionDialog.OK) {
 			Object[] result = dialog.getResult();
 			if (result.length == 1) {
@@ -173,16 +170,14 @@ public class NewFacplFileWizardPage extends WizardPage {
 	 */
 
 	private void dialogChanged() {
-		IResource container = ResourcesPlugin.getWorkspace().getRoot()
-				.findMember(new Path(getContainerName()));
+		IResource container = ResourcesPlugin.getWorkspace().getRoot().findMember(new Path(getContainerName()));
 		String fileName = getFileName();
 
 		if (getContainerName().length() == 0) {
 			updateStatus("File container must be specified");
 			return;
 		}
-		if (container == null
-				|| (container.getType() & (IResource.PROJECT | IResource.FOLDER)) == 0) {
+		if (container == null || (container.getType() & (IResource.PROJECT | IResource.FOLDER)) == 0) {
 			updateStatus("File container must exist");
 			return;
 		}
@@ -221,15 +216,17 @@ public class NewFacplFileWizardPage extends WizardPage {
 	public String getFileName() {
 		return fileText.getText();
 	}
-	
+
 	public Button getCheckPDP() {
 		return checkPDP;
 	}
+
 	public Button getCheckMain() {
 		return checkMain;
 	}
+
 	public Button getCheckRequest() {
 		return checkRequest;
 	}
-	
+
 }

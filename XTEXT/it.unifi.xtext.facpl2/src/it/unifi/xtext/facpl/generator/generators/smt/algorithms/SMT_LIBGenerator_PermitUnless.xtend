@@ -1,8 +1,8 @@
-package it.unifi.xtext.facpl.generator.generators.z3algorithms
+package it.unifi.xtext.facpl.generator.generators.smt.algorithms
 
-import it.unifi.xtext.facpl.generator.generators.Z3Generator_Alg
+import it.unifi.xtext.facpl.generator.generators.SMT_LIBGenerator_Alg
 
-class Z3Generator_DenyUnless extends Z3Generator_Alg {
+class SMT_LIBGenerator_PermitUnless extends SMT_LIBGenerator_Alg {
 
 	override getCombinationPermit(String prev, String current, String p_name, Boolean isFirst) {
 		// name of the previous combination
@@ -11,7 +11,15 @@ class Z3Generator_DenyUnless extends Z3Generator_Alg {
 		if (!isFirst) {
 			n_cns = p_name + "_cmb_"
 		}
-		return "\t (or cns_" + n_cns + prev + "_permit cns_" + current + "_permit)\n"
+		
+		val StringBuffer str = new StringBuffer()
+		str.append("\t (and \n")
+		str.append("\t\t (and (not cns_" + n_cns + prev + "_deny) (not cns_" + current + "_deny))\n")
+		str.append("\t\t (or cns_" + n_cns + prev + "_permit cns_" + n_cns + prev + "_notApp cns_" + n_cns + prev + "_indet)\n")
+		str.append("\t\t (or cns_" + current + "_permit cns_" + current + "_notApp cns_" + current + "_indet)\n")
+		str.append("\t )\n")
+		return str.toString
+		
 	}
 
 	override getCombinationDeny(String prev, String current, String p_name, Boolean isFirst) {
@@ -21,13 +29,7 @@ class Z3Generator_DenyUnless extends Z3Generator_Alg {
 		if (!isFirst) {
 			n_cns = p_name + "_cmb_"
 		}
-		val StringBuffer str = new StringBuffer()
-		str.append("\t (and \n")
-		str.append("\t\t (and (not cns_" + n_cns + prev + "_permit) (not cns_" + current + "_permit))\n")
-		str.append("\t\t (or cns_" + n_cns + prev + "_deny cns_" + n_cns + prev + "_notApp cns_" + n_cns + prev + "_indet)\n")
-		str.append("\t\t (or cns_" + current + "_deny cns_" + current + "_notApp cns_" + current + "_indet)\n")
-		str.append("\t )\n")
-		return str.toString
+		return "\t (or cns_" + n_cns + prev + "_deny cns_" + current + "_deny)\n"
 	}
 
 	override getCombinationNotApp(String prev, String current, String p_name, Boolean isFirst) {
@@ -42,16 +44,16 @@ class Z3Generator_DenyUnless extends Z3Generator_Alg {
 	 * DEFAULT CASES
 	 */
 	override getDefaultCombinationPermit(String r_name) {
-		return "cns_" + r_name + "_permit"
+		val StringBuffer str = new StringBuffer()
+		str.append("\t(and \n")
+		str.append("\t\t (not cns_" + r_name + "_deny)\n")
+		str.append("\t\t (or cns_" + r_name + "_permit (or cns_" + r_name + "_notApp cns_" + r_name + "_indet)))")
+		
+		return str.toString
 	}
 
 	override getDefaultCombinationDeny(String r_name) {
-		val StringBuffer str = new StringBuffer()
-		str.append("\t(and \n")
-		str.append("\t\t (not cns_" + r_name + "_permit)\n")
-		str.append("\t\t (or cns_" + r_name + "_deny (or cns_" + r_name + "_notApp cns_" + r_name + "_indet)))")
-		
-		return str.toString
+		return "cns_" + r_name + "_deny"
 	}
 
 	override getDefaultCombinationNotApp(String r_name) {
