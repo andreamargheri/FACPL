@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import it.unifi.facpl.lib.context.AbstractFulfilledObligation;
 import it.unifi.facpl.lib.context.ContextRequest;
 import it.unifi.facpl.lib.context.FulfilledObligationStatus;
-import it.unifi.facpl.lib.context.FullfilledObbligation;
 import it.unifi.facpl.lib.enums.Effect;
 import it.unifi.facpl.lib.enums.ExpressionValue;
 import it.unifi.facpl.lib.enums.ObligationType;
@@ -32,20 +31,21 @@ public class ObligationStatus implements IObligationElement {
 	 */
 
 	private IExpressionFunctionStatus pepAction;
-	
-	private StatusAttribute s;
 
 	private LinkedList<Object> argsFunction; //ExpresisonBooleanTree, Expression,  Attribute Names, Literals ,Status Attribute
 	private LinkedList<Object> argsStatus;
-
-	public ObligationStatus(IExpressionFunctionStatus pepAction,Effect evaluatedOn, ObligationType type, StatusAttribute s, Object...args){
+	
+	public ObligationStatus(IExpressionFunctionStatus pepAction,Effect evaluatedOn, ObligationType type, Object...args){
 		this.pepAction = pepAction;
 		this.evaluatedOn = evaluatedOn;
 		this.typeObl = type;
-		this.s = s;
 		this.argsFunction = new LinkedList<Object>();
+		this.argsStatus = new LinkedList<Object>();
 		if (args != null){
 			for (Object ob : args) {
+				if (ob instanceof StatusAttribute || ob instanceof Integer || ob instanceof Double || ob instanceof Boolean ){
+					argsStatus.add(ob);
+				}
 				argsFunction.add(ob);
 			}
 		}
@@ -57,7 +57,10 @@ public class ObligationStatus implements IObligationElement {
 		
 		l.debug("Fulfilling Obligation " +this.pepAction.toString() + "...");
 		//AbstractFulfilledObligation obl = new FullfilledObbligation(this.evaluatedOn,this.typeObl,this.pepAction);
-		AbstractFulfilledObligation obl = new FulfilledObligationStatus(this.evaluatedOn,this.typeObl,this.pepAction,this.s); 
+		AbstractFulfilledObligation obl = new FulfilledObligationStatus(this.evaluatedOn,this.typeObl,this.pepAction); 
+		if(!argsStatus.isEmpty()){
+			obl.addArgStatus(argsStatus);
+		}
 		//da correggere dopo
 
 		//Fulfill arguments for PEP Function

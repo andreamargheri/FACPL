@@ -17,9 +17,8 @@ public class FulfilledObligationStatus extends AbstractFulfilledObligation {
 	
 	
 	
-	public FulfilledObligationStatus(Effect effect, ObligationType typeObl, IExpressionFunctionStatus pepAction, StatusAttribute s) {
+	public FulfilledObligationStatus(Effect effect, ObligationType typeObl, IExpressionFunctionStatus pepAction) {
 		super(effect, typeObl, pepAction);
-		this.s=s;
 	}
 
 
@@ -30,15 +29,14 @@ public class FulfilledObligationStatus extends AbstractFulfilledObligation {
 		 * -gestire eccezione con try-catch nel caso di fallimento dell'operazione 
 		 * (per ora viene spedita su)
 		 */
-		this.pepAction.evaluateFunction(this.getArguments()); //quali sono gli argomenti? ponzi ponzi popopo
+		this.pepAction.evaluateFunction(this.getArgsStatus()); //quali sono gli argomenti? ponzi ponzi popopo
 		return this;
 	}
 
-
-	@Override
-	public void setStatusAttribute(StatusAttribute s) throws Exception {
-		this.s = s;
-		
-	}
+//	@Override
+//	public void setStatusAttribute(StatusAttribute s) throws Exception {
+//		this.s=s;
+//		
+//	}
 
 }

@@ -19,7 +19,7 @@ public abstract class AbstractFulfilledObligation {
 	protected ObligationType type;
 	protected LinkedList<Object> arguments;
 	protected IExpressionFunctionStatus pepAction; //dare un tipo a questo
-	protected StatusAttribute s;
+	protected LinkedList<Object> argsStatus;
 	/*
 	 * questa e' l'obbligation valutata astratta
 	 * bisogna differenziare tra obbligation fullfilled di stato e obbligation fullfilled NON di stato
@@ -36,14 +36,19 @@ public abstract class AbstractFulfilledObligation {
 	public AbstractFulfilledObligation() {
 		
 	}
-	
-	public abstract void setStatusAttribute(StatusAttribute s) throws Exception;
 
 	public void addArg(Object object){
 		if (this.arguments == null){
 			this.arguments = new LinkedList<Object>();
 		}
 		this.arguments.add(object);
+	}
+	
+	public void addArgStatus(LinkedList<Object> ob){
+		if (this.argsStatus == null){
+			this.argsStatus = new LinkedList<Object>();
+		}
+		this.argsStatus= ob;
 	}
 	
 	public Effect getEvaluatedOn() {
@@ -57,6 +62,10 @@ public abstract class AbstractFulfilledObligation {
 	}
 	public LinkedList<Object> getArguments() {
 		return arguments;
+	}
+	
+	public LinkedList<Object> getArgsStatus(){
+		return argsStatus;
 	}
 	
 	@Override

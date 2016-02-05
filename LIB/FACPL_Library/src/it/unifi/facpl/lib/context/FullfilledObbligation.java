@@ -15,10 +15,10 @@ public class FullfilledObbligation extends AbstractFulfilledObligation {
 	public AbstractFulfilledObligation evaluateObl() throws Exception {
 		throw new Exception("it's not a status obbligation"); 
 	}
-	@Override
-	public void setStatusAttribute(StatusAttribute s) throws Exception {
-		throw new Exception("it's not a status obbligation"); 
-		
-	}
+//	@Override
+//	public void setStatusAttribute(StatusAttribute s) throws Exception {
+//		throw new Exception("it's not a status obbligation"); 
+//		
+//	}
 
 }
