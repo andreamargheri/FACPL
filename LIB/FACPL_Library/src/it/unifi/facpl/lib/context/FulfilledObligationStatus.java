@@ -24,19 +24,9 @@ public class FulfilledObligationStatus extends AbstractFulfilledObligation {
 
 	@Override
 	public AbstractFulfilledObligation evaluateObl() throws Throwable {
-		/*
-		 * -vedere quali sono gli argomenti
-		 * -gestire eccezione con try-catch nel caso di fallimento dell'operazione 
-		 * (per ora viene spedita su)
-		 */
-		this.pepAction.evaluateFunction(this.getArgsStatus()); //quali sono gli argomenti? ponzi ponzi popopo
+		this.pepAction.evaluateFunction(this.getArgsStatus()); 
 		return this;
 	}
 
-//	@Override
-//	public void setStatusAttribute(StatusAttribute s) throws Exception {
-//		this.s=s;
-//		
-//	}
 
 }
