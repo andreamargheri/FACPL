@@ -20,12 +20,11 @@ public abstract class  AbstractObligation implements IObligationElement {
 	
 	protected Effect evaluatedOn;
 	protected ObligationType typeObl;
-	protected IExpressionFunctionStatus pepAction;
+	protected Object pepAction; 
 	protected LinkedList<Object> argsFunction, argsStatus; //ExpresisonBooleanTree, Expression,  Attribute Names, Literals ,Status Attribute
 
 	
-	public AbstractObligation(IExpressionFunctionStatus pepAction,Effect evaluatedOn, ObligationType type, Object...args){
-		this.pepAction = pepAction;
+	public AbstractObligation(Effect evaluatedOn, ObligationType type, Object...args){
 		this.evaluatedOn = evaluatedOn;
 		this.typeObl = type;
 		this.argsFunction = new LinkedList<Object>();

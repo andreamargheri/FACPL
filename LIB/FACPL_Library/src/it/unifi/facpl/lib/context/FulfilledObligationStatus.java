@@ -20,11 +20,11 @@ public class FulfilledObligationStatus extends AbstractFulfilledObligation {
 	public FulfilledObligationStatus(Effect effect, ObligationType typeObl, IExpressionFunctionStatus pepAction) {
 		super(effect, typeObl, pepAction);
 	}
-
+	
 
 	@Override
 	public AbstractFulfilledObligation evaluateObl() throws Throwable {
-		this.pepAction.evaluateFunction(this.getArgsStatus()); 
+		this.pepFunction.evaluateFunction(this.getArgsStatus()); 
 		return this;
 	}
 

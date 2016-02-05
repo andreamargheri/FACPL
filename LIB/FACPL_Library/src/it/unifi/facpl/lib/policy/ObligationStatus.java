@@ -10,7 +10,8 @@ import it.unifi.facpl.system.status.function.arithmetic.evaluator.IExpressionFun
 public class ObligationStatus extends AbstractObligation {
 	
 	public ObligationStatus(IExpressionFunctionStatus pepAction,Effect evaluatedOn, ObligationType type, Object...args){
-		super(pepAction, evaluatedOn, type, args);
+		super(evaluatedOn, type, args);
+		this.pepAction = pepAction;
 		if (args != null){
 			for (Object ob : args) {
 				if (ob instanceof StatusAttribute || ob instanceof Integer || ob instanceof Double || ob instanceof Boolean ){
@@ -23,7 +24,7 @@ public class ObligationStatus extends AbstractObligation {
 	
 	@Override
 	protected AbstractFulfilledObligation createObligation() {
-		AbstractFulfilledObligation obl = new FulfilledObligationStatus(this.evaluatedOn,this.typeObl,this.pepAction); 
+		AbstractFulfilledObligation obl = new FulfilledObligationStatus(this.evaluatedOn,this.typeObl,(IExpressionFunctionStatus)this.pepAction); 
 		if(!argsStatus.isEmpty()){
 			obl.addArgStatus(argsStatus);
 		}

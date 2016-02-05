@@ -33,6 +33,18 @@ public class ObligationEvaluationTest {
 						"subject", "missing"));
 		o4 = new Obligation("mailTo", Effect.DENY, ObligationType.O,
 				new AttributeName("subject", "missing"));
+		
+		
+		o1 = new Obligation("mailTo", Effect.PERMIT, ObligationType.M,
+				new AttributeName("subject", "permission"));
+		o2 = new Obligation("mailTo", Effect.DENY, ObligationType.M,
+				new AttributeName("subject", "permission"), new AttributeName(
+						"subject", "num"));
+		o3 = new Obligation("mailTo", Effect.DENY, ObligationType.M,
+				new AttributeName("subject", "permission"), new AttributeName(
+						"subject", "missing"));
+		o4 = new Obligation("mailTo", Effect.DENY, ObligationType.O,
+				new AttributeName("subject", "missing"));
 
 	}
 

@@ -33,10 +33,7 @@ public class PEP {
 		this.alg = alg;
 		this.status = new FacplStatus("status");
 	}
-	/*
-	 * eventualmente potrebbe servire
-	 * se gli venisse passato direttamente uno status gia' fatto
-	 */
+	
 	public PEP(EnforcementAlgorithm alg, FacplStatus status) {
 		this.alg = alg;
 		this.status = status;

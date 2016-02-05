@@ -8,9 +8,10 @@ import it.unifi.facpl.system.status.function.arithmetic.evaluator.IExpressionFun
 public class FullfilledObbligation extends AbstractFulfilledObligation {
 
 	
-	public FullfilledObbligation(Effect effect, ObligationType typeObl, IExpressionFunctionStatus pepAction) {
+	public FullfilledObbligation(Effect effect, ObligationType typeObl, String pepAction) {
 		super(effect, typeObl, pepAction);
 	}
+	
 	@Override
 	public AbstractFulfilledObligation evaluateObl() throws Exception {
 		throw new Exception("it's not a status obbligation"); 
