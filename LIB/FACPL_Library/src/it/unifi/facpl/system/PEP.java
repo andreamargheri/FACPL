@@ -10,11 +10,12 @@ import org.slf4j.LoggerFactory;
 import it.unifi.facpl.lib.context.AbstractFulfilledObligation;
 import it.unifi.facpl.lib.context.AuthorisationPDP;
 import it.unifi.facpl.lib.context.AuthorisationPEP;
+import it.unifi.facpl.lib.context.FulfilledObligationStatus;
+import it.unifi.facpl.lib.context.FullfilledObbligation;
 import it.unifi.facpl.lib.enums.EnforcementAlgorithm;
 import it.unifi.facpl.lib.enums.ObligationType;
 import it.unifi.facpl.lib.enums.StandardDecision;
 import it.unifi.facpl.lib.interfaces.IPepAction;
-import it.unifi.facpl.system.status.FacplStatus;
 
 /**
  * 
@@ -27,20 +28,11 @@ public class PEP {
 	private static HashMap<String, Class<? extends IPepAction>> pepAction;
 
 	private EnforcementAlgorithm alg;
-	private FacplStatus status;
-	//implementare lo stato
+
 	public PEP(EnforcementAlgorithm alg) {
 		this.alg = alg;
-		this.status = new FacplStatus("status");
-	}
-	
-	public PEP(EnforcementAlgorithm alg, FacplStatus status) {
-		this.alg = alg;
-		this.status = status;
-		
 	}
 
-	
 	public AuthorisationPEP doEnforcement(AuthorisationPDP authPDP) {
 
 		Logger l = LoggerFactory.getLogger(PEP.class);
@@ -151,40 +143,52 @@ public class PEP {
 	 */
 	private void dischargeObligation(AbstractFulfilledObligation obl) throws Throwable {
 		Logger l = LoggerFactory.getLogger(PEP.class);
-		try {
-			// discharge obligation
-			// retrieve pepActionClass
-			Class<? extends IPepAction> classAction = pepAction.get((String)obl.getPepAction());
+		if (obl instanceof FullfilledObbligation) {
+			obl = (FullfilledObbligation) obl;
+			try {
+				// discharge obligation
+				// retrieve pepActionClass
+				Class<? extends IPepAction> classAction = pepAction.get((String) obl.getPepAction());
 
-			if (classAction == null) {
-				l.debug("Undefined PEP action \"" + (String)obl.getPepAction() + "\"");
+				if (classAction == null) {
+					l.debug("Undefined PEP action \"" + (String) obl.getPepAction() + "\"");
 
-				throw new Exception("Undefined " + (String)obl.getPepAction() + " PEP Action");
+					throw new Exception("Undefined " + (String) obl.getPepAction() + " PEP Action");
+				}
+
+				Class<?> params[] = new Class[1];
+				params[0] = List.class;
+
+				Method eval = classAction.getDeclaredMethod("eval", params);
+
+				Object pepAction = classAction.newInstance();
+
+				eval.invoke(pepAction, obl.getArguments());
+
+			} catch (Throwable t) {
+				// check type of obligation for enforcement error
+				// t.printStackTrace();
+				if (obl.getType().equals(ObligationType.M)) {
+					// if mandatory re-throw exception
+					throw t;
+				}
+				l.debug("Exception ignored. Obligation is optional");
 			}
-
-			Class<?> params[] = new Class[1];
-			params[0] = List.class;
-
-			Method eval = classAction.getDeclaredMethod("eval", params);
-
-			Object pepAction = classAction.newInstance();
-
-			eval.invoke(pepAction, obl.getArguments());
-
-		} catch (Throwable t) {
-			// check type of obligation for enforcement error
-			// t.printStackTrace();
-			if (obl.getType().equals(ObligationType.M)) {
-				// if mandatory re-throw exception
-				throw t;
-			}
-			l.debug("Exception ignored. Obligation is optional");
+		}
+		/*
+		 * si valutano le obbligazioni di stato
+		 * in questo caso visto che l'oggetto è gia' presente all'interno
+		 * della classe si puo' semplicemente invocare il metodo che invocherà il valutatore
+		 */
+		else if (obl instanceof FulfilledObligationStatus) {
+			obl = (FulfilledObligationStatus)obl;
+			obl.evaluateObl();
 		}
 	}
-	
+
 	public void addPEPActions(HashMap<String, Class<? extends IPepAction>> classPepActions) {
 		Logger l = LoggerFactory.getLogger(PEP.class);
-		l.debug("Add standard actions"); //stile factory delle funzioni
+		l.debug("Add standard actions"); // stile factory delle funzioni
 
 		pepAction = new HashMap<String, Class<? extends IPepAction>>();
 		pepAction.put("mail", it.unifi.facpl.lib.pepFunction.MailTo.class);
