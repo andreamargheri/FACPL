@@ -47,7 +47,7 @@ class SMT_LIBGenerator extends SMT_LIBGenerator_Code {
 
 		var str = doGenerateSecurity_Property_Code(resource, policy_name, req, dec, prop);
 
-		var fileName = policy_name + "_property_" + name_property;
+		var fileName =  "Property_" + name_property + "_" + policy_name ;
 		/* Copy the generated SMT-LIB in a FILE  */
 		fsa.generateFile(fileName + ".smt2", str);
 		

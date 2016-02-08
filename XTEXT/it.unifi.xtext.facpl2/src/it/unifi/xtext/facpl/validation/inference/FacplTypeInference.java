@@ -61,21 +61,24 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 				type = FacplType.combine(type, doSwitch(exp));
 			}
 
-	
 			if (type.equals(FacplType.NAME) || type.equals(FacplType.ERR)) {
 				/*
 				 * Request attribute cannot be a name, it need to be a literal
 				 */
 				return FacplType.ERR;
-			}else if (attr.getValue().size() > 1){
-				/* it is a declaration of a set of value -> set the adequate FacplType */
+			} else if (attr.getValue().size() > 1) {
+				/*
+				 * it is a declaration of a set of value -> set the adequate
+				 * FacplType
+				 */
 				type = FacplType.getSetType(type);
 			}
 
 			/* Attribute well-typed, add type constraint */
 
 			try {
-				this.typeAssignments.add(attr.getName(), type);
+				if (type != null)
+					this.typeAssignments.add(attr.getName(), type);
 			} catch (Exception e) {
 				/*
 				 * Type of attribute inferred by the request does not match that
@@ -616,17 +619,20 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 
 	@Override
 	public FacplType caseAttributeReq(AttributeReq object) {
-		FacplType f = doSwitch(object.getValue().get(0));
-		for (Expression e : object.getValue()) {
-			FacplType t = doSwitch(e);
-			if (t.equals(FacplType.NAME))
-				// Names are not accepted in requests. Returned immediately
-				return t;
-			f = FacplType.combine(f, t);
-			if (f.equals(FacplType.ERR))
-				return FacplType.ERR;
+		if (object.getValue().size() > 0) {
+			FacplType f = doSwitch(object.getValue().get(0));
+			for (Expression e : object.getValue()) {
+				FacplType t = doSwitch(e);
+				if (t.equals(FacplType.NAME))
+					// Names are not accepted in requests. Returned immediately
+					return t;
+				f = FacplType.combine(f, t);
+				if (f.equals(FacplType.ERR))
+					return FacplType.ERR;
+			}
+			return f;
 		}
-		return f;
+		return null;
 	}
 
 }

@@ -34,53 +34,51 @@ public class PropertyNameDialog extends TitleAreaDialog {
 		setTitle("Define Security Property");
 		setMessage("Choose a Property Name ", IMessageProvider.INFORMATION);
 	}
-	
+
 	@Override
-	  protected Control createDialogArea(Composite parent) {
-	    Composite area = (Composite) super.createDialogArea(parent);
-	    Composite container = new Composite(area, SWT.NONE);
-	    container.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-	    GridLayout layout = new GridLayout(2, false);
-	    container.setLayout(layout);
+	protected Control createDialogArea(Composite parent) {
+		Composite area = (Composite) super.createDialogArea(parent);
+		Composite container = new Composite(area, SWT.NONE);
+		container.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		GridLayout layout = new GridLayout(2, false);
+		container.setLayout(layout);
 
-	    createPropertytName(container);
-	 
-	    return area;
-	  }
+		createPropertytName(container);
 
-	  private void createPropertytName(Composite container) {
-	    Label lbtFirstName = new Label(container, SWT.NONE);
-	    lbtFirstName.setText("First Name");
+		return area;
+	}
 
-	    GridData dataFirstName = new GridData();
-	    dataFirstName.grabExcessHorizontalSpace = true;
-	    dataFirstName.horizontalAlignment = GridData.FILL;
+	private void createPropertytName(Composite container) {
+		Label lbtFirstName = new Label(container, SWT.NONE);
+		lbtFirstName.setText("First Name");
 
-	    textPropertyName = new Text(container, SWT.BORDER);
-	    textPropertyName.setLayoutData(dataFirstName);
-	  }
-	
+		GridData dataFirstName = new GridData();
+		dataFirstName.grabExcessHorizontalSpace = true;
+		dataFirstName.horizontalAlignment = GridData.FILL;
 
-	  @Override
-	  protected boolean isResizable() {
-	    return true;
-	  }
+		textPropertyName = new Text(container, SWT.BORDER);
+		textPropertyName.setLayoutData(dataFirstName);
+	}
 
-	  // save content of the Text fields because they get disposed
-	  // as soon as the Dialog closes
-	  private void saveInput() {
-	    propertyName = textPropertyName.getText();
-	  }
+	@Override
+	protected boolean isResizable() {
+		return true;
+	}
 
-	  @Override
-	  protected void okPressed() {
-	    saveInput();
-	    super.okPressed();
-	  }
+	// save content of the Text fields because they get disposed
+	// as soon as the Dialog closes
+	private void saveInput() {
+		propertyName = textPropertyName.getText();
+	}
 
-	  public String getPropertyName() {
-	    return propertyName;
-	  }
-	  
-	  
+	@Override
+	protected void okPressed() {
+		saveInput();
+		super.okPressed();
+	}
+
+	public String getPropertyName() {
+		return propertyName;
+	}
+
 }
