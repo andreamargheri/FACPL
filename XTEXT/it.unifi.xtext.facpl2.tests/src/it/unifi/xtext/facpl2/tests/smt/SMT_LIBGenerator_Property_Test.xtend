@@ -18,6 +18,7 @@ import it.unifi.xtext.facpl.generator.util.Decision
 import it.unifi.xtext.facpl.validation.FacplType
 import it.unifi.xtext.facpl.generator.util.PolicyConstant
 import java.io.PrintWriter
+import it.unifi.xtext.facpl.generator.util.StructuralProperty
 
 @InjectWith(typeof(Facpl2InjectorProvider))
 @RunWith(typeof(XtextRunner))
@@ -343,4 +344,108 @@ public class SMT_LIBGenerator_Property_Test extends AbstractXtextTests {
 
 	}
 
+
+	/* Generation of SMT-LIB code for Complete Structural Property*/
+	@Test
+	def void genStructProperty_Complete() {
+		var model = (
+			'''PolicySet Name {permit-overrides 
+  		policies: 
+  			Rule r1 (permit target: in("read", action/id) || equal(subject/id,"Andrea"))
+  		}''').parse
+
+		assertNoErrors(model)
+
+		var str = doGenerateComplete_Property_Code(model, "Name")
+
+		/* Test Final assertion */
+		assertEquals(str.contains("(assert cns_Name_notApp)"), true)
+
+		/*Copy the generated code to file */
+		var PrintWriter writer = new PrintWriter("SMT_LIB_gen/StructuralProperty/genStruct_Complete1.smt2", "UTF-8");
+		writer.println(str);
+		writer.close();
+		
+		/* ------------------ */
+		
+		model = (
+		'''PolicySet Name {permit-overrides 
+  		policies: 
+  			Rule r1 (permit target: in("read", action/id) || equal(subject/id,"Andrea"))
+  		}
+  		PolicySet Name1 {permit-overrides 
+  		  	policies: 
+  		  		Rule r12 (permit target: in("read", action/id) || equal(subject/id,"Andrea"))
+  		 }
+  		''').parse
+
+		assertNoErrors(model)
+
+		str = doGenerateComplete_Property_Code(model, "Name1")
+
+		/* Test Final assertion */
+		assertEquals(str.contains("(assert cns_Name1_notApp)"), true)
+
+		/*Copy the generated code to file */
+		writer = new PrintWriter("SMT_LIB_gen/StructuralProperty/genStruct_Complete2.smt2", "UTF-8");
+		writer.println(str);
+		writer.close();	
+	}
+	
+	/* Generation of SMT-LIB code for Structural Properties (but Complete)*/
+	@Test
+	def void genStructProperties() {
+		var model = (
+		'''
+		PolicySet Name {permit-overrides 
+		policies: 
+			Rule r1 (permit target: equal("read", action/type))
+		}
+		
+		PolicySet Name1 {permit-overrides 
+		policies: 
+			Rule r12 (permit target: equal("read", action/id) || equal(subject/id,"Andrea"))
+		}
+  		''').parse
+
+		assertNoErrors(model)
+
+		var str = doGenerateStructural_Property_Code(model, "Name", "Name1", StructuralProperty.COVERAGE);
+
+		/* Test Final assertion */
+		assertEquals(str.contains("(=> cns_Name_permit cns_Name1_permit)"), true)
+
+		/*Copy the generated code to file */
+		var PrintWriter writer = new PrintWriter("SMT_LIB_gen/StructuralProperty/genStruct_Coverage1.smt2", "UTF-8");
+		writer.println(str);
+		writer.close();
+		
+		
+		model = (
+		'''
+		PolicySet Name {permit-overrides 
+		policies: 
+			Rule r1 (permit target: equal("read", action/type))
+		}
+		
+		PolicySet Name1 {permit-overrides 
+		policies: 
+			Rule r12 (permit target: equal("read", action/id) || equal(subject/id,"Andrea"))
+		}
+  		''').parse
+
+		assertNoErrors(model)
+
+		str = doGenerateStructural_Property_Code(model, "Name", "Name1", StructuralProperty.DISJOINT);
+
+		/* Test Final assertion */
+		assertEquals(str.contains("(and cns_Name_permit cns_Name1_permit)"), true)
+
+		/*Copy the generated code to file */
+		writer = new PrintWriter("SMT_LIB_gen/StructuralProperty/genStruct_Disjoint1.smt2", "UTF-8");
+		writer.println(str);
+		writer.close();
+
+	}
+	
 }

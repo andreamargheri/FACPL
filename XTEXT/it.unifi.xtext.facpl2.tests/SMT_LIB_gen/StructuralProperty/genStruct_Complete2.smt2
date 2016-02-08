@@ -8,7 +8,7 @@
 ;#######################
 (define-sort Set (T) (Array Int T)) 
 ;################### STRING DECLARATIONs #######################
- (declare-datatypes () ((String s_doctor s_write )))
+ (declare-datatypes () ((String s_read s_Andrea )))
 ;################### FACPL FUNCTION DECLARATIONs #######################
 (define-fun isFalse ((x (TValue Bool))) Bool
 	(ite (= x (mk-val false false false)) true false)
@@ -395,191 +395,139 @@
 ;################################ END DATATYPEs AND FUNCTIONs DECLARATION #############################
 
 ;################### ATTRIBUTE DECLARATIONs #######################
-(declare-const n_sub/id (TValue String))
-(assert (not (and (miss n_sub/id) (err n_sub/id))))
+(declare-const n_subject/id (TValue String))
+(assert (not (and (miss n_subject/id) (err n_subject/id))))
  
-(declare-const n_act/id (TValue String))
-(assert (not (and (miss n_act/id) (err n_act/id))))
- 
-(declare-const n_act/type (TValue Int))
-(assert (not (and (miss n_act/type) (err n_act/type))))
- 
-(declare-const n_sub/profile (TValue Int))
-(assert (not (and (miss n_sub/profile) (err n_sub/profile))))
+(declare-const n_action/id (TValue (Set String)))
+(assert (not (and (miss n_action/id) (err n_action/id))))
  
 ;################### CONSTANTs DECLARATIONs #######################
  
-(declare-const const_doctor (TValue String))
-(assert (= (val const_doctor) s_doctor))
-(assert (not (miss const_doctor))) 
-(assert (not (err const_doctor)))
+(declare-const const_read (TValue String))
+(assert (= (val const_read) s_read))
+(assert (not (miss const_read))) 
+(assert (not (err const_read)))
  
-(declare-const const_5 (TValue Int))
-(assert (= (val const_5) 5))
-(assert (not (miss const_5))) 
-(assert (not (err const_5)))
- 
-(declare-const const_write (TValue String))
-(assert (= (val const_write) s_write))
-(assert (not (miss const_write))) 
-(assert (not (err const_write)))
+(declare-const const_Andrea (TValue String))
+(assert (= (val const_Andrea) s_Andrea))
+(assert (not (miss const_Andrea))) 
+(assert (not (err const_Andrea)))
 ;################################ END ATTRIBUTEs AND CONSTANTs DECLARATION #############################
-;################### START CONSTRAINT RULE r1 #######################
+;################### START CONSTRAINT RULE r12 #######################
 ;##### Rule Target
-(define-fun cns_target_r1 () (TValue Bool)
-	(equalString n_act/id const_write)
+(define-fun cns_target_r12 () (TValue Bool)
+	(FOr (inString const_read n_action/id) (equalString n_subject/id const_Andrea))
 )
 ;##### Rule Obligations
-(define-fun cns_obl_permit_r1 ()  Bool
-	 (and (and
- 		 (not (miss (additionInt const_5 n_sub/profile)))
-		 (not (err (additionInt const_5 n_sub/profile)))
-)
-))
- 
-(define-fun cns_obl_deny_r1 ()  Bool
-	 (and 	 true true))
- 
-;##### Rule Constraints
-;PERMIT
-(define-fun cns_r1_permit () Bool
-(and (isTrue cns_target_r1) cns_obl_permit_r1)
-)
-;DENY
-(define-fun cns_r1_deny () Bool
- false 
-)
-;NOT APP
-(define-fun cns_r1_notApp () Bool
-	(or (isFalse cns_target_r1) (miss cns_target_r1))
-)
-;INDET
-(define-fun cns_r1_indet () Bool
-	(or 
-		(err cns_target_r1)
-		(isNotBoolValue cns_target_r1)
-		(and 
-			(isTrue cns_target_r1)
-			(not cns_obl_permit_r1)
-		)
-	)
-)
-;################### END CONSTRAINT RULE r1 #########################
-;################### START CONSTRAINT RULE r2 #######################
-;##### Rule Target
-(define-fun cns_target_r2 () (TValue Bool)
-	(equalInt n_act/type const_5)
-)
-;##### Rule Obligations
-(define-fun cns_obl_permit_r2 ()  Bool
+(define-fun cns_obl_permit_r12 ()  Bool
 true
 )
  
-(define-fun cns_obl_deny_r2 ()  Bool
+(define-fun cns_obl_deny_r12 ()  Bool
 true
 )
  
 ;##### Rule Constraints
 ;PERMIT
-(define-fun cns_r2_permit () Bool
- false 
+(define-fun cns_r12_permit () Bool
+(and (isTrue cns_target_r12) cns_obl_permit_r12)
 )
 ;DENY
-(define-fun cns_r2_deny () Bool
-(and (isTrue cns_target_r2) cns_obl_deny_r2)
+(define-fun cns_r12_deny () Bool
+ false 
 )
 ;NOT APP
-(define-fun cns_r2_notApp () Bool
-	(or (isFalse cns_target_r2) (miss cns_target_r2))
+(define-fun cns_r12_notApp () Bool
+	(or (isFalse cns_target_r12) (miss cns_target_r12))
 )
 ;INDET
-(define-fun cns_r2_indet () Bool
+(define-fun cns_r12_indet () Bool
 	(or 
-		(err cns_target_r2)
-		(isNotBoolValue cns_target_r2)
+		(err cns_target_r12)
+		(isNotBoolValue cns_target_r12)
 		(and 
-			(isTrue cns_target_r2)
-			(not cns_obl_deny_r2)
+			(isTrue cns_target_r12)
+			(not cns_obl_permit_r12)
 		)
 	)
 )
-;################### END CONSTRAINT RULE r2 #########################
-;################################ TOP-LEVEL POLICY Name CONSTRAINTs ###########################
+;################### END CONSTRAINT RULE r12 #########################
+;################################ TOP-LEVEL POLICY Name1 CONSTRAINTs ###########################
 ;##### Policy Target
-(define-fun cns_target_Name () (TValue Bool)
-	(equalString n_sub/id const_doctor)
+(define-fun cns_target_Name1 () (TValue Bool)	
+	(mk-val true false false) 
 )
 ;##### Policy Obligations
-(define-fun cns_obl_permit_Name ()  Bool
+(define-fun cns_obl_permit_Name1 ()  Bool
 true
 )
  
-(define-fun cns_obl_deny_Name ()  Bool
+(define-fun cns_obl_deny_Name1 ()  Bool
 true
 )
  
 ;##### Policy Combining Algorithm
-(define-fun cns_Name_cmb_final_permit () Bool
-	 (and cns_r1_permit cns_r2_permit))
-
-(define-fun cns_Name_cmb_final_deny () Bool
-	 (and cns_r1_deny cns_r2_deny))
-
-(define-fun cns_Name_cmb_final_notApp () Bool
-	 (and cns_r1_notApp cns_r2_notApp)
+(define-fun cns_Name1_cmb_final_permit () Bool
+	cns_r12_permit
 )
 
-(define-fun cns_Name_cmb_final_indet () Bool
-	 (or 
- 		 cns_r1_indet cns_r2_indet
-		 (and cns_r1_notApp (not cns_r2_notApp))
-		 (and (not cns_r1_notApp) cns_r2_notApp)
-		 (and cns_r1_permit cns_r2_deny)
-		 (and cns_r1_deny cns_r2_permit)
-	 ))
+(define-fun cns_Name1_cmb_final_deny () Bool
+	cns_r12_deny
+)
 
- 
+(define-fun cns_Name1_cmb_final_notApp () Bool
+	cns_r12_notApp
+)
+
+(define-fun cns_Name1_cmb_final_indet () Bool
+	cns_r12_indet
+)
 ;##### Policy Final Constraints
 ;PERMIT
-(define-fun cns_Name_permit () Bool
+(define-fun cns_Name1_permit () Bool
 	(and 
-		(isTrue cns_target_Name)
-		cns_Name_cmb_final_permit
-		cns_obl_permit_Name
+		(isTrue cns_target_Name1)
+		cns_Name1_cmb_final_permit
+		cns_obl_permit_Name1
 	)
 )
 ;DENY
-(define-fun cns_Name_deny () Bool
+(define-fun cns_Name1_deny () Bool
 	(and 
-		(isTrue cns_target_Name)
-		cns_Name_cmb_final_deny
-		cns_obl_deny_Name
+		(isTrue cns_target_Name1)
+		cns_Name1_cmb_final_deny
+		cns_obl_deny_Name1
 	)
 )
 ;NOT APP
-(define-fun cns_Name_notApp () Bool
+(define-fun cns_Name1_notApp () Bool
 	(or
-		(or (isFalse cns_target_Name) (miss cns_target_Name))
-		(and (isTrue cns_target_Name) cns_Name_cmb_final_notApp)
+		(or (isFalse cns_target_Name1) (miss cns_target_Name1))
+		(and (isTrue cns_target_Name1) cns_Name1_cmb_final_notApp)
 	)
 )
 ;INDET
-(define-fun cns_Name_indet () Bool
+(define-fun cns_Name1_indet () Bool
 	(or 
-		(err cns_target_Name)
-		(isNotBoolValue cns_target_Name)
-		(and (isTrue cns_target_Name) cns_Name_cmb_final_indet)
+		(err cns_target_Name1)
+		(isNotBoolValue cns_target_Name1)
+		(and (isTrue cns_target_Name1) cns_Name1_cmb_final_indet)
 		(and 
-			(isTrue cns_target_Name)
-			cns_Name_cmb_final_permit
-			(not cns_obl_permit_Name)
+			(isTrue cns_target_Name1)
+			cns_Name1_cmb_final_permit
+			(not cns_obl_permit_Name1)
 		)
 		(and 
-			(isTrue cns_target_Name)
-			cns_Name_cmb_final_deny
-			(not cns_obl_deny_Name)
+			(isTrue cns_target_Name1)
+			cns_Name1_cmb_final_deny
+			(not cns_obl_deny_Name1)
 		)
 	)
 )
-;################### END TOP-LEVEL POLICY Name CONSTRAINTs #########################
+;################### END TOP-LEVEL POLICY Name1 CONSTRAINTs #########################
+;###################### STRUCTURAL PROPERTY #####################
+(assert cns_Name1_notApp)
+
+(check-sat)
+(get-model)
 

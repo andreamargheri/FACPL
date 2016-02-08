@@ -59,14 +59,14 @@ class SMT_LIBGenerator_Code {
 	
 	//DeclaredFunction 
 	protected StringBuffer dec_functions
-	protected Boolean flag = false //if declared function occurs
+	protected Boolean flagDeclaredFunctions = false //if declared function occurs
 
 
 	/**
 	 * Initialization method for the SMT-LIB code generation 
-	 * -> NOT USED FOR PROPERTY VERIFICATION
+	 * -> Used for structural properties but not for security ones
 	 */
-	def void initialiseFacplResource (Facpl resource) throws Exception{
+	def initialiseFacplResource (Facpl resource) throws Exception{
 				
 		tInf = new FacplTypeInference()
 		
@@ -75,7 +75,7 @@ class SMT_LIBGenerator_Code {
 			dec_functions = new StringBuffer()
 			for (dec : resource.declarations){
 				dec_functions.append(createDeclFunctionConstr(dec)+"\n")
-				flag = true
+				flagDeclaredFunctions = true
 			}
 		}
 		
@@ -105,13 +105,16 @@ class SMT_LIBGenerator_Code {
 				stringEls.add(el.value.toString)
 			}
 		}
+		
+		/* Constraint Functions and Various Declarations */
+		return getGeneralDeclarations()
 
 	}
 	
 	/**
 	 * Initialization method for the Property evaluation ( it take into account a request)
 	 */
-	def void initialiseFacplResource_Request (Facpl resource, Request request) throws Exception{
+	def initialiseFacplResource_Request (Facpl resource, Request request) throws Exception{
 				
 		tInf = new FacplTypeInference()
 		
@@ -120,7 +123,7 @@ class SMT_LIBGenerator_Code {
 			dec_functions = new StringBuffer()
 			for (dec : resource.declarations){
 				dec_functions.append(createDeclFunctionConstr(dec)+"\n")
-				flag = true
+				flagDeclaredFunctions = true
 			}
 		}
 		
@@ -159,8 +162,33 @@ class SMT_LIBGenerator_Code {
 				stringEls.add(el.value.toString)
 			}
 		}
-
+		
+		/* Constraint Functions and Various Declarations */
+		return getGeneralDeclarations()
 	}
+
+	def getGeneralDeclarations()'''
+		«getDatatypeDec()»
+		«IF this.stringEls.size > 0»
+		;################### STRING DECLARATIONs #######################
+		«getStringDec()»
+		«ENDIF»
+		«IF flagDeclaredFunctions» 
+		;################### FUNCTIONS DECLARED BY POLICY (TO BE IMPLEMENTED) ##################
+		;#TODO: stub definitions for declared functions
+		«dec_functions.toString»
+		;################### END FUNCTIONS DECLARED BY POLICY ##################
+		«ENDIF»
+		;################### FACPL FUNCTION DECLARATIONs #######################
+		«getFunctionDec()»
+		;################################ END DATATYPEs AND FUNCTIONs DECLARATION #############################
+		
+		;################### ATTRIBUTE DECLARATIONs #######################
+		«getAttributeDec()»
+		;################### CONSTANTs DECLARATIONs #######################
+		«getConstantDec()»
+		;################################ END ATTRIBUTEs AND CONSTANTs DECLARATION #############################
+	'''
 
 	
 /* ##############################################
@@ -168,27 +196,6 @@ class SMT_LIBGenerator_Code {
  * ##############################################
  */
 def createMainConstraint(FacplPolicy pol) '''
-«getDatatypeDec(pol)»
-«IF this.stringEls.size > 0»
-;################### STRING DECLARATIONs #######################
-«getStringDec()»
-«ENDIF»
-«IF flag» 
-;################### FUNCTIONS DECLARED BY POLICY (TO BE IMPLEMENTED) ##################
-;#TODO: stub definitions for declared functions
-«dec_functions.toString»
-;################### END FUNCTIONS DECLARED BY POLICY ##################
-«ENDIF»
-;################### FACPL FUNCTION DECLARATIONs #######################
-«getFunctionDec()»
-;################################ END DATATYPEs AND FUNCTIONs DECLARATION #############################
-
-;################### ATTRIBUTE DECLARATIONs #######################
-«getAttributeDec()»
-;################### CONSTANTs DECLARATIONs #######################
-«getConstantDec()»
-;################################ END ATTRIBUTEs AND CONSTANTs DECLARATION #############################
-
 «««		Building constraint of internal element of the policy
 «IF pol instanceof PolicySet»
 	«FOR el : pol.policies»
@@ -474,7 +481,7 @@ def getFinalConstrPSet(String p_name,FacplPolicy pol)'''
 	 * ########################################################################
 	 */	
 	// Returning the record datatype, the Set and the auxiliary functions
-	def getDatatypeDec(FacplPolicy pol) '''
+	def getDatatypeDec() '''
 	;#######################
 	;RECORD DATATYPE with BOTTOM and ERROR
 	;#######################

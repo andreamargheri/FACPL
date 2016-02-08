@@ -1,7 +1,7 @@
 ;#######################
 ;RECORD DATATYPE with BOTTOM and ERROR
 ;#######################
-(declare-datatypes (U) ((TValue (mk-val (val U)(bot Bool)(err Bool)))))
+(declare-datatypes (U) ((TValue (mk-val (val U)(miss Bool)(err Bool)))))
 
 ;#######################
 ;Set of elements of type T with attached an integer index
@@ -16,8 +16,14 @@
 	(ite (= x (mk-val true false false)) true false)
 )
 
-(define-fun isBool ((x (TValue Bool))) Bool
-		(ite (or (isFalse x) (isTrue x)) true false)
+(define-fun isNotBoolValue ((x (TValue Bool))) Bool
+		(ite (or (isFalse x) (isTrue x)) 
+			false
+			(ite (and (not (miss x)) (not (err x)))
+				true
+				false
+			)
+		)
 )
 
 (define-fun FAnd ((x (TValue Bool)) (y (TValue Bool))) (TValue Bool)
@@ -38,7 +44,7 @@
 		(mk-val true false false)
 		(ite (or (err x) (err y))
 			(mk-val false false true)
-			(ite (or (bot x) (bot y))
+			(ite (or (miss x) (miss y))
 				(mk-val false true true)
 				(mk-val false false false)
 			)
@@ -51,7 +57,7 @@
 		(mk-val false false false)
 		(ite (isFalse x)
 			(mk-val true false false)
-			(ite (bot x)
+			(ite (miss x)
 				(mk-val false true false)
 				(mk-val false false true)
 			)
@@ -61,7 +67,7 @@
 (define-fun equalBool ((x (TValue Bool)) (y (TValue Bool))) (TValue Bool)
 	(ite (or (err x) (err y))
 		(mk-val false false true)
-		(ite (or (bot x) (bot y))
+		(ite (or (miss x) (miss y))
 			(mk-val false true false)
 			(ite (= (val x) (val y))
 				(mk-val true false false)
@@ -74,7 +80,7 @@
 (define-fun equalInt ((x (TValue Int)) (y (TValue Int))) (TValue Bool)
 	(ite (or (err x) (err y))
 		(mk-val false false true)
-		(ite (or (bot x) (bot y))
+		(ite (or (miss x) (miss y))
 			(mk-val false true false)
 			(ite (= (val x) (val y))
 				(mk-val true false false)
@@ -87,7 +93,7 @@
 (define-fun equalReal ((x (TValue Real)) (y (TValue Real))) (TValue Bool)
 	(ite (or (err x) (err y))
 		(mk-val false false true)
-		(ite (or (bot x) (bot y))
+		(ite (or (miss x) (miss y))
 			(mk-val false true false)
 			(ite (= (val x) (val y))
 				(mk-val true false false)
@@ -98,13 +104,13 @@
 )
 
 (define-fun isValInt ((x (TValue Int))) Bool
-	(ite (and (not (bot x)) (not (err x))) true false)
+	(ite (and (not (miss x)) (not (err x))) true false)
 )
 
 (define-fun lessthanInt ((x (TValue Int)) (y (TValue Int))) (TValue Bool)
 	(ite (or (err x) (err y))
 		(mk-val false false true)
-		(ite (or (bot x) (bot y))
+		(ite (or (miss x) (miss y))
 			(mk-val false true false)
 			(ite (< (val x) (val y))
 				(mk-val true false false)
@@ -117,7 +123,7 @@
 (define-fun lessthanorequalInt ((x (TValue Int)) (y (TValue Int))) (TValue Bool)
 	(ite (or (err x) (err y))
 		(mk-val false false true)
-		(ite (or (bot x) (bot y))
+		(ite (or (miss x) (miss y))
 			(mk-val false true false)
 			(ite (<= (val x) (val y))
 				(mk-val true false false)
@@ -130,7 +136,7 @@
 (define-fun greaterthanInt ((x (TValue Int)) (y (TValue Int))) (TValue Bool)
 	(ite (or (err x) (err y))
 		(mk-val false false true)
-		(ite (or (bot x) (bot y))
+		(ite (or (miss x) (miss y))
 			(mk-val false true false)
 			(ite (> (val x) (val y))
 				(mk-val true false false)
@@ -143,7 +149,7 @@
 (define-fun greaterthanorequalInt ((x (TValue Int)) (y (TValue Int))) (TValue Bool)
 	(ite (or (err x) (err y))
 		(mk-val false false true)
-		(ite (or (bot x) (bot y))
+		(ite (or (miss x) (miss y))
 			(mk-val false true false)
 			(ite (>= (val x) (val y))
 				(mk-val true false false)
@@ -196,13 +202,13 @@
 )
 
 (define-fun isValReal ((x (TValue Real))) Bool
-	(ite (and (not (bot x)) (not (err x))) true false)
+	(ite (and (not (miss x)) (not (err x))) true false)
 )
 
 (define-fun lessthanReal ((x (TValue Real)) (y (TValue Real))) (TValue Bool)
 	(ite (or (err x) (err y))
 		(mk-val false false true)
-		(ite (or (bot x) (bot y))
+		(ite (or (miss x) (miss y))
 			(mk-val false true false)
 			(ite (< (val x) (val y))
 				(mk-val true false false)
@@ -215,7 +221,7 @@
 (define-fun lessthanorequalReal ((x (TValue Real)) (y (TValue Real))) (TValue Bool)
 	(ite (or (err x) (err y))
 		(mk-val false false true)
-		(ite (or (bot x) (bot y))
+		(ite (or (miss x) (miss y))
 			(mk-val false true false)
 			(ite (<= (val x) (val y))
 				(mk-val true false false)
@@ -228,7 +234,7 @@
 (define-fun greaterthanReal ((x (TValue Real)) (y (TValue Real))) (TValue Bool)
 	(ite (or (err x) (err y))
 		(mk-val false false true)
-		(ite (or (bot x) (bot y))
+		(ite (or (miss x) (miss y))
 			(mk-val false true false)
 			(ite (> (val x) (val y))
 				(mk-val true false false)
@@ -241,7 +247,7 @@
 (define-fun greaterthanorequalReal ((x (TValue Real)) (y (TValue Real))) (TValue Bool)
 	(ite (or (err x) (err y))
 		(mk-val false false true)
-		(ite (or (bot x) (bot y))
+		(ite (or (miss x) (miss y))
 			(mk-val false true false)
 			(ite (>= (val x) (val y))
 				(mk-val true false false)
@@ -293,21 +299,21 @@
 	)
 )
 (define-fun isValSetInt ((x (TValue (Set Int)))) Bool
-	(ite (and (not (bot x)) (not (err x))) true false)
+	(ite (and (not (miss x)) (not (err x))) true false)
 )
 
 (define-fun isValSetReal ((x (TValue (Set Real)))) Bool
-	(ite (and (not (bot x)) (not (err x))) true false)
+	(ite (and (not (miss x)) (not (err x))) true false)
 )
 
 (define-fun isValSetBool ((x (TValue (Set Bool)))) Bool
-	(ite (and (not (bot x)) (not (err x))) true false)
+	(ite (and (not (miss x)) (not (err x))) true false)
 )
 
 (define-fun inBool ((x (TValue Bool)) (y (TValue (Set Bool)))) (TValue Bool)
 	(ite (or (err x)(err y)) 
 		(mk-val false false true)
-		(ite (or (bot x) (bot y))
+		(ite (or (miss x) (miss y))
 			(mk-val false true false)
 			(ite (exists ((i Int))
 						(= (val x) (select (val y) i))
@@ -322,7 +328,7 @@
 (define-fun inReal ((x (TValue Real)) (y (TValue (Set Real)))) (TValue Bool)
 	(ite (or (err x)(err y)) 
 		(mk-val false false true)
-		(ite (or (bot x) (bot y))
+		(ite (or (miss x) (miss y))
 			(mk-val false true false)
 			(ite (exists ((i Int))
 						(= (val x) (select (val y) i))
@@ -337,7 +343,7 @@
 (define-fun inInt ((x (TValue Int)) (y (TValue (Set Int)))) (TValue Bool)
 	(ite (or (err x)(err y)) 
 		(mk-val false false true)
-		(ite (or (bot x) (bot y))
+		(ite (or (miss x) (miss y))
 			(mk-val false true false)
 			(ite (exists ((i Int))
 						(= (val x) (select (val y) i))
@@ -352,37 +358,36 @@
 
 ;################### ATTRIBUTE DECLARATIONs #######################
 (declare-const n_cat/id1 (TValue Real))
-(assert (not (and (bot n_cat/id1) (err n_cat/id1))))
+(assert (not (and (miss n_cat/id1) (err n_cat/id1))))
  
 (declare-const n_cat/num (TValue Int))
-(assert (not (and (bot n_cat/num) (err n_cat/num))))
+(assert (not (and (miss n_cat/num) (err n_cat/num))))
  
 (declare-const n_cat/id (TValue Bool))
-(assert (not (and (bot n_cat/id) (err n_cat/id))))
+(assert (not (and (miss n_cat/id) (err n_cat/id))))
  
 ;################### CONSTANTs DECLARATIONs #######################
  
 (declare-const const_4 (TValue Int))
 (assert (= (val const_4) 4))
-(assert (not (bot const_4))) 
+(assert (not (miss const_4))) 
 (assert (not (err const_4)))
  
 (declare-const const_false (TValue Bool))
 (assert (= (val const_false) false))
-(assert (not (bot const_false))) 
+(assert (not (miss const_false))) 
 (assert (not (err const_false)))
  
 (declare-const const_true (TValue Bool))
 (assert (= (val const_true) true))
-(assert (not (bot const_true))) 
+(assert (not (miss const_true))) 
 (assert (not (err const_true)))
  
 (declare-const const_5.5 (TValue Real))
 (assert (= (val const_5.5) 5.5))
-(assert (not (bot const_5.5))) 
+(assert (not (miss const_5.5))) 
 (assert (not (err const_5.5)))
 ;################################ END ATTRIBUTEs AND CONSTANTs DECLARATION #############################
-
 ;################### START CONSTRAINT RULE r1 #######################
 ;##### Rule Target
 (define-fun cns_target_r1 () (TValue Bool)
@@ -408,13 +413,13 @@ true
 )
 ;NOT APP
 (define-fun cns_r1_notApp () Bool
-	(or (isFalse cns_target_r1) (bot cns_target_r1))
+	(or (isFalse cns_target_r1) (miss cns_target_r1))
 )
 ;INDET
 (define-fun cns_r1_indet () Bool
 	(or 
 		(err cns_target_r1)
-		(not (isBool cns_target_r1))
+		(isNotBoolValue cns_target_r1)
 		(and 
 			(isTrue cns_target_r1)
 			(not cns_obl_permit_r1)
@@ -474,7 +479,7 @@ true
 ;NOT APP
 (define-fun cns_Name_notApp () Bool
 	(or
-		(or (isFalse cns_target_Name) (bot cns_target_Name))
+		(or (isFalse cns_target_Name) (miss cns_target_Name))
 		(and (isTrue cns_target_Name) cns_Name_cmb_final_notApp)
 	)
 )
@@ -482,7 +487,7 @@ true
 (define-fun cns_Name_indet () Bool
 	(or 
 		(err cns_target_Name)
-		(not (isBool cns_target_Name))
+		(isNotBoolValue cns_target_Name)
 		(and (isTrue cns_target_Name) cns_Name_cmb_final_indet)
 		(and 
 			(isTrue cns_target_Name)

@@ -418,11 +418,10 @@
 (assert (not (miss const_Andrea))) 
 (assert (not (err const_Andrea)))
 ;################################ END ATTRIBUTEs AND CONSTANTs DECLARATION #############################
-
 ;################### START CONSTRAINT RULE r1 #######################
 ;##### Rule Target
 (define-fun cns_target_r1 () (TValue Bool)
-	(FAnd (inString const_read n_action/id) (equalString n_subject/id const_Andrea))
+	(FOr (inString const_read n_action/id) (equalString n_subject/id const_Andrea))
 )
 ;##### Rule Obligations
 (define-fun cns_obl_permit_r1 ()  Bool
@@ -531,7 +530,7 @@ true
 	)
 )
 ;################### END TOP-LEVEL POLICY Name CONSTRAINTs #########################
-;###################### PROPERTY MODELLING #####################
+;###################### SECURITY PROPERTY #####################
 (assert (= (select (val n_action/id) 0) s_read))
 (assert (= (select (val n_action/id) 1) s_write))
 

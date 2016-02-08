@@ -1,7 +1,7 @@
 ;#######################
 ;RECORD DATATYPE with BOTTOM and ERROR
 ;#######################
-(declare-datatypes (U) ((TValue (mk-val (val U)(bot Bool)(err Bool)))))
+(declare-datatypes (U) ((TValue (mk-val (val U)(miss Bool)(err Bool)))))
 
 ;#######################
 ;Set of elements of type T with attached an integer index
@@ -18,8 +18,14 @@
 	(ite (= x (mk-val true false false)) true false)
 )
 
-(define-fun isBool ((x (TValue Bool))) Bool
-		(ite (or (isFalse x) (isTrue x)) true false)
+(define-fun isNotBoolValue ((x (TValue Bool))) Bool
+		(ite (or (isFalse x) (isTrue x)) 
+			false
+			(ite (and (not (miss x)) (not (err x)))
+				true
+				false
+			)
+		)
 )
 
 (define-fun FAnd ((x (TValue Bool)) (y (TValue Bool))) (TValue Bool)
@@ -40,7 +46,7 @@
 		(mk-val true false false)
 		(ite (or (err x) (err y))
 			(mk-val false false true)
-			(ite (or (bot x) (bot y))
+			(ite (or (miss x) (miss y))
 				(mk-val false true true)
 				(mk-val false false false)
 			)
@@ -53,7 +59,7 @@
 		(mk-val false false false)
 		(ite (isFalse x)
 			(mk-val true false false)
-			(ite (bot x)
+			(ite (miss x)
 				(mk-val false true false)
 				(mk-val false false true)
 			)
@@ -63,7 +69,7 @@
 (define-fun equalBool ((x (TValue Bool)) (y (TValue Bool))) (TValue Bool)
 	(ite (or (err x) (err y))
 		(mk-val false false true)
-		(ite (or (bot x) (bot y))
+		(ite (or (miss x) (miss y))
 			(mk-val false true false)
 			(ite (= (val x) (val y))
 				(mk-val true false false)
@@ -76,7 +82,7 @@
 (define-fun equalInt ((x (TValue Int)) (y (TValue Int))) (TValue Bool)
 	(ite (or (err x) (err y))
 		(mk-val false false true)
-		(ite (or (bot x) (bot y))
+		(ite (or (miss x) (miss y))
 			(mk-val false true false)
 			(ite (= (val x) (val y))
 				(mk-val true false false)
@@ -89,7 +95,7 @@
 (define-fun equalReal ((x (TValue Real)) (y (TValue Real))) (TValue Bool)
 	(ite (or (err x) (err y))
 		(mk-val false false true)
-		(ite (or (bot x) (bot y))
+		(ite (or (miss x) (miss y))
 			(mk-val false true false)
 			(ite (= (val x) (val y))
 				(mk-val true false false)
@@ -100,7 +106,7 @@
 )
 
 (define-fun isValString ((x (TValue String))) Bool
-	(ite (and (not (bot x)) (not (err x))) true false)
+	(ite (and (not (miss x)) (not (err x))) true false)
 )
 
 (define-fun equalString ((x (TValue String)) (y (TValue String))) (TValue Bool)
@@ -117,13 +123,13 @@
 )
 
 (define-fun isValSetString ((x (TValue (Set String)))) Bool
-	(ite (and (not (bot x)) (not (err x))) true false)
+	(ite (and (not (miss x)) (not (err x))) true false)
 )
 
 (define-fun inString ((x (TValue String)) (y (TValue (Set String)))) (TValue Bool)
 	(ite (or (err x)(err y)) 
 		(mk-val false false true)
-		(ite (or (bot x) (bot y))
+		(ite (or (miss x) (miss y))
 			(mk-val false true false)
 			(ite (exists ((i Int))
 						(= (val x) (select (val y) i))
@@ -136,13 +142,13 @@
 )
 
 (define-fun isValInt ((x (TValue Int))) Bool
-	(ite (and (not (bot x)) (not (err x))) true false)
+	(ite (and (not (miss x)) (not (err x))) true false)
 )
 
 (define-fun lessthanInt ((x (TValue Int)) (y (TValue Int))) (TValue Bool)
 	(ite (or (err x) (err y))
 		(mk-val false false true)
-		(ite (or (bot x) (bot y))
+		(ite (or (miss x) (miss y))
 			(mk-val false true false)
 			(ite (< (val x) (val y))
 				(mk-val true false false)
@@ -155,7 +161,7 @@
 (define-fun lessthanorequalInt ((x (TValue Int)) (y (TValue Int))) (TValue Bool)
 	(ite (or (err x) (err y))
 		(mk-val false false true)
-		(ite (or (bot x) (bot y))
+		(ite (or (miss x) (miss y))
 			(mk-val false true false)
 			(ite (<= (val x) (val y))
 				(mk-val true false false)
@@ -168,7 +174,7 @@
 (define-fun greaterthanInt ((x (TValue Int)) (y (TValue Int))) (TValue Bool)
 	(ite (or (err x) (err y))
 		(mk-val false false true)
-		(ite (or (bot x) (bot y))
+		(ite (or (miss x) (miss y))
 			(mk-val false true false)
 			(ite (> (val x) (val y))
 				(mk-val true false false)
@@ -181,7 +187,7 @@
 (define-fun greaterthanorequalInt ((x (TValue Int)) (y (TValue Int))) (TValue Bool)
 	(ite (or (err x) (err y))
 		(mk-val false false true)
-		(ite (or (bot x) (bot y))
+		(ite (or (miss x) (miss y))
 			(mk-val false true false)
 			(ite (>= (val x) (val y))
 				(mk-val true false false)
@@ -234,13 +240,13 @@
 )
 
 (define-fun isValReal ((x (TValue Real))) Bool
-	(ite (and (not (bot x)) (not (err x))) true false)
+	(ite (and (not (miss x)) (not (err x))) true false)
 )
 
 (define-fun lessthanReal ((x (TValue Real)) (y (TValue Real))) (TValue Bool)
 	(ite (or (err x) (err y))
 		(mk-val false false true)
-		(ite (or (bot x) (bot y))
+		(ite (or (miss x) (miss y))
 			(mk-val false true false)
 			(ite (< (val x) (val y))
 				(mk-val true false false)
@@ -253,7 +259,7 @@
 (define-fun lessthanorequalReal ((x (TValue Real)) (y (TValue Real))) (TValue Bool)
 	(ite (or (err x) (err y))
 		(mk-val false false true)
-		(ite (or (bot x) (bot y))
+		(ite (or (miss x) (miss y))
 			(mk-val false true false)
 			(ite (<= (val x) (val y))
 				(mk-val true false false)
@@ -266,7 +272,7 @@
 (define-fun greaterthanReal ((x (TValue Real)) (y (TValue Real))) (TValue Bool)
 	(ite (or (err x) (err y))
 		(mk-val false false true)
-		(ite (or (bot x) (bot y))
+		(ite (or (miss x) (miss y))
 			(mk-val false true false)
 			(ite (> (val x) (val y))
 				(mk-val true false false)
@@ -279,7 +285,7 @@
 (define-fun greaterthanorequalReal ((x (TValue Real)) (y (TValue Real))) (TValue Bool)
 	(ite (or (err x) (err y))
 		(mk-val false false true)
-		(ite (or (bot x) (bot y))
+		(ite (or (miss x) (miss y))
 			(mk-val false true false)
 			(ite (>= (val x) (val y))
 				(mk-val true false false)
@@ -331,21 +337,21 @@
 	)
 )
 (define-fun isValSetInt ((x (TValue (Set Int)))) Bool
-	(ite (and (not (bot x)) (not (err x))) true false)
+	(ite (and (not (miss x)) (not (err x))) true false)
 )
 
 (define-fun isValSetReal ((x (TValue (Set Real)))) Bool
-	(ite (and (not (bot x)) (not (err x))) true false)
+	(ite (and (not (miss x)) (not (err x))) true false)
 )
 
 (define-fun isValSetBool ((x (TValue (Set Bool)))) Bool
-	(ite (and (not (bot x)) (not (err x))) true false)
+	(ite (and (not (miss x)) (not (err x))) true false)
 )
 
 (define-fun inBool ((x (TValue Bool)) (y (TValue (Set Bool)))) (TValue Bool)
 	(ite (or (err x)(err y)) 
 		(mk-val false false true)
-		(ite (or (bot x) (bot y))
+		(ite (or (miss x) (miss y))
 			(mk-val false true false)
 			(ite (exists ((i Int))
 						(= (val x) (select (val y) i))
@@ -360,7 +366,7 @@
 (define-fun inReal ((x (TValue Real)) (y (TValue (Set Real)))) (TValue Bool)
 	(ite (or (err x)(err y)) 
 		(mk-val false false true)
-		(ite (or (bot x) (bot y))
+		(ite (or (miss x) (miss y))
 			(mk-val false true false)
 			(ite (exists ((i Int))
 						(= (val x) (select (val y) i))
@@ -375,7 +381,7 @@
 (define-fun inInt ((x (TValue Int)) (y (TValue (Set Int)))) (TValue Bool)
 	(ite (or (err x)(err y)) 
 		(mk-val false false true)
-		(ite (or (bot x) (bot y))
+		(ite (or (miss x) (miss y))
 			(mk-val false true false)
 			(ite (exists ((i Int))
 						(= (val x) (select (val y) i))
@@ -390,61 +396,60 @@
 
 ;################### ATTRIBUTE DECLARATIONs #######################
 (declare-const n_subject/id (TValue Bool))
-(assert (not (and (bot n_subject/id) (err n_subject/id))))
+(assert (not (and (miss n_subject/id) (err n_subject/id))))
  
 (declare-const n_resource/type (TValue String))
-(assert (not (and (bot n_resource/type) (err n_resource/type))))
+(assert (not (and (miss n_resource/type) (err n_resource/type))))
  
 (declare-const n_action/id (TValue String))
-(assert (not (and (bot n_action/id) (err n_action/id))))
+(assert (not (and (miss n_action/id) (err n_action/id))))
  
 (declare-const n_system/time (TValue Bool))
-(assert (not (and (bot n_system/time) (err n_system/time))))
+(assert (not (and (miss n_system/time) (err n_system/time))))
  
 (declare-const n_subject/role (TValue String))
-(assert (not (and (bot n_subject/role) (err n_subject/role))))
+(assert (not (and (miss n_subject/role) (err n_subject/role))))
  
 (declare-const n_subject/permission (TValue (Set String)))
-(assert (not (and (bot n_subject/permission) (err n_subject/permission))))
+(assert (not (and (miss n_subject/permission) (err n_subject/permission))))
  
 ;################### CONSTANTs DECLARATIONs #######################
  
 (declare-const const_doctor (TValue String))
 (assert (= (val const_doctor) s_doctor))
-(assert (not (bot const_doctor))) 
+(assert (not (miss const_doctor))) 
 (assert (not (err const_doctor)))
  
 (declare-const const_e-Prescription (TValue String))
 (assert (= (val const_e-Prescription) s_e-Prescription))
-(assert (not (bot const_e-Prescription))) 
+(assert (not (miss const_e-Prescription))) 
 (assert (not (err const_e-Prescription)))
  
 (declare-const const_read (TValue String))
 (assert (= (val const_read) s_read))
-(assert (not (bot const_read))) 
+(assert (not (miss const_read))) 
 (assert (not (err const_read)))
  
 (declare-const const_e-Pre-Write (TValue String))
 (assert (= (val const_e-Pre-Write) s_e-Pre-Write))
-(assert (not (bot const_e-Pre-Write))) 
+(assert (not (miss const_e-Pre-Write))) 
 (assert (not (err const_e-Pre-Write)))
  
 (declare-const const_e-Pre-Read (TValue String))
 (assert (= (val const_e-Pre-Read) s_e-Pre-Read))
-(assert (not (bot const_e-Pre-Read))) 
+(assert (not (miss const_e-Pre-Read))) 
 (assert (not (err const_e-Pre-Read)))
  
 (declare-const const_pharmacist (TValue String))
 (assert (= (val const_pharmacist) s_pharmacist))
-(assert (not (bot const_pharmacist))) 
+(assert (not (miss const_pharmacist))) 
 (assert (not (err const_pharmacist)))
  
 (declare-const const_write (TValue String))
 (assert (= (val const_write) s_write))
-(assert (not (bot const_write))) 
+(assert (not (miss const_write))) 
 (assert (not (err const_write)))
 ;################################ END ATTRIBUTEs AND CONSTANTs DECLARATION #############################
-
 ;################### START CONSTRAINT RULE write #######################
 ;##### Rule Target
 (define-fun cns_target_write () (TValue Bool)
@@ -470,13 +475,13 @@ true
 )
 ;NOT APP
 (define-fun cns_write_notApp () Bool
-	(or (isFalse cns_target_write) (bot cns_target_write))
+	(or (isFalse cns_target_write) (miss cns_target_write))
 )
 ;INDET
 (define-fun cns_write_indet () Bool
 	(or 
 		(err cns_target_write)
-		(not (isBool cns_target_write))
+		(isNotBoolValue cns_target_write)
 		(and 
 			(isTrue cns_target_write)
 			(not cns_obl_permit_write)
@@ -509,13 +514,13 @@ true
 )
 ;NOT APP
 (define-fun cns_read_notApp () Bool
-	(or (isFalse cns_target_read) (bot cns_target_read))
+	(or (isFalse cns_target_read) (miss cns_target_read))
 )
 ;INDET
 (define-fun cns_read_indet () Bool
 	(or 
 		(err cns_target_read)
-		(not (isBool cns_target_read))
+		(isNotBoolValue cns_target_read)
 		(and 
 			(isTrue cns_target_read)
 			(not cns_obl_permit_read)
@@ -548,13 +553,13 @@ true
 )
 ;NOT APP
 (define-fun cns_pha_notApp () Bool
-	(or (isFalse cns_target_pha) (bot cns_target_pha))
+	(or (isFalse cns_target_pha) (miss cns_target_pha))
 )
 ;INDET
 (define-fun cns_pha_indet () Bool
 	(or 
 		(err cns_target_pha)
-		(not (isBool cns_target_pha))
+		(isNotBoolValue cns_target_pha)
 		(and 
 			(isTrue cns_target_pha)
 			(not cns_obl_permit_pha)
@@ -570,13 +575,13 @@ true
 ;##### Policy Obligations
 (define-fun cns_obl_permit_ePre ()  Bool
 	 (and (and
- 		 (not (bot n_system/time))
+ 		 (not (miss n_system/time))
 		 (not (err n_system/time))
-		 (not (bot n_resource/type))
+		 (not (miss n_resource/type))
 		 (not (err n_resource/type))
-		 (not (bot n_subject/id))
+		 (not (miss n_subject/id))
 		 (not (err n_subject/id))
-		 (not (bot n_action/id))
+		 (not (miss n_action/id))
 		 (not (err n_action/id))
 )
 ))
@@ -653,7 +658,7 @@ true
 ;NOT APP
 (define-fun cns_ePre_notApp () Bool
 	(or
-		(or (isFalse cns_target_ePre) (bot cns_target_ePre))
+		(or (isFalse cns_target_ePre) (miss cns_target_ePre))
 		(and (isTrue cns_target_ePre) cns_ePre_cmb_final_notApp)
 	)
 )
@@ -661,7 +666,7 @@ true
 (define-fun cns_ePre_indet () Bool
 	(or 
 		(err cns_target_ePre)
-		(not (isBool cns_target_ePre))
+		(isNotBoolValue cns_target_ePre)
 		(and (isTrue cns_target_ePre) cns_ePre_cmb_final_indet)
 		(and 
 			(isTrue cns_target_ePre)

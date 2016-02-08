@@ -7,6 +7,7 @@ import it.unifi.xtext.facpl.facpl2.Request
 import it.unifi.xtext.facpl.generator.util.Decision
 import it.unifi.xtext.facpl.generator.util.SecurityProperty
 import it.unifi.xtext.facpl.validation.inference.SubstitutionSet
+import it.unifi.xtext.facpl.generator.util.StructuralProperty
 
 class SMT_LIBGenerator extends SMT_LIBGenerator_Code {
 
@@ -14,9 +15,11 @@ class SMT_LIBGenerator extends SMT_LIBGenerator_Code {
 	 * EntryPoint for menu command Generate SMT-LIB code
 	 */
 	def void doGenerateFileSMT_LIB(Facpl resource, IFileSystemAccess fsa) throws Exception{
-
+		
+		var StringBuffer str = new StringBuffer()
+		
 		/* Type checks + Initialization of constants and various */
-		initialiseFacplResource(resource)
+		str.append(initialiseFacplResource(resource))
 
 		/* Compiling policies */
 		if (resource.getPolicies != null) {
@@ -28,9 +31,11 @@ class SMT_LIBGenerator extends SMT_LIBGenerator_Code {
 			if (resource.main.paf.pdp != null) {
 				for (pol : resource.main.paf.pdp.polSet) {
 					if (pol.newPolicy != null) {
-						fsa.generateFile(pol.newPolicy.getName + ".smt2", createMainConstraint(pol.newPolicy));
+						str.append(createMainConstraint(pol.newPolicy))
+						
+						fsa.generateFile(pol.newPolicy.getName + ".smt2", str.toString);
 					}
-				// Referred policies are not combined
+				// Referred policies are not compiled
 				}
 			}
 		}
@@ -45,22 +50,64 @@ class SMT_LIBGenerator extends SMT_LIBGenerator_Code {
 
 		var str = doGenerateSecurity_Property_Code(resource, policy_name, req, dec, prop);
 
+		var fileName = policy_name + "_property_" + name_property;
 		/* Copy the generated SMT-LIB in a FILE  */
-		fsa.generateFile(policy_name + "_property_" + name_property + ".smt2", str);
+		fsa.generateFile(fileName + ".smt2", str);
+		
+		/* Generate Z3 bash commands for executing file */
+		fsa.generateFile(fileName + "_z3.sh", getBashCommand(fileName, name_property, policy_name))
 
 	}
+	
+	
+	/**
+	 * EntryPoint for Security Property
+	 */
+	def void doGenerateStructural_Property(Facpl resource, String policy_name1, String policy_name2, 
+		String name_property, StructuralProperty prop, IFileSystemAccess fsa) {
+		
+		var str = ""
+		
+		if (prop.equals(StructuralProperty.COMPLETE)){
+			/* Only one policy is involved */
+			str = doGenerateComplete_Property_Code(resource, policy_name1);
+		}else {
+			str = doGenerateStructural_Property_Code(resource, policy_name1, policy_name2, prop);
+		}
+
+		var fileName = policy_name1 + "_property_" + name_property;
+		/* Copy the generated SMT-LIB in a FILE  */
+		fsa.generateFile(fileName + ".smt2", str);
+		
+		/* Generate Z3 bash commands for executing file */
+		fsa.generateFile(fileName + "_z3.sh", getBashCommand(fileName, name_property, policy_name1))
+
+	}
+		
+	/**
+	 * Main bash file for Z3 launch
+	 */
+	def getBashCommand(String fileName, String prop_name, String policy_name) '''
+	#! /bin/bash
+	
+	clear
+	
+	echo "Starting Verification of Property «prop_name» on FACPL Policy «policy_name»"
+	
+	#Alias z3 is assumed defined in the environment
+	
+	z3 -st -smt2 «fileName».smt2
+	'''
 
 	/**
-	 * Generation of SMT-LIB code for Security Property 
+	 * Generation of SMT-LIB code for the Complete Structural Property
 	 */
-	def String doGenerateSecurity_Property_Code(Facpl resource, String policy_name, Request req, Decision dec,
-		SecurityProperty prop) {
-
+	def doGenerateComplete_Property_Code(Facpl resource, String policy_name) {
+		var str = new StringBuffer
+		
 		/* Generate the SMT_LIB code of the FacplPolicy in input*/
 		/* -> Type checks + Initialization of constants and various */
-		initialiseFacplResource_Request(resource, req)
-
-		var str = new StringBuffer
+		str.append(initialiseFacplResource(resource))
 
 		/* -> Compile to SMT-LIB the chosen policy */
 		if (resource.getPolicies != null) {
@@ -71,7 +118,89 @@ class SMT_LIBGenerator extends SMT_LIBGenerator_Code {
 			}
 		}
 
-		str.append(";###################### SECURITY PROPERTY MODELLING #####################\n")
+		str.append(";###################### STRUCTURAL PROPERTY #####################\n")
+		
+		str.append("(assert cns_" + policy_name + "_notApp)")
+		
+		/* Evaluation commands for Z3 */
+		str.append("\n\n(check-sat)\n")
+		str.append("(get-model)\n")
+
+		return str.toString();
+	}
+
+	/**
+	 * Generation of the SMT-LIB for the structural properties
+	 */
+	def doGenerateStructural_Property_Code(Facpl resource, String policy_name1, String policy_name2, StructuralProperty property) {
+		var str = new StringBuffer
+		
+		/* Generate the SMT_LIB code of the FacplPolicy in input*/
+		/* -> Type checks + Initialization of constants and various */
+		str.append(initialiseFacplResource(resource))
+
+	
+		/* -> Compile to SMT-LIB the chosen policy */
+		if (resource.getPolicies != null) {
+			for (pol : resource.getPolicies) {
+				if (pol.name.equals(policy_name1) || pol.name.equals(policy_name2)) {
+					str.append(createMainConstraint(pol))
+				}
+			}
+		}
+
+		str.append(";###################### STRUCTURAL PROPERTY #####################\n")
+		
+		if (property.equals(StructuralProperty.COVERAGE)){
+			/* Policy1 cover Policy2 */
+			str.append("(assert (and\n") 
+			str.append("\t (=> cns_"+ policy_name1 + "_permit cns_"+ policy_name2+"_permit)\n")
+			str.append("\t (=> cns_"+ policy_name1 + "_deny cns_"+ policy_name2+"_deny)\n")
+			str.append("))\n")
+			
+		}else if (property.equals(StructuralProperty.DISJOINT)){
+			/* Policy1 disjoint Policy2 */
+			str.append("(assert (not (or\n") 
+			str.append("\t (and cns_"+ policy_name1 + "_permit cns_"+ policy_name2+"_permit)\n")
+			str.append("\t (and cns_"+ policy_name1 + "_permit cns_"+ policy_name2+"_deny)\n")
+			str.append("\t (and cns_"+ policy_name1 + "_deny cns_"+ policy_name2+"_permit)\n")
+			str.append("\t (and cns_"+ policy_name1 + "_deny cns_"+ policy_name2+"_deny)\n")
+			str.append(")))\n")
+			
+		}else {
+			throw new Exception("Wrong invocation of the generation method for the case of structural properties")
+		}
+		
+		/* Evaluation commands for Z3 */
+		str.append("\n\n(check-sat)\n")
+		str.append("(get-model)\n")
+
+		return str.toString();	
+	}
+	
+
+	/**
+	 * Generation of SMT-LIB code for Security Property 
+	 */
+	def String doGenerateSecurity_Property_Code(Facpl resource, String policy_name, Request req, Decision dec,
+		SecurityProperty prop) {
+		
+		var str = new StringBuffer
+		
+		/* Generate the SMT_LIB code of the FacplPolicy in input*/
+		/* -> Type checks + Initialization of constants and various */
+		str.append(initialiseFacplResource_Request(resource, req))
+
+		/* -> Compile to SMT-LIB the chosen policy */
+		if (resource.getPolicies != null) {
+			for (pol : resource.getPolicies) {
+				if (pol.name.equals(policy_name)) {
+					str.append(createMainConstraint(pol))
+				}
+			}
+		}
+
+		str.append(";###################### SECURITY PROPERTY #####################\n")
 
 		/* Add the definition of the property */
 		/* -> 1.  Insert Assertion modeling Request */
@@ -84,7 +213,7 @@ class SMT_LIBGenerator extends SMT_LIBGenerator_Code {
 						"(assert (= (val " + getNameAttr(SubstitutionSet._nameToString(attr.name)) + ") " +
 							getExpressionValue(attr.value.get(0)) + "))\n")
 				} else {
-					//Multi-valued attribute 
+					//Multivalued attribute 
 					/* 1 -> Force the value of the set a specified value */
 					for (var i = 0; i < attr.value.size ; i ++){
 						str.append(
@@ -167,6 +296,12 @@ class SMT_LIBGenerator extends SMT_LIBGenerator_Code {
 		}
 		return false
 	}
+	
+	
+	
+	
+	
+	
 
 	/**
 	 * Stub for testing SMT-LIB code
@@ -176,7 +311,7 @@ class SMT_LIBGenerator extends SMT_LIBGenerator_Code {
 		var StringBuffer str = new StringBuffer()
 
 		/* Type checks + Initialization of constants and various */
-		initialiseFacplResource(resource)
+		str.append(initialiseFacplResource(resource))
 
 		/* Compiling Policies that are declared out from the brackets of the Main */
 		if (resource.getPolicies != null) {
