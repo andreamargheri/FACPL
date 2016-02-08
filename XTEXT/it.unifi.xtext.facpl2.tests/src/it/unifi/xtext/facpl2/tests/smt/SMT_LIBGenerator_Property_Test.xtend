@@ -421,6 +421,9 @@ public class SMT_LIBGenerator_Property_Test extends AbstractXtextTests {
 		writer.close();
 		
 		
+		/* ---------------------------- */
+		
+		
 		model = (
 		'''
 		PolicySet Name {permit-overrides 

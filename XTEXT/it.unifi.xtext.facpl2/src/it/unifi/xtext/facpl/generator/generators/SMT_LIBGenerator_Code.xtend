@@ -507,7 +507,9 @@ def getFinalConstrPSet(String p_name,FacplPolicy pol)'''
 	// Convention for attribute names
 	def getNameAttr(String string) '''n_«string»'''
 
-	def getConstAttr(String string) '''const_«string»'''
+	def getConstAttr(String string) {
+		return "const_" + string.replaceAll(" ", "_")
+	}
 
 	// Types Name to be used in SMT constraint
 	def getType(FacplType type) {

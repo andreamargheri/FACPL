@@ -17,7 +17,10 @@ public class ConstraintConstant {
 
 	public ConstraintConstant(FacplType t, String n, Object v) {
 		this.type = t;
-		this.att_name = n;
+		this.att_name = n.replaceAll(" ", "_");
+		if (v instanceof String){
+			v = ((String) v).replaceAll(" ", "_");
+		}
 		this.value = v;
 	}
 

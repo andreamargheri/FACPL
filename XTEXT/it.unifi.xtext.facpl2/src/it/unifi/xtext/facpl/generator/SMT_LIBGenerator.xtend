@@ -16,24 +16,21 @@ class SMT_LIBGenerator extends SMT_LIBGenerator_Code {
 	 */
 	def void doGenerateFileSMT_LIB(Facpl resource, IFileSystemAccess fsa) throws Exception{
 		
-		var StringBuffer str = new StringBuffer()
-		
+	
 		/* Type checks + Initialization of constants and various */
-		str.append(initialiseFacplResource(resource))
+		var header = initialiseFacplResource(resource)
 
 		/* Compiling policies */
 		if (resource.getPolicies != null) {
 			for (pol : resource.getPolicies) {
-				fsa.generateFile(pol.getName + ".smt2", createMainConstraint(pol));
+				fsa.generateFile(pol.getName + ".smt2", header +" \n" + createMainConstraint(pol));
 			}
 		}
 		if (resource.main != null) {
 			if (resource.main.paf.pdp != null) {
 				for (pol : resource.main.paf.pdp.polSet) {
 					if (pol.newPolicy != null) {
-						str.append(createMainConstraint(pol.newPolicy))
-						
-						fsa.generateFile(pol.newPolicy.getName + ".smt2", str.toString);
+						fsa.generateFile(pol.newPolicy.getName + ".smt2", header +" \n" + createMainConstraint(pol.newPolicy));
 					}
 				// Referred policies are not compiled
 				}
