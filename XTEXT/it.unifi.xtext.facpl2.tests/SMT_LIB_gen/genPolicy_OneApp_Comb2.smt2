@@ -432,7 +432,9 @@
 ;##### Rule Obligations
 (define-fun cns_obl_permit_r1 ()  Bool
 	 (and (and
- 		 (not (bot(additionInt const_5 n_sub/profile)))		 (not (err(additionInt const_5 n_sub/profile))))
+ 		 (not (bot (additionInt const_5 n_sub/profile)))
+		 (not (err (additionInt const_5 n_sub/profile)))
+)
 ))
  
 (define-fun cns_obl_deny_r1 ()  Bool
@@ -557,41 +559,45 @@ true
  
 ;##### Policy Combining Algorithm
 (define-fun cns_Name_cmb_r1r2_permit () Bool
-	 (and 
-		 (and (not cns_r1_deny) (not cns_r2_deny))
-		 (or cns_r1_permit cns_r1_notApp cns_r1_indet)
-		 (or cns_r2_permit cns_r2_notApp cns_r2_indet)
-	 )
+	 (or (and cns_r1_permit cns_r2_notApp) (and cns_r1_notApp cns_r2_permit))
 )
 
 (define-fun cns_Name_cmb_r1r2_deny () Bool
-	 (or cns_r1_deny cns_r2_deny)
+	 (or (and cns_r1_deny cns_r2_notApp) (and cns_r1_notApp cns_r2_deny))
 )
 
 (define-fun cns_Name_cmb_r1r2_notApp () Bool
-false)
+	 (and cns_r1_notApp cns_r2_notApp)
+)
 
 (define-fun cns_Name_cmb_r1r2_indet () Bool
-false)
+	 (or 
+ 		 cns_r1_indet 
+		 cns_r2_indet 
+		 (and 
+			 (or cns_r1_permit cns_r1_deny)
+			 (or cns_r2_permit cns_r2_deny)		 )))
 
  
 (define-fun cns_Name_cmb_final_permit () Bool
-	 (and 
-		 (and (not cns_Name_cmb_r1r2_deny) (not cns_r3_deny))
-		 (or cns_Name_cmb_r1r2_permit cns_Name_cmb_r1r2_notApp cns_Name_cmb_r1r2_indet)
-		 (or cns_r3_permit cns_r3_notApp cns_r3_indet)
-	 )
+	 (or (and cns_Name_cmb_r1r2_permit cns_r3_notApp) (and cns_Name_cmb_r1r2_notApp cns_r3_permit))
 )
 
 (define-fun cns_Name_cmb_final_deny () Bool
-	 (or cns_Name_cmb_r1r2_deny cns_r3_deny)
+	 (or (and cns_Name_cmb_r1r2_deny cns_r3_notApp) (and cns_Name_cmb_r1r2_notApp cns_r3_deny))
 )
 
 (define-fun cns_Name_cmb_final_notApp () Bool
-false)
+	 (and cns_Name_cmb_r1r2_notApp cns_r3_notApp)
+)
 
 (define-fun cns_Name_cmb_final_indet () Bool
-false)
+	 (or 
+ 		 cns_Name_cmb_r1r2_indet 
+		 cns_r3_indet 
+		 (and 
+			 (or cns_Name_cmb_r1r2_permit cns_Name_cmb_r1r2_deny)
+			 (or cns_r3_permit cns_r3_deny)		 )))
 
  
 ;##### Policy Final Constraints

@@ -21,6 +21,7 @@ import it.unifi.xtext.facpl.facpl2.NotExpression;
 import it.unifi.xtext.facpl.facpl2.Obligation;
 import it.unifi.xtext.facpl.facpl2.OrExpression;
 import it.unifi.xtext.facpl.facpl2.PolicySet;
+import it.unifi.xtext.facpl.facpl2.Request;
 import it.unifi.xtext.facpl.facpl2.Rule;
 import it.unifi.xtext.facpl.facpl2.Set;
 import it.unifi.xtext.facpl.facpl2.StringLiteral;
@@ -47,6 +48,49 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 		// TODO Auto-generated method stub
 		return super.caseImport(object);
 	}
+
+	/*
+	 * REQUEST - (needed for generation of Property code)
+	 */
+
+	public FacplType caseRequest(Request req) {
+		for (AttributeReq attr : req.getAttributes()) {
+
+			FacplType type = FacplType.NAME;
+			for (Expression exp : attr.getValue()) {
+				type = FacplType.combine(type, doSwitch(exp));
+			}
+
+	
+			if (type.equals(FacplType.NAME) || type.equals(FacplType.ERR)) {
+				/*
+				 * Request attribute cannot be a name, it need to be a literal
+				 */
+				return FacplType.ERR;
+			}else if (attr.getValue().size() > 1){
+				/* it is a declaration of a set of value -> set the adequate FacplType */
+				type = FacplType.getSetType(type);
+			}
+
+			/* Attribute well-typed, add type constraint */
+
+			try {
+				this.typeAssignments.add(attr.getName(), type);
+			} catch (Exception e) {
+				/*
+				 * Type of attribute inferred by the request does not match that
+				 * in the assignment
+				 */
+				return FacplType.ERR;
+			}
+		}
+
+		return FacplType.TYPED;
+	}
+
+	/*
+	 * POLICY
+	 */
 
 	@Override
 	public FacplType caseFacpl(Facpl f) {

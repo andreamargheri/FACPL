@@ -13,7 +13,7 @@ import it.unifi.xtext.facpl.generator.util.PolicyConstant
 
 @InjectWith(typeof(Facpl2InjectorProvider))
 @RunWith(typeof(XtextRunner))
-public class Z3Generator_Constant_Test extends AbstractXtextTests {
+public class SMT_LIBGenerator_Constant_Test extends AbstractXtextTests {
 
 	@Inject
 	ParseHelper<Facpl> parser

@@ -395,6 +395,9 @@
 (declare-const n_act/id (TValue String))
 (assert (not (and (bot n_act/id) (err n_act/id))))
  
+(declare-const n_act/type (TValue Int))
+(assert (not (and (bot n_act/type) (err n_act/type))))
+ 
 (declare-const n_sub/profile (TValue Int))
 (assert (not (and (bot n_sub/profile) (err n_sub/profile))))
  
@@ -410,6 +413,11 @@
 (assert (not (bot const_5))) 
 (assert (not (err const_5)))
  
+(declare-const const_6 (TValue Int))
+(assert (= (val const_6) 6))
+(assert (not (bot const_6))) 
+(assert (not (err const_6)))
+ 
 (declare-const const_write (TValue String))
 (assert (= (val const_write) s_write))
 (assert (not (bot const_write))) 
@@ -424,7 +432,9 @@
 ;##### Rule Obligations
 (define-fun cns_obl_permit_r1 ()  Bool
 	 (and (and
- 		 (not (bot(additionInt const_5 n_sub/profile)))		 (not (err(additionInt const_5 n_sub/profile))))
+ 		 (not (bot (additionInt const_5 n_sub/profile)))
+		 (not (err (additionInt const_5 n_sub/profile)))
+)
 ))
  
 (define-fun cns_obl_deny_r1 ()  Bool
@@ -457,8 +467,8 @@
 ;################### END CONSTRAINT RULE r1 #########################
 ;################### START CONSTRAINT RULE r2 #######################
 ;##### Rule Target
-(define-fun cns_target_r2 () (TValue Bool)	
-	(mk-val true false false) 
+(define-fun cns_target_r2 () (TValue Bool)
+	(equalInt n_act/type const_5)
 )
 ;##### Rule Obligations
 (define-fun cns_obl_permit_r2 ()  Bool
@@ -496,8 +506,8 @@ true
 ;################### END CONSTRAINT RULE r2 #########################
 ;################### START CONSTRAINT RULE r3 #######################
 ;##### Rule Target
-(define-fun cns_target_r3 () (TValue Bool)	
-	(mk-val true false false) 
+(define-fun cns_target_r3 () (TValue Bool)
+	(equalInt n_act/type const_6)
 )
 ;##### Rule Obligations
 (define-fun cns_obl_permit_r3 ()  Bool
@@ -511,11 +521,11 @@ true
 ;##### Rule Constraints
 ;PERMIT
 (define-fun cns_r3_permit () Bool
-(and (isTrue cns_target_r3) cns_obl_permit_r3)
+ false 
 )
 ;DENY
 (define-fun cns_r3_deny () Bool
- false 
+(and (isTrue cns_target_r3) cns_obl_deny_r3)
 )
 ;NOT APP
 (define-fun cns_r3_notApp () Bool
@@ -528,50 +538,11 @@ true
 		(not (isBool cns_target_r3))
 		(and 
 			(isTrue cns_target_r3)
-			(not cns_obl_permit_r3)
+			(not cns_obl_deny_r3)
 		)
 	)
 )
 ;################### END CONSTRAINT RULE r3 #########################
-;################### START CONSTRAINT RULE r4 #######################
-;##### Rule Target
-(define-fun cns_target_r4 () (TValue Bool)
-	(equalString n_act/id const_write)
-)
-;##### Rule Obligations
-(define-fun cns_obl_permit_r4 ()  Bool
-	 (and (and
- 		 (not (bot(additionInt const_5 n_sub/profile)))		 (not (err(additionInt const_5 n_sub/profile))))
-))
- 
-(define-fun cns_obl_deny_r4 ()  Bool
-	 (and 	 true true))
- 
-;##### Rule Constraints
-;PERMIT
-(define-fun cns_r4_permit () Bool
-(and (isTrue cns_target_r4) cns_obl_permit_r4)
-)
-;DENY
-(define-fun cns_r4_deny () Bool
- false 
-)
-;NOT APP
-(define-fun cns_r4_notApp () Bool
-	(or (isFalse cns_target_r4) (bot cns_target_r4))
-)
-;INDET
-(define-fun cns_r4_indet () Bool
-	(or 
-		(err cns_target_r4)
-		(not (isBool cns_target_r4))
-		(and 
-			(isTrue cns_target_r4)
-			(not cns_obl_permit_r4)
-		)
-	)
-)
-;################### END CONSTRAINT RULE r4 #########################
 ;################################ TOP-LEVEL POLICY Name CONSTRAINTs ###########################
 ;##### Policy Target
 (define-fun cns_target_Name () (TValue Bool)
@@ -589,15 +560,17 @@ true
 ;##### Policy Combining Algorithm
 (define-fun cns_Name_cmb_r1r2_permit () Bool
 	 (or 
-		 (and cns_r1_permit cns_r2_permit)
-		 (and cns_r1_permit cns_r2_notApp)
-		 (and cns_r1_notApp cns_r2_permit)
-	 )
-)
+ 		 (and cns_r1_permit cns_r2_permit)
+		 (and cns_r1_permit (not cns_r2_deny))
+		 (and (not cns_r1_deny) cns_r2_permit)
+	 ))
 
 (define-fun cns_Name_cmb_r1r2_deny () Bool
-	 (or cns_r1_deny cns_r2_deny)
-)
+	 (or 
+ 		 (and cns_r1_deny cns_r2_deny)
+		 (and cns_r1_deny (not cns_r2_permit))
+		 (and (not cns_r1_permit) cns_r2_deny)
+	 ))
 
 (define-fun cns_Name_cmb_r1r2_notApp () Bool
 	 (and cns_r1_notApp cns_r2_notApp)
@@ -605,58 +578,36 @@ true
 
 (define-fun cns_Name_cmb_r1r2_indet () Bool
 	 (or 
-		 (and cns_r1_indet (not cns_r2_deny))
-		 (and (not cns_r1_deny) cns_r2_indet)
-	 )
-)
-
- 
-(define-fun cns_Name_cmb_r1r2r3_permit () Bool
-	 (or 
-		 (and cns_Name_cmb_r1r2_permit cns_r3_permit)
-		 (and cns_Name_cmb_r1r2_permit cns_r3_notApp)
-		 (and cns_Name_cmb_r1r2_notApp cns_r3_permit)
-	 )
-)
-
-(define-fun cns_Name_cmb_r1r2r3_deny () Bool
-	 (or cns_Name_cmb_r1r2_deny cns_r3_deny)
-)
-
-(define-fun cns_Name_cmb_r1r2r3_notApp () Bool
-	 (and cns_Name_cmb_r1r2_notApp cns_r3_notApp)
-)
-
-(define-fun cns_Name_cmb_r1r2r3_indet () Bool
-	 (or 
-		 (and cns_Name_cmb_r1r2_indet (not cns_r3_deny))
-		 (and (not cns_Name_cmb_r1r2_deny) cns_r3_indet)
-	 )
-)
+ 		 (and cns_r1_permit cns_r2_deny)
+		 (and cns_r1_deny  cns_r2_permit)
+		 cns_r1_indet cns_r2_indet
+	 ))
 
  
 (define-fun cns_Name_cmb_final_permit () Bool
 	 (or 
-		 (and cns_Name_cmb_r1r2r3_permit cns_r4_permit)
-		 (and cns_Name_cmb_r1r2r3_permit cns_r4_notApp)
-		 (and cns_Name_cmb_r1r2r3_notApp cns_r4_permit)
-	 )
-)
+ 		 (and cns_Name_cmb_r1r2_permit cns_r3_permit)
+		 (and cns_Name_cmb_r1r2_permit (not cns_r3_deny))
+		 (and (not cns_Name_cmb_r1r2_deny) cns_r3_permit)
+	 ))
 
 (define-fun cns_Name_cmb_final_deny () Bool
-	 (or cns_Name_cmb_r1r2r3_deny cns_r4_deny)
-)
+	 (or 
+ 		 (and cns_Name_cmb_r1r2_deny cns_r3_deny)
+		 (and cns_Name_cmb_r1r2_deny (not cns_r3_permit))
+		 (and (not cns_Name_cmb_r1r2_permit) cns_r3_deny)
+	 ))
 
 (define-fun cns_Name_cmb_final_notApp () Bool
-	 (and cns_Name_cmb_r1r2r3_notApp cns_r4_notApp)
+	 (and cns_Name_cmb_r1r2_notApp cns_r3_notApp)
 )
 
 (define-fun cns_Name_cmb_final_indet () Bool
 	 (or 
-		 (and cns_Name_cmb_r1r2r3_indet (not cns_r4_deny))
-		 (and (not cns_Name_cmb_r1r2r3_deny) cns_r4_indet)
-	 )
-)
+ 		 (and cns_Name_cmb_r1r2_permit cns_r3_deny)
+		 (and cns_Name_cmb_r1r2_deny  cns_r3_permit)
+		 cns_Name_cmb_r1r2_indet cns_r3_indet
+	 ))
 
  
 ;##### Policy Final Constraints

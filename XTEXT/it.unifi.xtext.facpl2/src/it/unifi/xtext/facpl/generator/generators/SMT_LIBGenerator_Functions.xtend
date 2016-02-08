@@ -14,8 +14,14 @@ class SMT_LIBGenerator_Functions {
 		(ite (= x (mk-val true false false)) true false)
 	)
 	
-	(define-fun isBool ((x (TValue Bool))) Bool
-			(ite (or (isFalse x) (isTrue x)) true false)
+	(define-fun isNotBoolValue ((x (TValue Bool))) Bool
+			(ite (or (isFalse x) (isTrue x)) 
+				false
+				(ite (and (not (miss x)) (not (err x)))
+					true
+					false
+				)
+			)
 	)
 	
 	(define-fun FAnd ((x (TValue Bool)) (y (TValue Bool))) (TValue Bool)
@@ -36,7 +42,7 @@ class SMT_LIBGenerator_Functions {
 			(mk-val true false false)
 			(ite (or (err x) (err y))
 				(mk-val false false true)
-				(ite (or (bot x) (bot y))
+				(ite (or (miss x) (miss y))
 					(mk-val false true true)
 					(mk-val false false false)
 				)
@@ -49,7 +55,7 @@ class SMT_LIBGenerator_Functions {
 			(mk-val false false false)
 			(ite (isFalse x)
 				(mk-val true false false)
-				(ite (bot x)
+				(ite (miss x)
 					(mk-val false true false)
 					(mk-val false false true)
 				)
@@ -62,7 +68,7 @@ class SMT_LIBGenerator_Functions {
 	(define-fun «funID.EQUAL.toString»Bool ((x (TValue Bool)) (y (TValue Bool))) (TValue Bool)
 		(ite (or (err x) (err y))
 			(mk-val false false true)
-			(ite (or (bot x) (bot y))
+			(ite (or (miss x) (miss y))
 				(mk-val false true false)
 				(ite (= (val x) (val y))
 					(mk-val true false false)
@@ -75,7 +81,7 @@ class SMT_LIBGenerator_Functions {
 	(define-fun «funID.EQUAL.toString»Int ((x (TValue Int)) (y (TValue Int))) (TValue Bool)
 		(ite (or (err x) (err y))
 			(mk-val false false true)
-			(ite (or (bot x) (bot y))
+			(ite (or (miss x) (miss y))
 				(mk-val false true false)
 				(ite (= (val x) (val y))
 					(mk-val true false false)
@@ -88,7 +94,7 @@ class SMT_LIBGenerator_Functions {
 	(define-fun «funID.EQUAL.toString»Real ((x (TValue Real)) (y (TValue Real))) (TValue Bool)
 		(ite (or (err x) (err y))
 			(mk-val false false true)
-			(ite (or (bot x) (bot y))
+			(ite (or (miss x) (miss y))
 				(mk-val false true false)
 				(ite (= (val x) (val y))
 					(mk-val true false false)
@@ -102,13 +108,13 @@ class SMT_LIBGenerator_Functions {
 	def static getIntFunctions() '''
 	
 	(define-fun isValInt ((x (TValue Int))) Bool
-		(ite (and (not (bot x)) (not (err x))) true false)
+		(ite (and (not (miss x)) (not (err x))) true false)
 	)
 	
 	(define-fun «funID.LESS.toString.replaceAll('-','')»Int ((x (TValue Int)) (y (TValue Int))) (TValue Bool)
 		(ite (or (err x) (err y))
 			(mk-val false false true)
-			(ite (or (bot x) (bot y))
+			(ite (or (miss x) (miss y))
 				(mk-val false true false)
 				(ite (< (val x) (val y))
 					(mk-val true false false)
@@ -121,7 +127,7 @@ class SMT_LIBGenerator_Functions {
 	(define-fun «funID.LESS_EQ.toString.replaceAll('-','')»Int ((x (TValue Int)) (y (TValue Int))) (TValue Bool)
 		(ite (or (err x) (err y))
 			(mk-val false false true)
-			(ite (or (bot x) (bot y))
+			(ite (or (miss x) (miss y))
 				(mk-val false true false)
 				(ite (<= (val x) (val y))
 					(mk-val true false false)
@@ -134,7 +140,7 @@ class SMT_LIBGenerator_Functions {
 	(define-fun «funID.GREATER.toString.replaceAll('-','')»Int ((x (TValue Int)) (y (TValue Int))) (TValue Bool)
 		(ite (or (err x) (err y))
 			(mk-val false false true)
-			(ite (or (bot x) (bot y))
+			(ite (or (miss x) (miss y))
 				(mk-val false true false)
 				(ite (> (val x) (val y))
 					(mk-val true false false)
@@ -147,7 +153,7 @@ class SMT_LIBGenerator_Functions {
 	(define-fun «funID.GREATER_EQ.toString.replaceAll('-','')»Int ((x (TValue Int)) (y (TValue Int))) (TValue Bool)
 		(ite (or (err x) (err y))
 			(mk-val false false true)
-			(ite (or (bot x) (bot y))
+			(ite (or (miss x) (miss y))
 				(mk-val false true false)
 				(ite (>= (val x) (val y))
 					(mk-val true false false)
@@ -203,13 +209,13 @@ class SMT_LIBGenerator_Functions {
 	def static getRealFunctions() '''
 	
 	(define-fun isValReal ((x (TValue Real))) Bool
-		(ite (and (not (bot x)) (not (err x))) true false)
+		(ite (and (not (miss x)) (not (err x))) true false)
 	)
 	
 	(define-fun «funID.LESS.toString.replaceAll('-','')»Real ((x (TValue Real)) (y (TValue Real))) (TValue Bool)
 		(ite (or (err x) (err y))
 			(mk-val false false true)
-			(ite (or (bot x) (bot y))
+			(ite (or (miss x) (miss y))
 				(mk-val false true false)
 				(ite (< (val x) (val y))
 					(mk-val true false false)
@@ -222,7 +228,7 @@ class SMT_LIBGenerator_Functions {
 	(define-fun «funID.LESS_EQ.toString.replaceAll('-','')»Real ((x (TValue Real)) (y (TValue Real))) (TValue Bool)
 		(ite (or (err x) (err y))
 			(mk-val false false true)
-			(ite (or (bot x) (bot y))
+			(ite (or (miss x) (miss y))
 				(mk-val false true false)
 				(ite (<= (val x) (val y))
 					(mk-val true false false)
@@ -235,7 +241,7 @@ class SMT_LIBGenerator_Functions {
 	(define-fun «funID.GREATER.toString.replaceAll('-','')»Real ((x (TValue Real)) (y (TValue Real))) (TValue Bool)
 		(ite (or (err x) (err y))
 			(mk-val false false true)
-			(ite (or (bot x) (bot y))
+			(ite (or (miss x) (miss y))
 				(mk-val false true false)
 				(ite (> (val x) (val y))
 					(mk-val true false false)
@@ -248,7 +254,7 @@ class SMT_LIBGenerator_Functions {
 	(define-fun «funID.GREATER_EQ.toString.replaceAll('-','')»Real ((x (TValue Real)) (y (TValue Real))) (TValue Bool)
 		(ite (or (err x) (err y))
 			(mk-val false false true)
-			(ite (or (bot x) (bot y))
+			(ite (or (miss x) (miss y))
 				(mk-val false true false)
 				(ite (>= (val x) (val y))
 					(mk-val true false false)
@@ -303,21 +309,21 @@ class SMT_LIBGenerator_Functions {
 	
 	def static getSetFunctions() '''
 	(define-fun isValSetInt ((x (TValue (Set Int)))) Bool
-		(ite (and (not (bot x)) (not (err x))) true false)
+		(ite (and (not (miss x)) (not (err x))) true false)
 	)
 	
 	(define-fun isValSetReal ((x (TValue (Set Real)))) Bool
-		(ite (and (not (bot x)) (not (err x))) true false)
+		(ite (and (not (miss x)) (not (err x))) true false)
 	)
 	
 	(define-fun isValSetBool ((x (TValue (Set Bool)))) Bool
-		(ite (and (not (bot x)) (not (err x))) true false)
+		(ite (and (not (miss x)) (not (err x))) true false)
 	)
 	
 	(define-fun «funID.IN.toString»Bool ((x (TValue Bool)) (y (TValue (Set Bool)))) (TValue Bool)
 		(ite (or (err x)(err y)) 
 			(mk-val false false true)
-			(ite (or (bot x) (bot y))
+			(ite (or (miss x) (miss y))
 				(mk-val false true false)
 				(ite (exists ((i Int))
 							(= (val x) (select (val y) i))
@@ -332,7 +338,7 @@ class SMT_LIBGenerator_Functions {
 	(define-fun «funID.IN.toString»Real ((x (TValue Real)) (y (TValue (Set Real)))) (TValue Bool)
 		(ite (or (err x)(err y)) 
 			(mk-val false false true)
-			(ite (or (bot x) (bot y))
+			(ite (or (miss x) (miss y))
 				(mk-val false true false)
 				(ite (exists ((i Int))
 							(= (val x) (select (val y) i))
@@ -347,7 +353,7 @@ class SMT_LIBGenerator_Functions {
 	(define-fun «funID.IN.toString»Int ((x (TValue Int)) (y (TValue (Set Int)))) (TValue Bool)
 		(ite (or (err x)(err y)) 
 			(mk-val false false true)
-			(ite (or (bot x) (bot y))
+			(ite (or (miss x) (miss y))
 				(mk-val false true false)
 				(ite (exists ((i Int))
 							(= (val x) (select (val y) i))

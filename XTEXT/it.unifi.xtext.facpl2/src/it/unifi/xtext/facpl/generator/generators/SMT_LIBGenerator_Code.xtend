@@ -40,11 +40,12 @@ import java.util.LinkedList
 import java.util.List
 import it.unifi.xtext.facpl.generator.util.PolicyConstant
 import it.unifi.xtext.facpl.facpl2.Facpl
+import it.unifi.xtext.facpl.facpl2.Request
 
 class SMT_LIBGenerator_Code {
 
 	// Typing assertions for Attributes
-	protected SubstitutionSet attribute_Types;
+	protected SubstitutionSet attributes;
 
 	// Declared Constants
 	protected HashMap<String,ConstraintConstant> constants
@@ -61,8 +62,12 @@ class SMT_LIBGenerator_Code {
 	protected Boolean flag = false //if declared function occurs
 
 
+	/**
+	 * Initialization method for the SMT-LIB code generation 
+	 * -> NOT USED FOR PROPERTY VERIFICATION
+	 */
 	def void initialiseFacplResource (Facpl resource) throws Exception{
-		
+				
 		tInf = new FacplTypeInference()
 		
 		/* Compiling Declared Functions */
@@ -76,18 +81,72 @@ class SMT_LIBGenerator_Code {
 		
 		/*  Check TYPE INFERENCE */
 		var FacplType type = tInf.doSwitch(resource)
-
+		
 		if (type.equals(FacplType.ERR)) {
 			throw new Exception("FACPL code is not well-typed");
 		}
 
-		this.attribute_Types = tInf.typeAssignments;
+		this.attributes = tInf.typeAssignments;
 
 		/* Calculate STRING AND ATTRIBUTE constants */
 		val PolicyConstant tConst = new PolicyConstant()
 
 		//constants to check for the whole file
 		tConst.doSwitch(resource)
+
+		this.constants = tConst.constants 
+		this.sets = tConst.sets
+		
+		
+		this.stringEls = new LinkedList<String>()
+		for( el : this.constants.values){
+			if (el.type.equals(FacplType.STRING)){
+				//add string constants
+				stringEls.add(el.value.toString)
+			}
+		}
+
+	}
+	
+	/**
+	 * Initialization method for the Property evaluation ( it take into account a request)
+	 */
+	def void initialiseFacplResource_Request (Facpl resource, Request request) throws Exception{
+				
+		tInf = new FacplTypeInference()
+		
+		/* Compiling Declared Functions */
+		if (resource.declarations != null){
+			dec_functions = new StringBuffer()
+			for (dec : resource.declarations){
+				dec_functions.append(createDeclFunctionConstr(dec)+"\n")
+				flag = true
+			}
+		}
+		
+		/*  Check TYPE INFERENCE  -> Policy and Request*/
+		var FacplType type = tInf.doSwitch(resource)
+
+		var FacplType type1 = tInf.doSwitch(request)
+
+		if (type.equals(FacplType.ERR) ) {
+			throw new Exception("FACPL policy is not well-typed");
+		}
+		
+		if (type1.equals(FacplType.ERR) ) {
+			throw new Exception("FACPL request is not well-typed with respect to the given Policy");
+		}
+		
+		this.attributes = tInf.typeAssignments;
+
+		/* Calculate STRING AND ATTRIBUTE constants */
+		val PolicyConstant tConst = new PolicyConstant()
+
+		//constants to check for the policy
+		tConst.doSwitch(resource)
+		//constants to check for the request
+		tConst.doSwitch(request)
+
 
 		this.constants = tConst.constants 
 		this.sets = tConst.sets
@@ -222,13 +281,13 @@ def dispatch getInternalPolicyConstr(Rule r)
 )
 ;NOT APP
 (define-fun cns_«r.name»_notApp () Bool
-	(or (isFalse cns_target_«r.name») (bot cns_target_«r.name»))
+	(or (isFalse cns_target_«r.name») (miss cns_target_«r.name»))
 )
 ;INDET
 (define-fun cns_«r.name»_indet () Bool
 	(or 
 		(err cns_target_«r.name»)
-		(not (isBool cns_target_«r.name»))
+		(isNotBoolValue cns_target_«r.name»)
 		(and 
 			(isTrue cns_target_«r.name»)
 			«IF r.effect.equals(Effect.PERMIT)»
@@ -319,7 +378,7 @@ def getFinalConstrPSet(String p_name,FacplPolicy pol)'''
 ;NOT APP
 (define-fun cns_«p_name»_notApp () Bool
 	(or
-		(or (isFalse cns_target_«p_name») (bot cns_target_«p_name»))
+		(or (isFalse cns_target_«p_name») (miss cns_target_«p_name»))
 		«IF pol instanceof PolicySet»(and (isTrue cns_target_«p_name») cns_«p_name»_cmb_final_notApp)«ENDIF»
 	)
 )
@@ -327,7 +386,7 @@ def getFinalConstrPSet(String p_name,FacplPolicy pol)'''
 (define-fun cns_«p_name»_indet () Bool
 	(or 
 		(err cns_target_«p_name»)
-		(not (isBool cns_target_«p_name»))
+		(isNotBoolValue cns_target_«p_name»)
 		«IF pol instanceof PolicySet»
 		(and (isTrue cns_target_«p_name») cns_«p_name»_cmb_final_indet)
 		«ENDIF»
@@ -384,7 +443,7 @@ def getFinalConstrPSet(String p_name,FacplPolicy pol)'''
 					if (o.expr.size > 0){
 						str.append("(and\n ") 
 						for (e : o.expr){
-								str.append("\t\t (not (bot "+ getExpressionConst(e)+"))\n")
+								str.append("\t\t (not (miss "+ getExpressionConst(e)+"))\n")
 								str.append("\t\t (not (err "+ getExpressionConst(e)+ "))\n")
 						}
 						str.append(")\n")
@@ -419,7 +478,7 @@ def getFinalConstrPSet(String p_name,FacplPolicy pol)'''
 	;#######################
 	;RECORD DATATYPE with BOTTOM and ERROR
 	;#######################
-	(declare-datatypes (U) ((TValue (mk-val (val U)(bot Bool)(err Bool)))))
+	(declare-datatypes (U) ((TValue (mk-val (val U)(miss Bool)(err Bool)))))
 	
 	;#######################
 	;Set of elements of type T with attached an integer index
@@ -431,9 +490,9 @@ def getFinalConstrPSet(String p_name,FacplPolicy pol)'''
 	''' (declare-datatypes () ((String «FOR el: this.stringEls»s_«el» «ENDFOR»)))'''
 
 	// Declaring Attributes used in the policy
-	def getAttributeDec() '''«FOR att_name : this.attribute_Types.substitutions.keySet»
-			(declare-const «getNameAttr(att_name)» (TValue «getType(this.attribute_Types.substitutions.get(att_name))»))
-			(assert (not (and (bot «getNameAttr(att_name)») (err «getNameAttr(att_name)»))))
+	def getAttributeDec() '''«FOR att_name : this.attributes.substitutions.keySet»
+			(declare-const «getNameAttr(att_name)» (TValue «getType(this.attributes.substitutions.get(att_name))»))
+			(assert (not (and (miss «getNameAttr(att_name)») (err «getNameAttr(att_name)»))))
 			 
 		«ENDFOR»
 	'''
@@ -483,7 +542,7 @@ def getFinalConstrPSet(String p_name,FacplPolicy pol)'''
 			«ELSE»
 			(assert (= (val «getConstAttr(cst.att_name)») «cst.value»))
 			«ENDIF»
-			(assert (not (bot «getConstAttr(cst.att_name)»))) 
+			(assert (not (miss «getConstAttr(cst.att_name)»))) 
 			(assert (not (err «getConstAttr(cst.att_name)»)))
 		«ENDIF» 
 		«ENDFOR»
@@ -498,7 +557,7 @@ def getFinalConstrPSet(String p_name,FacplPolicy pol)'''
 		val set_id = getConstAttr(cst.att_name)
 		//Declaration Set Element
 		str.append("(declare-const "+ set_id +" (TValue "+getType(cst.type)+ "))\n")
-		str.append("(assert (not (bot "+ set_id + ")))\n") 
+		str.append("(assert (not (miss "+ set_id + ")))\n") 
 		str.append("(assert (not (err "+ set_id + ")))\n")
 		
 		//Assertion on the enclosing elements
@@ -541,7 +600,7 @@ def getFinalConstrPSet(String p_name,FacplPolicy pol)'''
 	}
 
 	/*
-	 * THESE CASES CANNOT OCCUR -> they are 
+	 * THESE CASES CANNOT OCCUR 
 	 */
 	def dispatch String getExpressionValue (Set e){
 		throw new Exception ("NOT SUPPORTED")
@@ -564,7 +623,7 @@ def getFinalConstrPSet(String p_name,FacplPolicy pol)'''
 	«IF this.stringEls.size > 0»
 	
 	(define-fun isValString ((x (TValue String))) Bool
-		(ite (and (not (bot x)) (not (err x))) true false)
+		(ite (and (not (miss x)) (not (err x))) true false)
 	)
 
 	(define-fun «funID.EQUAL.toString»String ((x (TValue String)) (y (TValue String))) (TValue Bool)
@@ -581,13 +640,13 @@ def getFinalConstrPSet(String p_name,FacplPolicy pol)'''
 	)
 	
 	(define-fun isValSetString ((x (TValue (Set String)))) Bool
-		(ite (and (not (bot x)) (not (err x))) true false)
+		(ite (and (not (miss x)) (not (err x))) true false)
 	)
 	
 	(define-fun «funID.IN.toString»String ((x (TValue String)) (y (TValue (Set String)))) (TValue Bool)
 		(ite (or (err x)(err y)) 
 			(mk-val false false true)
-			(ite (or (bot x) (bot y))
+			(ite (or (miss x) (miss y))
 				(mk-val false true false)
 				(ite (exists ((i Int))
 							(= (val x) (select (val y) i))
@@ -628,11 +687,11 @@ def getFinalConstrPSet(String p_name,FacplPolicy pol)'''
 		//If any of the type is NAME look for type inference constraint
 		if (type1.equals(FacplType.NAME)){
 			//i.e. arg1 is an attribute name
-			type1 = this.attribute_Types.getBound(function.arg1 as AttributeName)
+			type1 = this.attributes.getBound(function.arg1 as AttributeName)
 		}
 		if (type2.equals(FacplType.NAME)){
 			//i.e. arg1 is an attribute name
-			type2 = this.attribute_Types.getBound(function.arg2 as AttributeName)
+			type2 = this.attributes.getBound(function.arg2 as AttributeName)
 		}
 		//combine the types and if there is no constraints on the NAME type assign it to BOOLEAN
 		var typeF = FacplType.combine(type1,type2)

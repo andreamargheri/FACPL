@@ -395,6 +395,9 @@
 (declare-const n_act/id (TValue String))
 (assert (not (and (bot n_act/id) (err n_act/id))))
  
+(declare-const n_act/type (TValue Int))
+(assert (not (and (bot n_act/type) (err n_act/type))))
+ 
 (declare-const n_sub/profile (TValue Int))
 (assert (not (and (bot n_sub/profile) (err n_sub/profile))))
  
@@ -424,7 +427,9 @@
 ;##### Rule Obligations
 (define-fun cns_obl_permit_r1 ()  Bool
 	 (and (and
- 		 (not (bot(additionInt const_5 n_sub/profile)))		 (not (err(additionInt const_5 n_sub/profile))))
+ 		 (not (bot (additionInt const_5 n_sub/profile)))
+		 (not (err (additionInt const_5 n_sub/profile)))
+)
 ))
  
 (define-fun cns_obl_deny_r1 ()  Bool
@@ -455,6 +460,45 @@
 	)
 )
 ;################### END CONSTRAINT RULE r1 #########################
+;################### START CONSTRAINT RULE r2 #######################
+;##### Rule Target
+(define-fun cns_target_r2 () (TValue Bool)
+	(equalInt n_act/type const_5)
+)
+;##### Rule Obligations
+(define-fun cns_obl_permit_r2 ()  Bool
+true
+)
+ 
+(define-fun cns_obl_deny_r2 ()  Bool
+true
+)
+ 
+;##### Rule Constraints
+;PERMIT
+(define-fun cns_r2_permit () Bool
+ false 
+)
+;DENY
+(define-fun cns_r2_deny () Bool
+(and (isTrue cns_target_r2) cns_obl_deny_r2)
+)
+;NOT APP
+(define-fun cns_r2_notApp () Bool
+	(or (isFalse cns_target_r2) (bot cns_target_r2))
+)
+;INDET
+(define-fun cns_r2_indet () Bool
+	(or 
+		(err cns_target_r2)
+		(not (isBool cns_target_r2))
+		(and 
+			(isTrue cns_target_r2)
+			(not cns_obl_deny_r2)
+		)
+	)
+)
+;################### END CONSTRAINT RULE r2 #########################
 ;################################ TOP-LEVEL POLICY Name CONSTRAINTs ###########################
 ;##### Policy Target
 (define-fun cns_target_Name () (TValue Bool)
@@ -471,20 +515,26 @@ true
  
 ;##### Policy Combining Algorithm
 (define-fun cns_Name_cmb_final_permit () Bool
-	cns_r1_permit
+	 (or (and cns_r1_permit cns_r2_notApp) (and cns_r1_notApp cns_r2_permit))
 )
 
 (define-fun cns_Name_cmb_final_deny () Bool
-	cns_r1_deny
+	 (or (and cns_r1_deny cns_r2_notApp) (and cns_r1_notApp cns_r2_deny))
 )
 
 (define-fun cns_Name_cmb_final_notApp () Bool
-	cns_r1_notApp
+	 (and cns_r1_notApp cns_r2_notApp)
 )
 
 (define-fun cns_Name_cmb_final_indet () Bool
-	cns_r1_indet
-)
+	 (or 
+ 		 cns_r1_indet 
+		 cns_r2_indet 
+		 (and 
+			 (or cns_r1_permit cns_r1_deny)
+			 (or cns_r2_permit cns_r2_deny)		 )))
+
+ 
 ;##### Policy Final Constraints
 ;PERMIT
 (define-fun cns_Name_permit () Bool

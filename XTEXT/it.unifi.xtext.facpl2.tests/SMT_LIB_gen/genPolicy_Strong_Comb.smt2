@@ -427,7 +427,9 @@
 ;##### Rule Obligations
 (define-fun cns_obl_permit_r1 ()  Bool
 	 (and (and
- 		 (not (bot(additionInt const_5 n_sub/profile)))		 (not (err(additionInt const_5 n_sub/profile))))
+ 		 (not (bot (additionInt const_5 n_sub/profile)))
+		 (not (err (additionInt const_5 n_sub/profile)))
+)
 ))
  
 (define-fun cns_obl_deny_r1 ()  Bool
@@ -513,18 +515,10 @@ true
  
 ;##### Policy Combining Algorithm
 (define-fun cns_Name_cmb_final_permit () Bool
-	 (or 
- 		 (and cns_r1_permit cns_r2_permit)
-		 (and cns_r1_permit (not cns_r2_deny))
-		 (and (not cns_r1_deny) cns_r2_permit)
-	 ))
+	 (and cns_r1_permit cns_r2_permit))
 
 (define-fun cns_Name_cmb_final_deny () Bool
-	 (or 
- 		 (and cns_r1_deny cns_r2_deny)
-		 (and cns_r1_deny (not cns_r2_permit))
-		 (and (not cns_r1_permit) cns_r2_deny)
-	 ))
+	 (and cns_r1_deny cns_r2_deny))
 
 (define-fun cns_Name_cmb_final_notApp () Bool
 	 (and cns_r1_notApp cns_r2_notApp)
@@ -532,9 +526,11 @@ true
 
 (define-fun cns_Name_cmb_final_indet () Bool
 	 (or 
- 		 (and cns_r1_permit cns_r2_deny)
-		 (and cns_r1_deny  cns_r2_permit)
-		 cns_r1_indet cns_r2_indet
+ 		 cns_r1_indet cns_r2_indet
+		 (and cns_r1_notApp (not cns_r2_notApp))
+		 (and (not cns_r1_notApp) cns_r2_notApp)
+		 (and cns_r1_permit cns_r2_deny)
+		 (and cns_r1_deny cns_r2_permit)
 	 ))
 
  
