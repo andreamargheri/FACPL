@@ -1,4 +1,4 @@
-package foo;
+package usagecontrol.foo;
 
 import it.unifi.facpl.lib.policy.*;
 import it.unifi.facpl.system.*;

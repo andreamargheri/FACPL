@@ -1,4 +1,4 @@
-package foo;
+package usagecontrol.foo;
 
 import java.util.HashMap;
 import it.unifi.facpl.lib.interfaces.IPepAction;
