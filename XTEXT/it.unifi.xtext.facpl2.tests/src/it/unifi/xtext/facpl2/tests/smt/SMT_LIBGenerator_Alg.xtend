@@ -15,7 +15,7 @@ import org.junit.runner.RunWith
 
 @InjectWith(typeof(Facpl2InjectorProvider))
 @RunWith(typeof(XtextRunner))
-class SMT_LIBGenerator_Alg extends AbstractXtextTests {
+class SMT_LIBGenerator_Alg  {
 
 	@Inject extension ParseHelper<Facpl>
 

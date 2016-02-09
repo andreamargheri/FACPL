@@ -41,6 +41,8 @@ import it.unifi.xtext.facpl.validation.inference.SubstitutionSet
 import java.util.HashMap
 import java.util.LinkedList
 import java.util.List
+import it.unifi.xtext.facpl.generator.util.DateUtil
+import java.util.Date
 
 class SMT_LIBGenerator_Code {
 
@@ -528,9 +530,8 @@ def getFinalConstrPSet(String p_name,FacplPolicy pol)'''
 			case SET_DOUBLE: return "(Set Real)"
 			case SET_NAME: return "(Set Bool)" // TO BE USED EVERYWHERE WHERE A Set IS NOT DECLARED!!!!
 			case SET_STRING: return "(Set String)"
-			// Not-Supported (?)
-			case SET_DATETIME: throw new Exception("DATE NOT SUPPORTED ????")
-			case DATETIME: throw new Exception("DATE NOT SUPPORTED ????")
+			case SET_DATETIME: return "(Set Int)"
+			case DATETIME: return "Int"
 			case ERR: throw new Exception("Policy not well-typed")
 			case TYPED: {
 				
@@ -601,11 +602,11 @@ def getFinalConstrPSet(String p_name,FacplPolicy pol)'''
 	'''s_«e.value.toString»''' 
 	
 	def dispatch String getExpressionValue (DateLiteral e){
-		throw new Exception ("NOT SUPPORTED")
+		return dateTimeToInt(e).toString()
 	}
 	
 	def dispatch String getExpressionValue (TimeLiteral e){
-		throw new Exception ("NOT SUPPORTED")
+		return dateTimeToInt(e).toString()
 	}
 
 	/*
@@ -748,15 +749,21 @@ def getFinalConstrPSet(String p_name,FacplPolicy pol)'''
 		val s = new SetUtils()
 		return getConstAttr(this.sets.get(s.doSwitch(e))).toString
 	}
-	
-	//TODO
-	
+		
 	def dispatch String getExpressionConst (DateLiteral e){
-		throw new Exception ("NOT SUPPORTED")
+		/*
+		 * 1 - Retrieve the value of the Date/Time constant available from the HashMap of constant
+		 * 2 - Return the constant named with the name of the constant (available form the HashMap) 
+		 */
+		return getConstAttr(this.constants.get(e.value.toString).att_name)
 	}
 	
 	def dispatch String getExpressionConst (TimeLiteral e){
-		throw new Exception ("NOT SUPPORTED")
+		/*
+		 * 1 - Retrieve the value of the Date/Time constant available from the HashMap of constant
+		 * 2 - Return the constant named with the name of the constant (available form the HashMap) 
+		 */
+		return getConstAttr(this.constants.get(e.value.toString).att_name)
 	}
 	
 	
@@ -779,5 +786,19 @@ def getFinalConstrPSet(String p_name,FacplPolicy pol)'''
 		return str.toString
 	}
 	
+	//------------------------
+	//CONVERSION OF DATE TIME
+	//------------------------
+	def static long  dateTimeToInt(DateLiteral e){
+	
+		var Date d = DateUtil::parseDate(e.value.toString)
+		return d.toInstant.toEpochMilli
+	}
+	
+	def static long dateTimeToInt(TimeLiteral e){
+		
+		var Date d = DateUtil::parseDate(e.value.toString)
+		return d.toInstant.toEpochMilli
+	}
 	
 }

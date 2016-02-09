@@ -211,6 +211,18 @@ class ValidatorChecks {
 			"Error date value. Must be yyyy/MM/dd"
 		)
 
+
+		model = ('''
+		PolicySet Name {permit-overrides 
+		policies: 
+				Rule r1 (permit target: equal(cat/id, 2005/43/43))
+		}''').parse
+
+		model.assertError(Facpl2Package::eINSTANCE.dateLiteral,
+			null,
+			"Error date value. Must be yyyy/MM/dd"
+		)
+		
 	}
 
 	@Test

@@ -26,6 +26,7 @@ import it.unifi.xtext.facpl.facpl2.util.Facpl2Switch
 import it.unifi.xtext.facpl.validation.FacplType
 import it.unifi.xtext.facpl.validation.inference.FacplTypeInference
 import java.util.HashMap
+import it.unifi.xtext.facpl.generator.generators.SMT_LIBGenerator_Code
 
 /**
  * Collect constants used in a policy
@@ -36,8 +37,8 @@ class PolicyConstant extends Facpl2Switch<Boolean> {
 
 	/*
 	 * <String1, String2>  
-	 * -> String1 == string representation of bag
-	 * -> String2 == name of the bag
+	 * -> String1 == string representation of set
+	 * -> String2 == name of the set
 	 */
 	private HashMap<String, String> sets;
 
@@ -254,11 +255,15 @@ class PolicyConstant extends Facpl2Switch<Boolean> {
 	}
 
 	override caseDateLiteral(DateLiteral object) {
-		throw new Exception("NOT SUPPORTED")
+		val c = new ConstraintConstant(FacplType.INT, object.value.toString, SMT_LIBGenerator_Code.dateTimeToInt(object))
+		this.constants.put(c.att_name, c)
+		return true
 	}
 
 	override caseTimeLiteral(TimeLiteral object) {
-		throw new Exception("NOT SUPPORTED")
+		val c = new ConstraintConstant(FacplType.INT, object.value.toString, SMT_LIBGenerator_Code.dateTimeToInt(object))
+		this.constants.put(c.att_name, c)
+		return true
 	}
 
 }
