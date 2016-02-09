@@ -10,7 +10,6 @@ import org.eclipse.xtext.ui.editor.syntaxcoloring.ISemanticHighlightingCalculato
 import it.unifi.xtext.facpl2.ui.syntaxcoloring.SyntaxHighlighting;
 import it.unifi.xtext.facpl2.ui.syntaxcoloring.TokenHighlight;
 
-
 /**
  * Use this class to register components to be used within the IDE.
  */
@@ -18,8 +17,8 @@ public class Facpl2UiModule extends it.unifi.xtext.facpl.ui.AbstractFacpl2UiModu
 	public Facpl2UiModule(AbstractUIPlugin plugin) {
 		super(plugin);
 	}
-	
-	public Class<? extends IHighlightingConfiguration>bindIHighlightingConfiguration() {
+
+	public Class<? extends IHighlightingConfiguration> bindIHighlightingConfiguration() {
 		return SyntaxHighlighting.class;
 	}
 
@@ -30,6 +29,5 @@ public class Facpl2UiModule extends it.unifi.xtext.facpl.ui.AbstractFacpl2UiModu
 	public Class<? extends org.eclipse.xtext.ui.wizard.IProjectCreator> bindIProjectCreator() {
 		return it.unifi.xtext.facpl.ui.wizard.Facpl2ProjectCreatorCustom.class;
 	}
-	
-		
+
 }

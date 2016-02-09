@@ -19,7 +19,6 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.xtext.builder.EclipseResourceFileSystemAccess2;
 import org.eclipse.xtext.generator.IFileSystemAccess;
@@ -31,12 +30,12 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 
 import it.unifi.xtext.facpl.facpl2.Facpl;
-import it.unifi.xtext.facpl.generator.Z3Generator;
+import it.unifi.xtext.facpl.generator.SMT_LIBGenerator;
 
 public class SMTLIBCommand extends AbstractHandler implements IHandler {
 
 	@Inject
-	private Z3Generator generator;
+	private SMT_LIBGenerator generator;
 
 	@Inject
 	IResourceDescriptions resourceDescriptions;
@@ -63,19 +62,16 @@ public class SMTLIBCommand extends AbstractHandler implements IHandler {
 				IFolder srcGenFolder = project.getFolder("src-smtlib");
 				if (!srcGenFolder.exists()) {
 					try {
-						srcGenFolder.create(true, true,
-								new NullProgressMonitor());
+						srcGenFolder.create(true, true, new NullProgressMonitor());
 					} catch (CoreException e) {
 						e.printStackTrace();
 					}
 				}
 
-				final EclipseResourceFileSystemAccess2 fsa = fileAccessProvider
-						.get();
+				final EclipseResourceFileSystemAccess2 fsa = fileAccessProvider.get();
 
 				// OUTPUTConfiguration
-				OutputConfiguration onceOutput = new OutputConfiguration(
-						IFileSystemAccess.DEFAULT_OUTPUT);
+				OutputConfiguration onceOutput = new OutputConfiguration(IFileSystemAccess.DEFAULT_OUTPUT);
 				onceOutput.setDescription("Output Folder");
 				onceOutput.setOutputDirectory("./src-smtlib");
 				onceOutput.setOverrideExistingResources(true);
@@ -90,8 +86,7 @@ public class SMTLIBCommand extends AbstractHandler implements IHandler {
 				fsa.setMonitor(new NullProgressMonitor());
 				fsa.setProject(project);
 
-				URI uri = URI.createPlatformResourceURI(file.getFullPath()
-						.toString(), true);
+				URI uri = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
 				ResourceSet rs = resourceSetProvider.get(project);
 				Resource r = rs.getResource(uri, true);
 
@@ -99,14 +94,12 @@ public class SMTLIBCommand extends AbstractHandler implements IHandler {
 					if (e instanceof Facpl) {
 						// Call SMTLIB generation
 						try {
-							generator.doGenerateFileZ3((Facpl) e, fsa);
+							generator.doGenerateFileSMT_LIB((Facpl) e, fsa);
 
-							MessageDialog.openInformation(activeShell,
-									"Generate SMT-LIB",
+							MessageDialog.openInformation(activeShell, "Generate SMT-LIB",
 									"All SMT-LIB code generated!");
 						} catch (Exception ex) {
-							MessageDialog.openWarning(activeShell,
-									"Generate SMT-LIB", ex.getMessage());
+							MessageDialog.openWarning(activeShell, "Generate SMT-LIB", ex.getMessage());
 						}
 					}
 				}

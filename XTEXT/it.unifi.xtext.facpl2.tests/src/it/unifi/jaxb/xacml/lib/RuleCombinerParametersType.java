@@ -5,7 +5,6 @@
 // Generated on: 2013.01.22 at 04:37:38 PM CET 
 //
 
-
 package it.unifi.jaxb.xacml.lib;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,9 +13,12 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- * <p>Java class for RuleCombinerParametersType complex type.
+ * <p>
+ * Java class for RuleCombinerParametersType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="RuleCombinerParametersType">
@@ -32,35 +34,30 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "RuleCombinerParametersType")
-public class RuleCombinerParametersType
-    extends CombinerParametersType
-{
+public class RuleCombinerParametersType extends CombinerParametersType {
 
-    @XmlAttribute(name = "RuleIdRef", required = true)
-    protected String ruleIdRef;
+	@XmlAttribute(name = "RuleIdRef", required = true)
+	protected String ruleIdRef;
 
-    /**
-     * Gets the value of the ruleIdRef property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getRuleIdRef() {
-        return ruleIdRef;
-    }
+	/**
+	 * Gets the value of the ruleIdRef property.
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
+	public String getRuleIdRef() {
+		return ruleIdRef;
+	}
 
-    /**
-     * Sets the value of the ruleIdRef property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setRuleIdRef(String value) {
-        this.ruleIdRef = value;
-    }
+	/**
+	 * Sets the value of the ruleIdRef property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link String }
+	 * 
+	 */
+	public void setRuleIdRef(String value) {
+		this.ruleIdRef = value;
+	}
 
 }

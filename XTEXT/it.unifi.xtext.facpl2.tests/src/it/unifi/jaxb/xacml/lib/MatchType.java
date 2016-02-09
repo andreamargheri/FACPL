@@ -5,7 +5,6 @@
 // Generated on: 2013.01.22 at 04:37:38 PM CET 
 //
 
-
 package it.unifi.jaxb.xacml.lib;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -15,12 +14,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
-
 /**
- * <p>Java class for MatchType complex type.
+ * <p>
+ * Java class for MatchType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="MatchType">
@@ -42,117 +42,101 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "MatchType", propOrder = {
-    "attributeValue",
-    "attributeDesignator",
-    "attributeSelector"
-})
+@XmlType(name = "MatchType", propOrder = { "attributeValue", "attributeDesignator", "attributeSelector" })
 public class MatchType {
 
-    @XmlElement(name = "AttributeValue", required = true)
-    protected AttributeValueType attributeValue;
-    @XmlElement(name = "AttributeDesignator")
-    protected AttributeDesignatorType attributeDesignator;
-    @XmlElement(name = "AttributeSelector")
-    protected AttributeSelectorType attributeSelector;
-    @XmlAttribute(name = "MatchId", required = true)
-    @XmlSchemaType(name = "anyURI")
-    protected String matchId;
+	@XmlElement(name = "AttributeValue", required = true)
+	protected AttributeValueType attributeValue;
+	@XmlElement(name = "AttributeDesignator")
+	protected AttributeDesignatorType attributeDesignator;
+	@XmlElement(name = "AttributeSelector")
+	protected AttributeSelectorType attributeSelector;
+	@XmlAttribute(name = "MatchId", required = true)
+	@XmlSchemaType(name = "anyURI")
+	protected String matchId;
 
-    /**
-     * Gets the value of the attributeValue property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link AttributeValueType }
-     *     
-     */
-    public AttributeValueType getAttributeValue() {
-        return attributeValue;
-    }
+	/**
+	 * Gets the value of the attributeValue property.
+	 * 
+	 * @return possible object is {@link AttributeValueType }
+	 * 
+	 */
+	public AttributeValueType getAttributeValue() {
+		return attributeValue;
+	}
 
-    /**
-     * Sets the value of the attributeValue property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link AttributeValueType }
-     *     
-     */
-    public void setAttributeValue(AttributeValueType value) {
-        this.attributeValue = value;
-    }
+	/**
+	 * Sets the value of the attributeValue property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link AttributeValueType }
+	 * 
+	 */
+	public void setAttributeValue(AttributeValueType value) {
+		this.attributeValue = value;
+	}
 
-    /**
-     * Gets the value of the attributeDesignator property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link AttributeDesignatorType }
-     *     
-     */
-    public AttributeDesignatorType getAttributeDesignator() {
-        return attributeDesignator;
-    }
+	/**
+	 * Gets the value of the attributeDesignator property.
+	 * 
+	 * @return possible object is {@link AttributeDesignatorType }
+	 * 
+	 */
+	public AttributeDesignatorType getAttributeDesignator() {
+		return attributeDesignator;
+	}
 
-    /**
-     * Sets the value of the attributeDesignator property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link AttributeDesignatorType }
-     *     
-     */
-    public void setAttributeDesignator(AttributeDesignatorType value) {
-        this.attributeDesignator = value;
-    }
+	/**
+	 * Sets the value of the attributeDesignator property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link AttributeDesignatorType }
+	 * 
+	 */
+	public void setAttributeDesignator(AttributeDesignatorType value) {
+		this.attributeDesignator = value;
+	}
 
-    /**
-     * Gets the value of the attributeSelector property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link AttributeSelectorType }
-     *     
-     */
-    public AttributeSelectorType getAttributeSelector() {
-        return attributeSelector;
-    }
+	/**
+	 * Gets the value of the attributeSelector property.
+	 * 
+	 * @return possible object is {@link AttributeSelectorType }
+	 * 
+	 */
+	public AttributeSelectorType getAttributeSelector() {
+		return attributeSelector;
+	}
 
-    /**
-     * Sets the value of the attributeSelector property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link AttributeSelectorType }
-     *     
-     */
-    public void setAttributeSelector(AttributeSelectorType value) {
-        this.attributeSelector = value;
-    }
+	/**
+	 * Sets the value of the attributeSelector property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link AttributeSelectorType }
+	 * 
+	 */
+	public void setAttributeSelector(AttributeSelectorType value) {
+		this.attributeSelector = value;
+	}
 
-    /**
-     * Gets the value of the matchId property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getMatchId() {
-        return matchId;
-    }
+	/**
+	 * Gets the value of the matchId property.
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
+	public String getMatchId() {
+		return matchId;
+	}
 
-    /**
-     * Sets the value of the matchId property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setMatchId(String value) {
-        this.matchId = value;
-    }
+	/**
+	 * Sets the value of the matchId property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link String }
+	 * 
+	 */
+	public void setMatchId(String value) {
+		this.matchId = value;
+	}
 
 }

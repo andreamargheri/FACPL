@@ -16,7 +16,6 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.xtext.builder.EclipseResourceFileSystemAccess2;
 import org.eclipse.xtext.generator.IFileSystemAccess;
@@ -60,19 +59,16 @@ public class XACMLTOFACPLCommand extends AbstractHandler implements IHandler {
 				IFolder srcGenFolder = project.getFolder("gen-FACPL");
 				if (!srcGenFolder.exists()) {
 					try {
-						srcGenFolder.create(true, true,
-								new NullProgressMonitor());
+						srcGenFolder.create(true, true, new NullProgressMonitor());
 					} catch (CoreException e) {
 						e.printStackTrace();
 					}
 				}
 
-				final EclipseResourceFileSystemAccess2 fsa = fileAccessProvider
-						.get();
+				final EclipseResourceFileSystemAccess2 fsa = fileAccessProvider.get();
 
 				// OUTPUTConfiguration
-				OutputConfiguration onceOutput = new OutputConfiguration(
-						IFileSystemAccess.DEFAULT_OUTPUT);
+				OutputConfiguration onceOutput = new OutputConfiguration(IFileSystemAccess.DEFAULT_OUTPUT);
 				onceOutput.setDescription("Output Folder");
 				onceOutput.setOutputDirectory("./gen-FACPL");
 				onceOutput.setOverrideExistingResources(true);
@@ -90,13 +86,10 @@ public class XACMLTOFACPLCommand extends AbstractHandler implements IHandler {
 				try {
 					String s = ParserxacmlToFacplEntryPoint.translate(file);
 
-					fsa.generateFile(
-							file.getName().substring(0,
-									file.getName().length() - 4)
-									+ ".fpl", s);
+					fsa.generateFile(file.getName().substring(0, file.getName().length() - 4) + ".fpl", s);
 
 					MessageDialog.openInformation(activeShell, "Generate FACPL Code", "All FACPL code generated!");
-					
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

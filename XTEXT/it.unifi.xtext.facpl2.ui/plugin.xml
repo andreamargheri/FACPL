@@ -433,6 +433,23 @@
             </visibleWhen>
         </command>
         <command
+               commandId="it.unifi.xtext.facpl.ui.popup.actions.SecurityPropertyCommand"
+               style="push">
+        	 <visibleWhen
+                  checkEnabled="false">
+                  <iterate>
+       		<adapt type="org.eclipse.core.resources.IResource">
+          		<test property="org.eclipse.core.resources.name" 
+                value="*.fpl"/>
+       		</adapt>
+    			</iterate>
+            </visibleWhen>
+        </command>
+         <separator
+                  name="additions"
+                  visible="true">
+       	</separator>
+        <command
            commandId="it.unifi.xtext.facpl.ui.popup.actions.XMLCommand"
            style="push">
              <visibleWhen
@@ -573,7 +590,14 @@
      </handler>   
   </extension>
   
-
+  <extension
+        point="org.eclipse.ui.handlers">
+     <handler
+           class="it.unifi.xtext.facpl.ui.Facpl2ExecutableExtensionFactory:it.unifi.xtext.facpl.ui.popup.actions.SecurityPropertyCommand"
+           commandId="it.unifi.xtext.facpl.ui.popup.actions.SecurityPropertyCommand">
+     </handler>   
+  </extension>
+  
   <!--command-->
   <extension
         point="org.eclipse.ui.commands">
@@ -624,6 +648,12 @@
         </command>
   </extension>
   
+   <extension
+        point="org.eclipse.ui.commands">
+        <command name="Security Property"
+              id="it.unifi.xtext.facpl.ui.popup.actions.SecurityPropertyCommand">
+        </command>
+  </extension>
   
 <!-- Wizard -->
   

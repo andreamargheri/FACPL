@@ -5,7 +5,6 @@
 // Generated on: 2013.01.22 at 04:37:38 PM CET 
 //
 
-
 package it.unifi.jaxb.xacml.lib;
 
 import java.util.ArrayList;
@@ -16,11 +15,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for TargetType complex type.
+ * <p>
+ * Java class for TargetType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="TargetType">
@@ -37,41 +38,40 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "TargetType", propOrder = {
-    "anyOf"
-})
+@XmlType(name = "TargetType", propOrder = { "anyOf" })
 public class TargetType {
 
-    @XmlElement(name = "AnyOf")
-    protected List<AnyOfType> anyOf;
+	@XmlElement(name = "AnyOf")
+	protected List<AnyOfType> anyOf;
 
-    /**
-     * Gets the value of the anyOf property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the anyOf property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getAnyOf().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link AnyOfType }
-     * 
-     * 
-     */
-    public List<AnyOfType> getAnyOf() {
-        if (anyOf == null) {
-            anyOf = new ArrayList<AnyOfType>();
-        }
-        return this.anyOf;
-    }
+	/**
+	 * Gets the value of the anyOf property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a
+	 * snapshot. Therefore any modification you make to the returned list will
+	 * be present inside the JAXB object. This is why there is not a
+	 * <CODE>set</CODE> method for the anyOf property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * 
+	 * <pre>
+	 * getAnyOf().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link AnyOfType
+	 * }
+	 * 
+	 * 
+	 */
+	public List<AnyOfType> getAnyOf() {
+		if (anyOf == null) {
+			anyOf = new ArrayList<AnyOfType>();
+		}
+		return this.anyOf;
+	}
 
 }

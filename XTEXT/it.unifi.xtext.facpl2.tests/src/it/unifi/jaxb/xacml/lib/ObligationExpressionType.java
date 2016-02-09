@@ -5,7 +5,6 @@
 // Generated on: 2013.01.22 at 04:37:38 PM CET 
 //
 
-
 package it.unifi.jaxb.xacml.lib;
 
 import java.util.ArrayList;
@@ -18,12 +17,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
-
 /**
- * <p>Java class for ObligationExpressionType complex type.
+ * <p>
+ * Java class for ObligationExpressionType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ObligationExpressionType">
@@ -42,94 +42,87 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ObligationExpressionType", propOrder = {
-    "attributeAssignmentExpression"
-})
+@XmlType(name = "ObligationExpressionType", propOrder = { "attributeAssignmentExpression" })
 public class ObligationExpressionType {
 
-    @XmlElement(name = "AttributeAssignmentExpression")
-    protected List<AttributeAssignmentExpressionType> attributeAssignmentExpression;
-    @XmlAttribute(name = "ObligationId", required = true)
-    @XmlSchemaType(name = "anyURI")
-    protected String obligationId;
-    @XmlAttribute(name = "FulfillOn", required = true)
-    protected EffectType fulfillOn;
+	@XmlElement(name = "AttributeAssignmentExpression")
+	protected List<AttributeAssignmentExpressionType> attributeAssignmentExpression;
+	@XmlAttribute(name = "ObligationId", required = true)
+	@XmlSchemaType(name = "anyURI")
+	protected String obligationId;
+	@XmlAttribute(name = "FulfillOn", required = true)
+	protected EffectType fulfillOn;
 
-    /**
-     * Gets the value of the attributeAssignmentExpression property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the attributeAssignmentExpression property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getAttributeAssignmentExpression().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link AttributeAssignmentExpressionType }
-     * 
-     * 
-     */
-    public List<AttributeAssignmentExpressionType> getAttributeAssignmentExpression() {
-        if (attributeAssignmentExpression == null) {
-            attributeAssignmentExpression = new ArrayList<AttributeAssignmentExpressionType>();
-        }
-        return this.attributeAssignmentExpression;
-    }
+	/**
+	 * Gets the value of the attributeAssignmentExpression property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a
+	 * snapshot. Therefore any modification you make to the returned list will
+	 * be present inside the JAXB object. This is why there is not a
+	 * <CODE>set</CODE> method for the attributeAssignmentExpression property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * 
+	 * <pre>
+	 * getAttributeAssignmentExpression().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link AttributeAssignmentExpressionType }
+	 * 
+	 * 
+	 */
+	public List<AttributeAssignmentExpressionType> getAttributeAssignmentExpression() {
+		if (attributeAssignmentExpression == null) {
+			attributeAssignmentExpression = new ArrayList<AttributeAssignmentExpressionType>();
+		}
+		return this.attributeAssignmentExpression;
+	}
 
-    /**
-     * Gets the value of the obligationId property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getObligationId() {
-        return obligationId;
-    }
+	/**
+	 * Gets the value of the obligationId property.
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
+	public String getObligationId() {
+		return obligationId;
+	}
 
-    /**
-     * Sets the value of the obligationId property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setObligationId(String value) {
-        this.obligationId = value;
-    }
+	/**
+	 * Sets the value of the obligationId property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link String }
+	 * 
+	 */
+	public void setObligationId(String value) {
+		this.obligationId = value;
+	}
 
-    /**
-     * Gets the value of the fulfillOn property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link EffectType }
-     *     
-     */
-    public EffectType getFulfillOn() {
-        return fulfillOn;
-    }
+	/**
+	 * Gets the value of the fulfillOn property.
+	 * 
+	 * @return possible object is {@link EffectType }
+	 * 
+	 */
+	public EffectType getFulfillOn() {
+		return fulfillOn;
+	}
 
-    /**
-     * Sets the value of the fulfillOn property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link EffectType }
-     *     
-     */
-    public void setFulfillOn(EffectType value) {
-        this.fulfillOn = value;
-    }
+	/**
+	 * Sets the value of the fulfillOn property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link EffectType }
+	 * 
+	 */
+	public void setFulfillOn(EffectType value) {
+		this.fulfillOn = value;
+	}
 
 }

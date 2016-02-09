@@ -5,7 +5,6 @@
 // Generated on: 2013.01.22 at 04:37:38 PM CET 
 //
 
-
 package it.unifi.jaxb.xacml.lib;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,12 +12,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
-
 /**
- * <p>Java class for StatusType complex type.
+ * <p>
+ * Java class for StatusType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="StatusType">
@@ -37,90 +37,77 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "StatusType", propOrder = {
-    "statusCode",
-    "statusMessage",
-    "statusDetail"
-})
+@XmlType(name = "StatusType", propOrder = { "statusCode", "statusMessage", "statusDetail" })
 public class StatusType {
 
-    @XmlElement(name = "StatusCode", required = true)
-    protected StatusCodeType statusCode;
-    @XmlElement(name = "StatusMessage")
-    protected String statusMessage;
-    @XmlElement(name = "StatusDetail")
-    protected StatusDetailType statusDetail;
+	@XmlElement(name = "StatusCode", required = true)
+	protected StatusCodeType statusCode;
+	@XmlElement(name = "StatusMessage")
+	protected String statusMessage;
+	@XmlElement(name = "StatusDetail")
+	protected StatusDetailType statusDetail;
 
-    /**
-     * Gets the value of the statusCode property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link StatusCodeType }
-     *     
-     */
-    public StatusCodeType getStatusCode() {
-        return statusCode;
-    }
+	/**
+	 * Gets the value of the statusCode property.
+	 * 
+	 * @return possible object is {@link StatusCodeType }
+	 * 
+	 */
+	public StatusCodeType getStatusCode() {
+		return statusCode;
+	}
 
-    /**
-     * Sets the value of the statusCode property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link StatusCodeType }
-     *     
-     */
-    public void setStatusCode(StatusCodeType value) {
-        this.statusCode = value;
-    }
+	/**
+	 * Sets the value of the statusCode property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link StatusCodeType }
+	 * 
+	 */
+	public void setStatusCode(StatusCodeType value) {
+		this.statusCode = value;
+	}
 
-    /**
-     * Gets the value of the statusMessage property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getStatusMessage() {
-        return statusMessage;
-    }
+	/**
+	 * Gets the value of the statusMessage property.
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
+	public String getStatusMessage() {
+		return statusMessage;
+	}
 
-    /**
-     * Sets the value of the statusMessage property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setStatusMessage(String value) {
-        this.statusMessage = value;
-    }
+	/**
+	 * Sets the value of the statusMessage property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link String }
+	 * 
+	 */
+	public void setStatusMessage(String value) {
+		this.statusMessage = value;
+	}
 
-    /**
-     * Gets the value of the statusDetail property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link StatusDetailType }
-     *     
-     */
-    public StatusDetailType getStatusDetail() {
-        return statusDetail;
-    }
+	/**
+	 * Gets the value of the statusDetail property.
+	 * 
+	 * @return possible object is {@link StatusDetailType }
+	 * 
+	 */
+	public StatusDetailType getStatusDetail() {
+		return statusDetail;
+	}
 
-    /**
-     * Sets the value of the statusDetail property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link StatusDetailType }
-     *     
-     */
-    public void setStatusDetail(StatusDetailType value) {
-        this.statusDetail = value;
-    }
+	/**
+	 * Sets the value of the statusDetail property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link StatusDetailType }
+	 * 
+	 */
+	public void setStatusDetail(StatusDetailType value) {
+		this.statusDetail = value;
+	}
 
 }

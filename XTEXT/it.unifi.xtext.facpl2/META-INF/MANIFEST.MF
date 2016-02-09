@@ -29,4 +29,5 @@ Export-Package: it.unifi.xtext.facpl,
  it.unifi.xtext.facpl.scoping,
  it.unifi.xtext.facpl.serializer,
  it.unifi.xtext.facpl.services,
- it.unifi.xtext.facpl.validation
+ it.unifi.xtext.facpl.validation,
+ it.unifi.xtext.facpl.validation.inference

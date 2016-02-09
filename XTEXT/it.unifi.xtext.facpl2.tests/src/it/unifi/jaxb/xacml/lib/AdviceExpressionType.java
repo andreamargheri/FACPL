@@ -5,7 +5,6 @@
 // Generated on: 2013.01.22 at 04:37:38 PM CET 
 //
 
-
 package it.unifi.jaxb.xacml.lib;
 
 import java.util.ArrayList;
@@ -18,12 +17,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
-
 /**
- * <p>Java class for AdviceExpressionType complex type.
+ * <p>
+ * Java class for AdviceExpressionType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="AdviceExpressionType">
@@ -42,94 +42,87 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "AdviceExpressionType", propOrder = {
-    "attributeAssignmentExpression"
-})
+@XmlType(name = "AdviceExpressionType", propOrder = { "attributeAssignmentExpression" })
 public class AdviceExpressionType {
 
-    @XmlElement(name = "AttributeAssignmentExpression")
-    protected List<AttributeAssignmentExpressionType> attributeAssignmentExpression;
-    @XmlAttribute(name = "AdviceId", required = true)
-    @XmlSchemaType(name = "anyURI")
-    protected String adviceId;
-    @XmlAttribute(name = "AppliesTo", required = true)
-    protected EffectType appliesTo;
+	@XmlElement(name = "AttributeAssignmentExpression")
+	protected List<AttributeAssignmentExpressionType> attributeAssignmentExpression;
+	@XmlAttribute(name = "AdviceId", required = true)
+	@XmlSchemaType(name = "anyURI")
+	protected String adviceId;
+	@XmlAttribute(name = "AppliesTo", required = true)
+	protected EffectType appliesTo;
 
-    /**
-     * Gets the value of the attributeAssignmentExpression property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the attributeAssignmentExpression property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getAttributeAssignmentExpression().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link AttributeAssignmentExpressionType }
-     * 
-     * 
-     */
-    public List<AttributeAssignmentExpressionType> getAttributeAssignmentExpression() {
-        if (attributeAssignmentExpression == null) {
-            attributeAssignmentExpression = new ArrayList<AttributeAssignmentExpressionType>();
-        }
-        return this.attributeAssignmentExpression;
-    }
+	/**
+	 * Gets the value of the attributeAssignmentExpression property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a
+	 * snapshot. Therefore any modification you make to the returned list will
+	 * be present inside the JAXB object. This is why there is not a
+	 * <CODE>set</CODE> method for the attributeAssignmentExpression property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * 
+	 * <pre>
+	 * getAttributeAssignmentExpression().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link AttributeAssignmentExpressionType }
+	 * 
+	 * 
+	 */
+	public List<AttributeAssignmentExpressionType> getAttributeAssignmentExpression() {
+		if (attributeAssignmentExpression == null) {
+			attributeAssignmentExpression = new ArrayList<AttributeAssignmentExpressionType>();
+		}
+		return this.attributeAssignmentExpression;
+	}
 
-    /**
-     * Gets the value of the adviceId property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getAdviceId() {
-        return adviceId;
-    }
+	/**
+	 * Gets the value of the adviceId property.
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
+	public String getAdviceId() {
+		return adviceId;
+	}
 
-    /**
-     * Sets the value of the adviceId property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setAdviceId(String value) {
-        this.adviceId = value;
-    }
+	/**
+	 * Sets the value of the adviceId property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link String }
+	 * 
+	 */
+	public void setAdviceId(String value) {
+		this.adviceId = value;
+	}
 
-    /**
-     * Gets the value of the appliesTo property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link EffectType }
-     *     
-     */
-    public EffectType getAppliesTo() {
-        return appliesTo;
-    }
+	/**
+	 * Gets the value of the appliesTo property.
+	 * 
+	 * @return possible object is {@link EffectType }
+	 * 
+	 */
+	public EffectType getAppliesTo() {
+		return appliesTo;
+	}
 
-    /**
-     * Sets the value of the appliesTo property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link EffectType }
-     *     
-     */
-    public void setAppliesTo(EffectType value) {
-        this.appliesTo = value;
-    }
+	/**
+	 * Sets the value of the appliesTo property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link EffectType }
+	 * 
+	 */
+	public void setAppliesTo(EffectType value) {
+		this.appliesTo = value;
+	}
 
 }

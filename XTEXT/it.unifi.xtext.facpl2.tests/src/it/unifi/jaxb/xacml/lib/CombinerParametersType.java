@@ -5,7 +5,6 @@
 // Generated on: 2013.01.22 at 04:37:38 PM CET 
 //
 
-
 package it.unifi.jaxb.xacml.lib;
 
 import java.util.ArrayList;
@@ -18,9 +17,12 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- * <p>Java class for CombinerParametersType complex type.
+ * <p>
+ * Java class for CombinerParametersType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="CombinerParametersType">
@@ -37,46 +39,42 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "CombinerParametersType", propOrder = {
-    "combinerParameter"
-})
-@XmlSeeAlso({
-    RuleCombinerParametersType.class,
-    PolicySetCombinerParametersType.class,
-    PolicyCombinerParametersType.class
-})
+@XmlType(name = "CombinerParametersType", propOrder = { "combinerParameter" })
+@XmlSeeAlso({ RuleCombinerParametersType.class, PolicySetCombinerParametersType.class,
+		PolicyCombinerParametersType.class })
 public class CombinerParametersType {
 
-    @XmlElement(name = "CombinerParameter")
-    protected List<CombinerParameterType> combinerParameter;
+	@XmlElement(name = "CombinerParameter")
+	protected List<CombinerParameterType> combinerParameter;
 
-    /**
-     * Gets the value of the combinerParameter property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the combinerParameter property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getCombinerParameter().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link CombinerParameterType }
-     * 
-     * 
-     */
-    public List<CombinerParameterType> getCombinerParameter() {
-        if (combinerParameter == null) {
-            combinerParameter = new ArrayList<CombinerParameterType>();
-        }
-        return this.combinerParameter;
-    }
+	/**
+	 * Gets the value of the combinerParameter property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a
+	 * snapshot. Therefore any modification you make to the returned list will
+	 * be present inside the JAXB object. This is why there is not a
+	 * <CODE>set</CODE> method for the combinerParameter property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * 
+	 * <pre>
+	 * getCombinerParameter().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link CombinerParameterType }
+	 * 
+	 * 
+	 */
+	public List<CombinerParameterType> getCombinerParameter() {
+		if (combinerParameter == null) {
+			combinerParameter = new ArrayList<CombinerParameterType>();
+		}
+		return this.combinerParameter;
+	}
 
 }

@@ -5,7 +5,6 @@
 // Generated on: 2013.01.22 at 04:37:38 PM CET 
 //
 
-
 package it.unifi.jaxb.xacml.lib;
 
 import java.util.ArrayList;
@@ -16,11 +15,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for RequestReferenceType complex type.
+ * <p>
+ * Java class for RequestReferenceType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="RequestReferenceType">
@@ -37,41 +38,40 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "RequestReferenceType", propOrder = {
-    "attributesReference"
-})
+@XmlType(name = "RequestReferenceType", propOrder = { "attributesReference" })
 public class RequestReferenceType {
 
-    @XmlElement(name = "AttributesReference", required = true)
-    protected List<AttributesReferenceType> attributesReference;
+	@XmlElement(name = "AttributesReference", required = true)
+	protected List<AttributesReferenceType> attributesReference;
 
-    /**
-     * Gets the value of the attributesReference property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the attributesReference property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getAttributesReference().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link AttributesReferenceType }
-     * 
-     * 
-     */
-    public List<AttributesReferenceType> getAttributesReference() {
-        if (attributesReference == null) {
-            attributesReference = new ArrayList<AttributesReferenceType>();
-        }
-        return this.attributesReference;
-    }
+	/**
+	 * Gets the value of the attributesReference property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a
+	 * snapshot. Therefore any modification you make to the returned list will
+	 * be present inside the JAXB object. This is why there is not a
+	 * <CODE>set</CODE> method for the attributesReference property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * 
+	 * <pre>
+	 * getAttributesReference().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link AttributesReferenceType }
+	 * 
+	 * 
+	 */
+	public List<AttributesReferenceType> getAttributesReference() {
+		if (attributesReference == null) {
+			attributesReference = new ArrayList<AttributesReferenceType>();
+		}
+		return this.attributesReference;
+	}
 
 }

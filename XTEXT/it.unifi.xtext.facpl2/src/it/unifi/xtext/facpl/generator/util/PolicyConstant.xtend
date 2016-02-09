@@ -26,6 +26,7 @@ import it.unifi.xtext.facpl.facpl2.DeclaredFunction
 import it.unifi.xtext.facpl.facpl2.FunctionDeclaration
 import it.unifi.xtext.facpl.facpl2.TypeLiteral
 import it.unifi.xtext.facpl.facpl2.Set
+import it.unifi.xtext.facpl.facpl2.Request
 
 /**
  * Collect constants used in a policy
@@ -70,7 +71,28 @@ class PolicyConstant extends Facpl2Switch<Boolean> {
 				s = s && doSwitch(f)
 			}
 		}
+		// check for string in requests 
+		if (object.requests != null) {
+			for (r : object.requests) {
+				s = s && doSwitch(r)
+			}
+		}
 		return s
+	}
+
+	/*
+	 * REQUEST
+	 */
+	override caseRequest(Request req) {
+		for (el : req.attributes){
+			var s = true;
+			for (v : el.value){
+				s = s && doSwitch(v)
+			}
+			if (s == false)
+				return false
+		}
+		return true
 	}
 
 	/*

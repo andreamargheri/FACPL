@@ -5,7 +5,6 @@
 // Generated on: 2013.01.22 at 04:37:38 PM CET 
 //
 
-
 package it.unifi.jaxb.xacml.lib;
 
 import java.util.ArrayList;
@@ -16,11 +15,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for PolicyIssuerType complex type.
+ * <p>
+ * Java class for PolicyIssuerType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="PolicyIssuerType">
@@ -38,68 +39,63 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "PolicyIssuerType", propOrder = {
-    "content",
-    "attribute"
-})
+@XmlType(name = "PolicyIssuerType", propOrder = { "content", "attribute" })
 public class PolicyIssuerType {
 
-    @XmlElement(name = "Content")
-    protected ContentType content;
-    @XmlElement(name = "Attribute")
-    protected List<AttributeType> attribute;
+	@XmlElement(name = "Content")
+	protected ContentType content;
+	@XmlElement(name = "Attribute")
+	protected List<AttributeType> attribute;
 
-    /**
-     * Gets the value of the content property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link ContentType }
-     *     
-     */
-    public ContentType getContent() {
-        return content;
-    }
+	/**
+	 * Gets the value of the content property.
+	 * 
+	 * @return possible object is {@link ContentType }
+	 * 
+	 */
+	public ContentType getContent() {
+		return content;
+	}
 
-    /**
-     * Sets the value of the content property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link ContentType }
-     *     
-     */
-    public void setContent(ContentType value) {
-        this.content = value;
-    }
+	/**
+	 * Sets the value of the content property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link ContentType }
+	 * 
+	 */
+	public void setContent(ContentType value) {
+		this.content = value;
+	}
 
-    /**
-     * Gets the value of the attribute property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the attribute property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getAttribute().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link AttributeType }
-     * 
-     * 
-     */
-    public List<AttributeType> getAttribute() {
-        if (attribute == null) {
-            attribute = new ArrayList<AttributeType>();
-        }
-        return this.attribute;
-    }
+	/**
+	 * Gets the value of the attribute property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a
+	 * snapshot. Therefore any modification you make to the returned list will
+	 * be present inside the JAXB object. This is why there is not a
+	 * <CODE>set</CODE> method for the attribute property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * 
+	 * <pre>
+	 * getAttribute().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link AttributeType }
+	 * 
+	 * 
+	 */
+	public List<AttributeType> getAttribute() {
+		if (attribute == null) {
+			attribute = new ArrayList<AttributeType>();
+		}
+		return this.attribute;
+	}
 
 }

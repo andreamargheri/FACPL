@@ -5,7 +5,6 @@
 // Generated on: 2013.01.22 at 04:37:38 PM CET 
 //
 
-
 package it.unifi.jaxb.xacml.lib;
 
 import javax.xml.bind.JAXBElement;
@@ -14,12 +13,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlType;
 
-
-
 /**
- * <p>Java class for ConditionType complex type.
+ * <p>
+ * Java class for ConditionType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ConditionType">
@@ -36,48 +36,47 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ConditionType", propOrder = {
-    "expression"
-})
+@XmlType(name = "ConditionType", propOrder = { "expression" })
 public class ConditionType {
 
-    @XmlElementRef(name = "Expression", namespace = "urn:oasis:names:tc:xacml:3.0:core:schema:wd-17", type = JAXBElement.class)
-    protected JAXBElement<?> expression;
+	@XmlElementRef(name = "Expression", namespace = "urn:oasis:names:tc:xacml:3.0:core:schema:wd-17", type = JAXBElement.class)
+	protected JAXBElement<?> expression;
 
-    /**
-     * Gets the value of the expression property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link JAXBElement }{@code <}{@link AttributeSelectorType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link ApplyType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link VariableReferenceType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link FunctionType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link ExpressionType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link AttributeValueType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link AttributeDesignatorType }{@code >}
-     *     
-     */
-    public JAXBElement<?> getExpression() {
-        return expression;
-    }
+	/**
+	 * Gets the value of the expression property.
+	 * 
+	 * @return possible object is {@link JAXBElement }{@code <}
+	 *         {@link AttributeSelectorType }{@code >} {@link JAXBElement }
+	 *         {@code <}{@link ApplyType }{@code >} {@link JAXBElement }
+	 *         {@code <}{@link VariableReferenceType }{@code >}
+	 *         {@link JAXBElement }{@code <}{@link FunctionType }{@code >}
+	 *         {@link JAXBElement }{@code <}{@link ExpressionType }{@code >}
+	 *         {@link JAXBElement }{@code <}{@link AttributeValueType }{@code >}
+	 *         {@link JAXBElement }{@code <}{@link AttributeDesignatorType }
+	 *         {@code >}
+	 * 
+	 */
+	public JAXBElement<?> getExpression() {
+		return expression;
+	}
 
-    /**
-     * Sets the value of the expression property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link JAXBElement }{@code <}{@link AttributeSelectorType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link ApplyType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link VariableReferenceType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link FunctionType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link ExpressionType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link AttributeValueType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link AttributeDesignatorType }{@code >}
-     *     
-     */
-    public void setExpression(JAXBElement<?> value) {
-        this.expression = ((JAXBElement<?> ) value);
-    }
+	/**
+	 * Sets the value of the expression property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link JAXBElement }{@code <}
+	 *            {@link AttributeSelectorType }{@code >} {@link JAXBElement }
+	 *            {@code <}{@link ApplyType }{@code >} {@link JAXBElement }
+	 *            {@code <}{@link VariableReferenceType }{@code >}
+	 *            {@link JAXBElement }{@code <}{@link FunctionType }{@code >}
+	 *            {@link JAXBElement }{@code <}{@link ExpressionType }{@code >}
+	 *            {@link JAXBElement }{@code <}{@link AttributeValueType }
+	 *            {@code >} {@link JAXBElement }{@code <}
+	 *            {@link AttributeDesignatorType }{@code >}
+	 * 
+	 */
+	public void setExpression(JAXBElement<?> value) {
+		this.expression = ((JAXBElement<?>) value);
+	}
 
 }

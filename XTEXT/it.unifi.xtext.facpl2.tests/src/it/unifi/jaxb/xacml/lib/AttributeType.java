@@ -5,7 +5,6 @@
 // Generated on: 2013.01.22 at 04:37:38 PM CET 
 //
 
-
 package it.unifi.jaxb.xacml.lib;
 
 import java.util.ArrayList;
@@ -18,12 +17,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
-
 /**
- * <p>Java class for AttributeType complex type.
+ * <p>
+ * Java class for AttributeType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="AttributeType">
@@ -43,112 +43,105 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "AttributeType", propOrder = {
-    "attributeValue"
-})
+@XmlType(name = "AttributeType", propOrder = { "attributeValue" })
 public class AttributeType {
 
-    @XmlElement(name = "AttributeValue", required = true)
-    protected List<AttributeValueType> attributeValue;
-    @XmlAttribute(name = "AttributeId", required = true)
-    @XmlSchemaType(name = "anyURI")
-    protected String attributeId;
-    @XmlAttribute(name = "Issuer")
-    protected String issuer;
-    @XmlAttribute(name = "IncludeInResult", required = true)
-    protected boolean includeInResult;
+	@XmlElement(name = "AttributeValue", required = true)
+	protected List<AttributeValueType> attributeValue;
+	@XmlAttribute(name = "AttributeId", required = true)
+	@XmlSchemaType(name = "anyURI")
+	protected String attributeId;
+	@XmlAttribute(name = "Issuer")
+	protected String issuer;
+	@XmlAttribute(name = "IncludeInResult", required = true)
+	protected boolean includeInResult;
 
-    /**
-     * Gets the value of the attributeValue property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the attributeValue property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getAttributeValue().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link AttributeValueType }
-     * 
-     * 
-     */
-    public List<AttributeValueType> getAttributeValue() {
-        if (attributeValue == null) {
-            attributeValue = new ArrayList<AttributeValueType>();
-        }
-        return this.attributeValue;
-    }
+	/**
+	 * Gets the value of the attributeValue property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a
+	 * snapshot. Therefore any modification you make to the returned list will
+	 * be present inside the JAXB object. This is why there is not a
+	 * <CODE>set</CODE> method for the attributeValue property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * 
+	 * <pre>
+	 * getAttributeValue().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link AttributeValueType }
+	 * 
+	 * 
+	 */
+	public List<AttributeValueType> getAttributeValue() {
+		if (attributeValue == null) {
+			attributeValue = new ArrayList<AttributeValueType>();
+		}
+		return this.attributeValue;
+	}
 
-    /**
-     * Gets the value of the attributeId property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getAttributeId() {
-        return attributeId;
-    }
+	/**
+	 * Gets the value of the attributeId property.
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
+	public String getAttributeId() {
+		return attributeId;
+	}
 
-    /**
-     * Sets the value of the attributeId property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setAttributeId(String value) {
-        this.attributeId = value;
-    }
+	/**
+	 * Sets the value of the attributeId property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link String }
+	 * 
+	 */
+	public void setAttributeId(String value) {
+		this.attributeId = value;
+	}
 
-    /**
-     * Gets the value of the issuer property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getIssuer() {
-        return issuer;
-    }
+	/**
+	 * Gets the value of the issuer property.
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
+	public String getIssuer() {
+		return issuer;
+	}
 
-    /**
-     * Sets the value of the issuer property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setIssuer(String value) {
-        this.issuer = value;
-    }
+	/**
+	 * Sets the value of the issuer property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link String }
+	 * 
+	 */
+	public void setIssuer(String value) {
+		this.issuer = value;
+	}
 
-    /**
-     * Gets the value of the includeInResult property.
-     * 
-     */
-    public boolean isIncludeInResult() {
-        return includeInResult;
-    }
+	/**
+	 * Gets the value of the includeInResult property.
+	 * 
+	 */
+	public boolean isIncludeInResult() {
+		return includeInResult;
+	}
 
-    /**
-     * Sets the value of the includeInResult property.
-     * 
-     */
-    public void setIncludeInResult(boolean value) {
-        this.includeInResult = value;
-    }
+	/**
+	 * Sets the value of the includeInResult property.
+	 * 
+	 */
+	public void setIncludeInResult(boolean value) {
+		this.includeInResult = value;
+	}
 
 }

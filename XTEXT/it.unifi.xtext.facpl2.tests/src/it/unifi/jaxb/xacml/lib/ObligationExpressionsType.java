@@ -5,7 +5,6 @@
 // Generated on: 2013.01.22 at 04:37:38 PM CET 
 //
 
-
 package it.unifi.jaxb.xacml.lib;
 
 import java.util.ArrayList;
@@ -17,9 +16,12 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- * <p>Java class for ObligationExpressionsType complex type.
+ * <p>
+ * Java class for ObligationExpressionsType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ObligationExpressionsType">
@@ -36,41 +38,40 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ObligationExpressionsType", propOrder = {
-    "obligationExpression"
-})
+@XmlType(name = "ObligationExpressionsType", propOrder = { "obligationExpression" })
 public class ObligationExpressionsType {
 
-    @XmlElement(name = "ObligationExpression", required = true)
-    protected List<ObligationExpressionType> obligationExpression;
+	@XmlElement(name = "ObligationExpression", required = true)
+	protected List<ObligationExpressionType> obligationExpression;
 
-    /**
-     * Gets the value of the obligationExpression property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the obligationExpression property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getObligationExpression().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link ObligationExpressionType }
-     * 
-     * 
-     */
-    public List<ObligationExpressionType> getObligationExpression() {
-        if (obligationExpression == null) {
-            obligationExpression = new ArrayList<ObligationExpressionType>();
-        }
-        return this.obligationExpression;
-    }
+	/**
+	 * Gets the value of the obligationExpression property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a
+	 * snapshot. Therefore any modification you make to the returned list will
+	 * be present inside the JAXB object. This is why there is not a
+	 * <CODE>set</CODE> method for the obligationExpression property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * 
+	 * <pre>
+	 * getObligationExpression().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link ObligationExpressionType }
+	 * 
+	 * 
+	 */
+	public List<ObligationExpressionType> getObligationExpression() {
+		if (obligationExpression == null) {
+			obligationExpression = new ArrayList<ObligationExpressionType>();
+		}
+		return this.obligationExpression;
+	}
 
 }

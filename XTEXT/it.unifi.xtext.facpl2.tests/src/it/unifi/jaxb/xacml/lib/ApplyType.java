@@ -5,7 +5,6 @@
 // Generated on: 2013.01.22 at 04:37:38 PM CET 
 //
 
-
 package it.unifi.jaxb.xacml.lib;
 
 import java.util.ArrayList;
@@ -20,11 +19,13 @@ import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for ApplyType complex type.
+ * <p>
+ * Java class for ApplyType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ApplyType">
@@ -43,103 +44,93 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ApplyType", propOrder = {
-    "description",
-    "expression"
-})
-public class ApplyType
-    extends ExpressionType
-{
+@XmlType(name = "ApplyType", propOrder = { "description", "expression" })
+public class ApplyType extends ExpressionType {
 
-    @XmlElement(name = "Description")
-    protected String description;
-    @XmlElementRef(name = "Expression", namespace = "urn:oasis:names:tc:xacml:3.0:core:schema:wd-17", type = JAXBElement.class)
-    protected List<JAXBElement<?>> expression;
-    @XmlAttribute(name = "FunctionId", required = true)
-    @XmlSchemaType(name = "anyURI")
-    protected String functionId;
+	@XmlElement(name = "Description")
+	protected String description;
+	@XmlElementRef(name = "Expression", namespace = "urn:oasis:names:tc:xacml:3.0:core:schema:wd-17", type = JAXBElement.class)
+	protected List<JAXBElement<?>> expression;
+	@XmlAttribute(name = "FunctionId", required = true)
+	@XmlSchemaType(name = "anyURI")
+	protected String functionId;
 
-    /**
-     * Gets the value of the description property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getDescription() {
-        return description;
-    }
+	/**
+	 * Gets the value of the description property.
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
+	public String getDescription() {
+		return description;
+	}
 
-    /**
-     * Sets the value of the description property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setDescription(String value) {
-        this.description = value;
-    }
+	/**
+	 * Sets the value of the description property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link String }
+	 * 
+	 */
+	public void setDescription(String value) {
+		this.description = value;
+	}
 
-    /**
-     * Gets the value of the expression property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the expression property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getExpression().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link JAXBElement }{@code <}{@link AttributeSelectorType }{@code >}
-     * {@link JAXBElement }{@code <}{@link ApplyType }{@code >}
-     * {@link JAXBElement }{@code <}{@link VariableReferenceType }{@code >}
-     * {@link JAXBElement }{@code <}{@link FunctionType }{@code >}
-     * {@link JAXBElement }{@code <}{@link ExpressionType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AttributeValueType }{@code >}
-     * {@link JAXBElement }{@code <}{@link AttributeDesignatorType }{@code >}
-     * 
-     * 
-     */
-    public List<JAXBElement<?>> getExpression() {
-        if (expression == null) {
-            expression = new ArrayList<JAXBElement<?>>();
-        }
-        return this.expression;
-    }
+	/**
+	 * Gets the value of the expression property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a
+	 * snapshot. Therefore any modification you make to the returned list will
+	 * be present inside the JAXB object. This is why there is not a
+	 * <CODE>set</CODE> method for the expression property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * 
+	 * <pre>
+	 * getExpression().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link JAXBElement }{@code <}{@link AttributeSelectorType }{@code >}
+	 * {@link JAXBElement }{@code <}{@link ApplyType }{@code >}
+	 * {@link JAXBElement }{@code <}{@link VariableReferenceType }{@code >}
+	 * {@link JAXBElement }{@code <}{@link FunctionType }{@code >}
+	 * {@link JAXBElement }{@code <}{@link ExpressionType }{@code >}
+	 * {@link JAXBElement }{@code <}{@link AttributeValueType }{@code >}
+	 * {@link JAXBElement }{@code <}{@link AttributeDesignatorType }{@code >}
+	 * 
+	 * 
+	 */
+	public List<JAXBElement<?>> getExpression() {
+		if (expression == null) {
+			expression = new ArrayList<JAXBElement<?>>();
+		}
+		return this.expression;
+	}
 
-    /**
-     * Gets the value of the functionId property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getFunctionId() {
-        return functionId;
-    }
+	/**
+	 * Gets the value of the functionId property.
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
+	public String getFunctionId() {
+		return functionId;
+	}
 
-    /**
-     * Sets the value of the functionId property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setFunctionId(String value) {
-        this.functionId = value;
-    }
+	/**
+	 * Sets the value of the functionId property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link String }
+	 * 
+	 */
+	public void setFunctionId(String value) {
+		this.functionId = value;
+	}
 
 }

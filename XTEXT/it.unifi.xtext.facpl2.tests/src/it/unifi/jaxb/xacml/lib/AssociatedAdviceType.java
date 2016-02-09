@@ -5,7 +5,6 @@
 // Generated on: 2013.01.22 at 04:37:38 PM CET 
 //
 
-
 package it.unifi.jaxb.xacml.lib;
 
 import java.util.ArrayList;
@@ -17,9 +16,12 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- * <p>Java class for AssociatedAdviceType complex type.
+ * <p>
+ * Java class for AssociatedAdviceType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="AssociatedAdviceType">
@@ -36,41 +38,40 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "AssociatedAdviceType", propOrder = {
-    "advice"
-})
+@XmlType(name = "AssociatedAdviceType", propOrder = { "advice" })
 public class AssociatedAdviceType {
 
-    @XmlElement(name = "Advice", required = true)
-    protected List<AdviceType> advice;
+	@XmlElement(name = "Advice", required = true)
+	protected List<AdviceType> advice;
 
-    /**
-     * Gets the value of the advice property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the advice property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getAdvice().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link AdviceType }
-     * 
-     * 
-     */
-    public List<AdviceType> getAdvice() {
-        if (advice == null) {
-            advice = new ArrayList<AdviceType>();
-        }
-        return this.advice;
-    }
+	/**
+	 * Gets the value of the advice property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a
+	 * snapshot. Therefore any modification you make to the returned list will
+	 * be present inside the JAXB object. This is why there is not a
+	 * <CODE>set</CODE> method for the advice property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * 
+	 * <pre>
+	 * getAdvice().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link AdviceType }
+	 * 
+	 * 
+	 */
+	public List<AdviceType> getAdvice() {
+		if (advice == null) {
+			advice = new ArrayList<AdviceType>();
+		}
+		return this.advice;
+	}
 
 }

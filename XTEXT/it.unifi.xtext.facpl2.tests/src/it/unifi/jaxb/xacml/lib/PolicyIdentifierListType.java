@@ -5,7 +5,6 @@
 // Generated on: 2013.01.22 at 04:37:38 PM CET 
 //
 
-
 package it.unifi.jaxb.xacml.lib;
 
 import java.util.ArrayList;
@@ -18,11 +17,13 @@ import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlElementRefs;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for PolicyIdentifierListType complex type.
+ * <p>
+ * Java class for PolicyIdentifierListType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="PolicyIdentifierListType">
@@ -40,45 +41,44 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "PolicyIdentifierListType", propOrder = {
-    "policyIdReferenceOrPolicySetIdReference"
-})
+@XmlType(name = "PolicyIdentifierListType", propOrder = { "policyIdReferenceOrPolicySetIdReference" })
 public class PolicyIdentifierListType {
 
-    @XmlElementRefs({
-        @XmlElementRef(name = "PolicySetIdReference", namespace = "urn:oasis:names:tc:xacml:3.0:core:schema:wd-17", type = JAXBElement.class),
-        @XmlElementRef(name = "PolicyIdReference", namespace = "urn:oasis:names:tc:xacml:3.0:core:schema:wd-17", type = JAXBElement.class)
-    })
-    protected List<JAXBElement<IdReferenceType>> policyIdReferenceOrPolicySetIdReference;
+	@XmlElementRefs({
+			@XmlElementRef(name = "PolicySetIdReference", namespace = "urn:oasis:names:tc:xacml:3.0:core:schema:wd-17", type = JAXBElement.class),
+			@XmlElementRef(name = "PolicyIdReference", namespace = "urn:oasis:names:tc:xacml:3.0:core:schema:wd-17", type = JAXBElement.class) })
+	protected List<JAXBElement<IdReferenceType>> policyIdReferenceOrPolicySetIdReference;
 
-    /**
-     * Gets the value of the policyIdReferenceOrPolicySetIdReference property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the policyIdReferenceOrPolicySetIdReference property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getPolicyIdReferenceOrPolicySetIdReference().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link JAXBElement }{@code <}{@link IdReferenceType }{@code >}
-     * {@link JAXBElement }{@code <}{@link IdReferenceType }{@code >}
-     * 
-     * 
-     */
-    public List<JAXBElement<IdReferenceType>> getPolicyIdReferenceOrPolicySetIdReference() {
-        if (policyIdReferenceOrPolicySetIdReference == null) {
-            policyIdReferenceOrPolicySetIdReference = new ArrayList<JAXBElement<IdReferenceType>>();
-        }
-        return this.policyIdReferenceOrPolicySetIdReference;
-    }
+	/**
+	 * Gets the value of the policyIdReferenceOrPolicySetIdReference property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a
+	 * snapshot. Therefore any modification you make to the returned list will
+	 * be present inside the JAXB object. This is why there is not a
+	 * <CODE>set</CODE> method for the policyIdReferenceOrPolicySetIdReference
+	 * property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * 
+	 * <pre>
+	 * getPolicyIdReferenceOrPolicySetIdReference().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link JAXBElement }{@code <}{@link IdReferenceType }{@code >}
+	 * {@link JAXBElement }{@code <}{@link IdReferenceType }{@code >}
+	 * 
+	 * 
+	 */
+	public List<JAXBElement<IdReferenceType>> getPolicyIdReferenceOrPolicySetIdReference() {
+		if (policyIdReferenceOrPolicySetIdReference == null) {
+			policyIdReferenceOrPolicySetIdReference = new ArrayList<JAXBElement<IdReferenceType>>();
+		}
+		return this.policyIdReferenceOrPolicySetIdReference;
+	}
 
 }

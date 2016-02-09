@@ -370,6 +370,9 @@ class XMLGenerator {
 				}
 			case Connector::OR:
 				return "<AllOf>"
+			case NOT: {
+				throw new Exception("Operator NOT cannot occur in XACML Target")
+			}
 		}
 	}
 
@@ -383,6 +386,9 @@ class XMLGenerator {
 				}
 			case Connector::OR:
 				return "</AllOf>"
+			case NOT: {
+				throw new Exception("Operator NOT cannot occur in XACML Target")
+			}
 		}
 	}
 

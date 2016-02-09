@@ -5,7 +5,6 @@
 // Generated on: 2013.01.22 at 04:37:38 PM CET 
 //
 
-
 package it.unifi.jaxb.xacml.lib;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -15,11 +14,13 @@ import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for AttributesReferenceType complex type.
+ * <p>
+ * Java class for AttributesReferenceType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="AttributesReferenceType">
@@ -37,33 +38,30 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "AttributesReferenceType")
 public class AttributesReferenceType {
 
-    @XmlAttribute(name = "ReferenceId", required = true)
-    @XmlIDREF
-    @XmlSchemaType(name = "IDREF")
-    protected Object referenceId;
+	@XmlAttribute(name = "ReferenceId", required = true)
+	@XmlIDREF
+	@XmlSchemaType(name = "IDREF")
+	protected Object referenceId;
 
-    /**
-     * Gets the value of the referenceId property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Object }
-     *     
-     */
-    public Object getReferenceId() {
-        return referenceId;
-    }
+	/**
+	 * Gets the value of the referenceId property.
+	 * 
+	 * @return possible object is {@link Object }
+	 * 
+	 */
+	public Object getReferenceId() {
+		return referenceId;
+	}
 
-    /**
-     * Sets the value of the referenceId property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Object }
-     *     
-     */
-    public void setReferenceId(Object value) {
-        this.referenceId = value;
-    }
+	/**
+	 * Sets the value of the referenceId property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link Object }
+	 * 
+	 */
+	public void setReferenceId(Object value) {
+		this.referenceId = value;
+	}
 
 }
