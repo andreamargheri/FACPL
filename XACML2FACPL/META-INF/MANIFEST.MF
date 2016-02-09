@@ -34,5 +34,6 @@ Export-Package: it.unifi.xacmlToFacpl,
  org.xml.sax,
  org.xml.sax.ext,
  org.xml.sax.helpers
-Require-Bundle: org.apache.log4j;bundle-version="1.2.15"
+Require-Bundle: org.apache.log4j;bundle-version="1.2.15",
+ FACPL_Dependecies;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
