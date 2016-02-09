@@ -7,6 +7,9 @@ Bundle-ClassPath: jaxp/jaxp-api-1.4.5.jar
 Export-Package: it.unifi.xacmlToFacpl,
  it.unifi.xacmlToFacpl.jaxb,
  it.unifi.xacmlToFacpl.parser,
+ it.unifi.xacmlToFacpl.xacml2.context.jaxb,
+ it.unifi.xacmlToFacpl.xacml2.parser,
+ it.unifi.xacmlToFacpl.xacml2.policy.jaxb,
  javax.xml,
  javax.xml.datatype,
  javax.xml.namespace,
@@ -34,6 +37,6 @@ Export-Package: it.unifi.xacmlToFacpl,
  org.xml.sax,
  org.xml.sax.ext,
  org.xml.sax.helpers
-Require-Bundle: org.apache.log4j;bundle-version="1.2.15",
- FACPL_Dependecies;bundle-version="1.0.0"
+Require-Bundle: FACPL_Dependecies;bundle-version="1.0.0",
+ org.apache.log4j;bundle-version="1.2.15"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

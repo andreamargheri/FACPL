@@ -294,11 +294,6 @@ class SMT_LIBGenerator extends SMT_LIBGenerator_Code {
 		return false
 	}
 	
-	
-	
-	
-	
-	
 
 	/**
 	 * Stub for testing SMT-LIB code

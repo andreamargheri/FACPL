@@ -500,7 +500,22 @@
 	               </reference>
 	            </visibleWhen>
         </command>
-         <command
+        <separator
+                  name="additions"
+                  visible="true">
+       	</separator>
+       	<command
+               commandId="it.unifi.xtext.facpl.ui.popup.actions.SecurityPropertyEditorCommand"
+               icon="icons/blue.png"
+               style="push">
+        	 <visibleWhen
+	                  checkEnabled="false">
+	               <reference
+	                     definitionId="it.unifi.xtext.facpl.Facpl2.Editor.opened">
+	               </reference>
+	            </visibleWhen>
+        </command>
+        <command
                commandId="it.unifi.xtext.facpl.ui.popup.actions.SMTLIBEditorCommand"
                icon="icons/blue.png"
                style="push">
@@ -598,6 +613,14 @@
      </handler>   
   </extension>
   
+  <extension
+        point="org.eclipse.ui.handlers">
+     <handler
+           class="it.unifi.xtext.facpl.ui.Facpl2ExecutableExtensionFactory:it.unifi.xtext.facpl.ui.popup.actions.SecurityPropertyEditorCommand"
+           commandId="it.unifi.xtext.facpl.ui.popup.actions.SecurityPropertyEditorCommand">
+     </handler>   
+  </extension>
+  
   <!--command-->
   <extension
         point="org.eclipse.ui.commands">
@@ -650,8 +673,15 @@
   
    <extension
         point="org.eclipse.ui.commands">
-        <command name="Security Property"
+        <command name="Create Security Property..."
               id="it.unifi.xtext.facpl.ui.popup.actions.SecurityPropertyCommand">
+        </command>
+  </extension>
+  
+  <extension
+        point="org.eclipse.ui.commands">
+        <command name="Create Security Property..."
+              id="it.unifi.xtext.facpl.ui.popup.actions.SecurityPropertyEditorCommand">
         </command>
   </extension>
   
