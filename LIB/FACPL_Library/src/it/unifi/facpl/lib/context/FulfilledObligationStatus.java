@@ -21,6 +21,12 @@ public class FulfilledObligationStatus extends AbstractFulfilledObligation {
 		this.pepFunction = pepFunction;
 	}
 	
+	public FulfilledObligationStatus(Effect effect, ObligationType typeObl, Class < ? extends IExpressionFunctionStatus > pepFunction) {
+		super(effect, typeObl);
+		
+//		this.pepFunction = pepFunction;
+		
+	}
 
 	@Override
 	public AbstractFulfilledObligation evaluateObl() throws Throwable {

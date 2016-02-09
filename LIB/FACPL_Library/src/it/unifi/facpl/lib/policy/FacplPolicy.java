@@ -16,7 +16,7 @@ import it.unifi.facpl.lib.util.exception.FulfillmentFailed;
 public abstract class FacplPolicy implements IEvaluablePolicy{
 
 	protected ExpressionBooleanTree targetExpression;
-	protected LinkedList<Obligation> obligations;
+	protected LinkedList<AbstractObligation> obligations;
 	protected String idElement;
 
 	protected void addId(String id){
@@ -37,12 +37,12 @@ public abstract class FacplPolicy implements IEvaluablePolicy{
 	}
 	
 	
-	protected void addObligation (Obligation obl){
+	protected void addObligation (AbstractObligation obl){
 		Logger l = LoggerFactory.getLogger(FacplPolicy.class);
 		l.debug(idElement + ": addObligation");
 		if (obl != null){
 			if(this.obligations == null){
-				this.obligations = new LinkedList<Obligation>();
+				this.obligations = new LinkedList<AbstractObligation>();
 			}
 			this.obligations.add(obl);
 		}
@@ -88,7 +88,7 @@ public abstract class FacplPolicy implements IEvaluablePolicy{
 		l.debug(idElement+ "- Start obligation eval");
 		
 		if (this.obligations != null){
-			for (Obligation oblExpr : this.obligations) {
+			for (AbstractObligation oblExpr : this.obligations) {
 				//Check Applicability of the Obligations to evaluate
 				if (oblExpr.getEvaluatedOn().name().equals(effect.name())){
 					fuliflledObls.add(oblExpr.getObligationValue(cxtRequest));

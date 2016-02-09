@@ -4,6 +4,9 @@ import java.util.Date;
 
 import it.unifi.facpl.lib.interfaces.IContextStub;
 import it.unifi.facpl.lib.util.AttributeName;
+import it.unifi.facpl.lib.util.StatusAttributeName;
+import it.unifi.facpl.lib.util.exception.MissingAttributeException;
+import it.unifi.facpl.system.status.FacplStatus;
 
 @SuppressWarnings("all")
 public class ContextStub_Default implements IContextStub{
@@ -46,6 +49,14 @@ public class ContextStub_Default implements IContextStub{
 		*	return null;
 		*}
 		*/
+		return null;
+	}
+
+	@Override
+	public Object getContextStatusValues(FacplStatus status, StatusAttributeName attribute) throws MissingAttributeException {
+		
+		//TODO
+		
 		return null;
 	}
 	
