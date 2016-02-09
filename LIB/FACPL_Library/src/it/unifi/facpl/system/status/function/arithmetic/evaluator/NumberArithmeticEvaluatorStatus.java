@@ -1,7 +1,6 @@
 package it.unifi.facpl.system.status.function.arithmetic.evaluator;
 
 import it.unifi.facpl.lib.enums.FacplStatusType;
-import it.unifi.facpl.lib.function.arithmetic.evaluator.NumberArithmeticEvaluator;
 import it.unifi.facpl.lib.util.exception.UnsupportedTypeException;
 import it.unifi.facpl.system.status.StatusAttribute;
 

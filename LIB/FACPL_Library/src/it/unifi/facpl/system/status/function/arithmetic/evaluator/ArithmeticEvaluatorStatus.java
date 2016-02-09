@@ -1,7 +1,5 @@
 package it.unifi.facpl.system.status.function.arithmetic.evaluator;
 
-import com.sun.mail.imap.protocol.Status;
-
 import it.unifi.facpl.system.status.StatusAttribute;
 
 public interface ArithmeticEvaluatorStatus {

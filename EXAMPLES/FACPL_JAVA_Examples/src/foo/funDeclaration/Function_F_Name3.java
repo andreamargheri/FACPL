@@ -1,4 +1,4 @@
-package foo;
+package foo.funDeclaration;
 
 import java.util.List;
 
@@ -6,15 +6,16 @@ import it.unifi.facpl.lib.interfaces.IExpressionFunction;
 import it.unifi.facpl.lib.util.*;
 
 @SuppressWarnings("all")
-public class Function_F_Name2 implements IExpressionFunction{
+public class Function_F_Name3 implements IExpressionFunction{
 
 	@Override
 	public Object evaluateFunction(List<Object> args) throws Throwable {
 		
-		if (args.size() == 2) {
+		if (args.size() == 3) {
 			if( 
-			args.get(0) instanceof String && 
-			args.get(1) instanceof Boolean
+			args.get(0) instanceof Set && 
+			args.get(1) instanceof Set && 
+			args.get(2) instanceof Double
 			){
 					throw new Exception("TODO: auto-generated method stub");
 			}else{

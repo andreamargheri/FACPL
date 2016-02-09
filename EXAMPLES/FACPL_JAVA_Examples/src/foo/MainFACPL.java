@@ -19,7 +19,7 @@ public class MainFACPL{
 	public MainFACPL() {
 		// defined list of policies included in the PDP
 		LinkedList<FacplPolicy> policies = new LinkedList<FacplPolicy>();
-		policies.add(new PolicySet_PSet()); 
+		policies.add(new PolicySet_NamePolicySetTwo()); 
 		this.pdp = new PDP(it.unifi.facpl.lib.algorithm.PermitUnlessDenyGreedy.class, policies, false);
 		
 		this.pep = new PEP(EnforcementAlgorithm.DENY_BIASED);
@@ -38,7 +38,7 @@ public class MainFACPL{
 		StringBuffer result = new StringBuffer();
 		//request
 		LinkedList<ContextRequest> requests = new LinkedList<ContextRequest>();
-		requests.add(ContextRequest_Name.getContextReq());
+		requests.add(ContextRequest_NameRequest.getContextReq());
 		for (ContextRequest rcxt : requests) {
 			result.append("---------------------------------------------------\n");
 			AuthorisationPDP resPDP = system.pdp.doAuthorisation(rcxt);

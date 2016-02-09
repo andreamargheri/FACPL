@@ -4,7 +4,6 @@ import it.unifi.facpl.lib.context.AbstractFulfilledObligation;
 import it.unifi.facpl.lib.context.FullfilledObbligation;
 import it.unifi.facpl.lib.enums.Effect;
 import it.unifi.facpl.lib.enums.ObligationType;
-import it.unifi.facpl.system.status.function.arithmetic.evaluator.IExpressionFunctionStatus;
 
 /**
  *

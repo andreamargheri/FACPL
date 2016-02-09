@@ -1,10 +1,6 @@
 package it.unifi.facpl.lib.function.comparison;
 
-import java.util.List;
-
-import it.unifi.facpl.lib.function.comparison.evaluator.ComparisonEvaluatorFactory;
 import it.unifi.facpl.lib.interfaces.IComparisonEvaluator;
-import it.unifi.facpl.lib.interfaces.IComparisonFunction;
 
 public class NotEqual extends AbstractComparison {
 

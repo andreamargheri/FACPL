@@ -1,6 +1,5 @@
 package it.unifi.facpl.lib.function.comparison.evaluator;
 
-import java.util.Date;
 import java.util.List;
 
 import it.unifi.facpl.lib.interfaces.IComparisonEvaluator;

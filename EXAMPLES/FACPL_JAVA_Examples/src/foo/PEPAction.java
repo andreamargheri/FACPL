@@ -1,13 +1,10 @@
 package foo;
 
 import java.util.HashMap;
-import java.util.List;
-
 import it.unifi.facpl.lib.interfaces.IPepAction;
 
 @SuppressWarnings("all")
 public class PEPAction{
-
 
     public static HashMap<String, Class<? extends IPepAction>> getPepActions() {
 		/*
@@ -19,5 +16,4 @@ public class PEPAction{
 		return null;
 	}
 	
-
 }

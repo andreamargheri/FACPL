@@ -1,4 +1,4 @@
-package foo;
+package foo.funDeclaration;
 
 import java.util.List;
 

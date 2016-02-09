@@ -5,8 +5,8 @@ import java.util.LinkedList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import it.unifi.facpl.lib.context.ContextRequest;
 import it.unifi.facpl.lib.context.AbstractFulfilledObligation;
+import it.unifi.facpl.lib.context.ContextRequest;
 import it.unifi.facpl.lib.enums.Effect;
 import it.unifi.facpl.lib.enums.ExpressionValue;
 import it.unifi.facpl.lib.enums.TargetDecision;

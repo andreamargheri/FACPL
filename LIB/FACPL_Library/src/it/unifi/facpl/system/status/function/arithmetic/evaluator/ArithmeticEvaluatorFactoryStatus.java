@@ -2,7 +2,6 @@ package it.unifi.facpl.system.status.function.arithmetic.evaluator;
 
 import java.util.HashMap;
 
-
 import it.unifi.facpl.lib.util.exception.UnsupportedTypeException;
 
 public class ArithmeticEvaluatorFactoryStatus {

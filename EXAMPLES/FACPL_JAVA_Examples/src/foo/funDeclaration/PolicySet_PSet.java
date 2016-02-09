@@ -1,9 +1,8 @@
-package foo.declaredFunctions;
+package foo.funDeclaration;
 
 import it.unifi.facpl.lib.policy.*;
 import it.unifi.facpl.lib.enums.*;
 import it.unifi.facpl.lib.util.*;
-import it.unifi.facpl.system.status.functions.bool.FlagStatus;
 
 @SuppressWarnings("all")
 public class PolicySet_PSet extends PolicySet {
@@ -35,11 +34,6 @@ public class PolicySet_PSet extends PolicySet {
 					new ExpressionBooleanTree(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.In.class,
 							new AttributeName("sub", "id"), new Set(true, false)))));
 			// Obligations
-			addObligation(
-					new Obligation("action2", Effect.DENY, ObligationType.M, new AttributeName("subject", "name")));
-			
-			addObligation(
-					new ObligationStatus(new FlagStatus() , Effect.DENY, ObligationType.M, new AttributeName("subject", "name")));
 		}
 	}
 }

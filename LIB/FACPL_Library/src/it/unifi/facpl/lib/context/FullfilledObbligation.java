@@ -2,8 +2,6 @@ package it.unifi.facpl.lib.context;
 
 import it.unifi.facpl.lib.enums.Effect;
 import it.unifi.facpl.lib.enums.ObligationType;
-import it.unifi.facpl.system.status.StatusAttribute;
-import it.unifi.facpl.system.status.function.arithmetic.evaluator.IExpressionFunctionStatus;
 
 public class FullfilledObbligation extends AbstractFulfilledObligation {
 

@@ -2,25 +2,36 @@ package it.unifi.facpl.lib.context;
 
 import java.util.Date;
 
-import it.unifi.facpl.lib.interfaces.IContextStub;
+import it.unifi.facpl.lib.interfaces.IContextStub_Status;
 import it.unifi.facpl.lib.util.AttributeName;
+import it.unifi.facpl.lib.util.StatusAttributeName;
+import it.unifi.facpl.lib.util.exception.MissingAttributeException;
+import it.unifi.facpl.system.status.FacplStatus;
 
 @SuppressWarnings("all")
-public class ContextStub_Default implements IContextStub{
+public class ContextStub_Status_Default implements IContextStub_Status{
 	
-	private static ContextStub_Default instance; 
+	private static ContextStub_Status_Default instance; 
 
-	public static ContextStub_Default getInstance(){
+	private static FacplStatus status; 
+	
+	public static ContextStub_Status_Default getInstance(){
 		if (instance == null){
-			instance = new ContextStub_Default();
+			instance = new ContextStub_Status_Default();
 		}
 	return instance;
 	}
 
-	private ContextStub_Default(){
+	private ContextStub_Status_Default(){
 	
 	}
 
+	
+	public static void setStatus(FacplStatus status) {
+		ContextStub_Status_Default.status = status;
+	}
+	
+	
 	@Override
 	public Object getContextValues(AttributeName attribute) {
 		//Context Time Value
@@ -47,6 +58,17 @@ public class ContextStub_Default implements IContextStub{
 		*}
 		*/
 		return null;
+	}
+
+	
+	@Override
+	public Object getContextStatusValues(StatusAttributeName attribute) throws MissingAttributeException {
+		
+		/*
+		 *  TODO Auto-generated method stub
+		 */
+		
+		return status.getValue(attribute);
 	}
 	
 }

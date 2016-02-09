@@ -1,4 +1,4 @@
-package foo.declaredFunctions;
+package foo.funDeclaration;
 
 import it.unifi.facpl.lib.policy.*;
 import it.unifi.facpl.system.*;

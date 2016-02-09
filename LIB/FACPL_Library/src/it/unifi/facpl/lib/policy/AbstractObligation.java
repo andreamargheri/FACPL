@@ -14,7 +14,6 @@ import it.unifi.facpl.lib.interfaces.IObligationElement;
 import it.unifi.facpl.lib.util.AttributeName;
 import it.unifi.facpl.lib.util.exception.FulfillmentFailed;
 import it.unifi.facpl.lib.util.exception.MissingAttributeException;
-import it.unifi.facpl.system.status.function.arithmetic.evaluator.IExpressionFunctionStatus;
 
 public abstract class  AbstractObligation implements IObligationElement {
 	

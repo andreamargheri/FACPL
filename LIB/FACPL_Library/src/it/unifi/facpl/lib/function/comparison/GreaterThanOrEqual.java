@@ -2,7 +2,6 @@ package it.unifi.facpl.lib.function.comparison;
 
 
 import it.unifi.facpl.lib.interfaces.IComparisonEvaluator;
-import it.unifi.facpl.lib.interfaces.IComparisonFunction;
 
 public class GreaterThanOrEqual extends AbstractComparison{
 

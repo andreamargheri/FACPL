@@ -1,6 +1,6 @@
 PAS { 
 	Extended Indeterminate : false ;
-	Java Package : "foo" ;
+	Java Package : "fooDEC" ;
 	Requests To Evaluate : Name ;
 	pep: deny-biased
 	pdp: permit-unless-deny
