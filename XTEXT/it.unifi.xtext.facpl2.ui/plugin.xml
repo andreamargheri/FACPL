@@ -445,10 +445,19 @@
     			</iterate>
             </visibleWhen>
         </command>
-         <separator
-                  name="additions"
-                  visible="true">
-       	</separator>
+        <command
+               commandId="it.unifi.xtext.facpl.ui.popup.actions.StructuralPropertyCommand"
+               style="push">
+        	 <visibleWhen
+                  checkEnabled="false">
+                  <iterate>
+       		<adapt type="org.eclipse.core.resources.IResource">
+          		<test property="org.eclipse.core.resources.name" 
+                value="*.fpl"/>
+       		</adapt>
+    			</iterate>
+            </visibleWhen>
+        </command>
         <command
            commandId="it.unifi.xtext.facpl.ui.popup.actions.XMLCommand"
            style="push">
@@ -462,10 +471,6 @@
     			</iterate>
             </visibleWhen>
         </command>
-        <separator
-                  name="additions"
-                  visible="true">
-       </separator>
         <!--GENERATOR OF FACPL CODE FROM XML -->
         <command
                commandId="it.unifi.xtext.facpl.ui.popup.actions.XACMLTOFACPLCommand"
@@ -500,12 +505,19 @@
 	               </reference>
 	            </visibleWhen>
         </command>
-        <separator
-                  name="additions"
-                  visible="true">
-       	</separator>
        	<command
                commandId="it.unifi.xtext.facpl.ui.popup.actions.SecurityPropertyEditorCommand"
+               icon="icons/blue.png"
+               style="push">
+        	 <visibleWhen
+	                  checkEnabled="false">
+	               <reference
+	                     definitionId="it.unifi.xtext.facpl.Facpl2.Editor.opened">
+	               </reference>
+	            </visibleWhen>
+        </command>
+        <command
+               commandId="it.unifi.xtext.facpl.ui.popup.actions.StructuralPropertyEditorCommand"
                icon="icons/blue.png"
                style="push">
         	 <visibleWhen
@@ -526,10 +538,6 @@
 	               </reference>
 	            </visibleWhen>
         </command>
-        <separator
-                  name="additions"
-                  visible="true">
-       	</separator>
         <command
             commandId="it.unifi.xtext.facpl.ui.popup.actions.XMLEditorCommand"
             icon="icons/blue.png"
@@ -621,6 +629,22 @@
      </handler>   
   </extension>
   
+  <extension
+        point="org.eclipse.ui.handlers">
+     <handler
+           class="it.unifi.xtext.facpl.ui.Facpl2ExecutableExtensionFactory:it.unifi.xtext.facpl.ui.popup.actions.StructuralPropertyCommand"
+           commandId="it.unifi.xtext.facpl.ui.popup.actions.StructuralPropertyCommand">
+     </handler>   
+  </extension>
+  
+  <extension
+        point="org.eclipse.ui.handlers">
+     <handler
+           class="it.unifi.xtext.facpl.ui.Facpl2ExecutableExtensionFactory:it.unifi.xtext.facpl.ui.popup.actions.StructuralPropertyEditorCommand"
+           commandId="it.unifi.xtext.facpl.ui.popup.actions.StructuralPropertyEditorCommand">
+     </handler>   
+  </extension>
+  
   <!--command-->
   <extension
         point="org.eclipse.ui.commands">
@@ -685,6 +709,20 @@
         </command>
   </extension>
   
+   <extension
+        point="org.eclipse.ui.commands">
+        <command name="Create Structural Property..."
+              id="it.unifi.xtext.facpl.ui.popup.actions.StructuralPropertyCommand">
+        </command>
+  </extension>
+  
+  <extension
+        point="org.eclipse.ui.commands">
+        <command name="Create Structural Property..."
+              id="it.unifi.xtext.facpl.ui.popup.actions.StructuralPropertyEditorCommand">
+        </command>
+  </extension>
+  
 <!-- Wizard -->
   
    <extension
@@ -693,6 +731,7 @@
             id="it.unifi.xtext.facpl.ui"
             name="Facpl">
       </category>
+      
       <!-- New File wizard -->
       <wizard
             category="it.unifi.xtext.facpl.ui"

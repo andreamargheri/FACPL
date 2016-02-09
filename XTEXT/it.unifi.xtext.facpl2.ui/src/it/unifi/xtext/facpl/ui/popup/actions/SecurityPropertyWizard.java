@@ -27,8 +27,8 @@ import it.unifi.xtext.facpl.ui.popup.actions.propertyDialog.PropertyNameDialog;
  */
 public class SecurityPropertyWizard {
 
-	
-	public Object createSecurityProperty(Shell activeShell, EclipseResourceFileSystemAccess2 fsa, Facpl e, SMT_LIBGenerator generator) {
+	public Object createSecurityProperty(Shell activeShell, EclipseResourceFileSystemAccess2 fsa, Facpl e,
+			SMT_LIBGenerator generator) {
 
 		try {
 
@@ -46,7 +46,7 @@ public class SecurityPropertyWizard {
 			String msg_info = "Check the FACPL guide at http://facpl.sf.net/guide/index.html for further details";
 
 			ListDialog type_P_dialog = new ListDialog(activeShell);
-			type_P_dialog.setMessage("Choose a Property Type... \n" + msg_info);
+			type_P_dialog.setMessage("Choose a Property... \n" + msg_info);
 			type_P_dialog.setInput(
 					new SecurityProperty[] { SecurityProperty.EVAL, SecurityProperty.MAY, SecurityProperty.MUST });
 			type_P_dialog.setContentProvider(new ArrayContentProvider());
@@ -145,16 +145,17 @@ public class SecurityPropertyWizard {
 			 * Property
 			 */
 
-			generator.doGenerateSecurity_Property(
-					(Facpl) e, policy_name, name_property, req, prop_decision, sec_prop,fsa);
+			generator.doGenerateSecurity_Property((Facpl) e, policy_name, name_property, req, prop_decision, sec_prop,
+					fsa);
 
-			MessageDialog.openInformation(activeShell, "Generate SMT-LIB",
+			MessageDialog.openInformation(activeShell, "Create Security Property",
 					"SMT-LIB code for property verification generated!");
 
 		} catch (Exception ex) {
-			if (ex.getMessage().equals("")){
-				MessageDialog.openWarning(activeShell, "Create Security Property", "Creation of Security Property Aborted");
-			}else{
+			if (ex.getMessage().equals("")) {
+				MessageDialog.openWarning(activeShell, "Create Security Property",
+						"Creation of Security Property Aborted");
+			} else {
 				MessageDialog.openWarning(activeShell, "Create Security Property", ex.getMessage());
 			}
 		}

@@ -9,6 +9,7 @@ import it.unifi.xtext.facpl.facpl2.DeclaredFunction
 import it.unifi.xtext.facpl.facpl2.DoubleLiteral
 import it.unifi.xtext.facpl.facpl2.Effect
 import it.unifi.xtext.facpl.facpl2.Expression
+import it.unifi.xtext.facpl.facpl2.Facpl
 import it.unifi.xtext.facpl.facpl2.FacplPolicy
 import it.unifi.xtext.facpl.facpl2.Function
 import it.unifi.xtext.facpl.facpl2.FunctionDeclaration
@@ -17,6 +18,7 @@ import it.unifi.xtext.facpl.facpl2.NotExpression
 import it.unifi.xtext.facpl.facpl2.Obligation
 import it.unifi.xtext.facpl.facpl2.OrExpression
 import it.unifi.xtext.facpl.facpl2.PolicySet
+import it.unifi.xtext.facpl.facpl2.Request
 import it.unifi.xtext.facpl.facpl2.Rule
 import it.unifi.xtext.facpl.facpl2.Set
 import it.unifi.xtext.facpl.facpl2.StringLiteral
@@ -31,6 +33,7 @@ import it.unifi.xtext.facpl.generator.generators.smt.algorithms.SMT_LIBGenerator
 import it.unifi.xtext.facpl.generator.generators.smt.algorithms.SMT_LIBGenerator_StrongCon
 import it.unifi.xtext.facpl.generator.generators.smt.algorithms.SMT_LIBGenerator_WeakCon
 import it.unifi.xtext.facpl.generator.util.ConstraintConstant
+import it.unifi.xtext.facpl.generator.util.PolicyConstant
 import it.unifi.xtext.facpl.generator.util.SetUtils
 import it.unifi.xtext.facpl.validation.FacplType
 import it.unifi.xtext.facpl.validation.inference.FacplTypeInference
@@ -38,9 +41,6 @@ import it.unifi.xtext.facpl.validation.inference.SubstitutionSet
 import java.util.HashMap
 import java.util.LinkedList
 import java.util.List
-import it.unifi.xtext.facpl.generator.util.PolicyConstant
-import it.unifi.xtext.facpl.facpl2.Facpl
-import it.unifi.xtext.facpl.facpl2.Request
 
 class SMT_LIBGenerator_Code {
 

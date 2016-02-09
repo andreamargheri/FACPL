@@ -37,7 +37,7 @@ import it.unifi.xtext.facpl.generator.SMT_LIBGenerator;
  * @author Andrea Margheri
  *
  */
-public class SecurityPropertyEditorCommand extends AbstractHandler implements IHandler {
+public class StructuralPropertyEditorCommand extends AbstractHandler implements IHandler {
 
 	@Inject
 	IResourceDescriptions resourceDescriptions;
@@ -93,7 +93,7 @@ public class SecurityPropertyEditorCommand extends AbstractHandler implements IH
 		for (Object e : r.getContents()) {
 			if (e instanceof Facpl) {
 
-				new SecurityPropertyWizard().createSecurityProperty(activeShell, fsa, (Facpl) e, generator);
+				new StructuralPropertyWizard().createStructuralProperty(activeShell, fsa, (Facpl) e, generator);
 
 			}
 		}

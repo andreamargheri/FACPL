@@ -1,22 +1,20 @@
 package it.unifi.xtext.facpl2.ui.syntaxcoloring
 
-import org.eclipse.xtext.ui.editor.syntaxcoloring.ISemanticHighlightingCalculator
 import com.google.inject.Inject
-import org.eclipse.xtext.nodemodel.INode
-import org.eclipse.xtext.EnumRule
-import org.eclipse.emf.ecore.EObject
-import org.eclipse.xtext.Keyword
-
-import org.eclipse.xtext.ParserRule
-import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightedPositionAcceptor
-import org.eclipse.xtext.IGrammarAccess
-import org.eclipse.xtext.resource.XtextResource
+import it.unifi.xtext.facpl.services.Facpl2GrammarAccess
 import java.util.Iterator
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtext.AbstractRule
+import org.eclipse.xtext.EnumRule
+import org.eclipse.xtext.IGrammarAccess
+import org.eclipse.xtext.Keyword
+import org.eclipse.xtext.ParserRule
 import org.eclipse.xtext.RuleCall
 import org.eclipse.xtext.TerminalRule
-
-import org.eclipse.xtext.AbstractRule
-import it.unifi.xtext.facpl.services.Facpl2GrammarAccess
+import org.eclipse.xtext.nodemodel.INode
+import org.eclipse.xtext.resource.XtextResource
+import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightedPositionAcceptor
+import org.eclipse.xtext.ui.editor.syntaxcoloring.ISemanticHighlightingCalculator
 
 class TokenHighlight implements ISemanticHighlightingCalculator {
 	

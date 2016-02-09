@@ -1,15 +1,15 @@
 package it.unifi.xtext.facpl2.tests.smt
 
-import org.junit.runner.RunWith
+import com.google.inject.Inject
+import it.unifi.xtext.facpl.Facpl2InjectorProvider
+import it.unifi.xtext.facpl.facpl2.Facpl
+import it.unifi.xtext.facpl.generator.util.PolicyConstant
+import org.eclipse.xtext.junit4.AbstractXtextTests
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
-import it.unifi.xtext.facpl.Facpl2InjectorProvider
-import org.eclipse.xtext.junit4.AbstractXtextTests
-import it.unifi.xtext.facpl.facpl2.Facpl
 import org.eclipse.xtext.junit4.util.ParseHelper
-import com.google.inject.Inject
 import org.junit.Test
-import it.unifi.xtext.facpl.generator.util.PolicyConstant
+import org.junit.runner.RunWith
 
 @InjectWith(typeof(Facpl2InjectorProvider))
 @RunWith(typeof(XtextRunner))

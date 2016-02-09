@@ -1,11 +1,11 @@
 package it.unifi.xtext.facpl.generator.util
 
 import it.unifi.xtext.facpl.facpl2.AttributeName
-import it.unifi.xtext.facpl.facpl2.Set
 import it.unifi.xtext.facpl.facpl2.BooleanLiteral
 import it.unifi.xtext.facpl.facpl2.DateLiteral
 import it.unifi.xtext.facpl.facpl2.DoubleLiteral
 import it.unifi.xtext.facpl.facpl2.IntLiteral
+import it.unifi.xtext.facpl.facpl2.Set
 import it.unifi.xtext.facpl.facpl2.StringLiteral
 import it.unifi.xtext.facpl.facpl2.TimeLiteral
 import it.unifi.xtext.facpl.facpl2.util.Facpl2Switch

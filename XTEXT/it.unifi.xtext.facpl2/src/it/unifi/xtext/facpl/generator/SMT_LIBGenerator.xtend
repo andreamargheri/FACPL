@@ -1,13 +1,13 @@
 package it.unifi.xtext.facpl.generator
 
 import it.unifi.xtext.facpl.facpl2.Facpl
-import it.unifi.xtext.facpl.generator.generators.SMT_LIBGenerator_Code
-import org.eclipse.xtext.generator.IFileSystemAccess
 import it.unifi.xtext.facpl.facpl2.Request
+import it.unifi.xtext.facpl.generator.generators.SMT_LIBGenerator_Code
 import it.unifi.xtext.facpl.generator.util.Decision
 import it.unifi.xtext.facpl.generator.util.SecurityProperty
-import it.unifi.xtext.facpl.validation.inference.SubstitutionSet
 import it.unifi.xtext.facpl.generator.util.StructuralProperty
+import it.unifi.xtext.facpl.validation.inference.SubstitutionSet
+import org.eclipse.xtext.generator.IFileSystemAccess
 
 class SMT_LIBGenerator extends SMT_LIBGenerator_Code {
 
@@ -64,15 +64,15 @@ class SMT_LIBGenerator extends SMT_LIBGenerator_Code {
 		String name_property, StructuralProperty prop, IFileSystemAccess fsa) {
 		
 		var str = ""
-		
+		var fileName = ""
 		if (prop.equals(StructuralProperty.COMPLETE)){
 			/* Only one policy is involved */
 			str = doGenerateComplete_Property_Code(resource, policy_name1);
+			fileName = "Property_" + name_property + "_" + policy_name1;
 		}else {
 			str = doGenerateStructural_Property_Code(resource, policy_name1, policy_name2, prop);
+			fileName = "Property_" + name_property + "_" + policy_name1 + "_" + policy_name2;
 		}
-
-		var fileName = policy_name1 + "_property_" + name_property;
 		/* Copy the generated SMT-LIB in a FILE  */
 		fsa.generateFile(fileName + ".smt2", str);
 		
