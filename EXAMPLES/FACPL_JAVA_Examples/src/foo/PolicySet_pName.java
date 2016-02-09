@@ -6,6 +6,7 @@ import it.unifi.facpl.lib.util.*;
 
 @SuppressWarnings("all")	
 public class PolicySet_pName extends PolicySet {
+	
 	public PolicySet_pName(){
 		addId("pName");
 		//Algorithm Combining
