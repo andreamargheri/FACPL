@@ -11,55 +11,54 @@ import java.util.LinkedList;
 import java.util.List;
 
 @SuppressWarnings("all")
-public class MainFACPL{
-	 	
+public class MainFACPL {
+
 	private PDP pdp;
 	private PEP pep;
-		
+
 	public MainFACPL() {
 		// defined list of policies included in the PDP
 		LinkedList<FacplPolicy> policies = new LinkedList<FacplPolicy>();
-		policies.add(new PolicySet_patientConsent()); 
+		policies.add(new PolicySet_patientConsent());
 		this.pdp = new PDP(it.unifi.facpl.lib.algorithm.OnlyOneApplicableGreedy.class, policies, true);
-		
+
 		this.pep = new PEP(EnforcementAlgorithm.BASE);
-			
+
 		this.pep.addPEPActions(PEPAction.getPepActions());
 	}
-		
+
 	/*
-	*ENTRY POINT FOR EVALUATION
-	*/
-	public static void main(String[] args){
-		//Initialise Authorisation System
+	 * ENTRY POINT FOR EVALUATION
+	 */
+	public static void main(String[] args) {
+		// Initialise Authorisation System
 		MainFACPL system = new MainFACPL();
-		
-		//log
+
+		// log
 		StringBuffer result = new StringBuffer();
-		//request
+		// request
 		LinkedList<ContextRequest> requests = new LinkedList<ContextRequest>();
 		requests.add(ContextRequest_Request1.getContextReq());
 		for (ContextRequest rcxt : requests) {
 			result.append("---------------------------------------------------\n");
 			AuthorisationPDP resPDP = system.pdp.doAuthorisation(rcxt);
-			result.append("Request: "+ resPDP.getId() + "\n\n");
-			result.append("PDP Decision=\n " + resPDP.toString()+"\n\n");
-			//enforce decision
+			result.append("Request: " + resPDP.getId() + "\n\n");
+			result.append("PDP Decision=\n " + resPDP.toString() + "\n\n");
+			// enforce decision
 			AuthorisationPEP resPEP = system.pep.doEnforcement(resPDP);
-			result.append("PEP Decision=\n " + resPEP.toString()+"\n");
+			result.append("PEP Decision=\n " + resPEP.toString() + "\n");
 			result.append("---------------------------------------------------\n");
 		}
 		System.out.println(result.toString());
 		ShowResult.showResult(result);
-	}	
-	
-	
+	}
+
 	public PDP getPdp() {
 		return pdp;
 	}
-		
+
 	public PEP getPep() {
 		return pep;
 	}
-	
+
 }

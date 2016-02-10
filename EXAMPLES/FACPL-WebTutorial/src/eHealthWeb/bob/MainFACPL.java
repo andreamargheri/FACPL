@@ -1,4 +1,4 @@
-package condition;
+package eHealthWeb.bob;
 
 import it.unifi.facpl.lib.policy.*;
 import it.unifi.facpl.system.*;
@@ -19,10 +19,10 @@ public class MainFACPL {
 	public MainFACPL() {
 		// defined list of policies included in the PDP
 		LinkedList<FacplPolicy> policies = new LinkedList<FacplPolicy>();
-		policies.add(new PolicySet_firstPolicy_denyOverrides());
-		this.pdp = new PDP(it.unifi.facpl.lib.algorithm.PermitOverridesGreedy.class, policies, true);
+		policies.add(new PolicySet_patientConsent());
+		this.pdp = new PDP(it.unifi.facpl.lib.algorithm.PermitOverrides.class, policies, false);
 
-		this.pep = new PEP(EnforcementAlgorithm.BASE);
+		this.pep = new PEP(EnforcementAlgorithm.DENY_BIASED);
 
 		this.pep.addPEPActions(PEPAction.getPepActions());
 	}
@@ -52,7 +52,7 @@ public class MainFACPL {
 			result.append("---------------------------------------------------\n");
 		}
 		System.out.println(result.toString());
-		ShowResult.showResult(result);
+		// ShowResult.showResult(result);
 	}
 
 	public PDP getPdp() {

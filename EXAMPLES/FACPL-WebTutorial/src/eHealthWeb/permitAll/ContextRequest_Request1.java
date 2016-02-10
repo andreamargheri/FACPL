@@ -1,8 +1,10 @@
-package e_Health;
+package eHealthWeb.permitAll;
 
 import java.util.HashMap;
+
+import eHealthWeb.ContextStub_eHealth;
 import it.unifi.facpl.lib.context.*;
-import it.unifi.facpl.lib.util.Set;
+import it.unifi.facpl.lib.util.*;
 
 @SuppressWarnings("all")
 public class ContextRequest_Request1 {
@@ -18,18 +20,19 @@ public class ContextRequest_Request1 {
 		HashMap<String, Object> req_resource = new HashMap<String, Object>();
 		HashMap<String, Object> req_action = new HashMap<String, Object>();
 		// add attribute's values
-		req_subject.put("id", "Marley");
-		req_resource.put("type", "ePrescription");
+		req_subject.put("id", "Dr.House");
+		req_resource.put("patient-id", "Alice");
+		req_resource.put("type", "e-Prescription");
 		req_subject.put("role", "doctor");
-		req_subject.put("permission", new Set("ePre-Read", "ePre-Write"));
-		req_action.put("id", "write");
+		req_subject.put("permission", "e-Pre-Read");
+		req_action.put("id", "read");
 		// add attributes to request
 		Request req = new Request("Request1");
 		req.addAttribute("subject", req_subject);
 		req.addAttribute("resource", req_resource);
 		req.addAttribute("action", req_action);
 		// context stub: default-one
-		CxtReq = new ContextRequest(req, ContextStub_Default.getInstance());
+		CxtReq = new ContextRequest(req, ContextStub_eHealth.getInstance());
 		return CxtReq;
 	}
 }

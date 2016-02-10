@@ -1,0 +1,8 @@
+PolicySet patientConsent {permit-overrides 
+		target:equal("Alice",resource/patient-id) 
+		policies: 
+		Rule denyRule (deny)
+	obl: 
+	[deny M mailTo(resource/patient-id.mail, "Data requested by unauthorized subject")]
+	[permit O compress()]
+}

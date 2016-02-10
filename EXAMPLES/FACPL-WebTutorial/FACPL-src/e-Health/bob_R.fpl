@@ -1,0 +1,31 @@
+/*
+ * Request1 : PERMIT
+ * Request2 : DENY
+ * Request3 : DENY
+ */
+
+Request:{ Request1 
+(subject/id,"Dr.House") 
+(resource/patient-id,"Bob") 
+(resource/type,"e-Dispensation") 
+(subject/role,"pharmacist") 
+(subject/permission,"e-Dis-Read") 
+(action/id,"read") 
+}
+
+Request:{ Request2 
+(subject/id,"Dr.House") 
+(resource/patient-id,"Bob") 
+(resource/type,"e-Dispensation") 
+(subject/role,"administrative") 
+(action/id,"read") 
+}
+
+Request:{ Request3 
+(subject/id,"Dr.House") 
+(resource/patient-id,"Bob") 
+(resource/type,"e-Prescription") 
+(subject/role,"doctor") 
+(subject/permission,"e-Pre-Read") 
+(action/id,"read") 
+}

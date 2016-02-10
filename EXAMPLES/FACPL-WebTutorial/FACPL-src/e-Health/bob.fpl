@@ -1,0 +1,22 @@
+PolicySet patientConsent { permit-overrides
+	target: equal ( "Bob" , resource / patient-id ) 
+	policies:
+	PolicySet eDis { permit-overrides - all
+		target:equal("e-Dispensation",resource/type)
+		policies:
+		Rule writePha ( permit target: equal ( subject / role , "pharmacist" ) 
+			&& equal ( action / id , "write" ) 
+			&& in ("e-Dis-Write", subject / permission ) 
+			&& in ("e-Dis-Read", subject / permission ) )
+		Rule readPha ( permit target: equal ( subject / role , "pharmacist" )
+			&& equal ( action / id , "read" ) 
+			&& in ("e-Dis-Read", subject / permission ) )
+		obl:
+		[ permit M log ( system / time , resource / type , subject / id , action / id ) ]
+	}
+	Rule denyRule ( deny )
+	obl:
+	[ deny M mailTo ( resource / patient-id.mail , "Data requested by unauthorized subject" ) ]
+	[ permit O compress ( ) ]
+}
+
