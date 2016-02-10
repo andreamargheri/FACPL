@@ -279,13 +279,9 @@ public class XacmlParser {
 			int j = 0;
 			l.trace("list of AnyOf");
 			for (AnyOfType a : t.getAnyOf()) {
-				if (j > 0)
-					s.append("&&");
 				s.append("(");
 				int i = 0;
 				for (AllOfType b : a.getAllOf()) {
-					if (i > 0)
-						s.append("||");
 					s.append("(");
 					int k = 0;
 					for (MatchType c : b.getMatch()) {
@@ -297,9 +293,13 @@ public class XacmlParser {
 					}
 					s.append(")");
 					i++;
+					if (i < b.getMatch().size())
+						s.append("||");
 				}
 				s.append(")");
 				j++;
+				if (j < t.getAnyOf().size())
+					s.append("&&");
 			}
 			l.debug("...target parsed");
 			return s.toString();
