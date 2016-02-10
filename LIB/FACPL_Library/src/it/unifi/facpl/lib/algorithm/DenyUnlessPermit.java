@@ -45,8 +45,10 @@ public class DenyUnlessPermit implements IEvaluableAlgorithm {
 			}
 		}
 		if (atLeastOnePermit) {
+			l.debug("ALG.DENY-un-PERMIT = dt: PERMIT");
 			return dr;
 		} else {
+			l.debug("ALG.DENY-un-PERMIT = dt: DENY");
 			dr.setDecision(ExtendedDecision.DENY);
 			dr.addObligation(obls_deny);
 			return dr;

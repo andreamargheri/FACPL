@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import it.unifi.facpl.lib.interfaces.IComparisonEvaluator;
 import it.unifi.facpl.lib.util.FacplDate;
+import it.unifi.facpl.lib.util.Set;
 import it.unifi.facpl.lib.util.exception.UnsupportedTypeException;
 
 /**
@@ -18,13 +19,14 @@ public class ComparisonEvaluatorFactory {
 
 	private ComparisonEvaluatorFactory() {
 		this.table = new HashMap<Class<?>, IComparisonEvaluator>();
-		
-		//initialisation
+
+		// initialisation
 		this.table.put(Integer.class, NumberComparisonEvaluator.getInstance());
 		this.table.put(Double.class, NumberComparisonEvaluator.getInstance());
 		this.table.put(String.class, StringComparisonEvaluator.getInstance());
 		this.table.put(Boolean.class, BooleanComparisonEvaluator.getInstance());
 		this.table.put(FacplDate.class, DateComparisonEvaluator.getInstance());
+		this.table.put(Set.class, SetComparisonEvaluator.getInstance());
 	}
 
 	public static synchronized ComparisonEvaluatorFactory getInstance() {
@@ -36,15 +38,15 @@ public class ComparisonEvaluatorFactory {
 
 	public IComparisonEvaluator getEvaluator(Object o) throws Exception {
 
-		try{
+		try {
 			IComparisonEvaluator evaluator = table.get(o.getClass());
 			if (evaluator == null) {
 				// evaluator = new DefaultComparisonEvaluator();
-				System.err.println("No comparison fucntion available for data type "+ o.getClass().getName());
-				throw new Exception("No comparison fucntion available for data type "+ o.getClass().getName());
-			}		
+				System.err.println("No comparison fucntion available for data type " + o.getClass().getName());
+				throw new Exception("No comparison fucntion available for data type " + o.getClass().getName());
+			}
 			return evaluator;
-		}catch (UnsupportedTypeException e){
+		} catch (UnsupportedTypeException e) {
 			System.err.println(e.getMessage());
 			throw e;
 		}

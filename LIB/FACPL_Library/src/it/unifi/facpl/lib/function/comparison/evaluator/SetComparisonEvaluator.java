@@ -8,17 +8,17 @@ import it.unifi.facpl.lib.util.exception.UnsupportedTypeException;
  * @author Andrea Margheri
  * 
  */
-public class BagComparisonEvaluator implements IComparisonEvaluator {
+public class SetComparisonEvaluator implements IComparisonEvaluator {
 
-	private static BagComparisonEvaluator instance;
+	private static SetComparisonEvaluator instance;
 
-	private BagComparisonEvaluator() {
+	private SetComparisonEvaluator() {
 
 	}
 
-	public static BagComparisonEvaluator getInstance() {
+	public static SetComparisonEvaluator getInstance() {
 		if (instance == null) {
-			instance = new BagComparisonEvaluator();
+			instance = new SetComparisonEvaluator();
 		}
 		return instance;
 	}
@@ -54,7 +54,7 @@ public class BagComparisonEvaluator implements IComparisonEvaluator {
 	}
 
 	@Override
-	public boolean isSubsetOf(Object o1, Object o2) throws Throwable {
+	public boolean isIn(Object o1, Object o2) throws Throwable {
 		if (o2 instanceof Set) {
 			return ((Set) o2).contains((Set) o1);
 		} else if (((Set) o1).getBag_values().size() == 1) {
@@ -62,37 +62,7 @@ public class BagComparisonEvaluator implements IComparisonEvaluator {
 			// by only one value they are compared each other
 			return ((Set) o1).contains(o2);
 		} else {
-			throw new UnsupportedTypeException("Bag (with multiple items) vs"
-					+ o2.getClass().getName(), "Subset");
+			throw new UnsupportedTypeException("Set vs" + o2.getClass().getName(), "Subset");
 		}
 	}
-
-	@Override
-	public boolean isAtLestOneMemberOf(Object o1, Object o2) throws Throwable {
-		if (((Set)o1).isEmpty()){
-			return false;
-		}
-		if (o2 instanceof Set) {
-			Boolean flag = false;
-			for (Object obj : ((Set) o1).getBag_values()) {
-				if (((Set) o2).contains(obj)) {
-					flag = true;
-					break;
-				}
-			}
-			return flag;
-		} else {
-			// o2 of a different type, e.g. a literal, thus if the bag is formed
-			// by only one value they are compared each other
-			Boolean flag = false;
-			for (Object obj : ((Set) o1).getBag_values()) {
-				if (o2.equals(obj)) {
-					flag = true;
-					break;
-				}
-			}
-			return flag;
-		}
-	}
-
 }

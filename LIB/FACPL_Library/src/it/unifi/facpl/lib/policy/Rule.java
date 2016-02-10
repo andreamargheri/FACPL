@@ -84,9 +84,9 @@ public abstract class Rule extends FacplPolicy {
 			}
 			return auth;
 
-		default: 
-			//IMPOSSIBLE (present only for Java matter)
-			return new AuthorisationPDP(ExtendedDecision.INDETERMINATE_DP, null); 
+		default:
+			// IMPOSSIBLE (present only for Java matter)
+			return new AuthorisationPDP(ExtendedDecision.INDETERMINATE_DP, null);
 		}
 	}
 }

@@ -15,6 +15,7 @@ package it.unifi.facpl.lib.function.comparison.evaluator;
 import java.util.Date;
 
 import it.unifi.facpl.lib.interfaces.IComparisonEvaluator;
+import it.unifi.facpl.lib.util.Set;
 import it.unifi.facpl.lib.util.exception.UnsupportedTypeException;
 
 /**
@@ -40,8 +41,8 @@ public class StringComparisonEvaluator implements IComparisonEvaluator {
 	public boolean areEquals(Object o1, Object o2) throws Throwable {
 		if (o2 instanceof String) {
 			return ((String) o1).equals(o2);
-		}else if (o2 instanceof Date){
-			return (Util.parseDate((String) o1)).equals((Date)o2);
+		} else if (o2 instanceof Date) {
+			return (Util.parseDate((String) o1)).equals((Date) o2);
 		}
 		throw new UnsupportedTypeException(o2.getClass().getName(), "Equal");
 	}
@@ -50,8 +51,8 @@ public class StringComparisonEvaluator implements IComparisonEvaluator {
 	public boolean areNotEquals(Object o1, Object o2) throws Throwable {
 		if (o2 instanceof String) {
 			return !(((String) o1).equals(o2));
-		}else if (o2 instanceof Date){
-			return !((Util.parseDate((String) o1)).equals((Date)o2));
+		} else if (o2 instanceof Date) {
+			return !((Util.parseDate((String) o1)).equals((Date) o2));
 		}
 		throw new UnsupportedTypeException(o2.getClass().getName(), "Not-Equal");
 	}
@@ -62,31 +63,28 @@ public class StringComparisonEvaluator implements IComparisonEvaluator {
 	}
 
 	@Override
-	public boolean isLessThanOrEqual(Object o1, Object o2)
-			throws UnsupportedTypeException {
+	public boolean isLessThanOrEqual(Object o1, Object o2) throws UnsupportedTypeException {
 		throw new UnsupportedTypeException("String", "Less-Than-Or-Equal");
 	}
 
 	@Override
-	public boolean isGreaterThan(Object o1, Object o2)
-			throws UnsupportedTypeException {
+	public boolean isGreaterThan(Object o1, Object o2) throws UnsupportedTypeException {
 		throw new UnsupportedTypeException("String", "Greater-Than");
 	}
 
 	@Override
-	public boolean isGreateThanOrEqual(Object o1, Object o2)
-			throws UnsupportedTypeException {
+	public boolean isGreateThanOrEqual(Object o1, Object o2) throws UnsupportedTypeException {
 		throw new UnsupportedTypeException("String", "Greater-Than-Or-Equal");
 	}
 
 	@Override
-	public boolean isSubsetOf(Object o1, Object o2) throws Throwable {
-		throw new UnsupportedTypeException("String", "Subset-Of");
-	}
-
-	@Override
-	public boolean isAtLestOneMemberOf(Object o1, Object o2) throws Throwable {
-		throw new UnsupportedTypeException("String", "At-Least-One-Member-Of");
+	public boolean isIn(Object o1, Object o2) throws Throwable {
+		if (o2 instanceof String) {
+			return ((String) o1).equals(o2);
+		} else if (o2 instanceof Set) {
+			return ((Set) o2).contains(o1);
+		}
+		throw new UnsupportedTypeException(o2.getClass().getName(), "In");
 	}
 
 }

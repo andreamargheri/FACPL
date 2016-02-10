@@ -41,8 +41,8 @@ public abstract class PolicySet extends FacplPolicy {
 
 		Logger l = LoggerFactory.getLogger(PolicySet.class);
 		l.debug(idElement + ": Start policySet eval");
-	
-		AuthorisationPDP auth= new AuthorisationPDP();
+
+		AuthorisationPDP auth = new AuthorisationPDP();
 
 		TargetDecision match_target = getTargetDecision(cxtRequest);
 
@@ -162,10 +162,10 @@ public abstract class PolicySet extends FacplPolicy {
 			l.debug(idElement + ": End policy eval - " + auth.toString());
 			return auth;
 
-		default: 
-			//IMPOSSIBLE (present only for Java matter)
-			return new AuthorisationPDP(ExtendedDecision.INDETERMINATE_DP, null); 
-			
+		default:
+			// IMPOSSIBLE (present only for Java matter)
+			return new AuthorisationPDP(ExtendedDecision.INDETERMINATE_DP, null);
+
 		}
 
 	}

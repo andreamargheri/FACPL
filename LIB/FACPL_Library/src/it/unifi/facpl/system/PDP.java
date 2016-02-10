@@ -19,19 +19,18 @@ import it.unifi.facpl.lib.policy.FacplPolicy;
  *
  */
 public class PDP {
-	
+
 	private Class<? extends IEvaluableAlgorithm> algCombining;
 	private List<FacplPolicy> policies;
 	private Boolean extendedIndeterminate;
-	
-	
-	public PDP (Class<? extends IEvaluableAlgorithm> algCombining, 
-			List<FacplPolicy> policies, Boolean extendedIndeterminate){
+
+	public PDP(Class<? extends IEvaluableAlgorithm> algCombining, List<FacplPolicy> policies,
+			Boolean extendedIndeterminate) {
 		this.algCombining = algCombining;
 		this.policies = policies;
 		this.extendedIndeterminate = extendedIndeterminate;
 	}
-	
+
 	/**
 	 * PDP Evaluation
 	 * 

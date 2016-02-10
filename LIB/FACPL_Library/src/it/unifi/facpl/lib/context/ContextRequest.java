@@ -32,26 +32,26 @@ public class ContextRequest {
 		return context;
 	}
 
-	public Object getContextRequestValues(AttributeName struct_name) throws MissingAttributeException {
+	public Object getContextRequestValues(AttributeName attr_name) throws MissingAttributeException {
 		Logger l = LoggerFactory.getLogger(ContextRequest.class);
-		//First we check in the request
-		try{
-			return this.request.getRequestValues(struct_name);
-		}catch(MissingAttributeException e){
-			//Request not defined on the names passed as argument
-			//-> Check in the context
-			if (context != null){
-				Object values =  this.context.getContextValues(struct_name);
-				if (values == null){
-					//throw Exception Missing Attribute if undefined again
-					l.debug("Throw MissingAttributeExcepion for " + struct_name.toString());
+		// First we check in the request
+		try {
+			return this.request.getRequestValues(attr_name);
+		} catch (MissingAttributeException e) {
+			// Request not defined on the names passed as argument
+			// -> Check in the context
+			if (context != null) {
+				Object values = this.context.getContextValues(attr_name);
+				if (values == null) {
+					// throw Exception Missing Attribute if undefined again
+					l.debug("Throw MissingAttributeExcepion for " + attr_name.toString());
 					throw new MissingAttributeException();
-				}else{
+				} else {
 					return values;
 				}
-			}else{
-				//throw Exception Missing Attribute due to absence of context
-				l.debug("Throw MissingAttributeExcepion for " + struct_name.toString());
+			} else {
+				// throw Exception Missing Attribute due to absence of context
+				l.debug("Throw MissingAttributeExcepion for " + attr_name.toString());
 				throw new MissingAttributeException();
 			}
 		}

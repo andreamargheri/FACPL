@@ -3,30 +3,31 @@ package it.unifi.facpl.lib.util;
 import java.util.LinkedList;
 
 public class Set {
-	
+
 	private LinkedList<Object> bag_values;
-	
-	public Set(Object...elements){
+
+	public Set(Object... elements) {
 		this.bag_values = new LinkedList<Object>();
 		for (Object object : elements) {
 			bag_values.add(object);
 		}
 	}
-	
-	public void addValue(Object value){
+
+	public void addValue(Object value) {
 		bag_values.add(value);
 	}
-	
+
 	public LinkedList<Object> getBag_values() {
 		return bag_values;
 	}
-	
-	public Boolean isEmpty(){
-		if (bag_values != null & bag_values.size()> 0)
+
+	public Boolean isEmpty() {
+		if (bag_values != null & bag_values.size() > 0)
 			return false;
 		else
 			return true;
 	}
+
 	@Override
 	public String toString() {
 		return bag_values.toString();
@@ -35,9 +36,9 @@ public class Set {
 	public boolean contains(Object object) {
 		return bag_values.contains(object);
 	}
-	
+
 	public boolean contains(Set bag) {
-		Boolean flag = true; 
+		Boolean flag = true;
 		for (Object el : bag.getBag_values()) {
 			flag = flag && bag_values.contains(el);
 			if (!flag)
@@ -45,5 +46,5 @@ public class Set {
 		}
 		return flag;
 	}
-	
+
 }

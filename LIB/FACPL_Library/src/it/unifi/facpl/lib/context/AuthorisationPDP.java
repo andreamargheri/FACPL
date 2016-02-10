@@ -18,8 +18,6 @@ public class AuthorisationPDP {
 	private ExtendedDecision decision;
 	private LinkedList<FulfilledObligation> obligation;
 
-	// Constructors
-
 	public AuthorisationPDP() {
 		this.obligation = new LinkedList<FulfilledObligation>();
 	}
@@ -60,7 +58,7 @@ public class AuthorisationPDP {
 		case INDETERMINATE_DP:
 			return StandardDecision.INDETERMINATE;
 		}
-		
+
 		return null;
 
 	}
@@ -112,7 +110,7 @@ public class AuthorisationPDP {
 			for (FulfilledObligation obl : obligation) {
 				text.append(obl.toString());
 			}
-		}else{
+		} else {
 			text.append("[]");
 		}
 		return text.toString();

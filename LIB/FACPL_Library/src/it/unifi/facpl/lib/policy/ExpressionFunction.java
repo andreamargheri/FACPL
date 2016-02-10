@@ -22,7 +22,8 @@ public class ExpressionFunction {
 
 	private Class<? extends IExpressionFunction> functionCond;
 
-	// struct_name, literal, ConditionExpressionArgument, list<Object> (bag),...
+	// AtrtibuteName, Literal, ConditionExpressionArgument, list<Object>
+	// (bag),...
 	private LinkedList<Object> arguments;
 
 	public ExpressionFunction() {
@@ -32,7 +33,7 @@ public class ExpressionFunction {
 
 		this.functionCond = function;
 
-		// Arguments=StructName, Value o ExpressionItem
+		// Arguments=AttributeName, Value o ExpressionItem
 		this.arguments = new LinkedList<Object>();
 
 		for (Object object : args) {
@@ -66,14 +67,14 @@ public class ExpressionFunction {
 					// Add value BOTTOM for modeling the absence of attribute
 					values.add(ExpressionValue.BOTTOM);
 				}
-			}else if (obj instanceof ExpressionFunction) {
+			} else if (obj instanceof ExpressionFunction) {
 				// Expression
 				values.add(((ExpressionFunction) obj).evaluateExpression(cxtRequest));
-			}else if (FacplLiteralTypes.isFacplValue(obj)) {
+			} else if (FacplLiteralTypes.isFacplValue(obj)) {
 				// Literals
 				values.add(obj);
-			}else {
-				//Unexpected Type Arguments
+			} else {
+				// Unexpected Type Arguments
 				l.debug("Unexpected Type Argument");
 				return ExpressionValue.ERROR;
 			}
@@ -98,7 +99,7 @@ public class ExpressionFunction {
 				value = function_m.invoke(alg, values);
 
 			} catch (Exception e) {
-
+				l.debug(e.getMessage());
 				l.debug("Expression result is " + ExpressionValue.ERROR);
 				return ExpressionValue.ERROR;
 			}
@@ -111,7 +112,7 @@ public class ExpressionFunction {
 	}
 
 	private boolean isBottom(LinkedList<Object> values) {
-		for(Object s : values){
+		for (Object s : values) {
 			if (s.equals(ExpressionValue.BOTTOM))
 				return true;
 		}

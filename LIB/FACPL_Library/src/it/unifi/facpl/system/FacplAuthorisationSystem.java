@@ -18,9 +18,8 @@ public class FacplAuthorisationSystem {
 
 	private PDP pdp;
 	private PEP pep;
-	
-	
-	public FacplAuthorisationSystem (PDP pdp, PEP pep){
+
+	public FacplAuthorisationSystem(PDP pdp, PEP pep) {
 		this.pdp = pdp;
 		this.pep = pep;
 	}
@@ -38,10 +37,6 @@ public class FacplAuthorisationSystem {
 
 	}
 
-	
-	
-	
-	
 	/**
 	 * PEP Enforcement
 	 * 

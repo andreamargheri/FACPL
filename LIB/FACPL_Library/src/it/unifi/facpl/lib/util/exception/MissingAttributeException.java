@@ -7,6 +7,5 @@ public class MissingAttributeException extends Exception {
 	public MissingAttributeException() {
 		super("Missing Attribute In Context Request");
 	}
-	
-	
+
 }
