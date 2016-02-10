@@ -16,14 +16,14 @@ public class Policy_BasicAndNotTarget extends PolicySet {
 		// Algorithm Combining
 		addCombiningAlg(it.unifi.facpl.lib.algorithm.DenyOverrides.class);
 		// Target
-		addTarget(
-				new ExpressionBooleanTree(ExprBooleanConnector.AND,
-						new ExpressionBooleanTree(ExprBooleanConnector.NOT,
-								new ExpressionBooleanTree(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
-										false, new AttributeName("envirnoment", "time")))),
-						new ExpressionBooleanTree(ExprBooleanConnector.NOT,
-								new ExpressionBooleanTree(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
-										false, new AttributeName("envirnoment", "time"))))));
+		addTarget(new ExpressionBooleanTree(ExprBooleanConnector.AND, new ExpressionBooleanTree(
+				ExprBooleanConnector.NOT,
+				new ExpressionBooleanTree(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
+						false, new AttributeName("envirnoment", "time")))),
+				new ExpressionBooleanTree(ExprBooleanConnector.NOT,
+						new ExpressionBooleanTree(
+								new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class, false,
+										new AttributeName("envirnoment", "time"))))));
 		// Rule
 		addPolicyElement(new rule1());
 		// Obligations

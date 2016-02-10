@@ -16,7 +16,8 @@ public class AbstractEvaluableElement implements IEvaluablePolicy {
 	// private LinkedList<ObligationValue> obls;
 
 	public AbstractEvaluableElement(AuthorisationPDP d) {
-		this.d = new AuthorisationPDP(d.getDecision());;
+		this.d = new AuthorisationPDP(d.getDecision());
+		;
 	}
 
 	public AbstractEvaluableElement(TargetDecision m) {
@@ -25,13 +26,13 @@ public class AbstractEvaluableElement implements IEvaluablePolicy {
 
 	public AbstractEvaluableElement(AuthorisationPDP d, TargetDecision m) {
 		this.m = m;
-		this.d = new AuthorisationPDP(d.getDecision());;
+		this.d = new AuthorisationPDP(d.getDecision());
+		;
 	}
 
-	public AbstractEvaluableElement(AuthorisationPDP d, TargetDecision m,
-			List<FulfilledObligation> obls) {
+	public AbstractEvaluableElement(AuthorisationPDP d, TargetDecision m, List<FulfilledObligation> obls) {
 		this.m = m;
-		//NB attention to the pointer for obligations
+		// NB attention to the pointer for obligations
 		this.d = new AuthorisationPDP(d.getDecision());
 		for (FulfilledObligation o : obls) {
 			if (o.getEvaluatedOn().toString().equals(d.getDecision().toString()))
@@ -40,8 +41,7 @@ public class AbstractEvaluableElement implements IEvaluablePolicy {
 	}
 
 	@Override
-	public AuthorisationPDP evaluate(ContextRequest cxtRequest,
-			Boolean extendedIndeterminate) {
+	public AuthorisationPDP evaluate(ContextRequest cxtRequest, Boolean extendedIndeterminate) {
 		return d;
 	}
 

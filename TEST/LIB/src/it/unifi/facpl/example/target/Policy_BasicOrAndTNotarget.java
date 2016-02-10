@@ -9,43 +9,39 @@ import it.unifi.facpl.lib.policy.Rule;
 import it.unifi.facpl.lib.util.AttributeName;
 
 @SuppressWarnings("all")
-public class Policy_BasicOrAndTNotarget extends PolicySet{
-	
-	public Policy_BasicOrAndTNotarget(){
+public class Policy_BasicOrAndTNotarget extends PolicySet {
+
+	public Policy_BasicOrAndTNotarget() {
 		addId("BasicOrAndTNotarget");
-		//Algorithm Combining
+		// Algorithm Combining
 		addCombiningAlg(it.unifi.facpl.lib.algorithm.DenyOverrides.class);
-		//Target
-		addTarget(new ExpressionBooleanTree(ExprBooleanConnector.AND,new ExpressionBooleanTree(ExprBooleanConnector.NOT,new ExpressionBooleanTree(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class, false
-		,new AttributeName("envirnoment","time") 
-		))
-		)
-		,new ExpressionBooleanTree(ExprBooleanConnector.OR,new ExpressionBooleanTree(ExprBooleanConnector.NOT,new ExpressionBooleanTree(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class, false
-		,new AttributeName("envirnoment","time") 
-		))
-		)
-		,new ExpressionBooleanTree(ExprBooleanConnector.NOT,new ExpressionBooleanTree(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class, false
-		,new AttributeName("envirnoment","time") 
-		))
-		)
-		)
-		)
-		);
-		//Rule
+		// Target
+		addTarget(new ExpressionBooleanTree(ExprBooleanConnector.AND, new ExpressionBooleanTree(
+				ExprBooleanConnector.NOT,
+				new ExpressionBooleanTree(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
+						false, new AttributeName("envirnoment", "time")))),
+				new ExpressionBooleanTree(ExprBooleanConnector.OR,
+						new ExpressionBooleanTree(ExprBooleanConnector.NOT,
+								new ExpressionBooleanTree(
+										new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
+												false, new AttributeName("envirnoment", "time")))),
+						new ExpressionBooleanTree(ExprBooleanConnector.NOT,
+								new ExpressionBooleanTree(
+										new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
+												false, new AttributeName("envirnoment", "time")))))));
+		// Rule
 		addPolicyElement(new rule1());
-		//Obligations
+		// Obligations
 	}
-	
-	private class rule1 extends Rule{
-		
-			rule1 (){
-				addId("rule1");
-				//Effect
-				addEffect(Effect.DENY);
-				
-				
-		}	
+
+	private class rule1 extends Rule {
+
+		rule1() {
+			addId("rule1");
+			// Effect
+			addEffect(Effect.DENY);
+
+		}
 	}
-	
-	
+
 }

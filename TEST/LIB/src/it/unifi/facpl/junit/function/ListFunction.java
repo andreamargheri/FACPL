@@ -8,7 +8,6 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import it.unifi.facpl.lib.function.comparison.AtLeastOneMemberOf;
 import it.unifi.facpl.lib.function.comparison.In;
 import it.unifi.facpl.lib.interfaces.IExpressionFunction;
 import it.unifi.facpl.lib.util.Set;
@@ -56,13 +55,13 @@ public class ListFunction {
 	@Test
 	public void testSubSet_Function_String() throws Throwable {
 		function = new In();
-		
+
 		list.clear();
 		list.add(b_equals);
 		list.add(b_ok);
 		Boolean b = (Boolean) function.evaluateFunction(list);
 		assertEquals(true, b);
-		
+
 		list.clear();
 		list.add(s1);
 		list.add(b_ok);
@@ -82,19 +81,19 @@ public class ListFunction {
 		list.add(s1);
 		b = (Boolean) function.evaluateFunction(list);
 		assertEquals(true, b);
-		
+
 		list.clear();
 		list.add(b_ok);
 		list.add(b_equals);
 		b = (Boolean) function.evaluateFunction(list);
 		assertEquals(false, b);
-		
+
 		list.clear();
 		list.add(b_one);
 		list.add(b_two);
 		b = (Boolean) function.evaluateFunction(list);
 		assertEquals(true, b);
-		
+
 		list.clear();
 		list.add(b_two);
 		list.add(b_one);
@@ -118,59 +117,6 @@ public class ListFunction {
 			list.add(5);
 			list.add(b_ok);
 			function.evaluateFunction(list);
-		} catch (Exception e) {
-			assertEquals("Illegal Type of arguments", e.getMessage());
-		}
-
-	}
-
-	// AtLeastOneMemberOf.java
-	@Test
-	public void testAtLeastOneMemberOf_Function_String() throws Throwable {
-		function = new AtLeastOneMemberOf();
-		list.clear();
-		list.add(s1);
-		list.add(b_ok);
-		Boolean b = (Boolean) function.evaluateFunction(list);
-		assertEquals(true, b);
-		list.clear();
-		list.add(b_equals);
-		list.add(b_ok);
-		b = (Boolean) function.evaluateFunction(list);
-		assertEquals(true, b);
-		list.clear();
-		list.add(b_ok);
-		list.add(b_equals);
-		b = (Boolean) function.evaluateFunction(list);
-		assertEquals(true, b);
-		list.clear();
-		list.add(b_one);
-		list.add(b_two);
-		b = (Boolean) function.evaluateFunction(list);
-		assertEquals(true, b);
-		list.clear();
-		list.add(b_two);
-		list.add(b_one);
-		b = (Boolean) function.evaluateFunction(list);
-		assertEquals(true, b);
-		try {
-			list.clear();
-			list.add(s1);
-			list.add(s1);
-			list.add(b_ok);
-			function.evaluateFunction(list);
-		} catch (Exception e) {
-			assertEquals("Illegal number of arguments", e.getMessage());
-		}
-		try {
-			list.clear();
-			list.add(5);
-			list.add(b_ok);
-			function.evaluateFunction(list);
-			list.add(b_ok);
-			list.add(s1);
-			b = (Boolean) function.evaluateFunction(list);
-			assertEquals(true, b);
 		} catch (Exception e) {
 			assertEquals("Illegal Type of arguments", e.getMessage());
 		}

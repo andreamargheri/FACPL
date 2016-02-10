@@ -77,7 +77,7 @@ public class ComparisonFunction {
 		boolean_False = new LinkedList<Boolean>();
 		boolean_False.add(false);
 		boolean_False.add(false);
-		
+
 		// String
 		string_Eq = new LinkedList<String>();
 		string_Eq.add("time1");
@@ -211,7 +211,7 @@ public class ComparisonFunction {
 			assertEquals("Illegal number of arguments", e.getMessage());
 		}
 	}
-	
+
 	// Not-Equal
 
 	@SuppressWarnings("unchecked")
@@ -293,7 +293,7 @@ public class ComparisonFunction {
 			assertEquals("Illegal number of arguments", e.getMessage());
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testNot_Equal_Function_Date() throws Throwable {
@@ -387,7 +387,7 @@ public class ComparisonFunction {
 			assertEquals("Illegal number of arguments", e.getMessage());
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testGreater_Function_Date() throws Throwable {
@@ -482,7 +482,7 @@ public class ComparisonFunction {
 			assertEquals("Illegal number of arguments", e.getMessage());
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testGreaterEqual_Function_Date() throws Throwable {
@@ -596,7 +596,7 @@ public class ComparisonFunction {
 			assertEquals("Illegal number of arguments", e.getMessage());
 		}
 	}
-	
+
 	// LessThanOrEqual.java
 
 	@SuppressWarnings("unchecked")
@@ -670,7 +670,7 @@ public class ComparisonFunction {
 			assertEquals("Illegal number of arguments", e.getMessage());
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testLessEqual_Function_Date() throws Throwable {

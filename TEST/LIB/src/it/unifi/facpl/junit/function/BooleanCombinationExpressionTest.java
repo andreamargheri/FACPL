@@ -87,7 +87,7 @@ public class BooleanCombinationExpressionTest extends ExpressionBooleanTree {
 		assertEquals(v_true, m);
 		m = this.combineValues(ExprBooleanConnector.OR, getArrayList(bot, v_true));
 		assertEquals(v_true, m);
-		//err
+		// err
 		m = this.combineValues(ExprBooleanConnector.OR, getArrayList(v_false, err));
 		assertEquals(err, m);
 		m = this.combineValues(ExprBooleanConnector.OR, getArrayList(err, v_false));

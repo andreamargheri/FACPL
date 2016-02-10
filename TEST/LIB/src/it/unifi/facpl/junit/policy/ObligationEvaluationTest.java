@@ -23,16 +23,12 @@ public class ObligationEvaluationTest {
 	public void setUp() {
 		req1 = ContextRequest_NoContext.getContextReq();
 
-		o1 = new Obligation("mailTo", Effect.PERMIT, ObligationType.M,
-				new AttributeName("subject", "permission"));
-		o2 = new Obligation("mailTo", Effect.DENY, ObligationType.M,
-				new AttributeName("subject", "permission"), new AttributeName(
-						"subject", "num"));
-		o3 = new Obligation("mailTo", Effect.DENY, ObligationType.M,
-				new AttributeName("subject", "permission"), new AttributeName(
-						"subject", "missing"));
-		o4 = new Obligation("mailTo", Effect.DENY, ObligationType.O,
+		o1 = new Obligation("mailTo", Effect.PERMIT, ObligationType.M, new AttributeName("subject", "permission"));
+		o2 = new Obligation("mailTo", Effect.DENY, ObligationType.M, new AttributeName("subject", "permission"),
+				new AttributeName("subject", "num"));
+		o3 = new Obligation("mailTo", Effect.DENY, ObligationType.M, new AttributeName("subject", "permission"),
 				new AttributeName("subject", "missing"));
+		o4 = new Obligation("mailTo", Effect.DENY, ObligationType.O, new AttributeName("subject", "missing"));
 
 	}
 
@@ -61,13 +57,13 @@ public class ObligationEvaluationTest {
 	}
 
 	@Test
-	public void testAdvice() throws Throwable{
+	public void testAdvice() throws Throwable {
 		try {
 			o4.getObligationValue(req1);
-//			assertEquals("PR01", value3.getArguments().getFirst());
-//			assertEquals(10, value3.getArguments().getLast());
-//			assertEquals(value3.getEvaluatedOn(), Effect.DENY);
-//			assertEquals(value3.getType(), TypeObl.M);
+			// assertEquals("PR01", value3.getArguments().getFirst());
+			// assertEquals(10, value3.getArguments().getLast());
+			// assertEquals(value3.getEvaluatedOn(), Effect.DENY);
+			// assertEquals(value3.getType(), TypeObl.M);
 		} catch (Exception e) {
 			assertEquals(e.getMessage(), "Obligation Fulfillment Failed");
 		}

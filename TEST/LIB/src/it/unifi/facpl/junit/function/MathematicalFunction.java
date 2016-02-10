@@ -24,7 +24,6 @@ public class MathematicalFunction {
 	private List doubles_Eq, doubles_Diff, doubles_Times, doubles_One;
 	private List boolean_Eq, boolean_Diff, boolean_Times, boolean_One;
 
-
 	// doubles, booleans;
 
 	@SuppressWarnings("unchecked")
@@ -71,7 +70,7 @@ public class MathematicalFunction {
 		boolean_Times.add(false);
 		boolean_One = new LinkedList<Boolean>();
 		boolean_One.add(true);
-		
+
 	}
 
 	// Add.java
@@ -153,8 +152,7 @@ public class MathematicalFunction {
 		assertEquals(new Double(0.0), b);
 		b = (Double) function.evaluateFunction(doubles_Diff);
 		// [4.2,5.5]
-		assertEquals(new Double((Double) doubles_Diff.get(0)
-				- (Double) doubles_Diff.get(1)), b);
+		assertEquals(new Double((Double) doubles_Diff.get(0) - (Double) doubles_Diff.get(1)), b);
 		try {
 			function.evaluateFunction(doubles_Times);
 		} catch (Exception e) {
@@ -222,12 +220,10 @@ public class MathematicalFunction {
 	public void testMultiply_Function_Double() throws Throwable {
 		function = new Multiply();
 		Double b = (Double) function.evaluateFunction(doubles_Eq);
-		assertEquals(new Double((Double) doubles_Eq.get(0)
-				* (Double) doubles_Eq.get(1)), b);
+		assertEquals(new Double((Double) doubles_Eq.get(0) * (Double) doubles_Eq.get(1)), b);
 		b = (Double) function.evaluateFunction(doubles_Diff);
 		// [4.2,5.5]
-		assertEquals(new Double((Double) doubles_Diff.get(0)
-				* (Double) doubles_Diff.get(1)), b);
+		assertEquals(new Double((Double) doubles_Diff.get(0) * (Double) doubles_Diff.get(1)), b);
 		try {
 			function.evaluateFunction(doubles_Times);
 		} catch (Exception e) {
@@ -295,12 +291,10 @@ public class MathematicalFunction {
 	public void testDivide_Function_Double() throws Throwable {
 		function = new Divide();
 		Double b = (Double) function.evaluateFunction(doubles_Eq);
-		assertEquals(new Double((Double) doubles_Eq.get(0)
-				/ (Double) doubles_Eq.get(1)), b);
+		assertEquals(new Double((Double) doubles_Eq.get(0) / (Double) doubles_Eq.get(1)), b);
 		b = (Double) function.evaluateFunction(doubles_Diff);
 		// [4.2,5.5]
-		assertEquals(new Double((Double) doubles_Diff.get(0)
-				/ (Double) doubles_Diff.get(1)), b);
+		assertEquals(new Double((Double) doubles_Diff.get(0) / (Double) doubles_Diff.get(1)), b);
 		try {
 			function.evaluateFunction(doubles_Times);
 		} catch (Exception e) {

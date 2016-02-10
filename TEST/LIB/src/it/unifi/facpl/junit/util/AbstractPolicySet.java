@@ -20,27 +20,30 @@ public class AbstractPolicySet extends PolicySet {
 
 	/**
 	 * 
-	 * @param d Decision resulted by the internal element
-	 * @param m Target applicability
-	 * @param fullfilmentObl Fulfillment error (TRUE= Error)
+	 * @param d
+	 *            Decision resulted by the internal element
+	 * @param m
+	 *            Target applicability
+	 * @param fullfilmentObl
+	 *            Fulfillment error (TRUE= Error)
 	 */
 	public AbstractPolicySet(AuthorisationPDP d, TargetDecision m, Boolean fullfilmentObl) {
 		this.m = m;
-		
+
 		this.err_obl = fullfilmentObl;
-		
+
 		addCombiningAlg(permitOver);
 
 		if (d.getDecision().equals(ExtendedDecision.PERMIT)) {
-			addPolicyElement(new AbstractRule(Effect.PERMIT, TargetDecision.TRUE,false));
+			addPolicyElement(new AbstractRule(Effect.PERMIT, TargetDecision.TRUE, false));
 		} else if (d.getDecision().equals(ExtendedDecision.DENY)) {
-			addPolicyElement(new AbstractRule(Effect.DENY, TargetDecision.TRUE,false));
+			addPolicyElement(new AbstractRule(Effect.DENY, TargetDecision.TRUE, false));
 		} else if (d.getDecision().equals(ExtendedDecision.NOT_APPLICABLE)) {
-			addPolicyElement(new AbstractRule(Effect.DENY, TargetDecision.FALSE,false));
+			addPolicyElement(new AbstractRule(Effect.DENY, TargetDecision.FALSE, false));
 		} else if (d.getDecision().equals(ExtendedDecision.INDETERMINATE_D)) {
-			addPolicyElement(new AbstractRule(Effect.DENY, TargetDecision.INDETERMINATE,false));
+			addPolicyElement(new AbstractRule(Effect.DENY, TargetDecision.INDETERMINATE, false));
 		} else if (d.getDecision().equals(ExtendedDecision.INDETERMINATE_P)) {
-			addPolicyElement(new AbstractRule(Effect.PERMIT, TargetDecision.INDETERMINATE,false));
+			addPolicyElement(new AbstractRule(Effect.PERMIT, TargetDecision.INDETERMINATE, false));
 		}
 	}
 
@@ -51,15 +54,14 @@ public class AbstractPolicySet extends PolicySet {
 		}
 		return this.m;
 	}
-	
-	
+
 	@Override
 	protected LinkedList<FulfilledObligation> evaluateObl(Effect effect, ContextRequest cxtRequest)
 			throws FulfillmentFailed {
-	
-		if (err_obl){
+
+		if (err_obl) {
 			throw new FulfillmentFailed();
-		}else{
+		} else {
 			return new LinkedList<FulfilledObligation>();
 		}
 	}
