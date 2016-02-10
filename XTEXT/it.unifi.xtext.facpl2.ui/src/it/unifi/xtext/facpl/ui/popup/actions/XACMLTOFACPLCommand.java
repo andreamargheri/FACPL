@@ -3,6 +3,8 @@ package it.unifi.xtext.facpl.ui.popup.actions;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -38,7 +40,7 @@ public class XACMLTOFACPLCommand extends AbstractHandler implements IHandler {
 
 	@Inject
 	private Provider<EclipseResourceFileSystemAccess2> fileAccessProvider;
-
+	
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 
 		// IEditorPart activeEditor = HandlerUtil.getActiveEditor(event);

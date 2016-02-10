@@ -203,7 +203,7 @@ class Facpl2Generator implements IGenerator {
 				result.append("---------------------------------------------------\n");
 			}
 			System.out.println(result.toString());
-			ShowResult.showResult(result);
+			//ShowResult.showResult(result);
 		}	
 		
 		«FOR p : main.paf.pdp.polSet»

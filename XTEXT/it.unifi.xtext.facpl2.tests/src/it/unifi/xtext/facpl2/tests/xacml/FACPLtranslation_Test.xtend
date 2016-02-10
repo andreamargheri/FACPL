@@ -6,7 +6,6 @@ import it.unifi.xtext.facpl.Facpl2InjectorProvider
 import it.unifi.xtext.facpl.facpl2.Facpl
 import java.io.File
 import java.io.PrintWriter
-import org.eclipse.xtext.junit4.AbstractXtextTests
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.util.ParseHelper
@@ -16,7 +15,7 @@ import org.junit.runner.RunWith
 
 @InjectWith(typeof(Facpl2InjectorProvider))
 @RunWith(typeof(XtextRunner))
-class FACPLtranslation_Test extends AbstractXtextTests {
+class FACPLtranslation_Test  {
 
 	@Inject extension ParseHelper<Facpl>
 
@@ -49,6 +48,25 @@ class FACPLtranslation_Test extends AbstractXtextTests {
 
 	}
 
+	@Test
+	def void checkTarget() {
+
+		for (var i = 1; i <= 6; i ++) {
+			var file = "./xacml_src/targets/Target" + i + ".xml"
+			var code = ParserXACMLEntryPoint.genFACPL(new File(file))
+			var model = code.parse
+
+			assertNoErrors(model)
+
+			val PrintWriter writer = new PrintWriter("facpl_gen/Target"+i+".fpl", "UTF-8");
+			writer.println(code);
+			writer.close();
+
+		}
+
+	}
+	
+	
 	@Test
 	def void checkPSet() {
 

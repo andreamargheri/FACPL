@@ -27,6 +27,8 @@ import it.unifi.xtext.facpl.ui.popup.actions.propertyDialog.PropertyNameDialog;
  */
 public class SecurityPropertyWizard {
 
+	public static final String ex_mess = "No element selected!";
+	
 	public Object createSecurityProperty(Shell activeShell, EclipseResourceFileSystemAccess2 fsa, Facpl e,
 			SMT_LIBGenerator generator) {
 
@@ -102,7 +104,7 @@ public class SecurityPropertyWizard {
 				type_Request_dialog.setLabelProvider(new LabelProvider());
 
 			} catch (Exception ex) {
-				MessageDialog.openError(activeShell, "Security Property", ex.getMessage());
+				MessageDialog.openError(activeShell, "Security Property", ex_mess);
 				return false;
 			}
 			type_Request_dialog.setTitle("Which request...");
@@ -124,7 +126,7 @@ public class SecurityPropertyWizard {
 				type_Policy_dialog.setLabelProvider(new LabelProvider());
 
 			} catch (Exception ex) {
-				MessageDialog.openError(activeShell, "Security Property", ex.getMessage());
+				MessageDialog.openError(activeShell, "Security Property", ex_mess);
 				return false;
 			}
 			type_Policy_dialog.setTitle("Which policy...");

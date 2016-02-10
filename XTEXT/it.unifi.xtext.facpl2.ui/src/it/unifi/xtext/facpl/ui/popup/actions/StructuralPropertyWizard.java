@@ -78,7 +78,7 @@ public class StructuralPropertyWizard {
 					type_Policy_dialog.setLabelProvider(new LabelProvider());
 
 				} catch (Exception ex) {
-					MessageDialog.openError(activeShell, "Create Structural Property", ex.getMessage());
+					MessageDialog.openError(activeShell, "Create Structural Property", SecurityPropertyWizard.ex_mess);
 					return false;
 				}
 				type_Policy_dialog.setTitle("Which policy...");
@@ -112,7 +112,7 @@ public class StructuralPropertyWizard {
 					type_Policy_dialog_1.setLabelProvider(new LabelProvider());
 
 				} catch (Exception ex) {
-					MessageDialog.openError(activeShell, "Create Structural Property", ex.getMessage());
+					MessageDialog.openError(activeShell, "Create Structural Property", SecurityPropertyWizard.ex_mess);
 					return false;
 				}
 				type_Policy_dialog_1.setTitle("Which policy...");
@@ -139,7 +139,7 @@ public class StructuralPropertyWizard {
 					type_Policy_dialog_2.setLabelProvider(new LabelProvider());
 
 				} catch (Exception ex) {
-					MessageDialog.openError(activeShell, "Create Structural Property", ex.getMessage());
+					MessageDialog.openError(activeShell, "Create Structural Property", SecurityPropertyWizard.ex_mess);
 					return false;
 				}
 				type_Policy_dialog_2.setTitle("Which policy...");
