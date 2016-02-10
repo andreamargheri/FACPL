@@ -126,6 +126,22 @@ class Facpl2Generator implements IGenerator {
 		}
 	}
 	
+	/**
+	 * Create an specific context stub given as input
+	 */
+	def void doGenerate_ExternalContext(Resource resource, IFileSystemAccess fsa, String external_contextStub){
+		
+		this.doGenerate(resource, fsa)
+		
+		/* Compile the external context stub */
+		for(e: resource.contents.filter(typeof(Facpl))) {
+				/* Compiling Requests */
+			if (e.getRequests != null){
+				fsa.generateFile(packageFolder + "ContextStub_Default.java",external_contextStub)
+			}
+		}
+	}
+	
 	//----------------------------------------------------
 	//PDP
 	//----------------------------------------------------
