@@ -15,12 +15,16 @@
  PolicySet NamePolicySetTwo { deny-unless-permit 
 	 target: equal("value",category/id) 
  		policies: 
- 	 	Rule ruleName (permit
- 	 		//STATUS CHECK
+ 	 	Rule ruleName (permit target:
+ 	 		less-than("2", status/accessNumber)
  	 	) 
- 	obl:  [permit M log(category/id, "Obligation")]
+ 	obl:  
+ 		[permit M log(category/id, "Obligation")]
+ 		[permit M add(status/accessNumber, 1)]
+ 	
 } 
  
  Request:{NameRequest 
-	 (category_attribute/id_attribute, "")} 
+	 (category_attribute/id_attribute, "")
+	 } 
 

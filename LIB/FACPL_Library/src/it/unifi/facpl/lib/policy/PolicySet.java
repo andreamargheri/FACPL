@@ -21,6 +21,7 @@ public abstract class PolicySet extends FacplPolicy {
 	private LinkedList<FacplPolicy> polElements;
 
 	private Class<? extends IEvaluableAlgorithm> algCombining;
+	
 
 	protected void addCombiningAlg(Class<? extends IEvaluableAlgorithm> alg) {
 		Logger l = LoggerFactory.getLogger(PolicySet.class);

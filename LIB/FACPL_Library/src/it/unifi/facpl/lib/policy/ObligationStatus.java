@@ -4,6 +4,7 @@ import it.unifi.facpl.lib.context.AbstractFulfilledObligation;
 import it.unifi.facpl.lib.context.FulfilledObligationStatus;
 import it.unifi.facpl.lib.enums.Effect;
 import it.unifi.facpl.lib.enums.ObligationType;
+import it.unifi.facpl.lib.util.StatusAttributeName;
 import it.unifi.facpl.system.status.StatusAttribute;
 import it.unifi.facpl.system.status.function.arithmetic.evaluator.IExpressionFunctionStatus;
 
@@ -24,7 +25,7 @@ public class ObligationStatus extends AbstractObligation {
 	
 	@Override
 	protected AbstractFulfilledObligation createObligation() {
-		AbstractFulfilledObligation obl = new FulfilledObligationStatus(this.evaluatedOn,this.typeObl,(IExpressionFunctionStatus)this.pepAction); 
+		AbstractFulfilledObligation obl = new FulfilledObligationStatus(this.evaluatedOn,this.typeObl, (IExpressionFunctionStatus) this.pepAction); 
 		if(!argsStatus.isEmpty()){
 			obl.addArgStatus(argsStatus);
 		}

@@ -14,10 +14,6 @@ public abstract class MathOperationStatus  implements IExpressionFunctionStatus 
 	}
 
 
-	public void evaluateFunction() throws Throwable {
-		
-	}
-
 	public void evaluateFunction(List<Object> args) throws Throwable {
 
 		if (args.size() == 2) { //secondo controllo quasi inutile
