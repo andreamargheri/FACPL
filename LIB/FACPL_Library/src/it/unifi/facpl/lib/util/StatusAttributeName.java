@@ -16,7 +16,6 @@ public class StatusAttributeName extends AttributeName {
 	public StatusAttributeName(String category, String id) {
 		super(category, id);
 	}
-
 	
 	public FacplStatusType getType() {
 		return type;

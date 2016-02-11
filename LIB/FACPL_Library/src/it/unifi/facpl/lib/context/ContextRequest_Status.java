@@ -21,7 +21,6 @@ public class ContextRequest_Status {
 
 	public ContextRequest_Status(Request req, IContextStub_Status context) {
 		this.request = req;
-
 		this.context = context;
 	}
 
@@ -48,14 +47,12 @@ public class ContextRequest_Status {
 			
 			
 			if (values == null){
-				//throw Exception Missing Attribute if undefined again
 				l.debug("Throw MissingAttributeExcepion for " + name.toString());
 				throw new MissingAttributeException();
 			}else{
 				return values;
 			}
 		}else{
-			//throw Exception Missing Attribute due to absence of context
 			l.debug("Throw MissingAttributeExcepion for " + name.toString());
 			throw new MissingAttributeException();
 		}

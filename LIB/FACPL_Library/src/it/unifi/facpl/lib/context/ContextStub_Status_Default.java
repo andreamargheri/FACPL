@@ -10,11 +10,13 @@ import it.unifi.facpl.system.status.FacplStatus;
 
 @SuppressWarnings("all")
 public class ContextStub_Status_Default implements IContextStub_Status{
-	
+	/* 
+	 * TODO: rendere lo stato unico ed non modificabile
+	 */
 	private static ContextStub_Status_Default instance; 
 
 	private static FacplStatus status; 
-	
+
 	public static ContextStub_Status_Default getInstance(){
 		if (instance == null){
 			instance = new ContextStub_Status_Default();
@@ -25,13 +27,11 @@ public class ContextStub_Status_Default implements IContextStub_Status{
 	private ContextStub_Status_Default(){
 	
 	}
-
 	
 	public static void setStatus(FacplStatus status) {
 		ContextStub_Status_Default.status = status;
 	}
-	
-	
+
 	@Override
 	public Object getContextValues(AttributeName attribute) {
 		//Context Time Value
@@ -48,26 +48,11 @@ public class ContextStub_Status_Default implements IContextStub_Status{
 		if (attribute.getCategory().equals("environment") && attribute.getIDAttribute().equals("false")){
 			return false;
 		}
-		
-		//TO Implement your own context here. For example
-		/*
-		*if (attribute.getCategory().equals("foo") && attribute.getIDAttribute().equals("id")){
-		*	return "foo";
-		*}else{
-		*	return null;
-		*}
-		*/
 		return null;
 	}
 
-	
 	@Override
 	public Object getContextStatusValues(StatusAttributeName attribute) throws MissingAttributeException {
-		
-		/*
-		 *  TODO Auto-generated method stub
-		 */
-		
 		return status.getValue(attribute);
 	}
 	

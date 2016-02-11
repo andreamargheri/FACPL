@@ -7,7 +7,10 @@ import it.unifi.facpl.lib.util.AttributeName;
 
 @SuppressWarnings("all")
 public class ContextStub_Default implements IContextStub{
-	
+	/*
+	 * contesto stateless
+	 * singleton
+	 */
 	private static ContextStub_Default instance; 
 
 	public static ContextStub_Default getInstance(){
@@ -20,7 +23,13 @@ public class ContextStub_Default implements IContextStub{
 	private ContextStub_Default(){
 	
 	}
-
+	/*
+	 * restituisce le variabili d'ambiente come:
+	 * -Data
+	 * -Tempo
+	 * -True
+	 * -False
+	 */ 
 	@Override
 	public Object getContextValues(AttributeName attribute) {
 		//Context Time Value

@@ -3,6 +3,8 @@
  */
 package it.unifi.facpl.system.status;
 
+import java.rmi.server.RemoteObject;
+
 import it.unifi.facpl.lib.enums.FacplStatusType;
 
 /**
@@ -12,7 +14,7 @@ import it.unifi.facpl.lib.enums.FacplStatusType;
 public class StatusAttribute {
 
 	private String id;
-	private FacplStatusType type; //meglio cosi' o sottoclassi per ogni tipo? 
+	private FacplStatusType type; 
 	private String value;
 
 	public StatusAttribute(String id, FacplStatusType type) {
@@ -57,6 +59,19 @@ public class StatusAttribute {
 	 */
 	public void setType(FacplStatusType type) {
 		this.type = type;
+	}
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof StatusAttribute) {
+			StatusAttribute o = (StatusAttribute)obj;
+			return this.getId()==o.getId() && this.getType() == o.getType()
+					&& o.getValue() == this.getValue();
+		}
+		return false;
 	}
 	
 	

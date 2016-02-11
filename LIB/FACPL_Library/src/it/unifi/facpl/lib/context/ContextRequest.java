@@ -8,10 +8,10 @@ import it.unifi.facpl.lib.util.AttributeName;
 import it.unifi.facpl.lib.util.exception.MissingAttributeException;
 
 public class ContextRequest {
-
-	private IContextStub context;
-	private Request request;
-
+	
+	private IContextStub context; 
+	private Request request; 
+ 
 	public ContextRequest(Request req) {
 		this.request = req;
 
