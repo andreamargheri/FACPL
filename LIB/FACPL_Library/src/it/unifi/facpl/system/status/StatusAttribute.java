@@ -3,8 +3,6 @@
  */
 package it.unifi.facpl.system.status;
 
-import java.rmi.server.RemoteObject;
-
 import it.unifi.facpl.lib.enums.FacplStatusType;
 
 /**
@@ -20,7 +18,18 @@ public class StatusAttribute {
 	public StatusAttribute(String id, FacplStatusType type) {
 		this.id = id;
 		this.type = type;
-		value = "";
+		/*
+		 * default values
+		 */
+		if (type == (FacplStatusType.INT) || type == (FacplStatusType.DOUBLE)) {
+			value = "0";
+		}
+		else if (type == FacplStatusType.BOOLEAN) {
+			value = "false";
+		}
+		else {
+			value = "";
+		}
 	}
 	
 	public StatusAttribute(String id, FacplStatusType type, String value) {
@@ -68,8 +77,7 @@ public class StatusAttribute {
 	public boolean equals(Object obj) {
 		if (obj instanceof StatusAttribute) {
 			StatusAttribute o = (StatusAttribute)obj;
-			return this.getId()==o.getId() && this.getType() == o.getType()
-					&& o.getValue() == this.getValue();
+			return this.getId()==o.getId() && this.getType() == o.getType();
 		}
 		return false;
 	}

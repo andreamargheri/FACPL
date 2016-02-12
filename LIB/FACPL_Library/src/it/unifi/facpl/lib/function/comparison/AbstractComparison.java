@@ -6,6 +6,8 @@ import it.unifi.facpl.lib.enums.FacplStatusType;
 import it.unifi.facpl.lib.function.comparison.evaluator.ComparisonEvaluatorFactory;
 import it.unifi.facpl.lib.interfaces.IComparisonEvaluator;
 import it.unifi.facpl.lib.interfaces.IComparisonFunction;
+import it.unifi.facpl.lib.util.exception.MissingAttributeException;
+import it.unifi.facpl.system.status.FacplStatus;
 import it.unifi.facpl.system.status.StatusAttribute;
 
 public abstract class AbstractComparison  implements IComparisonFunction {
@@ -33,21 +35,23 @@ public abstract class AbstractComparison  implements IComparisonFunction {
 		}
 	}
 	/*
-	 * effettua il controllo sul tipo dell'attributo dello status attribute
+	 * effettua per prima cosa il retrieve dallo status dell'attributo corretto poi
+	 * fa il controllo sul tipo dell'attributo dello status attribute
 	 * e fa il cast al tipo corretto
 	 */
-	private Object convertType(StatusAttribute s) {
-		if (s.getType() == FacplStatusType.BOOLEAN) {
-			return Boolean.getBoolean(s.getValue());
+	private Object convertType(StatusAttribute sa) {
+		//StatusAttribute sa = FacplStatus.getInstance().getStatusAttribute(s);
+		if (sa.getType() == FacplStatusType.BOOLEAN) {
+			return Boolean.getBoolean(sa.getValue());
 		}
-		else if (s.getType() == FacplStatusType.DOUBLE) {
-			return Double.valueOf(s.getValue());
+		else if (sa.getType() == FacplStatusType.DOUBLE) {
+			return Double.valueOf(sa.getValue());
 		}
-		else if (s.getType() == FacplStatusType.INT) {
-			return Integer.valueOf(s.getValue());
+		else if (sa.getType() == FacplStatusType.INT) {
+			return Integer.valueOf(sa.getValue());
 		}
-		else if (s.getType() == FacplStatusType.STRING) {
-			return s.getValue();
+		else if (sa.getType() == FacplStatusType.STRING) {
+			return sa.getValue();
 		}
 		return null;
 	}

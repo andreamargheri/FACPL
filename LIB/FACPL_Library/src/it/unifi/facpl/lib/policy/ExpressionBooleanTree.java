@@ -99,7 +99,6 @@ public class ExpressionBooleanTree {
 			return toExpressionValue(combineValues((ExprBooleanConnector) root, values));
 
 		} else if (root instanceof ExpressionFunction) {
-
 			// Root corresponds to a leaf -> return the function evaluation
 			return toExpressionValue(((ExpressionFunction) root).evaluateExpression(cxtRequest));
 
@@ -108,6 +107,7 @@ public class ExpressionBooleanTree {
 			return toExpressionValue(root);
 
 		} else if (root instanceof AttributeName) {
+
 			// Attribute Name
 			try {
 				return toExpressionValue(cxtRequest.getContextRequestValues((AttributeName) root));

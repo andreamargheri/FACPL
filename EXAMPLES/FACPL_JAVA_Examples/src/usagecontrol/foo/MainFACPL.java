@@ -1,14 +1,20 @@
 package usagecontrol.foo;
 
-import it.unifi.facpl.lib.policy.*;
-import it.unifi.facpl.system.*;
-import it.unifi.facpl.lib.context.*;
-import it.unifi.facpl.lib.interfaces.*;
-import it.unifi.facpl.lib.enums.*;
-import it.unifi.facpl.lib.util.*;
-import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
+
+import it.unifi.facpl.lib.context.AuthorisationPDP;
+import it.unifi.facpl.lib.context.AuthorisationPEP;
+import it.unifi.facpl.lib.context.ContextRequest;
+import it.unifi.facpl.lib.enums.EnforcementAlgorithm;
+import it.unifi.facpl.lib.enums.FacplStatusType;
+import it.unifi.facpl.lib.policy.FacplPolicy;
+import it.unifi.facpl.lib.util.ShowResult;
+import it.unifi.facpl.lib.util.exception.MissingAttributeException;
+import it.unifi.facpl.system.PDP;
+import it.unifi.facpl.system.PEP;
+import it.unifi.facpl.system.status.FacplStatus;
+import it.unifi.facpl.system.status.StatusAttribute;
 
 @SuppressWarnings("all")
 public class MainFACPL{
@@ -16,10 +22,19 @@ public class MainFACPL{
 	private PDP pdp;
 	private PEP pep;
 		
-	public MainFACPL() {
+	public MainFACPL() throws MissingAttributeException {
 		// defined list of policies included in the PDP
 		LinkedList<FacplPolicy> policies = new LinkedList<FacplPolicy>();
-		policies.add(new PolicySet_NamePolicySetTwo()); 
+		/*
+		 * parte riguardante lo stato -> nuova
+		 */
+		ArrayList<StatusAttribute> attributeList = new ArrayList<StatusAttribute>();
+		attributeList.add(new StatusAttribute("accessNumber", FacplStatusType.INT, "60"));
+		FacplStatus status = new FacplStatus(attributeList, "stato");
+		policies.add(new PolicySet_NamePolicySetTwo(status)); 
+		/*
+		 * fine parte riguardante lo stato 
+		 */
 		this.pdp = new PDP(it.unifi.facpl.lib.algorithm.PermitUnlessDenyGreedy.class, policies, false);
 		
 		this.pep = new PEP(EnforcementAlgorithm.DENY_BIASED);
@@ -30,7 +45,7 @@ public class MainFACPL{
 	/*
 	*ENTRY POINT FOR EVALUATION
 	*/
-	public static void main(String[] args){
+	public static void main(String[] args) throws MissingAttributeException{
 		//Initialise Authorisation System
 		MainFACPL system = new MainFACPL();
 		

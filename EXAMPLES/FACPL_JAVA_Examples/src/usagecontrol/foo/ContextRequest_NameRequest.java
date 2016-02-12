@@ -1,11 +1,15 @@
 package usagecontrol.foo;
 
 import java.util.HashMap;
-import it.unifi.facpl.lib.context.*;
-import it.unifi.facpl.lib.util.*;
+
+import it.unifi.facpl.lib.context.ContextRequest;
+import it.unifi.facpl.lib.context.ContextStub_Default;
+import it.unifi.facpl.lib.context.Request;
+import it.unifi.facpl.system.status.FacplStatus;
 
 @SuppressWarnings("all")
 public class ContextRequest_NameRequest {
+
 
 	private static ContextRequest CxtReq;
 
@@ -17,10 +21,28 @@ public class ContextRequest_NameRequest {
 		// create map for each category
 		HashMap<String, Object> req_category_attribute = new HashMap<String, Object>();
 		// add attribute's values
-		req_category_attribute.put("id_attribute", "");
+		req_category_attribute.put("id", "");
 		// add attributes to request
 		Request req = new Request("NameRequest");
-		req.addAttribute("category_attribute", req_category_attribute);
+		req.addAttribute("category", req_category_attribute);
+		// context stub: default-one
+		CxtReq = new ContextRequest(req, ContextStub_Default.getInstance());
+		return CxtReq;
+	}
+	
+	
+	public static ContextRequest getContextReq(FacplStatus status) {
+		if (CxtReq != null) {
+			return CxtReq;
+		}
+		//in caso contrario viene creata la richiesta
+		// create map for each category
+		HashMap<String, Object> req_category_attribute = new HashMap<String, Object>();
+		// add attribute's values
+		req_category_attribute.put("id", "");
+		// add attributes to request
+		Request req = new Request("NameRequest");
+		req.addAttribute("category", req_category_attribute);
 		// context stub: default-one
 		CxtReq = new ContextRequest(req, ContextStub_Default.getInstance());
 		return CxtReq;

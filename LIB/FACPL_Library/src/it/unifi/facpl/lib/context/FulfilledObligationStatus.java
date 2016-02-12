@@ -3,8 +3,13 @@
  */
 package it.unifi.facpl.lib.context;
 
+import java.awt.List;
+import java.util.LinkedList;
+
 import it.unifi.facpl.lib.enums.Effect;
 import it.unifi.facpl.lib.enums.ObligationType;
+import it.unifi.facpl.system.status.FacplStatus;
+import it.unifi.facpl.system.status.StatusAttribute;
 import it.unifi.facpl.system.status.function.arithmetic.evaluator.IExpressionFunctionStatus;
 
 /**
@@ -29,6 +34,11 @@ public class FulfilledObligationStatus extends AbstractFulfilledObligation {
 
 	@Override
 	public AbstractFulfilledObligation evaluateObl() throws Throwable {
+//		StatusAttribute s = FacplStatus.getInstance().
+//				getStatusAttribute((StatusAttribute)this.getArgsStatus().get(0));
+//		LinkedList<Object> args = this.getArgsStatus();
+//		args.set(0, s);
+//		this.pepFunction.evaluateFunction(args);
 		this.pepFunction.evaluateFunction(this.getArgsStatus()); 
 		return this;
 	}
