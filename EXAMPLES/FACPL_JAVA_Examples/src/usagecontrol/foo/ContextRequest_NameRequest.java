@@ -21,7 +21,7 @@ public class ContextRequest_NameRequest {
 		// create map for each category
 		HashMap<String, Object> req_category_attribute = new HashMap<String, Object>();
 		// add attribute's values
-		req_category_attribute.put("id", "4");
+		req_category_attribute.put("id", "3");
 		// add attributes to request
 		Request req = new Request("NameRequest");
 		req.addAttribute("category", req_category_attribute);

@@ -72,6 +72,7 @@ public class PDP {
 			return dr;
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			l.debug("PDP catch unexpected exception");
 			l.debug(e.getMessage().toString());
 			return null;
