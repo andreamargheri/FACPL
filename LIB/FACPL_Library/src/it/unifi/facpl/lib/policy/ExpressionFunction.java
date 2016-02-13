@@ -93,12 +93,11 @@ public class ExpressionFunction {
 			Method function_m;
 			try {
 				function_m = functionCond.getDeclaredMethod("evaluateFunction", params);
-
 				Object alg = functionCond.newInstance();
 				value = function_m.invoke(alg, values);
 
 			} catch (Exception e) {
-
+				e.printStackTrace();
 				l.debug("Expression result is " + ExpressionValue.ERROR);
 				return ExpressionValue.ERROR;
 			}

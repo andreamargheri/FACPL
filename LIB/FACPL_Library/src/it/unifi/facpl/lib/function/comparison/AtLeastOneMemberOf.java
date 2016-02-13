@@ -4,9 +4,10 @@ package it.unifi.facpl.lib.function.comparison;
 import java.util.List;
 
 import it.unifi.facpl.lib.interfaces.IComparisonEvaluator;
+import it.unifi.facpl.lib.interfaces.IComparisonFunction;
 import it.unifi.facpl.lib.util.Set;
 
-public class AtLeastOneMemberOf extends AbstractComparison{
+public class AtLeastOneMemberOf implements IComparisonFunction{
 	//non usa evaluator, si vedra' in seguito come fare refactoring
 	@Override
 	public Boolean evaluateFunction(List<Object> args) throws Throwable {
@@ -51,9 +52,5 @@ public class AtLeastOneMemberOf extends AbstractComparison{
 		}
 	}
 
-	@Override
-	protected Boolean op(IComparisonEvaluator ev, Object o1, Object o2) throws Throwable {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 }

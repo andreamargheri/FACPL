@@ -21,7 +21,7 @@ public class ContextRequest_NameRequest {
 		// create map for each category
 		HashMap<String, Object> req_category_attribute = new HashMap<String, Object>();
 		// add attribute's values
-		req_category_attribute.put("id", "");
+		req_category_attribute.put("id", "4");
 		// add attributes to request
 		Request req = new Request("NameRequest");
 		req.addAttribute("category", req_category_attribute);
@@ -29,22 +29,5 @@ public class ContextRequest_NameRequest {
 		CxtReq = new ContextRequest(req, ContextStub_Default.getInstance());
 		return CxtReq;
 	}
-	
-	
-	public static ContextRequest getContextReq(FacplStatus status) {
-		if (CxtReq != null) {
-			return CxtReq;
-		}
-		//in caso contrario viene creata la richiesta
-		// create map for each category
-		HashMap<String, Object> req_category_attribute = new HashMap<String, Object>();
-		// add attribute's values
-		req_category_attribute.put("id", "");
-		// add attributes to request
-		Request req = new Request("NameRequest");
-		req.addAttribute("category", req_category_attribute);
-		// context stub: default-one
-		CxtReq = new ContextRequest(req, ContextStub_Default.getInstance());
-		return CxtReq;
-	}
+
 }
