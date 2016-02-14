@@ -3,25 +3,22 @@ package it.unifi.facpl.lib.context;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import it.unifi.facpl.lib.interfaces.IContextStub_Status;
+import it.unifi.facpl.lib.interfaces.IContextStub;
 import it.unifi.facpl.lib.util.StatusAttributeName;
 import it.unifi.facpl.lib.util.exception.MissingAttributeException;
 
 public class ContextRequest_Status extends ContextRequest {
 
-	private IContextStub_Status context;
 	
 	public ContextRequest_Status(Request req) {
 		super(req);
-		this.context = null;
 	}
 
-	public ContextRequest_Status(Request req, IContextStub_Status context) {
-		super(req);
-		this.context = context;
+	public ContextRequest_Status(Request req, IContextStub context) {
+		super(req, context);
 	}
 
-	public IContextStub_Status getContext() {
+	public IContextStub getContext() {
 		return context;
 	}
 
@@ -32,7 +29,7 @@ public class ContextRequest_Status extends ContextRequest {
 			/*
 			 * SI PASSA LO STATO COME RIFERIMENTO -> CAMBIARE ?
 			 */
-			Object values =  this.context.getContextStatusValues(name);
+			Object values =  this.context.getContextValues(name);
 			
 			
 			if (values == null){

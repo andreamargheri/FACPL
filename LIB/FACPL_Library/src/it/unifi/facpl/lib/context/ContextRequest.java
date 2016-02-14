@@ -9,8 +9,8 @@ import it.unifi.facpl.lib.util.exception.MissingAttributeException;
 
 public class ContextRequest {
 	
-	private IContextStub context; 
-	private Request request; 
+	protected IContextStub context; 
+	protected Request request; 
  
 	public ContextRequest(Request req) {
 		this.request = req;

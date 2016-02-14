@@ -4,7 +4,6 @@
 package it.unifi.facpl.system;
 
 import java.lang.reflect.Method;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -13,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import it.unifi.facpl.lib.context.AuthorisationPDP;
 import it.unifi.facpl.lib.context.ContextRequest;
 import it.unifi.facpl.lib.interfaces.IEvaluableAlgorithm;
-import it.unifi.facpl.lib.interfaces.IEvaluablePolicy;
 import it.unifi.facpl.lib.policy.FacplPolicy;
 
 /**

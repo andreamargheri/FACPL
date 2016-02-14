@@ -10,6 +10,6 @@ import it.unifi.facpl.lib.util.exception.MissingAttributeException;
  */
 public interface IContextStub {
 	
-	Object getContextValues(AttributeName attribute) throws MissingAttributeException;
+	Object getContextValues(Object attribute) throws MissingAttributeException;
 	
 }

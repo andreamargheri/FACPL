@@ -7,10 +7,7 @@ import it.unifi.facpl.lib.util.AttributeName;
 
 @SuppressWarnings("all")
 public class ContextStub_Default implements IContextStub{
-	/*
-	 * contesto stateless
-	 * singleton
-	 */
+
 	private static ContextStub_Default instance; 
 
 	public static ContextStub_Default getInstance(){
@@ -23,15 +20,12 @@ public class ContextStub_Default implements IContextStub{
 	private ContextStub_Default(){
 	
 	}
-	/*
-	 * restituisce le variabili d'ambiente come:
-	 * -Data
-	 * -Tempo
-	 * -True
-	 * -False
-	 */ 
 	@Override
-	public Object getContextValues(AttributeName attribute) {
+	public Object getContextValues(Object attr) {
+		AttributeName attribute = null;
+		if (attr instanceof AttributeName) {
+			attribute = (AttributeName)attr;
+		}
 		//Context Time Value
 		if (attribute.getCategory().equals("environment") && attribute.getIDAttribute().equals("time")){
 			return new Date();
@@ -46,15 +40,6 @@ public class ContextStub_Default implements IContextStub{
 		if (attribute.getCategory().equals("environment") && attribute.getIDAttribute().equals("false")){
 			return false;
 		}
-		
-		//TO Implement your own context here. For example
-		/*
-		*if (attribute.getCategory().equals("foo") && attribute.getIDAttribute().equals("id")){
-		*	return "foo";
-		*}else{
-		*	return null;
-		*}
-		*/
 		return null;
 	}
 	
