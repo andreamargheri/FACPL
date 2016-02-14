@@ -37,7 +37,7 @@ public class PolicySet_NamePolicySetTwo extends PolicySet {
 		// Algorithm Combining
 		addCombiningAlg(it.unifi.facpl.lib.algorithm.DenyUnlessPermitGreedy.class);
 		// Target
-		addTarget(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class, "9", 
+		addTarget(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class, "3", 
 				new AttributeName("category", "id")));
 		// PolElements
 		addPolicyElement(new Rule_ruleName());

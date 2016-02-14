@@ -3,7 +3,8 @@ package usagecontrol.foo;
 import java.util.HashMap;
 
 import it.unifi.facpl.lib.context.ContextRequest;
-import it.unifi.facpl.lib.context.ContextStub_Default;
+import it.unifi.facpl.lib.context.ContextRequest_Status;
+import it.unifi.facpl.lib.context.ContextStub_Status_Default;
 import it.unifi.facpl.lib.context.Request;
 import it.unifi.facpl.system.status.FacplStatus;
 
@@ -11,9 +12,9 @@ import it.unifi.facpl.system.status.FacplStatus;
 public class ContextRequest_NameRequest {
 
 
-	private static ContextRequest CxtReq;
+	private static ContextRequest_Status CxtReq;
 
-	public static ContextRequest getContextReq() {
+	public static ContextRequest_Status getContextReq(FacplStatus status) {
 		if (CxtReq != null) {
 			return CxtReq;
 		}
@@ -26,7 +27,8 @@ public class ContextRequest_NameRequest {
 		Request req = new Request("NameRequest");
 		req.addAttribute("category", req_category_attribute);
 		// context stub: default-one
-		CxtReq = new ContextRequest(req, ContextStub_Default.getInstance());
+		CxtReq = new ContextRequest_Status(req, ContextStub_Status_Default.getInstance());
+		ContextStub_Status_Default.getInstance().setStatus(status);
 		return CxtReq;
 	}
 
