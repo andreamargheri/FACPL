@@ -4,8 +4,9 @@ import java.util.Date;
 
 import it.unifi.facpl.lib.interfaces.IContextStub;
 import it.unifi.facpl.lib.util.AttributeName;
-import it.unifi.facpl.lib.util.StatusAttributeName;
+import it.unifi.facpl.lib.util.exception.MissingAttributeException;
 import it.unifi.facpl.system.status.FacplStatus;
+import it.unifi.facpl.system.status.StatusAttribute;
 
 @SuppressWarnings("all")
 public class ContextStub_Status_Default implements IContextStub {
@@ -30,8 +31,12 @@ public class ContextStub_Status_Default implements IContextStub {
 	public static void setStatus(FacplStatus status) {
 		ContextStub_Status_Default.status = status;
 	}
+	
+	public StatusAttribute getStatusAttribute(StatusAttribute attribute) throws MissingAttributeException {
+		return status.retrieveAttribute(attribute);
+	}
 
-	public Object getContextValues(Object attr) {
+	public Object getContextValues(Object attr) throws MissingAttributeException {
 		if (attr instanceof AttributeName) {
 			AttributeName attribute = (AttributeName) attr;
 			// Context Time Value
@@ -48,12 +53,11 @@ public class ContextStub_Status_Default implements IContextStub {
 			if (attribute.getCategory().equals("environment") && attribute.getIDAttribute().equals("false")) {
 				return false;
 			}
-		} else if (attr instanceof StatusAttributeName) {
-			return status.getValue((StatusAttributeName)attr);
+		} else if (attr instanceof StatusAttribute) {
+			return status.getValue((StatusAttribute) attr);
 		}
 		return null;
-		
-	}
 
+	}
 
 }

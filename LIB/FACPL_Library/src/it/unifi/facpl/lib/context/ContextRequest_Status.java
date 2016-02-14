@@ -4,8 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import it.unifi.facpl.lib.interfaces.IContextStub;
-import it.unifi.facpl.lib.util.StatusAttributeName;
 import it.unifi.facpl.lib.util.exception.MissingAttributeException;
+import it.unifi.facpl.system.status.StatusAttribute;
 
 public class ContextRequest_Status extends ContextRequest {
 
@@ -21,8 +21,12 @@ public class ContextRequest_Status extends ContextRequest {
 	public IContextStub getContext() {
 		return context;
 	}
-
-	public Object getContextRequestValues (StatusAttributeName name) throws MissingAttributeException {
+	
+	public StatusAttribute getStatusAttribute(StatusAttribute attribute) throws MissingAttributeException {
+		return ((ContextStub_Status_Default)context).getStatusAttribute(attribute);
+	}
+ 
+	public Object getContextRequestValues (StatusAttribute name) throws MissingAttributeException {
 		Logger l = LoggerFactory.getLogger(ContextRequest_Status.class);
 		if (context != null){
 			

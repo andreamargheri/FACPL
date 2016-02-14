@@ -13,6 +13,7 @@ import it.unifi.facpl.lib.interfaces.IExpressionFunction;
 import it.unifi.facpl.lib.util.AttributeName;
 import it.unifi.facpl.lib.util.FacplLiteralTypes;
 import it.unifi.facpl.lib.util.exception.MissingAttributeException;
+import it.unifi.facpl.system.status.StatusAttribute;
 
 /**
  * 
@@ -72,7 +73,11 @@ public class ExpressionFunction {
 			}else if (FacplLiteralTypes.isFacplValue(obj)) {
 				// Literals
 				values.add(obj);
-			}else {
+			}
+			else if (obj instanceof StatusAttribute) {
+				values.add(obj);
+			}
+			else {
 				//Unexpected Type Arguments
 				l.debug("Unexpected Type Argument");
 				return ExpressionValue.ERROR;

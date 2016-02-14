@@ -1,38 +1,23 @@
 package usagecontrol.foo;
 
+import it.unifi.facpl.lib.context.ContextRequest_Status;
 import it.unifi.facpl.lib.enums.Effect;
 import it.unifi.facpl.lib.enums.FacplStatusType;
 import it.unifi.facpl.lib.enums.ObligationType;
 import it.unifi.facpl.lib.policy.ExpressionFunction;
-import it.unifi.facpl.lib.policy.Obligation;
 import it.unifi.facpl.lib.policy.ObligationStatus;
 import it.unifi.facpl.lib.policy.PolicySet;
 import it.unifi.facpl.lib.policy.Rule;
 import it.unifi.facpl.lib.util.AttributeName;
 import it.unifi.facpl.lib.util.exception.MissingAttributeException;
-import it.unifi.facpl.system.status.FacplStatus;
 import it.unifi.facpl.system.status.StatusAttribute;
 import it.unifi.facpl.system.status.functions.arithmetic.AddStatus;
 
 @SuppressWarnings("all")
 public class PolicySet_NamePolicySetTwo extends PolicySet {
-	protected FacplStatus status;
-
-	public PolicySet_NamePolicySetTwo() throws MissingAttributeException {
-		addId("NamePolicySetTwo");
-		// Algorithm Combining
-		addCombiningAlg(it.unifi.facpl.lib.algorithm.DenyUnlessPermitGreedy.class);
-		// Target
-		addTarget(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class, "2",
-				new AttributeName("category", "id")));
-		// PolElements
-		addPolicyElement(new Rule_ruleName());
-		// Obligation
-	}
-	
-	
-	public PolicySet_NamePolicySetTwo(FacplStatus status) throws MissingAttributeException {
-		this.status = status;
+	protected ContextRequest_Status ctxReq;
+	public PolicySet_NamePolicySetTwo(ContextRequest_Status ctxReq) throws MissingAttributeException {
+		this.ctxReq = ctxReq;
 		addId("NamePolicySetTwo");
 		// Algorithm Combining
 		addCombiningAlg(it.unifi.facpl.lib.algorithm.DenyUnlessPermitGreedy.class);
@@ -47,7 +32,7 @@ public class PolicySet_NamePolicySetTwo extends PolicySet {
 						new AddStatus(),
 						Effect.PERMIT,
 						ObligationType.M, 
-						status.getStatusAttribute(new StatusAttribute("accessNumber", FacplStatusType.INT)), 1) 
+						ctxReq.getStatusAttribute(new StatusAttribute("accessNumber", FacplStatusType.INT)), 1) 
 				); 
 	}
 
@@ -57,9 +42,8 @@ public class PolicySet_NamePolicySetTwo extends PolicySet {
 			addId("ruleName");
 			// Effect
 			addEffect(Effect.PERMIT);
-			// Obligations
-			//addTarget(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.LessThan.class, 
-				//	status.getStatusAttribute(new StatusAttribute("accessNumber", FacplStatusType.INT)), 3)); 
+			addTarget(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.LessThan.class, 
+					ctxReq.getStatusAttribute(ctxReq.getStatusAttribute(new StatusAttribute("accessNumber", FacplStatusType.INT))), 3)); 
 		}
 	}
 }

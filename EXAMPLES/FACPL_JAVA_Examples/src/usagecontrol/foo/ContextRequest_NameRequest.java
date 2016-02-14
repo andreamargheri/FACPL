@@ -1,12 +1,15 @@
 package usagecontrol.foo;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import it.unifi.facpl.lib.context.ContextRequest;
 import it.unifi.facpl.lib.context.ContextRequest_Status;
 import it.unifi.facpl.lib.context.ContextStub_Status_Default;
 import it.unifi.facpl.lib.context.Request;
+import it.unifi.facpl.lib.enums.FacplStatusType;
 import it.unifi.facpl.system.status.FacplStatus;
+import it.unifi.facpl.system.status.StatusAttribute;
 
 @SuppressWarnings("all")
 public class ContextRequest_NameRequest {
@@ -14,11 +17,10 @@ public class ContextRequest_NameRequest {
 
 	private static ContextRequest_Status CxtReq;
 
-	public static ContextRequest_Status getContextReq(FacplStatus status) {
+	public static ContextRequest_Status getContextReq() {
 		if (CxtReq != null) {
 			return CxtReq;
 		}
-		//in caso contrario viene creata la richiesta
 		// create map for each category
 		HashMap<String, Object> req_category_attribute = new HashMap<String, Object>();
 		// add attribute's values
@@ -28,8 +30,19 @@ public class ContextRequest_NameRequest {
 		req.addAttribute("category", req_category_attribute);
 		// context stub: default-one
 		CxtReq = new ContextRequest_Status(req, ContextStub_Status_Default.getInstance());
-		ContextStub_Status_Default.getInstance().setStatus(status);
+		/*
+		 * set dello stato
+		 */
+		ContextStub_Status_Default.getInstance().setStatus(createStatus());
 		return CxtReq;
 	}
+	
+	private static FacplStatus createStatus() {
+		ArrayList<StatusAttribute> attributeList = new ArrayList<StatusAttribute>();
+		attributeList.add(new StatusAttribute("accessNumber", FacplStatusType.INT, "666"));
+		FacplStatus status = new FacplStatus(attributeList, "stato");
+		return status;
+	}
+	
 
 }
