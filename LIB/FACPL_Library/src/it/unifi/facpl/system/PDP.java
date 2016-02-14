@@ -58,22 +58,6 @@ public class PDP {
 			Object alg = algCombining.newInstance();
 
 			AuthorisationPDP dr = new AuthorisationPDP();
-			
-			/*
-			 * DEBUG
-			 */
-			System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX DIOCANE XXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-			System.out.println("alg "+alg);
-			System.out.println("policies "+policies);
-			System.out.println("cxtReq " +cxtReq);
-			System.out.println("extendedIndeterminated "+extendedIndeterminate);
-			//System.out.println("dr" + dr); -> NULL POINTER EXCEPTION
-			System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX DIOCANE XXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-			
-			/*
-			 * DEBUG
-			 */
-			
 			dr = (AuthorisationPDP) eval.invoke(alg, policies, cxtReq, extendedIndeterminate); 
 			dr.setId(cxtReq.getRequest().getId());
 

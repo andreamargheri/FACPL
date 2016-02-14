@@ -88,14 +88,12 @@ public abstract class  AbstractObligation implements IObligationElement {
 	
 	@Override
 	public Effect getEvaluatedOn() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.evaluatedOn;
 	}
 
 	@Override
 	public ObligationType getTypeObl() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.typeObl;	
 	}
 
 }

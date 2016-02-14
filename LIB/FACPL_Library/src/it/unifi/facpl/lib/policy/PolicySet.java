@@ -71,6 +71,7 @@ public abstract class PolicySet extends FacplPolicy {
 
 			} catch (Exception e) {
 				// catch expression from Obligation Fulfillment
+			
 				l.debug("Catch generic exception in policy set eval. Return INDETERMINATE DP");
 				return new AuthorisationPDP(ExtendedDecision.INDETERMINATE_DP, null);
 			}
