@@ -1,9 +1,8 @@
-package usagecontrol.foo;
+package usagecontrol.foo.two;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import it.unifi.facpl.lib.context.ContextRequest;
 import it.unifi.facpl.lib.context.ContextRequest_Status;
 import it.unifi.facpl.lib.context.ContextStub_Status_Default;
 import it.unifi.facpl.lib.context.Request;

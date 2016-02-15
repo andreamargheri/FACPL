@@ -1,4 +1,4 @@
-package usagecontrol.foo;
+package usagecontrol.foo.two;
 
 import it.unifi.facpl.lib.context.ContextRequest_Status;
 import it.unifi.facpl.lib.enums.Effect;

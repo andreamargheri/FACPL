@@ -1,4 +1,4 @@
-package usagecontrol.foo;
+package usagecontrol.foo.two;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -17,13 +17,13 @@ import it.unifi.facpl.system.status.FacplStatus;
 import it.unifi.facpl.system.status.StatusAttribute;
 
 @SuppressWarnings("all")
-public class MainFACPL {
+public class MainFACPL_Two {
 
 	private PDP pdp;
 	private PEP pep;
-
+	private static FacplStatus status;
 	
-	public MainFACPL() throws MissingAttributeException {
+	public MainFACPL_Two() throws MissingAttributeException {
 		// defined list of policies included in the PDP
 		LinkedList<FacplPolicy> policies = new LinkedList<FacplPolicy>();
 		// policies.add(new PolicySet_NamePolicySetTwo());
@@ -42,21 +42,12 @@ public class MainFACPL {
 	 */
 	public static void main(String[] args) throws MissingAttributeException {
 		// Initialise Authorisation System
-		MainFACPL system = new MainFACPL();
+		MainFACPL_Two system = new MainFACPL_Two();
 		// log
 		StringBuffer result = new StringBuffer();
 		// request
-		
 		LinkedList<ContextRequest_Status> requests = new LinkedList<ContextRequest_Status>();
-		
 		requests.add(ContextRequest_NameRequest.getContextReq());
-		
-		requests.add(ContextRequest_NameRequest.getContextReq());
-
-		requests.add(ContextRequest_NameRequest.getContextReq());
-
-		requests.add(ContextRequest_NameRequest.getContextReq());
-		
 		for (ContextRequest rcxt : requests) {
 			result.append("---------------------------------------------------\n");
 			AuthorisationPDP resPDP = system.pdp.doAuthorisation(rcxt);
