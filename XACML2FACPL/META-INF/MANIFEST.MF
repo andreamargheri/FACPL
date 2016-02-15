@@ -3,8 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: XacmlToFacpl
 Bundle-SymbolicName: XacmlToFacpl
 Bundle-Version: 1.0.0.qualifier
-Bundle-ClassPath: .,
- jaxp/jaxp-api-1.4.5.jar
+Bundle-ClassPath: .
 Export-Package: it.unifi.xacmlToFacpl,
  it.unifi.xacmlToFacpl.jaxb;uses:="javax.xml.bind",
  it.unifi.xacmlToFacpl.parser;uses:="org.w3c.dom,org.apache.log4j,it.unifi.xacmlToFacpl.jaxb"
