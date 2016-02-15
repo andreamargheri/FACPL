@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/it.unifi.xtext.facpl2.sdk_1.0.0.qualifier.jar" id="it.unifi.xtext.facpl2.sdk" version="1.0.0.qualifier">
+      <category name="FACPL"/>
+   </feature>
+   <category-def name="FACPL" label="FACPL"/>
+</site>
