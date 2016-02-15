@@ -2,7 +2,7 @@
 
 PAS{ 
 	Extended Indeterminate :false; 
-	Java Package : "Devrim";
+	Java Package : "sod";
 	Requests To Evaluate: Request1,Request2,Request3;
 	
 	pep:base
