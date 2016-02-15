@@ -2,6 +2,7 @@ package it.unifi.facpl.system.status;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import it.unifi.facpl.lib.util.exception.MissingAttributeException;
 
@@ -25,6 +26,11 @@ public class FacplStatus {
 	public FacplStatus(List<StatusAttribute> attributeList, String statusID) {
 		this.attributeList = attributeList;
 		this.statusID = statusID;
+	}
+	
+	public FacplStatus() {
+		attributeList = new ArrayList<StatusAttribute>();
+		this.statusID = UUID.randomUUID().toString().substring(0, 8);
 	}
 	
 	public String getStatusID() {
