@@ -82,6 +82,12 @@ public class StatusAttribute {
 		return false;
 	}
 	
+	@Override
+	public String toString() {
+		return this.type.toString()+"/"+this.id+"/"+this.value;
+	}
+	
+	
 	
 	
 }

@@ -1,0 +1,34 @@
+Request:{ Request1 
+  (action/id, "write")
+  (name/id , "Lucrezia")
+}
+Request:{ Request2 
+  (name/id , "Lucrezia")
+  (action/id, "read")
+}
+
+PolicySet readWrite {permit-overrides 
+  target:equal("Lucrezia",name/id)   
+  policies: 
+    Policy read < permit-overrides  
+      rules: 
+        Rule read ( permit target: equal("read",action/id) 
+          && equal("false", status/isWriting) )
+    >
+    Policy write < deny-overrides 
+      rules: 
+        Rule  write (permit target: equal("write",action/id) 
+          && equal("false", status/isWriting)) >
+    obl: 
+      [permit M flag(isWriting, true)]
+}
+
+PAS { 
+  Combined Decision : false ;
+  Extended Indeterminate : false ;
+  Java Package : "example" ;
+  Requests To Evaluate : Request1, Request2 ;
+  pep: deny-biased
+  pdp: permit-unless-deny
+  status: [(boolean isWriting = false)]
+  include readWri
