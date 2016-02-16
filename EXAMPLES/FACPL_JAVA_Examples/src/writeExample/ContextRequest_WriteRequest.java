@@ -10,6 +10,7 @@ import it.unifi.facpl.lib.enums.FacplStatusType;
 import it.unifi.facpl.system.status.FacplStatus;
 import it.unifi.facpl.system.status.StatusAttribute;
 
+@SuppressWarnings("all")
 public class ContextRequest_WriteRequest {
 	private static ContextRequest_Status CxtReq;
 
@@ -18,12 +19,15 @@ public class ContextRequest_WriteRequest {
 			return CxtReq;
 		}
 		// create map for each category
-		HashMap<String, Object> req_category_attribute = new HashMap<String, Object>();
+		HashMap<String, Object> req_category_attribute_name = new HashMap<String, Object>();
+		HashMap<String, Object> req_category_attribute_action = new HashMap<String, Object>();
 		// add attribute's values
-		req_category_attribute.put("id", "Lucrezia");
+		req_category_attribute_name.put("id", "Lucrezia");
+		req_category_attribute_action.put("id", "write");
 		// add attributes to request
-		Request req = new Request("read_request");
-		req.addAttribute("name", req_category_attribute);
+		Request req = new Request("write_request");
+		req.addAttribute("name", req_category_attribute_name);
+		req.addAttribute("action", req_category_attribute_action);
 		// context stub: default-one
 		CxtReq = new ContextRequest_Status(req, ContextStub_Status_Default.getInstance());
 		/*
@@ -32,10 +36,10 @@ public class ContextRequest_WriteRequest {
 		ContextStub_Status_Default.getInstance().setStatus(createStatus());
 		return CxtReq;
 	}
-	
+
 	private static FacplStatus createStatus() {
 		ArrayList<StatusAttribute> attributeList = new ArrayList<StatusAttribute>();
-		attributeList.add(new StatusAttribute("isWriting", FacplStatusType.BOOLEAN, "true"));
+		attributeList.add(new StatusAttribute("isWriting", FacplStatusType.BOOLEAN, "false"));
 		FacplStatus status = new FacplStatus(attributeList, "stato");
 		return status;
 	}

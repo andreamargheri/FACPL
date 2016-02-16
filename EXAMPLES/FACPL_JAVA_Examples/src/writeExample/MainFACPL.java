@@ -25,15 +25,14 @@ public class MainFACPL {
 	public MainFACPL() throws MissingAttributeException {
 		// defined list of policies included in the PDP
 		LinkedList<FacplPolicy> policies = new LinkedList<FacplPolicy>();
-		// policies.add(new PolicySet_NamePolicySetTwo());
-		policies.add(new PolicySet_ReadWrite(ContextRequest_ReadRequest.getContextReq()));		
+
 		policies.add(new PolicySet_ReadWrite(ContextRequest_WriteRequest.getContextReq()));
-		
+
 		this.pdp = new PDP(it.unifi.facpl.lib.algorithm.PermitUnlessDenyGreedy.class, policies, false);
 
 		this.pep = new PEP(EnforcementAlgorithm.DENY_BIASED);
 
-		//this.pep.addPEPActions(PEPAction.getPepActions());
+		this.pep.addPEPActions(PEPAction.getPepActions());
 	}
 
 	/*
@@ -49,11 +48,11 @@ public class MainFACPL {
 		LinkedList<ContextRequest_Status> requests = new LinkedList<ContextRequest_Status>();
 
 		requests.add(ContextRequest_ReadRequest.getContextReq());
-
-//		requests.add(ContextRequest_WriteRequest.getContextReq());
-//
-//		requests.add(ContextRequest_ReadRequest.getContextReq());
-
+		requests.add(ContextRequest_ReadRequest.getContextReq());
+		requests.add(ContextRequest_WriteRequest.getContextReq());
+		requests.add(ContextRequest_ReadRequest.getContextReq());
+		requests.add(ContextRequest_WriteRequest.getContextReq());
+		requests.add(ContextRequest_ReadRequest.getContextReq());
 
 		for (ContextRequest rcxt : requests) {
 			result.append("---------------------------------------------------\n");

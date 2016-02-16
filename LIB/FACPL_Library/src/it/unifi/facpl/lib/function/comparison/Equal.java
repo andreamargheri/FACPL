@@ -36,7 +36,9 @@ public class Equal implements IComparisonFunction {
 	private Object convertType(StatusAttribute sa) {
 		//StatusAttribute sa = FacplStatus.getInstance().getStatusAttribute(s);
 		if (sa.getType() == FacplStatusType.BOOLEAN) {
-			return Boolean.getBoolean(sa.getValue());
+			if (sa.getValue()=="true"){return true;}
+			else return false;
+			//return Boolean.getBoolean(sa.getValue());
 		}
 		else if (sa.getType() == FacplStatusType.DOUBLE) {
 			return Double.valueOf(sa.getValue());
