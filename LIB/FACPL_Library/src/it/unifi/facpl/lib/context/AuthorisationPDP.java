@@ -1,10 +1,12 @@
 package it.unifi.facpl.lib.context;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
 import it.unifi.facpl.lib.enums.ExtendedDecision;
 import it.unifi.facpl.lib.enums.StandardDecision;
+import it.unifi.facpl.lib.policy.ObligationCheck;
 
 /**
  * 
@@ -17,6 +19,7 @@ public class AuthorisationPDP {
 
 	private ExtendedDecision decision;
 	private LinkedList<AbstractFulfilledObligation> obligation;
+	private List<ObligationCheck> obligationCheck;
 
 	// Constructors
 
@@ -92,7 +95,39 @@ public class AuthorisationPDP {
 	public LinkedList<AbstractFulfilledObligation> getObligation() {
 		return obligation;
 	}
-
+	
+	/*
+	 * obligation check
+	 */
+	
+	public void addObligation(ObligationCheck obligation) {
+		if (this.obligationCheck == null) {
+			this.obligationCheck = new LinkedList<ObligationCheck>();
+		}
+		this.obligationCheck.add(obligation);
+	}
+	
+	public void addObligation(LinkedList<ObligationCheck> obligation) {
+		if (this.obligationCheck == null) {
+			this.obligationCheck = new LinkedList<ObligationCheck>();
+		}
+		this.obligationCheck.addAll(obligation);
+	}
+	
+	public Iterator<ObligationCheck> getIteratorCheck() {
+		return this.obligationCheck.iterator();
+	}
+	
+	public boolean obligationCheckIsEmpty() {
+		if (this.obligationCheck != null) {
+			if (this.obligationCheck.size()>0) {
+				return true;
+			}
+			return false;
+		}
+		return false;
+	}
+	
 	// ID
 
 	public String getId() {
