@@ -21,7 +21,6 @@ public abstract class PolicySet extends FacplPolicy {
 	private LinkedList<FacplPolicy> polElements;
 
 	private Class<? extends IEvaluableAlgorithm> algCombining;
-	
 
 	protected void addCombiningAlg(Class<? extends IEvaluableAlgorithm> alg) {
 		Logger l = LoggerFactory.getLogger(PolicySet.class);
@@ -42,18 +41,18 @@ public abstract class PolicySet extends FacplPolicy {
 
 		Logger l = LoggerFactory.getLogger(PolicySet.class);
 		l.debug(idElement + ": Start policySet eval");
-	
-		AuthorisationPDP auth= new AuthorisationPDP();
 
-		TargetDecision match_target = getTargetDecision(cxtRequest);
+		AuthorisationPDP auth = new AuthorisationPDP(); //AUTORIZZAZIONE PER LA POLICY
+
+		TargetDecision match_target = getTargetDecision(cxtRequest); 
 
 		switch (match_target) {
-		case FALSE:
+		case FALSE: //SE TARGET FALSO NON FA NIENTE
 			auth.setDecision(ExtendedDecision.NOT_APPLICABLE);
 			l.debug(idElement + ": End policy eval - " + auth.toString());
 			return auth;
 
-		case TRUE:
+		case TRUE: //SE TARGET VERO ALLORA FA QUALCOSA
 			Class<?> params[] = new Class[3];
 			params[0] = List.class;
 			params[1] = ContextRequest.class;
@@ -61,17 +60,19 @@ public abstract class PolicySet extends FacplPolicy {
 
 			try {
 
-				Method eval = algCombining.getDeclaredMethod("evaluate", params);
+				Method eval = algCombining.getDeclaredMethod("evaluate", params); 
+				
 
 				l.debug("Loading combining algorithm: " + algCombining.getSimpleName());
 				Object alg = algCombining.newInstance();
 				l.debug("Algorithm started on eval elements");
 
 				auth = (AuthorisationPDP) eval.invoke(alg, this.polElements, cxtRequest, extendedIndeterminate);
+				//USA L'ALGORITMO DI COMBINING PER COMBINARE LE DECISIONI
 
 			} catch (Exception e) {
 				// catch expression from Obligation Fulfillment
-			
+
 				l.debug("Catch generic exception in policy set eval. Return INDETERMINATE DP");
 				return new AuthorisationPDP(ExtendedDecision.INDETERMINATE_DP, null);
 			}
@@ -85,6 +86,7 @@ public abstract class PolicySet extends FacplPolicy {
 				LinkedList<AbstractFulfilledObligation> listObl = null;
 				if (auth.getDecision().equals(ExtendedDecision.PERMIT)) {
 					listObl = this.evaluateObl(Effect.PERMIT, cxtRequest);
+
 				} else if (auth.getDecision().equals(ExtendedDecision.DENY)) {
 					listObl = this.evaluateObl(Effect.DENY, cxtRequest);
 				}
@@ -164,10 +166,10 @@ public abstract class PolicySet extends FacplPolicy {
 			l.debug(idElement + ": End policy eval - " + auth.toString());
 			return auth;
 
-		default: 
-			//IMPOSSIBLE (present only for Java matter)
-			return new AuthorisationPDP(ExtendedDecision.INDETERMINATE_DP, null); 
-			
+		default:
+			// IMPOSSIBLE (present only for Java matter)
+			return new AuthorisationPDP(ExtendedDecision.INDETERMINATE_DP, null);
+
 		}
 
 	}

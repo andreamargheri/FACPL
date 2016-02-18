@@ -8,9 +8,18 @@ public class AuthorisationPEP {
 
 	private StandardDecision decision;
 
+	private boolean check;
+
 	public AuthorisationPEP(String id, StandardDecision dec) {
 		this.id = id;
 		this.decision = dec;
+		this.check = false;
+	}
+
+	public AuthorisationPEP(String id, StandardDecision dec, boolean check) {
+		this.id = id;
+		this.decision = dec;
+		this.check = check;
 	}
 
 	public String getId() {
@@ -24,6 +33,13 @@ public class AuthorisationPEP {
 	@Override
 	public String toString() {
 		return decision.toString();
+	}
+
+	/*
+	 * getter per check
+	 */
+	public boolean isCheck() {
+		return check;
 	}
 
 }

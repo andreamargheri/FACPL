@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import it.unifi.facpl.lib.context.AbstractFulfilledObligation;
 import it.unifi.facpl.lib.context.ContextRequest;
+import it.unifi.facpl.lib.context.FulfilledObligationCheck;
 import it.unifi.facpl.lib.enums.Effect;
 import it.unifi.facpl.lib.enums.ExpressionValue;
 import it.unifi.facpl.lib.enums.ObligationType;
@@ -39,6 +40,10 @@ public abstract class  AbstractObligation implements IObligationElement {
 		
 		l.debug("Fulfilling Obligation " +this.pepAction.toString() + "...");
 		AbstractFulfilledObligation obl = this.createObligation();
+		if (obl instanceof FulfilledObligationCheck) {
+			l.debug("...created FulfilledObligationCHECK: "+obl.toString());
+			return obl;
+		}
 		//Fulfill arguments for PEP Function
 		for (Object arg : argsFunction) {
 			if (arg instanceof ExpressionFunction){
@@ -48,7 +53,7 @@ public abstract class  AbstractObligation implements IObligationElement {
 				
 				if (res.equals(ExpressionValue.BOTTOM) || res.equals(ExpressionValue.ERROR)){
 					//Fulfillment of Obligation failed
-					throw new FulfillmentFailed(); //eccezione semplice - no problem
+					throw new FulfillmentFailed(); 
 				}
 				//Evaluation ok -> add value in the arguments
 				obl.addArg(res);

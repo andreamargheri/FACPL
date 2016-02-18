@@ -58,7 +58,7 @@ public class PDP {
 			Object alg = algCombining.newInstance();
 
 			AuthorisationPDP dr = new AuthorisationPDP();
-			dr = (AuthorisationPDP) eval.invoke(alg, policies, cxtReq, extendedIndeterminate); 
+			dr = (AuthorisationPDP) eval.invoke(alg, policies, cxtReq, extendedIndeterminate); //VIENE CHIAMATO IL COMBINING ALG
 			dr.setId(cxtReq.getRequest().getId());
 
 			l.debug("...PDP Evaluation of request " + cxtReq.getRequest().getId() + " completed. PDP decision: "
@@ -69,27 +69,11 @@ public class PDP {
 			return dr;
 
 		} catch (Exception e) {
-			printStackTrace(e);
 			l.debug("PDP catch unexpected exception");
 			l.debug(e.getMessage().toString());
 			return null;
 		}
 
-	}
-	/*
-	 * TODO: da cancellare -> per debug
-	 */
-	public static void printStackTrace(Throwable t) {
-		System.out.println(t);
-		for (StackTraceElement ste : t.getStackTrace()) {
-
-			System.err.println("\tat " + ste);
-		}
-		Throwable cause = t.getCause();
-		if (cause != null) {
-			System.err.print("Caused by \r\n");
-			printStackTrace(cause);
-		}
 	}
 
 }
