@@ -9,6 +9,6 @@ package it.unifi.facpl.lib.enums;
  */
 public enum FacplStatusType {
 
-	INT, BOOLEAN, DOUBLE, STRING;
+	INT, BOOLEAN, DOUBLE, STRING, DATE;
 	
 }

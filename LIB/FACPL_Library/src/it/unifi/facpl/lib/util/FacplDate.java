@@ -1,15 +1,22 @@
 package it.unifi.facpl.lib.util;
 
-import java.util.Date;
+import java.util.Calendar;
 
 import it.unifi.facpl.lib.function.comparison.evaluator.Util;
 
 public class FacplDate {
 
-	private Date date;
+	private Calendar date;
+	private String dateS;
+	
+	public FacplDate(){
+		this.date=Calendar.getInstance();
+		this.dateS=this.dateS.toString();
+	}
 	
 	public FacplDate(String dateS) {
 		try {
+			this.dateS=dateS;
 			date = Util.parseDate(dateS);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -17,7 +24,7 @@ public class FacplDate {
 		}
 	}
 	
-	public Date getDate() {
+	public Calendar getDate() {
 		return date;
 	}
 	
@@ -25,11 +32,11 @@ public class FacplDate {
 		return date.equals(obj.getDate());
 	}
 	
-	public boolean equals(Date obj) {
+	public boolean equals(Calendar obj) {
 		return date.equals(obj);
 	}
 	
-	public boolean before(Date obj){
+	public boolean before(Calendar obj){
 		return date.before(obj);
 	}
 	
@@ -38,7 +45,7 @@ public class FacplDate {
 	}
 	
 	
-	public boolean after(Date obj){
+	public boolean after(Calendar obj){
 		return date.after(obj);
 	}
 	
@@ -48,6 +55,6 @@ public class FacplDate {
 	
 	@Override
 	public String toString() {
-		return this.date.toString();
+		return this.dateS;
 	}
 }

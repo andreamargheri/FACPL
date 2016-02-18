@@ -7,6 +7,7 @@ import it.unifi.facpl.lib.enums.FacplStatusType;
 import it.unifi.facpl.lib.function.comparison.evaluator.ComparisonEvaluatorFactory;
 import it.unifi.facpl.lib.interfaces.IComparisonEvaluator;
 import it.unifi.facpl.lib.interfaces.IComparisonFunction;
+import it.unifi.facpl.lib.util.FacplDate;
 import it.unifi.facpl.system.status.StatusAttribute;
 
 public class LessThan implements IComparisonFunction{
@@ -46,6 +47,9 @@ public class LessThan implements IComparisonFunction{
 		}
 		else if (sa.getType() == FacplStatusType.STRING) {
 			return sa.getValue();
+		}
+		else if (sa.getType() == FacplStatusType.DATE) {
+			return new FacplDate(sa.getValue());
 		}
 		return null;
 	}

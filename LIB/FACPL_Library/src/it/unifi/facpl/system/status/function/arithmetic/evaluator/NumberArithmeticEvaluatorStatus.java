@@ -1,6 +1,11 @@
 package it.unifi.facpl.system.status.function.arithmetic.evaluator;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import it.unifi.facpl.lib.util.FacplDate;
+
 import it.unifi.facpl.lib.enums.FacplStatusType;
+import it.unifi.facpl.lib.function.comparison.evaluator.Util;
 import it.unifi.facpl.lib.util.exception.UnsupportedTypeException;
 import it.unifi.facpl.system.status.StatusAttribute;
 
@@ -98,6 +103,22 @@ public class NumberArithmeticEvaluatorStatus  implements ArithmeticEvaluatorStat
 			throw new UnsupportedTypeException("Boolean", "Flag");
 		}
 
+	}
+
+	@Override
+	public void sum_date(StatusAttribute o1, Object o2) throws Throwable {
+		if (o1.getType() == FacplStatusType.DATE)  {
+			Calendar d1 = Util.parseDate(o1.getValue());
+			Calendar d2 = Util.parseDate(((FacplDate)o2).toString());
+			d1.add(d1.HOUR, d2.get(d2.HOUR));
+			d1.add(d1.MINUTE, d2.get(d2.MINUTE));
+			d1.add(d1.SECOND, d2.get(d2.SECOND));
+			o1.setValue(Util.parseCalendar(d1));
+		}
+		else {
+			throw new UnsupportedTypeException("Date", "Add");
+		}
+		
 	}
 
 

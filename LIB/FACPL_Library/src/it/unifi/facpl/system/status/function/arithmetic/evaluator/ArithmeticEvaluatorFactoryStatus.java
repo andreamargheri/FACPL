@@ -2,6 +2,7 @@ package it.unifi.facpl.system.status.function.arithmetic.evaluator;
 
 import java.util.HashMap;
 
+import it.unifi.facpl.lib.util.FacplDate;
 import it.unifi.facpl.lib.util.exception.UnsupportedTypeException;
 
 public class ArithmeticEvaluatorFactoryStatus {
@@ -16,6 +17,7 @@ public class ArithmeticEvaluatorFactoryStatus {
 		this.table.put(Integer.class, NumberArithmeticEvaluatorStatus.getInstance());
 		this.table.put(Double.class, NumberArithmeticEvaluatorStatus.getInstance());
 		this.table.put(Boolean.class, NumberArithmeticEvaluatorStatus.getInstance());
+		this.table.put(FacplDate.class, NumberArithmeticEvaluatorStatus.getInstance());
 	}
 
 	public static synchronized ArithmeticEvaluatorFactoryStatus getInstance() {

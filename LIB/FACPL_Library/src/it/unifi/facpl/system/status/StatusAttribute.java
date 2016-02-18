@@ -4,7 +4,7 @@
 package it.unifi.facpl.system.status;
 
 import it.unifi.facpl.lib.enums.FacplStatusType;
-
+import it.unifi.facpl.lib.util.FacplDate;
 /**
  * class for status attribute	
  *
@@ -26,6 +26,9 @@ public class StatusAttribute {
 		}
 		else if (type == FacplStatusType.BOOLEAN) {
 			value = "false";
+		}
+		else if (type == FacplStatusType.DATE) {
+			value = "0";
 		}
 		else {
 			value = "";
@@ -84,7 +87,7 @@ public class StatusAttribute {
 	
 	@Override
 	public String toString() {
-		return this.type.toString()+"/"+this.id+"/"+this.value;
+		return this.type.toString()+"/"+this.id+"/"+this.value.toString();
 	}
 	
 	

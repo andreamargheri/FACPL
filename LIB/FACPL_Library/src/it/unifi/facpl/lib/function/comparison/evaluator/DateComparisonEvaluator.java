@@ -40,7 +40,8 @@ public class DateComparisonEvaluator implements IComparisonEvaluator {
 	public boolean areNotEquals(Object o1, Object o2) throws Throwable {
 		if (o2 instanceof FacplDate){
 			return !(((FacplDate)o1).equals((FacplDate)o2));
-		}else if (o2 instanceof String){
+		}
+		else if (o2 instanceof String){
 			return !(((FacplDate)o1).equals(Util.parseDate((String)o2)));
 		}
 		throw new UnsupportedTypeException(o2.getClass().getName(), "Equal");
@@ -50,7 +51,8 @@ public class DateComparisonEvaluator implements IComparisonEvaluator {
 	public boolean isLessThan(Object o1, Object o2) throws Throwable {
 		if (o2 instanceof FacplDate){
 			return ((FacplDate)o1).before((FacplDate)o2);
-		}else if (o2 instanceof String){
+		}
+		else if (o2 instanceof String){
 			return ((FacplDate)o1).before(Util.parseDate((String)o2));
 		}
 		throw new UnsupportedTypeException(o2.getClass().getName(), "Less-Than");
@@ -60,7 +62,8 @@ public class DateComparisonEvaluator implements IComparisonEvaluator {
 	public boolean isLessThanOrEqual(Object o1, Object o2)  throws Throwable{
 		if (o2 instanceof FacplDate){
 			return ((FacplDate)o1).before((FacplDate)o2) || ((FacplDate)o1).equals((FacplDate)o2);
-		}else if (o2 instanceof String){
+		}
+		else if (o2 instanceof String){
 			return ((FacplDate)o1).before(Util.parseDate((String)o2)) || ((FacplDate)o1).equals(Util.parseDate((String)o2));
 		}
 		throw new UnsupportedTypeException(o2.getClass().getName(), "Less-Than-Or-Equal");
@@ -70,7 +73,8 @@ public class DateComparisonEvaluator implements IComparisonEvaluator {
 	public boolean isGreaterThan(Object o1, Object o2)throws Throwable {
 		if (o2 instanceof FacplDate){
 			return ((FacplDate)o1).after((FacplDate)o2);
-		}else if (o2 instanceof String){
+		}
+		else if (o2 instanceof String){
 			return ((FacplDate)o1).after(Util.parseDate((String)o2));
 		}
 		throw new UnsupportedTypeException(o2.getClass().getName(), "Greater-Than");
@@ -80,7 +84,8 @@ public class DateComparisonEvaluator implements IComparisonEvaluator {
 	public boolean isGreateThanOrEqual(Object o1, Object o2) throws Throwable{
 		if (o2 instanceof FacplDate){
 			return ((FacplDate)o1).after((FacplDate)o2) || ((FacplDate)o1).equals((FacplDate)o2);
-		}else if (o2 instanceof String){
+		}
+		else if (o2 instanceof String){
 			return ((FacplDate)o1).after(Util.parseDate((String)o2)) || ((FacplDate)o1).equals(Util.parseDate((String)o2));
 		}
 		throw new UnsupportedTypeException(o2.getClass().getName(), "Greater-Than-Or-Equal");

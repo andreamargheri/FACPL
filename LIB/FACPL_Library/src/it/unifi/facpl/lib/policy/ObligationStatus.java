@@ -4,6 +4,7 @@ import it.unifi.facpl.lib.context.AbstractFulfilledObligation;
 import it.unifi.facpl.lib.context.FulfilledObligationStatus;
 import it.unifi.facpl.lib.enums.Effect;
 import it.unifi.facpl.lib.enums.ObligationType;
+import it.unifi.facpl.lib.util.FacplDate;
 import it.unifi.facpl.system.status.StatusAttribute;
 import it.unifi.facpl.system.status.function.arithmetic.evaluator.IExpressionFunctionStatus;
 
@@ -14,7 +15,7 @@ public class ObligationStatus extends AbstractObligation {
 		this.pepAction = pepAction;
 		if (args != null){
 			for (Object ob : args) {
-				if (ob instanceof StatusAttribute || ob instanceof Integer || ob instanceof Double || ob instanceof Boolean ){
+				if (ob instanceof StatusAttribute || ob instanceof Integer || ob instanceof Double || ob instanceof Boolean || ob instanceof FacplDate){
 					argsStatus.add(ob);
 				}
 				argsFunction.add(ob);
