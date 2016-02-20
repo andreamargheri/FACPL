@@ -10,9 +10,11 @@ import org.slf4j.LoggerFactory;
 import it.unifi.facpl.lib.context.AbstractFulfilledObligation;
 import it.unifi.facpl.lib.context.AuthorisationPDP;
 import it.unifi.facpl.lib.context.AuthorisationPEP;
+import it.unifi.facpl.lib.context.FulfilledObligationCheck;
 import it.unifi.facpl.lib.context.FulfilledObligationStatus;
 import it.unifi.facpl.lib.context.FullfilledObbligation;
 import it.unifi.facpl.lib.enums.EnforcementAlgorithm;
+import it.unifi.facpl.lib.enums.ExtendedDecision;
 import it.unifi.facpl.lib.enums.ObligationType;
 import it.unifi.facpl.lib.enums.StandardDecision;
 import it.unifi.facpl.lib.interfaces.IPepAction;
@@ -184,6 +186,18 @@ public class PEP {
 			obl = (FulfilledObligationStatus)obl;
 			obl.evaluateObl();
 		}
+		
+	}
+	
+	/*
+	 * TODO: DA IMPLEMENTARE
+	 */
+	private ExtendedDecision dischargeObligationCheck(AbstractFulfilledObligation obl) {
+		if (obl instanceof FulfilledObligationCheck) {
+			FulfilledObligationCheck new_obl = (FulfilledObligationCheck) obl;
+			
+		}
+		return null;
 	}
 
 	public void addPEPActions(HashMap<String, Class<? extends IPepAction>> classPepActions) {

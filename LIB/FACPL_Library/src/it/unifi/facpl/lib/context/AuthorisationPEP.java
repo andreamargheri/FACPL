@@ -8,18 +8,18 @@ public class AuthorisationPEP {
 
 	private StandardDecision decision;
 
-	private boolean check;
+	private boolean PDPpassthrough;
 
 	public AuthorisationPEP(String id, StandardDecision dec) {
 		this.id = id;
 		this.decision = dec;
-		this.check = false;
+		this.PDPpassthrough = false;
 	}
 
-	public AuthorisationPEP(String id, StandardDecision dec, boolean check) {
+	public AuthorisationPEP(String id, StandardDecision dec, boolean PDPpassthrough) {
 		this.id = id;
 		this.decision = dec;
-		this.check = check;
+		this.PDPpassthrough = PDPpassthrough;
 	}
 
 	public String getId() {
@@ -36,10 +36,10 @@ public class AuthorisationPEP {
 	}
 
 	/*
-	 * getter per check
+	 * getter per PDPpassthrough
 	 */
-	public boolean isCheck() {
-		return check;
+	public boolean PDPpassthrough() {
+		return PDPpassthrough;
 	}
 
 }

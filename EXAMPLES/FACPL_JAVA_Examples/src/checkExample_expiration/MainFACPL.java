@@ -1,4 +1,4 @@
-package checkExample;
+package checkExample_expiration;
 
 import java.util.LinkedList;
 
@@ -46,31 +46,58 @@ public class MainFACPL {
 
 		LinkedList<ContextRequest_Status> requests = new LinkedList<ContextRequest_Status>();
 
-		requests.add(ContextRequest_NameRequest.getContextReq());
+		requests.add(ContextRequest_NameRequest.getContextReq()); // 1: PDP
+																	// PERMIT -
+																	// PEP
+																	// PERMIT
 
-		requests.add(ContextRequest_NameRequest.getContextReq());
+		requests.add(ContextRequest_NameRequest.getContextReq()); // 2: PDP ->
+																	// PEP
+																	// PERMIT
 
-		requests.add(ContextRequest_NameRequest.getContextReq());
+		requests.add(ContextRequest_NameRequest.getContextReq()); // 3: PDP ->
+																	// PEP
+																	// PERMIT
+		requests.add(ContextRequest_NameRequest.getContextReq()); // 4: PDP
+																	// PERMIT ->
+																	// PEP
+																	// PERMIT
 
-		requests.add(ContextRequest_NameRequest.getContextReq());
-		
+		requests.add(ContextRequest_NameRequest.getContextReq()); // 5: PDP ->
+																	// PEP
+																	// PERMIT
+
+		requests.add(ContextRequest_NameRequest.getContextReq()); // 6: PDP ->
+																	// PEP
+																	// PERMIT
+
 		AuthorisationPDP resPDP = null;
 		AuthorisationPEP resPEP = null;
+		Integer i = 1;
 		for (ContextRequest rcxt : requests) {
-			result.append("---------------------------------------------------\n");
-			if (resPEP == null || !resPEP.isCheck() || resPEP.getDecision() == StandardDecision.DENY) {
+			boolean PDPed = false;
+			System.err.println("REQUEST N: " + i.toString());
+			if (resPEP == null || resPEP.PDPpassthrough() == false) {
 				resPDP = system.pdp.doAuthorisation(rcxt);
-				result.append("Request: " + resPDP.getId() + "\n\n");
-				result.append("PDP Decision=\n " + resPDP.toString() + "\n\n");
+				PDPed = true;
+				System.err.println("Request: " + resPDP.getId() + "\n\n");
+				System.err.println("PDP Decision=\n " + resPDP.toString() + "\n\n");
 			}
 			// enforce decision
+			if (resPEP != null && resPEP.PDPpassthrough() == false && PDPed == false) {
+				System.err.println("BACK TO PDP");
+				resPDP = system.pdp.doAuthorisation(rcxt);
+				System.err.println("PDP Decision=\n " + resPDP.toString() + "\n\n");
 
+				resPEP = system.pep.doEnforcement(resPDP);
+				
+			}
 			resPEP = system.pep.doEnforcement(resPDP);
-			result.append("PEP Decision=\n " + resPEP.toString() + "\n");
-			result.append("---------------------------------------------------\n");
+			System.err.println("PEP Decision=\n " + resPEP.toString() + "\n");
+			i += 1;
 
 		}
-		System.out.println(result.toString());
+		// System.out.println(result.toString());
 		// ShowResult.showResult(result);
 	}
 
