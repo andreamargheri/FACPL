@@ -1,4 +1,4 @@
-package checkExample_expiration;
+package checkExample.one;
 
 import java.util.LinkedList;
 
@@ -19,7 +19,7 @@ import it.unifi.facpl.system.PEPCheck;
 public class MainFACPL {
 
 	private PDP pdp;
-	private PEP pep;
+	private PEPCheck pep;
 
 	public MainFACPL() throws MissingAttributeException {
 		// defined list of policies included in the PDP
@@ -75,23 +75,14 @@ public class MainFACPL {
 		AuthorisationPEP resPEP = null;
 		Integer i = 1;
 		for (ContextRequest rcxt : requests) {
-			boolean PDPed = false;
 			System.err.println("REQUEST N: " + i.toString());
 			if (resPEP == null || resPEP.PDPpassthrough() == false) {
 				resPDP = system.pdp.doAuthorisation(rcxt);
-				PDPed = true;
+				system.pep.clearAllObligations();
 				System.err.println("Request: " + resPDP.getId() + "\n\n");
 				System.err.println("PDP Decision=\n " + resPDP.toString() + "\n\n");
 			}
 			// enforce decision
-			if (resPEP != null && resPEP.PDPpassthrough() == false && PDPed == false) {
-				System.err.println("BACK TO PDP");
-				resPDP = system.pdp.doAuthorisation(rcxt);
-				System.err.println("PDP Decision=\n " + resPDP.toString() + "\n\n");
-
-				resPEP = system.pep.doEnforcement(resPDP);
-				
-			}
 			resPEP = system.pep.doEnforcement(resPDP);
 			System.err.println("PEP Decision=\n " + resPEP.toString() + "\n");
 			i += 1;

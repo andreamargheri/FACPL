@@ -3,6 +3,7 @@ package it.unifi.facpl.lib.context;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import it.unifi.facpl.lib.algorithm.check.IEvaluableAlgorithmCheck;
 import it.unifi.facpl.lib.enums.Effect;
 import it.unifi.facpl.lib.enums.ExpressionValue;
 import it.unifi.facpl.lib.enums.ObligationType;
@@ -12,15 +13,13 @@ import it.unifi.facpl.system.PEP;
 
 public class FulfilledObligationCheck extends AbstractFulfilledObligation implements Cloneable {
 
-	private ExpressionBooleanTree target;
-	private ExpressionBooleanTree status_target;
-	private int expiration; // PER ORA E' UN INT, POTRA' ESSERE ANCHE UN TEMPO
-							// IN FUTURO
-	private boolean hasExpired;
-	private int originalExpiration;
-	/*
-	 * TODO: AGGIUNGERE TIPO PERSISTENTE NEL TEMPO E NEL NUMERO DI RICHIESTE
-	 */
+	protected ExpressionBooleanTree target;
+	protected ExpressionBooleanTree status_target;
+	protected int expiration; 
+	protected boolean hasExpired;
+	protected int originalExpiration;
+
+	
 	public FulfilledObligationCheck(Effect evaluatedOn, ObligationType type, ExpressionFunction target,
 			ExpressionFunction status_target, int expiration) {
 		super(evaluatedOn, type);
@@ -91,6 +90,7 @@ public class FulfilledObligationCheck extends AbstractFulfilledObligation implem
 			l.debug("EVALUATING EXPRESSION OF OBLIGATION: "+"\r\n");
 			result_target = target.evaluateExpressionTree(cxtRequest);
 			result_target_status = status_target.evaluateExpressionTree(cxtRequest);
+			this.subExpiration(1);
 			l.debug("RESULT_TARGET: " + result_target + " || RESULT_TARGET_STATUS: " + result_target_status);
 		} else if (this.getExpiration() == 0) {
 			l.debug("OBLIGATION CHECK HAS EXPIRED");
@@ -110,7 +110,7 @@ public class FulfilledObligationCheck extends AbstractFulfilledObligation implem
 		} else if (result_target == ExpressionValue.ERROR || result_target_status == ExpressionValue.ERROR) {
 			l.debug("DECISION CHECK: ERROR");
 			return ExpressionValue.ERROR;
-		} else if (result_target == ExpressionValue.FALSE || result_target == ExpressionValue.FALSE) {
+		} else if (result_target == ExpressionValue.FALSE || result_target_status == ExpressionValue.FALSE) {
 			l.debug("DECISION CHECK: FALSE");
 			return ExpressionValue.FALSE;
 		}

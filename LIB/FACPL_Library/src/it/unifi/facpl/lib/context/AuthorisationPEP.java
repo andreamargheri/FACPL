@@ -22,6 +22,10 @@ public class AuthorisationPEP {
 		this.PDPpassthrough = PDPpassthrough;
 	}
 
+	public AuthorisationPEP(String id) {
+		this.id = id;
+	}
+
 	public String getId() {
 		return id;
 	}
@@ -40,6 +44,13 @@ public class AuthorisationPEP {
 	 */
 	public boolean PDPpassthrough() {
 		return PDPpassthrough;
+	}
+	
+	public void setDecision(StandardDecision decision) {
+		this.decision = decision;
+	}
+	public void setPDPpassthrough(boolean pDPpassthrough) {
+		PDPpassthrough = pDPpassthrough;
 	}
 
 }

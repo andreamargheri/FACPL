@@ -7,6 +7,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import it.unifi.facpl.lib.algorithm.check.DenyOverridesCheck;
+import it.unifi.facpl.lib.algorithm.check.IEvaluableAlgorithmCheck;
 import it.unifi.facpl.lib.context.AbstractFulfilledObligation;
 import it.unifi.facpl.lib.context.AuthorisationPDP;
 import it.unifi.facpl.lib.context.AuthorisationPEP;
@@ -14,18 +16,21 @@ import it.unifi.facpl.lib.context.ContextRequest_Status;
 import it.unifi.facpl.lib.context.FulfilledObligationCheck;
 import it.unifi.facpl.lib.enums.EnforcementAlgorithm;
 import it.unifi.facpl.lib.enums.ExpressionValue;
+import it.unifi.facpl.lib.enums.ExtendedDecision;
 import it.unifi.facpl.lib.enums.StandardDecision;
 import it.unifi.facpl.lib.interfaces.IEvaluableAlgorithm;
 
 public class PEPCheck extends PEP {
 	private ContextRequest_Status ctxRequest;
 	private List<FulfilledObligationCheck> checkObl;
+	protected IEvaluableAlgorithmCheck checkAlg;
 
 	public PEPCheck(EnforcementAlgorithm alg, IEvaluableAlgorithm combiningAlgorithm,
 			ContextRequest_Status ctxRequest) {
 		super(alg);
 		this.ctxRequest = ctxRequest;
 		checkObl = new LinkedList<FulfilledObligationCheck>();
+		checkAlg = new DenyOverridesCheck(); //per ora si usa uno fissato
 	}
 
 	/*
@@ -69,52 +74,74 @@ public class PEPCheck extends PEP {
 			}
 		}
 		l.debug("...CHECK OBLIGATION ADDED");
-		/*
-		 * soluzione temporanea prima del combining algorithm TODO: TROVARE UN
-		 * MODO DI USARE IL COMBINING ALGORITHM GIA' ESISTENTE PER COMBINARE LE
-		 * DECISIONI
-		 * 
-		 */
-		boolean pass = true;
-		List<Integer> reAdd = new LinkedList<Integer>();
-		for (FulfilledObligationCheck o1 : checkObl) {
-			try {
-				if (!o1.hasExpired()) {
-					ExpressionValue value = o1.getObligationResult(ctxRequest);
-					if (value != ExpressionValue.TRUE) {
-						pass = false;
-					} else {
-						o1.subExpiration(1);
-						if (o1.hasExpired()) {
-							reAdd.add(checkObl.indexOf(o1));
-							pass = false;
-						}
-					}
-				}
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		for (int i : reAdd) {
-			try {
-				checkObl.add((FulfilledObligationCheck) checkObl.get(i).clone());
-			} catch (CloneNotSupportedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
 
-		if (!pass) {
-			return new AuthorisationPEP(first_enforcement.getId(), first_enforcement.getDecision(), pass);
-		} else {
-			return new AuthorisationPEP(first_enforcement.getId(), StandardDecision.PERMIT, pass);
+
+		AuthorisationPEP evaluationResult = checkAlg.evaluate(checkObl, ctxRequest, true);
+		if (evaluationResult.getDecision() != StandardDecision.PERMIT) {
+			/*
+			 * non saltare il PDP
+			 */
+			evaluationResult.setPDPpassthrough(false);
 		}
+		return evaluationResult;
+		
+		
+		
+//		/*
+//		 * soluzione temporanea prima del combining algorithm TODO: TROVARE UN
+//		 * MODO DI USARE IL COMBINING ALGORITHM GIA' ESISTENTE PER COMBINARE LE
+//		 * DECISIONI
+//		 * 
+//		 */
+//		boolean pass = true;
+//		boolean atLeastOneDeny = false;
+//		List<Integer> reAdd = new LinkedList<Integer>();
+//		for (FulfilledObligationCheck o1 : checkObl) {
+//			try {
+//				if (!o1.hasExpired()) {
+//					ExpressionValue value = o1.getObligationResult(ctxRequest);
+//					if (value != ExpressionValue.TRUE) {
+//						pass = false;
+//						atLeastOneDeny = true;
+//					} else {
+//						o1.subExpiration(1);
+//						if (o1.hasExpired()) {
+//							reAdd.add(checkObl.indexOf(o1));
+//							pass = false;
+//						}
+//					}
+//				}
+//			} catch (Exception e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
+//		for (int i : reAdd) {
+//			try {
+//				checkObl.add((FulfilledObligationCheck) checkObl.get(i).clone());
+//			} catch (CloneNotSupportedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
+//
+//		if (!pass) {
+//			if (atLeastOneDeny) {
+//				return new AuthorisationPEP(first_enforcement.getId(), StandardDecision.DENY, pass);
+//			}
+//			return new AuthorisationPEP(first_enforcement.getId(), first_enforcement.getDecision(), pass);
+//		} else {
+//			return new AuthorisationPEP(first_enforcement.getId(), StandardDecision.PERMIT, pass);
+//		}
+//
+//		/*
+//		 * fine soluzione temporanea
+//		 */
 
-		/*
-		 * fine soluzione temporanea
-		 */
-
+	}
+	
+	public void clearAllObligations() {
+		this.checkObl = new LinkedList<FulfilledObligationCheck>();
 	}
 
 }
