@@ -24,9 +24,7 @@ public class ObligationCheck extends AbstractObligation {
 		super(evaluatedOn, type);
 		this.target = new ExpressionBooleanTree(target);
 		this.status_target = new ExpressionBooleanTree(status_target);
-		this.expiration = expiration;
-		this.pepAction = "CHECK";
-		this.type = CheckObligationType.N;
+		this.init(expiration);
 	}
 
 	public ObligationCheck(Effect evaluatedOn, ObligationType type, ExpressionBooleanTree target,
@@ -34,9 +32,7 @@ public class ObligationCheck extends AbstractObligation {
 		super(evaluatedOn, type);
 		this.target = target;
 		this.status_target = status_target;
-		this.expiration = expiration;
-		this.pepAction = "CHECK";
-		this.type = CheckObligationType.N;
+		this.init(expiration);
 	}
 
 	public ObligationCheck(Effect evaluatedOn, ObligationType type, ExpressionBooleanTree target,
@@ -44,9 +40,7 @@ public class ObligationCheck extends AbstractObligation {
 		super(evaluatedOn, type);
 		this.target = target;
 		this.status_target = new ExpressionBooleanTree(status_target);
-		this.expiration = expiration;
-		this.pepAction = "CHECK";
-		this.type = CheckObligationType.N;
+		this.init(expiration);
 
 	}
 
@@ -55,24 +49,31 @@ public class ObligationCheck extends AbstractObligation {
 		super(evaluatedOn, type);
 		this.target = new ExpressionBooleanTree(target);
 		this.status_target = status_target;
+		this.init(expiration);
+
+	}
+
+	private void init(int expiration) {
 		this.expiration = expiration;
 		this.pepAction = "CHECK";
 		this.type = CheckObligationType.N;
 	}
-	
+
+	private void init() {
+		this.pepAction = "CHECK";
+		this.type = CheckObligationType.P;
+	}
+
 	/*
 	 * COSTRUTTORI PER IL PERSISTENTE
 	 */
-	
-	
-	
+
 	public ObligationCheck(Effect evaluatedOn, ObligationType type, ExpressionFunction target,
 			ExpressionFunction status_target) {
 		super(evaluatedOn, type);
 		this.target = new ExpressionBooleanTree(target);
 		this.status_target = new ExpressionBooleanTree(status_target);
-		this.pepAction = "CHECK";
-		this.type = CheckObligationType.P;
+		this.init();
 	}
 
 	public ObligationCheck(Effect evaluatedOn, ObligationType type, ExpressionBooleanTree target,
@@ -80,8 +81,8 @@ public class ObligationCheck extends AbstractObligation {
 		super(evaluatedOn, type);
 		this.target = target;
 		this.status_target = status_target;
-		this.pepAction = "CHECK";
-		this.type = CheckObligationType.P;
+		this.init();
+
 	}
 
 	public ObligationCheck(Effect evaluatedOn, ObligationType type, ExpressionBooleanTree target,
@@ -89,8 +90,7 @@ public class ObligationCheck extends AbstractObligation {
 		super(evaluatedOn, type);
 		this.target = target;
 		this.status_target = new ExpressionBooleanTree(status_target);
-		this.pepAction = "CHECK";
-		this.type = CheckObligationType.P;
+		this.init();
 
 	}
 
@@ -99,20 +99,18 @@ public class ObligationCheck extends AbstractObligation {
 		super(evaluatedOn, type);
 		this.target = new ExpressionBooleanTree(target);
 		this.status_target = status_target;
-		this.pepAction = "CHECK";
-		this.type = CheckObligationType.P;
+		this.init();
 	}
-	
 
 	@Override
 	protected AbstractFulfilledObligation createObligation() {
 		if (this.type == CheckObligationType.N) {
-			return new FulfilledObligationCheck(this.evaluatedOn,this.typeObl, this.target, this.status_target, this.expiration);
+			return new FulfilledObligationCheck(this.evaluatedOn, this.typeObl, this.target, this.status_target,
+					this.expiration);
 		} else {
-			return new FulfilledObligationCheckPersistent(this.evaluatedOn, this.typeObl, this.target, this.status_target);
+			return new FulfilledObligationCheckPersistent(this.evaluatedOn, this.typeObl, this.target,
+					this.status_target);
 		}
 	}
-
-
 
 }

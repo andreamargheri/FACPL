@@ -8,18 +8,10 @@ public class AuthorisationPEP {
 
 	private StandardDecision decision;
 
-	private boolean PDPpassthrough;
 
 	public AuthorisationPEP(String id, StandardDecision dec) {
 		this.id = id;
 		this.decision = dec;
-		this.PDPpassthrough = false;
-	}
-
-	public AuthorisationPEP(String id, StandardDecision dec, boolean PDPpassthrough) {
-		this.id = id;
-		this.decision = dec;
-		this.PDPpassthrough = PDPpassthrough;
 	}
 
 	public AuthorisationPEP(String id) {
@@ -39,18 +31,9 @@ public class AuthorisationPEP {
 		return decision.toString();
 	}
 
-	/*
-	 * getter per PDPpassthrough
-	 */
-	public boolean PDPpassthrough() {
-		return PDPpassthrough;
-	}
-	
 	public void setDecision(StandardDecision decision) {
 		this.decision = decision;
 	}
-	public void setPDPpassthrough(boolean pDPpassthrough) {
-		PDPpassthrough = pDPpassthrough;
-	}
+
 
 }

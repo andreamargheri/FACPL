@@ -21,7 +21,7 @@ import it.unifi.facpl.system.PEPCheck;
 public class MainFACPL {
 
 	private PDP pdp;
-	private PEP pep;
+	private PEPCheck pep;
 
 	public MainFACPL() throws MissingAttributeException {
 		// defined list of policies included in the PDP
@@ -30,8 +30,7 @@ public class MainFACPL {
 		policies.add(new PolicySet_NamePolicySetTwo(ContextRequest_NameRequest.getContextReq()));
 		this.pdp = new PDP(it.unifi.facpl.lib.algorithm.PermitUnlessDenyGreedy.class, policies, false);
 
-		this.pep = new PEPCheck(EnforcementAlgorithm.DENY_BIASED, new DenyOverrides(),
-				ContextRequest_NameRequest.getContextReq());
+		this.pep = new PEPCheck(EnforcementAlgorithm.DENY_BIASED, new DenyOverrides(), this.pdp);
 
 		this.pep.addPEPActions(PEPAction.getPepActions());
 	}
@@ -62,19 +61,9 @@ public class MainFACPL {
 		AuthorisationPEP resPEP = null;
 		Integer i = 1;
 		for (ContextRequest rcxt : requests) {
-			boolean PDPed = false;
 			System.err.println("REQUEST N: " + i.toString());
-			if (resPEP == null || resPEP.PDPpassthrough() == false) {
-				resPDP = system.pdp.doAuthorisation(rcxt);
-				PDPed = true;
-				System.err.println("Request: " + resPDP.getId() + "\n\n");
-				System.err.println("PDP Decision=\n " + resPDP.toString() + "\n\n");
-			}
-			// enforce decision
-			resPEP = system.pep.doEnforcement(resPDP);
-			System.err.println("PEP Decision=\n " + resPEP.toString() + "\n");
+			System.err.println(system.pep.doAuthorisation(rcxt));
 			i += 1;
-
 		}
 		// System.out.println(result.toString());
 		// ShowResult.showResult(result);

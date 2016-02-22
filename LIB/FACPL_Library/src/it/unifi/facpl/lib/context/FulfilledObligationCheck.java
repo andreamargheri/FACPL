@@ -16,11 +16,10 @@ public class FulfilledObligationCheck extends AbstractFulfilledObligation implem
 
 	protected ExpressionBooleanTree target;
 	protected ExpressionBooleanTree status_target;
-	protected int expiration; 
+	protected int expiration;
 	protected boolean hasExpired;
 	protected int originalExpiration;
 
-	
 	public FulfilledObligationCheck(Effect evaluatedOn, ObligationType type, ExpressionFunction target,
 			ExpressionFunction status_target, int expiration) {
 		super(evaluatedOn, type);
@@ -71,24 +70,24 @@ public class FulfilledObligationCheck extends AbstractFulfilledObligation implem
 	}
 
 	@Override
-	public AbstractFulfilledObligation evaluateObl() throws Throwable  {
+	public AbstractFulfilledObligation evaluateObl() throws Throwable {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public StandardDecision getObligationResult(ContextRequest cxtRequest) throws Exception {
+	public StandardDecision getObligationResult(ContextRequest cxtRequest) {
 		/*
 		 * SE ENTRAMBE VERE -> VERO SE UNA FALSA -> FALSO [RITORNA PDP] SE UNA
 		 * BOTTOM -> BOTTOM [RITORNA PDP] SE UNA ERROR -> ERROR [RITORNA PDP]
 		 */
 		Logger l = LoggerFactory.getLogger(FulfilledObligationCheck.class);
-		l.debug("EVALUATING FULFILLEDOBLIGATIONCHECK: "+"\r\n");
-		
+		l.debug("EVALUATING FULFILLEDOBLIGATION-CHECK: " + "\r\n");
+
 		ExpressionValue result_target, result_target_status;
 		result_target = null;
 		result_target_status = null;
 		if (this.getExpiration() > 0) {
-			l.debug("EVALUATING EXPRESSION OF OBLIGATION: "+"\r\n");
+			l.debug("EVALUATING EXPRESSION OF OBLIGATION: " + "\r\n");
 			result_target = target.evaluateExpressionTree(cxtRequest);
 			result_target_status = status_target.evaluateExpressionTree(cxtRequest);
 			this.subExpiration(1);
@@ -99,68 +98,67 @@ public class FulfilledObligationCheck extends AbstractFulfilledObligation implem
 			result_target_status = ExpressionValue.ERROR;
 		}
 
-		/*
-		 * TODO: GESTIRE NULL POINTER EXCEPTION
-		 */
 		if (result_target == ExpressionValue.TRUE && result_target_status == ExpressionValue.TRUE) {
 			l.debug("DECISION CHECK: TRUE");
-			
-			/*
-			 * 
-			 */
-			if (evaluatedOn.equals(Effect.PERMIT)){
+			if (evaluatedOn.equals(Effect.PERMIT)) {
+				l.debug("RETURN PERMIT");
 				return StandardDecision.PERMIT;
-			}else{
+			} else {
+				l.debug("RETURN DENY");
 				return StandardDecision.DENY;
 			}
 		} else if (result_target == ExpressionValue.BOTTOM || result_target_status == ExpressionValue.BOTTOM) {
 			l.debug("DECISION CHECK: BOTTOM");
+			l.debug("RETURN NOT APPLICABLE");
 			return StandardDecision.NOT_APPLICABLE;
 		} else if (result_target == ExpressionValue.ERROR || result_target_status == ExpressionValue.ERROR) {
-			l.debug("DECISION CHECK: ERROR");
+			l.debug("DECISION INDETERMINATE");
 			return StandardDecision.INDETERMINATE;
 		} else if (result_target == ExpressionValue.FALSE || result_target_status == ExpressionValue.FALSE) {
-			l.debug("DECISION CHECK: FALSE");
+			l.debug("DECISION NOT APPLICABLE");
 			return StandardDecision.NOT_APPLICABLE;
 		}
+		l.debug("RETURN INDETERMINATE");
 		return StandardDecision.INDETERMINATE;
 	}
 
 	public int getExpiration() {
 		return expiration;
 	}
+
 	public void setExpired() {
 		this.hasExpired = true;
 	}
+
 	public boolean hasExpired() {
 		return this.hasExpired;
 	}
-	public void subExpiration(int i) throws Exception {
+
+	public void subExpiration(int i) {
 		Logger l = LoggerFactory.getLogger(FulfilledObligationCheck.class);
 		if (expiration != 0) {
 			expiration -= i;
-			l.debug("NEW EXPIRATION: "+this.toString());
+			l.debug("NEW EXPIRATION: " + this.toString());
 			if (expiration == 0) {
 				this.setExpired();
 			}
 		} else if (expiration == 0) {
-			throw new Exception("The obligation has expired");
-			/*
-			 * valutare se creare un nuovo tipo di Exception
-			 */
+			//niente
 		}
 	}
 
 	@Override
 	public String toString() {
-		return "target: " + target.toString() + "\r\n" + "status: " + status_target.toString() +"\r\n EXPIRATION IN: "+expiration;
+		return "target: " + target.toString() + "\r\n" + "status: " + status_target.toString() + "\r\n EXPIRATION IN: "
+				+ expiration;
 	}
-	
+
 	@Override
 	public Object clone() throws CloneNotSupportedException {
-		return new FulfilledObligationCheck(this.evaluatedOn, this.type, this.target,this.status_target, this.originalExpiration);
+		return new FulfilledObligationCheck(this.evaluatedOn, this.type, this.target, this.status_target,
+				this.originalExpiration);
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof FulfilledObligationCheck) {

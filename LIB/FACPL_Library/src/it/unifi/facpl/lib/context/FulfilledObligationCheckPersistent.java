@@ -35,7 +35,7 @@ public class FulfilledObligationCheckPersistent extends FulfilledObligationCheck
 		return false;
 	}
 
-	public void subExpiration(int i) throws Exception {
+	public void subExpiration(int i) {
 		// do nothing
 	}
 

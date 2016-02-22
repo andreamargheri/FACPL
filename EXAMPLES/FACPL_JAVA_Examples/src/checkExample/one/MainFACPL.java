@@ -28,8 +28,7 @@ public class MainFACPL {
 		policies.add(new PolicySet_NamePolicySetTwo(ContextRequest_NameRequest.getContextReq()));
 		this.pdp = new PDP(it.unifi.facpl.lib.algorithm.PermitUnlessDenyGreedy.class, policies, false);
 
-		this.pep = new PEPCheck(EnforcementAlgorithm.DENY_BIASED, new DenyOverrides(),
-				ContextRequest_NameRequest.getContextReq());
+		this.pep = new PEPCheck(EnforcementAlgorithm.DENY_BIASED, new DenyOverrides(), this.pdp);
 
 		this.pep.addPEPActions(PEPAction.getPepActions());
 	}
@@ -76,17 +75,9 @@ public class MainFACPL {
 		Integer i = 1;
 		for (ContextRequest rcxt : requests) {
 			System.err.println("REQUEST N: " + i.toString());
-			if (resPEP == null || resPEP.PDPpassthrough() == false) {
-				resPDP = system.pdp.doAuthorisation(rcxt);
-				system.pep.clearAllObligations();
-				System.err.println("Request: " + resPDP.getId() + "\n\n");
-				System.err.println("PDP Decision=\n " + resPDP.toString() + "\n\n");
-			}
-			// enforce decision
-			resPEP = system.pep.doEnforcement(resPDP);
-			System.err.println("PEP Decision=\n " + resPEP.toString() + "\n");
+			resPEP = system.pep.doAuthorisation(rcxt);
+			System.err.println(resPEP);
 			i += 1;
-
 		}
 		// System.out.println(result.toString());
 		// ShowResult.showResult(result);
