@@ -18,14 +18,13 @@ public class DenyOverridesCheck implements IEvaluableAlgorithmCheck {
 	private Boolean atLeastOneDeny = false;
 
 	@Override
-	public AuthorisationPEP evaluate(List<FulfilledObligationCheck> checkObl, ContextRequest cxtRequest,
-			Boolean extendedIndeterminate) {
+	public AuthorisationPEP evaluate(List<FulfilledObligationCheck> checkObl, ContextRequest cxtRequest) {
 		AuthorisationPEP dr = new AuthorisationPEP(UUID.randomUUID().toString().substring(0, 8));
 		dr.setPDPpassthrough(true);
 		for (FulfilledObligationCheck obl : checkObl) {
 			if (!obl.hasExpired()) {
 
-				ExpressionValue dec;
+				StandardDecision dec;
 				try {
 					dec = obl.getObligationResult(cxtRequest);
 					if (obl.hasExpired()) {

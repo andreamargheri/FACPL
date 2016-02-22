@@ -7,6 +7,7 @@ import it.unifi.facpl.lib.algorithm.check.IEvaluableAlgorithmCheck;
 import it.unifi.facpl.lib.enums.Effect;
 import it.unifi.facpl.lib.enums.ExpressionValue;
 import it.unifi.facpl.lib.enums.ObligationType;
+import it.unifi.facpl.lib.enums.StandardDecision;
 import it.unifi.facpl.lib.policy.ExpressionBooleanTree;
 import it.unifi.facpl.lib.policy.ExpressionFunction;
 import it.unifi.facpl.system.PEP;
@@ -75,7 +76,7 @@ public class FulfilledObligationCheck extends AbstractFulfilledObligation implem
 		return null;
 	}
 
-	public ExpressionValue getObligationResult(ContextRequest cxtRequest) throws Exception {
+	public StandardDecision getObligationResult(ContextRequest cxtRequest) throws Exception {
 		/*
 		 * SE ENTRAMBE VERE -> VERO SE UNA FALSA -> FALSO [RITORNA PDP] SE UNA
 		 * BOTTOM -> BOTTOM [RITORNA PDP] SE UNA ERROR -> ERROR [RITORNA PDP]
@@ -103,18 +104,26 @@ public class FulfilledObligationCheck extends AbstractFulfilledObligation implem
 		 */
 		if (result_target == ExpressionValue.TRUE && result_target_status == ExpressionValue.TRUE) {
 			l.debug("DECISION CHECK: TRUE");
-			return ExpressionValue.TRUE;
+			
+			/*
+			 * 
+			 */
+			if (evaluatedOn.equals(Effect.PERMIT)){
+				return StandardDecision.PERMIT;
+			}else{
+				return StandardDecision.DENY;
+			}
 		} else if (result_target == ExpressionValue.BOTTOM || result_target_status == ExpressionValue.BOTTOM) {
 			l.debug("DECISION CHECK: BOTTOM");
-			return ExpressionValue.BOTTOM;
+			return StandardDecision.NOT_APPLICABLE;
 		} else if (result_target == ExpressionValue.ERROR || result_target_status == ExpressionValue.ERROR) {
 			l.debug("DECISION CHECK: ERROR");
-			return ExpressionValue.ERROR;
+			return StandardDecision.INDETERMINATE;
 		} else if (result_target == ExpressionValue.FALSE || result_target_status == ExpressionValue.FALSE) {
 			l.debug("DECISION CHECK: FALSE");
-			return ExpressionValue.FALSE;
+			return StandardDecision.NOT_APPLICABLE;
 		}
-		return null;
+		return StandardDecision.INDETERMINATE;
 	}
 
 	public int getExpiration() {

@@ -8,8 +8,7 @@ import it.unifi.facpl.lib.context.FulfilledObligationCheck;
 
 public interface IEvaluableAlgorithmCheck {
 	
-	
-	AuthorisationPEP evaluate(List<FulfilledObligationCheck> checkObl, ContextRequest cxtRequest, Boolean extendedIndeterminate);
+	AuthorisationPEP evaluate(List<FulfilledObligationCheck> checkObl, ContextRequest cxtRequest);
 }
 	
 

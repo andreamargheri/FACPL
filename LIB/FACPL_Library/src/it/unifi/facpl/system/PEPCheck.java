@@ -76,7 +76,7 @@ public class PEPCheck extends PEP {
 		l.debug("...CHECK OBLIGATION ADDED");
 
 
-		AuthorisationPEP evaluationResult = checkAlg.evaluate(checkObl, ctxRequest, true);
+		AuthorisationPEP evaluationResult = checkAlg.evaluate(checkObl, ctxRequest);
 		if (evaluationResult.getDecision() != StandardDecision.PERMIT) {
 			/*
 			 * non saltare il PDP
