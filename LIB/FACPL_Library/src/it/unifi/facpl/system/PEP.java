@@ -178,9 +178,8 @@ public class PEP {
 			}
 		}
 		/*
-		 * si valutano le obbligazioni di stato in questo caso visto che
-		 * l'oggetto è gia' presente all'interno della classe si puo'
-		 * semplicemente invocare il metodo che invocherà il valutatore
+		 * evaluating of Status Obligation
+		 *  
 		 */
 		else if (obl instanceof FulfilledObligationStatus) {
 			obl = (FulfilledObligationStatus) obl;
@@ -189,16 +188,8 @@ public class PEP {
 
 	}
 
-	/*
-	 * TODO: DA IMPLEMENTARE
-	 */
-	private ExtendedDecision dischargeObligationCheck(AbstractFulfilledObligation obl) {
-		if (obl instanceof FulfilledObligationCheck) {
-			FulfilledObligationCheck new_obl = (FulfilledObligationCheck) obl;
 
-		}
-		return null;
-	}
+
 
 	public void addPEPActions(HashMap<String, Class<? extends IPepAction>> classPepActions) {
 		Logger l = LoggerFactory.getLogger(PEP.class);

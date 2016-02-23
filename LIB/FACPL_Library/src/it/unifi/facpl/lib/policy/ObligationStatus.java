@@ -14,6 +14,9 @@ public class ObligationStatus extends AbstractObligation {
 			Object... args) {
 		super(evaluatedOn, type, args);
 		this.pepAction = pepAction;
+		/*
+		 * adding status argument to this obligation
+		 */
 		if (args != null) {
 			for (Object ob : args) {
 				if (ob instanceof StatusAttribute || ob instanceof Integer || ob instanceof Double
@@ -27,6 +30,9 @@ public class ObligationStatus extends AbstractObligation {
 
 	@Override
 	protected AbstractFulfilledObligation createObligation() {
+		/*
+		 * this method create a fulfilled obligation status
+		 */
 		AbstractFulfilledObligation obl = new FulfilledObligationStatus(this.evaluatedOn, this.typeObl,
 				(IExpressionFunctionStatus) this.pepAction);
 		if (!argsStatus.isEmpty()) {

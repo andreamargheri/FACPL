@@ -8,7 +8,9 @@ import it.unifi.facpl.lib.util.exception.MissingAttributeException;
 import it.unifi.facpl.system.status.StatusAttribute;
 
 public class ContextRequest_Status extends ContextRequest {
-
+	/*
+	 * context request for status
+	 */
 	public ContextRequest_Status(Request req) {
 		super(req);
 	}
@@ -22,6 +24,9 @@ public class ContextRequest_Status extends ContextRequest {
 	}
 
 	public StatusAttribute getStatusAttribute(StatusAttribute attribute) throws MissingAttributeException {
+		/*
+		 * return status attribute retrieved in context
+		 */
 		return ((ContextStub_Status_Default) context).getStatusAttribute(attribute);
 	}
 
@@ -29,9 +34,7 @@ public class ContextRequest_Status extends ContextRequest {
 		Logger l = LoggerFactory.getLogger(ContextRequest_Status.class);
 		if (context != null) {
 
-			/*
-			 * SI PASSA LO STATO COME RIFERIMENTO -> CAMBIARE ?
-			 */
+			
 			Object values = this.context.getContextValues(name);
 
 			if (values == null) {

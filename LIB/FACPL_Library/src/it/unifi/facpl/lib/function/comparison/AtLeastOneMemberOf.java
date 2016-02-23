@@ -6,7 +6,7 @@ import it.unifi.facpl.lib.interfaces.IComparisonFunction;
 import it.unifi.facpl.lib.util.Set;
 
 public class AtLeastOneMemberOf implements IComparisonFunction {
-	// non usa evaluator, si vedra' in seguito come fare refactoring
+
 	@Override
 	public Boolean evaluateFunction(List<Object> args) throws Throwable {
 		if (args.size() == 2) {

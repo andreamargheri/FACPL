@@ -7,6 +7,10 @@ import it.unifi.facpl.lib.policy.ExpressionFunction;
 
 public class FulfilledObligationCheckPersistent extends FulfilledObligationCheck {
 
+	/*
+	 * same constructor of FulfilledObligationCheck, 
+	 * but expiration is initialized with max int
+	 */
 	public FulfilledObligationCheckPersistent(Effect evaluatedOn, ObligationType type, ExpressionBooleanTree target,
 			ExpressionBooleanTree status_target) {
 		super(evaluatedOn, type, target, status_target, Integer.MAX_VALUE);

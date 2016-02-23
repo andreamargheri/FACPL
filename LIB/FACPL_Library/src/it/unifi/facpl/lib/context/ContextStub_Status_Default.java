@@ -10,9 +10,7 @@ import it.unifi.facpl.system.status.StatusAttribute;
 
 @SuppressWarnings("all")
 public class ContextStub_Status_Default implements IContextStub {
-	/*
-	 * TODO: rendere lo stato unico ed non modificabile
-	 */
+	
 	private static ContextStub_Status_Default instance;
 
 	private static FacplStatus status;
@@ -37,6 +35,9 @@ public class ContextStub_Status_Default implements IContextStub {
 	}
 
 	public Object getContextValues(Object attr) throws MissingAttributeException {
+		/*
+		 * return environment attribute or status attribute
+		 */
 		if (attr instanceof AttributeName) {
 			AttributeName attribute = (AttributeName) attr;
 			// Context Time Value

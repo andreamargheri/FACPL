@@ -17,7 +17,13 @@ public class FulfilledObligationCheck extends AbstractFulfilledObligation implem
 	protected int expiration;
 	protected boolean hasExpired;
 	protected int originalExpiration;
-
+	/*
+	 * four constructor for all combination of Expression: 
+	 * 1: ExpressionFunction, ExpressionFunction
+	 * 2: ExpressionBooleanTree, ExpressionBooleanTree
+	 * 3: ExpressionBooleanTree, ExpressionFunction
+	 * 4: ExpressionFunction, ExpresisonBooleanTree
+	 */
 	public FulfilledObligationCheck(Effect evaluatedOn, ObligationType type, ExpressionFunction target,
 			ExpressionFunction status_target, int expiration) {
 		super(evaluatedOn, type);
@@ -60,10 +66,6 @@ public class FulfilledObligationCheck extends AbstractFulfilledObligation implem
 
 	@Override
 	public Object getPepAction() {
-		// TODO Auto-generated method stub
-		/*
-		 * TODO: NON CI SONO PEPACTION, GESTIRE QUESTO ASPETTO
-		 */
 		return null;
 	}
 
@@ -74,9 +76,13 @@ public class FulfilledObligationCheck extends AbstractFulfilledObligation implem
 	}
 
 	public StandardDecision getObligationResult(ContextRequest cxtRequest) {
+
 		/*
-		 * SE ENTRAMBE VERE -> VERO SE UNA FALSA -> FALSO [RITORNA PDP] SE UNA
-		 * BOTTOM -> BOTTOM [RITORNA PDP] SE UNA ERROR -> ERROR [RITORNA PDP]
+		 * This method evaluate target and status target and according to result return:
+		 * IF target and status target TRUE -> EVALUATED_ON [PERMIT OR DENY]
+		 * IF target or status target FALSE -> NOT APPLICABLE
+		 * IF target or status target BOTTOM -> NOT APPLICABLE
+		 * IF target or status target ERROR -> INDETERMINATE
 		 */
 		Logger l = LoggerFactory.getLogger(FulfilledObligationCheck.class);
 		l.debug("EVALUATING FULFILLEDOBLIGATION-CHECK: " + "\r\n");
@@ -85,6 +91,7 @@ public class FulfilledObligationCheck extends AbstractFulfilledObligation implem
 		result_target = null;
 		result_target_status = null;
 		if (this.getExpiration() > 0) {
+			//if not expired -> evaluate target
 			l.debug("EVALUATING EXPRESSION OF OBLIGATION: " + "\r\n");
 			result_target = target.evaluateExpressionTree(cxtRequest);
 			result_target_status = status_target.evaluateExpressionTree(cxtRequest);
@@ -97,6 +104,7 @@ public class FulfilledObligationCheck extends AbstractFulfilledObligation implem
 		}
 
 		if (result_target == ExpressionValue.TRUE && result_target_status == ExpressionValue.TRUE) {
+			//true and true -> [permit or deny]
 			l.debug("DECISION CHECK: TRUE");
 			if (evaluatedOn.equals(Effect.PERMIT)) {
 				l.debug("RETURN PERMIT");
@@ -106,13 +114,16 @@ public class FulfilledObligationCheck extends AbstractFulfilledObligation implem
 				return StandardDecision.DENY;
 			}
 		} else if (result_target == ExpressionValue.BOTTOM || result_target_status == ExpressionValue.BOTTOM) {
+			//bottom -> not applicable
 			l.debug("DECISION CHECK: BOTTOM");
 			l.debug("RETURN NOT APPLICABLE");
 			return StandardDecision.NOT_APPLICABLE;
 		} else if (result_target == ExpressionValue.ERROR || result_target_status == ExpressionValue.ERROR) {
+			//error -> indeterminate
 			l.debug("DECISION INDETERMINATE");
 			return StandardDecision.INDETERMINATE;
 		} else if (result_target == ExpressionValue.FALSE || result_target_status == ExpressionValue.FALSE) {
+			//false -> not applicable
 			l.debug("DECISION NOT APPLICABLE");
 			return StandardDecision.NOT_APPLICABLE;
 		}
@@ -133,6 +144,7 @@ public class FulfilledObligationCheck extends AbstractFulfilledObligation implem
 	}
 
 	public void subExpiration(int i) {
+		
 		Logger l = LoggerFactory.getLogger(FulfilledObligationCheck.class);
 		if (expiration != 0) {
 			expiration -= i;
@@ -153,6 +165,9 @@ public class FulfilledObligationCheck extends AbstractFulfilledObligation implem
 
 	@Override
 	public Object clone() throws CloneNotSupportedException {
+		/*
+		 * return the original obligation
+		 */
 		return new FulfilledObligationCheck(this.evaluatedOn, this.type, this.target, this.status_target,
 				this.originalExpiration);
 	}

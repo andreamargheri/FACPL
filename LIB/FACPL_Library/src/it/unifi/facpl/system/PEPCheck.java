@@ -24,23 +24,43 @@ public class PEPCheck extends PEP {
 	private PDP pdp;
 	private AuthorisationPDP authPDP;
 
-	public PEPCheck(EnforcementAlgorithm alg, IEvaluableAlgorithm combiningAlgorithm, PDP pdp) {
+	public PEPCheck(EnforcementAlgorithm alg, PDP pdp) {
 		super(alg);
 		checkObl = new LinkedList<FulfilledObligationCheck>();
-		checkAlg = new DenyOverridesCheck(); // per ora si usa uno fissato
+		checkAlg = new DenyOverridesCheck(); //default algorithm
+		this.pdp = pdp;
+		authPDP = null;
+
+	}
+	
+	public PEPCheck(EnforcementAlgorithm alg, IEvaluableAlgorithmCheck combiningAlgorithm, PDP pdp) {
+		super(alg);
+		checkObl = new LinkedList<FulfilledObligationCheck>();
+		checkAlg = combiningAlgorithm;
 		this.pdp = pdp;
 		authPDP = null;
 
 	}
 
 	public AuthorisationPEP doAuthorisation(ContextRequest cxtReq) {
+		/*
+		 * authorisation:
+		 * if number of check obligation == 0 -> PDP evaluation -> PEP Enforcement
+		 * otherwise -> PEP Evaluation
+		 */
 		Logger l = LoggerFactory.getLogger(PEPCheck.class);
 		AuthorisationPEP result;
 		if (checkObl.size() == 0) {
+			/*
+			 * PDP Evaluation -> PEP ENFORCEMENT
+			 */
 			l.debug("NUMBER OF CHECK OBLIGATION: 0 -> AUTHORISATION BY PDP -> ENFORCEMENT BY PEP");
 			authPDP = pdp.doAuthorisation(cxtReq);
 			return this.doEnforcement(authPDP);
 		} else {
+			/*
+			 * PEP EVALUATION
+			 */
 			l.debug("NUMBER OF CHECK OBLIGATION: " + checkObl.size() + " -> EVALUATING CHECK OBLIGATION");
 			result = this.doPEPCheck(cxtReq);
 
@@ -48,6 +68,10 @@ public class PEPCheck extends PEP {
 			if (result.getDecision() == StandardDecision.PERMIT || result.getDecision() == StandardDecision.DENY) {
 				return result;
 			} else {
+				/*
+				 * if check obligation returns an error
+				 *  -> PDP Evaluation -> PEP Enforcement
+				 */
 				l.debug("BACK TO PDP");
 				authPDP = pdp.doAuthorisation(cxtReq);
 				this.clearAllObligations();
@@ -61,6 +85,9 @@ public class PEPCheck extends PEP {
 
 	@Override
 	public AuthorisationPEP doEnforcement(AuthorisationPDP authPDP) {
+		/*
+		 * normal PEP enforcement + addiction of CheckObligation
+		 */
 		AuthorisationPEP first_enforcement;
 		Logger l = LoggerFactory.getLogger(PEPCheck.class);
 		first_enforcement = super.doEnforcement(authPDP); // enforcement
@@ -93,6 +120,9 @@ public class PEPCheck extends PEP {
 	}
 
 	private AuthorisationPEP doPEPCheck(ContextRequest ctxRequest) {
+		/*
+		 * evaluate check obligation
+		 */
 		Logger l = LoggerFactory.getLogger(PEPCheck.class);
 		l.debug("DOING PEP CHECK:");
 		if (checkObl.size() > 0) {

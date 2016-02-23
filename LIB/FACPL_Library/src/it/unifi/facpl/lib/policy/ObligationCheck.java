@@ -11,14 +11,15 @@ public class ObligationCheck extends AbstractObligation {
 
 	private ExpressionBooleanTree target;
 	private ExpressionBooleanTree status_target;
-	private int expiration; // PER ORA E' UN INT, POTRA' ESSERE ANCHE UN TEMPO
-							// IN FUTURO
+	private int expiration; 
 	private CheckObligationType type;
 	/*
-	 * Servono quattro costruttori poiche' bisogna considerare tutti e quattro i
-	 * casi possibili di funzioni in input
+	 * four constructor for all combination of Expression: 
+	 * 1: ExpressionFunction, ExpressionFunction
+	 * 2: ExpressionBooleanTree, ExpressionBooleanTree
+	 * 3: ExpressionBooleanTree, ExpressionFunction
+	 * 4: ExpressionFunction, ExpresisonBooleanTree
 	 */
-
 	public ObligationCheck(Effect evaluatedOn, ObligationType type, ExpressionFunction target,
 			ExpressionFunction status_target, int expiration) {
 		super(evaluatedOn, type);
@@ -65,7 +66,7 @@ public class ObligationCheck extends AbstractObligation {
 	}
 
 	/*
-	 * COSTRUTTORI PER IL PERSISTENTE
+	 * CONSTRUCTOR FOR PERSISTENT TYPE
 	 */
 
 	public ObligationCheck(Effect evaluatedOn, ObligationType type, ExpressionFunction target,
@@ -104,6 +105,9 @@ public class ObligationCheck extends AbstractObligation {
 
 	@Override
 	protected AbstractFulfilledObligation createObligation() {
+		/*
+		 * this method create a fulfilledobligationcheck
+		 */
 		if (this.type == CheckObligationType.N) {
 			return new FulfilledObligationCheck(this.evaluatedOn, this.typeObl, this.target, this.status_target,
 					this.expiration);
