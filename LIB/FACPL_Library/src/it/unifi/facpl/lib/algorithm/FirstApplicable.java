@@ -16,33 +16,34 @@ import it.unifi.facpl.lib.interfaces.IEvaluablePolicy;
  * @author Andrea Margheri
  *
  */
-public class FirstApplicable implements IEvaluableAlgorithm{
+public class FirstApplicable implements IEvaluableAlgorithm {
 
 	@Override
-	public AuthorisationPDP evaluate(List<IEvaluablePolicy> elements,
-			ContextRequest cxtRequest, Boolean extendedIndeterminate) {
+	public AuthorisationPDP evaluate(List<IEvaluablePolicy> elements, ContextRequest cxtRequest,
+			Boolean extendedIndeterminate) {
 
 		Logger l = LoggerFactory.getLogger(FirstApplicable.class);
 		l.debug("-> FIRST APPLICABLE started");
-	
+
 		AuthorisationPDP dr = new AuthorisationPDP();
- 
+
 		for (IEvaluablePolicy el : elements) {
 			dr = el.evaluate(cxtRequest, extendedIndeterminate);
-			if (dr.getDecision().equals(ExtendedDecision.DENY)){
+			if (dr.getDecision().equals(ExtendedDecision.DENY)) {
 				l.debug("First Applicable END - Result DENY");
 				return dr;
 			}
-			if (dr.getDecision().equals(ExtendedDecision.PERMIT)){
+			if (dr.getDecision().equals(ExtendedDecision.PERMIT)) {
 				l.debug("First Applicable END - Result PERMIT");
 				return dr;
 			}
-			if (dr.getDecision().equals(ExtendedDecision.NOT_APPLICABLE)){
+			if (dr.getDecision().equals(ExtendedDecision.NOT_APPLICABLE)) {
 				l.debug("First Applicable Continue - Element NOT APPLICABLE, continue");
 				continue;
 			}
-			if (dr.getDecision().equals(ExtendedDecision.INDETERMINATE_D)|| dr.getDecision().equals(ExtendedDecision.INDETERMINATE_P)
-					|| dr.getDecision().equals(ExtendedDecision.INDETERMINATE_DP)){
+			if (dr.getDecision().equals(ExtendedDecision.INDETERMINATE_D)
+					|| dr.getDecision().equals(ExtendedDecision.INDETERMINATE_P)
+					|| dr.getDecision().equals(ExtendedDecision.INDETERMINATE_DP)) {
 				l.debug("First Applicable END - Result INDETERMINATE");
 				return dr;
 			}
@@ -53,4 +54,3 @@ public class FirstApplicable implements IEvaluableAlgorithm{
 	}
 
 }
-

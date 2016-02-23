@@ -7,15 +7,12 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import it.unifi.facpl.lib.algorithm.PermitOverrides;
 import it.unifi.facpl.lib.context.AbstractFulfilledObligation;
-import it.unifi.facpl.lib.context.AuthorisationPDP;
 import it.unifi.facpl.lib.context.AuthorisationPEP;
 import it.unifi.facpl.lib.context.ContextRequest;
 import it.unifi.facpl.lib.context.FulfilledObligationCheck;
 import it.unifi.facpl.lib.enums.ExtendedDecision;
 import it.unifi.facpl.lib.enums.StandardDecision;
-import it.unifi.facpl.lib.interfaces.IEvaluablePolicy;
 
 public class PermitOverridesCheck implements IEvaluableAlgorithmCheck {
 

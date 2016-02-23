@@ -115,8 +115,8 @@ public class ExpressionBooleanTree {
 				// return BOTTOM for modeling the absence of attribute
 				return ExpressionValue.BOTTOM;
 			}
-		}else if (root instanceof ExpressionBooleanTree){
-			return ((ExpressionBooleanTree)root).evaluateExpressionTree(cxtRequest);
+		} else if (root instanceof ExpressionBooleanTree) {
+			return ((ExpressionBooleanTree) root).evaluateExpressionTree(cxtRequest);
 		}
 
 		// Case non considered

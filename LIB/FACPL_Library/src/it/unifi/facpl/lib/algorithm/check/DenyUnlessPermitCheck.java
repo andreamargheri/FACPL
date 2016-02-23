@@ -19,8 +19,6 @@ public class DenyUnlessPermitCheck implements IEvaluableAlgorithmCheck {
 		Logger l = LoggerFactory.getLogger(DenyUnlessPermit.class);
 		l.debug("-> DENY UNLESS PERMIT CHECK STARTED");
 
-
-
 		Boolean atLeastOnePermit = false;
 
 		AuthorisationPEP dr = new AuthorisationPEP(UUID.randomUUID().toString().substring(0, 8));

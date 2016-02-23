@@ -17,30 +17,30 @@ public class ArithmeticEvaluatorFactory {
 
 	private ArithmeticEvaluatorFactory() {
 		this.table = new HashMap<Class<?>, ArithmeticEvaluator>();
-		
-		//initialisation
+
+		// initialisation
 		this.table.put(Integer.class, NumberArithmeticEvaluator.getInstance());
 		this.table.put(Double.class, NumberArithmeticEvaluator.getInstance());
 	}
 
 	public static synchronized ArithmeticEvaluatorFactory getInstance() {
 		if (instance == null) {
-			instance = new ArithmeticEvaluatorFactory(); 
+			instance = new ArithmeticEvaluatorFactory();
 		}
 		return instance;
 	}
 
 	public ArithmeticEvaluator getEvaluator(Object o) throws Exception {
 
-		try{
+		try {
 			ArithmeticEvaluator evaluator = table.get(o.getClass());
 			if (evaluator == null) {
 				// evaluator = new DefaultComparisonEvaluator();
-				System.err.println("No comparison fucntion available for data type "+ o.getClass().getName());
-				throw new Exception("No comparison fucntion available for data type "+ o.getClass().getName());
+				System.err.println("No comparison fucntion available for data type " + o.getClass().getName());
+				throw new Exception("No comparison fucntion available for data type " + o.getClass().getName());
 			}
 			return evaluator;
-		}catch (UnsupportedTypeException e){
+		} catch (UnsupportedTypeException e) {
 			System.err.println(e.getMessage());
 			throw e;
 		}

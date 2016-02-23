@@ -8,10 +8,10 @@ import it.unifi.facpl.lib.util.AttributeName;
 import it.unifi.facpl.lib.util.exception.MissingAttributeException;
 
 public class ContextRequest {
-	
-	protected IContextStub context; 
-	protected Request request; 
- 
+
+	protected IContextStub context;
+	protected Request request;
+
 	public ContextRequest(Request req) {
 		this.request = req;
 
@@ -31,26 +31,26 @@ public class ContextRequest {
 	public IContextStub getContext() {
 		return context;
 	}
-	
+
 	public Object getContextRequestValues(AttributeName struct_name) throws MissingAttributeException {
 		Logger l = LoggerFactory.getLogger(ContextRequest.class);
-		//First we check in the request
-		try{
+		// First we check in the request
+		try {
 			return this.request.getRequestValues(struct_name);
-		}catch(MissingAttributeException e){
-			//Request not defined on the names passed as argument
-			//-> Check in the context
-			if (context != null){
-				Object values =  this.context.getContextValues(struct_name);
-				if (values == null){
-					//throw Exception Missing Attribute if undefined again
+		} catch (MissingAttributeException e) {
+			// Request not defined on the names passed as argument
+			// -> Check in the context
+			if (context != null) {
+				Object values = this.context.getContextValues(struct_name);
+				if (values == null) {
+					// throw Exception Missing Attribute if undefined again
 					l.debug("Throw MissingAttributeExcepion for " + struct_name.toString());
 					throw new MissingAttributeException();
-				}else{
+				} else {
 					return values;
 				}
-			}else{
-				//throw Exception Missing Attribute due to absence of context
+			} else {
+				// throw Exception Missing Attribute due to absence of context
 				l.debug("Throw MissingAttributeExcepion for " + struct_name.toString());
 				throw new MissingAttributeException();
 			}

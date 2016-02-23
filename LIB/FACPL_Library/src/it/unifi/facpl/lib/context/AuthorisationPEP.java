@@ -8,7 +8,6 @@ public class AuthorisationPEP {
 
 	private StandardDecision decision;
 
-
 	public AuthorisationPEP(String id, StandardDecision dec) {
 		this.id = id;
 		this.decision = dec;
@@ -34,6 +33,5 @@ public class AuthorisationPEP {
 	public void setDecision(StandardDecision decision) {
 		this.decision = decision;
 	}
-
 
 }

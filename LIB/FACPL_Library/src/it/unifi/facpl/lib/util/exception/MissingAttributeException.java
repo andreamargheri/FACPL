@@ -11,6 +11,5 @@ public class MissingAttributeException extends Exception {
 	public MissingAttributeException(String string) {
 		super(string);
 	}
-	
-	
+
 }

@@ -33,7 +33,7 @@ public class PermitUnlessDenyGreedy implements IEvaluableAlgorithm {
 		for (IEvaluablePolicy el : elements) {
 			try {
 				AuthorisationPDP d = el.evaluate(cxtRequest, extendedIndeterminate); // ->
-																					// eccezione
+																						// eccezione
 				if (d.getDecision().equals(ExtendedDecision.DENY)) {
 					dr.setDecision(ExtendedDecision.DENY);
 					dr.addObligation(d.getObligation());

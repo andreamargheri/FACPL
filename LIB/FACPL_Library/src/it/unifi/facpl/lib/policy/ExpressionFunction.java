@@ -67,18 +67,16 @@ public class ExpressionFunction {
 					// Add value BOTTOM for modeling the absence of attribute
 					values.add(ExpressionValue.BOTTOM);
 				}
-			}else if (obj instanceof ExpressionFunction) {
+			} else if (obj instanceof ExpressionFunction) {
 				// Expression
 				values.add(((ExpressionFunction) obj).evaluateExpression(cxtRequest));
-			}else if (FacplLiteralTypes.isFacplValue(obj)) {
+			} else if (FacplLiteralTypes.isFacplValue(obj)) {
 				// Literals
 				values.add(obj);
-			}
-			else if (obj instanceof StatusAttribute) {
+			} else if (obj instanceof StatusAttribute) {
 				values.add(obj);
-			}
-			else {
-				//Unexpected Type Arguments
+			} else {
+				// Unexpected Type Arguments
 				l.debug("Unexpected Type Argument");
 				return ExpressionValue.ERROR;
 			}
@@ -115,7 +113,7 @@ public class ExpressionFunction {
 	}
 
 	private boolean isBottom(LinkedList<Object> values) {
-		for(Object s : values){
+		for (Object s : values) {
 			if (s.equals(ExpressionValue.BOTTOM))
 				return true;
 		}

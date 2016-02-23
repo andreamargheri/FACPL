@@ -17,33 +17,29 @@ import java.util.List;
 import it.unifi.facpl.lib.interfaces.IComparisonEvaluator;
 import it.unifi.facpl.lib.util.exception.UnsupportedTypeException;
 
-
-
 /**
  * @author Andrea Margheri
  *
  */
-public class BooleanComparisonEvaluator implements IComparisonEvaluator{
+public class BooleanComparisonEvaluator implements IComparisonEvaluator {
 
-	private static BooleanComparisonEvaluator instance; 
-	
-	private BooleanComparisonEvaluator(){
-		
+	private static BooleanComparisonEvaluator instance;
+
+	private BooleanComparisonEvaluator() {
+
 	}
-	
-	public static BooleanComparisonEvaluator getInstance(){
-		if (instance == null){
+
+	public static BooleanComparisonEvaluator getInstance() {
+		if (instance == null) {
 			instance = new BooleanComparisonEvaluator();
 		}
 		return instance;
 	}
 
-	
-	
 	@Override
 	public boolean areEquals(Object o1, Object o2) throws Throwable {
 		if (o2 instanceof Boolean)
-			return ((Boolean)o1).equals(o2);
+			return ((Boolean) o1).equals(o2);
 		else
 			throw new UnsupportedTypeException(o2.getClass().getName(), "Equal");
 	}
@@ -51,7 +47,7 @@ public class BooleanComparisonEvaluator implements IComparisonEvaluator{
 	@Override
 	public boolean areNotEquals(Object o1, Object o2) throws Throwable {
 		if (o2 instanceof Boolean)
-			return !(((Boolean)o1).equals(o2));
+			return !(((Boolean) o1).equals(o2));
 		else
 			throw new UnsupportedTypeException(o2.getClass().getName(), "Equal");
 	}
@@ -85,11 +81,11 @@ public class BooleanComparisonEvaluator implements IComparisonEvaluator{
 	public boolean isAtLestOneMemberOf(Object o1, Object o2) throws Throwable {
 		throw new UnsupportedTypeException("Boolean", "At-Least-One-Member-Of");
 	}
+
 	@Override
 	public boolean isListElement(List<?> list, Object o2) throws Throwable {
 		throw new UnsupportedTypeException("Boolean", "Is-List-Element");
 
 	}
-
 
 }

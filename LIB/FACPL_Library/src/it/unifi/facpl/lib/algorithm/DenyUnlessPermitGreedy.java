@@ -18,26 +18,26 @@ import it.unifi.facpl.lib.interfaces.IEvaluablePolicy;
  * @author Andrea Margheri
  *
  */
-public class DenyUnlessPermitGreedy implements IEvaluableAlgorithm{
+public class DenyUnlessPermitGreedy implements IEvaluableAlgorithm {
 
 	@Override
-	public AuthorisationPDP evaluate(List<IEvaluablePolicy> elements, 
-			ContextRequest cxtRequest, Boolean extendedIndeterminate) {
+	public AuthorisationPDP evaluate(List<IEvaluablePolicy> elements, ContextRequest cxtRequest,
+			Boolean extendedIndeterminate) {
 
 		Logger l = LoggerFactory.getLogger(DenyUnlessPermitGreedy.class);
 		l.debug("-> DENY UNLESS PERMIT - Greedy started");
- 
+
 		LinkedList<AbstractFulfilledObligation> obls_deny = new LinkedList<AbstractFulfilledObligation>();
-		
+
 		AuthorisationPDP dr = new AuthorisationPDP();
 		for (IEvaluablePolicy el : elements) {
-			AuthorisationPDP d = el.evaluate(cxtRequest,extendedIndeterminate);
-			if (d.getDecision().equals(ExtendedDecision.PERMIT)){
+			AuthorisationPDP d = el.evaluate(cxtRequest, extendedIndeterminate);
+			if (d.getDecision().equals(ExtendedDecision.PERMIT)) {
 				dr.setDecision(ExtendedDecision.PERMIT);
 				dr.addObligation(d.getObligation());
 				return dr;
-			}else{
-				if (d.getDecision().equals(ExtendedDecision.DENY)){
+			} else {
+				if (d.getDecision().equals(ExtendedDecision.DENY)) {
 					obls_deny.addAll(d.getObligation());
 				}
 			}

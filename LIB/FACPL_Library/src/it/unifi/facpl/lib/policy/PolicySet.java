@@ -42,17 +42,18 @@ public abstract class PolicySet extends FacplPolicy {
 		Logger l = LoggerFactory.getLogger(PolicySet.class);
 		l.debug(idElement + ": Start policySet eval");
 
-		AuthorisationPDP auth = new AuthorisationPDP(); //AUTORIZZAZIONE PER LA POLICY
+		AuthorisationPDP auth = new AuthorisationPDP(); // AUTORIZZAZIONE PER LA
+														// POLICY
 
-		TargetDecision match_target = getTargetDecision(cxtRequest); 
+		TargetDecision match_target = getTargetDecision(cxtRequest);
 
 		switch (match_target) {
-		case FALSE: //SE TARGET FALSO NON FA NIENTE
+		case FALSE: // SE TARGET FALSO NON FA NIENTE
 			auth.setDecision(ExtendedDecision.NOT_APPLICABLE);
 			l.debug(idElement + ": End policy eval - " + auth.toString());
 			return auth;
 
-		case TRUE: //SE TARGET VERO ALLORA FA QUALCOSA
+		case TRUE: // SE TARGET VERO ALLORA FA QUALCOSA
 			Class<?> params[] = new Class[3];
 			params[0] = List.class;
 			params[1] = ContextRequest.class;
@@ -60,15 +61,14 @@ public abstract class PolicySet extends FacplPolicy {
 
 			try {
 
-				Method eval = algCombining.getDeclaredMethod("evaluate", params); 
-				
+				Method eval = algCombining.getDeclaredMethod("evaluate", params);
 
 				l.debug("Loading combining algorithm: " + algCombining.getSimpleName());
 				Object alg = algCombining.newInstance();
 				l.debug("Algorithm started on eval elements");
 
 				auth = (AuthorisationPDP) eval.invoke(alg, this.polElements, cxtRequest, extendedIndeterminate);
-				//USA L'ALGORITMO DI COMBINING PER COMBINARE LE DECISIONI
+				// USA L'ALGORITMO DI COMBINING PER COMBINARE LE DECISIONI
 
 			} catch (Exception e) {
 				// catch expression from Obligation Fulfillment

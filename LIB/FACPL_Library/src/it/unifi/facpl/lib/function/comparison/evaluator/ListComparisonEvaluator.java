@@ -7,24 +7,19 @@ import it.unifi.facpl.lib.util.exception.UnsupportedTypeException;
 
 public class ListComparisonEvaluator implements IComparisonEvaluator {
 
-	
+	private static ListComparisonEvaluator instance;
 
-	private static ListComparisonEvaluator instance; 
-	
-	private ListComparisonEvaluator(){
-		
+	private ListComparisonEvaluator() {
+
 	}
-	
-	public static ListComparisonEvaluator getInstance(){
-		if (instance == null){
+
+	public static ListComparisonEvaluator getInstance() {
+		if (instance == null) {
 			instance = new ListComparisonEvaluator();
 		}
 		return instance;
 	}
-	
-	
-	
-	
+
 	@Override
 	public boolean areEquals(Object o1, Object o2) throws Throwable {
 		if (o1 instanceof List<?>) {
@@ -56,13 +51,13 @@ public class ListComparisonEvaluator implements IComparisonEvaluator {
 	@Override
 	public boolean isGreaterThan(Object o1, Object o2) throws Throwable {
 		throw new UnsupportedTypeException("list", "Is-greater-than");
-		
+
 	}
 
 	@Override
 	public boolean isGreateThanOrEqual(Object o1, Object o2) throws Throwable {
 		throw new UnsupportedTypeException("list", "Is-greater-than-or-equal");
-		
+
 	}
 
 	@Override
@@ -78,17 +73,14 @@ public class ListComparisonEvaluator implements IComparisonEvaluator {
 	@Override
 	public boolean isListElement(List<?> list, Object o2) throws Throwable {
 		boolean dummy = false;
-		for (Object o:list) {
+		for (Object o : list) {
 			dummy = o.equals(o2);
 			if (dummy) {
 				return dummy;
 			}
 		}
-		return false;		
-		
+		return false;
+
 	}
-	
-	
-	
 
 }

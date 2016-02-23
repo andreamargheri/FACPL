@@ -13,7 +13,7 @@ public class ArithmeticEvaluatorFactoryStatus {
 	private ArithmeticEvaluatorFactoryStatus() {
 		this.table = new HashMap<Class<?>, ArithmeticEvaluatorStatus>();
 
-		//initialisation
+		// initialisation
 		this.table.put(Integer.class, NumberArithmeticEvaluatorStatus.getInstance());
 		this.table.put(Double.class, NumberArithmeticEvaluatorStatus.getInstance());
 		this.table.put(Boolean.class, NumberArithmeticEvaluatorStatus.getInstance());
@@ -22,22 +22,22 @@ public class ArithmeticEvaluatorFactoryStatus {
 
 	public static synchronized ArithmeticEvaluatorFactoryStatus getInstance() {
 		if (instance == null) {
-			instance = new ArithmeticEvaluatorFactoryStatus(); 
+			instance = new ArithmeticEvaluatorFactoryStatus();
 		}
 		return instance;
 	}
 
 	public ArithmeticEvaluatorStatus getEvaluator(Object o) throws Exception {
 
-		try{
+		try {
 			ArithmeticEvaluatorStatus evaluator = table.get(o.getClass());
 			if (evaluator == null) {
 				// evaluator = new DefaultComparisonEvaluator();
-				System.err.println("No comparison fucntion available for data type "+ o.getClass().getName());
-				throw new Exception("No comparison fucntion available for data type "+ o.getClass().getName());
+				System.err.println("No comparison fucntion available for data type " + o.getClass().getName());
+				throw new Exception("No comparison fucntion available for data type " + o.getClass().getName());
 			}
-			return evaluator; //ritorna il valutatore alla funzione
-		}catch (UnsupportedTypeException e){
+			return evaluator; // ritorna il valutatore alla funzione
+		} catch (UnsupportedTypeException e) {
 			System.err.println(e.getMessage());
 			throw e;
 		}

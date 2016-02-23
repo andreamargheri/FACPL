@@ -43,15 +43,7 @@ public class PEPCheck extends PEP {
 		} else {
 			l.debug("NUMBER OF CHECK OBLIGATION: " + checkObl.size() + " -> EVALUATING CHECK OBLIGATION");
 			result = this.doPEPCheck(cxtReq);
-			/*
-			 * TODO: CHIARIRE DUBBIO -> in questo caso non viene fatto
-			 * l'enforcement, quindi le obligation "normali", tra cui sono
-			 * presenti anche quelle di stato, non vengono rivalutate e di
-			 * conseguenza gli status attribute non vengono aggiornati. Bisogna
-			 * rifare l'enforcement o va lasciato così? 
-			 * (basta commentare o non commentare la riga 54)
-			 */
-			// this.doEnforcement(authPDP);
+
 			l.debug("CHECK RESULT: " + result.getDecision());
 			if (result.getDecision() == StandardDecision.PERMIT || result.getDecision() == StandardDecision.DENY) {
 				return result;

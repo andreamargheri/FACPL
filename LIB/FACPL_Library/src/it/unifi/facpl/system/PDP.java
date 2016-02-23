@@ -58,12 +58,16 @@ public class PDP {
 			Object alg = algCombining.newInstance();
 
 			AuthorisationPDP dr = new AuthorisationPDP();
-			dr = (AuthorisationPDP) eval.invoke(alg, policies, cxtReq, extendedIndeterminate); //VIENE CHIAMATO IL COMBINING ALG
+			dr = (AuthorisationPDP) eval.invoke(alg, policies, cxtReq, extendedIndeterminate); // VIENE
+																								// CHIAMATO
+																								// IL
+																								// COMBINING
+																								// ALG
 			dr.setId(cxtReq.getRequest().getId());
 
 			l.debug("...PDP Evaluation of request " + cxtReq.getRequest().getId() + " completed. PDP decision: "
 					+ dr.toString());
-			
+
 			l.debug("--------------------------------");
 
 			return dr;

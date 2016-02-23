@@ -61,7 +61,7 @@ public class AuthorisationPDP {
 		case INDETERMINATE_DP:
 			return StandardDecision.INDETERMINATE;
 		}
-		
+
 		return null;
 
 	}
@@ -93,12 +93,11 @@ public class AuthorisationPDP {
 	public LinkedList<AbstractFulfilledObligation> getObligation() {
 		return obligation;
 	}
-	
+
 	public Iterator<AbstractFulfilledObligation> getObligationIterator() {
 		return obligation.iterator();
 	}
 
-	
 	// ID
 
 	public String getId() {
@@ -118,7 +117,7 @@ public class AuthorisationPDP {
 			for (AbstractFulfilledObligation obl : obligation) {
 				text.append(obl.toString());
 			}
-		}else{
+		} else {
 			text.append("[]");
 		}
 		return text.toString();

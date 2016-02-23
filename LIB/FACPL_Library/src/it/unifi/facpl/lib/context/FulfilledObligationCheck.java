@@ -3,14 +3,12 @@ package it.unifi.facpl.lib.context;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import it.unifi.facpl.lib.algorithm.check.IEvaluableAlgorithmCheck;
 import it.unifi.facpl.lib.enums.Effect;
 import it.unifi.facpl.lib.enums.ExpressionValue;
 import it.unifi.facpl.lib.enums.ObligationType;
 import it.unifi.facpl.lib.enums.StandardDecision;
 import it.unifi.facpl.lib.policy.ExpressionBooleanTree;
 import it.unifi.facpl.lib.policy.ExpressionFunction;
-import it.unifi.facpl.system.PEP;
 
 public class FulfilledObligationCheck extends AbstractFulfilledObligation implements Cloneable {
 
@@ -143,7 +141,7 @@ public class FulfilledObligationCheck extends AbstractFulfilledObligation implem
 				this.setExpired();
 			}
 		} else if (expiration == 0) {
-			//niente
+			// niente
 		}
 	}
 

@@ -64,14 +64,13 @@ public class BagComparisonEvaluator implements IComparisonEvaluator {
 			// by only one value they are compared each other
 			return ((Set) o1).contains(o2);
 		} else {
-			throw new UnsupportedTypeException("Bag (with multiple items) vs"
-					+ o2.getClass().getName(), "Subset");
+			throw new UnsupportedTypeException("Bag (with multiple items) vs" + o2.getClass().getName(), "Subset");
 		}
 	}
 
 	@Override
 	public boolean isAtLestOneMemberOf(Object o1, Object o2) throws Throwable {
-		if (((Set)o1).isEmpty()){
+		if (((Set) o1).isEmpty()) {
 			return false;
 		}
 		if (o2 instanceof Set) {

@@ -27,8 +27,6 @@ public abstract class AbstractFulfilledObligation {
 		this.arguments = new LinkedList<Object>();
 	}
 
-
-
 	public AbstractFulfilledObligation() {
 
 	}
@@ -64,7 +62,6 @@ public abstract class AbstractFulfilledObligation {
 	public LinkedList<Object> getArgsStatus() {
 		return argsStatus;
 	}
-
 
 	/**
 	 * Eval by PEP

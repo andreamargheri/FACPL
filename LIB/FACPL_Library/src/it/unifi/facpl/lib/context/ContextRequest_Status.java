@@ -9,7 +9,6 @@ import it.unifi.facpl.system.status.StatusAttribute;
 
 public class ContextRequest_Status extends ContextRequest {
 
-	
 	public ContextRequest_Status(Request req) {
 		super(req);
 	}
@@ -21,28 +20,27 @@ public class ContextRequest_Status extends ContextRequest {
 	public IContextStub getContext() {
 		return context;
 	}
-	
+
 	public StatusAttribute getStatusAttribute(StatusAttribute attribute) throws MissingAttributeException {
-		return ((ContextStub_Status_Default)context).getStatusAttribute(attribute);
+		return ((ContextStub_Status_Default) context).getStatusAttribute(attribute);
 	}
- 
-	public Object getContextRequestValues (StatusAttribute name) throws MissingAttributeException {
+
+	public Object getContextRequestValues(StatusAttribute name) throws MissingAttributeException {
 		Logger l = LoggerFactory.getLogger(ContextRequest_Status.class);
-		if (context != null){
-			
+		if (context != null) {
+
 			/*
 			 * SI PASSA LO STATO COME RIFERIMENTO -> CAMBIARE ?
 			 */
-			Object values =  this.context.getContextValues(name);
-			
-			
-			if (values == null){
+			Object values = this.context.getContextValues(name);
+
+			if (values == null) {
 				l.debug("Throw MissingAttributeExcepion for " + name.toString());
 				throw new MissingAttributeException();
-			}else{
+			} else {
 				return values;
 			}
-		}else{
+		} else {
 			l.debug("Throw MissingAttributeExcepion for " + name.toString());
 			throw new MissingAttributeException();
 		}

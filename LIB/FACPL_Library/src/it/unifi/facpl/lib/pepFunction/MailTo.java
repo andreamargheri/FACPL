@@ -15,20 +15,19 @@ import org.slf4j.LoggerFactory;
 
 import it.unifi.facpl.lib.interfaces.IPepAction;
 
-
 public class MailTo implements IPepAction {
 
 	@Override
-	public void eval(List<Object> args) throws Throwable{
+	public void eval(List<Object> args) throws Throwable {
 		Logger l = LoggerFactory.getLogger(MailTo.class);
 
-		l.debug("Send mail to " + args.get(0));	
+		l.debug("Send mail to " + args.get(0));
 
 		String to = (String) args.get(0);
 		String text = (String) args.get(1);
 		String subject = "Auto-Generated FACPL mail";
-		//String subject = (String) args.get(2);
-		try{		
+		// String subject = (String) args.get(2);
+		try {
 			Properties props = new Properties();
 			props.load(new FileInputStream("./config.properties"));
 
@@ -41,26 +40,22 @@ public class MailTo implements IPepAction {
 
 			message.addRecipient(Message.RecipientType.TO, toAddress);
 
-
 			message.setSubject(subject);
 			message.setText(text);
 
 			Transport transport = session.getTransport("smtp");
-			transport.connect(props.getProperty("mail.smtp.host"), 
-					props.getProperty("mail.smtp.user"),
-					props.getProperty("mail.smtp.password")
-					);
+			transport.connect(props.getProperty("mail.smtp.host"), props.getProperty("mail.smtp.user"),
+					props.getProperty("mail.smtp.password"));
 			transport.sendMessage(message, message.getAllRecipients());
 			transport.close();
 
 			l.debug("Message sent");
-		}catch(Exception e){
+		} catch (Exception e) {
 			l.debug("EXCEPTION MAIL FUNCTION - Check config.properties");
 			e.printStackTrace();
 			throw e;
 		}
 
 	}
-
 
 }

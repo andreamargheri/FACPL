@@ -10,7 +10,7 @@ public class Add implements IExpressionFunction {
 
 	@Override
 	public Object evaluateFunction(List<Object> args) throws Throwable {
-		
+
 		if (args.size() == 2) {
 
 			Object o1 = args.get(0);

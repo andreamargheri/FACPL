@@ -178,24 +178,24 @@ public class PEP {
 			}
 		}
 		/*
-		 * si valutano le obbligazioni di stato
-		 * in questo caso visto che l'oggetto è gia' presente all'interno
-		 * della classe si puo' semplicemente invocare il metodo che invocherà il valutatore
+		 * si valutano le obbligazioni di stato in questo caso visto che
+		 * l'oggetto è gia' presente all'interno della classe si puo'
+		 * semplicemente invocare il metodo che invocherà il valutatore
 		 */
 		else if (obl instanceof FulfilledObligationStatus) {
-			obl = (FulfilledObligationStatus)obl;
+			obl = (FulfilledObligationStatus) obl;
 			obl.evaluateObl();
 		}
-		
+
 	}
-	
+
 	/*
 	 * TODO: DA IMPLEMENTARE
 	 */
 	private ExtendedDecision dischargeObligationCheck(AbstractFulfilledObligation obl) {
 		if (obl instanceof FulfilledObligationCheck) {
 			FulfilledObligationCheck new_obl = (FulfilledObligationCheck) obl;
-			
+
 		}
 		return null;
 	}

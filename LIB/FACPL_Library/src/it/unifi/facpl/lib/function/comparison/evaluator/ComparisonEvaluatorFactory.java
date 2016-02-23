@@ -18,19 +18,20 @@ public class ComparisonEvaluatorFactory {
 	private HashMap<Class<?>, IComparisonEvaluator> table;
 
 	/**
-	 * Initialization of the evaluators -> NB to add reference otherwise exception
+	 * Initialization of the evaluators -> NB to add reference otherwise
+	 * exception
 	 */
 	private ComparisonEvaluatorFactory() {
 		this.table = new HashMap<Class<?>, IComparisonEvaluator>();
-		
-		//initialisation
+
+		// initialisation
 		this.table.put(Integer.class, NumberComparisonEvaluator.getInstance());
 		this.table.put(Double.class, NumberComparisonEvaluator.getInstance());
 		this.table.put(String.class, StringComparisonEvaluator.getInstance());
 		this.table.put(Boolean.class, BooleanComparisonEvaluator.getInstance());
 		this.table.put(FacplDate.class, DateComparisonEvaluator.getInstance());
-		this.table.put(List.class, ListComparisonEvaluator.getInstance()); 
-		
+		this.table.put(List.class, ListComparisonEvaluator.getInstance());
+
 	}
 
 	public static synchronized ComparisonEvaluatorFactory getInstance() {
@@ -42,15 +43,15 @@ public class ComparisonEvaluatorFactory {
 
 	public IComparisonEvaluator getEvaluator(Object o) throws Exception {
 
-		try{
+		try {
 			IComparisonEvaluator evaluator = table.get(o.getClass());
 			if (evaluator == null) {
 				// evaluator = new DefaultComparisonEvaluator();
-				System.err.println("No comparison fucntion available for data type "+ o.getClass().getName());
-				throw new Exception("No comparison fucntion available for data type "+ o.getClass().getName());
-			}		
+				System.err.println("No comparison fucntion available for data type " + o.getClass().getName());
+				throw new Exception("No comparison fucntion available for data type " + o.getClass().getName());
+			}
 			return evaluator;
-		}catch (UnsupportedTypeException e){
+		} catch (UnsupportedTypeException e) {
 			System.err.println(e.getMessage());
 			throw e;
 		}

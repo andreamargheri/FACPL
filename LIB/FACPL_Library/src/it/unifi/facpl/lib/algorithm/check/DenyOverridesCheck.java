@@ -10,7 +10,6 @@ import it.unifi.facpl.lib.context.AuthorisationPEP;
 import it.unifi.facpl.lib.context.ContextRequest;
 import it.unifi.facpl.lib.context.FulfilledObligationCheck;
 import it.unifi.facpl.lib.enums.StandardDecision;
-import it.unifi.facpl.system.PEPCheck;
 
 public class DenyOverridesCheck implements IEvaluableAlgorithmCheck {
 
@@ -47,7 +46,6 @@ public class DenyOverridesCheck implements IEvaluableAlgorithmCheck {
 
 		}
 
-		
 		if (atLeastOneDeny) {
 			return dr;
 		}

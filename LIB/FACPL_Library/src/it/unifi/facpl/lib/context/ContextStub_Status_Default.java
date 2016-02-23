@@ -31,7 +31,7 @@ public class ContextStub_Status_Default implements IContextStub {
 	public static void setStatus(FacplStatus status) {
 		ContextStub_Status_Default.status = status;
 	}
-	
+
 	public StatusAttribute getStatusAttribute(StatusAttribute attribute) throws MissingAttributeException {
 		return status.retrieveAttribute(attribute);
 	}
