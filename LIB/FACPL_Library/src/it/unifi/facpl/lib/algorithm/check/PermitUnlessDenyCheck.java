@@ -15,7 +15,7 @@ public class PermitUnlessDenyCheck implements IEvaluableAlgorithmCheck {
 
 	@Override
 	public AuthorisationPEP evaluate(List<FulfilledObligationCheck> checkObl, ContextRequest cxtRequest) {
-		Logger l = LoggerFactory.getLogger(PermitUnlessDenyCheck.class);
+		Logger l = LoggerFactory.getLogger(getClass());
 		l.debug("PERMIT UNLESS DENY CHECK STARTED");
 
 		Boolean atLeastOneDeny = false;

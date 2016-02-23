@@ -21,7 +21,7 @@ public class DenyOverridesCheck implements IEvaluableAlgorithmCheck {
 
 	@Override
 	public AuthorisationPEP evaluate(List<FulfilledObligationCheck> checkObl, ContextRequest cxtRequest) {
-		Logger l = LoggerFactory.getLogger(DenyOverridesCheck.class);
+		Logger l = LoggerFactory.getLogger(getClass());
 		l.debug("DENY OVERRIDE FOR CHECK STARTED");
 		AuthorisationPEP dr = new AuthorisationPEP(UUID.randomUUID().toString().substring(0, 8));
 		for (FulfilledObligationCheck obl : checkObl) {

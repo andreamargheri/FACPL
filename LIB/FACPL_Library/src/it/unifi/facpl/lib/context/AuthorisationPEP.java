@@ -1,5 +1,7 @@
 package it.unifi.facpl.lib.context;
 
+import java.util.UUID;
+
 import it.unifi.facpl.lib.enums.StandardDecision;
 
 public class AuthorisationPEP {
@@ -12,7 +14,9 @@ public class AuthorisationPEP {
 		this.id = id;
 		this.decision = dec;
 	}
-
+	public AuthorisationPEP() {
+		this.id = UUID.randomUUID().toString().substring(0, 8);
+	}
 	public AuthorisationPEP(String id) {
 		this.id = id;
 	}
