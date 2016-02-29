@@ -53,6 +53,9 @@ public class MainFACPL {
 		requests.add(ContextRequest_ReadRequest.getContextReq());
 		requests.add(ContextRequest_WriteRequest.getContextReq());
 		requests.add(ContextRequest_ReadRequest.getContextReq());
+		requests.add(ContextRequest_StopWriteRequest.getContextReq());
+		requests.add(ContextRequest_ReadRequest.getContextReq());
+		
 
 		for (ContextRequest rcxt : requests) {
 			result.append("---------------------------------------------------\n");
