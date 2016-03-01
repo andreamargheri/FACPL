@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 
 import it.unifi.facpl.lib.context.AuthorisationPEP;
 import it.unifi.facpl.lib.context.ContextRequest;
-import it.unifi.facpl.lib.context.FulfilledObligationCheck;
 import it.unifi.facpl.lib.enums.StandardDecision;
 
 public class DenyOverridesCheck implements IEvaluableAlgorithmCheck {
@@ -20,12 +19,12 @@ public class DenyOverridesCheck implements IEvaluableAlgorithmCheck {
 	private Boolean atLeastOneDeny = false;
 
 	@Override
-	public AuthorisationPEP evaluate(List<FulfilledObligationCheck> checkObl, ContextRequest cxtRequest) {
+	public AuthorisationPEP evaluate(List<StandardDecision> decList, ContextRequest cxtRequest) {
 		Logger l = LoggerFactory.getLogger(getClass());
 		l.debug("DENY OVERRIDE FOR CHECK STARTED");
 		AuthorisationPEP dr = new AuthorisationPEP(UUID.randomUUID().toString().substring(0, 8));
-		for (FulfilledObligationCheck obl : checkObl) {
-			StandardDecision dec = obl.getObligationResult(cxtRequest);
+		for (StandardDecision dec : decList) {
+			
 			if (StandardDecision.DENY.equals(dec)) {
 				atLeastOneDeny = true;
 				dr.setDecision(StandardDecision.DENY);
@@ -69,9 +68,18 @@ public class DenyOverridesCheck implements IEvaluableAlgorithmCheck {
 			dr.setDecision(StandardDecision.INDETERMINATE);
 			return dr;
 		}
-		// otherwise return not app
 		dr.setDecision(StandardDecision.NOT_APPLICABLE);
 		return dr;
+	}
+
+	@Override
+	public void resetAlg() {
+		this.atLeastOneDeny = false;
+		this.atLeastOneErrorD = false;
+		this.atLeastOneErrorDP = false;
+		this.atLeastOneErrorP = false;
+		this.atLeastOnePermit = false;
+		
 	}
 
 }

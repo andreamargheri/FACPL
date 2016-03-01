@@ -3,8 +3,10 @@ package checkReadWriteExample;
 
 import it.unifi.facpl.lib.context.ContextRequest_Status;
 import it.unifi.facpl.lib.enums.Effect;
+import it.unifi.facpl.lib.enums.ExprBooleanConnector;
 import it.unifi.facpl.lib.enums.FacplStatusType;
 import it.unifi.facpl.lib.enums.ObligationType;
+import it.unifi.facpl.lib.policy.ExpressionBooleanTree;
 import it.unifi.facpl.lib.policy.ExpressionFunction;
 import it.unifi.facpl.lib.policy.ObligationCheck;
 import it.unifi.facpl.lib.policy.ObligationStatus;
@@ -88,17 +90,29 @@ public class PolicySet_ReadWrite extends PolicySet {
 			// PolElements
 			addPolicyElement(new Rule_read());
 			// Obligation
-			addObligation( //PERSISTENTE
-					new ObligationCheck(
-							Effect.PERMIT, 
-							ObligationType.M,
-							new ExpressionFunction(
-									it.unifi.facpl.lib.function.comparison.Equal.class, "Bob", 
-									new AttributeName("name", "id")), 
-							new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class, 
-									ctxReq.getStatusAttribute(ctxReq.getStatusAttribute(new StatusAttribute("isWriting", FacplStatusType.BOOLEAN))), false)
-							, 2));
+			/*
+			 * scritte qua per migliorare la leggibilita'
+			 */
+			ExpressionFunction e1 = new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class, "Bob",
+					new AttributeName("name", "id"));
+			ExpressionFunction e2 = new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class, "read",
+					new AttributeName("action", "id"));
+			
+			ExpressionBooleanTree ebt = new ExpressionBooleanTree(ExprBooleanConnector.AND, e1, e2);
+			/*
+			 *  
+			 * 
+			 */
+			addObligation( 
+					new ObligationCheck(Effect.PERMIT, ObligationType.M,
+							ebt,
+							new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
+									ctxReq.getStatusAttribute(ctxReq.getStatusAttribute(
+											new StatusAttribute("isWriting", FacplStatusType.BOOLEAN))),
+									false),
+							2));
 		}
+
 
 		private class Rule_read extends Rule {
 
