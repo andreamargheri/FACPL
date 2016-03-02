@@ -62,13 +62,16 @@ public class MainFACPL {
 		AuthorisationPDP resPDP = null;
 		AuthorisationPEP resPEP = null;
 		Integer i = 1;
+		long start;
+		long end;
 		for (ContextRequest rcxt : requests) {
 			System.err.println("REQUEST N: " + i.toString()+"\n");
+			start=System.currentTimeMillis();
 			System.err.println(system.pep.doAuthorisation(rcxt));
+			end=System.currentTimeMillis();
+			System.err.println(end-start);
 			i += 1;
 		}
-		// System.out.println(result.toString());
-		// ShowResult.showResult(result);
 	}
 
 	public PDP getPdp() {

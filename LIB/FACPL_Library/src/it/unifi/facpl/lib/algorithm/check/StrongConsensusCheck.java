@@ -14,22 +14,24 @@ import it.unifi.facpl.lib.enums.StandardDecision;
 
 public class StrongConsensusCheck implements IEvaluableAlgorithmCheck {
 
+	private int numOfPermit = 0;
+	private int numOfDeny = 0;
+
+	private Boolean atLeastOneNotApp = false;
+
+	private Boolean noConsensus = false;
+	
 	@Override
-	public AuthorisationPEP evaluate(List<FulfilledObligationCheck> checkObl, ContextRequest cxtRequest) {
+	public AuthorisationPEP evaluate(List<StandardDecision> decList, ContextRequest cxtRequest) {
 		Logger l = LoggerFactory.getLogger(getClass());
 		l.debug("-> STRONG CONSENSUS started");
 
 
-		int numOfPermit = 0;
-		int numOfDeny = 0;
 
-		Boolean atLeastOneNotApp = false;
-
-		Boolean noConsensus = false;
 
 		AuthorisationPEP dr = new AuthorisationPEP();
-		for (FulfilledObligationCheck el : checkObl) {
-			StandardDecision d = el.getObligationResult(cxtRequest);
+		for (StandardDecision dec : decList) {
+			StandardDecision d = dec;
 
 			if (StandardDecision.PERMIT.equals(d)) {
 				numOfPermit++;
@@ -74,6 +76,17 @@ public class StrongConsensusCheck implements IEvaluableAlgorithmCheck {
 		}
 
 		return dr;
+	}
+
+	@Override
+	public void resetAlg() {
+		this.numOfPermit = 0;
+		this.numOfDeny = 0;
+
+		this.atLeastOneNotApp = false;
+
+		this.noConsensus = false;
+		
 	}
 
 }

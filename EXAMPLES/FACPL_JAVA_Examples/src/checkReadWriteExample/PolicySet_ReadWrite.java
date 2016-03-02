@@ -110,7 +110,7 @@ public class PolicySet_ReadWrite extends PolicySet {
 									ctxReq.getStatusAttribute(ctxReq.getStatusAttribute(
 											new StatusAttribute("isWriting", FacplStatusType.BOOLEAN))),
 									false),
-							2));
+							3));
 		}
 
 

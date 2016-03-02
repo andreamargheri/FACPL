@@ -14,15 +14,14 @@ import it.unifi.facpl.lib.enums.StandardDecision;
 public class DenyUnlessPermitGreedyCheck implements IEvaluableAlgorithmCheck {
 
 	@Override
-	public AuthorisationPEP evaluate(List<FulfilledObligationCheck> checkObl, ContextRequest cxtRequest) {
+	public AuthorisationPEP evaluate(List<StandardDecision> decList, ContextRequest cxtRequest) {
 		Logger l = LoggerFactory.getLogger(getClass());
 		l.debug("-> DENY UNLESS PERMIT - Greedy started");
 
 		
 
 		AuthorisationPEP dr = new AuthorisationPEP();
-		for (FulfilledObligationCheck el : checkObl) {
-			StandardDecision d = el.getObligationResult(cxtRequest);
+		for (StandardDecision d : decList) {
 			if (d.equals(StandardDecision.PERMIT)) {
 				dr.setDecision(StandardDecision.PERMIT);
 
@@ -36,6 +35,12 @@ public class DenyUnlessPermitGreedyCheck implements IEvaluableAlgorithmCheck {
 		dr.setDecision(StandardDecision.DENY);
 
 		return dr;
+	}
+
+	@Override
+	public void resetAlg() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

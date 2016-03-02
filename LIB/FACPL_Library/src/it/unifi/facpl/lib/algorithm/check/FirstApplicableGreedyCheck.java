@@ -13,34 +13,43 @@ import it.unifi.facpl.lib.enums.StandardDecision;
 public class FirstApplicableGreedyCheck implements IEvaluableAlgorithmCheck {
 
 	@Override
-	public AuthorisationPEP evaluate(List<FulfilledObligationCheck> checkObl, ContextRequest cxtRequest) {
+	public AuthorisationPEP evaluate(List<StandardDecision> decList, ContextRequest cxtRequest) {
 		Logger l = LoggerFactory.getLogger(getClass());
 		l.debug("-> FIRST APPLICABLE-Greedy started");
 
 		AuthorisationPEP dr = new AuthorisationPEP();
 
-		for (FulfilledObligationCheck el : checkObl) {
-			dr.setDecision(el.getObligationResult(cxtRequest));
-			if (dr.getDecision().equals(StandardDecision.DENY)) {
+		for (StandardDecision d : decList) {
+			
+			if (d.equals(StandardDecision.DENY)) {
 				l.debug("First Applicable END - Result DENY");
+				dr.setDecision(StandardDecision.DENY);
 				return dr;
 			}
-			if (dr.getDecision().equals(StandardDecision.PERMIT)) {
+			if (d.equals(StandardDecision.PERMIT)) {
 				l.debug("First Applicable END - Result PERMIT");
+				dr.setDecision(StandardDecision.PERMIT);
 				return dr;
 			}
-			if (dr.getDecision().equals(StandardDecision.NOT_APPLICABLE)) {
+			if (d.equals(StandardDecision.NOT_APPLICABLE)) {
 				l.debug("First Applicable Continue - Element NOT APPLICABLE, continue");
 				continue;
 			}
-			if (dr.getDecision().equals(StandardDecision.INDETERMINATE)){
+			if (d.equals(StandardDecision.INDETERMINATE)){
 				l.debug("First Applicable END - Result INDETERMINATE");
+				dr.setDecision(StandardDecision.INDETERMINATE);
 				return dr;
 			}
 		}
 		dr.setDecision(StandardDecision.NOT_APPLICABLE);
 		l.debug("First Applicable END - Result NOT_APP");
 		return dr;
+	}
+
+	@Override
+	public void resetAlg() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

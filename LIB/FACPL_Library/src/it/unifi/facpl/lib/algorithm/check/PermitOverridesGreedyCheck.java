@@ -12,19 +12,21 @@ import it.unifi.facpl.lib.context.FulfilledObligationCheck;
 import it.unifi.facpl.lib.enums.StandardDecision;
 
 public class PermitOverridesGreedyCheck implements IEvaluableAlgorithmCheck {
-
+	private Boolean atLeastOneErrorD = false;
+	private Boolean atLeastOneErrorP = false;
+	private Boolean atLeastOneErrorDP = false;
+	private Boolean atLeastOneDeny = false;
+	
 	@Override
-	public AuthorisationPEP evaluate(List<FulfilledObligationCheck> checkObl, ContextRequest cxtRequest) {
+	public AuthorisationPEP evaluate(List<StandardDecision> decList, ContextRequest cxtRequest) {
 		Logger l = LoggerFactory.getLogger(getClass());
 		l.debug("-> PERMIT OVERRIDES started");
 
-		Boolean atLeastOneErrorD = false;
-		Boolean atLeastOneErrorP = false;
-		Boolean atLeastOneErrorDP = false;
-		Boolean atLeastOneDeny = false;
+
 		AuthorisationPEP dr = new AuthorisationPEP();
-		for (FulfilledObligationCheck el : checkObl) {
-			StandardDecision d = el.getObligationResult(cxtRequest);
+		
+		for (StandardDecision dec : decList) {
+			StandardDecision d = dec;
 
 			if (StandardDecision.PERMIT.equals(d)) {
 				l.debug("ALG.PERMIT-GREEDY = dt: PERMIT");
@@ -66,6 +68,15 @@ public class PermitOverridesGreedyCheck implements IEvaluableAlgorithmCheck {
 		l.debug("ALG.PERMIT-GREEDY = dt: NotAPP");
 		dr.setDecision(StandardDecision.NOT_APPLICABLE);
 		return dr;
+	}
+
+	@Override
+	public void resetAlg() {
+		this.atLeastOneErrorD = false;
+		this.atLeastOneErrorP = false;
+		this.atLeastOneErrorDP = false;
+		this.atLeastOneDeny = false;
+		
 	}
 
 }

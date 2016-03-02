@@ -13,17 +13,14 @@ import it.unifi.facpl.lib.context.FulfilledObligationCheck;
 import it.unifi.facpl.lib.enums.StandardDecision;
 
 public class DenyUnlessPermitCheck implements IEvaluableAlgorithmCheck {
-
+	private Boolean atLeastOnePermit = false;
 	@Override
-	public AuthorisationPEP evaluate(List<FulfilledObligationCheck> checkObl, ContextRequest cxtRequest) {
+	public AuthorisationPEP evaluate(List<StandardDecision> decList, ContextRequest cxtRequest) {
 		Logger l = LoggerFactory.getLogger(getClass());
 		l.debug("-> DENY UNLESS PERMIT CHECK STARTED");
 
-		Boolean atLeastOnePermit = false;
-
 		AuthorisationPEP dr = new AuthorisationPEP(UUID.randomUUID().toString().substring(0, 8));
-		for (FulfilledObligationCheck obl : checkObl) {
-			StandardDecision d = obl.getObligationResult(cxtRequest);
+		for (StandardDecision d : decList) {
 			if (d.equals(StandardDecision.PERMIT)) {
 				atLeastOnePermit = true;
 				dr.setDecision(StandardDecision.PERMIT);
@@ -39,6 +36,11 @@ public class DenyUnlessPermitCheck implements IEvaluableAlgorithmCheck {
 			dr.setDecision(StandardDecision.DENY);
 			return dr;
 		}
+	}
+	
+	@Override
+	public void resetAlg() {
+		this.atLeastOnePermit = false;
 	}
 
 }

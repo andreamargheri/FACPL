@@ -13,20 +13,23 @@ import it.unifi.facpl.lib.enums.StandardDecision;
 
 public class OnlyOneApplicableGreedyCheck implements IEvaluableAlgorithmCheck {
 
+	private Boolean atLeastOne = false;
+	//FulfilledObligationCheck selectedPolicy = null;
+	private StandardDecision selectedDecision=StandardDecision.INDETERMINATE;
+	private StandardDecision appResult;
+	
 	@Override
-	public AuthorisationPEP evaluate(List<FulfilledObligationCheck> checkObl, ContextRequest cxtRequest) {
+	public AuthorisationPEP evaluate(List<StandardDecision> decList, ContextRequest cxtRequest) {
 
 		Logger l = LoggerFactory.getLogger(getClass());
 		l.debug("-> ONLY ONE APPLICABLE-Greedy started");
 
-		Boolean atLeastOne = false;
-		FulfilledObligationCheck selectedPolicy = null;
-		StandardDecision appResult;
+
 
 		AuthorisationPEP dr = new AuthorisationPEP();
 
-		for (FulfilledObligationCheck el : checkObl) {
-			appResult = el.getObligationResult(cxtRequest);
+		for (StandardDecision dec : decList) {
+			appResult = dec;
 
 			if (appResult.equals(StandardDecision.INDETERMINATE)) {
 				dr.setDecision(StandardDecision.INDETERMINATE);
@@ -38,7 +41,8 @@ public class OnlyOneApplicableGreedyCheck implements IEvaluableAlgorithmCheck {
 					return dr;
 				} else {
 					atLeastOne = true;
-					selectedPolicy = el;
+					//selectedPolicy = el;
+					selectedDecision = dec;
 				}
 			}
 			if (appResult.equals(StandardDecision.PERMIT)) {
@@ -47,13 +51,20 @@ public class OnlyOneApplicableGreedyCheck implements IEvaluableAlgorithmCheck {
 		}
 		if (atLeastOne) {
 			l.debug("Only one policy applied. Returned its decision result");
-			dr.setDecision(selectedPolicy.getObligationResult(cxtRequest));
+			dr.setDecision(selectedDecision);
 			return dr;
 		} else {
 			dr.setDecision(StandardDecision.NOT_APPLICABLE);
 			l.debug("No policy applied");
 			return dr;
 		}
+	}
+
+	@Override
+	public void resetAlg() {
+		this.atLeastOne = false;
+		this.selectedDecision=StandardDecision.INDETERMINATE;
+		
 	}
 
 }
