@@ -47,8 +47,12 @@ public class MainFACPL {
 
 		LinkedList<ContextRequest_Status> requests = new LinkedList<ContextRequest_Status>();
 
-		requests.add(ContextRequest_ViewRequestBob.getContextReq()); 
-		requests.add(ContextRequest_ViewRequestAlice.getContextReq()); 
+		requests.add(ContextRequest_ViewRequestAlice.getContextReq());//view senza comprare DENY
+		requests.add(ContextRequest_ViewRequestBob.getContextReq());//view senza comprare DENY
+		requests.add(ContextRequest_BuyRequestAlice.getContextReq());//compra
+		requests.add(ContextRequest_ViewRequestAlice.getContextReq());//noleggia
+		requests.add(ContextRequest_BuyRequestBob.getContextReq());//view permit
+		requests.add(ContextRequest_ViewRequestBob.getContextReq());//view permit  
 
 		
 		

@@ -27,12 +27,13 @@ public class ContextRequest_BuyRequestAlice {
 		// add attribute's values
 		req_category_attribute_name.put("id", "Alice");
 		req_category_attribute_action.put("id", "buy");
-		req_category_attribute_actionType.put("id", "buyType1");
+		req_category_attribute_actionType.put("id", "0");
 		req_category_attribute_file.put("id", "file1");
 		// add attributes to request
 		Request req = new Request("view");
 		req.addAttribute("name", req_category_attribute_name);
 		req.addAttribute("action", req_category_attribute_action);
+		req.addAttribute("actionType", req_category_attribute_actionType);
 		req.addAttribute("file", req_category_attribute_file);
 		// context stub: default-one
 		CxtReq = new ContextRequest_Status(req, ContextStub_Status_Default.getInstance());
@@ -46,11 +47,9 @@ public class ContextRequest_BuyRequestAlice {
 	private static FacplStatus createStatus() {
 		ArrayList<StatusAttribute> attributeList = new ArrayList<StatusAttribute>();
 		attributeList.add(new StatusAttribute("counterViewFile1", FacplStatusType.INT, "0"));
-		attributeList.add(new StatusAttribute("tempoViewFile1", FacplStatusType.DATE, "0"));
-		attributeList.add(new StatusAttribute("buyType", FacplStatusType.INT, "0"));// 0 per comprare 1 per noleggiare a tempo 2 per noleggiare le views
-		attributeList.add(new StatusAttribute("accessTypeAlice", FacplStatusType.INT, "-1"));//-1 non ha accesso 0 per comprare 1 per noleggiare a tempo 2 per noleggiare le views
-		attributeList.add(new StatusAttribute("accessTypeBob", FacplStatusType.INT, "-1"));//-1 non ha accesso 0 per comprare 1 per noleggiare a tempo 2 per noleggiare le views
-		attributeList.add(new StatusAttribute("accessTypeCarl", FacplStatusType.INT, "-1"));//-1 non ha accesso 0 per comprare 1 per noleggiare a tempo 2 per noleggiare le views
+		attributeList.add(new StatusAttribute("tempoViewFile1", FacplStatusType.DATE, "07:07:07"));
+		attributeList.add(new StatusAttribute("accessTypeAlice", FacplStatusType.BOOLEAN, "null"));//null non ha accesso true ha comprato false ha noleggiato
+		attributeList.add(new StatusAttribute("accessTypeBob", FacplStatusType.BOOLEAN, "null"));//null non ha accesso true ha comprato false ha noleggiato
 		attributeList.add(new StatusAttribute("File1", FacplStatusType.STRING, "null"));
 		FacplStatus status = new FacplStatus(attributeList, "stato");
 		return status;

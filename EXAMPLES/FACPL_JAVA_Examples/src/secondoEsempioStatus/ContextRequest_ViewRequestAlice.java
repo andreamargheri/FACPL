@@ -43,12 +43,11 @@ public class ContextRequest_ViewRequestAlice {
 
 	private static FacplStatus createStatus() {
 		ArrayList<StatusAttribute> attributeList = new ArrayList<StatusAttribute>();
-		attributeList.add(new StatusAttribute("compratoFile1", FacplStatusType.BOOLEAN, "false"));
-		attributeList.add(new StatusAttribute("noleggiatoFile1Tempo", FacplStatusType.BOOLEAN, "false"));
-		attributeList.add(new StatusAttribute("noleggiatoFile1Counter", FacplStatusType.BOOLEAN, "false"));
 		attributeList.add(new StatusAttribute("counterViewFile1", FacplStatusType.INT, "0"));
+		attributeList.add(new StatusAttribute("tempoViewFile1", FacplStatusType.DATE, "07:07:07"));
+		attributeList.add(new StatusAttribute("accessTypeAlice", FacplStatusType.BOOLEAN, "null"));//null non ha accesso true ha comprato false ha noleggiato
+		attributeList.add(new StatusAttribute("accessTypeBob", FacplStatusType.BOOLEAN, "null"));//null non ha accesso true ha comprato false ha noleggiato
 		attributeList.add(new StatusAttribute("File1", FacplStatusType.STRING, "null"));
-		attributeList.add(new StatusAttribute("buyType", FacplStatusType.INT, "0"));// 0 per comprare 1 per noleggiare a tempo 2 per noleggiare le views
 		FacplStatus status = new FacplStatus(attributeList, "stato");
 		return status;
 	}
