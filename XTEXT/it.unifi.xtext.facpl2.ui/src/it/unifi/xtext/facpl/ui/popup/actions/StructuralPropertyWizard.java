@@ -45,7 +45,7 @@ public class StructuralPropertyWizard {
 
 			ListDialog type_P_dialog = new ListDialog(activeShell);
 			type_P_dialog.setMessage("Choose a Property... \n" + msg_info);
-			type_P_dialog.setInput(new StructuralProperty[] { StructuralProperty.COMPLETE, StructuralProperty.COVERAGE,
+			type_P_dialog.setInput(new StructuralProperty[] { StructuralProperty.COMPLETE, StructuralProperty.COVER,
 					StructuralProperty.DISJOINT });
 			type_P_dialog.setContentProvider(new ArrayContentProvider());
 			type_P_dialog.setLabelProvider(new LabelProvider() {
@@ -78,7 +78,7 @@ public class StructuralPropertyWizard {
 					type_Policy_dialog.setLabelProvider(new LabelProvider());
 
 				} catch (Exception ex) {
-					MessageDialog.openError(activeShell, "Create Structural Property", SecurityPropertyWizard.ex_mess);
+					MessageDialog.openError(activeShell, "Create Structural Property1", SecurityPropertyWizard.ex_mess);
 					return false;
 				}
 				type_Policy_dialog.setTitle("Which policy...");
@@ -112,7 +112,11 @@ public class StructuralPropertyWizard {
 					type_Policy_dialog_1.setLabelProvider(new LabelProvider());
 
 				} catch (Exception ex) {
-					MessageDialog.openError(activeShell, "Create Structural Property", SecurityPropertyWizard.ex_mess);
+					if (!ex.getMessage().equals("")) {
+						MessageDialog.openError(activeShell, "Create Structural Property", ex.getMessage());
+					}else{
+						MessageDialog.openError(activeShell, "Create Structural Property", SecurityPropertyWizard.ex_mess);
+					}
 					return false;
 				}
 				type_Policy_dialog_1.setTitle("Which policy...");
@@ -139,8 +143,11 @@ public class StructuralPropertyWizard {
 					type_Policy_dialog_2.setLabelProvider(new LabelProvider());
 
 				} catch (Exception ex) {
-					MessageDialog.openError(activeShell, "Create Structural Property", SecurityPropertyWizard.ex_mess);
-					return false;
+					if (!ex.getMessage().equals("")) {
+						MessageDialog.openError(activeShell, "Create Structural Property", ex.getMessage());
+					}else{
+						MessageDialog.openError(activeShell, "Create Structural Property", SecurityPropertyWizard.ex_mess);
+					}
 				}
 				type_Policy_dialog_2.setTitle("Which policy...");
 
@@ -181,7 +188,7 @@ public class StructuralPropertyWizard {
 
 	private Object[] getPolicies(Facpl e) throws Exception {
 		ArrayList<String> ar = new ArrayList<String>();
-		if (e.getRequests().size() == 0) {
+		if (e.getPolicies().size() == 0) {
 			throw new Exception(
 					"No policies are defined in the chosen FACPL file. Declare at least one policy to use in Property Specification");
 		}

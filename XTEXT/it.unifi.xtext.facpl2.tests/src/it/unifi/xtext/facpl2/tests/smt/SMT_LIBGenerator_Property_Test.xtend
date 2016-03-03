@@ -410,7 +410,7 @@ public class SMT_LIBGenerator_Property_Test extends AbstractXtextTests {
 
 		assertNoErrors(model)
 
-		var str = doGenerateStructural_Property_Code(model, "Name", "Name1", StructuralProperty.COVERAGE);
+		var str = doGenerateStructural_Property_Code(model, "Name", "Name1", StructuralProperty.COVER);
 
 		/* Test Final assertion */
 		assertEquals(str.contains("(=> cns_Name_permit cns_Name1_permit)"), true)

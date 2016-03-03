@@ -181,7 +181,7 @@ public class SecurityPropertyWizard {
 
 	private Object[] getPolicies(Facpl e) throws Exception {
 		ArrayList<String> ar = new ArrayList<String>();
-		if (e.getRequests().size() == 0) {
+		if (e.getPolicies().size() == 0) {
 			throw new Exception(
 					"No policies are defined in the chosen FACPL file. Declare at least one policy to use in Property Specification");
 		}
