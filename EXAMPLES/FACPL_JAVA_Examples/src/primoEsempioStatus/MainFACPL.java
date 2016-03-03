@@ -1,11 +1,8 @@
-package writeExample;
+package primoEsempioStatus;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import checkReadWriteExample.ContextRequest_ReadRequest;
-import checkReadWriteExample.ContextRequest_StopWriteRequest;
-import checkReadWriteExample.ContextRequest_WriteRequest;
 import it.unifi.facpl.lib.context.AuthorisationPDP;
 import it.unifi.facpl.lib.context.AuthorisationPEP;
 import it.unifi.facpl.lib.context.ContextRequest;
@@ -29,7 +26,7 @@ public class MainFACPL {
 		// defined list of policies included in the PDP
 		LinkedList<FacplPolicy> policies = new LinkedList<FacplPolicy>();
 
-		policies.add(new PolicySet_ReadWrite(ContextRequest_WriteRequest.getContextReq()));
+		policies.add(new PolicySet_ReadWrite(ContextRequest_WriteRequestAlice.getContextReq()));
 
 		this.pdp = new PDP(it.unifi.facpl.lib.algorithm.PermitUnlessDenyGreedy.class, policies, false);
 
@@ -50,20 +47,14 @@ public class MainFACPL {
 
 		LinkedList<ContextRequest_Status> requests = new LinkedList<ContextRequest_Status>();
 
-		requests.add(ContextRequest_ReadRequest.getContextReq()); 
-		requests.add(ContextRequest_ReadRequest.getContextReq()); 
-		requests.add(ContextRequest_ReadRequest.getContextReq()); 
-		requests.add(ContextRequest_ReadRequest.getContextReq()); 
-		requests.add(ContextRequest_ReadRequest.getContextReq()); 
+		requests.add(ContextRequest_ReadRequestAlice.getContextReq()); 
+		requests.add(ContextRequest_WriteRequestBob.getContextReq()); 
+		requests.add(ContextRequest_ReadRequestBob.getContextReq()); 
+		requests.add(ContextRequest_StopReadRequestAlice.getContextReq()); 
+		requests.add(ContextRequest_StopReadRequestBob.getContextReq()); 
 		
-
-		requests.add(ContextRequest_WriteRequest.getContextReq()); 
-		requests.add(ContextRequest_ReadRequest.getContextReq()); 
-		requests.add(ContextRequest_StopWriteRequest.getContextReq());
-		requests.add(ContextRequest_ReadRequest.getContextReq());
-		requests.add(ContextRequest_ReadRequest.getContextReq());
-		requests.add(ContextRequest_ReadRequest.getContextReq());
-		requests.add(ContextRequest_ReadRequest.getContextReq());
+		requests.add(ContextRequest_WriteRequestAlice.getContextReq()); 
+		
 		
 		long startR,start;
 		long endR,end;

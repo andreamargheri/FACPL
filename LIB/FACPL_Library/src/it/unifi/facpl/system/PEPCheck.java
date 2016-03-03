@@ -49,22 +49,27 @@ public class PEPCheck extends PEP {
 		 */
 		Logger l = LoggerFactory.getLogger(PEPCheck.class);
 		AuthorisationPEP result;
+		long start,end;
 		if (checkObl.size() == 0) {
 			/*
 			 * PDP Evaluation -> PEP ENFORCEMENT
 			 */
-			l.debug("NUMBER OF CHECK OBLIGATION: 0 -> AUTHORISATION BY PDP -> ENFORCEMENT BY PEP");
+			// l.debug("NUMBER OF CHECK OBLIGATION: 0 -> AUTHORISATION BY PDP ->
+			// ENFORCEMENT BY PEP");
+			start=System.currentTimeMillis();
 			authPDP = pdp.doAuthorisation(cxtReq);
+			System.err.println("pdp.doAuthorisation time"+(System.currentTimeMillis()-start));
 			return this.doEnforcement(authPDP);
 		} else {
 			/*
 			 * PEP EVALUATION
 			 */
-			l.debug("NUMBER OF CHECK OBLIGATION: " + checkObl.size() + " -> EVALUATING CHECK OBLIGATION");
+			// l.debug("NUMBER OF CHECK OBLIGATION: " + checkObl.size() + " ->
+			// EVALUATING CHECK OBLIGATION");
 			result = this.doPEPCheck(cxtReq);
-
-			l.debug("CHECK RESULT: " + result.getDecision());
-			if (result.getDecision() == StandardDecision.PERMIT || result.getDecision() == StandardDecision.DENY) {
+			StandardDecision dec = result.getDecision();
+			l.debug("CHECK RESULT: " + dec);
+			if (dec == StandardDecision.PERMIT || dec == StandardDecision.DENY) {
 				return result;
 			} else {
 				/*
@@ -90,10 +95,10 @@ public class PEPCheck extends PEP {
 		AuthorisationPEP first_enforcement;
 		Logger l = LoggerFactory.getLogger(PEPCheck.class);
 		first_enforcement = super.doEnforcement(authPDP); // enforcement
-		l.debug("FIRST ENFORCEMENT COMPLETED, DECISION: " + first_enforcement.getDecision());
-		if (first_enforcement.getDecision() != StandardDecision.PERMIT) {
-
-			return new AuthorisationPEP(first_enforcement.getId(), first_enforcement.getDecision());
+		StandardDecision dec = first_enforcement.getDecision();
+		l.debug("FIRST ENFORCEMENT COMPLETED, DECISION: " + dec);
+		if (dec != StandardDecision.PERMIT) {
+			return new AuthorisationPEP(first_enforcement.getId(), dec);
 		}
 
 		l.debug("ADDING CHECK OBLIGATION TO PEP...");
@@ -125,21 +130,19 @@ public class PEPCheck extends PEP {
 		Logger l = LoggerFactory.getLogger(PEPCheck.class);
 		l.debug("DOING PEP CHECK:");
 		AuthorisationPEP r = new AuthorisationPEP();
-		if (checkObl.size() > 0) {
-			LinkedList<StandardDecision> decisionList = new LinkedList<StandardDecision>();
-			for (FulfilledObligationCheck obl : checkObl) {
-				StandardDecision dec = obl.getObligationResult(ctxRequest);
-				decisionList.add(dec);
-				if (StandardDecision.NOT_APPLICABLE.equals(dec)) {
-					r.setDecision(StandardDecision.NOT_APPLICABLE);
-					return r;
-				}
+		StandardDecision dec;
+		LinkedList<StandardDecision> decisionList = new LinkedList<StandardDecision>();
+		for (FulfilledObligationCheck obl : checkObl) {
+			dec = obl.getObligationResult(ctxRequest);
+			decisionList.add(dec);
+			if (StandardDecision.NOT_APPLICABLE.equals(dec)) {
+				r.setDecision(StandardDecision.NOT_APPLICABLE);
+				return r;
 			}
-			r = checkAlg.evaluate(decisionList, ctxRequest);
-			checkAlg.resetAlg();
-			return r;
 		}
-		return null;
+		r = checkAlg.evaluate(decisionList, ctxRequest);
+		checkAlg.resetAlg();
+		return r;
 	}
 
 	private void clearAllObligations() {

@@ -57,7 +57,7 @@ public class NumberArithmeticEvaluatorStatus implements ArithmeticEvaluatorStatu
 	public void multiply(StatusAttribute o1, Object o2) throws Throwable {
 		if (o1.getType() == FacplStatusType.INT) {
 			Integer value = Integer.parseInt(o1.getValue());
-			Integer newValue = value / (int) o2;
+			Integer newValue = value * (int) o2;
 			o1.setValue(newValue.toString());
 		} else if (o1.getType() == FacplStatusType.DOUBLE) {
 			Double value = Double.parseDouble(o1.getValue());
@@ -72,7 +72,7 @@ public class NumberArithmeticEvaluatorStatus implements ArithmeticEvaluatorStatu
 	public void subtract(StatusAttribute o1, Object o2) throws Throwable {
 		if (o1.getType() == FacplStatusType.INT) {
 			Integer value = Integer.parseInt(o1.getValue());
-			Integer newValue = value / (int) o2;
+			Integer newValue = value - (int) o2;
 			o1.setValue(newValue.toString());
 		} else if (o1.getType() == FacplStatusType.DOUBLE) {
 			Double value = Double.parseDouble(o1.getValue());

@@ -4,6 +4,7 @@ package checkReadWriteExample;
 import java.util.LinkedList;
 
 import it.unifi.facpl.lib.algorithm.check.DenyOverridesCheck;
+import it.unifi.facpl.lib.algorithm.check.DenyOverridesGreedyCheck;
 import it.unifi.facpl.lib.context.AuthorisationPDP;
 import it.unifi.facpl.lib.context.AuthorisationPEP;
 import it.unifi.facpl.lib.context.ContextRequest;
@@ -24,7 +25,7 @@ public class MainFACPL {
 	public MainFACPL() throws MissingAttributeException {
 		// defined list of policies included in the PDP
 		LinkedList<FacplPolicy> policies = new LinkedList<FacplPolicy>();
-		// policies.add(new PolicySet_NamePolicySetTwo());
+
 		policies.add(new PolicySet_ReadWrite(ContextRequest_ReadRequest.getContextReq()));
 		this.pdp = new PDP(it.unifi.facpl.lib.algorithm.PermitUnlessDenyGreedy.class, policies, false);
 
@@ -50,6 +51,7 @@ public class MainFACPL {
 		requests.add(ContextRequest_ReadRequest.getContextReq()); 
 		requests.add(ContextRequest_ReadRequest.getContextReq()); 
 		requests.add(ContextRequest_ReadRequest.getContextReq()); 
+		
 
 		requests.add(ContextRequest_WriteRequest.getContextReq()); 
 		requests.add(ContextRequest_ReadRequest.getContextReq()); 
@@ -61,17 +63,25 @@ public class MainFACPL {
 
 		AuthorisationPDP resPDP = null;
 		AuthorisationPEP resPEP = null;
-		Integer i = 1;
-		long start;
-		long end;
+		int i = 1;
+		long startR,start;
+		long endR,end;
+		start=System.currentTimeMillis();
 		for (ContextRequest rcxt : requests) {
-			System.err.println("REQUEST N: " + i.toString()+"\n");
-			start=System.currentTimeMillis();
-			System.err.println(system.pep.doAuthorisation(rcxt));
-			end=System.currentTimeMillis();
-			System.err.println(end-start);
+			
+			result.append("---------------------------------------------------\n");
+			result.append("REQUEST N: "+(i)+"\n");
+			result.append("PEP Decision=\n ");
+			startR=System.currentTimeMillis();
+			result.append(system.pep.doAuthorisation(rcxt));
+			endR=System.currentTimeMillis();
+			result.append("\ntime per request "+(endR-startR));
+			result.append("\n---------------------------------------------------\n");
 			i += 1;
 		}
+		end=System.currentTimeMillis();
+		result.append("\ntime for all requests "+(end-start));
+		System.out.println(result.toString());
 	}
 
 	public PDP getPdp() {

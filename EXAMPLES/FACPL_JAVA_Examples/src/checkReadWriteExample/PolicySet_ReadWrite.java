@@ -109,8 +109,8 @@ public class PolicySet_ReadWrite extends PolicySet {
 							new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
 									ctxReq.getStatusAttribute(ctxReq.getStatusAttribute(
 											new StatusAttribute("isWriting", FacplStatusType.BOOLEAN))),
-									false),
-							3));
+									false)
+							));
 		}
 
 
