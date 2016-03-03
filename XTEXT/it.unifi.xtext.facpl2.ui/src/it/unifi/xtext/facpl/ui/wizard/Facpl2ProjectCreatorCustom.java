@@ -11,8 +11,8 @@ public class Facpl2ProjectCreatorCustom extends Facpl2ProjectCreator {
 
 	@Override
 	protected List<String> getRequiredBundles() {
-		
-		return Lists.newArrayList("FACPL_Library","XacmlToFacpl");
+
+		return Lists.newArrayList("FACPL_Library", "XacmlToFacpl");
 	}
 
 	@Override

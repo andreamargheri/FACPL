@@ -23,10 +23,10 @@ import it.unifi.xtext.facpl.facpl2.StringLiteral
 import it.unifi.xtext.facpl.facpl2.TimeLiteral
 import it.unifi.xtext.facpl.facpl2.TypeLiteral
 import it.unifi.xtext.facpl.facpl2.util.Facpl2Switch
+import it.unifi.xtext.facpl.generator.generators.SMT_LIBGenerator_Code
 import it.unifi.xtext.facpl.validation.FacplType
 import it.unifi.xtext.facpl.validation.inference.FacplTypeInference
 import java.util.HashMap
-import it.unifi.xtext.facpl.generator.generators.SMT_LIBGenerator_Code
 
 /**
  * Collect constants used in a policy

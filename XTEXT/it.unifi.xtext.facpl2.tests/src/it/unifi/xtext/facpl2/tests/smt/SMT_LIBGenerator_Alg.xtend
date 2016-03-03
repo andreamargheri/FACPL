@@ -5,7 +5,6 @@ import it.unifi.xtext.facpl.Facpl2InjectorProvider
 import it.unifi.xtext.facpl.facpl2.Facpl
 import it.unifi.xtext.facpl.generator.SMT_LIBGenerator
 import java.io.PrintWriter
-import org.eclipse.xtext.junit4.AbstractXtextTests
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.util.ParseHelper

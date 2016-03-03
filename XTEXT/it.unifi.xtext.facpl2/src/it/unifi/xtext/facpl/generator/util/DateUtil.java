@@ -6,19 +6,19 @@ import java.util.Date;
 
 public class DateUtil {
 
-	public static Date parseDate(String s) throws Exception{
+	public static Date parseDate(String s) throws Exception {
 		DateFormat dateLong = new SimpleDateFormat("yyyy/MM/dd-HH:mm:ss");
 		DateFormat dateOnly = new SimpleDateFormat("yyyy/MM/dd");
 		DateFormat dateTime = new SimpleDateFormat("HH:mm:ss");
-		try{
+		try {
 			return dateLong.parse(s);
-		}catch(Exception e){
-			try{
+		} catch (Exception e) {
+			try {
 				return dateOnly.parse(s);
-			}catch(Exception t){
+			} catch (Exception t) {
 				return dateTime.parse(s);
 			}
 		}
 	}
-	
+
 }

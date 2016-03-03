@@ -28,7 +28,7 @@ import it.unifi.xtext.facpl.ui.popup.actions.propertyDialog.PropertyNameDialog;
 public class SecurityPropertyWizard {
 
 	public static final String ex_mess = "No element selected!";
-	
+
 	public Object createSecurityProperty(Shell activeShell, EclipseResourceFileSystemAccess2 fsa, Facpl e,
 			SMT_LIBGenerator generator) {
 

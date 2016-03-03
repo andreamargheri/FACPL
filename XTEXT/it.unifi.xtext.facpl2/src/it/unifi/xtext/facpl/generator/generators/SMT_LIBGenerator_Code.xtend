@@ -33,16 +33,16 @@ import it.unifi.xtext.facpl.generator.generators.smt.algorithms.SMT_LIBGenerator
 import it.unifi.xtext.facpl.generator.generators.smt.algorithms.SMT_LIBGenerator_StrongCon
 import it.unifi.xtext.facpl.generator.generators.smt.algorithms.SMT_LIBGenerator_WeakCon
 import it.unifi.xtext.facpl.generator.util.ConstraintConstant
+import it.unifi.xtext.facpl.generator.util.DateUtil
 import it.unifi.xtext.facpl.generator.util.PolicyConstant
 import it.unifi.xtext.facpl.generator.util.SetUtils
 import it.unifi.xtext.facpl.validation.FacplType
 import it.unifi.xtext.facpl.validation.inference.FacplTypeInference
 import it.unifi.xtext.facpl.validation.inference.SubstitutionSet
+import java.util.Date
 import java.util.HashMap
 import java.util.LinkedList
 import java.util.List
-import it.unifi.xtext.facpl.generator.util.DateUtil
-import java.util.Date
 
 class SMT_LIBGenerator_Code {
 
@@ -496,7 +496,7 @@ def getFinalConstrPSet(String p_name,FacplPolicy pol)'''
 
 	// Defining the enumeration type modeling string -> definition of equality and/or function in  
 	def getStringDec() 
-	''' (declare-datatypes () ((String «FOR el: this.stringEls»s_«el» «ENDFOR»)))'''
+	''' (declare-datatypes () ((String «FOR el: this.stringEls»s_«el» «ENDFOR» s_AdditionalStringValue )))'''
 
 	// Declaring Attributes used in the policy
 	def getAttributeDec() '''«FOR att_name : this.attributes.substitutions.keySet»

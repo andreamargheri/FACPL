@@ -38,7 +38,7 @@ public class XACMLTOFACPLCommand extends AbstractHandler implements IHandler {
 
 	@Inject
 	private Provider<EclipseResourceFileSystemAccess2> fileAccessProvider;
-	
+
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 
 		// IEditorPart activeEditor = HandlerUtil.getActiveEditor(event);
