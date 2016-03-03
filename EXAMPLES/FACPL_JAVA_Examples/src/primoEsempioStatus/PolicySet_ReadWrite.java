@@ -81,7 +81,7 @@ public class PolicySet_ReadWrite extends PolicySet {
 				ExpressionFunction e2=new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
 						ctxReq.getStatusAttribute(
 								ctxReq.getStatusAttribute(new StatusAttribute("counterReadFile1", FacplStatusType.INT))),
-						"0");//se nessuno legge
+						0);//se nessuno legge
 				ExpressionBooleanTree ebt = new ExpressionBooleanTree(ExprBooleanConnector.AND, e1, e2);
 				addTarget(ebt);
 			}

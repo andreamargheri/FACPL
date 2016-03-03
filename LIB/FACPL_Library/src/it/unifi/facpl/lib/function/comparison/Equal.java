@@ -40,9 +40,9 @@ public class Equal implements IComparisonFunction {
 				return false;
 			// return Boolean.getBoolean(sa.getValue());
 		} else if (sa.getType() == FacplStatusType.DOUBLE) {
-			return Double.parseDouble(sa.getValue());
+			return (Double)Double.parseDouble(sa.getValue());
 		} else if (sa.getType() == FacplStatusType.INT) {
-			return Integer.parseInt(sa.getValue());
+			return (Integer)Integer.parseInt(sa.getValue());
 		} else if (sa.getType() == FacplStatusType.STRING) {
 			return sa.getValue();
 		}
