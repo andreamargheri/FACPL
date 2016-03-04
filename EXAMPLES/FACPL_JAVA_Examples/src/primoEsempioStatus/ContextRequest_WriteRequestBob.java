@@ -23,7 +23,7 @@ public class ContextRequest_WriteRequestBob {
 		HashMap<String, Object> req_category_attribute_action = new HashMap<String, Object>();
 		HashMap<String, Object> req_category_attribute_file = new HashMap<String, Object>();
 		// add attribute's values
-		req_category_attribute_name.put("id", "Alice");
+		req_category_attribute_name.put("id", "Bob");
 		req_category_attribute_action.put("id", "write");
 		req_category_attribute_file.put("id", "file1");
 		// add attributes to request
@@ -45,8 +45,8 @@ public class ContextRequest_WriteRequestBob {
 		attributeList.add(new StatusAttribute("isWriting", FacplStatusType.BOOLEAN, "false"));
 		attributeList.add(new StatusAttribute("counterReadFile1", FacplStatusType.INT, "0"));
 		attributeList.add(new StatusAttribute("counterReadFile2", FacplStatusType.INT, "0"));
-		attributeList.add(new StatusAttribute("File1", FacplStatusType.STRING, "null"));
-		attributeList.add(new StatusAttribute("File2", FacplStatusType.STRING, "null"));
+		//attributeList.add(new StatusAttribute("File1", FacplStatusType.STRING, "null"));
+				//attributeList.add(new StatusAttribute("File2", FacplStatusType.STRING, "null"));
 		FacplStatus status = new FacplStatus(attributeList, "stato");
 		return status;
 	}

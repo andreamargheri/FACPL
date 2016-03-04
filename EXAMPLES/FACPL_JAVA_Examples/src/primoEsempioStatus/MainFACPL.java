@@ -52,7 +52,6 @@ public class MainFACPL {
 		requests.add(ContextRequest_ReadRequestBob.getContextReq()); 
 		requests.add(ContextRequest_StopReadRequestAlice.getContextReq()); 
 		requests.add(ContextRequest_StopReadRequestBob.getContextReq()); 
-		
 		requests.add(ContextRequest_WriteRequestAlice.getContextReq()); 
 		
 		

@@ -46,8 +46,8 @@ public class ContextRequest_StopReadRequestBob {
 		attributeList.add(new StatusAttribute("isWriting", FacplStatusType.BOOLEAN, "false"));
 		attributeList.add(new StatusAttribute("counterReadFile1", FacplStatusType.INT, "0"));
 		attributeList.add(new StatusAttribute("counterReadFile2", FacplStatusType.INT, "0"));
-		attributeList.add(new StatusAttribute("File1", FacplStatusType.STRING, "null"));
-		attributeList.add(new StatusAttribute("File2", FacplStatusType.STRING, "null"));
+		//attributeList.add(new StatusAttribute("File1", FacplStatusType.STRING, "null"));
+		//attributeList.add(new StatusAttribute("File2", FacplStatusType.STRING, "null"));
 		FacplStatus status = new FacplStatus(attributeList, "stato");
 		return status;
 	}

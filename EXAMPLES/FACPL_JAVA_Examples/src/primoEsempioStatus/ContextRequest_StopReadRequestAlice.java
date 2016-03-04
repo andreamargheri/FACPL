@@ -28,7 +28,7 @@ public class ContextRequest_StopReadRequestAlice {
 		req_category_attribute_action.put("id", "stopRead");
 		req_category_attribute_file.put("id", "file1");
 		// add attributes to request
-		Request req = new Request("stop_write_request");
+		Request req = new Request("stop_read_request");
 		req.addAttribute("name", req_category_attribute_name);
 		req.addAttribute("action", req_category_attribute_action);
 		req.addAttribute("file", req_category_attribute_file);
@@ -46,8 +46,8 @@ public class ContextRequest_StopReadRequestAlice {
 		attributeList.add(new StatusAttribute("isWriting", FacplStatusType.BOOLEAN, "false"));
 		attributeList.add(new StatusAttribute("counterReadFile1", FacplStatusType.INT, "0"));
 		attributeList.add(new StatusAttribute("counterReadFile2", FacplStatusType.INT, "0"));
-		attributeList.add(new StatusAttribute("File1", FacplStatusType.STRING, "null"));
-		attributeList.add(new StatusAttribute("File2", FacplStatusType.STRING, "null"));
+		//attributeList.add(new StatusAttribute("File1", FacplStatusType.STRING, "null"));
+		//attributeList.add(new StatusAttribute("File2", FacplStatusType.STRING, "null"));
 		FacplStatus status = new FacplStatus(attributeList, "stato");
 		return status;
 	}
