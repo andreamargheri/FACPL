@@ -39,9 +39,13 @@ public class ContextStub_Status_Default extends AbstractContextStub {
 		 * return environment attribute or status attribute
 		 */
 		try {
-			return status.getValue((StatusAttribute) attr);
+			if (attr instanceof StatusAttribute) {
+				return status.getValue((StatusAttribute) attr);
+			} else {
+				return super.getContextValues(attr);
+			}
 		} catch (MissingAttributeException e) {
-			return super.getContextValues(attr);
+			return null;
 		}
 
 	}
