@@ -25,5 +25,7 @@ public interface ArithmeticEvaluatorStatus {
 																		// aritmetiche
 
 	public void sum_date(StatusAttribute s1, Object o2) throws Throwable;
+	
+	public void set_date(StatusAttribute s1, Object o2) throws Throwable;
 
 }

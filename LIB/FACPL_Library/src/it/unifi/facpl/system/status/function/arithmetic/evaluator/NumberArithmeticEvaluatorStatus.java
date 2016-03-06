@@ -110,4 +110,15 @@ public class NumberArithmeticEvaluatorStatus implements ArithmeticEvaluatorStatu
 
 	}
 
+	@Override
+	public void set_date(StatusAttribute o1, Object o2) throws Throwable {
+		if (o1.getType() == FacplStatusType.DATE) {
+			Calendar d2 = Util.parseDate(((FacplDate) o2).toString());
+			o1.setValue(Util.parseCalendar(d2));
+		} else {
+			throw new UnsupportedTypeException("Date", "Add");
+		}
+		
+	}
+
 }
