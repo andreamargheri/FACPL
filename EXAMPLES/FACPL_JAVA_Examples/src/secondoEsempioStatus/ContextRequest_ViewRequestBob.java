@@ -8,6 +8,7 @@ import it.unifi.facpl.lib.context.ContextRequest_Status;
 import it.unifi.facpl.lib.context.ContextStub_Status_Default;
 import it.unifi.facpl.lib.context.Request;
 import it.unifi.facpl.lib.enums.FacplStatusType;
+import it.unifi.facpl.lib.util.FacplDate;
 import it.unifi.facpl.system.status.FacplStatus;
 import it.unifi.facpl.system.status.StatusAttribute;
 
@@ -42,12 +43,14 @@ public class ContextRequest_ViewRequestBob {
 	}
 
 	private static FacplStatus createStatus() {
+		FacplDate date = new FacplDate();
 		ArrayList<StatusAttribute> attributeList = new ArrayList<StatusAttribute>();
-		attributeList.add(new StatusAttribute("counterViewFile1", FacplStatusType.INT, "0"));
-		attributeList.add(new StatusAttribute("tempoViewFile1", FacplStatusType.DATE, "07:07:07"));
-		attributeList.add(new StatusAttribute("accessTypeAlice", FacplStatusType.BOOLEAN, "null"));//null non ha accesso true ha comprato false ha noleggiato
-		attributeList.add(new StatusAttribute("accessTypeBob", FacplStatusType.BOOLEAN, "null"));//null non ha accesso true ha comprato false ha noleggiato
-		attributeList.add(new StatusAttribute("File1", FacplStatusType.STRING, "null"));
+		attributeList.add(new StatusAttribute("accessTypeAlice", FacplStatusType.STRING, "no"));
+		attributeList.add(new StatusAttribute("accessTypeBob", FacplStatusType.STRING, "no"));
+		attributeList.add(new StatusAttribute("aliceFile1viewNumber", FacplStatusType.INT, "0"));
+		attributeList.add(new StatusAttribute("bobFile1viewNumber", FacplStatusType.INT, "0"));
+		attributeList.add(new StatusAttribute("aliceFile1expiration", FacplStatusType.DATE, date.toString()));
+		attributeList.add(new StatusAttribute("bobFile1expiration", FacplStatusType.DATE, date.toString()));
 		FacplStatus status = new FacplStatus(attributeList, "stato");
 		return status;
 	}
