@@ -43,7 +43,7 @@ public class ContextRequest_ViewRequestBob {
 	}
 
 	private static FacplStatus createStatus() {
-		FacplDate date = new FacplDate("2016/04/20");
+		FacplDate date = new FacplDate("2016/04/20-00:00:00");
 		ArrayList<StatusAttribute> attributeList = new ArrayList<StatusAttribute>();
 		attributeList.add(new StatusAttribute("accessTypeAlice", FacplStatusType.STRING, "no"));
 		attributeList.add(new StatusAttribute("accessTypeBob", FacplStatusType.STRING, "no"));
