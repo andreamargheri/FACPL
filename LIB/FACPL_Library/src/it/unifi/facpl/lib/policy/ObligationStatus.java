@@ -20,7 +20,7 @@ public class ObligationStatus extends AbstractObligation {
 		if (args != null) {
 			for (Object ob : args) {
 				if (ob instanceof StatusAttribute || ob instanceof Integer || ob instanceof Double
-						|| ob instanceof Boolean || ob instanceof FacplDate) {
+						|| ob instanceof Boolean || ob instanceof FacplDate || ob instanceof String) {
 					argsStatus.add(ob);
 				}
 				argsFunction.add(ob);

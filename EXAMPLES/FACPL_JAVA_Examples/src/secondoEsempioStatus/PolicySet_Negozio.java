@@ -311,7 +311,7 @@ public class PolicySet_Negozio extends PolicySet {
 				// Effect
 				addEffect(Effect.PERMIT);
 				ExpressionFunction e1 = new ExpressionFunction(it.unifi.facpl.lib.function.comparison.GreaterThan.class,
-						ctxReq.getStatusAttribute(new StatusAttribute("aliceFile1expiration", FacplStatusType.DATE)), new AttributeName("environment", "date"));
+						ctxReq.getStatusAttribute(new StatusAttribute("aliceFile1expiration", FacplStatusType.DATE)), new FacplDate("2016/04/20"));
 				ExpressionFunction e2 = new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
 						"Alice", new AttributeName("name", "id"));
 				ExpressionFunction e3 = new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
@@ -328,7 +328,7 @@ public class PolicySet_Negozio extends PolicySet {
 				// Effect
 				addEffect(Effect.PERMIT);
 				ExpressionFunction e1 = new ExpressionFunction(it.unifi.facpl.lib.function.comparison.GreaterThan.class,
-						ctxReq.getStatusAttribute(new StatusAttribute("bobFile1expiration", FacplStatusType.DATE)), new AttributeName("environment", "date"));
+						ctxReq.getStatusAttribute(new StatusAttribute("bobFile1expiration", FacplStatusType.DATE)), new FacplDate("2016/04/22"));
 				ExpressionFunction e2 = new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
 						"Bob", new AttributeName("name", "id"));
 				ExpressionFunction e3 = new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,

@@ -58,7 +58,7 @@ public class PEP {
 						try {
 							this.dischargeObligation(obl);
 						} catch (Throwable t) {
-							// t.printStackTrace();
+							t.printStackTrace();
 							l.debug("Obligation Evaluation Failed");
 							// return indeterminate when for permit or deny
 							// decision obligations discharging is not
@@ -87,7 +87,7 @@ public class PEP {
 							// if any error throw exception
 							this.dischargeObligation(obl);
 						} catch (Throwable t) {
-							// t.printStackTrace();
+							 t.printStackTrace();
 							l.debug("Obligation Evaluation Failed");
 							// return deny in all cases of error
 							l.debug("Enforced Decision:" + StandardDecision.DENY);
@@ -110,7 +110,7 @@ public class PEP {
 							// if any error throw exception
 							this.dischargeObligation(obl);
 						} catch (Throwable t) {
-							// t.printStackTrace();
+							 t.printStackTrace();
 							l.debug("Obligations Evaluation Failed");
 							// return deny in all cases of error
 							l.debug("Enforced Decision:" + StandardDecision.PERMIT);

@@ -3,9 +3,11 @@ package it.unifi.facpl.system.status.functions.strings;
 import java.util.List;
 
 import it.unifi.facpl.system.status.StatusAttribute;
+import it.unifi.facpl.system.status.function.arithmetic.evaluator.ArithmeticEvaluatorFactoryStatus;
 import it.unifi.facpl.system.status.function.arithmetic.evaluator.ArithmeticEvaluatorStatus;
 import it.unifi.facpl.system.status.function.arithmetic.evaluator.IExpressionFunctionStatus;
 import it.unifi.facpl.system.status.function.arithmetic.evaluator.StringEvaluator;
+import it.unifi.facpl.system.status.function.arithmetic.evaluator.StringEvaluatorStatus;
 
 public abstract class StringOperationStatus implements IExpressionFunctionStatus {
 
@@ -23,7 +25,8 @@ public abstract class StringOperationStatus implements IExpressionFunctionStatus
 				throw new Exception("First argument it's not a Status Attribute");
 			}
 			Object o2 = args.get(1); // value
-			op(s1, o2);
+			StringEvaluatorStatus evaluator = StringEvaluator.getInstance();
+			op(evaluator,s1, o2);
 									
 		} else {
 			throw new Exception("Illegal number of arguments");
@@ -31,7 +34,7 @@ public abstract class StringOperationStatus implements IExpressionFunctionStatus
 		
 	}
 	
-	abstract protected void op(StatusAttribute s1, Object o2) throws Throwable;
+	abstract protected void op(StringEvaluatorStatus ev,StatusAttribute s1, Object o2) throws Throwable;
 
 	
 }
