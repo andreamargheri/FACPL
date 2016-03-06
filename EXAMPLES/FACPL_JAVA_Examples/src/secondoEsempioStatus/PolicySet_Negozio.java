@@ -199,7 +199,7 @@ public class PolicySet_Negozio extends PolicySet {
 
 				addObligation(new ObligationStatus(new AddStatus(), Effect.PERMIT, ObligationType.M,
 						ctxReq.getStatusAttribute(new StatusAttribute("aliceFile1expiration", FacplStatusType.DATE)),
-						new FacplDate("48:00:00")));
+						new FacplDate("0000/00/00-48:00:00")));
 			}
 		}
 
@@ -221,7 +221,7 @@ public class PolicySet_Negozio extends PolicySet {
 
 				addObligation(new ObligationStatus(new SumDateStatus(), Effect.PERMIT, ObligationType.M,
 						ctxReq.getStatusAttribute(new StatusAttribute("bobFile1expiration", FacplStatusType.DATE)),
-						new FacplDate("48:00:00")));
+						new FacplDate("0000/00/00-48:00:00")));
 			}
 		}
 
