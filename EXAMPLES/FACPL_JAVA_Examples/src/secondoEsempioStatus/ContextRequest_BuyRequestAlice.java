@@ -30,7 +30,7 @@ public class ContextRequest_BuyRequestAlice {
 		req_category_attribute_action.put("id", "buy");
 		req_category_attribute_file.put("id", "file1");
 		// add attributes to request
-		Request req = new Request("view");
+		Request req = new Request("AliceBuy");
 		req.addAttribute("name", req_category_attribute_name);
 		req.addAttribute("action", req_category_attribute_action);
 		req.addAttribute("file", req_category_attribute_file);
@@ -42,7 +42,7 @@ public class ContextRequest_BuyRequestAlice {
 	}
 
 	private static FacplStatus createStatus() {
-		FacplDate date = new FacplDate();
+		FacplDate date = new FacplDate("2016/04/20");
 		ArrayList<StatusAttribute> attributeList = new ArrayList<StatusAttribute>();
 		attributeList.add(new StatusAttribute("accessTypeAlice", FacplStatusType.STRING, "no"));
 		attributeList.add(new StatusAttribute("accessTypeBob", FacplStatusType.STRING, "no"));

@@ -59,8 +59,9 @@ public class MainFACPL {
 		long startR,start;
 		long endR,end;
 		start=System.currentTimeMillis();
-
+		int i = 0;
 		for (ContextRequest rcxt : requests) {
+			System.err.println("-------------------------------------REQUEST: "+i+"-----------------------------------------------");
 			result.append("---------------------------------------------------\n");
 			startR=System.currentTimeMillis();
 			AuthorisationPDP resPDP = system.pdp.doAuthorisation(rcxt);
@@ -72,6 +73,7 @@ public class MainFACPL {
 			result.append("time per request "+(endR-startR));
 			result.append("\nPEP Decision=\n " + resPEP.toString() + "\n");
 			result.append("---------------------------------------------------\n");
+			i++;
 		}
 		end=System.currentTimeMillis();
 		result.append("\ntime for all requests "+(end-start));

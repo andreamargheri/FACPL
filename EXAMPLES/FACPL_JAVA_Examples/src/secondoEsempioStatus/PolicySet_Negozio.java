@@ -156,7 +156,7 @@ public class PolicySet_Negozio extends PolicySet {
 						ctxReq.getStatusAttribute(new StatusAttribute("accessTypeBob", FacplStatusType.STRING)),
 						"NUMBER"));
 				addObligation(new ObligationStatus(new SetString(), Effect.PERMIT, ObligationType.M,
-						ctxReq.getStatusAttribute(new StatusAttribute("bobFile1viewNumber", FacplStatusType.STRING)),
+						ctxReq.getStatusAttribute(new StatusAttribute("bobFile1viewNumber", FacplStatusType.INT)),
 						2));
 			}
 		}
@@ -272,12 +272,12 @@ public class PolicySet_Negozio extends PolicySet {
 						ctxReq.getStatusAttribute(new StatusAttribute("aliceFile1viewNumber", FacplStatusType.INT)), 0);
 				ExpressionFunction e2 = new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
 						"Alice", new AttributeName("name", "id"));
-				ExpressionFunction e3 = new ExpressionFunction(it.unifi.facpl.lib.function.comparison.GreaterThan.class,
+				ExpressionFunction e3 = new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
 						ctxReq.getStatusAttribute(new StatusAttribute("accessTypeAlice", FacplStatusType.STRING)), "NUMBER");
 				ExpressionBooleanTree ebt = new ExpressionBooleanTree(ExprBooleanConnector.AND, e2, e3, e1);
 				addTarget(ebt);
 				addObligation(new ObligationStatus(new SubStatus(), Effect.PERMIT, ObligationType.M,
-						ctxReq.getStatusAttribute(new StatusAttribute("aliceFile1viewNumber", FacplStatusType.DATE)),
+						ctxReq.getStatusAttribute(new StatusAttribute("aliceFile1viewNumber", FacplStatusType.INT)),
 						1));
 			}
 		}
@@ -292,12 +292,12 @@ public class PolicySet_Negozio extends PolicySet {
 						ctxReq.getStatusAttribute(new StatusAttribute("bobFile1viewNumber", FacplStatusType.INT)), 0);
 				ExpressionFunction e2 = new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
 						"Bob", new AttributeName("name", "id"));
-				ExpressionFunction e3 = new ExpressionFunction(it.unifi.facpl.lib.function.comparison.GreaterThan.class,
+				ExpressionFunction e3 = new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
 						ctxReq.getStatusAttribute(new StatusAttribute("accessTypeBob", FacplStatusType.STRING)), "NUMBER");
 				ExpressionBooleanTree ebt = new ExpressionBooleanTree(ExprBooleanConnector.AND, e2, e3, e1);
 				addTarget(ebt);
 				addObligation(new ObligationStatus(new SubStatus(), Effect.PERMIT, ObligationType.M,
-						ctxReq.getStatusAttribute(new StatusAttribute("bobFile1viewNumber", FacplStatusType.DATE)),
+						ctxReq.getStatusAttribute(new StatusAttribute("bobFile1viewNumber", FacplStatusType.INT)),
 						1));
 			}
 		}
@@ -311,10 +311,10 @@ public class PolicySet_Negozio extends PolicySet {
 				// Effect
 				addEffect(Effect.PERMIT);
 				ExpressionFunction e1 = new ExpressionFunction(it.unifi.facpl.lib.function.comparison.GreaterThan.class,
-						ctxReq.getStatusAttribute(new StatusAttribute("aliceFile1expiration", FacplStatusType.INT)), new AttributeName("environment", "date"));
+						ctxReq.getStatusAttribute(new StatusAttribute("aliceFile1expiration", FacplStatusType.DATE)), new AttributeName("environment", "date"));
 				ExpressionFunction e2 = new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
 						"Alice", new AttributeName("name", "id"));
-				ExpressionFunction e3 = new ExpressionFunction(it.unifi.facpl.lib.function.comparison.GreaterThan.class,
+				ExpressionFunction e3 = new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
 						ctxReq.getStatusAttribute(new StatusAttribute("accessTypeAlice", FacplStatusType.STRING)), "TIME");
 				ExpressionBooleanTree ebt = new ExpressionBooleanTree(ExprBooleanConnector.AND, e2, e3, e1);
 				addTarget(ebt);
@@ -328,10 +328,10 @@ public class PolicySet_Negozio extends PolicySet {
 				// Effect
 				addEffect(Effect.PERMIT);
 				ExpressionFunction e1 = new ExpressionFunction(it.unifi.facpl.lib.function.comparison.GreaterThan.class,
-						ctxReq.getStatusAttribute(new StatusAttribute("bobFile1expiration", FacplStatusType.INT)), new AttributeName("environment", "date"));
+						ctxReq.getStatusAttribute(new StatusAttribute("bobFile1expiration", FacplStatusType.DATE)), new AttributeName("environment", "date"));
 				ExpressionFunction e2 = new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
 						"Bob", new AttributeName("name", "id"));
-				ExpressionFunction e3 = new ExpressionFunction(it.unifi.facpl.lib.function.comparison.GreaterThan.class,
+				ExpressionFunction e3 = new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
 						ctxReq.getStatusAttribute(new StatusAttribute("accessTypeBob", FacplStatusType.STRING)), "TIME");
 				ExpressionBooleanTree ebt = new ExpressionBooleanTree(ExprBooleanConnector.AND, e2, e3, e1);
 				addTarget(ebt);

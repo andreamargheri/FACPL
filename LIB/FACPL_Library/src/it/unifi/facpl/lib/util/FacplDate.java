@@ -11,7 +11,7 @@ public class FacplDate {
 
 	public FacplDate() {
 		this.date = Calendar.getInstance();
-		this.dateS = this.dateS.toString();
+		this.dateS = this.date.toString();
 	}
 
 	public FacplDate(String dateS) {
