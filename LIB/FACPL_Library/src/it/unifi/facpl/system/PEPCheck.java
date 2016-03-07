@@ -10,23 +10,25 @@ import org.slf4j.LoggerFactory;
 import it.unifi.facpl.lib.algorithm.check.DenyOverridesCheck;
 import it.unifi.facpl.lib.algorithm.check.IEvaluableAlgorithmCheck;
 import it.unifi.facpl.lib.context.AbstractFulfilledObligation;
+import it.unifi.facpl.lib.context.AbstractFulfilledObligationCheck;
 import it.unifi.facpl.lib.context.AuthorisationPDP;
 import it.unifi.facpl.lib.context.AuthorisationPEP;
 import it.unifi.facpl.lib.context.ContextRequest;
 import it.unifi.facpl.lib.context.FulfilledObligationCheck;
+import it.unifi.facpl.lib.context.FulfilledObligationTimeCheck;
 import it.unifi.facpl.lib.enums.EnforcementAlgorithm;
 import it.unifi.facpl.lib.enums.StandardDecision;
 import it.unifi.facpl.lib.interfaces.IEvaluableAlgorithm;
 
 public class PEPCheck extends PEP {
-	private List<FulfilledObligationCheck> checkObl;
+	private List<AbstractFulfilledObligationCheck> checkObl;
 	protected IEvaluableAlgorithmCheck checkAlg;
 	private PDP pdp;
 	private AuthorisationPDP authPDP;
 
 	public PEPCheck(EnforcementAlgorithm alg, PDP pdp) {
 		super(alg);
-		checkObl = new LinkedList<FulfilledObligationCheck>();
+		checkObl = new LinkedList<AbstractFulfilledObligationCheck>();
 		checkAlg = new DenyOverridesCheck(); // default algorithm
 		this.pdp = pdp;
 		authPDP = null;
@@ -35,7 +37,7 @@ public class PEPCheck extends PEP {
 
 	public PEPCheck(EnforcementAlgorithm alg, IEvaluableAlgorithmCheck combiningAlgorithm, PDP pdp) {
 		super(alg);
-		checkObl = new LinkedList<FulfilledObligationCheck>();
+		checkObl = new LinkedList<AbstractFulfilledObligationCheck>();
 		checkAlg = combiningAlgorithm;
 		this.pdp = pdp;
 		authPDP = null;
@@ -56,9 +58,7 @@ public class PEPCheck extends PEP {
 			 */
 			// l.debug("NUMBER OF CHECK OBLIGATION: 0 -> AUTHORISATION BY PDP ->
 			// ENFORCEMENT BY PEP");
-			start=System.currentTimeMillis();
 			authPDP = pdp.doAuthorisation(cxtReq);
-			System.err.println("pdp.doAuthorisation time"+(System.currentTimeMillis()-start));
 			return this.doEnforcement(authPDP);
 		} else {
 			/*
@@ -116,6 +116,17 @@ public class PEPCheck extends PEP {
 					l.debug("ADDED: " + temp);
 					checkObl.add(temp);
 				}
+			}else if (o instanceof FulfilledObligationTimeCheck) {
+				FulfilledObligationTimeCheck temp = null;
+				try {
+					temp = (FulfilledObligationTimeCheck) ((FulfilledObligationTimeCheck) o).clone();
+				} catch (CloneNotSupportedException e) {
+					e.printStackTrace();
+				}
+				if (!checkObl.contains(temp)) {
+					l.debug("ADDED: " + temp);
+					checkObl.add(temp);
+				}
 			}
 		}
 		l.debug("...CHECK OBLIGATION ADDED");
@@ -132,12 +143,21 @@ public class PEPCheck extends PEP {
 		AuthorisationPEP r = new AuthorisationPEP();
 		StandardDecision dec;
 		LinkedList<StandardDecision> decisionList = new LinkedList<StandardDecision>();
-		for (FulfilledObligationCheck obl : checkObl) {
-			dec = obl.getObligationResult(ctxRequest);
-			decisionList.add(dec);
-			if (StandardDecision.NOT_APPLICABLE.equals(dec)) {
-				r.setDecision(StandardDecision.NOT_APPLICABLE);
-				return r;
+		for (AbstractFulfilledObligationCheck obl : checkObl) {
+			if (obl instanceof FulfilledObligationCheck){
+				dec = ((FulfilledObligationCheck)obl).getObligationResult(ctxRequest);
+				decisionList.add(dec);
+				if (StandardDecision.NOT_APPLICABLE.equals(dec)) {
+					r.setDecision(StandardDecision.NOT_APPLICABLE);
+					return r;
+				}
+			}else if (obl instanceof FulfilledObligationTimeCheck){
+				dec = ((FulfilledObligationTimeCheck)obl).getObligationResult(ctxRequest);
+				decisionList.add(dec);
+				if (StandardDecision.NOT_APPLICABLE.equals(dec)) {
+					r.setDecision(StandardDecision.NOT_APPLICABLE);
+					return r;
+				}
 			}
 		}
 		r = checkAlg.evaluate(decisionList, ctxRequest);
@@ -147,7 +167,7 @@ public class PEPCheck extends PEP {
 
 	private void clearAllObligations() {
 		LoggerFactory.getLogger(PEPCheck.class).debug("RESET ALL CHECK OBLIGATION");
-		this.checkObl = new LinkedList<FulfilledObligationCheck>();
+		this.checkObl = new LinkedList<AbstractFulfilledObligationCheck>();
 	}
 
 }

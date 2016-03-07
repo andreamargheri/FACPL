@@ -1,5 +1,6 @@
 package it.unifi.facpl.lib.context;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import it.unifi.facpl.lib.interfaces.IContextStub;
@@ -19,6 +20,9 @@ public class AbstractContextStub implements IContextStub {
 		}
 		if (attribute.getCategory().equals("environment") && attribute.getIDAttribute().equals("date")) {
 			return new Date();
+		}
+		if (attribute.getCategory().equals("environment") && attribute.getIDAttribute().equals("calendar")) {
+			return Calendar.getInstance();
 		}
 		// True and False constant
 		if (attribute.getCategory().equals("environment") && attribute.getIDAttribute().equals("true")) {

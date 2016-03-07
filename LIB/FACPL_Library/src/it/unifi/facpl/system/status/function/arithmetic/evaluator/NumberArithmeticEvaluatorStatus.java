@@ -104,7 +104,6 @@ public class NumberArithmeticEvaluatorStatus implements ArithmeticEvaluatorStatu
 			d1.add(d1.HOUR, d2.get(d2.HOUR));
 			d1.add(d1.MINUTE, d2.get(d2.MINUTE));
 			d1.add(d1.SECOND, d2.get(d2.SECOND));
-			System.err.println(Util.parseCalendar(d1));
 			o1.setValue(Util.parseCalendar(d1));
 		} else {
 			throw new UnsupportedTypeException("Date", "Add");
