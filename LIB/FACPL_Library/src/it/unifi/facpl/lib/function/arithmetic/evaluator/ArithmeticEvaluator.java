@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 Concurrency and Mobility Group.
+ * Copyright (c) 2014, 2016 Concurrency and Mobility Group.
  * Universit?? di Firenze
  *	
  * All rights reserved. This program and the accompanying materials

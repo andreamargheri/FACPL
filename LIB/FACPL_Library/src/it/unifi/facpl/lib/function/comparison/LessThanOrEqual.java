@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2016 Andrea Margheri
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Andrea Margheri
+ *******************************************************************************/
 package it.unifi.facpl.lib.function.comparison;
 
 import java.util.List;
@@ -13,9 +23,11 @@ public class LessThanOrEqual implements IComparisonFunction {
 	public Boolean evaluateFunction(List<Object> args) throws Throwable {
 
 		if (args.size() == 2) {
+
 			Object o1, o2;
 			o1 = args.get(0) instanceof StatusAttribute ? this.convertType((StatusAttribute) args.get(0)) : args.get(0);
 			o2 = args.get(1) instanceof StatusAttribute ? this.convertType((StatusAttribute) args.get(1)) : args.get(1);
+
 			IComparisonEvaluator evaluator = ComparisonEvaluatorFactory.getInstance().getEvaluator(o1);
 			return evaluator.isLessThanOrEqual(o1, o2);
 

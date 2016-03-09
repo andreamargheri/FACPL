@@ -1,10 +1,10 @@
 package it.unifi.xtext.facpl2.ui.syntaxcoloring
 
-import org.eclipse.xtext.ui.editor.utils.TextStyle
-import org.eclipse.swt.graphics.RGB
-import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfigurationAcceptor
 import org.eclipse.swt.SWT
+import org.eclipse.swt.graphics.RGB
 import org.eclipse.xtext.ui.editor.syntaxcoloring.DefaultHighlightingConfiguration
+import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfigurationAcceptor
+import org.eclipse.xtext.ui.editor.utils.TextStyle
 
 class SyntaxHighlighting extends DefaultHighlightingConfiguration {
 

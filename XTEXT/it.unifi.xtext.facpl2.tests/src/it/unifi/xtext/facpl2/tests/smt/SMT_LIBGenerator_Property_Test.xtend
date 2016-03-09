@@ -1,24 +1,24 @@
 package it.unifi.xtext.facpl2.tests.smt
 
-import org.junit.runner.RunWith
+import com.google.inject.Inject
+import it.unifi.xtext.facpl.Facpl2InjectorProvider
+import it.unifi.xtext.facpl.facpl2.Facpl
+import it.unifi.xtext.facpl.facpl2.Request
+import it.unifi.xtext.facpl.generator.SMT_LIBGenerator
+import it.unifi.xtext.facpl.generator.util.Decision
+import it.unifi.xtext.facpl.generator.util.PolicyConstant
+import it.unifi.xtext.facpl.generator.util.SecurityProperty
+import it.unifi.xtext.facpl.generator.util.StructuralProperty
+import it.unifi.xtext.facpl.validation.FacplType
+import it.unifi.xtext.facpl.validation.inference.FacplTypeInference
+import java.io.PrintWriter
+import org.eclipse.xtext.junit4.AbstractXtextTests
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
-import it.unifi.xtext.facpl.Facpl2InjectorProvider
-import org.eclipse.xtext.junit4.AbstractXtextTests
-import it.unifi.xtext.facpl.facpl2.Facpl
 import org.eclipse.xtext.junit4.util.ParseHelper
-import com.google.inject.Inject
-import org.junit.Test
-import it.unifi.xtext.facpl.generator.SMT_LIBGenerator
 import org.eclipse.xtext.junit4.validation.ValidationTestHelper
-import it.unifi.xtext.facpl.generator.util.SecurityProperty
-import it.unifi.xtext.facpl.facpl2.Request
-import it.unifi.xtext.facpl.validation.inference.FacplTypeInference
-import it.unifi.xtext.facpl.generator.util.Decision
-import it.unifi.xtext.facpl.validation.FacplType
-import it.unifi.xtext.facpl.generator.util.PolicyConstant
-import java.io.PrintWriter
-import it.unifi.xtext.facpl.generator.util.StructuralProperty
+import org.junit.Test
+import org.junit.runner.RunWith
 
 @InjectWith(typeof(Facpl2InjectorProvider))
 @RunWith(typeof(XtextRunner))
@@ -410,7 +410,7 @@ public class SMT_LIBGenerator_Property_Test extends AbstractXtextTests {
 
 		assertNoErrors(model)
 
-		var str = doGenerateStructural_Property_Code(model, "Name", "Name1", StructuralProperty.COVERAGE);
+		var str = doGenerateStructural_Property_Code(model, "Name", "Name1", StructuralProperty.COVER);
 
 		/* Test Final assertion */
 		assertEquals(str.contains("(=> cns_Name_permit cns_Name1_permit)"), true)

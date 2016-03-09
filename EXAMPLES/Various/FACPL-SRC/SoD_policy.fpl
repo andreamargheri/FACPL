@@ -1,0 +1,96 @@
+
+
+PAS{ 
+	Extended Indeterminate :false; 
+	Java Package : "sod";
+	Requests To Evaluate: Request1,Request2,Request3;
+	
+	pep:base
+    pdp:permit-overrides
+	PolicySet AccessRules { permit-overrides
+		policies:
+		PolicySet UniversityALogin { permit-overrides
+			target:
+				equal ( "University A" , resource / destination ) &&  //la localita' di dove voglio fare l'azione
+				equal ( "Corporation B" , subject / organization ) && //localita' di dove sono affiliato
+				equal (	"Corporation B" , subject / locality ) && //la localita' da dove sto facendo l'azione (location-based ac)
+				equal ( "Portable" , subject / originating-device ) //controllo aggiuntivo per accesso
+			policies:
+			Rule rule1A ( permit target:
+				equal ( "Login" , action / action-id ) //azione che eseguo
+				&&
+				in ( set("JOINT-PROJECT", "JRAPP-EXECUTE" ) , subject / permission ) ) //role-mapping
+		}
+		PolicySet CorporationBRead { permit-overrides
+			target:
+			//sono un SOFT-ENG e eseguo una READ da localita' in Uni A verso UniA e sono affiliato a Corp B
+				equal ( "University A" , resource / destination ) && 
+				equal ( "Corporation B" , subject / organization ) && 
+				equal ( "University A" , subject / locality ) 
+			policies:
+			Rule rule1B ( permit target:
+				equal ( "Read" , action / action-id )
+				&&
+				in ( set( "JOINT-PROJECT" , "HEALTH-RECORDS" , "JRAPP-EXECUTE" ) , subject / permission ) )
+		}
+		PolicySet HospitalC { permit-overrides
+			target:
+				equal ( "Hospital C" , resource / destination ) && //servers dei patient records 
+				equal ( "Hospital C" , subject / locality ) &&  //da dove eseguo l'azione
+				equal (	"University A" , subject / organization ) && //affilizione
+				equal ( "Portable" , subject / originating-device ) //device
+			policies:
+			Rule ruleCa ( deny target:
+				equal ( "Write" , action / action-id )
+				&&
+				in ( set( "JOINT-PROJECT" , "HEALTH-RECORDS" , "JRAPP-EXECUTE" ) , subject / permission ) )
+		}
+	}
+	//da aggiungere in caso di regole SoD
+	PolicySet SoDRules { permit-overrides 
+ 	 policies: 
+ 	 	PolicySet SoDRole1 { permit-overrides 
+ 	 		policies: 
+ 	 	 		Rule ruleName (permit) } 
+ 	}
+} 
+
+
+Request:{ Request1 
+	( subject / user , "mrundell" )
+	( subject / role , "Mgr" )
+	( subject / organization ,"Corporation B" ) 
+	( subject / locality , "Corporation B" ) 
+	( subject / originating-device , "Portable" )
+	( resource /destination , "University A" )
+	( action / action-id , "Login" ) 
+	( subject / permission , "JOINT-PROJECT" , "JRAPP-EXECUTE" )//set di permessi aggiunto dal PEP sulla base del ruolo rievuto in input (ROLE-MAPPING)
+}
+
+
+Request:{ Request2 
+	( subject / user , "dmendiola" ) 
+	( subject / role , "SwEng" ) 
+	( subject / organization ,	"Corporation B" )
+	( subject / locality , "University A" )
+	( subject / originating-device , "Portable" ) 
+	( resource / destination , "University A" ) 
+	( action / action-id , "Read" ) 
+	( subject / permission , "JOINT-PROJECT","HEALTH-RECORDS" , "JRAPP-EXECUTE" ) } 
+	
+	
+Request:{ Request3 
+	( subject / user , "fmcbride" ) 
+	( subject / role ,	"Research and Doctor" ) 
+	( subject / organization , "University A" ) 
+	( subject / locality , "Hospital C" ) 
+	( subject /	originating-device , "Portable" )
+	( resource / destination , "Hospital C" )
+	( action / action-id , "Write" ) 
+	( subject / permission , "JOINT-PROJECT" , "HEALTH-RECORDS" , "JRAPP-EXECUTE" ) }
+
+
+
+
+
+

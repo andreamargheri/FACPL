@@ -51,8 +51,7 @@ public class AbstractPolicySet extends PolicySet {
 		}
 		return this.m;
 	}
-	
-	
+
 	@Override
 	protected LinkedList<AbstractFulfilledObligation> evaluateObl(Effect effect, ContextRequest cxtRequest)
 			throws FulfillmentFailed {

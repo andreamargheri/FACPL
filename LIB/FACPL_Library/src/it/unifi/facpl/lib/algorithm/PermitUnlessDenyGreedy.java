@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2016 Andrea Margheri
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Andrea Margheri
+ *******************************************************************************/
 package it.unifi.facpl.lib.algorithm;
 
 import java.util.LinkedList;
@@ -27,6 +37,7 @@ public class PermitUnlessDenyGreedy implements IEvaluableAlgorithm {
 		Logger l = LoggerFactory.getLogger(PermitUnlessDenyGreedy.class);
 		l.debug("-> PERMIT UNLESS DENY-GREEDY started");
 
+
 		LinkedList<AbstractFulfilledObligation> obls_permit = new LinkedList<AbstractFulfilledObligation>();
 
 		AuthorisationPDP dr = new AuthorisationPDP();
@@ -48,7 +59,7 @@ public class PermitUnlessDenyGreedy implements IEvaluableAlgorithm {
 			}
 
 		}
-
+		l.debug("ALG.PERMIT-un-DENY = dt: PERMIT");
 		dr.setDecision(ExtendedDecision.PERMIT);
 		dr.addObligation(obls_permit);
 		return dr;

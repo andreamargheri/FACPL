@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2016 Andrea Margheri
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Andrea Margheri
+ *******************************************************************************/
 package it.unifi.facpl.junit.function;
 
 import static org.junit.Assert.assertEquals;
@@ -87,7 +97,7 @@ public class BooleanCombinationExpressionTest extends ExpressionBooleanTree {
 		assertEquals(v_true, m);
 		m = this.combineValues(ExprBooleanConnector.OR, getArrayList(bot, v_true));
 		assertEquals(v_true, m);
-		//err
+		// err
 		m = this.combineValues(ExprBooleanConnector.OR, getArrayList(v_false, err));
 		assertEquals(err, m);
 		m = this.combineValues(ExprBooleanConnector.OR, getArrayList(err, v_false));

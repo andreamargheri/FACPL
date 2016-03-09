@@ -1,38 +1,37 @@
 package it.unifi.xtext.facpl.generator
 
-import org.eclipse.emf.ecore.resource.Resource
-import org.eclipse.xtext.generator.IFileSystemAccess
-import org.eclipse.emf.common.util.URI
-import it.unifi.xtext.facpl.generator.util.TargetTree
-import it.unifi.xtext.facpl.generator.util.Connector
-import it.unifi.xtext.facpl.validation.FacplType
-import java.util.UUID
-import java.util.Calendar
-import java.text.SimpleDateFormat
-
-import org.eclipse.emf.common.util.EList
-import java.util.HashMap
-import it.unifi.xtext.facpl.validation.inference.FacplTypeInference
+import it.unifi.xtext.facpl.facpl2.Alg
+import it.unifi.xtext.facpl.facpl2.AndExpression
+import it.unifi.xtext.facpl.facpl2.AttributeName
+import it.unifi.xtext.facpl.facpl2.BooleanLiteral
+import it.unifi.xtext.facpl.facpl2.DateLiteral
+import it.unifi.xtext.facpl.facpl2.DoubleLiteral
+import it.unifi.xtext.facpl.facpl2.Expression
 import it.unifi.xtext.facpl.facpl2.Facpl
 import it.unifi.xtext.facpl.facpl2.FacplPolicy
-import it.unifi.xtext.facpl.facpl2.PolicySet
-import it.unifi.xtext.facpl.facpl2.Expression
-import it.unifi.xtext.facpl.facpl2.AndExpression
-import it.unifi.xtext.facpl.facpl2.OrExpression
+import it.unifi.xtext.facpl.facpl2.Function
+import it.unifi.xtext.facpl.facpl2.IntLiteral
 import it.unifi.xtext.facpl.facpl2.NotExpression
 import it.unifi.xtext.facpl.facpl2.Obligation
-import it.unifi.xtext.facpl.facpl2.Alg
-import it.unifi.xtext.facpl.facpl2.Rule
-import it.unifi.xtext.facpl.facpl2.BooleanLiteral
-import it.unifi.xtext.facpl.facpl2.StringLiteral
-import it.unifi.xtext.facpl.facpl2.DoubleLiteral
-import it.unifi.xtext.facpl.facpl2.IntLiteral
-import it.unifi.xtext.facpl.facpl2.Function
-import it.unifi.xtext.facpl.facpl2.Set
-import it.unifi.xtext.facpl.facpl2.AttributeName
-import it.unifi.xtext.facpl.facpl2.DateLiteral
-import it.unifi.xtext.facpl.facpl2.TimeLiteral
+import it.unifi.xtext.facpl.facpl2.OrExpression
+import it.unifi.xtext.facpl.facpl2.PolicySet
 import it.unifi.xtext.facpl.facpl2.Request
+import it.unifi.xtext.facpl.facpl2.Rule
+import it.unifi.xtext.facpl.facpl2.Set
+import it.unifi.xtext.facpl.facpl2.StringLiteral
+import it.unifi.xtext.facpl.facpl2.TimeLiteral
+import it.unifi.xtext.facpl.generator.util.Connector
+import it.unifi.xtext.facpl.generator.util.TargetTree
+import it.unifi.xtext.facpl.validation.FacplType
+import it.unifi.xtext.facpl.validation.inference.FacplTypeInference
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.HashMap
+import java.util.UUID
+import org.eclipse.emf.common.util.EList
+import org.eclipse.emf.common.util.URI
+import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.xtext.generator.IFileSystemAccess
 
 /**
  * Xtend Generator for creating the XACML policies and/or requests corresponding to the FACPL code given as input
@@ -48,7 +47,7 @@ class XMLGenerator {
 	private static var String DATE_FORMAT_NOW = "yyyy-MM-dd HH:mm:ss";
 
 	new() {
-		it.unifi.xtext.facpl.generator.XMLGenerator.tInf = new FacplTypeInference
+		XMLGenerator.tInf = new FacplTypeInference
 	}
 
 	def private static String now() {

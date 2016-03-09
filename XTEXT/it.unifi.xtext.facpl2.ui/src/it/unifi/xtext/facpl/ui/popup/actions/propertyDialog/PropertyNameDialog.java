@@ -31,7 +31,7 @@ public class PropertyNameDialog extends TitleAreaDialog {
 	@Override
 	public void create() {
 		super.create();
-		setTitle("Define Security Property");
+		setTitle("Define A Property");
 		setMessage("Choose a Property Name ", IMessageProvider.INFORMATION);
 	}
 

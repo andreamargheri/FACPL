@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2016 Andrea Margheri
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Andrea Margheri
+ *******************************************************************************/
 package it.unifi.facpl.example.target;
 
 import it.unifi.facpl.lib.enums.Effect;
@@ -16,14 +26,14 @@ public class Policy_BasicAndNotTarget extends PolicySet {
 		// Algorithm Combining
 		addCombiningAlg(it.unifi.facpl.lib.algorithm.DenyOverrides.class);
 		// Target
-		addTarget(
-				new ExpressionBooleanTree(ExprBooleanConnector.AND,
-						new ExpressionBooleanTree(ExprBooleanConnector.NOT,
-								new ExpressionBooleanTree(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
-										false, new AttributeName("envirnoment", "time")))),
-						new ExpressionBooleanTree(ExprBooleanConnector.NOT,
-								new ExpressionBooleanTree(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
-										false, new AttributeName("envirnoment", "time"))))));
+		addTarget(new ExpressionBooleanTree(ExprBooleanConnector.AND, new ExpressionBooleanTree(
+				ExprBooleanConnector.NOT,
+				new ExpressionBooleanTree(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
+						false, new AttributeName("envirnoment", "time")))),
+				new ExpressionBooleanTree(ExprBooleanConnector.NOT,
+						new ExpressionBooleanTree(
+								new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class, false,
+										new AttributeName("envirnoment", "time"))))));
 		// Rule
 		addPolicyElement(new rule1());
 		// Obligations

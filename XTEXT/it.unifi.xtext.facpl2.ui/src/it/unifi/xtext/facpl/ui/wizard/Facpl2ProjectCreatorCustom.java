@@ -11,18 +11,8 @@ public class Facpl2ProjectCreatorCustom extends Facpl2ProjectCreator {
 
 	@Override
 	protected List<String> getRequiredBundles() {
-		// return Lists.newArrayList(
-		// "com.ibm.icu",
-		// "org.eclipse.xtext",
-		// "org.eclipse.xtext.generator",
-		// "org.eclipse.xtend",
-		// "org.eclipse.xtend.typesystem.emf",
-		// "org.eclipse.xpand",
-		//// "de.itemis.xtext.antlr;resolution:=optional",
-		// "org.eclipse.emf.mwe2.launch;resolution:=optional");
 
-		return Lists.newArrayList("FACPL_Library");
-		// s.add("XacmlToFacpl")
+		return Lists.newArrayList("FACPL_Library", "XacmlToFacpl");
 	}
 
 	@Override

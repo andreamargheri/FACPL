@@ -1,12 +1,12 @@
 package it.unifi.xtext.facpl2.tests.genJava
 
-import org.junit.Test
-import org.eclipse.xtext.junit4.XtextRunner
-import org.junit.runner.RunWith
-import org.eclipse.xtext.junit4.InjectWith
-import it.unifi.xtext.facpl.Facpl2InjectorProvider
-import org.eclipse.xtext.xbase.compiler.CompilationTestHelper
 import com.google.inject.Inject
+import it.unifi.xtext.facpl.Facpl2InjectorProvider
+import org.eclipse.xtext.junit4.InjectWith
+import org.eclipse.xtext.junit4.XtextRunner
+import org.eclipse.xtext.xbase.compiler.CompilationTestHelper
+import org.junit.Test
+import org.junit.runner.RunWith
 
 @RunWith(typeof(XtextRunner)) 
 @InjectWith(typeof(Facpl2InjectorProvider))

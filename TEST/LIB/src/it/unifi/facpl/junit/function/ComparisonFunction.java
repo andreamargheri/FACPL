@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2016 Andrea Margheri
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Andrea Margheri
+ *******************************************************************************/
 package it.unifi.facpl.junit.function;
 
 import static org.junit.Assert.assertEquals;
@@ -77,7 +87,7 @@ public class ComparisonFunction {
 		boolean_False = new LinkedList<Boolean>();
 		boolean_False.add(false);
 		boolean_False.add(false);
-		
+
 		// String
 		string_Eq = new LinkedList<String>();
 		string_Eq.add("time1");
@@ -211,7 +221,7 @@ public class ComparisonFunction {
 			assertEquals("Illegal number of arguments", e.getMessage());
 		}
 	}
-	
+
 	// Not-Equal
 
 	@SuppressWarnings("unchecked")
@@ -293,7 +303,7 @@ public class ComparisonFunction {
 			assertEquals("Illegal number of arguments", e.getMessage());
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testNot_Equal_Function_Date() throws Throwable {
@@ -387,7 +397,7 @@ public class ComparisonFunction {
 			assertEquals("Illegal number of arguments", e.getMessage());
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testGreater_Function_Date() throws Throwable {
@@ -482,7 +492,7 @@ public class ComparisonFunction {
 			assertEquals("Illegal number of arguments", e.getMessage());
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testGreaterEqual_Function_Date() throws Throwable {
@@ -596,7 +606,7 @@ public class ComparisonFunction {
 			assertEquals("Illegal number of arguments", e.getMessage());
 		}
 	}
-	
+
 	// LessThanOrEqual.java
 
 	@SuppressWarnings("unchecked")
@@ -670,7 +680,7 @@ public class ComparisonFunction {
 			assertEquals("Illegal number of arguments", e.getMessage());
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testLessEqual_Function_Date() throws Throwable {

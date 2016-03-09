@@ -3,13 +3,12 @@
  */
 package it.unifi.xtext.facpl.ui.contentassist
 
-import it.unifi.xtext.facpl.ui.contentassist.AbstractFacpl2ProposalProvider
 import com.google.inject.Inject
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtext.RuleCall
 import org.eclipse.xtext.ui.IImageHelper
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor
-import org.eclipse.emf.ecore.EObject
-import org.eclipse.xtext.RuleCall
 
 /**
  * See https://www.eclipse.org/Xtext/documentation/304_ide_concepts.html#content-assist

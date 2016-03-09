@@ -1,0 +1,9 @@
+PolicySet Name { deny-unless-permit-greedy
+target: ((equal(true , cat/id)&&equal(true , cat/id)&&equal(true , cat/id))||(equal(true , cat/id)&&equal(true , cat/id)&&equal(true , cat/id))||(equal(true , cat/id)&&equal(true , cat/id)&&equal(true , cat/id)))&&((less-than(4.0 , n/id)&&equal(true , cat/id)&&equal(true , cat/id))||(equal(true , cat/id)&&equal(true , cat/id)&&equal(true , cat/id))||(equal(true , cat/id)&&equal(true , cat/id)&&equal(true , cat/id))||(equal(true , cat/id)&&equal(true , cat/id)&&equal(true , cat/id)))
+policies: 
+PolicySet PolicyEnclosingRuler1 { permit-overrides-greedy
+policies: 
+Rule r1 (permit  target: cat/id
+)
+}
+}

@@ -9,6 +9,26 @@
       Eclipse Plugin supporting the specification, analysis and enforcement of FACPL policies
    </description>
 
+   <copyright>
+      /*******************************************************************************
+* Copyright 2016 Andrea Margheri
+* 
+* Licensed under the Eclipse Public License - v 1.0 (the &quot;License&quot;);
+* you may not use this file except in compliance with the License.
+*
+* 
+* Unless required by applicable law or agreed to in writing,
+software
+* distributed under the License is distributed on an &quot;AS IS&quot;
+BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+or implied.
+* See the License for the specific language governing permissions
+and
+* limitations under the License.
+******************************************************************************/
+   </copyright>
+
    <license url="http://www.eclipse.org/legal/epl-v10.html">
       Eclipse Public License - v 1.0
 
@@ -140,5 +160,11 @@ This Agreement is governed by the laws of the State of New York and the intellec
          install-size="0"
          version="0.0.0"
          unpack="false"/>
+
+   <plugin
+         id="XacmlToFacpl"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
 
 </feature>

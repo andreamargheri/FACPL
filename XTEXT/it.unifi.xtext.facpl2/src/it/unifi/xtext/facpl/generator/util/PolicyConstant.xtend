@@ -1,32 +1,32 @@
 package it.unifi.xtext.facpl.generator.util
 
-import it.unifi.xtext.facpl.facpl2.util.Facpl2Switch
-import it.unifi.xtext.facpl.validation.FacplType
-import it.unifi.xtext.facpl.facpl2.BooleanLiteral
-import it.unifi.xtext.facpl.facpl2.DoubleLiteral
-import it.unifi.xtext.facpl.facpl2.IntLiteral
-import it.unifi.xtext.facpl.facpl2.StringLiteral
-import it.unifi.xtext.facpl.facpl2.DateLiteral
-import it.unifi.xtext.facpl.facpl2.TimeLiteral
-import it.unifi.xtext.facpl.facpl2.AttributeName
+import it.unifi.xtext.facpl.facpl2.AbstractPolicyIncl
 import it.unifi.xtext.facpl.facpl2.AndExpression
+import it.unifi.xtext.facpl.facpl2.AttributeName
+import it.unifi.xtext.facpl.facpl2.BooleanLiteral
+import it.unifi.xtext.facpl.facpl2.DateLiteral
+import it.unifi.xtext.facpl.facpl2.DeclaredFunction
+import it.unifi.xtext.facpl.facpl2.DoubleLiteral
 import it.unifi.xtext.facpl.facpl2.Expression
+import it.unifi.xtext.facpl.facpl2.Facpl
+import it.unifi.xtext.facpl.facpl2.FacplPolicy
+import it.unifi.xtext.facpl.facpl2.Function
+import it.unifi.xtext.facpl.facpl2.FunctionDeclaration
+import it.unifi.xtext.facpl.facpl2.IntLiteral
 import it.unifi.xtext.facpl.facpl2.NotExpression
 import it.unifi.xtext.facpl.facpl2.OrExpression
-import it.unifi.xtext.facpl.facpl2.Function
-import it.unifi.xtext.facpl.facpl2.Rule
-
 import it.unifi.xtext.facpl.facpl2.PolicySet
-import it.unifi.xtext.facpl.facpl2.FacplPolicy
-import it.unifi.xtext.facpl.facpl2.Facpl
-import it.unifi.xtext.facpl.facpl2.AbstractPolicyIncl
+import it.unifi.xtext.facpl.facpl2.Request
+import it.unifi.xtext.facpl.facpl2.Rule
+import it.unifi.xtext.facpl.facpl2.Set
+import it.unifi.xtext.facpl.facpl2.StringLiteral
+import it.unifi.xtext.facpl.facpl2.TimeLiteral
+import it.unifi.xtext.facpl.facpl2.TypeLiteral
+import it.unifi.xtext.facpl.facpl2.util.Facpl2Switch
+import it.unifi.xtext.facpl.generator.generators.SMT_LIBGenerator_Code
+import it.unifi.xtext.facpl.validation.FacplType
 import it.unifi.xtext.facpl.validation.inference.FacplTypeInference
 import java.util.HashMap
-import it.unifi.xtext.facpl.facpl2.DeclaredFunction
-import it.unifi.xtext.facpl.facpl2.FunctionDeclaration
-import it.unifi.xtext.facpl.facpl2.TypeLiteral
-import it.unifi.xtext.facpl.facpl2.Set
-import it.unifi.xtext.facpl.facpl2.Request
 
 /**
  * Collect constants used in a policy
@@ -37,8 +37,8 @@ class PolicyConstant extends Facpl2Switch<Boolean> {
 
 	/*
 	 * <String1, String2>  
-	 * -> String1 == string representation of bag
-	 * -> String2 == name of the bag
+	 * -> String1 == string representation of set
+	 * -> String2 == name of the set
 	 */
 	private HashMap<String, String> sets;
 
@@ -255,11 +255,15 @@ class PolicyConstant extends Facpl2Switch<Boolean> {
 	}
 
 	override caseDateLiteral(DateLiteral object) {
-		throw new Exception("NOT SUPPORTED")
+		val c = new ConstraintConstant(FacplType.INT, object.value.toString, SMT_LIBGenerator_Code.dateTimeToInt(object))
+		this.constants.put(c.att_name, c)
+		return true
 	}
 
 	override caseTimeLiteral(TimeLiteral object) {
-		throw new Exception("NOT SUPPORTED")
+		val c = new ConstraintConstant(FacplType.INT, object.value.toString, SMT_LIBGenerator_Code.dateTimeToInt(object))
+		this.constants.put(c.att_name, c)
+		return true
 	}
 
 }
