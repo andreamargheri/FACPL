@@ -4,29 +4,30 @@
 package it.unifi.xtext.facpl.ui.outline
 
 import com.google.inject.Inject
-import org.eclipse.swt.graphics.Image
-import org.eclipse.xtext.ui.IImageHelper
-import it.unifi.xtext.facpl.facpl2.FacplPolicy
-import it.unifi.xtext.facpl.facpl2.PEPAlg
-import it.unifi.xtext.facpl.facpl2.Rule
-import it.unifi.xtext.facpl.facpl2.MainFacpl
-import it.unifi.xtext.facpl.facpl2.Import
-import it.unifi.xtext.facpl.facpl2.Request
-import org.eclipse.xtext.ui.editor.outline.impl.DocumentRootNode
+import it.unifi.xtext.facpl.facpl2.AbstractPolicyIncl
 import it.unifi.xtext.facpl.facpl2.Facpl
 import it.unifi.xtext.facpl.facpl2.Facpl2Package
-import org.eclipse.xtext.ui.editor.outline.impl.EStructuralFeatureNode
-import it.unifi.xtext.facpl.facpl2.AbstractPolicyIncl
-import it.unifi.xtext.facpl.facpl2.PolicySet
-import org.eclipse.xtext.ui.editor.outline.IOutlineNode
+import it.unifi.xtext.facpl.facpl2.FacplPolicy
 import it.unifi.xtext.facpl.facpl2.FunctionDeclaration
+import it.unifi.xtext.facpl.facpl2.Import
+import it.unifi.xtext.facpl.facpl2.MainFacpl
+import it.unifi.xtext.facpl.facpl2.PEPAlg
+import it.unifi.xtext.facpl.facpl2.PolicySet
+import it.unifi.xtext.facpl.facpl2.Request
+import it.unifi.xtext.facpl.facpl2.Rule
+import org.eclipse.swt.graphics.Image
+import org.eclipse.xtext.ui.IImageHelper
+import org.eclipse.xtext.ui.editor.outline.IOutlineNode
+import org.eclipse.xtext.ui.editor.outline.impl.DefaultOutlineTreeProvider
+import org.eclipse.xtext.ui.editor.outline.impl.DocumentRootNode
+import org.eclipse.xtext.ui.editor.outline.impl.EStructuralFeatureNode
 
 /**
  * Customization of the default outline structure.
  * 
  * See https://www.eclipse.org/Xtext/documentation/304_ide_concepts.html#outline
  */
-class Facpl2OutlineTreeProvider extends org.eclipse.xtext.ui.editor.outline.impl.DefaultOutlineTreeProvider {
+class Facpl2OutlineTreeProvider extends DefaultOutlineTreeProvider {
 
 	@Inject IImageHelper imageHelper;
 

@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2016 Andrea Margheri
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Andrea Margheri
+ *******************************************************************************/
 package it.unifi.facpl.junit.policy;
 
 import static org.junit.Assert.assertEquals;
@@ -23,29 +33,11 @@ public class ObligationEvaluationTest {
 	public void setUp() {
 		req1 = ContextRequest_NoContext.getContextReq();
 
-		o1 = new Obligation("mailTo", Effect.PERMIT, ObligationType.M,
-				new AttributeName("subject", "permission"));
-		o2 = new Obligation("mailTo", Effect.DENY, ObligationType.M,
-				new AttributeName("subject", "permission"), new AttributeName(
-						"subject", "num"));
-		o3 = new Obligation("mailTo", Effect.DENY, ObligationType.M,
-				new AttributeName("subject", "permission"), new AttributeName(
-						"subject", "missing"));
-		o4 = new Obligation("mailTo", Effect.DENY, ObligationType.O,
+		o1 = new Obligation("mailTo", Effect.PERMIT, ObligationType.M, new AttributeName("subject", "permission"));
+		o2 = new Obligation("mailTo", Effect.DENY, ObligationType.M, new AttributeName("subject", "permission"),
+				new AttributeName("subject", "num"));
+		o3 = new Obligation("mailTo", Effect.DENY, ObligationType.M, new AttributeName("subject", "permission"),
 				new AttributeName("subject", "missing"));
-		
-		
-		o1 = new Obligation("mailTo", Effect.PERMIT, ObligationType.M,
-				new AttributeName("subject", "permission"));
-		o2 = new Obligation("mailTo", Effect.DENY, ObligationType.M,
-				new AttributeName("subject", "permission"), new AttributeName(
-						"subject", "num"));
-		o3 = new Obligation("mailTo", Effect.DENY, ObligationType.M,
-				new AttributeName("subject", "permission"), new AttributeName(
-						"subject", "missing"));
-		o4 = new Obligation("mailTo", Effect.DENY, ObligationType.O,
-				new AttributeName("subject", "missing"));
-
 	}
 
 	@Test
@@ -73,13 +65,13 @@ public class ObligationEvaluationTest {
 	}
 
 	@Test
-	public void testAdvice() throws Throwable{
+	public void testAdvice() throws Throwable {
 		try {
 			o4.getObligationValue(req1);
-//			assertEquals("PR01", value3.getArguments().getFirst());
-//			assertEquals(10, value3.getArguments().getLast());
-//			assertEquals(value3.getEvaluatedOn(), Effect.DENY);
-//			assertEquals(value3.getType(), TypeObl.M);
+			// assertEquals("PR01", value3.getArguments().getFirst());
+			// assertEquals(10, value3.getArguments().getLast());
+			// assertEquals(value3.getEvaluatedOn(), Effect.DENY);
+			// assertEquals(value3.getType(), TypeObl.M);
 		} catch (Exception e) {
 			assertEquals(e.getMessage(), "Obligation Fulfillment Failed");
 		}

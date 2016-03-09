@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2016 Andrea Margheri
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Andrea Margheri
+ *******************************************************************************/
 package it.unifi.facpl.lib.algorithm;
 
 import java.util.LinkedList;
@@ -35,6 +45,7 @@ public class DenyUnlessPermitGreedy implements IEvaluableAlgorithm {
 			if (d.getDecision().equals(ExtendedDecision.PERMIT)) {
 				dr.setDecision(ExtendedDecision.PERMIT);
 				dr.addObligation(d.getObligation());
+				l.debug("ALG.DENY-un-PERMIT = dt: PERMIT");
 				return dr;
 			} else {
 				if (d.getDecision().equals(ExtendedDecision.DENY)) {
@@ -42,6 +53,7 @@ public class DenyUnlessPermitGreedy implements IEvaluableAlgorithm {
 				}
 			}
 		}
+		l.debug("ALG.DENY-un-PERMIT = dt: DENY");
 		dr.setDecision(ExtendedDecision.DENY);
 		dr.addObligation(obls_deny);
 		return dr;

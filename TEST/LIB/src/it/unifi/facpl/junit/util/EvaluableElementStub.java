@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2016 Andrea Margheri
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Andrea Margheri
+ *******************************************************************************/
 package it.unifi.facpl.junit.util;
 
 import java.util.LinkedList;
@@ -10,14 +20,16 @@ import it.unifi.facpl.lib.interfaces.IEvaluablePolicy;
 
 public class EvaluableElementStub {
 
-	private LinkedList<IEvaluablePolicy> elements;	
+	private LinkedList<IEvaluablePolicy> elements;
 
 	public EvaluableElementStub() {
 		this.elements = new LinkedList<IEvaluablePolicy>();
 	}
 
 	/**
-	 * Create a set of AbstractEvaluableElements starting from a set of Decision. 
+	 * Create a set of AbstractEvaluableElements starting from a set of
+	 * Decision.
+	 * 
 	 * @param dt
 	 */
 	public void setElements(List<AuthorisationPDP> dt) {
@@ -25,12 +37,15 @@ public class EvaluableElementStub {
 			elements.add(new AbstractEvaluableElement(d));
 		}
 	}
-	
-	
+
 	/**
-	 * Create a set of AbstractEvaluableElements starting from a set of Decision. 
-	 * @param dt decision result
-	 * @param obls list of obligations for each AbstractEvaluableElement
+	 * Create a set of AbstractEvaluableElements starting from a set of
+	 * Decision.
+	 * 
+	 * @param dt
+	 *            decision result
+	 * @param obls
+	 *            list of obligations for each AbstractEvaluableElement
 	 */
 	public void setElements(List<AuthorisationPDP> dt,List<TargetDecision> mt,  List<AbstractFulfilledObligation> obls) {
 		for (int i = 0; i < dt.size(); i++){
@@ -38,15 +53,15 @@ public class EvaluableElementStub {
 			}
 	}
 	
+
 	public void setElements(List<AuthorisationPDP> dt, List<TargetDecision> mt) {
-		for (int i = 0; i < dt.size(); i++){
-//		for (DecisionResult d : dt) {
-			elements.add(new AbstractEvaluableElement(dt.get(i),mt.get(i)));
+		for (int i = 0; i < dt.size(); i++) {
+			// for (DecisionResult d : dt) {
+			elements.add(new AbstractEvaluableElement(dt.get(i), mt.get(i)));
 		}
 	}
 
-	
-	public void clearElements(){
+	public void clearElements() {
 		elements.clear();
 	}
 
@@ -54,5 +69,4 @@ public class EvaluableElementStub {
 		return elements;
 	}
 
-	
 }

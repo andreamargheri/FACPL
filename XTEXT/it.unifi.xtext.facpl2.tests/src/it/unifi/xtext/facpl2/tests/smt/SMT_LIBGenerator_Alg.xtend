@@ -1,21 +1,20 @@
 package it.unifi.xtext.facpl2.tests.smt
 
-import org.eclipse.xtext.junit4.AbstractXtextTests
-import it.unifi.xtext.facpl.Facpl2InjectorProvider
-import org.eclipse.xtext.junit4.InjectWith
-import org.junit.runner.RunWith
-import org.eclipse.xtext.junit4.XtextRunner
-import org.junit.Test
 import com.google.inject.Inject
-import it.unifi.xtext.facpl.generator.SMT_LIBGenerator
-import org.eclipse.xtext.junit4.validation.ValidationTestHelper
-import org.eclipse.xtext.junit4.util.ParseHelper
+import it.unifi.xtext.facpl.Facpl2InjectorProvider
 import it.unifi.xtext.facpl.facpl2.Facpl
+import it.unifi.xtext.facpl.generator.SMT_LIBGenerator
 import java.io.PrintWriter
+import org.eclipse.xtext.junit4.InjectWith
+import org.eclipse.xtext.junit4.XtextRunner
+import org.eclipse.xtext.junit4.util.ParseHelper
+import org.eclipse.xtext.junit4.validation.ValidationTestHelper
+import org.junit.Test
+import org.junit.runner.RunWith
 
 @InjectWith(typeof(Facpl2InjectorProvider))
 @RunWith(typeof(XtextRunner))
-class SMT_LIBGenerator_Alg extends AbstractXtextTests {
+class SMT_LIBGenerator_Alg  {
 
 	@Inject extension ParseHelper<Facpl>
 

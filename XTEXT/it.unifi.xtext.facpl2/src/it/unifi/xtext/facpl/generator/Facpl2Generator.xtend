@@ -1,40 +1,40 @@
 package it.unifi.xtext.facpl.generator
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.resource.Resource
-import org.eclipse.xtext.generator.IFileSystemAccess
-import it.unifi.xtext.facpl.facpl2.Facpl
-import it.unifi.xtext.facpl.facpl2.Import
 import com.google.inject.Injector
-import org.eclipse.xtext.resource.XtextResourceSet
 import it.unifi.xtext.facpl.Facpl2StandaloneSetup
-import it.unifi.xtext.facpl.facpl2.MainFacpl
-import it.unifi.xtext.facpl.facpl2.PolicySet
-import it.unifi.xtext.facpl.facpl2.Rule
-import it.unifi.xtext.facpl.facpl2.Obligation
-import org.eclipse.emf.common.util.EList
-import it.unifi.xtext.facpl.facpl2.Expression
-import it.unifi.xtext.facpl.facpl2.Request
-import it.unifi.xtext.facpl.generator.generators.Facpl2Generator_Name
-import it.unifi.xtext.facpl.facpl2.IntLiteral
-import it.unifi.xtext.facpl.facpl2.DoubleLiteral
-import it.unifi.xtext.facpl.facpl2.BooleanLiteral
-import it.unifi.xtext.facpl.facpl2.StringLiteral
-import it.unifi.xtext.facpl.facpl2.TimeLiteral
-import it.unifi.xtext.facpl.facpl2.DateLiteral
-import it.unifi.xtext.facpl.facpl2.AttributeName
-import it.unifi.xtext.facpl.facpl2.Set
-import it.unifi.xtext.facpl.facpl2.AndExpression
-import it.unifi.xtext.facpl.facpl2.OrExpression
-import it.unifi.xtext.facpl.facpl2.NotExpression
-import it.unifi.xtext.facpl.facpl2.Function
 import it.unifi.xtext.facpl.facpl2.Alg
 import it.unifi.xtext.facpl.facpl2.AlgLiteral
-import it.unifi.xtext.facpl.facpl2.FulfillmentStrategy
+import it.unifi.xtext.facpl.facpl2.AndExpression
+import it.unifi.xtext.facpl.facpl2.AttributeName
+import it.unifi.xtext.facpl.facpl2.BooleanLiteral
+import it.unifi.xtext.facpl.facpl2.DateLiteral
 import it.unifi.xtext.facpl.facpl2.DeclaredFunction
+import it.unifi.xtext.facpl.facpl2.DoubleLiteral
+import it.unifi.xtext.facpl.facpl2.Expression
+import it.unifi.xtext.facpl.facpl2.Facpl
+import it.unifi.xtext.facpl.facpl2.FulfillmentStrategy
+import it.unifi.xtext.facpl.facpl2.Function
 import it.unifi.xtext.facpl.facpl2.FunctionDeclaration
+import it.unifi.xtext.facpl.facpl2.Import
+import it.unifi.xtext.facpl.facpl2.IntLiteral
+import it.unifi.xtext.facpl.facpl2.MainFacpl
+import it.unifi.xtext.facpl.facpl2.NotExpression
+import it.unifi.xtext.facpl.facpl2.Obligation
+import it.unifi.xtext.facpl.facpl2.OrExpression
+import it.unifi.xtext.facpl.facpl2.PolicySet
+import it.unifi.xtext.facpl.facpl2.Request
+import it.unifi.xtext.facpl.facpl2.Rule
+import it.unifi.xtext.facpl.facpl2.Set
+import it.unifi.xtext.facpl.facpl2.StringLiteral
+import it.unifi.xtext.facpl.facpl2.TimeLiteral
+import it.unifi.xtext.facpl.generator.generators.Facpl2Generator_Name
 import it.unifi.xtext.facpl.validation.FacplType
+import org.eclipse.emf.common.util.EList
+import org.eclipse.emf.common.util.URI
+import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.xtext.generator.IFileSystemAccess
 import org.eclipse.xtext.generator.IGenerator
+import org.eclipse.xtext.resource.XtextResourceSet
 
 class Facpl2Generator implements IGenerator {
 	
@@ -126,6 +126,22 @@ class Facpl2Generator implements IGenerator {
 		}
 	}
 	
+	/**
+	 * Create an specific context stub given as input
+	 */
+	def void doGenerate_ExternalContext(Resource resource, IFileSystemAccess fsa, String external_contextStub){
+		
+		this.doGenerate(resource, fsa)
+		
+		/* Compile the external context stub */
+		for(e: resource.contents.filter(typeof(Facpl))) {
+				/* Compiling Requests */
+			if (e.getRequests != null){
+				fsa.generateFile(packageFolder + "ContextStub_Default.java",external_contextStub)
+			}
+		}
+	}
+	
 	//----------------------------------------------------
 	//PDP
 	//----------------------------------------------------
@@ -187,7 +203,7 @@ class Facpl2Generator implements IGenerator {
 				result.append("---------------------------------------------------\n");
 			}
 			System.out.println(result.toString());
-			ShowResult.showResult(result);
+			//ShowResult.showResult(result);
 		}	
 		
 		«FOR p : main.paf.pdp.polSet»

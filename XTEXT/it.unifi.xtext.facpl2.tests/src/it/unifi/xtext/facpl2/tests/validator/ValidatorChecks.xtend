@@ -1,15 +1,15 @@
 package it.unifi.xtext.facpl2.tests.validator
 
-import org.junit.runner.RunWith
+import com.google.inject.Inject
+import it.unifi.xtext.facpl.Facpl2InjectorProvider
+import it.unifi.xtext.facpl.facpl2.Facpl
+import it.unifi.xtext.facpl.facpl2.Facpl2Package
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
-import it.unifi.xtext.facpl.Facpl2InjectorProvider
-import com.google.inject.Inject
-import it.unifi.xtext.facpl.facpl2.Facpl
 import org.eclipse.xtext.junit4.util.ParseHelper
 import org.eclipse.xtext.junit4.validation.ValidationTestHelper
 import org.junit.Test
-import it.unifi.xtext.facpl.facpl2.Facpl2Package
+import org.junit.runner.RunWith
 
 @RunWith(typeof(XtextRunner))
 @InjectWith(typeof(Facpl2InjectorProvider))
@@ -211,6 +211,18 @@ class ValidatorChecks {
 			"Error date value. Must be yyyy/MM/dd"
 		)
 
+
+		model = ('''
+		PolicySet Name {permit-overrides 
+		policies: 
+				Rule r1 (permit target: equal(cat/id, 2005/43/43))
+		}''').parse
+
+		model.assertError(Facpl2Package::eINSTANCE.dateLiteral,
+			null,
+			"Error date value. Must be yyyy/MM/dd"
+		)
+		
 	}
 
 	@Test
@@ -262,8 +274,121 @@ class ValidatorChecks {
 			null,
 			"Sets cannot contain other sets"
 		)
+	}
 
-
+	@Test
+	def void testWebExamples(){
+		
+		var model = '''
+		PolicySet firstPolicy { permit-overrides
+			target: equal ( "4567-1" , resource / id ) policies:
+			Rule Rule1 ( permit target: equal ( "John" , subject / id ) && equal ( "read" , action / id ) )
+			Rule RuleDeny ( deny )
+		}'''.parse
+		
+		model.assertNoErrors()
+		
+		model ='''
+		PolicySet permitAll { deny-overrides
+			policies:
+			Rule Rule1 ( permit )
+		}'''.parse
+		
+		model.assertNoErrors()
+		
+		
+		model ='''
+		PolicySet firstPolicy_denyOverrides {deny-overrides
+			 target: equal("4567-1",resource/id)
+			 policies: 
+				Rule RuleCondition_P (permit target: equal("John",subject/id)
+					&&  in(action/id, set("read","seek")) 
+				)
+				Rule RuleCondition_D ( deny
+					target: in(action/id, set("write","checkout"))
+				)  
+		}
+		'''.parse
+		
+		model.assertNoErrors()
+		
+		model = '''
+		PolicySet polSet { first-applicable
+			policies:
+			PolicySet first { deny-overrides
+				target: equal ( "4567-1" , resource / id ) policies:
+				Rule Rule_DenyAll ( deny )
+			}
+			PolicySet second { permit-overrides
+				policies:
+				Rule rule1 ( permit )
+			}
+		}'''.parse
+		
+		
+		model.assertNoErrors()
+		
+		model = '''
+		PolicySet polSet { only-one-applicable
+			policies: 
+			 PolicySet first {deny-overrides
+				 target: equal("4567-1",resource/id)
+				 policies:  
+					Rule Rule_DenyAll (deny)  
+			  }
+			  PolicySet second {permit-overrides 
+			  	policies: Rule rule1 (permit)
+			  }
+		}'''.parse
+		
+		
+		model.assertNoErrors()
+		
+		model = '''
+		PolicySet obligation_1 { deny-overrides
+			target: equal ( "4567-1" , resource / id ) policies:
+			Rule RuleP ( permit target: equal ( "John" , subject / id ) && in ( action / id , set( "read" , "seek" ) ) 
+				
+				obl:
+				[ permit M action1 ( subject / name ) ]
+			)
+			Rule RuleD ( deny target: in ( action / id , set( "write" , "checkout" ) ) 
+				obl:
+				[ deny M action2 ( subject / name ) ]
+			)
+			obl:
+			[ permit M log ( "Resource accessed: " , resource / id ) ]
+		}'''.parse
+		
+		model.assertNoErrors()
+		
+		model = '''
+		PolicySet polSet { permit-overrides
+			policies:
+			PolicySet obligation_1 { deny-overrides
+				target: equal ( "4567-1" , resource / id ) policies:
+				Rule RuleP ( permit target: equal ( "John" , subject / id ) && in ( action / id , set( "read" , "seek" ) ) 
+					obl:
+					[ permit M action1 ( subject / name ) ]
+				)
+				Rule RuleD ( deny target: equal ( "Mark" , subject / id ) && in ( action / id , set( "write" , "checkout" ) ) 
+					obl:
+					[ deny M action2 ( subject / name ) ]
+				)
+			}
+			PolicySet obligation_2 { permit-overrides
+				policies:
+				Rule rule1 ( deny )
+				obl:
+				[ deny M log ( "Subject: " , subject / id , subject / name ) ]
+			}
+			obl:
+			[ permit M log ( "Resource accessed: " , resource / id ) ]
+			[ deny M log ( "Resource requested: " , resource / id ) ]
+		}'''.parse
+		
+		model.assertNoErrors()
+		
 	}
 
 }

@@ -3,39 +3,36 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17
 	http://docs.oasis-open.org/xacml/3.0/xacml-core-v3-schema-wd-17.xsd"
-PolicySetId="Name"
-Version="1.0"
-PolicyCombiningAlgId="urn:oasis:names:tc:xacml:3.0:policy-combining-algorithm:permit-overrides"
-MaxDelegationDepth="1">
-<Target>
-<AnyOf> 
- 	 <AllOf> 
-<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:boolean-equal">
-<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#boolean">
-true
-</AttributeValue>
-<AttributeDesignator 
-DataType="http://www.w3.org/2001/XMLSchema#anyURI" MustBePresent="false" 
-Category="urn:oasis:names:tc:xacml:3.0:attribute-category:cat" 
-AttributeId="urn:oasis:names:tc:xacml:3.0:cat:id"/>
-</Match>
-</AllOf> 
- 	 </AnyOf> 
-</Target>
-<Policy 
-	PolicyId="PolicyEnclosingRuler1"
-	Version="1.0"
-	RuleCombiningAlgId="urn:oasis:names:tc:xacml:3.0:policy-combining-algorithm:permit-overrides"
+	PolicySetId="Name" Version="1.0"
+	PolicyCombiningAlgId="urn:oasis:names:tc:xacml:3.0:policy-combining-algorithm:permit-overrides"
 	MaxDelegationDepth="1">
-	<Target/>
-	<Rule RuleId="r1" Effect="Permit">
-		<Target/>
-		<Condition><AttributeDesignator 
-		DataType="http://www.w3.org/2001/XMLSchema#anyURI" MustBePresent="false" 
-		Category="urn:oasis:names:tc:xacml:3.0:attribute-category:cat" 
-		AttributeId="urn:oasis:names:tc:xacml:3.0:cat:id"/>
-		</Condition>
-	</Rule>
-</Policy>
+	<Target>
+		<AnyOf>
+			<AllOf>
+				<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:boolean-equal">
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#boolean">
+						true
+					</AttributeValue>
+					<AttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#anyURI"
+						MustBePresent="false"
+						Category="urn:oasis:names:tc:xacml:3.0:attribute-category:cat"
+						AttributeId="urn:oasis:names:tc:xacml:3.0:cat:id" />
+				</Match>
+			</AllOf>
+		</AnyOf>
+	</Target>
+	<Policy PolicyId="PolicyEnclosingRuler1" Version="1.0"
+		RuleCombiningAlgId="urn:oasis:names:tc:xacml:3.0:policy-combining-algorithm:permit-overrides"
+		MaxDelegationDepth="1">
+		<Target />
+		<Rule RuleId="r1" Effect="Permit">
+			<Target />
+			<Condition>
+				<AttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#anyURI"
+					MustBePresent="false" Category="urn:oasis:names:tc:xacml:3.0:attribute-category:cat"
+					AttributeId="urn:oasis:names:tc:xacml:3.0:cat:id" />
+			</Condition>
+		</Rule>
+	</Policy>
 </PolicySet>
 

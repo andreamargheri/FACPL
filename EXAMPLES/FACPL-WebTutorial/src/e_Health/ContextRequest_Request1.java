@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2016 Andrea Margheri
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Andrea Margheri
+ *******************************************************************************/
 package e_Health;
 
 import java.util.HashMap;
@@ -21,7 +31,7 @@ public class ContextRequest_Request1 {
 		req_subject.put("id", "Marley");
 		req_resource.put("type", "ePrescription");
 		req_subject.put("role", "doctor");
-		req_subject.put("permission", new Set("ePre-Access", "ePre-Create"));
+		req_subject.put("permission", new Set("ePre-Read", "ePre-Write"));
 		req_action.put("id", "write");
 		// add attributes to request
 		Request req = new Request("Request1");

@@ -1,0 +1,32 @@
+/*
+ * Request1 : PERMIT
+ * Request2 : PERMIT
+ * Request3 : PERMIT
+ */
+
+Request:{ Request1 
+(subject/id,"Dr.House") 
+(resource/patient-id,"Alice") 
+(resource/type,"e-Prescription") 
+(subject/role,"doctor") 
+(subject/permission,"e-Pre-Read") 
+(action/id,"read") 
+}
+
+Request:{ Request2 
+(subject/id,"Dr.House") 
+(resource/patient-id,"Alice") 
+(resource/type,"e-Dispensation") 
+(subject/role,"pharmacist") 
+(subject/permission,"e-Dis-Read") 
+(action/id,"read") 
+}
+
+Request:{ Request3
+(subject/id,"Dr.Foreman") 
+(resource/patient-id,"Alice") 
+(resource/type,"e-Prescription") 
+(subject/role,"doctor") 
+(subject/permission,"e-Pre-Read","e-Pre-Write") 
+(action/id,"write") 
+}

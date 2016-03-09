@@ -9,8 +9,6 @@ import it.unifi.facpl.lib.enums.TargetDecision;
 import it.unifi.facpl.lib.policy.Rule;
 import it.unifi.facpl.lib.util.exception.FulfillmentFailed;
 
-
-
 public class AbstractRule extends Rule {
 
 	private TargetDecision m;

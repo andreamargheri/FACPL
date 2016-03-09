@@ -3,6 +3,8 @@
  */
 package it.unifi.xtext.facpl.scoping
 
+import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider
+
 /**
  * This class contains custom scoping description.
  * 
@@ -10,6 +12,6 @@ package it.unifi.xtext.facpl.scoping
  * on how and when to use it.
  *
  */
-class Facpl2ScopeProvider extends org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider {
+class Facpl2ScopeProvider extends AbstractDeclarativeScopeProvider {
 
 }

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 Concurrency and Mobility Group.
+ * Copyright (c) 2014, 2016 Concurrency and Mobility Group.
  * Universit?? di Firenze
  *	
  * All rights reserved. This program and the accompanying materials
@@ -15,6 +15,7 @@ package it.unifi.facpl.lib.function.comparison.evaluator;
 import java.util.List;
 
 import it.unifi.facpl.lib.interfaces.IComparisonEvaluator;
+import it.unifi.facpl.lib.util.Set;
 import it.unifi.facpl.lib.util.exception.UnsupportedTypeException;
 
 /**
@@ -73,13 +74,13 @@ public class BooleanComparisonEvaluator implements IComparisonEvaluator {
 	}
 
 	@Override
-	public boolean isSubsetOf(Object o1, Object o2) throws Throwable {
-		throw new UnsupportedTypeException("Boolean", "Subset-Of");
-	}
-
-	@Override
-	public boolean isAtLestOneMemberOf(Object o1, Object o2) throws Throwable {
-		throw new UnsupportedTypeException("Boolean", "At-Least-One-Member-Of");
+	public boolean isIn(Object o1, Object o2) throws Throwable {
+		if (o2 instanceof Boolean) {
+			return (((Boolean) o1).equals(o2));
+		} else if (o2 instanceof Set) {
+			return ((Set) o2).contains(o1);
+		}
+		throw new UnsupportedTypeException(o2.getClass().getName(), "In");
 	}
 
 	@Override

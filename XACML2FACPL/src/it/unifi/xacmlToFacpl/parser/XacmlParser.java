@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2016 Andrea Margheri
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Andrea Margheri
+ *******************************************************************************/
 package it.unifi.xacmlToFacpl.parser;
 
 import it.unifi.xacmlToFacpl.jaxb.AdviceExpressionType;
@@ -106,21 +116,18 @@ public class XacmlParser {
 			id++;
 		}
 		st.append(getCombingAlgName(polSet.getPolicyCombiningAlgId()) + "\n");
-		l.trace("Added Combing Alg: "
-				+ getCombingAlgName(polSet.getPolicyCombiningAlgId()));
+		l.trace("Added Combing Alg: " + getCombingAlgName(polSet.getPolicyCombiningAlgId()));
 		l.trace("Parsing target..");
 		if (polSet.getTarget() != null) {
 			if (polSet.getTarget().getAnyOf() != null) {
 				if (polSet.getTarget().getAnyOf().size() != 0) {
-					st.append("target: " + parseTarget(polSet.getTarget())
-							+ "\n");
+					st.append("target: " + parseTarget(polSet.getTarget()) + "\n");
 				}
 			}
 		}
 		st.append("policies: \n");
 		// policy or policy set or reference
-		for (JAXBElement<?> p : polSet
-				.getPolicySetOrPolicyOrPolicySetIdReference()) {
+		for (JAXBElement<?> p : polSet.getPolicySetOrPolicyOrPolicySetIdReference()) {
 			if (p.getValue() instanceof PolicyType) {
 				l.trace("Found a Policy");
 				parsePolicy((PolicyType) p.getValue(), st);
@@ -134,17 +141,13 @@ public class XacmlParser {
 			if (p.getValue() instanceof IdReferenceType) {
 				l.trace("Found a Reference");
 				st.append("include ");
-				st.append(parseID(((IdReferenceType) p.getValue()).getValue())
-						+ "\n");
+				st.append(parseID(((IdReferenceType) p.getValue()).getValue()) + "\n");
 			}
 		}
-		if (polSet.getObligationExpressions() != null
-				|| polSet.getAdviceExpressions() != null) {
+		if (polSet.getObligationExpressions() != null || polSet.getAdviceExpressions() != null) {
 			st.append("\n");
 			// oblgiations and advices
-			st.append("obl: "
-					+ parseObls(polSet.getObligationExpressions(),
-							polSet.getAdviceExpressions()) + "\n");
+			st.append("obl: " + parseObls(polSet.getObligationExpressions(), polSet.getAdviceExpressions()) + "\n");
 		}
 		st.append("}");
 		l.trace("End PolicySet Parsing");
@@ -170,33 +173,27 @@ public class XacmlParser {
 			id++;
 		}
 		st.append(getCombingAlgName(policy.getRuleCombiningAlgId()) + "\n");
-		l.trace("Added Combing Alg: "
-				+ getCombingAlgName(policy.getRuleCombiningAlgId()));
+		l.trace("Added Combing Alg: " + getCombingAlgName(policy.getRuleCombiningAlgId()));
 		l.trace("Parsing target..");
 		if (policy.getTarget() != null) {
 			if (policy.getTarget().getAnyOf() != null) {
 				if (policy.getTarget().getAnyOf().size() != 0) {
-					st.append("target: " + parseTarget(policy.getTarget())
-							+ "\n");
+					st.append("target: " + parseTarget(policy.getTarget()) + "\n");
 				}
 			}
 		}
 		st.append("policies: \n");
 		// rules
-		for (Object r : policy
-				.getCombinerParametersOrRuleCombinerParametersOrVariableDefinition()) {
+		for (Object r : policy.getCombinerParametersOrRuleCombinerParametersOrVariableDefinition()) {
 			if (r instanceof RuleType) {
 				l.trace("Found a rule");
 				st.append(parseRule((RuleType) r) + "\n");
 			}
 		}
 		// oblgiations and advices
-		if (policy.getObligationExpressions() != null
-				|| policy.getAdviceExpressions() != null) {
+		if (policy.getObligationExpressions() != null || policy.getAdviceExpressions() != null) {
 			st.append("\n");
-			st.append("obl: "
-					+ parseObls(policy.getObligationExpressions(),
-							policy.getAdviceExpressions()) + "\n");
+			st.append("obl: " + parseObls(policy.getObligationExpressions(), policy.getAdviceExpressions()) + "\n");
 		}
 		st.append("}");
 		l.trace("End Policy Parsing");
@@ -234,12 +231,9 @@ public class XacmlParser {
 			}
 			s.append(parseCondition(r.getCondition()) + "\n");
 		}
-		
-		if (r.getObligationExpressions() != null
-				|| r.getAdviceExpressions() != null) {
-			s.append("obl: "
-					+ parseObls(r.getObligationExpressions(),
-							r.getAdviceExpressions()));
+
+		if (r.getObligationExpressions() != null || r.getAdviceExpressions() != null) {
+			s.append("obl: " + parseObls(r.getObligationExpressions(), r.getAdviceExpressions()));
 		}
 		// closing brackets
 		s.append(")");
@@ -276,30 +270,38 @@ public class XacmlParser {
 	private String parseTarget(TargetType t) {
 		if (t != null) {
 			StringBuffer s = new StringBuffer();
-			int j = 0;
 			l.trace("list of AnyOf");
-			for (AnyOfType a : t.getAnyOf()) {
-				if (j > 0)
-					s.append("&&");
-				s.append("(");
-				int i = 0;
-				for (AllOfType b : a.getAllOf()) {
-					if (i > 0)
-						s.append("||");
+			for (int j = 0; j < t.getAnyOf().size(); j++) {
+				AnyOfType a = t.getAnyOf().get(j);
+				if (t.getAnyOf().size() > 1) {
 					s.append("(");
-					int k = 0;
-					for (MatchType c : b.getMatch()) {
-						if (k > 0)
-							s.append("&&");
-						l.trace("parsing Match");
-						s.append(parseMatch(c));
-						k++;
-					}
-					s.append(")");
-					i++;
 				}
-				s.append(")");
-				j++;
+				// Sequence of AllOf to put between ||
+				for (int k = 0; k < a.getAllOf().size(); k++) {
+					AllOfType b = a.getAllOf().get(k);
+					if (a.getAllOf().size() > 1) {
+						s.append("(");
+					}
+					// Sequence of Match to put between &&
+					for (int i = 0; i < b.getMatch().size(); i++) {
+						l.trace("parsing Match");
+						s.append(parseMatch(b.getMatch().get(i)));
+						if (i < b.getMatch().size() - 1) {
+							s.append("&&");
+						}
+					}
+					if (a.getAllOf().size() > 1) {
+						s.append(")");
+					}
+					if (k < a.getAllOf().size() - 1)
+						s.append("||");
+				}
+				// End sequence of AllOF
+				if (t.getAnyOf().size() > 1) {
+					s.append(")");
+				}
+				if (j < t.getAnyOf().size() - 1)
+					s.append("&&");
 			}
 			l.debug("...target parsed");
 			return s.toString();
@@ -347,8 +349,7 @@ public class XacmlParser {
 	 * @param advs
 	 * @return
 	 */
-	private String parseObls(ObligationExpressionsType obls,
-			AdviceExpressionsType advs) {
+	private String parseObls(ObligationExpressionsType obls, AdviceExpressionsType advs) {
 		StringBuffer s = new StringBuffer();
 		// obls
 		if (obls != null) {
@@ -357,8 +358,7 @@ public class XacmlParser {
 				s.append(parseID(o.getObligationId()) + " ( ");
 				// arguments
 				int i = 0;
-				for (AttributeAssignmentExpressionType arg : o
-						.getAttributeAssignmentExpression()) {
+				for (AttributeAssignmentExpressionType arg : o.getAttributeAssignmentExpression()) {
 					if (i > 0)
 						s.append(",");
 					s.append(parseArgumentObls(arg));
@@ -374,8 +374,7 @@ public class XacmlParser {
 				s.append(parseID(a.getAdviceId()) + " ( ");
 				// arguments
 				int i = 0;
-				for (AttributeAssignmentExpressionType arg : a
-						.getAttributeAssignmentExpression()) {
+				for (AttributeAssignmentExpressionType arg : a.getAttributeAssignmentExpression()) {
 					if (i > 0)
 						s.append(", ");
 					s.append(parseArgumentObls(arg));
@@ -520,16 +519,29 @@ public class XacmlParser {
 	private Object parseApply(ApplyType ob) {
 		// NB -> nested functions
 		StringBuffer s = new StringBuffer();
-		s.append(getIDFunction(parseID(ob.getFunctionId())));
-		s.append("(");
-		int i = 0;
-		for (JAXBElement<?> ex : ob.getExpression()) {
-			if (i > 0)
-				s.append(", ");
-			s.append(parseExpr(ex));
-			i++;
+		String op = getIDFunction(parseID(ob.getFunctionId()));
+		if (op.equals("&&") || op.equals("||")) {
+			s.append("(");
+			int i = 0;
+			for (JAXBElement<?> ex : ob.getExpression()) {
+				if (i > 0)
+					s.append(" "+ op + " ");
+				s.append(parseExpr(ex));
+				i++;
+			}
+			s.append(")");
+		} else {
+			s.append(op);
+			s.append("(");
+			int i = 0;
+			for (JAXBElement<?> ex : ob.getExpression()) {
+				if (i > 0)
+					s.append(", ");
+				s.append(parseExpr(ex));
+				i++;
+			}
+			s.append(")");
 		}
-		s.append(")");
 		return s.toString();
 	}
 
@@ -623,8 +635,7 @@ public class XacmlParser {
 		for (AttributesType at : request.getAttributes()) {
 			String category = parseID(at.getCategory());
 			for (AttributeType el : at.getAttribute()) {
-				st.append("( " + category + "/" + parseID(el.getAttributeId())
-						+ ", ");
+				st.append("( " + category + "/" + parseID(el.getAttributeId()) + ", ");
 				int i = 0;
 				for (AttributeValueType val : el.getAttributeValue()) {
 					if (i > 0)

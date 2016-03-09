@@ -3,13 +3,13 @@
  */
 package it.unifi.xtext.facpl.formatting
 
-import org.eclipse.xtext.formatting.impl.AbstractDeclarativeFormatter
-import org.eclipse.xtext.formatting.impl.FormattingConfig
 import com.google.inject.Inject
 import it.unifi.xtext.facpl.services.Facpl2GrammarAccess
-import org.eclipse.xtext.util.Pair
-import org.eclipse.xtext.Keyword
 import java.util.List
+import org.eclipse.xtext.Keyword
+import org.eclipse.xtext.formatting.impl.AbstractDeclarativeFormatter
+import org.eclipse.xtext.formatting.impl.FormattingConfig
+import org.eclipse.xtext.util.Pair
 
 /**
  * This class contains custom formatting declarations.

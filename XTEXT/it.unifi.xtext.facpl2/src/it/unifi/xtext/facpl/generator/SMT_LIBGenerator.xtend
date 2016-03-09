@@ -1,13 +1,13 @@
 package it.unifi.xtext.facpl.generator
 
 import it.unifi.xtext.facpl.facpl2.Facpl
-import it.unifi.xtext.facpl.generator.generators.SMT_LIBGenerator_Code
-import org.eclipse.xtext.generator.IFileSystemAccess
 import it.unifi.xtext.facpl.facpl2.Request
+import it.unifi.xtext.facpl.generator.generators.SMT_LIBGenerator_Code
 import it.unifi.xtext.facpl.generator.util.Decision
 import it.unifi.xtext.facpl.generator.util.SecurityProperty
-import it.unifi.xtext.facpl.validation.inference.SubstitutionSet
 import it.unifi.xtext.facpl.generator.util.StructuralProperty
+import it.unifi.xtext.facpl.validation.inference.SubstitutionSet
+import org.eclipse.xtext.generator.IFileSystemAccess
 
 class SMT_LIBGenerator extends SMT_LIBGenerator_Code {
 
@@ -64,15 +64,15 @@ class SMT_LIBGenerator extends SMT_LIBGenerator_Code {
 		String name_property, StructuralProperty prop, IFileSystemAccess fsa) {
 		
 		var str = ""
-		
+		var fileName = ""
 		if (prop.equals(StructuralProperty.COMPLETE)){
 			/* Only one policy is involved */
 			str = doGenerateComplete_Property_Code(resource, policy_name1);
+			fileName = "Property_" + name_property + "_" + policy_name1;
 		}else {
 			str = doGenerateStructural_Property_Code(resource, policy_name1, policy_name2, prop);
+			fileName = "Property_" + name_property + "_" + policy_name1 + "_" + policy_name2;
 		}
-
-		var fileName = policy_name1 + "_property_" + name_property;
 		/* Copy the generated SMT-LIB in a FILE  */
 		fsa.generateFile(fileName + ".smt2", str);
 		
@@ -117,6 +117,8 @@ class SMT_LIBGenerator extends SMT_LIBGenerator_Code {
 
 		str.append(";###################### STRUCTURAL PROPERTY #####################\n")
 		
+		str.append("(echo \"--> Check COMPLETE of " + policy_name + "... (holds if the following check is unsat)\")\n")
+		
 		str.append("(assert cns_" + policy_name + "_notApp)")
 		
 		/* Evaluation commands for Z3 */
@@ -148,30 +150,104 @@ class SMT_LIBGenerator extends SMT_LIBGenerator_Code {
 
 		str.append(";###################### STRUCTURAL PROPERTY #####################\n")
 		
-		if (property.equals(StructuralProperty.COVERAGE)){
+		if (property.equals(StructuralProperty.COVER)){
+		
 			/* Policy1 cover Policy2 */
-			str.append("(assert (and\n") 
-			str.append("\t (=> cns_"+ policy_name1 + "_permit cns_"+ policy_name2+"_permit)\n")
-			str.append("\t (=> cns_"+ policy_name1 + "_deny cns_"+ policy_name2+"_deny)\n")
-			str.append("))\n")
+		
+			str.append("(echo \"--> Check " + policy_name1 + "COVER" + policy_name2 +"... (holds if the following two checks are unsat)\")\n")
+			
+			/* Check 1 of 2 */
+
+			str.append("(echo \"...(1/2) " + policy_name1 + "_PERMIT  COVER " + policy_name2 + "_PERMIT...(holds if it is unsat)\")\n ")
+			
+			str.append("(push)\n")
+			str.append("(assert \n")
+			str.append("\t (and (not cns_"+ policy_name1 + "_permit) cns_"+ policy_name2 + "_permit)\n")
+			str.append(")\n")
+			
+			/* Evaluation commands for Z3 */
+			str.append("\n(check-sat)\n")
+			str.append(";(get-model)\n\n")
+			
+			/* Check 2 of 2 */
+			
+			str.append("(pop)\n")
+			str.append("(push)\n")
+			
+			str.append("(echo \"...(2/2) " + policy_name1 + "_DENY  COVER " + policy_name2 + "_DENY...(holds if it is unsat)\")\n ")
+			
+			str.append("(assert \n")
+			str.append("\t (and (not cns_"+ policy_name1 + "_deny) cns_"+ policy_name2 + "_deny)\n")
+			str.append(")\n")
+			
+			/* Evaluation commands for Z3 */
+			str.append("\n(check-sat)\n")
+			str.append(";(get-model)\n\n")
+
 			
 		}else if (property.equals(StructuralProperty.DISJOINT)){
-			/* Policy1 disjoint Policy2 */
-			str.append("(assert (not (or\n") 
-			str.append("\t (and cns_"+ policy_name1 + "_permit cns_"+ policy_name2+"_permit)\n")
-			str.append("\t (and cns_"+ policy_name1 + "_permit cns_"+ policy_name2+"_deny)\n")
-			str.append("\t (and cns_"+ policy_name1 + "_deny cns_"+ policy_name2+"_permit)\n")
-			str.append("\t (and cns_"+ policy_name1 + "_deny cns_"+ policy_name2+"_deny)\n")
-			str.append(")))\n")
+
+			/* Policy1 DISJOINT Policy2 */
+		
+			str.append("(echo \"--> Check " + policy_name1 + "DIJOINT" + policy_name2 +"... (holds if the following four checks are unsat)\")\n")
+			
+			/* Check 1 of 4 */
+
+			str.append("(echo \"...(1/4) " + policy_name1 + "_PERMIT  DIJOINT " + policy_name2 + "_PERMIT...(holds if it is unsat)\")\n ")
+			
+			str.append("(push)\n")
+			str.append("(assert \n")
+			str.append("\t (and cns_"+ policy_name1 + "_permit cns_"+ policy_name2 + "_permit)\n")
+			str.append(")\n")
+			
+			/* Evaluation commands for Z3 */
+			str.append("\n(check-sat)\n")
+			str.append(";(get-model)\n\n")
+	
+			/* Check 2 of 4 */
+
+			str.append("(echo \"...(2/4) " + policy_name1 + "_PERMIT  DIJOINT " + policy_name2 + "_DENY...(holds if it is unsat)\")\n ")
+			
+			str.append("(push)\n")
+			str.append("(assert \n")
+			str.append("\t (and cns_"+ policy_name1 + "_permit cns_"+ policy_name2 + "_deny)\n")
+			str.append(")\n")
+			
+			/* Evaluation commands for Z3 */
+			str.append("\n(check-sat)\n")
+			str.append(";(get-model)\n\n")
+			
+			/* Check 3 of 4 */
+
+			str.append("(echo \"...(3/4) " + policy_name1 + "_DENY  DIJOINT " + policy_name2 + "_PERMIT...(holds if it is unsat)\")\n ")
+			
+			str.append("(push)\n")
+			str.append("(assert \n")
+			str.append("\t (and cns_"+ policy_name1 + "_deny cns_"+ policy_name2 + "_permit)\n")
+			str.append(")\n")
+			
+			/* Evaluation commands for Z3 */
+			str.append("\n(check-sat)\n")
+			str.append(";(get-model)\n\n")
+			
+			
+			/* Check 4 of 4 */
+
+			str.append("(echo \"...(4/4) " + policy_name1 + "_DENY  DIJOINT " + policy_name2 + "_DENY...(holds if it is unsat)\")\n ")
+			
+			str.append("(push)\n")
+			str.append("(assert \n")
+			str.append("\t (and cns_"+ policy_name1 + "_deny cns_"+ policy_name2 + "_deny)\n")
+			str.append(")\n")
+			
+			/* Evaluation commands for Z3 */
+			str.append("\n(check-sat)\n")
+			str.append(";(get-model)\n\n")
 			
 		}else {
 			throw new Exception("Wrong invocation of the generation method for the case of structural properties")
 		}
 		
-		/* Evaluation commands for Z3 */
-		str.append("\n\n(check-sat)\n")
-		str.append("(get-model)\n")
-
 		return str.toString();	
 	}
 	
@@ -253,12 +329,15 @@ class SMT_LIBGenerator extends SMT_LIBGenerator_Code {
 		switch (prop) {
 			case EVAL: {
 				str.append("(assert cns_" + policy_name + "_" + _toDecision(dec) + ")")
+				str.append("(echo \" --> Check EVAL property... (holds if the following check is sat)\")\n")
 			}
 			case MAY: {
 				str.append("(assert cns_" + policy_name + "_" + _toDecision(dec) + ")")
+				str.append("(echo \" --> Check MAY property... (holds if the following check is sat)\")\n")
 			}
 			case MUST: {
 				str.append("(assert (not cns_" + policy_name + "_" + _toDecision(dec) + "))")
+				str.append("(echo \" --> Check MUST property... (holds if the following check is unsat)\")\n")
 			}
 		}
 
@@ -293,11 +372,6 @@ class SMT_LIBGenerator extends SMT_LIBGenerator_Code {
 		}
 		return false
 	}
-	
-	
-	
-	
-	
 	
 
 	/**

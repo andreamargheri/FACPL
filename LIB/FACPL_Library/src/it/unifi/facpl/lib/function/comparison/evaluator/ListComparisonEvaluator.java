@@ -61,14 +61,10 @@ public class ListComparisonEvaluator implements IComparisonEvaluator {
 	}
 
 	@Override
-	public boolean isSubsetOf(Object o1, Object o2) throws Throwable {
+	public boolean isIn(Object o1, Object o2) throws Throwable {
 		throw new UnsupportedTypeException("list", "Is-subset-of");
 	}
 
-	@Override
-	public boolean isAtLestOneMemberOf(Object o1, Object o2) throws Throwable {
-		throw new UnsupportedTypeException("list", "Is-at-least-one-member-of");
-	}
 
 	@Override
 	public boolean isListElement(List<?> list, Object o2) throws Throwable {
