@@ -51,7 +51,6 @@ public class PEPCheck extends PEP {
 		 */
 		Logger l = LoggerFactory.getLogger(PEPCheck.class);
 		AuthorisationPEP result;
-		long start,end;
 		if (checkObl.size() == 0) {
 			/*
 			 * PDP Evaluation -> PEP ENFORCEMENT

@@ -1,14 +1,11 @@
 package checkStreamingExample;
 
-import java.util.ArrayList;
+
 import java.util.HashMap;
 
 import it.unifi.facpl.lib.context.ContextRequest_Status;
 import it.unifi.facpl.lib.context.ContextStub_Status_Default;
 import it.unifi.facpl.lib.context.Request;
-import it.unifi.facpl.lib.enums.FacplStatusType;
-import it.unifi.facpl.system.status.FacplStatus;
-import it.unifi.facpl.system.status.StatusAttribute;
 
 public class ContextRequest_ListenPremiumAlice {
 	private static ContextRequest_Status CxtReq;
@@ -30,22 +27,8 @@ public class ContextRequest_ListenPremiumAlice {
 		// context stub: default-one
 		CxtReq = new ContextRequest_Status(req, ContextStub_Status_Default.getInstance());
 		/*
-		 * set dello stato
+		 * set status
 		 */
-		ContextStub_Status_Default.getInstance().setStatus(createStatus());
 		return CxtReq;
-	}
-	
-	private static FacplStatus createStatus() {
-		ArrayList<StatusAttribute> attributeList = new ArrayList<StatusAttribute>();
-		attributeList.add(new StatusAttribute("loginBob", FacplStatusType.STRING, "noLogin"));
-		attributeList.add(new StatusAttribute("loginAlice", FacplStatusType.STRING, "noLogin"));
-		attributeList.add(new StatusAttribute("passwordAlice", FacplStatusType.STRING, "123456"));
-		attributeList.add(new StatusAttribute("passwordBob", FacplStatusType.STRING, "null"));
-		attributeList.add(new StatusAttribute("streamingTimeBob", FacplStatusType.DATE, "00:00:00"));
-		attributeList.add(new StatusAttribute("streamingAlice", FacplStatusType.BOOLEAN, "false"));
-		attributeList.add(new StatusAttribute("streamingBob", FacplStatusType.BOOLEAN, "false"));
-		FacplStatus status = new FacplStatus(attributeList, "stato");
-		return status;
 	}
 }

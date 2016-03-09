@@ -90,7 +90,7 @@ public class FulfilledObligationCheck extends AbstractFulfilledObligationCheck i
 		ExpressionValue result_target, result_target_status;
 		result_target = null;
 		result_target_status = null;
-		if (this.getExpiration() > 0) {
+		if (this.getExpiration() > 0 || this.getExpiration()== -1) {
 			//if not expired -> evaluate target
 			l.debug("EVALUATING EXPRESSION OF OBLIGATION: " + "\r\n");
 			result_target = target.evaluateExpressionTree(cxtRequest);
@@ -146,7 +146,10 @@ public class FulfilledObligationCheck extends AbstractFulfilledObligationCheck i
 	public void subExpiration(int i) {
 		
 		Logger l = LoggerFactory.getLogger(FulfilledObligationCheck.class);
-		if (expiration != 0) {
+		if (expiration == -1){
+			l.debug("EXPIRATION PERSISTENT");
+		}
+		if (expiration > 0) {
 			expiration -= i;
 			l.debug("NEW EXPIRATION: " + this.toString());
 			if (expiration == 0) {
@@ -159,7 +162,7 @@ public class FulfilledObligationCheck extends AbstractFulfilledObligationCheck i
 
 	@Override
 	public String toString() {
-		return "target: " + target.toString() + "\r\n" + "status: " + status_target.toString() + "\r\n EXPIRATION IN: "
+		return "target: " + target.toString() + "  " + "status:  " + status_target.toString() + "  EXPIRATION IN: "
 				+ expiration;
 	}
 
