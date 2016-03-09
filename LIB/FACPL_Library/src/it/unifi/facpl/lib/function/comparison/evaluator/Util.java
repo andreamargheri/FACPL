@@ -43,12 +43,12 @@ public class Util {
 		DateFormat dateOnly = new SimpleDateFormat("yyyy/MM/dd");
 		DateFormat dateTime = new SimpleDateFormat("HH:mm:ss");
 		try {
-			return dateTime.format(c.getTime());
+			return dateLong.format(c.getTime());
 		} catch (Exception e) {
 			try {
 				return dateOnly.format(c.getTime());
 			} catch (Exception t) {
-				return dateLong.format(c.getTime());
+				return dateTime.format(c.getTime());
 			}
 		}
 	}

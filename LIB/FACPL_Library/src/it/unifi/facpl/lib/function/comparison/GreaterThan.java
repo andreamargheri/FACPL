@@ -16,6 +16,7 @@ import it.unifi.facpl.lib.enums.FacplStatusType;
 import it.unifi.facpl.lib.function.comparison.evaluator.ComparisonEvaluatorFactory;
 import it.unifi.facpl.lib.interfaces.IComparisonEvaluator;
 import it.unifi.facpl.lib.interfaces.IComparisonFunction;
+import it.unifi.facpl.lib.util.FacplDate;
 import it.unifi.facpl.system.status.StatusAttribute;
 
 public class GreaterThan implements IComparisonFunction {
@@ -24,6 +25,9 @@ public class GreaterThan implements IComparisonFunction {
 
 		if (args.size() == 2) {
 			Object o1, o2;
+			/*
+			 * if one of the args is a status attribute -> retrieve value
+			 */
 			o1 = args.get(0) instanceof StatusAttribute ? this.convertType((StatusAttribute) args.get(0)) : args.get(0);
 			o2 = args.get(1) instanceof StatusAttribute ? this.convertType((StatusAttribute) args.get(1)) : args.get(1);
 			IComparisonEvaluator evaluator = ComparisonEvaluatorFactory.getInstance().getEvaluator(o1);
@@ -34,12 +38,11 @@ public class GreaterThan implements IComparisonFunction {
 		}
 	}
 
-	/*
-	 * effettua per prima cosa il retrieve dallo status dell'attributo corretto
-	 * poi fa il controllo sul tipo dell'attributo dello status attribute e fa
-	 * il cast al tipo corretto
-	 */
+	
 	private Object convertType(StatusAttribute sa) {
+		/*
+		 * retrieve value from status attribute
+		 */
 		// StatusAttribute sa = FacplStatus.getInstance().getStatusAttribute(s);
 		if (sa.getType() == FacplStatusType.BOOLEAN) {
 			return Boolean.getBoolean(sa.getValue());
@@ -49,6 +52,8 @@ public class GreaterThan implements IComparisonFunction {
 			return Integer.valueOf(sa.getValue());
 		} else if (sa.getType() == FacplStatusType.STRING) {
 			return sa.getValue();
+		} else if (sa.getType() == FacplStatusType.DATE) {
+			return new FacplDate(sa.getValue());
 		}
 		return null;
 	}

@@ -57,7 +57,7 @@ public class NumberArithmeticEvaluatorStatus implements ArithmeticEvaluatorStatu
 	public void multiply(StatusAttribute o1, Object o2) throws Throwable {
 		if (o1.getType() == FacplStatusType.INT) {
 			Integer value = Integer.parseInt(o1.getValue());
-			Integer newValue = value / (int) o2;
+			Integer newValue = value * (int) o2;
 			o1.setValue(newValue.toString());
 		} else if (o1.getType() == FacplStatusType.DOUBLE) {
 			Double value = Double.parseDouble(o1.getValue());
@@ -72,7 +72,7 @@ public class NumberArithmeticEvaluatorStatus implements ArithmeticEvaluatorStatu
 	public void subtract(StatusAttribute o1, Object o2) throws Throwable {
 		if (o1.getType() == FacplStatusType.INT) {
 			Integer value = Integer.parseInt(o1.getValue());
-			Integer newValue = value / (int) o2;
+			Integer newValue = value - (int) o2;
 			o1.setValue(newValue.toString());
 		} else if (o1.getType() == FacplStatusType.DOUBLE) {
 			Double value = Double.parseDouble(o1.getValue());
@@ -100,6 +100,7 @@ public class NumberArithmeticEvaluatorStatus implements ArithmeticEvaluatorStatu
 		if (o1.getType() == FacplStatusType.DATE) {
 			Calendar d1 = Util.parseDate(o1.getValue());
 			Calendar d2 = Util.parseDate(((FacplDate) o2).toString());
+			d1.add(d1.DAY_OF_MONTH, d2.get(d2.DAY_OF_MONTH));
 			d1.add(d1.HOUR, d2.get(d2.HOUR));
 			d1.add(d1.MINUTE, d2.get(d2.MINUTE));
 			d1.add(d1.SECOND, d2.get(d2.SECOND));
@@ -108,6 +109,17 @@ public class NumberArithmeticEvaluatorStatus implements ArithmeticEvaluatorStatu
 			throw new UnsupportedTypeException("Date", "Add");
 		}
 
+	}
+
+	@Override
+	public void set_date(StatusAttribute o1, Object o2) throws Throwable {
+		if (o1.getType() == FacplStatusType.DATE) {
+			Calendar d2 = Util.parseDate(((FacplDate) o2).toString());
+			o1.setValue(Util.parseCalendar(d2));
+		} else {
+			throw new UnsupportedTypeException("Date", "Add");
+		}
+		
 	}
 
 }

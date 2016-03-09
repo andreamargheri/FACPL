@@ -3,6 +3,9 @@ package writeExample;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import checkReadWriteExample.ContextRequest_ReadRequest;
+import checkReadWriteExample.ContextRequest_StopWriteRequest;
+import checkReadWriteExample.ContextRequest_WriteRequest;
 import it.unifi.facpl.lib.context.AuthorisationPDP;
 import it.unifi.facpl.lib.context.AuthorisationPEP;
 import it.unifi.facpl.lib.context.ContextRequest;
@@ -47,23 +50,40 @@ public class MainFACPL {
 
 		LinkedList<ContextRequest_Status> requests = new LinkedList<ContextRequest_Status>();
 
+		requests.add(ContextRequest_ReadRequest.getContextReq()); 
+		requests.add(ContextRequest_ReadRequest.getContextReq()); 
+		requests.add(ContextRequest_ReadRequest.getContextReq()); 
+		requests.add(ContextRequest_ReadRequest.getContextReq()); 
+		requests.add(ContextRequest_ReadRequest.getContextReq()); 
+		
+
+		requests.add(ContextRequest_WriteRequest.getContextReq()); 
+		requests.add(ContextRequest_ReadRequest.getContextReq()); 
+		requests.add(ContextRequest_StopWriteRequest.getContextReq());
 		requests.add(ContextRequest_ReadRequest.getContextReq());
 		requests.add(ContextRequest_ReadRequest.getContextReq());
-		requests.add(ContextRequest_WriteRequest.getContextReq());
 		requests.add(ContextRequest_ReadRequest.getContextReq());
-		requests.add(ContextRequest_WriteRequest.getContextReq());
 		requests.add(ContextRequest_ReadRequest.getContextReq());
+		
+		long startR,start;
+		long endR,end;
+		start=System.currentTimeMillis();
 
 		for (ContextRequest rcxt : requests) {
 			result.append("---------------------------------------------------\n");
+			startR=System.currentTimeMillis();
 			AuthorisationPDP resPDP = system.pdp.doAuthorisation(rcxt);
-			result.append("Request: " + resPDP.getId() + "\n\n");
+			result.append("\nRequest: " + resPDP.getId() + "\n\n");
 			result.append("PDP Decision=\n " + resPDP.toString() + "\n\n");
 			// enforce decision
 			AuthorisationPEP resPEP = system.pep.doEnforcement(resPDP);
-			result.append("PEP Decision=\n " + resPEP.toString() + "\n");
+			endR=System.currentTimeMillis();
+			result.append("time per request "+(endR-startR));
+			result.append("\nPEP Decision=\n " + resPEP.toString() + "\n");
 			result.append("---------------------------------------------------\n");
 		}
+		end=System.currentTimeMillis();
+		result.append("\ntime for all requests "+(end-start));
 		System.out.println(result.toString());
 		// ShowResult.showResult(result);
 	}

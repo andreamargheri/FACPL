@@ -2,13 +2,12 @@ package checkExample.one;
 
 import java.util.LinkedList;
 
-import it.unifi.facpl.lib.algorithm.DenyOverrides;
+import it.unifi.facpl.lib.algorithm.check.DenyOverridesCheck;
 import it.unifi.facpl.lib.context.AuthorisationPDP;
 import it.unifi.facpl.lib.context.AuthorisationPEP;
 import it.unifi.facpl.lib.context.ContextRequest;
 import it.unifi.facpl.lib.context.ContextRequest_Status;
 import it.unifi.facpl.lib.enums.EnforcementAlgorithm;
-import it.unifi.facpl.lib.enums.StandardDecision;
 import it.unifi.facpl.lib.policy.FacplPolicy;
 import it.unifi.facpl.lib.util.exception.MissingAttributeException;
 import it.unifi.facpl.system.PDP;
@@ -28,7 +27,7 @@ public class MainFACPL {
 		policies.add(new PolicySet_NamePolicySetTwo(ContextRequest_NameRequest.getContextReq()));
 		this.pdp = new PDP(it.unifi.facpl.lib.algorithm.PermitUnlessDenyGreedy.class, policies, false);
 
-		this.pep = new PEPCheck(EnforcementAlgorithm.DENY_BIASED, new DenyOverrides(), this.pdp);
+		this.pep = new PEPCheck(EnforcementAlgorithm.DENY_BIASED, new DenyOverridesCheck(), this.pdp);
 
 		this.pep.addPEPActions(PEPAction.getPepActions());
 	}

@@ -7,7 +7,7 @@ import it.unifi.facpl.lib.enums.ObligationType;
 
 /**
  * 
- * @author Andrea Obligation gia valutata dal PDP
+ * @author Andrea 
  */
 public abstract class AbstractFulfilledObligation {
 
@@ -15,10 +15,10 @@ public abstract class AbstractFulfilledObligation {
 	protected ObligationType type;
 	protected LinkedList<Object> arguments;
 	protected LinkedList<Object> argsStatus;
+
+	
 	/*
-	 * questa e' l'obbligation valutata astratta bisogna differenziare tra
-	 * obbligation fullfilled di stato e obbligation fullfilled NON di stato
-	 * implementare il metodo evaluateObl()
+	 * abstract type of all fulfilled obligation
 	 */
 
 	public AbstractFulfilledObligation(Effect effect, ObligationType typeObl) {
@@ -31,6 +31,9 @@ public abstract class AbstractFulfilledObligation {
 
 	}
 
+	/*
+	 * args for "normal" obligation
+	 */
 	public void addArg(Object object) {
 		if (this.arguments == null) {
 			this.arguments = new LinkedList<Object>();
@@ -38,6 +41,9 @@ public abstract class AbstractFulfilledObligation {
 		this.arguments.add(object);
 	}
 
+	/*
+	 * args for status obligation
+	 */
 	public void addArgStatus(LinkedList<Object> ob) {
 		if (this.argsStatus == null) {
 			this.argsStatus = new LinkedList<Object>();

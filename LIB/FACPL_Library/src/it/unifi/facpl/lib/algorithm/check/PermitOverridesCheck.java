@@ -16,23 +16,22 @@ import it.unifi.facpl.lib.enums.StandardDecision;
 
 public class PermitOverridesCheck implements IEvaluableAlgorithmCheck {
 
+	private Boolean atLeastOneErrorD = false;
+	private Boolean atLeastOneErrorP = false;
+	private Boolean atLeastOneErrorDP = false;
+	private Boolean atLeastOneDeny = false;
+	private Boolean atLeastOnePermit = false;
+	
 	@Override
-	public AuthorisationPEP evaluate(List<FulfilledObligationCheck> checkObl, ContextRequest cxtRequest) {
-		Logger l = LoggerFactory.getLogger(PermitOverridesCheck.class);
+	public AuthorisationPEP evaluate(List<StandardDecision> decList, ContextRequest cxtRequest) {
+		Logger l = LoggerFactory.getLogger(getClass());
 		l.debug("PERMIT OVERRIDES CHECK STARTED");
 
-		Boolean atLeastOneErrorD = false;
-		Boolean atLeastOneErrorP = false;
-		Boolean atLeastOneErrorDP = false;
-		Boolean atLeastOneDeny = false;
-		Boolean atLeastOnePermit = false;
 
-		LinkedList<AbstractFulfilledObligation> obligationDeny = new LinkedList<AbstractFulfilledObligation>();
 
 		AuthorisationPEP dr = new AuthorisationPEP(UUID.randomUUID().toString().substring(0, 8));
-		for (FulfilledObligationCheck obl : checkObl) {
+		for (StandardDecision dec : decList) {
 
-			StandardDecision dec = obl.getObligationResult(cxtRequest);
 
 			if (ExtendedDecision.PERMIT.equals(dec)) {
 				l.debug("ALG.PERMIT = dt: PERMIT");
@@ -92,6 +91,15 @@ public class PermitOverridesCheck implements IEvaluableAlgorithmCheck {
 		l.debug("ALG.PERMIT = dt: NotAPP");
 		dr.setDecision(StandardDecision.NOT_APPLICABLE);
 		return dr;
+	}
+
+	@Override
+	public void resetAlg() {
+		this.atLeastOneErrorD = false;
+		this.atLeastOneErrorP = false;
+		this.atLeastOneErrorDP = false;
+		this.atLeastOneDeny = false;
+		this.atLeastOnePermit = false;
 	}
 
 }

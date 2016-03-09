@@ -10,44 +10,72 @@ import org.slf4j.LoggerFactory;
 import it.unifi.facpl.lib.algorithm.check.DenyOverridesCheck;
 import it.unifi.facpl.lib.algorithm.check.IEvaluableAlgorithmCheck;
 import it.unifi.facpl.lib.context.AbstractFulfilledObligation;
+import it.unifi.facpl.lib.context.AbstractFulfilledObligationCheck;
 import it.unifi.facpl.lib.context.AuthorisationPDP;
 import it.unifi.facpl.lib.context.AuthorisationPEP;
 import it.unifi.facpl.lib.context.ContextRequest;
 import it.unifi.facpl.lib.context.FulfilledObligationCheck;
+import it.unifi.facpl.lib.context.FulfilledObligationTimeCheck;
 import it.unifi.facpl.lib.enums.EnforcementAlgorithm;
 import it.unifi.facpl.lib.enums.StandardDecision;
 import it.unifi.facpl.lib.interfaces.IEvaluableAlgorithm;
 
 public class PEPCheck extends PEP {
-	private List<FulfilledObligationCheck> checkObl;
+	private List<AbstractFulfilledObligationCheck> checkObl;
 	protected IEvaluableAlgorithmCheck checkAlg;
 	private PDP pdp;
 	private AuthorisationPDP authPDP;
 
-	public PEPCheck(EnforcementAlgorithm alg, IEvaluableAlgorithm combiningAlgorithm, PDP pdp) {
+	public PEPCheck(EnforcementAlgorithm alg, PDP pdp) {
 		super(alg);
-		checkObl = new LinkedList<FulfilledObligationCheck>();
-		checkAlg = new DenyOverridesCheck(); // per ora si usa uno fissato
+		checkObl = new LinkedList<AbstractFulfilledObligationCheck>();
+		checkAlg = new DenyOverridesCheck(); // default algorithm
+		this.pdp = pdp;
+		authPDP = null;
+
+	}
+
+	public PEPCheck(EnforcementAlgorithm alg, IEvaluableAlgorithmCheck combiningAlgorithm, PDP pdp) {
+		super(alg);
+		checkObl = new LinkedList<AbstractFulfilledObligationCheck>();
+		checkAlg = combiningAlgorithm;
 		this.pdp = pdp;
 		authPDP = null;
 
 	}
 
 	public AuthorisationPEP doAuthorisation(ContextRequest cxtReq) {
+		/*
+		 * authorisation: if number of check obligation == 0 -> PDP evaluation
+		 * -> PEP Enforcement otherwise -> PEP Evaluation
+		 */
 		Logger l = LoggerFactory.getLogger(PEPCheck.class);
 		AuthorisationPEP result;
+		long start,end;
 		if (checkObl.size() == 0) {
-			l.debug("NUMBER OF CHECK OBLIGATION: 0 -> AUTHORISATION BY PDP -> ENFORCEMENT BY PEP");
+			/*
+			 * PDP Evaluation -> PEP ENFORCEMENT
+			 */
+			// l.debug("NUMBER OF CHECK OBLIGATION: 0 -> AUTHORISATION BY PDP ->
+			// ENFORCEMENT BY PEP");
 			authPDP = pdp.doAuthorisation(cxtReq);
 			return this.doEnforcement(authPDP);
 		} else {
-			l.debug("NUMBER OF CHECK OBLIGATION: " + checkObl.size() + " -> EVALUATING CHECK OBLIGATION");
+			/*
+			 * PEP EVALUATION
+			 */
+			// l.debug("NUMBER OF CHECK OBLIGATION: " + checkObl.size() + " ->
+			// EVALUATING CHECK OBLIGATION");
 			result = this.doPEPCheck(cxtReq);
-
-			l.debug("CHECK RESULT: " + result.getDecision());
-			if (result.getDecision() == StandardDecision.PERMIT || result.getDecision() == StandardDecision.DENY) {
+			StandardDecision dec = result.getDecision();
+			l.debug("CHECK RESULT: " + dec);
+			if (dec == StandardDecision.PERMIT || dec == StandardDecision.DENY) {
 				return result;
 			} else {
+				/*
+				 * if check obligation returns an error -> PDP Evaluation -> PEP
+				 * Enforcement
+				 */
 				l.debug("BACK TO PDP");
 				authPDP = pdp.doAuthorisation(cxtReq);
 				this.clearAllObligations();
@@ -61,13 +89,16 @@ public class PEPCheck extends PEP {
 
 	@Override
 	public AuthorisationPEP doEnforcement(AuthorisationPDP authPDP) {
+		/*
+		 * normal PEP enforcement + addiction of CheckObligation
+		 */
 		AuthorisationPEP first_enforcement;
 		Logger l = LoggerFactory.getLogger(PEPCheck.class);
 		first_enforcement = super.doEnforcement(authPDP); // enforcement
-		l.debug("FIRST ENFORCEMENT COMPLETED, DECISION: " + first_enforcement.getDecision());
-		if (first_enforcement.getDecision() != StandardDecision.PERMIT) {
-
-			return new AuthorisationPEP(first_enforcement.getId(), first_enforcement.getDecision());
+		StandardDecision dec = first_enforcement.getDecision();
+		l.debug("FIRST ENFORCEMENT COMPLETED, DECISION: " + dec);
+		if (dec != StandardDecision.PERMIT) {
+			return new AuthorisationPEP(first_enforcement.getId(), dec);
 		}
 
 		l.debug("ADDING CHECK OBLIGATION TO PEP...");
@@ -85,6 +116,17 @@ public class PEPCheck extends PEP {
 					l.debug("ADDED: " + temp);
 					checkObl.add(temp);
 				}
+			}else if (o instanceof FulfilledObligationTimeCheck) {
+				FulfilledObligationTimeCheck temp = null;
+				try {
+					temp = (FulfilledObligationTimeCheck) ((FulfilledObligationTimeCheck) o).clone();
+				} catch (CloneNotSupportedException e) {
+					e.printStackTrace();
+				}
+				if (!checkObl.contains(temp)) {
+					l.debug("ADDED: " + temp);
+					checkObl.add(temp);
+				}
 			}
 		}
 		l.debug("...CHECK OBLIGATION ADDED");
@@ -93,18 +135,39 @@ public class PEPCheck extends PEP {
 	}
 
 	private AuthorisationPEP doPEPCheck(ContextRequest ctxRequest) {
+		/*
+		 * evaluate check obligation
+		 */
 		Logger l = LoggerFactory.getLogger(PEPCheck.class);
 		l.debug("DOING PEP CHECK:");
-		if (checkObl.size() > 0) {
-			return checkAlg.evaluate(checkObl, ctxRequest);
+		AuthorisationPEP r = new AuthorisationPEP();
+		StandardDecision dec;
+		LinkedList<StandardDecision> decisionList = new LinkedList<StandardDecision>();
+		for (AbstractFulfilledObligationCheck obl : checkObl) {
+			if (obl instanceof FulfilledObligationCheck){
+				dec = ((FulfilledObligationCheck)obl).getObligationResult(ctxRequest);
+				decisionList.add(dec);
+				if (StandardDecision.NOT_APPLICABLE.equals(dec)) {
+					r.setDecision(StandardDecision.NOT_APPLICABLE);
+					return r;
+				}
+			}else if (obl instanceof FulfilledObligationTimeCheck){
+				dec = ((FulfilledObligationTimeCheck)obl).getObligationResult(ctxRequest);
+				decisionList.add(dec);
+				if (StandardDecision.NOT_APPLICABLE.equals(dec)) {
+					r.setDecision(StandardDecision.NOT_APPLICABLE);
+					return r;
+				}
+			}
 		}
-		return null;
+		r = checkAlg.evaluate(decisionList, ctxRequest);
+		checkAlg.resetAlg();
+		return r;
 	}
 
 	private void clearAllObligations() {
 		LoggerFactory.getLogger(PEPCheck.class).debug("RESET ALL CHECK OBLIGATION");
-		;
-		this.checkObl = new LinkedList<FulfilledObligationCheck>();
+		this.checkObl = new LinkedList<AbstractFulfilledObligationCheck>();
 	}
 
 }

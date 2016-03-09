@@ -4,9 +4,10 @@ import java.util.List;
 
 import it.unifi.facpl.lib.context.AuthorisationPEP;
 import it.unifi.facpl.lib.context.ContextRequest;
-import it.unifi.facpl.lib.context.FulfilledObligationCheck;
+import it.unifi.facpl.lib.enums.StandardDecision;
 
 public interface IEvaluableAlgorithmCheck {
 
-	AuthorisationPEP evaluate(List<FulfilledObligationCheck> checkObl, ContextRequest cxtRequest);
+	AuthorisationPEP evaluate(List<StandardDecision> checkObl, ContextRequest cxtRequest);
+	public void resetAlg();
 }

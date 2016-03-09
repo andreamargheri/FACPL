@@ -2,10 +2,7 @@ package checkExample.three;
 
 import java.util.LinkedList;
 
-import checkExample.three.ContextRequest_NameRequest;
-import checkExample.three.PEPAction;
-import checkExample.three.PolicySet_NamePolicySetTwo;
-import it.unifi.facpl.lib.algorithm.DenyOverrides;
+import it.unifi.facpl.lib.algorithm.check.DenyOverridesCheck;
 import it.unifi.facpl.lib.context.AuthorisationPDP;
 import it.unifi.facpl.lib.context.AuthorisationPEP;
 import it.unifi.facpl.lib.context.ContextRequest;
@@ -30,7 +27,7 @@ public class MainFACPL {
 		policies.add(new PolicySet_NamePolicySetTwo(ContextRequest_NameRequest.getContextReq()));
 		this.pdp = new PDP(it.unifi.facpl.lib.algorithm.PermitUnlessDenyGreedy.class, policies, false);
 
-		this.pep = new PEPCheck(EnforcementAlgorithm.DENY_BIASED, new DenyOverrides(), this.pdp);
+		this.pep = new PEPCheck(EnforcementAlgorithm.DENY_BIASED, new DenyOverridesCheck(), this.pdp);
 
 		this.pep.addPEPActions(PEPAction.getPepActions());
 	}

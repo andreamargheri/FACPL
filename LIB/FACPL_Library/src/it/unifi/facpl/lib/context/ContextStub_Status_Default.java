@@ -9,10 +9,8 @@ import it.unifi.facpl.system.status.FacplStatus;
 import it.unifi.facpl.system.status.StatusAttribute;
 
 @SuppressWarnings("all")
-public class ContextStub_Status_Default implements IContextStub {
-	/*
-	 * TODO: rendere lo stato unico ed non modificabile
-	 */
+public class ContextStub_Status_Default extends AbstractContextStub {
+
 	private static ContextStub_Status_Default instance;
 
 	private static FacplStatus status;
@@ -36,27 +34,19 @@ public class ContextStub_Status_Default implements IContextStub {
 		return status.retrieveAttribute(attribute);
 	}
 
-	public Object getContextValues(Object attr) throws MissingAttributeException {
-		if (attr instanceof AttributeName) {
-			AttributeName attribute = (AttributeName) attr;
-			// Context Time Value
-			if (attribute.getCategory().equals("environment") && attribute.getIDAttribute().equals("time")) {
-				return new Date();
+	public Object getContextValues(Object attr) {
+		/*
+		 * return environment attribute or status attribute
+		 */
+		try {
+			if (attr instanceof StatusAttribute) {
+				return status.getValue((StatusAttribute) attr);
+			} else {
+				return super.getContextValues(attr);
 			}
-			if (attribute.getCategory().equals("environment") && attribute.getIDAttribute().equals("date")) {
-				return new Date();
-			}
-			// True and False constant
-			if (attribute.getCategory().equals("environment") && attribute.getIDAttribute().equals("true")) {
-				return true;
-			}
-			if (attribute.getCategory().equals("environment") && attribute.getIDAttribute().equals("false")) {
-				return false;
-			}
-		} else if (attr instanceof StatusAttribute) {
-			return status.getValue((StatusAttribute) attr);
+		} catch (MissingAttributeException e) {
+			return null;
 		}
-		return null;
 
 	}
 
