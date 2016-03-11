@@ -1,9 +1,12 @@
-bin/
-.DS_Store
-._*
+
+*.DS_Store
+*._*
 *.log
-src-gen/
-xtend-gen/
+*.lock
+*~
+*.class
+
+
 WEB-APPs/
 WEB-Example/
 JAR/
@@ -15,4 +18,3 @@ TEST/Benchmark/
 EXAMPLES/ASCENS-School/
 EXAMPLES/FACPL_eHealth/
 EXAMPLES/FACPL_XACML_eHealth/ 
-ECLIPSE_UpdateSite/
