@@ -12,7 +12,7 @@ import it.unifi.facpl.system.status.FacplStatus;
 import it.unifi.facpl.system.status.StatusAttribute;
 
 @SuppressWarnings("all")
-public class ContextRequest_StopWriteRequest {
+public class ContextRequest_WriteRequestAlice {
 	private static ContextRequest_Status CxtReq;
 
 	public static ContextRequest_Status getContextReq() {
@@ -21,18 +21,24 @@ public class ContextRequest_StopWriteRequest {
 		}
 		// create map for each category
 		HashMap<String, Object> req_category_attribute_name = new HashMap<String, Object>();
+		HashMap<String, Object> req_category_attribute_group = new HashMap<String, Object>();
 		HashMap<String, Object> req_category_attribute_action = new HashMap<String, Object>();
+		HashMap<String, Object> req_category_attribute_file = new HashMap<String, Object>();
 		// add attribute's values
-		req_category_attribute_name.put("id", "Bob");
-		req_category_attribute_action.put("id", "stopWrite");
+		req_category_attribute_name.put("id", "Alice");
+		req_category_attribute_group.put("id", "Administrator");
+		req_category_attribute_action.put("id", "write");
+		req_category_attribute_file.put("id", "thesis.tex");
 		// add attributes to request
-		Request req = new Request("stop_write_request");
+		Request req = new Request("write_request Alice");
 		req.addAttribute("name", req_category_attribute_name);
+		req.addAttribute("group", req_category_attribute_group);
 		req.addAttribute("action", req_category_attribute_action);
+		req.addAttribute("file", req_category_attribute_file);
 		// context stub: default-one
 		CxtReq = new ContextRequest_Status(req, ContextStub_Status_Default.getInstance());
 		/*
-		 * set dello stato
+		 * set status
 		 */
 		ContextStub_Status_Default.getInstance().setStatus(createStatus());
 		return CxtReq;
@@ -40,7 +46,7 @@ public class ContextRequest_StopWriteRequest {
 
 	private static FacplStatus createStatus() {
 		ArrayList<StatusAttribute> attributeList = new ArrayList<StatusAttribute>();
-		attributeList.add(new StatusAttribute("isWriting", FacplStatusType.BOOLEAN, "false"));
+		attributeList.add(new StatusAttribute("isWritingThesis", FacplStatusType.BOOLEAN, "false"));
 		FacplStatus status = new FacplStatus(attributeList, "stato");
 		return status;
 	}

@@ -13,7 +13,7 @@ import it.unifi.facpl.system.status.FacplStatus;
 import it.unifi.facpl.system.status.StatusAttribute;
 
 @SuppressWarnings("all")
-public class ContextRequest_ReadRequest {
+public class ContextRequest_ReadRequestBob {
 
 
 	private static ContextRequest_Status CxtReq;
@@ -25,17 +25,20 @@ public class ContextRequest_ReadRequest {
 		// create map for each category
 		HashMap<String, Object> req_category_attribute_name = new HashMap<String, Object>();
 		HashMap<String, Object> req_category_attribute_action = new HashMap<String, Object>();
+		HashMap<String, Object> req_category_attribute_file = new HashMap<String, Object>();
 		// add attribute's values
 		req_category_attribute_name.put("id", "Bob");
 		req_category_attribute_action.put("id", "read");
+		req_category_attribute_file.put("id", "thesis.tex");
 		// add attributes to request
-		Request req = new Request("read_request");
+		Request req = new Request("read_request Bob");
 		req.addAttribute("name", req_category_attribute_name);
 		req.addAttribute("action", req_category_attribute_action);
+		req.addAttribute("file", req_category_attribute_file);
 		// context stub: default-one
 		CxtReq = new ContextRequest_Status(req, ContextStub_Status_Default.getInstance());
 		/*
-		 * set dello stato
+		 * set status
 		 */
 		ContextStub_Status_Default.getInstance().setStatus(createStatus());
 		return CxtReq;
@@ -43,7 +46,7 @@ public class ContextRequest_ReadRequest {
 	
 	private static FacplStatus createStatus() {
 		ArrayList<StatusAttribute> attributeList = new ArrayList<StatusAttribute>();
-		attributeList.add(new StatusAttribute("isWriting", FacplStatusType.BOOLEAN, "false"));
+		attributeList.add(new StatusAttribute("isWritingThesis", FacplStatusType.BOOLEAN, "false"));
 		FacplStatus status = new FacplStatus(attributeList, "stato");
 		return status;
 	}

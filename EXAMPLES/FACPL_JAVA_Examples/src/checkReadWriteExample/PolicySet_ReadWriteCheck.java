@@ -17,10 +17,10 @@ import it.unifi.facpl.lib.util.exception.MissingAttributeException;
 import it.unifi.facpl.system.status.StatusAttribute;
 import it.unifi.facpl.system.status.functions.bool.FlagStatus;
 
-public class PolicySet_ReadWrite extends PolicySet {
+public class PolicySet_ReadWriteCheck extends PolicySet {
 	protected ContextRequest_Status ctxReq;
 
-	public PolicySet_ReadWrite(ContextRequest_Status ctxReq) throws MissingAttributeException {
+	public PolicySet_ReadWriteCheck(ContextRequest_Status ctxReq) throws MissingAttributeException {
 		this.ctxReq = ctxReq;
 		addId("ReadWrite_Policy");
 		// Algorithm Combining
@@ -30,7 +30,7 @@ public class PolicySet_ReadWrite extends PolicySet {
 				new AttributeName("name", "id"));
 		ExpressionFunction e2=new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class, "Alice",
 				new AttributeName("name", "id"));
-		ExpressionBooleanTree ebt = new ExpressionBooleanTree(ExprBooleanConnector.AND, e1, e2);
+		ExpressionBooleanTree ebt = new ExpressionBooleanTree(ExprBooleanConnector.OR, e1, e2);
 		addTarget(ebt);
 		// Policy
 		addPolicyElement(new PolicySet_Write(ctxReq));
@@ -58,7 +58,7 @@ public class PolicySet_ReadWrite extends PolicySet {
 							new FlagStatus(),
 							Effect.PERMIT,
 							ObligationType.M,
-							ctxReq.getStatusAttribute(new StatusAttribute("isWriting", FacplStatusType.BOOLEAN)), true)
+							ctxReq.getStatusAttribute(new StatusAttribute("isWritingThesis", FacplStatusType.BOOLEAN)), true)
 						);
 		}
 
@@ -68,13 +68,16 @@ public class PolicySet_ReadWrite extends PolicySet {
 				addId("write");
 				// Effect
 				addEffect(Effect.PERMIT);
-				addTarget(new ExpressionFunction(
-								it.unifi.facpl.lib.function.comparison.Equal.class,
-								ctxReq.getStatusAttribute(
-								ctxReq.getStatusAttribute(new StatusAttribute(
-															"isWriting", 
-															FacplStatusType.BOOLEAN))),
-						false));
+				ExpressionFunction e1=new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class, "Administrator",
+						new AttributeName("group", "id"));
+				ExpressionFunction e2=new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class, "thesis.tex",
+						new AttributeName("file", "id"));
+				ExpressionFunction e3=new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
+										ctxReq.getStatusAttribute(ctxReq.getStatusAttribute(
+												new StatusAttribute("isWritingThesis",FacplStatusType.BOOLEAN))),false);
+				ExpressionBooleanTree ebt = new ExpressionBooleanTree(ExprBooleanConnector.AND, e1, e2,e3);
+				addTarget(ebt);
+				
 			}
 		}
 	}
@@ -89,29 +92,27 @@ public class PolicySet_ReadWrite extends PolicySet {
 			// Algorithm Combining
 			addCombiningAlg(it.unifi.facpl.lib.algorithm.DenyUnlessPermitGreedy.class);
 			// Target
-			addTarget(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class, "read",
-					new AttributeName("action", "id")));
+			ExpressionFunction file1 = new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class, "thesis.tex",
+					new AttributeName("file", "id"));
+			ExpressionFunction file2 = new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class, "facpl.pdf",
+					new AttributeName("file", "id"));
+			ExpressionFunction read = new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class, "read",
+					new AttributeName("action", "id"));
+			ExpressionFunction writingCondition = new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
+					ctxReq.getStatusAttribute(ctxReq.getStatusAttribute(
+							new StatusAttribute("isWritingThesis", FacplStatusType.BOOLEAN))),
+					false);
+			ExpressionBooleanTree ebt = new ExpressionBooleanTree(ExprBooleanConnector.OR, file1, file2);
+			
+			addTarget(ebt);
 			// PolElements
 			addPolicyElement(new Rule_read());
 			// Obligation
 
-			ExpressionFunction e1 = new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class, "Bob",
-					new AttributeName("name", "id"));
-			ExpressionFunction e2 = new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class, "read",
-					new AttributeName("action", "id"));
-			
-			ExpressionBooleanTree ebt = new ExpressionBooleanTree(ExprBooleanConnector.AND, e1, e2);
-			/*
-			 *  
-			 * 
-			 */
 			addObligation( 
 					new ObligationCheck(Effect.PERMIT, ObligationType.M,
-							ebt,
-							new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
-									ctxReq.getStatusAttribute(ctxReq.getStatusAttribute(
-											new StatusAttribute("isWriting", FacplStatusType.BOOLEAN))),
-									false)
+							read,
+							writingCondition
 							));
 		}
 
@@ -122,10 +123,14 @@ public class PolicySet_ReadWrite extends PolicySet {
 				addId("read");
 				// Effect
 				addEffect(Effect.PERMIT);
-				addTarget(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
+				ExpressionFunction e1 = new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class, "read",
+						new AttributeName("action", "id"));
+				ExpressionFunction e2 = new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
 						ctxReq.getStatusAttribute(
-								ctxReq.getStatusAttribute(new StatusAttribute("isWriting", FacplStatusType.BOOLEAN))),
-						false));
+								ctxReq.getStatusAttribute(new StatusAttribute("isWritingThesis", FacplStatusType.BOOLEAN))),
+						false);
+				ExpressionBooleanTree ebt = new ExpressionBooleanTree(ExprBooleanConnector.AND, e1, e2);
+				addTarget(ebt);
 			}
 		}
 
@@ -147,7 +152,7 @@ public class PolicySet_ReadWrite extends PolicySet {
 			addPolicyElement(new Rule_write());
 			// Obligation
 			addObligation(new ObligationStatus(new FlagStatus(), Effect.PERMIT, ObligationType.M,
-					ctxReq.getStatusAttribute(new StatusAttribute("isWriting", FacplStatusType.BOOLEAN)), false));
+					ctxReq.getStatusAttribute(new StatusAttribute("isWritingThesis", FacplStatusType.BOOLEAN)), false));
 		}
 
 		private class Rule_write extends Rule {
@@ -156,10 +161,15 @@ public class PolicySet_ReadWrite extends PolicySet {
 				addId("write");
 				// Effect
 				addEffect(Effect.PERMIT);
-				addTarget(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
-						ctxReq.getStatusAttribute(
-								ctxReq.getStatusAttribute(new StatusAttribute("isWriting", FacplStatusType.BOOLEAN))),
-						true));
+				ExpressionFunction e1=new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class, "Administrator",
+						new AttributeName("group", "id"));
+				ExpressionFunction e2=new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class, "thesis.tex",
+						new AttributeName("file", "id"));
+				ExpressionFunction e3=new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
+										ctxReq.getStatusAttribute(ctxReq.getStatusAttribute(
+												new StatusAttribute("isWritingThesis",FacplStatusType.BOOLEAN))),true);
+				ExpressionBooleanTree ebt = new ExpressionBooleanTree(ExprBooleanConnector.AND, e1, e2,e3);
+				addTarget(ebt);
 			}
 		}
 	}

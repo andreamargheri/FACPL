@@ -16,9 +16,6 @@ import it.unifi.facpl.lib.util.AttributeName;
 import it.unifi.facpl.lib.util.FacplDate;
 import it.unifi.facpl.lib.util.exception.MissingAttributeException;
 import it.unifi.facpl.system.status.StatusAttribute;
-import it.unifi.facpl.system.status.functions.arithmetic.AddStatus;
-import it.unifi.facpl.system.status.functions.arithmetic.SetDate;
-import it.unifi.facpl.system.status.functions.arithmetic.SumDateStatus;
 import it.unifi.facpl.system.status.functions.bool.FlagStatus;
 import it.unifi.facpl.system.status.functions.strings.SetString;
 

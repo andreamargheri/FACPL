@@ -9,26 +9,26 @@ public class FulfilledObligationCheckPersistent extends FulfilledObligationCheck
 
 	/*
 	 * same constructor of FulfilledObligationCheck, 
-	 * but expiration is initialized with max int
+	 * but expiration is initialized with -1
 	 */
 	public FulfilledObligationCheckPersistent(Effect evaluatedOn, ObligationType type, ExpressionBooleanTree target,
 			ExpressionBooleanTree status_target) {
-		super(evaluatedOn, type, target, status_target, Integer.MAX_VALUE);
+		super(evaluatedOn, type, target, status_target, -1);
 	}
 
 	public FulfilledObligationCheckPersistent(Effect evaluatedOn, ObligationType type, ExpressionFunction target,
 			ExpressionBooleanTree status_target) {
-		super(evaluatedOn, type, target, status_target, Integer.MAX_VALUE);
+		super(evaluatedOn, type, target, status_target, -1);
 	}
 
 	public FulfilledObligationCheckPersistent(Effect evaluatedOn, ObligationType type, ExpressionBooleanTree target,
 			ExpressionFunction status_target) {
-		super(evaluatedOn, type, target, status_target, Integer.MAX_VALUE);
+		super(evaluatedOn, type, target, status_target, -1);
 	}
 
 	public FulfilledObligationCheckPersistent(Effect evaluatedOn, ObligationType type, ExpressionFunction target,
 			ExpressionFunction status_target) {
-		super(evaluatedOn, type, target, status_target, Integer.MAX_VALUE);
+		super(evaluatedOn, type, target, status_target, -1);
 	}
 
 	public void setExpired() {
@@ -45,7 +45,7 @@ public class FulfilledObligationCheckPersistent extends FulfilledObligationCheck
 
 	@Override
 	public String toString() {
-		return "target: " + target.toString() + "\r\n" + "status: " + status_target.toString() + "\r\n PERSISTENT";
+		return "target:  " + target.toString() + "  " + "status: " + status_target.toString() + "  PERSISTENT";
 	}
 
 }

@@ -1,4 +1,5 @@
-package checkStreamingExample;
+package checkReadWriteExample;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,13 +8,11 @@ import it.unifi.facpl.lib.context.ContextRequest_Status;
 import it.unifi.facpl.lib.context.ContextStub_Status_Default;
 import it.unifi.facpl.lib.context.Request;
 import it.unifi.facpl.lib.enums.FacplStatusType;
-import it.unifi.facpl.lib.util.FacplDate;
 import it.unifi.facpl.system.status.FacplStatus;
 import it.unifi.facpl.system.status.StatusAttribute;
 
 @SuppressWarnings("all")
-public class ContextRequest_LoginStandardBob {
-
+public class ContextRequest_StopWriteRequestAlice {
 	private static ContextRequest_Status CxtReq;
 
 	public static ContextRequest_Status getContextReq() {
@@ -22,17 +21,20 @@ public class ContextRequest_LoginStandardBob {
 		}
 		// create map for each category
 		HashMap<String, Object> req_category_attribute_name = new HashMap<String, Object>();
+		HashMap<String, Object> req_category_attribute_group = new HashMap<String, Object>();
 		HashMap<String, Object> req_category_attribute_action = new HashMap<String, Object>();
-		HashMap<String, Object> req_category_attribute_password = new HashMap<String, Object>();
+		HashMap<String, Object> req_category_attribute_file = new HashMap<String, Object>();
 		// add attribute's values
-		req_category_attribute_name.put("id", "Bob");
-		req_category_attribute_action.put("id", "login");
-		req_category_attribute_password.put("id", "abcdef");
+		req_category_attribute_name.put("id", "Alice");
+		req_category_attribute_group.put("id", "Administrator");
+		req_category_attribute_action.put("id", "stopWrite");
+		req_category_attribute_file.put("id", "thesis.tex");
 		// add attributes to request
-		Request req = new Request("login bob");
+		Request req = new Request("stop_write_request Alice");
 		req.addAttribute("name", req_category_attribute_name);
+		req.addAttribute("group", req_category_attribute_group);
 		req.addAttribute("action", req_category_attribute_action);
-		req.addAttribute("password", req_category_attribute_password);
+		req.addAttribute("file", req_category_attribute_file);
 		// context stub: default-one
 		CxtReq = new ContextRequest_Status(req, ContextStub_Status_Default.getInstance());
 		/*
@@ -41,15 +43,10 @@ public class ContextRequest_LoginStandardBob {
 		ContextStub_Status_Default.getInstance().setStatus(createStatus());
 		return CxtReq;
 	}
-	
+
 	private static FacplStatus createStatus() {
 		ArrayList<StatusAttribute> attributeList = new ArrayList<StatusAttribute>();
-		attributeList.add(new StatusAttribute("loginBob", FacplStatusType.STRING, "noLogin"));
-		attributeList.add(new StatusAttribute("loginAlice", FacplStatusType.STRING, "noLogin"));
-		attributeList.add(new StatusAttribute("passwordAlice", FacplStatusType.STRING, "123456"));
-		attributeList.add(new StatusAttribute("passwordBob", FacplStatusType.STRING, "abcdef"));
-		attributeList.add(new StatusAttribute("streamingAlice", FacplStatusType.BOOLEAN, "false"));
-		attributeList.add(new StatusAttribute("streamingBob", FacplStatusType.BOOLEAN, "false"));
+		attributeList.add(new StatusAttribute("isWritingThesis", FacplStatusType.BOOLEAN, "false"));
 		FacplStatus status = new FacplStatus(attributeList, "stato");
 		return status;
 	}
