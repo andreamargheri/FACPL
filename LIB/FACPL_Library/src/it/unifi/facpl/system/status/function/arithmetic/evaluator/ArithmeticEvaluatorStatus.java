@@ -9,13 +9,13 @@ public interface ArithmeticEvaluatorStatus {
 	 */
 	public void add(FacplStatus status, StatusAttribute o1, Object o2) throws Throwable;
 
-	public void divide(StatusAttribute o1, Object o2) throws Throwable;
+	public void divide(FacplStatus status,StatusAttribute o1, Object o2) throws Throwable;
 
-	public void multiply(StatusAttribute o1, Object o2) throws Throwable;
+	public void multiply(FacplStatus status,StatusAttribute o1, Object o2) throws Throwable;
 
-	public void subtract(StatusAttribute o1, Object o2) throws Throwable;
+	public void subtract(FacplStatus status,StatusAttribute o1, Object o2) throws Throwable;
 
-	public void flag(StatusAttribute o1, Object o2) throws Throwable; // e' per
+	public void flag(FacplStatus status,StatusAttribute o1, Object o2) throws Throwable; // e' per
 																		// i
 																		// booleani,
 																		// per
@@ -25,8 +25,8 @@ public interface ArithmeticEvaluatorStatus {
 																		// nelle
 																		// aritmetiche
 
-	public void sum_date(StatusAttribute s1, Object o2) throws Throwable;
+	public void sum_date(FacplStatus status,StatusAttribute s1, Object o2) throws Throwable;
 	
-	public void set_date(StatusAttribute s1, Object o2) throws Throwable;
+	public void set_date(FacplStatus status,StatusAttribute s1, Object o2) throws Throwable;
 
 }

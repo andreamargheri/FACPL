@@ -5,6 +5,7 @@ package it.unifi.facpl.lib.context;
 
 import it.unifi.facpl.lib.enums.Effect;
 import it.unifi.facpl.lib.enums.ObligationType;
+import it.unifi.facpl.system.status.FacplStatus;
 import it.unifi.facpl.system.status.function.arithmetic.evaluator.IExpressionFunctionStatus;
 
 /**
@@ -33,9 +34,9 @@ public class FulfilledObligationStatus extends AbstractFulfilledObligation {
 	}
 
 	@Override
-	public AbstractFulfilledObligation evaluateObl() throws Throwable {
+	public AbstractFulfilledObligation evaluateObl(FacplStatus status) throws Throwable {
 		//invoke the action in the object for status attribute modification
-		this.pepFunction.evaluateFunction(this.getArgsStatus());
+		this.pepFunction.evaluateFunction(status, this.getArgsStatus());
 		return this;
 	}
 

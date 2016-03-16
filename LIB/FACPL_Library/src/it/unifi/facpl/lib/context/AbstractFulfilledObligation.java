@@ -4,6 +4,7 @@ import java.util.LinkedList;
 
 import it.unifi.facpl.lib.enums.Effect;
 import it.unifi.facpl.lib.enums.ObligationType;
+import it.unifi.facpl.system.status.FacplStatus;
 
 /**
  * 
@@ -74,6 +75,6 @@ public abstract class AbstractFulfilledObligation {
 	 * 
 	 * @return
 	 */
-	public abstract AbstractFulfilledObligation evaluateObl() throws Throwable;
+	public abstract AbstractFulfilledObligation evaluateObl(FacplStatus status) throws Throwable;
 
 }

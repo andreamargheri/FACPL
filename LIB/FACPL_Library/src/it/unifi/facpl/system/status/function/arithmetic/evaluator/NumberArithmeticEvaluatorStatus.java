@@ -6,6 +6,7 @@ import it.unifi.facpl.lib.enums.FacplStatusType;
 import it.unifi.facpl.lib.function.comparison.evaluator.Util;
 import it.unifi.facpl.lib.util.FacplDate;
 import it.unifi.facpl.lib.util.exception.UnsupportedTypeException;
+import it.unifi.facpl.system.status.FacplStatus;
 import it.unifi.facpl.system.status.StatusAttribute;
 
 public class NumberArithmeticEvaluatorStatus implements ArithmeticEvaluatorStatus {
@@ -24,70 +25,70 @@ public class NumberArithmeticEvaluatorStatus implements ArithmeticEvaluatorStatu
 	}
 
 	@Override
-	public void add(StatusAttribute o1, Object o2) throws Throwable {
+	public void add(FacplStatus status,StatusAttribute o1, Object o2) throws Throwable {
 		if (o1.getType() == FacplStatusType.INT) {
-			Integer value = Integer.parseInt(o1.getValue());
+			Integer value = Integer.parseInt(status.retrieveAttribute(o1));
 			Integer newValue = value + (int) o2;
-			o1.setValue(newValue.toString());
+			status.setAttribute(o1, newValue.toString());
 		} else if (o1.getType() == FacplStatusType.DOUBLE) {
-			Double value = Double.parseDouble(o1.getValue());
+			Double value = Double.parseDouble(status.retrieveAttribute(o1));
 			Double newValue = value + (double) o2;
-			o1.setValue(newValue.toString());
+			status.setAttribute(o1, newValue.toString());
 		} else {
 			throw new UnsupportedTypeException("Number", "Add");
 		}
 	}
 
 	@Override
-	public void divide(StatusAttribute o1, Object o2) throws Throwable {
+	public void divide(FacplStatus status,StatusAttribute o1, Object o2) throws Throwable {
 		if (o1.getType() == FacplStatusType.INT) {
-			Integer value = Integer.parseInt(o1.getValue());
+			Integer value = Integer.parseInt(status.retrieveAttribute(o1));
 			Integer newValue = value / (int) o2;
-			o1.setValue(newValue.toString());
+			status.setAttribute(o1, newValue.toString());
 		} else if (o1.getType() == FacplStatusType.DOUBLE) {
-			Double value = Double.parseDouble(o1.getValue());
+			Double value = Double.parseDouble(status.retrieveAttribute(o1));
 			Double newValue = value / (double) o2;
-			o1.setValue(newValue.toString());
+			status.setAttribute(o1, newValue.toString());
 		} else {
 			throw new UnsupportedTypeException("Number", "div");
 		}
 	}
 
 	@Override
-	public void multiply(StatusAttribute o1, Object o2) throws Throwable {
+	public void multiply(FacplStatus status,StatusAttribute o1, Object o2) throws Throwable {
 		if (o1.getType() == FacplStatusType.INT) {
-			Integer value = Integer.parseInt(o1.getValue());
+			Integer value = Integer.parseInt(status.retrieveAttribute(o1));
 			Integer newValue = value * (int) o2;
-			o1.setValue(newValue.toString());
+			status.setAttribute(o1, newValue.toString());
 		} else if (o1.getType() == FacplStatusType.DOUBLE) {
-			Double value = Double.parseDouble(o1.getValue());
+			Double value = Double.parseDouble(status.retrieveAttribute(o1));
 			Double newValue = value * (double) o2;
-			o1.setValue(newValue.toString());
+			status.setAttribute(o1, newValue.toString());
 		} else {
 			throw new UnsupportedTypeException("Number", "mul");
 		}
 	}
 
 	@Override
-	public void subtract(StatusAttribute o1, Object o2) throws Throwable {
+	public void subtract(FacplStatus status,StatusAttribute o1, Object o2) throws Throwable {
 		if (o1.getType() == FacplStatusType.INT) {
-			Integer value = Integer.parseInt(o1.getValue());
+			Integer value = Integer.parseInt(status.retrieveAttribute(o1));
 			Integer newValue = value - (int) o2;
-			o1.setValue(newValue.toString());
+			status.setAttribute(o1, newValue.toString());
 		} else if (o1.getType() == FacplStatusType.DOUBLE) {
-			Double value = Double.parseDouble(o1.getValue());
+			Double value = Double.parseDouble(status.retrieveAttribute(o1));
 			Double newValue = value - (double) o2;
-			o1.setValue(newValue.toString());
+			status.setAttribute(o1, newValue.toString());
 		} else {
 			throw new UnsupportedTypeException("Number", "sub");
 		}
 	}
 
 	@Override
-	public void flag(StatusAttribute o1, Object o2) throws Throwable {
+	public void flag(FacplStatus status,StatusAttribute o1, Object o2) throws Throwable {
 		if (o1.getType() == FacplStatusType.BOOLEAN && o2 instanceof Boolean) {
 			Boolean newValue = (Boolean) o2;
-			o1.setValue(newValue.toString());
+			status.setAttribute(o1, newValue.toString());
 
 		} else {
 			throw new UnsupportedTypeException("Boolean", "Flag");
@@ -96,15 +97,15 @@ public class NumberArithmeticEvaluatorStatus implements ArithmeticEvaluatorStatu
 	}
 
 	@Override
-	public void sum_date(StatusAttribute o1, Object o2) throws Throwable {
+	public void sum_date(FacplStatus status,StatusAttribute o1, Object o2) throws Throwable {
 		if (o1.getType() == FacplStatusType.DATE) {
-			Calendar d1 = Util.parseDate(o1.getValue());
+			Calendar d1 = Util.parseDate(status.retrieveAttribute(o1));
 			Calendar d2 = Util.parseDate(((FacplDate) o2).toString());
 			d1.add(d1.DAY_OF_MONTH, d2.get(d2.DAY_OF_MONTH));
 			d1.add(d1.HOUR, d2.get(d2.HOUR));
 			d1.add(d1.MINUTE, d2.get(d2.MINUTE));
 			d1.add(d1.SECOND, d2.get(d2.SECOND));
-			o1.setValue(Util.parseCalendar(d1));
+			status.setAttribute(o1, Util.parseCalendar(d1));
 		} else {
 			throw new UnsupportedTypeException("Date", "Add");
 		}
@@ -112,10 +113,10 @@ public class NumberArithmeticEvaluatorStatus implements ArithmeticEvaluatorStatu
 	}
 
 	@Override
-	public void set_date(StatusAttribute o1, Object o2) throws Throwable {
+	public void set_date(FacplStatus status,StatusAttribute o1, Object o2) throws Throwable {
 		if (o1.getType() == FacplStatusType.DATE) {
 			Calendar d2 = Util.parseDate(((FacplDate) o2).toString());
-			o1.setValue(Util.parseCalendar(d2));
+			status.setAttribute(o1, Util.parseCalendar(d2));
 		} else {
 			throw new UnsupportedTypeException("Date", "Add");
 		}

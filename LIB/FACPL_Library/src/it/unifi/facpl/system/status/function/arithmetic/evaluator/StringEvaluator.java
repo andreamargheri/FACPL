@@ -1,11 +1,11 @@
 package it.unifi.facpl.system.status.function.arithmetic.evaluator;
 
 import it.unifi.facpl.lib.enums.FacplStatusType;
+import it.unifi.facpl.system.status.FacplStatus;
 import it.unifi.facpl.system.status.StatusAttribute;
 
 public class StringEvaluator implements StringEvaluatorStatus {
 
-	
 	private static StringEvaluator instance;
 
 	private StringEvaluator() {
@@ -18,20 +18,23 @@ public class StringEvaluator implements StringEvaluatorStatus {
 		}
 		return instance;
 	}
+
 	@Override
-	public void setValue(StatusAttribute o1, Object o2) throws Throwable {
+	public void setValue(FacplStatus status, StatusAttribute o1, Object o2) throws Throwable {
 		if (o1.getType() == FacplStatusType.STRING) {
-			o1.setValue(o2.toString());
+
+			status.setAttribute(o1, o2.toString());
 		}
 
 	}
 
 	@Override
-	public void sumString(StatusAttribute o1, Object o2) throws Throwable {
+	public void sumString(FacplStatus status, StatusAttribute o1, Object o2) throws Throwable {
 		if (o1.getType() == FacplStatusType.STRING) {
-			o1.setValue(o1.getValue().toString()+o2.toString());
+
+			status.setAttribute(o1, status.retrieveAttribute(o1) + o2.toString());
 		}
-		
+
 	}
 
 }
