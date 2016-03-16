@@ -20,8 +20,8 @@ import it.unifi.facpl.system.status.functions.bool.FlagStatus;
 public class PolicySet_ReadWrite extends PolicySet {
 	protected ContextRequest_Status ctxReq;
 
-	public PolicySet_ReadWrite(ContextRequest_Status ctxReq) throws MissingAttributeException {
-		this.ctxReq = ctxReq;
+	public PolicySet_ReadWrite() throws MissingAttributeException {
+		
 		addId("ReadWrite_Policy");
 		// Algorithm Combining
 		addCombiningAlg(it.unifi.facpl.lib.algorithm.DenyUnlessPermitGreedy.class);
@@ -35,18 +35,17 @@ public class PolicySet_ReadWrite extends PolicySet {
 		
 		addTarget(ebt);
 		// Policy
-		addPolicyElement(new PolicySet_Write(ctxReq));
-		addPolicyElement(new PolicySet_Read(ctxReq));
-		addPolicyElement(new PolicySet_StopWrite(ctxReq));
-		addPolicyElement(new PolicySet_StopRead(ctxReq));
+		addPolicyElement(new PolicySet_Write());
+//		addPolicyElement(new PolicySet_Read(ctxReq));
+//		addPolicyElement(new PolicySet_StopWrite(ctxReq));
+//		addPolicyElement(new PolicySet_StopRead(ctxReq));
 	}
 
 	private class PolicySet_Write extends PolicySet {
 
-		protected ContextRequest_Status ctxReq;
 
-		public PolicySet_Write(ContextRequest_Status ctxReq) throws MissingAttributeException {
-			this.ctxReq = ctxReq;
+		public PolicySet_Write() {
+			
 			addId("Write_Policy");
 			// Algorithm Combining
 			addCombiningAlg(it.unifi.facpl.lib.algorithm.DenyUnlessPermitGreedy.class);
@@ -65,22 +64,20 @@ public class PolicySet_ReadWrite extends PolicySet {
 			addPolicyElement(new Rule_write());
 			// Obligation
 			addObligation(new ObligationStatus(new FlagStatus(), Effect.PERMIT, ObligationType.M,
-					ctxReq.getStatusAttribute(new StatusAttribute("isWriting", FacplStatusType.BOOLEAN)), true));
+					new StatusAttribute("isWriting", FacplStatusType.BOOLEAN), true));
 		}
 
 		private class Rule_write extends Rule {
 
-			Rule_write() throws MissingAttributeException {
+			Rule_write() {
 				addId("write");
 				// Effect
 				addEffect(Effect.PERMIT);
 				ExpressionFunction e1=new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
-						ctxReq.getStatusAttribute(
-								ctxReq.getStatusAttribute(new StatusAttribute("isWriting", FacplStatusType.BOOLEAN))),
+										new StatusAttribute("isWriting", FacplStatusType.BOOLEAN),
 						false);//se nessuno scrive
 				ExpressionFunction e2=new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
-						ctxReq.getStatusAttribute(
-								ctxReq.getStatusAttribute(new StatusAttribute("counterReadFile1", FacplStatusType.INT))),
+									new StatusAttribute("counterReadFile1", FacplStatusType.INT),
 						0);//se nessuno legge
 				ExpressionBooleanTree ebt = new ExpressionBooleanTree(ExprBooleanConnector.AND, e1, e2);
 				addTarget(ebt);
@@ -112,7 +109,7 @@ public class PolicySet_ReadWrite extends PolicySet {
 			addPolicyElement(new Rule_read());
 			// Obligation
 			addObligation(new ObligationStatus(new AddStatus(), Effect.PERMIT, ObligationType.M,
-					ctxReq.getStatusAttribute(new StatusAttribute("counterReadFile1", FacplStatusType.INT)), 1));
+					new StatusAttribute("counterReadFile1", FacplStatusType.INT), 1));
 		}
 
 		private class Rule_read extends Rule {

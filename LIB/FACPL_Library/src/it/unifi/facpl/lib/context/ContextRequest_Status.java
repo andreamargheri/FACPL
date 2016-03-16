@@ -4,13 +4,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import it.unifi.facpl.lib.interfaces.IContextStub;
+import it.unifi.facpl.lib.util.AttributeName;
 import it.unifi.facpl.lib.util.exception.MissingAttributeException;
+import it.unifi.facpl.system.status.FacplStatus;
 import it.unifi.facpl.system.status.StatusAttribute;
 
 public class ContextRequest_Status extends ContextRequest {
-	/*
-	 * context request for status
-	 */
+
+	private FacplStatus status;
+
 	public ContextRequest_Status(Request req) {
 		super(req);
 	}
@@ -19,33 +21,37 @@ public class ContextRequest_Status extends ContextRequest {
 		super(req, context);
 	}
 
-	public IContextStub getContext() {
-		return context;
+	public ContextRequest_Status(Request req, IContextStub context, FacplStatus status) {
+		super(req, context);
+		this.status = status;
 	}
 
-	public StatusAttribute getStatusAttribute(StatusAttribute attribute) throws MissingAttributeException {
-		/*
-		 * return status attribute retrieved in context
-		 */
-		return ((ContextStub_Status_Default) context).getStatusAttribute(attribute);
+	public FacplStatus getStatus() {
+		return status;
 	}
 
-	public Object getContextRequestValues(StatusAttribute name) throws MissingAttributeException {
+	public void setStatus(FacplStatus status) {
+		this.status = status;
+	}
+
+	@Override
+	public Object getContextRequestValues(AttributeName name) throws MissingAttributeException {
 		Logger l = LoggerFactory.getLogger(ContextRequest_Status.class);
-		if (context != null) {
-
-			
-			Object values = this.context.getContextValues(name);
-
-			if (values == null) {
-				l.debug("Throw MissingAttributeExcepion for " + name.toString());
-				throw new MissingAttributeException();
+ 
+		if (name instanceof StatusAttribute) {
+			if (status != null) {
+				try {
+					return this.status.retrieveAttribute((StatusAttribute) name);
+				} catch (MissingAttributeException e) {
+					l.debug("Throw MissingAttributeExcepion for " + name.toString() + "Status is missing");
+					throw new MissingAttributeException();
+				}
 			} else {
-				return values;
+				l.debug("Throw MissingAttributeExcepion for " + name.toString() + "Status is missing");
+				throw new MissingAttributeException();
 			}
-		} else {
-			l.debug("Throw MissingAttributeExcepion for " + name.toString());
-			throw new MissingAttributeException();
+		}else {
+			return super.getContextRequestValues(name);
 		}
 	}
 }

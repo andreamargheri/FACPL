@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import it.unifi.facpl.lib.context.ContextRequest;
+import it.unifi.facpl.lib.context.ContextRequest_Status;
 import it.unifi.facpl.lib.enums.ExpressionValue;
 import it.unifi.facpl.lib.interfaces.IExpressionFunction;
 import it.unifi.facpl.lib.util.AttributeName;
@@ -71,8 +72,14 @@ public class ExpressionFunction {
 				// Expression
 				values.add(((ExpressionFunction) obj).evaluateExpression(cxtRequest));
 			} else if (FacplLiteralTypes.isFacplValue(obj)) {
-				// Literals
-				values.add(obj);
+				try {
+					// Literals
+					// values.add(obj);
+					cxtRequest.getContextRequestValues((StatusAttribute) obj);
+				} catch (MissingAttributeException e) {
+					// Add value BOTTOM for modeling the absence of attribute
+					values.add(ExpressionValue.BOTTOM);
+				}
 			} else if (obj instanceof StatusAttribute) {
 				values.add(obj);
 			} else {

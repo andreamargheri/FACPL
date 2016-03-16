@@ -1,6 +1,7 @@
 package it.unifi.facpl.system.status;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -8,16 +9,17 @@ import it.unifi.facpl.lib.util.exception.MissingAttributeException;
 
 public class FacplStatus {
 
-	private List<StatusAttribute> attributeList;
+	
 	private String statusID;
-	private static FacplStatus instance = null;
+	
+	private HashMap<StatusAttribute,Object> status;
 
 	/**
 	 * @param id
 	 */
 
 	public FacplStatus(String statusID) {
-		attributeList = new ArrayList<StatusAttribute>();
+		this.status = new HashMap<StatusAttribute,Object>();
 		this.statusID = statusID;
 	}
 
@@ -25,13 +27,13 @@ public class FacplStatus {
 	 * @param attributeList
 	 * @param id
 	 */
-	public FacplStatus(List<StatusAttribute> attributeList, String statusID) {
-		this.attributeList = attributeList;
+	public FacplStatus(HashMap<StatusAttribute,Object> attributeList, String statusID) {
+		this.status = attributeList;
 		this.statusID = statusID;
 	}
 
 	public FacplStatus() {
-		attributeList = new ArrayList<StatusAttribute>();
+		this.status = new HashMap<StatusAttribute,Object>();
 		this.statusID = UUID.randomUUID().toString().substring(0, 8);
 	}
 
@@ -39,8 +41,8 @@ public class FacplStatus {
 		return this.statusID;
 	}
 
-	public void add(StatusAttribute a) {
-		this.attributeList.add(a);
+	public void add(StatusAttribute a,Object v) {
+		this.status.put(a,v);
 	}
 
 	/**
@@ -48,19 +50,13 @@ public class FacplStatus {
 	 * 
 	 * @param attribute
 	 */
-	public StatusAttribute retrieveAttribute(StatusAttribute attribute) throws MissingAttributeException {
-		int i = this.attributeList.indexOf(attribute);
-		if (i != -1) {
-			return this.attributeList.get(i);
-		} else {
+	public Object retrieveAttribute(StatusAttribute attribute) throws MissingAttributeException {
+		Object v = this.status.get(attribute);	
+		if (v == null){
 			throw new MissingAttributeException("attribute doesn't exist in the current status");
+		}else{
+			return v;
 		}
-	}
-
-	// 050910828
-
-	public Object getValue(StatusAttribute attribute) throws MissingAttributeException {
-		return (Object) (this.retrieveAttribute(attribute).getValue());
 	}
 
 }
