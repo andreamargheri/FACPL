@@ -32,7 +32,7 @@ public class StringEvaluator implements StringEvaluatorStatus {
 	public void sumString(FacplStatus status, StatusAttribute o1, Object o2) throws Throwable {
 		if (o1.getType() == FacplStatusType.STRING) {
 
-			status.setAttribute(o1, status.retrieveAttribute(o1) + o2.toString());
+			status.setAttribute(o1, (String)status.retrieveAttribute(o1) + o2.toString());
 		}
 
 	}

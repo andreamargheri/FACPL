@@ -14,6 +14,7 @@ import it.unifi.facpl.lib.context.AbstractFulfilledObligationCheck;
 import it.unifi.facpl.lib.context.AuthorisationPDP;
 import it.unifi.facpl.lib.context.AuthorisationPEP;
 import it.unifi.facpl.lib.context.ContextRequest;
+import it.unifi.facpl.lib.context.ContextRequest_Status;
 import it.unifi.facpl.lib.context.FulfilledObligationCheck;
 import it.unifi.facpl.lib.context.FulfilledObligationTimeCheck;
 import it.unifi.facpl.lib.enums.EnforcementAlgorithm;
@@ -44,7 +45,7 @@ public class PEPCheck extends PEP {
 
 	}
 
-	public AuthorisationPEP doAuthorisation(ContextRequest cxtReq) {
+	public AuthorisationPEP doAuthorisation(ContextRequest_Status cxtReq) {
 		/*
 		 * authorisation: if number of check obligation == 0 -> PDP evaluation
 		 * -> PEP Enforcement otherwise -> PEP Evaluation
@@ -58,7 +59,7 @@ public class PEPCheck extends PEP {
 			// l.debug("NUMBER OF CHECK OBLIGATION: 0 -> AUTHORISATION BY PDP ->
 			// ENFORCEMENT BY PEP");
 			authPDP = pdp.doAuthorisation(cxtReq);
-			return this.doEnforcement(authPDP);
+			return this.doEnforcement(authPDP, cxtReq);
 		} else {
 			/*
 			 * PEP EVALUATION
@@ -78,7 +79,7 @@ public class PEPCheck extends PEP {
 				l.debug("BACK TO PDP");
 				authPDP = pdp.doAuthorisation(cxtReq);
 				this.clearAllObligations();
-				return this.doEnforcement(authPDP);
+				return this.doEnforcement(authPDP, cxtReq);
 
 			}
 
@@ -87,13 +88,13 @@ public class PEPCheck extends PEP {
 	}
 
 	@Override
-	public AuthorisationPEP doEnforcement(AuthorisationPDP authPDP) {
+	public AuthorisationPEP doEnforcement(AuthorisationPDP authPDP, ContextRequest_Status cxtReq) {
 		/*
 		 * normal PEP enforcement + addiction of CheckObligation
 		 */
 		AuthorisationPEP first_enforcement;
 		Logger l = LoggerFactory.getLogger(PEPCheck.class);
-		first_enforcement = super.doEnforcement(authPDP); // enforcement
+		first_enforcement = super.doEnforcement(authPDP, cxtReq); // enforcement
 		StandardDecision dec = first_enforcement.getDecision();
 		l.debug("FIRST ENFORCEMENT COMPLETED, DECISION: " + dec);
 		if (dec != StandardDecision.PERMIT) {

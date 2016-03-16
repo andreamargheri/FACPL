@@ -26,7 +26,7 @@ public class MainFACPL {
 		// defined list of policies included in the PDP
 		LinkedList<FacplPolicy> policies = new LinkedList<FacplPolicy>();
 
-		policies.add(new PolicySet_ReadWrite(ContextRequest_WriteRequestAlice.getContextReq()));
+		policies.add(new PolicySet_ReadWrite());
 
 		this.pdp = new PDP(it.unifi.facpl.lib.algorithm.PermitUnlessDenyGreedy.class, policies, false);
 

@@ -15,6 +15,7 @@ import java.util.HashMap;
 import it.unifi.facpl.lib.context.AuthorisationPDP;
 import it.unifi.facpl.lib.context.AuthorisationPEP;
 import it.unifi.facpl.lib.context.ContextRequest;
+import it.unifi.facpl.lib.context.ContextRequest_Status;
 import it.unifi.facpl.lib.interfaces.IPepAction;
 
 /**
@@ -54,9 +55,9 @@ public class FacplAuthorisationSystem {
 	 *            Authorisation to enforce
 	 * @return
 	 */
-	public AuthorisationPEP doEnforcement(AuthorisationPDP authPDP) {
+	public AuthorisationPEP doEnforcement(AuthorisationPDP authPDP, ContextRequest_Status cxtReq) {
 
-		return this.pep.doEnforcement(authPDP);
+		return this.pep.doEnforcement(authPDP, cxtReq);
 
 	}
 

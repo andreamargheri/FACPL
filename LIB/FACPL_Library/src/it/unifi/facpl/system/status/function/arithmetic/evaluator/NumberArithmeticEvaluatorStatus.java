@@ -27,11 +27,11 @@ public class NumberArithmeticEvaluatorStatus implements ArithmeticEvaluatorStatu
 	@Override
 	public void add(FacplStatus status,StatusAttribute o1, Object o2) throws Throwable {
 		if (o1.getType() == FacplStatusType.INT) {
-			Integer value = Integer.parseInt(status.retrieveAttribute(o1));
+			Integer value = (int)(status.retrieveAttribute(o1));
 			Integer newValue = value + (int) o2;
 			status.setAttribute(o1, newValue.toString());
 		} else if (o1.getType() == FacplStatusType.DOUBLE) {
-			Double value = Double.parseDouble(status.retrieveAttribute(o1));
+			Double value = (Double)(status.retrieveAttribute(o1));
 			Double newValue = value + (double) o2;
 			status.setAttribute(o1, newValue.toString());
 		} else {
@@ -42,11 +42,11 @@ public class NumberArithmeticEvaluatorStatus implements ArithmeticEvaluatorStatu
 	@Override
 	public void divide(FacplStatus status,StatusAttribute o1, Object o2) throws Throwable {
 		if (o1.getType() == FacplStatusType.INT) {
-			Integer value = Integer.parseInt(status.retrieveAttribute(o1));
+			Integer value = (int)(status.retrieveAttribute(o1));
 			Integer newValue = value / (int) o2;
 			status.setAttribute(o1, newValue.toString());
 		} else if (o1.getType() == FacplStatusType.DOUBLE) {
-			Double value = Double.parseDouble(status.retrieveAttribute(o1));
+			Double value = (Double)(status.retrieveAttribute(o1));
 			Double newValue = value / (double) o2;
 			status.setAttribute(o1, newValue.toString());
 		} else {
@@ -57,11 +57,11 @@ public class NumberArithmeticEvaluatorStatus implements ArithmeticEvaluatorStatu
 	@Override
 	public void multiply(FacplStatus status,StatusAttribute o1, Object o2) throws Throwable {
 		if (o1.getType() == FacplStatusType.INT) {
-			Integer value = Integer.parseInt(status.retrieveAttribute(o1));
+			Integer value = (int)(status.retrieveAttribute(o1));
 			Integer newValue = value * (int) o2;
 			status.setAttribute(o1, newValue.toString());
 		} else if (o1.getType() == FacplStatusType.DOUBLE) {
-			Double value = Double.parseDouble(status.retrieveAttribute(o1));
+			Double value = (Double)(status.retrieveAttribute(o1));
 			Double newValue = value * (double) o2;
 			status.setAttribute(o1, newValue.toString());
 		} else {
@@ -72,11 +72,11 @@ public class NumberArithmeticEvaluatorStatus implements ArithmeticEvaluatorStatu
 	@Override
 	public void subtract(FacplStatus status,StatusAttribute o1, Object o2) throws Throwable {
 		if (o1.getType() == FacplStatusType.INT) {
-			Integer value = Integer.parseInt(status.retrieveAttribute(o1));
+			Integer value = (int)(status.retrieveAttribute(o1));
 			Integer newValue = value - (int) o2;
 			status.setAttribute(o1, newValue.toString());
 		} else if (o1.getType() == FacplStatusType.DOUBLE) {
-			Double value = Double.parseDouble(status.retrieveAttribute(o1));
+			Double value = (Double)(status.retrieveAttribute(o1));
 			Double newValue = value - (double) o2;
 			status.setAttribute(o1, newValue.toString());
 		} else {
@@ -96,10 +96,19 @@ public class NumberArithmeticEvaluatorStatus implements ArithmeticEvaluatorStatu
 
 	}
 
+	
+
+	
+	
+	
+	/*
+	 * 
+	 * RIVEDERE QUESTA
+	 */
 	@Override
 	public void sum_date(FacplStatus status,StatusAttribute o1, Object o2) throws Throwable {
 		if (o1.getType() == FacplStatusType.DATE) {
-			Calendar d1 = Util.parseDate(status.retrieveAttribute(o1));
+			Calendar d1 = Util.parseDate((String) status.retrieveAttribute(o1));
 			Calendar d2 = Util.parseDate(((FacplDate) o2).toString());
 			d1.add(d1.DAY_OF_MONTH, d2.get(d2.DAY_OF_MONTH));
 			d1.add(d1.HOUR, d2.get(d2.HOUR));

@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 import it.unifi.facpl.lib.context.AbstractFulfilledObligation;
 import it.unifi.facpl.lib.context.AuthorisationPDP;
 import it.unifi.facpl.lib.context.AuthorisationPEP;
+import it.unifi.facpl.lib.context.ContextRequest_Status;
 import it.unifi.facpl.lib.context.FulfilledObligationCheck;
 import it.unifi.facpl.lib.context.FulfilledObligationStatus;
 import it.unifi.facpl.lib.context.FullfilledObbligation;
@@ -45,7 +46,7 @@ public class PEP {
 		this.alg = alg;
 	}
 
-	public AuthorisationPEP doEnforcement(AuthorisationPDP authPDP) {
+	public AuthorisationPEP doEnforcement(AuthorisationPDP authPDP, ContextRequest_Status cxtReq) {
 
 		Logger l = LoggerFactory.getLogger(PEP.class);
 		l.debug("Start PEP enforcement for request: " + authPDP.getId());
@@ -66,7 +67,7 @@ public class PEP {
 					for (AbstractFulfilledObligation obl : authPDP.getObligation()) {
 						// if any error throw exception
 						try {
-							this.dischargeObligation(obl);
+							this.dischargeObligation(obl, cxtReq);
 						} catch (Throwable t) {
 							t.printStackTrace();
 							l.debug("Obligation Evaluation Failed");
@@ -95,7 +96,7 @@ public class PEP {
 					for (AbstractFulfilledObligation obl : authPDP.getObligation()) {
 						try {
 							// if any error throw exception
-							this.dischargeObligation(obl);
+							this.dischargeObligation(obl, cxtReq);
 						} catch (Throwable t) {
 							 t.printStackTrace();
 							l.debug("Obligation Evaluation Failed");
@@ -118,7 +119,7 @@ public class PEP {
 					for (AbstractFulfilledObligation obl : authPDP.getObligation()) {
 						try {
 							// if any error throw exception
-							this.dischargeObligation(obl);
+							this.dischargeObligation(obl, cxtReq);
 						} catch (Throwable t) {
 							 t.printStackTrace();
 							l.debug("Obligations Evaluation Failed");
@@ -153,7 +154,7 @@ public class PEP {
 	 * @param obl
 	 * @throws Throwable
 	 */
-	private void dischargeObligation(AbstractFulfilledObligation obl) throws Throwable {
+	private void dischargeObligation(AbstractFulfilledObligation obl, ContextRequest_Status cxtReq) throws Throwable {
 		Logger l = LoggerFactory.getLogger(PEP.class);
 		if (obl instanceof FullfilledObbligation) {
 			obl = (FullfilledObbligation) obl;
@@ -193,7 +194,7 @@ public class PEP {
 		 */
 		else if (obl instanceof FulfilledObligationStatus) {
 			obl = (FulfilledObligationStatus) obl;
-			obl.evaluateObl();
+			obl.evaluateObl(cxtReq.getStatus());
 		}
 
 	}
