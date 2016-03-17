@@ -12,6 +12,7 @@ import it.unifi.facpl.lib.enums.StandardDecision;
 import it.unifi.facpl.lib.policy.ExpressionBooleanTree;
 import it.unifi.facpl.lib.policy.ExpressionFunction;
 import it.unifi.facpl.lib.util.FacplDate;
+import it.unifi.facpl.system.status.FacplStatus;
 
 public class FulfilledObligationTimeCheck extends AbstractFulfilledObligationCheck implements Cloneable {
 
@@ -73,7 +74,7 @@ public class FulfilledObligationTimeCheck extends AbstractFulfilledObligationChe
 	}
 
 	@Override
-	public AbstractFulfilledObligation evaluateObl() throws Throwable {
+	public AbstractFulfilledObligation evaluateObl(FacplStatus status) throws Throwable {
 		// TODO Auto-generated method stub
 		return null;
 	}

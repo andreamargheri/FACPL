@@ -15,15 +15,7 @@ public interface ArithmeticEvaluatorStatus {
 
 	public void subtract(FacplStatus status,StatusAttribute o1, Object o2) throws Throwable;
 
-	public void flag(FacplStatus status,StatusAttribute o1, Object o2) throws Throwable; // e' per
-																		// i
-																		// booleani,
-																		// per
-																		// comodita'
-																		// e'
-																		// inserito
-																		// nelle
-																		// aritmetiche
+	public void flag(FacplStatus status,StatusAttribute o1, Object o2) throws Throwable; 
 
 	public void sum_date(FacplStatus status,StatusAttribute s1, Object o2) throws Throwable;
 	

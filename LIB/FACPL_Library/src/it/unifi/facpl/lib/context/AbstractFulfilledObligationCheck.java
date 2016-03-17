@@ -4,6 +4,7 @@ import java.util.LinkedList;
 
 import it.unifi.facpl.lib.enums.Effect;
 import it.unifi.facpl.lib.enums.ObligationType;
+import it.unifi.facpl.system.status.FacplStatus;
 
 public class AbstractFulfilledObligationCheck extends AbstractFulfilledObligation {
 
@@ -19,7 +20,7 @@ public class AbstractFulfilledObligationCheck extends AbstractFulfilledObligatio
 	}
 
 	@Override
-	public AbstractFulfilledObligation evaluateObl() throws Throwable {
+	public AbstractFulfilledObligation evaluateObl(FacplStatus status) throws Throwable {
 		
 		return null;
 	}

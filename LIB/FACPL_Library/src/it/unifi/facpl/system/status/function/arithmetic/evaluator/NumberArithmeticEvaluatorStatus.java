@@ -97,10 +97,6 @@ public class NumberArithmeticEvaluatorStatus implements ArithmeticEvaluatorStatu
 	}
 
 	
-
-	
-	
-	
 	/*
 	 * 
 	 * RIVEDERE QUESTA

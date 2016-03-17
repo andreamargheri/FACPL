@@ -1,7 +1,6 @@
 package checkReadWriteExample;
 
 
-import it.unifi.facpl.lib.context.ContextRequest_Status;
 import it.unifi.facpl.lib.enums.Effect;
 import it.unifi.facpl.lib.enums.ExprBooleanConnector;
 import it.unifi.facpl.lib.enums.FacplStatusType;
@@ -18,10 +17,8 @@ import it.unifi.facpl.system.status.StatusAttribute;
 import it.unifi.facpl.system.status.functions.bool.FlagStatus;
 
 public class PolicySet_ReadWriteCheck extends PolicySet {
-	protected ContextRequest_Status ctxReq;
 
-	public PolicySet_ReadWriteCheck(ContextRequest_Status ctxReq) throws MissingAttributeException {
-		this.ctxReq = ctxReq;
+	public PolicySet_ReadWriteCheck() throws MissingAttributeException {
 		addId("ReadWrite_Policy");
 		// Algorithm Combining
 		addCombiningAlg(it.unifi.facpl.lib.algorithm.DenyUnlessPermitGreedy.class);
@@ -33,17 +30,14 @@ public class PolicySet_ReadWriteCheck extends PolicySet {
 		ExpressionBooleanTree ebt = new ExpressionBooleanTree(ExprBooleanConnector.OR, e1, e2);
 		addTarget(ebt);
 		// Policy
-		addPolicyElement(new PolicySet_Write(ctxReq));
-		addPolicyElement(new PolicySet_Read(ctxReq));
-		addPolicyElement(new PolicySet_StopWrite(ctxReq));
+		addPolicyElement(new PolicySet_Write());
+		addPolicyElement(new PolicySet_Read());
+		addPolicyElement(new PolicySet_StopWrite());
 	}
 
 	private class PolicySet_Write extends PolicySet {
 
-		protected ContextRequest_Status ctxReq;
-
-		public PolicySet_Write(ContextRequest_Status ctxReq) throws MissingAttributeException {
-			this.ctxReq = ctxReq;
+		public PolicySet_Write() {
 			addId("Write_Policy");
 			// Algorithm Combining
 			addCombiningAlg(it.unifi.facpl.lib.algorithm.DenyUnlessPermitGreedy.class);
@@ -58,13 +52,13 @@ public class PolicySet_ReadWriteCheck extends PolicySet {
 							new FlagStatus(),
 							Effect.PERMIT,
 							ObligationType.M,
-							ctxReq.getStatusAttribute(new StatusAttribute("isWritingThesis", FacplStatusType.BOOLEAN)), true)
+							new StatusAttribute("isWritingThesis", FacplStatusType.BOOLEAN), true)
 						);
 		}
 
 		private class Rule_write extends Rule {
 
-			Rule_write() throws MissingAttributeException {
+			Rule_write(){
 				addId("write");
 				// Effect
 				addEffect(Effect.PERMIT);
@@ -73,8 +67,7 @@ public class PolicySet_ReadWriteCheck extends PolicySet {
 				ExpressionFunction e2=new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class, "thesis.tex",
 						new AttributeName("file", "id"));
 				ExpressionFunction e3=new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
-										ctxReq.getStatusAttribute(ctxReq.getStatusAttribute(
-												new StatusAttribute("isWritingThesis",FacplStatusType.BOOLEAN))),false);
+												new StatusAttribute("isWritingThesis",FacplStatusType.BOOLEAN),false);
 				ExpressionBooleanTree ebt = new ExpressionBooleanTree(ExprBooleanConnector.AND, e1, e2,e3);
 				addTarget(ebt);
 				
@@ -84,10 +77,7 @@ public class PolicySet_ReadWriteCheck extends PolicySet {
 
 	private class PolicySet_Read extends PolicySet {
 
-		protected ContextRequest_Status ctxReq;
-
-		public PolicySet_Read(ContextRequest_Status ctxReq) throws MissingAttributeException {
-			this.ctxReq = ctxReq;
+		public PolicySet_Read() {
 			addId("Read_Policy");
 			// Algorithm Combining
 			addCombiningAlg(it.unifi.facpl.lib.algorithm.DenyUnlessPermitGreedy.class);
@@ -99,8 +89,7 @@ public class PolicySet_ReadWriteCheck extends PolicySet {
 			ExpressionFunction read = new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class, "read",
 					new AttributeName("action", "id"));
 			ExpressionFunction writingCondition = new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
-					ctxReq.getStatusAttribute(ctxReq.getStatusAttribute(
-							new StatusAttribute("isWritingThesis", FacplStatusType.BOOLEAN))),
+					new StatusAttribute("isWritingThesis", FacplStatusType.BOOLEAN),
 					false);
 			ExpressionBooleanTree ebt = new ExpressionBooleanTree(ExprBooleanConnector.OR, file1, file2);
 			
@@ -119,15 +108,14 @@ public class PolicySet_ReadWriteCheck extends PolicySet {
 
 		private class Rule_read extends Rule {
 
-			Rule_read() throws MissingAttributeException {
+			Rule_read(){
 				addId("read");
 				// Effect
 				addEffect(Effect.PERMIT);
 				ExpressionFunction e1 = new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class, "read",
 						new AttributeName("action", "id"));
 				ExpressionFunction e2 = new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
-						ctxReq.getStatusAttribute(
-								ctxReq.getStatusAttribute(new StatusAttribute("isWritingThesis", FacplStatusType.BOOLEAN))),
+						new StatusAttribute("isWritingThesis", FacplStatusType.BOOLEAN),
 						false);
 				ExpressionBooleanTree ebt = new ExpressionBooleanTree(ExprBooleanConnector.AND, e1, e2);
 				addTarget(ebt);
@@ -137,11 +125,8 @@ public class PolicySet_ReadWriteCheck extends PolicySet {
 	}
 	
 	private class PolicySet_StopWrite extends PolicySet {
-
-		protected ContextRequest_Status ctxReq;
-
-		public PolicySet_StopWrite(ContextRequest_Status ctxReq) throws MissingAttributeException {
-			this.ctxReq = ctxReq;
+		
+		public PolicySet_StopWrite() {
 			addId("Write_Policy");
 			// Algorithm Combining
 			addCombiningAlg(it.unifi.facpl.lib.algorithm.DenyUnlessPermitGreedy.class);
@@ -152,12 +137,12 @@ public class PolicySet_ReadWriteCheck extends PolicySet {
 			addPolicyElement(new Rule_write());
 			// Obligation
 			addObligation(new ObligationStatus(new FlagStatus(), Effect.PERMIT, ObligationType.M,
-					ctxReq.getStatusAttribute(new StatusAttribute("isWritingThesis", FacplStatusType.BOOLEAN)), false));
+							new StatusAttribute("isWritingThesis", FacplStatusType.BOOLEAN), false));
 		}
 
 		private class Rule_write extends Rule {
 
-			Rule_write() throws MissingAttributeException {
+			Rule_write() {
 				addId("write");
 				// Effect
 				addEffect(Effect.PERMIT);
@@ -166,8 +151,7 @@ public class PolicySet_ReadWriteCheck extends PolicySet {
 				ExpressionFunction e2=new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class, "thesis.tex",
 						new AttributeName("file", "id"));
 				ExpressionFunction e3=new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
-										ctxReq.getStatusAttribute(ctxReq.getStatusAttribute(
-												new StatusAttribute("isWritingThesis",FacplStatusType.BOOLEAN))),true);
+												new StatusAttribute("isWritingThesis",FacplStatusType.BOOLEAN),true);
 				ExpressionBooleanTree ebt = new ExpressionBooleanTree(ExprBooleanConnector.AND, e1, e2,e3);
 				addTarget(ebt);
 			}

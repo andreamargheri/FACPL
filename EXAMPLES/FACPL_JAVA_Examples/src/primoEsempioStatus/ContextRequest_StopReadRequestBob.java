@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import it.unifi.facpl.lib.context.ContextRequest_Status;
-import it.unifi.facpl.lib.context.ContextStub_Status_Default;
+import it.unifi.facpl.lib.context.ContextStub_Default;
 import it.unifi.facpl.lib.context.Request;
 import it.unifi.facpl.lib.enums.FacplStatusType;
 import it.unifi.facpl.system.status.FacplStatus;
@@ -33,22 +33,9 @@ public class ContextRequest_StopReadRequestBob {
 		req.addAttribute("action", req_category_attribute_action);
 		req.addAttribute("file", req_category_attribute_file);
 		// context stub: default-one
-		CxtReq = new ContextRequest_Status(req, ContextStub_Status_Default.getInstance());
-		/*
-		 * set dello stato
-		 */
-		ContextStub_Status_Default.getInstance().setStatus(createStatus());
+		CxtReq = new ContextRequest_Status(req, ContextStub_Default.getInstance());
+		StatusRW st = new StatusRW();
+		CxtReq.setStatus(st.getStatus());
 		return CxtReq;
-	}
-
-	private static FacplStatus createStatus() {
-		ArrayList<StatusAttribute> attributeList = new ArrayList<StatusAttribute>();
-		attributeList.add(new StatusAttribute("isWriting", FacplStatusType.BOOLEAN, "false"));
-		attributeList.add(new StatusAttribute("counterReadFile1", FacplStatusType.INT, "0"));
-		attributeList.add(new StatusAttribute("counterReadFile2", FacplStatusType.INT, "0"));
-		//attributeList.add(new StatusAttribute("File1", FacplStatusType.STRING, "null"));
-		//attributeList.add(new StatusAttribute("File2", FacplStatusType.STRING, "null"));
-		FacplStatus status = new FacplStatus(attributeList, "stato");
-		return status;
 	}
 }

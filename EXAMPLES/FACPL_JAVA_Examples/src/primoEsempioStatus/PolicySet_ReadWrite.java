@@ -18,9 +18,8 @@ import it.unifi.facpl.system.status.functions.arithmetic.SubStatus;
 import it.unifi.facpl.system.status.functions.bool.FlagStatus;
 
 public class PolicySet_ReadWrite extends PolicySet {
-	protected ContextRequest_Status ctxReq;
 
-	public PolicySet_ReadWrite() throws MissingAttributeException {
+	public PolicySet_ReadWrite(){
 		
 		addId("ReadWrite_Policy");
 		// Algorithm Combining
@@ -36,9 +35,9 @@ public class PolicySet_ReadWrite extends PolicySet {
 		addTarget(ebt);
 		// Policy
 		addPolicyElement(new PolicySet_Write());
-//		addPolicyElement(new PolicySet_Read(ctxReq));
-//		addPolicyElement(new PolicySet_StopWrite(ctxReq));
-//		addPolicyElement(new PolicySet_StopRead(ctxReq));
+		addPolicyElement(new PolicySet_Read());
+		addPolicyElement(new PolicySet_StopWrite());
+		addPolicyElement(new PolicySet_StopRead());
 	}
 
 	private class PolicySet_Write extends PolicySet {
@@ -87,10 +86,9 @@ public class PolicySet_ReadWrite extends PolicySet {
 
 	private class PolicySet_Read extends PolicySet {
 
-		protected ContextRequest_Status ctxReq;
 
-		public PolicySet_Read(ContextRequest_Status ctxReq) throws MissingAttributeException {
-			this.ctxReq = ctxReq;
+		public PolicySet_Read()  {
+
 			addId("Read_Policy");
 			// Algorithm Combining
 			addCombiningAlg(it.unifi.facpl.lib.algorithm.DenyUnlessPermitGreedy.class);
@@ -114,17 +112,15 @@ public class PolicySet_ReadWrite extends PolicySet {
 
 		private class Rule_read extends Rule {
 
-			Rule_read() throws MissingAttributeException {
+			Rule_read() {
 				addId("read");
 				// Effect
 				addEffect(Effect.PERMIT);
 				ExpressionFunction e1 = new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
-						ctxReq.getStatusAttribute(
-								ctxReq.getStatusAttribute(new StatusAttribute("isWriting", FacplStatusType.BOOLEAN))),
+						new StatusAttribute("isWriting", FacplStatusType.BOOLEAN),
 						false);//nessuno scrive
 				ExpressionFunction e2 = new ExpressionFunction(it.unifi.facpl.lib.function.comparison.LessThan.class,
-						ctxReq.getStatusAttribute(
-								ctxReq.getStatusAttribute(new StatusAttribute("counterReadFile1", FacplStatusType.INT))),
+						new StatusAttribute("counterReadFile1", FacplStatusType.INT),
 						2);//i lettori sono meno di due
 				
 				ExpressionBooleanTree ebt = new ExpressionBooleanTree(ExprBooleanConnector.AND, e1, e2);
@@ -136,10 +132,9 @@ public class PolicySet_ReadWrite extends PolicySet {
 	
 	private class PolicySet_StopRead extends PolicySet {
 
-		protected ContextRequest_Status ctxReq;
 
-		public PolicySet_StopRead(ContextRequest_Status ctxReq) throws MissingAttributeException {
-			this.ctxReq = ctxReq;
+		public PolicySet_StopRead() {
+
 			addId("StopRead_Policy");
 			// Algorithm Combining
 			addCombiningAlg(it.unifi.facpl.lib.algorithm.DenyUnlessPermitGreedy.class);
@@ -158,18 +153,17 @@ public class PolicySet_ReadWrite extends PolicySet {
 			addPolicyElement(new Rule_stopRead());
 			// Obligation
 			addObligation(new ObligationStatus(new SubStatus(), Effect.PERMIT, ObligationType.M,
-					ctxReq.getStatusAttribute(new StatusAttribute("counterReadFile1", FacplStatusType.INT)), 1));//meno uno sui lettori
+							new StatusAttribute("counterReadFile1", FacplStatusType.INT), 1));//meno uno sui lettori
 		}
 
 		private class Rule_stopRead extends Rule {
 
-			Rule_stopRead() throws MissingAttributeException {
+			Rule_stopRead() {
 				addId("stopRead");
 				// Effect
 				addEffect(Effect.PERMIT);
 				addTarget(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.GreaterThan.class,
-						ctxReq.getStatusAttribute(
-								ctxReq.getStatusAttribute(new StatusAttribute("counterReadFile1", FacplStatusType.INT))),
+						new StatusAttribute("counterReadFile1", FacplStatusType.INT),
 						0));//solo se ci sono lettori
 			}
 		}
@@ -177,10 +171,8 @@ public class PolicySet_ReadWrite extends PolicySet {
 	
 	private class PolicySet_StopWrite extends PolicySet {
 
-		protected ContextRequest_Status ctxReq;
 
-		public PolicySet_StopWrite(ContextRequest_Status ctxReq) throws MissingAttributeException {
-			this.ctxReq = ctxReq;
+		public PolicySet_StopWrite(){
 			addId("StopWrite_Policy");
 			// Algorithm Combining
 			addCombiningAlg(it.unifi.facpl.lib.algorithm.DenyUnlessPermitGreedy.class);
@@ -199,18 +191,17 @@ public class PolicySet_ReadWrite extends PolicySet {
 			addPolicyElement(new Rule_write());
 			// Obligation
 			addObligation(new ObligationStatus(new FlagStatus(), Effect.PERMIT, ObligationType.M,
-					ctxReq.getStatusAttribute(new StatusAttribute("isWriting", FacplStatusType.BOOLEAN)), false));
+							new StatusAttribute("isWriting", FacplStatusType.BOOLEAN), false));
 		}
 
 		private class Rule_write extends Rule {
 
-			Rule_write() throws MissingAttributeException {
+			Rule_write() {
 				addId("stopWrite");
 				// Effect
 				addEffect(Effect.PERMIT);
 				addTarget(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
-						ctxReq.getStatusAttribute(
-								ctxReq.getStatusAttribute(new StatusAttribute("isWriting", FacplStatusType.BOOLEAN))),
+							new StatusAttribute("isWriting", FacplStatusType.BOOLEAN),
 						true));
 			}
 		}

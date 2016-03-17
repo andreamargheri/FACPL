@@ -13,13 +13,11 @@ import it.unifi.facpl.lib.context.AbstractFulfilledObligation;
 import it.unifi.facpl.lib.context.AbstractFulfilledObligationCheck;
 import it.unifi.facpl.lib.context.AuthorisationPDP;
 import it.unifi.facpl.lib.context.AuthorisationPEP;
-import it.unifi.facpl.lib.context.ContextRequest;
 import it.unifi.facpl.lib.context.ContextRequest_Status;
 import it.unifi.facpl.lib.context.FulfilledObligationCheck;
 import it.unifi.facpl.lib.context.FulfilledObligationTimeCheck;
 import it.unifi.facpl.lib.enums.EnforcementAlgorithm;
 import it.unifi.facpl.lib.enums.StandardDecision;
-import it.unifi.facpl.lib.interfaces.IEvaluableAlgorithm;
 
 public class PEPCheck extends PEP {
 	private List<AbstractFulfilledObligationCheck> checkObl;
@@ -134,7 +132,7 @@ public class PEPCheck extends PEP {
 
 	}
 
-	private AuthorisationPEP doPEPCheck(ContextRequest ctxRequest) {
+	private AuthorisationPEP doPEPCheck(ContextRequest_Status ctxRequest) {
 		/*
 		 * evaluate check obligation
 		 */
