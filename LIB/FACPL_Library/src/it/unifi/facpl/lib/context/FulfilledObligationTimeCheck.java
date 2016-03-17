@@ -18,22 +18,22 @@ public class FulfilledObligationTimeCheck extends AbstractFulfilledObligationChe
 
 	protected ExpressionBooleanTree target;
 	protected ExpressionBooleanTree status_target;
-	protected FacplDate expirationTime; 
+	protected FacplDate expirationTime;
 	protected boolean hasExpired;
 	protected FacplDate originalExpiration;
 	/*
-	 * four constructor for all combination of Expression: 
+	 * four constructor for all combination of Expression:
 	 * 1: ExpressionFunction, ExpressionFunction
 	 * 2: ExpressionBooleanTree, ExpressionBooleanTree
 	 * 3: ExpressionBooleanTree, ExpressionFunction
 	 * 4: ExpressionFunction, ExpresisonBooleanTree
 	 */
-	public FulfilledObligationTimeCheck(Effect evaluatedOn, ObligationType type, ExpressionFunction target,
+	public FulfilledObligationTimeCheck(Effect evaluatedOn, ExpressionFunction target,
 			ExpressionFunction status_target, FacplDate expiration) {
-		super(evaluatedOn, type);
+		super(evaluatedOn);
 		this.target = new ExpressionBooleanTree(target);
 		this.target = new ExpressionBooleanTree(status_target);
-		
+
 		this.expirationTime = new FacplDate();
 		System.err.println("EXPIRATION TIME SECOND "+expiration.getDate().get(Calendar.SECOND));
 		System.err.println("EXPIRATION TIME MINUTE "+expiration.getDate().get(Calendar.MINUTE));
@@ -45,14 +45,14 @@ public class FulfilledObligationTimeCheck extends AbstractFulfilledObligationChe
 		System.err.println("EXPIRATION TIME SECOND "+this.expirationTime.getDate().get(Calendar.SECOND));
 		System.err.println("EXPIRATION TIME MINUTE "+this.expirationTime.getDate().get(Calendar.MINUTE));
 		System.err.println("EXPIRATION TIME HOUR "+this.expirationTime.getDate().get(Calendar.HOUR));
-		
+
 		this.originalExpiration = expiration;
 		this.hasExpired = false;
 	}
 
-	public FulfilledObligationTimeCheck(Effect evaluatedOn, ObligationType type, ExpressionBooleanTree target,
+	public FulfilledObligationTimeCheck(Effect evaluatedOn, ExpressionBooleanTree target,
 			ExpressionBooleanTree status_target, FacplDate expiration) {
-		super(evaluatedOn, type);
+		super(evaluatedOn);
 		this.target = target;
 		this.status_target = status_target;
 		this.expirationTime = new FacplDate();
@@ -70,9 +70,9 @@ public class FulfilledObligationTimeCheck extends AbstractFulfilledObligationChe
 		this.hasExpired = false;
 	}
 
-	public FulfilledObligationTimeCheck(Effect evaluatedOn, ObligationType type, ExpressionBooleanTree target,
+	public FulfilledObligationTimeCheck(Effect evaluatedOn, ExpressionBooleanTree target,
 			ExpressionFunction status_target, FacplDate expiration) {
-		super(evaluatedOn, type);
+		super(evaluatedOn);
 		this.target = target;
 		this.target = new ExpressionBooleanTree(status_target);
 		this.expirationTime = new FacplDate();
@@ -90,9 +90,9 @@ public class FulfilledObligationTimeCheck extends AbstractFulfilledObligationChe
 		this.hasExpired = false;
 	}
 
-	public FulfilledObligationTimeCheck(Effect evaluatedOn, ObligationType type, ExpressionFunction target,
+	public FulfilledObligationTimeCheck(Effect evaluatedOn, ExpressionFunction target,
 			ExpressionBooleanTree status_target, FacplDate expiration) {
-		super(evaluatedOn, type);
+		super(evaluatedOn);
 		this.target = new ExpressionBooleanTree(target);
 		this.status_target = status_target;
 		this.expirationTime = new FacplDate();
@@ -197,12 +197,12 @@ public class FulfilledObligationTimeCheck extends AbstractFulfilledObligationChe
 		return this.hasExpired;
 	}
 
-	
+
 	public void checkExpiration() {
 		FacplDate TIME = new FacplDate();
 		Logger l = LoggerFactory.getLogger(FulfilledObligationTimeCheck.class);
 		int timeDifference= this.expirationTime.getDate().get(Calendar.SECOND)-TIME.getDate().get(Calendar.SECOND);
-		if (TIME.before(this.expirationTime)) {	
+		if (TIME.before(this.expirationTime)) {
 			l.debug("TIME TO EXPIRATION: " + timeDifference);
 		}
 		else if (this.expirationTime.after(TIME)) {
@@ -228,7 +228,7 @@ public class FulfilledObligationTimeCheck extends AbstractFulfilledObligationChe
 		/*
 		 * return the original obligation
 		 */
-		return new FulfilledObligationTimeCheck(this.evaluatedOn, this.type, this.target, this.status_target,
+		return new FulfilledObligationTimeCheck(this.evaluatedOn, this.target, this.status_target,
 				this.originalExpiration);
 	}
 

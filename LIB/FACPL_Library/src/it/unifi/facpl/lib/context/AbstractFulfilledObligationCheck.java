@@ -8,8 +8,8 @@ import it.unifi.facpl.system.status.FacplStatus;
 
 public class AbstractFulfilledObligationCheck extends AbstractFulfilledObligation {
 
-	public AbstractFulfilledObligationCheck(Effect effect, ObligationType typeObl) {
-		this.type = typeObl;
+	public AbstractFulfilledObligationCheck(Effect effect) {
+		this.type = ObligationType.M;
 		this.evaluatedOn = effect;
 		this.arguments = new LinkedList<Object>();
 	}

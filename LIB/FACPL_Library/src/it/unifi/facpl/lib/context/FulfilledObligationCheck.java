@@ -19,15 +19,15 @@ public class FulfilledObligationCheck extends AbstractFulfilledObligationCheck i
 	protected boolean hasExpired;
 	protected int originalExpiration;
 	/*
-	 * four constructor for all combination of Expression: 
+	 * four constructor for all combination of Expression:
 	 * 1: ExpressionFunction, ExpressionFunction
 	 * 2: ExpressionBooleanTree, ExpressionBooleanTree
 	 * 3: ExpressionBooleanTree, ExpressionFunction
 	 * 4: ExpressionFunction, ExpresisonBooleanTree
 	 */
-	public FulfilledObligationCheck(Effect evaluatedOn, ObligationType type, ExpressionFunction target,
+	public FulfilledObligationCheck(Effect evaluatedOn, ExpressionFunction target,
 			ExpressionFunction status_target, int expiration) {
-		super(evaluatedOn, type);
+		super(evaluatedOn);
 		this.target = new ExpressionBooleanTree(target);
 		this.target = new ExpressionBooleanTree(status_target);
 		this.expiration = expiration;
@@ -35,9 +35,9 @@ public class FulfilledObligationCheck extends AbstractFulfilledObligationCheck i
 		this.hasExpired = false;
 	}
 
-	public FulfilledObligationCheck(Effect evaluatedOn, ObligationType type, ExpressionBooleanTree target,
+	public FulfilledObligationCheck(Effect evaluatedOn, ExpressionBooleanTree target,
 			ExpressionBooleanTree status_target, int expiration) {
-		super(evaluatedOn, type);
+		super(evaluatedOn);
 		this.target = target;
 		this.status_target = status_target;
 		this.expiration = expiration;
@@ -45,9 +45,9 @@ public class FulfilledObligationCheck extends AbstractFulfilledObligationCheck i
 		this.originalExpiration = expiration;
 	}
 
-	public FulfilledObligationCheck(Effect evaluatedOn, ObligationType type, ExpressionBooleanTree target,
+	public FulfilledObligationCheck(Effect evaluatedOn, ExpressionBooleanTree target,
 			ExpressionFunction status_target, int expiration) {
-		super(evaluatedOn, type);
+		super(evaluatedOn);
 		this.target = target;
 		this.target = new ExpressionBooleanTree(status_target);
 		this.expiration = expiration;
@@ -55,9 +55,9 @@ public class FulfilledObligationCheck extends AbstractFulfilledObligationCheck i
 		this.originalExpiration = expiration;
 	}
 
-	public FulfilledObligationCheck(Effect evaluatedOn, ObligationType type, ExpressionFunction target,
+	public FulfilledObligationCheck(Effect evaluatedOn, ExpressionFunction target,
 			ExpressionBooleanTree status_target, int expiration) {
-		super(evaluatedOn, type);
+		super(evaluatedOn);
 		this.target = new ExpressionBooleanTree(target);
 		this.status_target = status_target;
 		this.expiration = expiration;
@@ -145,7 +145,7 @@ public class FulfilledObligationCheck extends AbstractFulfilledObligationCheck i
 	}
 
 	public void subExpiration(int i) {
-		
+
 		Logger l = LoggerFactory.getLogger(FulfilledObligationCheck.class);
 		if (expiration == -1){
 			l.debug("EXPIRATION PERSISTENT");
@@ -172,7 +172,7 @@ public class FulfilledObligationCheck extends AbstractFulfilledObligationCheck i
 		/*
 		 * return the original obligation
 		 */
-		return new FulfilledObligationCheck(this.evaluatedOn, this.type, this.target, this.status_target,
+		return new FulfilledObligationCheck(this.evaluatedOn, this.target, this.status_target,
 				this.originalExpiration);
 	}
 

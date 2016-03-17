@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 
 import it.unifi.facpl.lib.context.AbstractFulfilledObligation;
 import it.unifi.facpl.lib.context.ContextRequest;
-import it.unifi.facpl.lib.context.ContextRequest_Status;
 import it.unifi.facpl.lib.context.FulfilledObligationCheck;
 import it.unifi.facpl.lib.enums.Effect;
 import it.unifi.facpl.lib.enums.ExpressionValue;
@@ -31,6 +30,13 @@ public abstract class AbstractObligation implements IObligationElement {
 	public AbstractObligation(Effect evaluatedOn, ObligationType type, Object... args) {
 		this.evaluatedOn = evaluatedOn;
 		this.typeObl = type;
+		this.argsFunction = new LinkedList<Object>();
+		this.argsStatus = new LinkedList<Object>();
+	}
+	
+	public AbstractObligation(Effect evaluatedOn, Object... args) {
+		this.evaluatedOn = evaluatedOn;
+		this.typeObl = ObligationType.M;
 		this.argsFunction = new LinkedList<Object>();
 		this.argsStatus = new LinkedList<Object>();
 	}

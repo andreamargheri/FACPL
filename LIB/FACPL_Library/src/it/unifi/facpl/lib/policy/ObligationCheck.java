@@ -8,52 +8,51 @@ import it.unifi.facpl.lib.context.FulfilledObligationCheckPersistent;
 import it.unifi.facpl.lib.context.FulfilledObligationTimeCheck;
 import it.unifi.facpl.lib.enums.CheckObligationType;
 import it.unifi.facpl.lib.enums.Effect;
-import it.unifi.facpl.lib.enums.ObligationType;
 import it.unifi.facpl.lib.util.FacplDate;
 
 public class ObligationCheck extends AbstractObligation {
 
 	private ExpressionBooleanTree target;
 	private ExpressionBooleanTree status_target;
-	private int expiration; 
+	private int expiration;
 	private FacplDate expirationTime;
 	private CheckObligationType type;
-	
+
 	/*
-	 * four constructor for all combination of Expression: 
+	 * four constructor for all combination of Expression:
 	 * 1: ExpressionFunction, ExpressionFunction
 	 * 2: ExpressionBooleanTree, ExpressionBooleanTree
 	 * 3: ExpressionBooleanTree, ExpressionFunction
 	 * 4: ExpressionFunction, ExpresisonBooleanTree
 	 */
-	public ObligationCheck(Effect evaluatedOn, ObligationType type, ExpressionFunction target,
+	public ObligationCheck(Effect evaluatedOn, ExpressionFunction target,
 			ExpressionFunction status_target, int expiration) {
-		super(evaluatedOn, type);
+		super(evaluatedOn);
 		this.target = new ExpressionBooleanTree(target);
 		this.status_target = new ExpressionBooleanTree(status_target);
 		this.init(expiration);
 	}
 
-	public ObligationCheck(Effect evaluatedOn, ObligationType type, ExpressionBooleanTree target,
+	public ObligationCheck(Effect evaluatedOn, ExpressionBooleanTree target,
 			ExpressionBooleanTree status_target, int expiration) {
-		super(evaluatedOn, type);
+		super(evaluatedOn);
 		this.target = target;
 		this.status_target = status_target;
 		this.init(expiration);
 	}
 
-	public ObligationCheck(Effect evaluatedOn, ObligationType type, ExpressionBooleanTree target,
+	public ObligationCheck(Effect evaluatedOn, ExpressionBooleanTree target,
 			ExpressionFunction status_target, int expiration) {
-		super(evaluatedOn, type);
+		super(evaluatedOn);
 		this.target = target;
 		this.status_target = new ExpressionBooleanTree(status_target);
 		this.init(expiration);
 
 	}
 
-	public ObligationCheck(Effect evaluatedOn, ObligationType type, ExpressionFunction target,
+	public ObligationCheck(Effect evaluatedOn, ExpressionFunction target,
 			ExpressionBooleanTree status_target, int expiration) {
-		super(evaluatedOn, type);
+		super(evaluatedOn);
 		this.target = new ExpressionBooleanTree(target);
 		this.status_target = status_target;
 		this.init(expiration);
@@ -65,7 +64,7 @@ public class ObligationCheck extends AbstractObligation {
 		this.pepAction = "CHECK";
 		this.type = CheckObligationType.N;
 	}
-	
+
 	private void init(FacplDate expiration) {
 		this.expirationTime = expiration;
 		this.pepAction = "CHECK";
@@ -81,73 +80,73 @@ public class ObligationCheck extends AbstractObligation {
 	 * CONSTRUCTOR FOR PERSISTENT TYPE
 	 */
 
-	public ObligationCheck(Effect evaluatedOn, ObligationType type, ExpressionFunction target,
+	public ObligationCheck(Effect evaluatedOn, ExpressionFunction target,
 			ExpressionFunction status_target) {
-		super(evaluatedOn, type);
+		super(evaluatedOn);
 		this.target = new ExpressionBooleanTree(target);
 		this.status_target = new ExpressionBooleanTree(status_target);
 		this.init();
 	}
 
-	public ObligationCheck(Effect evaluatedOn, ObligationType type, ExpressionBooleanTree target,
+	public ObligationCheck(Effect evaluatedOn, ExpressionBooleanTree target,
 			ExpressionBooleanTree status_target) {
-		super(evaluatedOn, type);
+		super(evaluatedOn);
 		this.target = target;
 		this.status_target = status_target;
 		this.init();
 
 	}
 
-	public ObligationCheck(Effect evaluatedOn, ObligationType type, ExpressionBooleanTree target,
+	public ObligationCheck(Effect evaluatedOn, ExpressionBooleanTree target,
 			ExpressionFunction status_target) {
-		super(evaluatedOn, type);
+		super(evaluatedOn);
 		this.target = target;
 		this.status_target = new ExpressionBooleanTree(status_target);
 		this.init();
 
 	}
 
-	public ObligationCheck(Effect evaluatedOn, ObligationType type, ExpressionFunction target,
+	public ObligationCheck(Effect evaluatedOn, ExpressionFunction target,
 			ExpressionBooleanTree status_target) {
-		super(evaluatedOn, type);
+		super(evaluatedOn);
 		this.target = new ExpressionBooleanTree(target);
 		this.status_target = status_target;
 		this.init();
 	}
-	
-	public ObligationCheck(Effect evaluatedOn, ObligationType type) {
-		super(evaluatedOn, type);
+
+	public ObligationCheck(Effect evaluatedOn) {
+		super(evaluatedOn);
 		this.init();
 	}
-	
-	public ObligationCheck(Effect evaluatedOn, ObligationType type, ExpressionFunction target,
+
+	public ObligationCheck(Effect evaluatedOn, ExpressionFunction target,
 			ExpressionFunction status_target, FacplDate expiration) {
-		super(evaluatedOn, type);
+		super(evaluatedOn);
 		this.target = new ExpressionBooleanTree(target);
 		this.status_target = new ExpressionBooleanTree(status_target);
 		this.init(expiration);
 	}
 
-	public ObligationCheck(Effect evaluatedOn, ObligationType type, ExpressionBooleanTree target,
+	public ObligationCheck(Effect evaluatedOn, ExpressionBooleanTree target,
 			ExpressionBooleanTree status_target, FacplDate expiration) {
-		super(evaluatedOn, type);
+		super(evaluatedOn);
 		this.target = target;
 		this.status_target = status_target;
 		this.init(expiration);
 	}
 
-	public ObligationCheck(Effect evaluatedOn, ObligationType type, ExpressionBooleanTree target,
+	public ObligationCheck(Effect evaluatedOn, ExpressionBooleanTree target,
 			ExpressionFunction status_target, FacplDate expiration) {
-		super(evaluatedOn, type);
+		super(evaluatedOn);
 		this.target = target;
 		this.status_target = new ExpressionBooleanTree(status_target);
 		this.init(expiration);
 
 	}
 
-	public ObligationCheck(Effect evaluatedOn, ObligationType type, ExpressionFunction target,
+	public ObligationCheck(Effect evaluatedOn, ExpressionFunction target,
 			ExpressionBooleanTree status_target, FacplDate expiration) {
-		super(evaluatedOn, type);
+		super(evaluatedOn);
 		this.target = new ExpressionBooleanTree(target);
 		this.status_target = status_target;
 		this.init(expiration);
@@ -160,17 +159,17 @@ public class ObligationCheck extends AbstractObligation {
 		 * this method create a fulfilledobligationcheck
 		 */
 		if (this.type == CheckObligationType.N) {
-			return new FulfilledObligationCheck(this.evaluatedOn, this.typeObl, this.target, this.status_target,
+			return new FulfilledObligationCheck(this.evaluatedOn, this.target, this.status_target,
 					this.expiration);
 		} else if (this.type == CheckObligationType.T){
-			return new FulfilledObligationTimeCheck(this.evaluatedOn, this.typeObl, this.target, this.status_target,
+			return new FulfilledObligationTimeCheck(this.evaluatedOn, this.target, this.status_target,
 					this.expirationTime);
 		} else{
-			return new FulfilledObligationCheckPersistent(this.evaluatedOn, this.typeObl, this.target,
+			return new FulfilledObligationCheckPersistent(this.evaluatedOn, this.target,
 					this.status_target);
 		}
 	}
-	
-	
+
+
 
 }

@@ -99,7 +99,7 @@ public class PolicySet_ReadWriteCheck extends PolicySet {
 			// Obligation
 
 			addObligation( 
-					new ObligationCheck(Effect.PERMIT, ObligationType.M,
+					new ObligationCheck(Effect.PERMIT,
 							read,
 							writingCondition
 							));

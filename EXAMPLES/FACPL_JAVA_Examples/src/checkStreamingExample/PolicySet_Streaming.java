@@ -143,7 +143,7 @@ public class PolicySet_Streaming extends PolicySet{
 			addPolicyElement(new Rule_Login());
 			// Obligation
 			addObligation(
-					new ObligationCheck(Effect.PERMIT, ObligationType.M,
+					new ObligationCheck(Effect.PERMIT,
 							new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class, "Alice",
 									new AttributeName("name", "id")),
 							new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
@@ -184,7 +184,7 @@ public class PolicySet_Streaming extends PolicySet{
 			addPolicyElement(new Rule_ListenBob());
 			// Obligation
 			addObligation(
-					new ObligationCheck(Effect.PERMIT, ObligationType.M,
+					new ObligationCheck(Effect.PERMIT,
 							new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class, "Bob",
 									new AttributeName("name", "id")),
 							new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,

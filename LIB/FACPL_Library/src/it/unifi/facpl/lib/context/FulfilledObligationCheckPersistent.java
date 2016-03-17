@@ -8,27 +8,27 @@ import it.unifi.facpl.lib.policy.ExpressionFunction;
 public class FulfilledObligationCheckPersistent extends FulfilledObligationCheck {
 
 	/*
-	 * same constructor of FulfilledObligationCheck, 
+	 * same constructor of FulfilledObligationCheck,
 	 * but expiration is initialized with -1
 	 */
-	public FulfilledObligationCheckPersistent(Effect evaluatedOn, ObligationType type, ExpressionBooleanTree target,
+	public FulfilledObligationCheckPersistent(Effect evaluatedOn, ExpressionBooleanTree target,
 			ExpressionBooleanTree status_target) {
-		super(evaluatedOn, type, target, status_target, -1);
+		super(evaluatedOn, target, status_target, -1);
 	}
 
-	public FulfilledObligationCheckPersistent(Effect evaluatedOn, ObligationType type, ExpressionFunction target,
+	public FulfilledObligationCheckPersistent(Effect evaluatedOn, ExpressionFunction target,
 			ExpressionBooleanTree status_target) {
-		super(evaluatedOn, type, target, status_target, -1);
+		super(evaluatedOn, target, status_target, -1);
 	}
 
-	public FulfilledObligationCheckPersistent(Effect evaluatedOn, ObligationType type, ExpressionBooleanTree target,
+	public FulfilledObligationCheckPersistent(Effect evaluatedOn, ExpressionBooleanTree target,
 			ExpressionFunction status_target) {
-		super(evaluatedOn, type, target, status_target, -1);
+		super(evaluatedOn, target, status_target, -1);
 	}
 
-	public FulfilledObligationCheckPersistent(Effect evaluatedOn, ObligationType type, ExpressionFunction target,
+	public FulfilledObligationCheckPersistent(Effect evaluatedOn, ExpressionFunction target,
 			ExpressionFunction status_target) {
-		super(evaluatedOn, type, target, status_target, -1);
+		super(evaluatedOn, target, status_target, -1);
 	}
 
 	public void setExpired() {
