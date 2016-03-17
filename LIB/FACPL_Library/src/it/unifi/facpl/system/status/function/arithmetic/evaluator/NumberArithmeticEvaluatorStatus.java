@@ -29,11 +29,11 @@ public class NumberArithmeticEvaluatorStatus implements ArithmeticEvaluatorStatu
 		if (o1.getType() == FacplStatusType.INT) {
 			Integer value = (int)(status.retrieveAttribute(o1));
 			Integer newValue = value + (int) o2;
-			status.setAttribute(o1, newValue.toString());
+			status.setAttribute(o1, newValue);
 		} else if (o1.getType() == FacplStatusType.DOUBLE) {
 			Double value = (Double)(status.retrieveAttribute(o1));
 			Double newValue = value + (double) o2;
-			status.setAttribute(o1, newValue.toString());
+			status.setAttribute(o1, newValue);
 		} else {
 			throw new UnsupportedTypeException("Number", "Add");
 		}
@@ -44,11 +44,11 @@ public class NumberArithmeticEvaluatorStatus implements ArithmeticEvaluatorStatu
 		if (o1.getType() == FacplStatusType.INT) {
 			Integer value = (int)(status.retrieveAttribute(o1));
 			Integer newValue = value / (int) o2;
-			status.setAttribute(o1, newValue.toString());
+			status.setAttribute(o1, newValue);
 		} else if (o1.getType() == FacplStatusType.DOUBLE) {
 			Double value = (Double)(status.retrieveAttribute(o1));
 			Double newValue = value / (double) o2;
-			status.setAttribute(o1, newValue.toString());
+			status.setAttribute(o1, newValue);
 		} else {
 			throw new UnsupportedTypeException("Number", "div");
 		}
@@ -59,11 +59,11 @@ public class NumberArithmeticEvaluatorStatus implements ArithmeticEvaluatorStatu
 		if (o1.getType() == FacplStatusType.INT) {
 			Integer value = (int)(status.retrieveAttribute(o1));
 			Integer newValue = value * (int) o2;
-			status.setAttribute(o1, newValue.toString());
+			status.setAttribute(o1, newValue);
 		} else if (o1.getType() == FacplStatusType.DOUBLE) {
 			Double value = (Double)(status.retrieveAttribute(o1));
 			Double newValue = value * (double) o2;
-			status.setAttribute(o1, newValue.toString());
+			status.setAttribute(o1, newValue);
 		} else {
 			throw new UnsupportedTypeException("Number", "mul");
 		}
@@ -74,11 +74,11 @@ public class NumberArithmeticEvaluatorStatus implements ArithmeticEvaluatorStatu
 		if (o1.getType() == FacplStatusType.INT) {
 			Integer value = (int)(status.retrieveAttribute(o1));
 			Integer newValue = value - (int) o2;
-			status.setAttribute(o1, newValue.toString());
+			status.setAttribute(o1, newValue);
 		} else if (o1.getType() == FacplStatusType.DOUBLE) {
 			Double value = (Double)(status.retrieveAttribute(o1));
 			Double newValue = value - (double) o2;
-			status.setAttribute(o1, newValue.toString());
+			status.setAttribute(o1, newValue);
 		} else {
 			throw new UnsupportedTypeException("Number", "sub");
 		}
@@ -88,7 +88,7 @@ public class NumberArithmeticEvaluatorStatus implements ArithmeticEvaluatorStatu
 	public void flag(FacplStatus status,StatusAttribute o1, Object o2) throws Throwable {
 		if (o1.getType() == FacplStatusType.BOOLEAN && o2 instanceof Boolean) {
 			Boolean newValue = (Boolean) o2;
-			status.setAttribute(o1, newValue.toString());
+			status.setAttribute(o1, newValue);
 
 		} else {
 			throw new UnsupportedTypeException("Boolean", "Flag");

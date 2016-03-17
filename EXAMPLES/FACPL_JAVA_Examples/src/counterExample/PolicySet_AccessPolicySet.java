@@ -15,9 +15,7 @@ import it.unifi.facpl.system.status.functions.arithmetic.AddStatus;
 
 @SuppressWarnings("all")
 public class PolicySet_AccessPolicySet extends PolicySet {
-	protected ContextRequest_Status ctxReq;
-	public PolicySet_AccessPolicySet(ContextRequest_Status ctxReq) throws MissingAttributeException {
-		this.ctxReq = ctxReq;
+	public PolicySet_AccessPolicySet() throws MissingAttributeException {
 		addId("AccessPolicySet");
 		// Algorithm Combining
 		addCombiningAlg(it.unifi.facpl.lib.algorithm.DenyUnlessPermitGreedy.class);
@@ -32,7 +30,7 @@ public class PolicySet_AccessPolicySet extends PolicySet {
 						new AddStatus(),
 						Effect.PERMIT,
 						ObligationType.M, 
-						ctxReq.getStatusAttribute(new StatusAttribute("accessCounter", FacplStatusType.INT)), 1) 
+						new StatusAttribute("accessCounter", FacplStatusType.INT), 1) 
 				); 
 	}
 
@@ -43,7 +41,7 @@ public class PolicySet_AccessPolicySet extends PolicySet {
 			// Effect
 			addEffect(Effect.PERMIT);
 			addTarget(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.LessThan.class, 
-					ctxReq.getStatusAttribute(ctxReq.getStatusAttribute(new StatusAttribute("accessCounter", FacplStatusType.INT))), 5)); 
+					new StatusAttribute("accessCounter", FacplStatusType.INT), 5)); 
 		}
 	}
 }

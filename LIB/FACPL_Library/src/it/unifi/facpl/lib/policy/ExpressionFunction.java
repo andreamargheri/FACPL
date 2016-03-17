@@ -74,9 +74,10 @@ public class ExpressionFunction {
 			} else if (FacplLiteralTypes.isFacplValue(obj)) {
 				try {
 					// Literals
-					// values.add(obj);
-					cxtRequest.getContextRequestValues((StatusAttribute) obj);
-				} catch (MissingAttributeException e) {
+					values.add(obj);
+					//cxtRequest.getContextRequestValues((StatusAttribute) obj);
+				} catch (Exception e) {
+					e.printStackTrace();
 					// Add value BOTTOM for modeling the absence of attribute
 					values.add(ExpressionValue.BOTTOM);
 				}

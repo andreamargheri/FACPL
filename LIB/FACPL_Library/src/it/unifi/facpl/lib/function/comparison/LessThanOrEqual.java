@@ -28,8 +28,8 @@ public class LessThanOrEqual implements IComparisonFunction {
 			/*
 			 * if one of the args is a status attribute -> retrieve value
 			 */
-			o1 = args.get(0) instanceof StatusAttribute ? this.convertType((StatusAttribute) args.get(0)) : args.get(0);
-			o2 = args.get(1) instanceof StatusAttribute ? this.convertType((StatusAttribute) args.get(1)) : args.get(1);
+			o1 = args.get(0);
+			o2 = args.get(1);
 
 			IComparisonEvaluator evaluator = ComparisonEvaluatorFactory.getInstance().getEvaluator(o1);
 			return evaluator.isLessThanOrEqual(o1, o2);
@@ -39,21 +39,5 @@ public class LessThanOrEqual implements IComparisonFunction {
 		}
 	}
 
-	private Object convertType(StatusAttribute sa) {
-		/*
-		 * retrieve value from status attribute
-		 */
-		// StatusAttribute sa = FacplStatus.getInstance().getStatusAttribute(s);
-		if (sa.getType() == FacplStatusType.BOOLEAN) {
-			return Boolean.getBoolean(sa.getValue());
-		} else if (sa.getType() == FacplStatusType.DOUBLE) {
-			return Double.valueOf(sa.getValue());
-		} else if (sa.getType() == FacplStatusType.INT) {
-			return Integer.valueOf(sa.getValue());
-		} else if (sa.getType() == FacplStatusType.STRING) {
-			return sa.getValue();
-		}
-		return null;
-	}
 
 }

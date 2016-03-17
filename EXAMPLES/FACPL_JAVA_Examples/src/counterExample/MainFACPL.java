@@ -27,11 +27,9 @@ public class MainFACPL {
 	public MainFACPL() throws MissingAttributeException {
 		// defined list of policies included in the PDP
 		LinkedList<FacplPolicy> policies = new LinkedList<FacplPolicy>();
-		policies.add(new PolicySet_AccessPolicySet(ContextRequest_AccessRequest.getContextReq()));
+		policies.add(new PolicySet_AccessPolicySet());
 		this.pdp = new PDP(it.unifi.facpl.lib.algorithm.PermitUnlessDenyGreedy.class, policies, false);
-
 		this.pep = new PEP(EnforcementAlgorithm.DENY_BIASED);
-
 		this.pep.addPEPActions(PEPAction.getPepActions());
 	}
 
@@ -54,13 +52,14 @@ public class MainFACPL {
 		requests.add(ContextRequest_AccessRequest.getContextReq());
 		
 		
-		for (ContextRequest rcxt : requests) {
+		for (ContextRequest_Status rcxt : requests) {
+			System.err.println("__________________________________________________________");
 			result.append("---------------------------------------------------\n");
 			AuthorisationPDP resPDP = system.pdp.doAuthorisation(rcxt);
 			result.append("Request: " + resPDP.getId() + "\n\n");
 			result.append("PDP Decision=\n " + resPDP.toString() + "\n\n");
 			// enforce decision
-			AuthorisationPEP resPEP = system.pep.doEnforcement(resPDP);
+			AuthorisationPEP resPEP = system.pep.doEnforcement(resPDP, rcxt);
 			result.append("PEP Decision=\n " + resPEP.toString() + "\n");
 			result.append("---------------------------------------------------\n");
 		}

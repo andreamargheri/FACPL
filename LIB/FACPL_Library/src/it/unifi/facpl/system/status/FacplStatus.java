@@ -34,6 +34,11 @@ public class FacplStatus {
 		this.status = new HashMap<StatusAttribute,Object>();
 		this.statusID = UUID.randomUUID().toString().substring(0, 8);
 	}
+	
+	public FacplStatus(HashMap<StatusAttribute,Object> attributeList) {
+		this.status = attributeList;
+		this.statusID =  UUID.randomUUID().toString().substring(0, 8);;
+	}
 
 	public String getStatusID() {
 		return this.statusID;

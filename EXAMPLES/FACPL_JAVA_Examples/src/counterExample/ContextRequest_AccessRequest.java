@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import it.unifi.facpl.lib.context.ContextRequest_Status;
-import it.unifi.facpl.lib.context.ContextStub_Status_Default;
+import it.unifi.facpl.lib.context.ContextStub_Default;
 import it.unifi.facpl.lib.context.Request;
 import it.unifi.facpl.lib.enums.FacplStatusType;
 import it.unifi.facpl.system.status.FacplStatus;
@@ -27,20 +27,11 @@ public class ContextRequest_AccessRequest {
 		Request req = new Request("request1");
 		req.addAttribute("name", req_category_attribute);
 		// context stub: default-one
-		CxtReq = new ContextRequest_Status(req, ContextStub_Status_Default.getInstance());
-		/*
-		 * set dello stato
-		 */
-		ContextStub_Status_Default.getInstance().setStatus(createStatus());
-		
+		CxtReq = new ContextRequest_Status(req, ContextStub_Default.getInstance());
+		Status_1 st = new Status_1();
+		CxtReq.setStatus(st.getStatus());
 		return CxtReq;
 	}
 
-	private static FacplStatus createStatus() {
-		ArrayList<StatusAttribute> attributeList = new ArrayList<StatusAttribute>();
-		attributeList.add(new StatusAttribute("accessCounter", FacplStatusType.INT, "0"));
-		FacplStatus status = new FacplStatus(attributeList, "stato");
-		return status;
-	}
 
 }
