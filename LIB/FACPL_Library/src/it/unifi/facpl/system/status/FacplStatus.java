@@ -62,7 +62,7 @@ public class FacplStatus {
 		}
 	}
 	public void setAttribute(StatusAttribute attribute, Object o) throws MissingAttributeException {
-		Object v = this.status.get(attribute);	
+		Object v = this.status.get(attribute);
 		if (v == null){
 			throw new MissingAttributeException("attribute doesn't exist in the current status");
 		}else{

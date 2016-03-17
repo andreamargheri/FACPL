@@ -18,7 +18,7 @@ public class FulfilledObligationTimeCheck extends AbstractFulfilledObligationChe
 
 	protected ExpressionBooleanTree target;
 	protected ExpressionBooleanTree status_target;
-	protected FacplDate expiration; 
+	protected FacplDate expirationTime; 
 	protected boolean hasExpired;
 	protected FacplDate originalExpiration;
 	/*
@@ -33,7 +33,19 @@ public class FulfilledObligationTimeCheck extends AbstractFulfilledObligationChe
 		super(evaluatedOn, type);
 		this.target = new ExpressionBooleanTree(target);
 		this.target = new ExpressionBooleanTree(status_target);
-		this.expiration = expiration;
+		
+		this.expirationTime = new FacplDate();
+		System.err.println("EXPIRATION TIME SECOND "+expiration.getDate().get(Calendar.SECOND));
+		System.err.println("EXPIRATION TIME MINUTE "+expiration.getDate().get(Calendar.MINUTE));
+		System.err.println("EXPIRATION TIME HOUR "+expiration.getDate().get(Calendar.HOUR));
+		System.err.println("START TIME "+this.expirationTime.toString());
+		this.expirationTime.getDate().add(Calendar.SECOND, expiration.getDate().get(Calendar.SECOND));
+		this.expirationTime.getDate().add(Calendar.MINUTE, expiration.getDate().get(Calendar.MINUTE));
+		this.expirationTime.getDate().add(Calendar.HOUR, expiration.getDate().get(Calendar.HOUR));
+		System.err.println("EXPIRATION TIME SECOND "+this.expirationTime.getDate().get(Calendar.SECOND));
+		System.err.println("EXPIRATION TIME MINUTE "+this.expirationTime.getDate().get(Calendar.MINUTE));
+		System.err.println("EXPIRATION TIME HOUR "+this.expirationTime.getDate().get(Calendar.HOUR));
+		
 		this.originalExpiration = expiration;
 		this.hasExpired = false;
 	}
@@ -43,9 +55,19 @@ public class FulfilledObligationTimeCheck extends AbstractFulfilledObligationChe
 		super(evaluatedOn, type);
 		this.target = target;
 		this.status_target = status_target;
-		this.expiration = expiration;
-		this.hasExpired = false;
+		this.expirationTime = new FacplDate();
+		System.err.println("EXPIRATION TIME SECOND "+expiration.getDate().get(Calendar.SECOND));
+		System.err.println("EXPIRATION TIME MINUTE "+expiration.getDate().get(Calendar.MINUTE));
+		System.err.println("EXPIRATION TIME HOUR "+expiration.getDate().get(Calendar.HOUR));
+		System.err.println("START TIME "+this.expirationTime.toString());
+		this.expirationTime.getDate().add(Calendar.SECOND, expiration.getDate().get(Calendar.SECOND));
+		this.expirationTime.getDate().add(Calendar.MINUTE, expiration.getDate().get(Calendar.MINUTE));
+		this.expirationTime.getDate().add(Calendar.HOUR, expiration.getDate().get(Calendar.HOUR));
+		System.err.println("EXPIRATION TIME SECOND "+this.expirationTime.getDate().get(Calendar.SECOND));
+		System.err.println("EXPIRATION TIME MINUTE "+this.expirationTime.getDate().get(Calendar.MINUTE));
+		System.err.println("EXPIRATION TIME HOUR "+this.expirationTime.getDate().get(Calendar.HOUR));
 		this.originalExpiration = expiration;
+		this.hasExpired = false;
 	}
 
 	public FulfilledObligationTimeCheck(Effect evaluatedOn, ObligationType type, ExpressionBooleanTree target,
@@ -53,9 +75,19 @@ public class FulfilledObligationTimeCheck extends AbstractFulfilledObligationChe
 		super(evaluatedOn, type);
 		this.target = target;
 		this.target = new ExpressionBooleanTree(status_target);
-		this.expiration = expiration;
-		this.hasExpired = false;
+		this.expirationTime = new FacplDate();
+		System.err.println("EXPIRATION TIME SECOND "+expiration.getDate().get(Calendar.SECOND));
+		System.err.println("EXPIRATION TIME MINUTE "+expiration.getDate().get(Calendar.MINUTE));
+		System.err.println("EXPIRATION TIME HOUR "+expiration.getDate().get(Calendar.HOUR));
+		System.err.println("START TIME "+this.expirationTime.toString());
+		this.expirationTime.getDate().add(Calendar.SECOND, expiration.getDate().get(Calendar.SECOND));
+		this.expirationTime.getDate().add(Calendar.MINUTE, expiration.getDate().get(Calendar.MINUTE));
+		this.expirationTime.getDate().add(Calendar.HOUR, expiration.getDate().get(Calendar.HOUR));
+		System.err.println("EXPIRATION TIME SECOND "+this.expirationTime.getDate().get(Calendar.SECOND));
+		System.err.println("EXPIRATION TIME MINUTE "+this.expirationTime.getDate().get(Calendar.MINUTE));
+		System.err.println("EXPIRATION TIME HOUR "+this.expirationTime.getDate().get(Calendar.HOUR));
 		this.originalExpiration = expiration;
+		this.hasExpired = false;
 	}
 
 	public FulfilledObligationTimeCheck(Effect evaluatedOn, ObligationType type, ExpressionFunction target,
@@ -63,9 +95,19 @@ public class FulfilledObligationTimeCheck extends AbstractFulfilledObligationChe
 		super(evaluatedOn, type);
 		this.target = new ExpressionBooleanTree(target);
 		this.status_target = status_target;
-		this.expiration = expiration;
-		this.hasExpired = false;
+		this.expirationTime = new FacplDate();
+		System.err.println("EXPIRATION TIME SECOND "+expiration.getDate().get(Calendar.SECOND));
+		System.err.println("EXPIRATION TIME MINUTE "+expiration.getDate().get(Calendar.MINUTE));
+		System.err.println("EXPIRATION TIME HOUR "+expiration.getDate().get(Calendar.HOUR));
+		System.err.println("START TIME "+this.expirationTime.toString());
+		this.expirationTime.getDate().add(Calendar.SECOND, expiration.getDate().get(Calendar.SECOND));
+		this.expirationTime.getDate().add(Calendar.MINUTE, expiration.getDate().get(Calendar.MINUTE));
+		this.expirationTime.getDate().add(Calendar.HOUR, expiration.getDate().get(Calendar.HOUR));
+		System.err.println("EXPIRATION TIME SECOND "+this.expirationTime.getDate().get(Calendar.SECOND));
+		System.err.println("EXPIRATION TIME MINUTE "+this.expirationTime.getDate().get(Calendar.MINUTE));
+		System.err.println("EXPIRATION TIME HOUR "+this.expirationTime.getDate().get(Calendar.HOUR));
 		this.originalExpiration = expiration;
+		this.hasExpired = false;
 	}
 
 	@Override
@@ -144,7 +186,7 @@ public class FulfilledObligationTimeCheck extends AbstractFulfilledObligationChe
 	}
 
 	public FacplDate getExpiration() {
-		return expiration;
+		return expirationTime;
 	}
 
 	public void setExpired() {
@@ -159,15 +201,15 @@ public class FulfilledObligationTimeCheck extends AbstractFulfilledObligationChe
 	public void checkExpiration() {
 		FacplDate TIME = new FacplDate();
 		Logger l = LoggerFactory.getLogger(FulfilledObligationTimeCheck.class);
-		int timeDifference= this.expiration.getDate().get(Calendar.SECOND)-TIME.getDate().get(Calendar.SECOND);
-		if (TIME.before(this.expiration)) {	
+		int timeDifference= this.expirationTime.getDate().get(Calendar.SECOND)-TIME.getDate().get(Calendar.SECOND);
+		if (TIME.before(this.expirationTime)) {	
 			l.debug("TIME TO EXPIRATION: " + timeDifference);
 		}
-		else if (expiration.after(TIME)) {
+		else if (this.expirationTime.after(TIME)) {
 			l.debug("TIME TO EXPIRATION: " + timeDifference);
 				this.setExpired();
 		}
-		else if (expiration.equals(TIME)) {
+		else if (this.expirationTime.equals(TIME)) {
 			l.debug("TIME TO EXPIRATION: " + timeDifference);
 				this.setExpired();
 		}
@@ -176,7 +218,7 @@ public class FulfilledObligationTimeCheck extends AbstractFulfilledObligationChe
 	@Override
 	public String toString() {
 		FacplDate TIME = new FacplDate();
-		int timeDifference= this.expiration.getDate().get(Calendar.SECOND)-TIME.getDate().get(Calendar.SECOND);
+		int timeDifference= this.expirationTime.getDate().get(Calendar.SECOND)-TIME.getDate().get(Calendar.SECOND);
 		return "target: " + target.toString() + "\r\n" + "status: " + status_target.toString() + "\r\n TIME TO EXPIRATION: "
 				+ timeDifference;
 	}

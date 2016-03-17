@@ -67,14 +67,7 @@ public class ObligationCheck extends AbstractObligation {
 	}
 	
 	private void init(FacplDate expiration) {
-		this.expirationTime = new FacplDate();
-		System.err.println("START TIME "+this.expirationTime.toString());
-		this.expirationTime.getDate().add(Calendar.SECOND, expiration.getDate().get(Calendar.SECOND));
-		this.expirationTime.getDate().add(Calendar.MINUTE, expiration.getDate().get(Calendar.MINUTE));
-		this.expirationTime.getDate().add(Calendar.HOUR, expiration.getDate().get(Calendar.HOUR));
-		System.err.println("EXPIRATION TIME SECOND "+this.expirationTime.getDate().get(Calendar.SECOND));
-		System.err.println("EXPIRATION TIME MINUTE "+this.expirationTime.getDate().get(Calendar.MINUTE));
-		System.err.println("EXPIRATION TIME HOUR "+this.expirationTime.getDate().get(Calendar.HOUR));
+		this.expirationTime = expiration;
 		this.pepAction = "CHECK";
 		this.type = CheckObligationType.T;
 	}

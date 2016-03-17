@@ -3,7 +3,7 @@ package checkStreamingExample;
 import java.util.HashMap;
 
 import it.unifi.facpl.lib.context.ContextRequest_Status;
-import it.unifi.facpl.lib.context.ContextStub_Status_Default;
+import it.unifi.facpl.lib.context.ContextStub_Default;
 import it.unifi.facpl.lib.context.Request;
 
 
@@ -25,10 +25,9 @@ public class ContextRequest_ListenStandardBob {
 		req.addAttribute("name", req_category_attribute_name);
 		req.addAttribute("action", req_category_attribute_action);
 		// context stub: default-one
-		CxtReq = new ContextRequest_Status(req, ContextStub_Status_Default.getInstance());
-		/*
-		 * set status
-		 */
+		CxtReq = new ContextRequest_Status(req, ContextStub_Default.getInstance());
+		StatusStreaming st = new StatusStreaming();
+		CxtReq.setStatus(st.getStatus());
 		return CxtReq;
 	}
 }

@@ -46,24 +46,24 @@ public class MainFACPL {
 
 		LinkedList<ContextRequest_Status> requests = new LinkedList<ContextRequest_Status>();
 
-//		requests.add(ContextRequest_ReadRequestBob.getContextReq());//permit pdp		
-//		requests.add(ContextRequest_ReadRequestBob.getContextReq());//permit pep only	
-//		requests.add(ContextRequest_ReadRequestAlice.getContextReq());
-//		requests.add(ContextRequest_ReadRequestBob.getContextReq());//permit pep only	
-//		requests.add(ContextRequest_ReadRequestBob.getContextReq());//permit pep only	
+		requests.add(ContextRequest_ReadRequestBob.getContextReq());//permit pdp		
+		requests.add(ContextRequest_ReadRequestBob.getContextReq());//permit pep only	
+		requests.add(ContextRequest_ReadRequestAlice.getContextReq());
+		requests.add(ContextRequest_ReadRequestBob.getContextReq());//permit pep only	
+		requests.add(ContextRequest_ReadRequestBob.getContextReq());//permit pep only	
 		
 		requests.add(ContextRequest_WriteRequestAlice.getContextReq());//permit 		#
 		
 		requests.add(ContextRequest_ReadRequestBob.getContextReq()); //read while 		#
 //																  //write deny
-//		requests.add(ContextRequest_WriteRequestAlice.getContextReq());//write while		
+		requests.add(ContextRequest_WriteRequestAlice.getContextReq());//write while		
 //																  //write deny
 //		
-//		requests.add(ContextRequest_StopWriteRequestAlice.getContextReq());//permit 	#
-//		
-//		requests.add(ContextRequest_ReadRequestBob.getContextReq());//permit			#
-//		requests.add(ContextRequest_ReadRequestBob.getContextReq());//permit			#
-//		requests.add(ContextRequest_ReadRequestBob.getContextReq());//permit			#
+		requests.add(ContextRequest_StopWriteRequestAlice.getContextReq());//permit 	#
+		
+		requests.add(ContextRequest_ReadRequestBob.getContextReq());//permit			#
+		requests.add(ContextRequest_ReadRequestBob.getContextReq());//permit			#
+		requests.add(ContextRequest_ReadRequestBob.getContextReq());//permit			#
 
 		AuthorisationPDP resPDP = null;
 		AuthorisationPEP resPEP = null;

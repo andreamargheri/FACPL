@@ -48,6 +48,8 @@ public class MainFACPL {
 		LinkedList<ContextRequest_Status> requests = new LinkedList<ContextRequest_Status>();
 
 		requests.add(ContextRequest_ReadRequestAlice.getContextReq()); 
+		requests.add(ContextRequest_ReadRequestAlice.getContextReq()); 
+		requests.add(ContextRequest_ReadRequestAlice.getContextReq()); 
 		requests.add(ContextRequest_WriteRequestBob.getContextReq()); 
 		requests.add(ContextRequest_ReadRequestBob.getContextReq()); 
 		requests.add(ContextRequest_StopReadRequestAlice.getContextReq()); 

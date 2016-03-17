@@ -1,6 +1,5 @@
 package primoEsempioStatus;
 
-import it.unifi.facpl.lib.context.ContextRequest_Status;
 import it.unifi.facpl.lib.enums.Effect;
 import it.unifi.facpl.lib.enums.ExprBooleanConnector;
 import it.unifi.facpl.lib.enums.FacplStatusType;
@@ -11,7 +10,6 @@ import it.unifi.facpl.lib.policy.ObligationStatus;
 import it.unifi.facpl.lib.policy.PolicySet;
 import it.unifi.facpl.lib.policy.Rule;
 import it.unifi.facpl.lib.util.AttributeName;
-import it.unifi.facpl.lib.util.exception.MissingAttributeException;
 import it.unifi.facpl.system.status.StatusAttribute;
 import it.unifi.facpl.system.status.functions.arithmetic.AddStatus;
 import it.unifi.facpl.system.status.functions.arithmetic.SubStatus;

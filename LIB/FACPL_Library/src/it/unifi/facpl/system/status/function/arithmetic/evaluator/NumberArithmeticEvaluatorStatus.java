@@ -86,9 +86,9 @@ public class NumberArithmeticEvaluatorStatus implements ArithmeticEvaluatorStatu
 
 	@Override
 	public void flag(FacplStatus status,StatusAttribute o1, Object o2) throws Throwable {
-		if (o1.getType() == FacplStatusType.BOOLEAN && o2 instanceof Boolean) {
+		if (o1.getType() == FacplStatusType.BOOLEAN) {
 			Boolean newValue = (Boolean) o2;
-			status.setAttribute(o1, newValue);
+			status.setAttribute(o1, newValue.booleanValue());
 
 		} else {
 			throw new UnsupportedTypeException("Boolean", "Flag");

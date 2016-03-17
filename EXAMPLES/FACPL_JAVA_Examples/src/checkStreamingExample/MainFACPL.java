@@ -26,7 +26,7 @@ public class MainFACPL {
 		// defined list of policies included in the PDP
 		LinkedList<FacplPolicy> policies = new LinkedList<FacplPolicy>();
 
-		policies.add(new PolicySet_Streaming(ContextRequest_LoginStandardBob.getContextReq()));
+		policies.add(new PolicySet_Streaming());
 		this.pdp = new PDP(it.unifi.facpl.lib.algorithm.PermitUnlessDenyGreedy.class, policies, false);
 
 		this.pep = new PEPCheck(EnforcementAlgorithm.DENY_BIASED, new DenyOverridesCheck(), this.pdp);
@@ -63,7 +63,8 @@ public class MainFACPL {
 		requests.add(ContextRequest_ListenStandardBob.getContextReq());//deny
 		
 		requests.add(ContextRequest_ListenStandardBob.getContextReq());//deny
-		requests.add(ContextRequest_LoginStandardBob.getContextReq()); //login bob
+		requests.add(ContextRequest_PubblicitaBob.getContextReq()); //pubblicita bob
+		requests.add(ContextRequest_ListenStandardBob.getContextReq());//permit
 		requests.add(ContextRequest_ListenStandardBob.getContextReq());//permit
 
 		AuthorisationPDP resPDP = null;
@@ -72,7 +73,7 @@ public class MainFACPL {
 		long startR,start;
 		long endR,end;
 		start=System.currentTimeMillis();
-		for (ContextRequest rcxt : requests) {
+		for (ContextRequest_Status rcxt : requests) {
 			
 			result.append("---------------------------------------------------\n");
 			result.append("REQUEST N: "+(i)+"\n");

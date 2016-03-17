@@ -1,7 +1,6 @@
 package checkStreamingExample;
 
 
-import it.unifi.facpl.lib.context.ContextRequest_Status;
 import it.unifi.facpl.lib.enums.Effect;
 import it.unifi.facpl.lib.enums.ExprBooleanConnector;
 import it.unifi.facpl.lib.enums.FacplStatusType;
@@ -14,34 +13,30 @@ import it.unifi.facpl.lib.policy.PolicySet;
 import it.unifi.facpl.lib.policy.Rule;
 import it.unifi.facpl.lib.util.AttributeName;
 import it.unifi.facpl.lib.util.FacplDate;
-import it.unifi.facpl.lib.util.exception.MissingAttributeException;
 import it.unifi.facpl.system.status.StatusAttribute;
 import it.unifi.facpl.system.status.functions.bool.FlagStatus;
 import it.unifi.facpl.system.status.functions.strings.SetString;
 
-public class PolicySet_Streaming extends PolicySet {
-	protected ContextRequest_Status ctxReq;
+public class PolicySet_Streaming extends PolicySet{
 
-	public PolicySet_Streaming(ContextRequest_Status ctxReq) throws Exception {
-		this.ctxReq = ctxReq;
+	public PolicySet_Streaming() {
 		addId("Streaming_Policy");
 		// Algorithm Combining
 		addCombiningAlg(it.unifi.facpl.lib.algorithm.DenyUnlessPermitGreedy.class);
 		// Target
-		
+
 		// Policy
-		addPolicyElement(new PolicySet_LoginAlice(ctxReq));
-		addPolicyElement(new PolicySet_LoginBob(ctxReq));
-		addPolicyElement(new PolicySet_ListenAlice(ctxReq));
-		addPolicyElement(new PolicySet_ListenBob(ctxReq));
+		addPolicyElement(new PolicySet_LoginAlice());
+		addPolicyElement(new PolicySet_LoginBob());
+		addPolicyElement(new PolicySet_ListenAlice());
+		addPolicyElement(new PolicySet_ListenBob());
+		addPolicyElement(new PolicySet_pubBob());
 	}
 
 	private class PolicySet_LoginAlice extends PolicySet {
 
-		protected ContextRequest_Status ctxReq;
 
-		public PolicySet_LoginAlice(ContextRequest_Status ctxReq) throws MissingAttributeException {
-			this.ctxReq = ctxReq;
+		public PolicySet_LoginAlice() {
 			addId("LoginAlice_Policy");
 			// Algorithm Combining
 			addCombiningAlg(it.unifi.facpl.lib.algorithm.DenyUnlessPermitGreedy.class);
@@ -60,37 +55,34 @@ public class PolicySet_Streaming extends PolicySet {
 							new SetString(),
 							Effect.PERMIT,
 							ObligationType.M,
-							ctxReq.getStatusAttribute(new StatusAttribute("loginAlice", FacplStatusType.STRING)), "PREMIUM")
+							new StatusAttribute("loginAlice", FacplStatusType.STRING), "PREMIUM")
 						);
 			addObligation(
 					new ObligationStatus(
 							new FlagStatus(),
 							Effect.PERMIT,
 							ObligationType.M,
-							ctxReq.getStatusAttribute(new StatusAttribute("streamingAlice", FacplStatusType.BOOLEAN)), true)
+							new StatusAttribute("streamingAlice", FacplStatusType.BOOLEAN), true)
 						);
 		}
 
 		private class Rule_Login extends Rule {
 
-			Rule_Login() throws MissingAttributeException {
+			Rule_Login() {
 				addId("LoginAlice_Rule");
 				// Effect
 				addEffect(Effect.PERMIT);
 				addTarget(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
-						ctxReq.getStatusAttribute(
-								ctxReq.getStatusAttribute(new StatusAttribute("passwordAlice", FacplStatusType.STRING))),
+						new StatusAttribute("passwordAlice", FacplStatusType.STRING),
 						new AttributeName("password", "id")));
 			}
 		}
 	}
-	
+
 	private class PolicySet_LoginBob extends PolicySet {
 
-		protected ContextRequest_Status ctxReq;
 
-		public PolicySet_LoginBob(ContextRequest_Status ctxReq) throws MissingAttributeException {
-			this.ctxReq = ctxReq;
+		public PolicySet_LoginBob() {
 			addId("LoginBob_Policy");
 			// Algorithm Combining
 			addCombiningAlg(it.unifi.facpl.lib.algorithm.DenyUnlessPermitGreedy.class);
@@ -109,37 +101,34 @@ public class PolicySet_Streaming extends PolicySet {
 							new SetString(),
 							Effect.PERMIT,
 							ObligationType.M,
-							ctxReq.getStatusAttribute(new StatusAttribute("loginBob", FacplStatusType.STRING)), "STANDARD")
+							new StatusAttribute("loginBob", FacplStatusType.STRING), "STANDARD")
 						);
 			addObligation(
 					new ObligationStatus(
 							new FlagStatus(),
 							Effect.PERMIT,
 							ObligationType.M,
-							ctxReq.getStatusAttribute(new StatusAttribute("streamingBob", FacplStatusType.BOOLEAN)), true)
+							new StatusAttribute("streamingBob", FacplStatusType.BOOLEAN), true)
 						);
 		}
 
 		private class Rule_LoginBob extends Rule {
 
-			Rule_LoginBob() throws MissingAttributeException {
+			Rule_LoginBob() {
 				addId("LoginBob_Rule");
 				// Effect
 				addEffect(Effect.PERMIT);
 				addTarget(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
-						ctxReq.getStatusAttribute(
-								ctxReq.getStatusAttribute(new StatusAttribute("passwordBob", FacplStatusType.STRING))),
+						new StatusAttribute("passwordBob", FacplStatusType.STRING),
 						new AttributeName("password", "id")));
 			}
 		}
 	}
-	
+
 	private class PolicySet_ListenAlice extends PolicySet {
 
-		protected ContextRequest_Status ctxReq;
 
-		public PolicySet_ListenAlice(ContextRequest_Status ctxReq) throws MissingAttributeException {
-			this.ctxReq = ctxReq;
+		public PolicySet_ListenAlice() {
 			addId("ListenAlice_Policy");
 			// Algorithm Combining
 			addCombiningAlg(it.unifi.facpl.lib.algorithm.DenyUnlessPermitGreedy.class);
@@ -153,38 +142,34 @@ public class PolicySet_Streaming extends PolicySet {
 			// PolElements
 			addPolicyElement(new Rule_Login());
 			// Obligation
-			addObligation( 
+			addObligation(
 					new ObligationCheck(Effect.PERMIT, ObligationType.M,
 							new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class, "Alice",
 									new AttributeName("name", "id")),
 							new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
-									ctxReq.getStatusAttribute(ctxReq.getStatusAttribute(
-											new StatusAttribute("streamingAlice", FacplStatusType.BOOLEAN))),
+											new StatusAttribute("streamingAlice", FacplStatusType.BOOLEAN),
 									true)
 							));
 		}
 
 		private class Rule_Login extends Rule {
 
-			Rule_Login() throws MissingAttributeException {
+			Rule_Login() {
 				addId("ListenAlice_Rule");
 				// Effect
 				addEffect(Effect.PERMIT);
-				
+
 				addTarget(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
-						ctxReq.getStatusAttribute(
-								ctxReq.getStatusAttribute(new StatusAttribute("loginAlice", FacplStatusType.STRING))),
+						new StatusAttribute("loginAlice", FacplStatusType.STRING),
 						"PREMIUM"));
 			}
 		}
 	}
-	
+
 	private class PolicySet_ListenBob extends PolicySet {
 
-		protected ContextRequest_Status ctxReq;
 
-		public PolicySet_ListenBob(ContextRequest_Status ctxReq) throws Exception {
-			this.ctxReq = ctxReq;
+		public PolicySet_ListenBob()  {
 			addId("ListenBob_Policy");
 			// Algorithm Combining
 			addCombiningAlg(it.unifi.facpl.lib.algorithm.DenyUnlessPermitGreedy.class);
@@ -198,34 +183,79 @@ public class PolicySet_Streaming extends PolicySet {
 			// PolElements
 			addPolicyElement(new Rule_ListenBob());
 			// Obligation
-			addObligation( 
+			addObligation(
 					new ObligationCheck(Effect.PERMIT, ObligationType.M,
 							new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class, "Bob",
 									new AttributeName("name", "id")),
 							new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
-									ctxReq.getStatusAttribute(ctxReq.getStatusAttribute(
-											new StatusAttribute("streamingBob", FacplStatusType.BOOLEAN))),
+											new StatusAttribute("streamingBob", FacplStatusType.BOOLEAN),
 									true),
 							new FacplDate("00:00:01")));
 		}
 
 		private class Rule_ListenBob extends Rule {
 
-			Rule_ListenBob() throws MissingAttributeException {
+			Rule_ListenBob() {
 				addId("ListenBob_Rule");
 				// Effect
 				addEffect(Effect.PERMIT);
-				ExpressionFunction e=new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
-						ctxReq.getStatusAttribute(
-								ctxReq.getStatusAttribute(new StatusAttribute("loginBob", FacplStatusType.STRING))),
+				ExpressionFunction e1=new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
+						new StatusAttribute("loginBob", FacplStatusType.STRING),
 						"STANDARD");
-				addTarget(e);
+				ExpressionFunction e2=new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
+						new StatusAttribute("commercialsBob", FacplStatusType.BOOLEAN),
+						false);
+				ExpressionBooleanTree ebt = new ExpressionBooleanTree(ExprBooleanConnector.AND, e1, e2);
+				addTarget(ebt);
 				addObligation(
 						new ObligationStatus(
-								new SetString(),
+								new FlagStatus(),
 								Effect.PERMIT,
 								ObligationType.M,
-								ctxReq.getStatusAttribute(new StatusAttribute("loginBob", FacplStatusType.STRING)), "noLogin")
+								new StatusAttribute("commercialsBob", FacplStatusType.BOOLEAN), true)
+							);
+			}
+		}
+	}
+
+	private class PolicySet_pubBob extends PolicySet {
+
+
+		public PolicySet_pubBob()  {
+			addId("PubblitàBob_Policy");
+			// Algorithm Combining
+			addCombiningAlg(it.unifi.facpl.lib.algorithm.DenyUnlessPermitGreedy.class);
+			// Target
+			ExpressionFunction e1=new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class, "listenCommercials",
+					new AttributeName("action", "id"));
+			ExpressionFunction e2=new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class, "Bob",
+					new AttributeName("name", "id"));
+			ExpressionBooleanTree ebt = new ExpressionBooleanTree(ExprBooleanConnector.AND, e1, e2);
+			addTarget(ebt);
+			// PolElements
+			addPolicyElement(new Rule_pubBob());
+		}
+
+		private class Rule_pubBob extends Rule {
+
+			Rule_pubBob() {
+				addId("pubBob_Rule");
+				// Effect
+				addEffect(Effect.PERMIT);
+				ExpressionFunction e1=new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
+						new StatusAttribute("loginBob", FacplStatusType.STRING),
+						"STANDARD");
+				ExpressionFunction e2=new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
+						new StatusAttribute("commercialsBob", FacplStatusType.BOOLEAN),
+						true);
+				ExpressionBooleanTree ebt = new ExpressionBooleanTree(ExprBooleanConnector.AND, e1, e2);
+				addTarget(ebt);
+				addObligation(
+						new ObligationStatus(
+								new FlagStatus(),
+								Effect.PERMIT,
+								ObligationType.M,
+								new StatusAttribute("commercialsBob", FacplStatusType.BOOLEAN), false)
 							);
 			}
 		}

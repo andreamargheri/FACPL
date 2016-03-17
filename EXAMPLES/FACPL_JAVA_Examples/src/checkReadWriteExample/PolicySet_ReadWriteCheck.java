@@ -107,7 +107,6 @@ public class PolicySet_ReadWriteCheck extends PolicySet {
 
 
 		private class Rule_read extends Rule {
-
 			Rule_read(){
 				addId("read");
 				// Effect
@@ -141,7 +140,6 @@ public class PolicySet_ReadWriteCheck extends PolicySet {
 		}
 
 		private class Rule_write extends Rule {
-
 			Rule_write() {
 				addId("write");
 				// Effect
