@@ -43,8 +43,45 @@
     <eLiterals name="SetDateTime" value="9" literal="Set&lt;DateTime>"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PAF">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="status" eType="#//STATUS"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="pep" eType="#//PEPAlg"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="pdp" eType="#//PDP" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="STATUS">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elements" upperBound="-1"
+        eType="#//AttributeDeclaration" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Attribute">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="x" eType="#//Expression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AttributeDeclaration">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="att" eType="#//Attribute"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PepFunction">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="att" eType="#//Attribute"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//Expression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Obligation">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="EvaluetedOn" eType="#//Effect"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="typeObl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pepAction" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expr" upperBound="-1" eType="#//Expression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="function" eType="#//PepFunction"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="e1" eType="#//Function"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="e2" eType="#//Function"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expiration" eType="#//Expression"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="PEPAlg">
     <eLiterals name="BASE" literal="base"/>
@@ -117,13 +154,6 @@
     <eLiterals name="PERMIT" literal="permit"/>
     <eLiterals name="DENY" value="1" literal="deny"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Obligation">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="EvaluetedOn" eType="#//Effect"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="typeObl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pepAction" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="expr" upperBound="-1" eType="#//Expression"
-        containment="true"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Expression"/>
   <eClassifiers xsi:type="ecore:EClass" name="NotExpression" eSuperTypes="#//Expression">
     <eStructuralFeatures xsi:type="ecore:EReference" name="arg" eType="#//Expression"
@@ -133,8 +163,10 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="functionId" eType="#//funID"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="arg1" eType="#//Expression"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="att1" eType="#//Attribute"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="arg2" eType="#//Expression"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="att2" eType="#//Attribute"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DeclaredFunction" eSuperTypes="#//Expression">
     <eStructuralFeatures xsi:type="ecore:EReference" name="functionId" eType="#//FunctionDeclaration"/>

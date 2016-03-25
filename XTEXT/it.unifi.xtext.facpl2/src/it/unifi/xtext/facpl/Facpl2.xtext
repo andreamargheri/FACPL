@@ -69,7 +69,7 @@ Obligation:
 	'[' EvaluetedOn=Effect typeObl=('M' | 'O')
 	 
 	 (((pepAction=ID '(' (expr+=Expression (',' expr+=Expression)*)* ')') | function = PepFunction) 
-	 	| e1 = Function '~' e2 = Function
+	 	| e1 = Function ',' e2 = Function (',' expiration=Literals)?
 	 )
 	 ']'
 	;

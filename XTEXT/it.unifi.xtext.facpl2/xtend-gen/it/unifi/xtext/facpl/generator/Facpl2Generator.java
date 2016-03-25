@@ -8,6 +8,8 @@ import it.unifi.xtext.facpl.facpl2.AbstractPolicyIncl;
 import it.unifi.xtext.facpl.facpl2.Alg;
 import it.unifi.xtext.facpl.facpl2.AlgLiteral;
 import it.unifi.xtext.facpl.facpl2.AndExpression;
+import it.unifi.xtext.facpl.facpl2.Attribute;
+import it.unifi.xtext.facpl.facpl2.AttributeDeclaration;
 import it.unifi.xtext.facpl.facpl2.AttributeName;
 import it.unifi.xtext.facpl.facpl2.AttributeReq;
 import it.unifi.xtext.facpl.facpl2.BooleanLiteral;
@@ -30,9 +32,11 @@ import it.unifi.xtext.facpl.facpl2.OrExpression;
 import it.unifi.xtext.facpl.facpl2.PAF;
 import it.unifi.xtext.facpl.facpl2.PDP;
 import it.unifi.xtext.facpl.facpl2.PEPAlg;
+import it.unifi.xtext.facpl.facpl2.PepFunction;
 import it.unifi.xtext.facpl.facpl2.PolicySet;
 import it.unifi.xtext.facpl.facpl2.Request;
 import it.unifi.xtext.facpl.facpl2.Rule;
+import it.unifi.xtext.facpl.facpl2.STATUS;
 import it.unifi.xtext.facpl.facpl2.Set;
 import it.unifi.xtext.facpl.facpl2.StringLiteral;
 import it.unifi.xtext.facpl.facpl2.TimeLiteral;
@@ -194,6 +198,9 @@ public class Facpl2Generator implements IGenerator {
           fsa.generateFile((this.packageFolder + "MainFACPL.java"), _compileMain);
           CharSequence _compilePEPAction = this.compilePEPAction();
           fsa.generateFile((this.packageFolder + "PEPAction.java"), _compilePEPAction);
+          MainFacpl _main_8 = e.getMain();
+          CharSequence _compileStatus = this.compileStatus(_main_8);
+          fsa.generateFile((this.packageFolder + "Status1.java"), _compileStatus);
         }
       }
     }
@@ -213,6 +220,98 @@ public class Facpl2Generator implements IGenerator {
         fsa.generateFile((this.packageFolder + "ContextStub_Default.java"), external_contextStub);
       }
     }
+  }
+  
+  public CharSequence compileStatus(final MainFacpl main) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      boolean _notEquals = (!Objects.equal(this.packageName, ""));
+      if (_notEquals) {
+        _builder.append("package ");
+        _builder.append(this.packageName, "");
+      }
+    }
+    _builder.newLineIfNotEmpty();
+    _builder.append("import java.util.HashMap;");
+    _builder.newLine();
+    _builder.append("import it.unifi.facpl.lib.enums.FacplStatusType;");
+    _builder.newLine();
+    _builder.append("import it.unifi.facpl.system.status.FacplStatus;");
+    _builder.newLine();
+    _builder.append("import it.unifi.facpl.system.status.StatusAttribute;");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("public class Status1 {");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("private static FacplStatus status;");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("public Status1() {");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("public FacplStatus getStatus() {");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("if (status == null) {");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("HashMap<StatusAttribute, Object> attributes = new HashMap<StatusAttribute, Object>();");
+    _builder.newLine();
+    {
+      PAF _paf = main.getPaf();
+      STATUS _status = _paf.getStatus();
+      EList<AttributeDeclaration> _elements = _status.getElements();
+      for(final AttributeDeclaration p : _elements) {
+        _builder.append("\t\t\t");
+        _builder.append("attributes.put(new StatusAttribute(\"");
+        Attribute _att = p.getAtt();
+        String _name = _att.getName();
+        _builder.append(_name, "\t\t\t");
+        _builder.append("\", FacplStatusType.");
+        Attribute _att_1 = p.getAtt();
+        String _type = _att_1.getType();
+        String _attributeType = this.getAttributeType(_type);
+        _builder.append(_attributeType, "\t\t\t");
+        _builder.append("), ");
+        Attribute _att_2 = p.getAtt();
+        Expression _x = _att_2.getX();
+        Object _expression = this.getExpression(_x);
+        _builder.append(_expression, "\t\t\t");
+        _builder.append(");");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    _builder.append("\t\t\t");
+    _builder.append("status = new FacplStatus(attributes, this.getClass().getName());");
+    _builder.newLine();
+    _builder.append("\t\t\t");
+    _builder.append("return status;");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("return status;");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.newLine();
+    return _builder;
+  }
+  
+  public String getAttributeType(final String s) {
+    return s.toUpperCase();
   }
   
   public CharSequence compileMain(final MainFacpl main, final IFileSystemAccess fsa) {
@@ -417,7 +516,7 @@ public class Facpl2Generator implements IGenerator {
     _builder.append("//enforce decision");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("AuthorisationPEP resPEP = system.pep.doEnforcement(resPDP);");
+    _builder.append("AuthorisationPEP resPEP = system.pep.doEnforcement(resPDP, rcxt);");
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("result.append(\"PEP Decision=\\n \" + resPEP.toString()+\"\\n\");");
@@ -788,21 +887,122 @@ public class Facpl2Generator implements IGenerator {
   
   public CharSequence compileObligation(final Obligation obl) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("new Obligation(\"");
-    String _pepAction = obl.getPepAction();
-    _builder.append(_pepAction, "");
-    _builder.append("\",Effect.");
-    Effect _evaluetedOn = obl.getEvaluetedOn();
-    String _name = _evaluetedOn.getName();
+    {
+      Expression _expiration = obl.getExpiration();
+      boolean _notEquals = (!Objects.equal(_expiration, null));
+      if (_notEquals) {
+        _builder.append("new ObligationCheck(Effect.");
+        Effect _evaluetedOn = obl.getEvaluetedOn();
+        String _name = _evaluetedOn.getName();
+        _builder.append(_name, "");
+        _builder.append(",");
+        Function _e1 = obl.getE1();
+        Object _expression = this.getExpression(_e1);
+        _builder.append(_expression, "");
+        _builder.append(",");
+        Function _e2 = obl.getE2();
+        Object _expression_1 = this.getExpression(_e2);
+        _builder.append(_expression_1, "");
+        _builder.append(",");
+        Expression _expiration_1 = obl.getExpiration();
+        Object _expression_2 = this.getExpression(_expiration_1);
+        _builder.append(_expression_2, "");
+        _builder.append(")");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    {
+      Function _e1_1 = obl.getE1();
+      boolean _notEquals_1 = (!Objects.equal(_e1_1, null));
+      if (_notEquals_1) {
+        _builder.append("new ObligationCheck(Effect.");
+        Effect _evaluetedOn_1 = obl.getEvaluetedOn();
+        String _name_1 = _evaluetedOn_1.getName();
+        _builder.append(_name_1, "");
+        _builder.append(",");
+        Function _e1_2 = obl.getE1();
+        Object _expression_3 = this.getExpression(_e1_2);
+        _builder.append(_expression_3, "");
+        _builder.append(",");
+        Function _e2_1 = obl.getE2();
+        Object _expression_4 = this.getExpression(_e2_1);
+        _builder.append(_expression_4, "");
+        _builder.append(")");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    {
+      PepFunction _function = obl.getFunction();
+      boolean _equals = Objects.equal(_function, null);
+      if (_equals) {
+        _builder.append("new Obligation(\"");
+        String _pepAction = obl.getPepAction();
+        _builder.append(_pepAction, "");
+        _builder.append("\",Effect.");
+        Effect _evaluetedOn_2 = obl.getEvaluetedOn();
+        String _name_2 = _evaluetedOn_2.getName();
+        _builder.append(_name_2, "");
+        _builder.append(",ObligationType.");
+        String _typeObl = obl.getTypeObl();
+        _builder.append(_typeObl, "");
+        _builder.append(",");
+        EList<Expression> _expr = obl.getExpr();
+        CharSequence _oblExpression = this.getOblExpression(_expr);
+        _builder.append(_oblExpression, "");
+        _builder.append(")");
+        _builder.newLineIfNotEmpty();
+      } else {
+        _builder.append("new ObligationStatus(");
+        PepFunction _function_1 = obl.getFunction();
+        String _name_3 = _function_1.getName();
+        String _pepFunction = this.getPepFunction(_name_3);
+        _builder.append(_pepFunction, "");
+        _builder.append(",Effect.");
+        Effect _evaluetedOn_3 = obl.getEvaluetedOn();
+        String _name_4 = _evaluetedOn_3.getName();
+        _builder.append(_name_4, "");
+        _builder.append(", ");
+        CharSequence _generateOblStatusArgs = this.generateOblStatusArgs(obl);
+        _builder.append(_generateOblStatusArgs, "");
+        _builder.append(")");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    return _builder;
+  }
+  
+  public String getPepFunction(final String s) {
+    boolean _equals = s.equals("add-status");
+    if (_equals) {
+      return "new AddStatus()";
+    } else {
+      boolean _equals_1 = s.equals("sub-status");
+      if (_equals_1) {
+        return "new SubStatus()";
+      }
+    }
+    return null;
+  }
+  
+  public CharSequence generateOblStatusArgs(final Obligation obl) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("new StatusAttribute(\"");
+    PepFunction _function = obl.getFunction();
+    Attribute _att = _function.getAtt();
+    String _name = _att.getName();
     _builder.append(_name, "");
-    _builder.append(",ObligationType.");
-    String _typeObl = obl.getTypeObl();
-    _builder.append(_typeObl, "");
-    _builder.append(",");
-    EList<Expression> _expr = obl.getExpr();
-    CharSequence _oblExpression = this.getOblExpression(_expr);
-    _builder.append(_oblExpression, "");
-    _builder.append(")");
+    _builder.append("\",FacplStatusType.");
+    PepFunction _function_1 = obl.getFunction();
+    Attribute _att_1 = _function_1.getAtt();
+    String _type = _att_1.getType();
+    String _attributeType = this.getAttributeType(_type);
+    _builder.append(_attributeType, "");
+    _builder.append("), ");
+    _builder.newLineIfNotEmpty();
+    PepFunction _function_2 = obl.getFunction();
+    Expression _value = _function_2.getValue();
+    Object _expression = this.getExpression(_value);
+    _builder.append(_expression, "");
     _builder.newLineIfNotEmpty();
     return _builder;
   }
@@ -884,20 +1084,115 @@ public class Facpl2Generator implements IGenerator {
   
   protected Object _getExpression(final Function exp) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("new ExpressionFunction(it.unifi.facpl.lib.function.");
-    funID _functionId = exp.getFunctionId();
-    String _funName = Facpl2Generator_Name.getFunName(_functionId);
-    _builder.append(_funName, "");
-    _builder.append(".class, ");
-    Expression _arg1 = exp.getArg1();
-    Object _expression = this.getExpression(_arg1);
-    _builder.append(_expression, "");
-    _builder.append(",");
-    Expression _arg2 = exp.getArg2();
-    Object _expression_1 = this.getExpression(_arg2);
-    _builder.append(_expression_1, "");
-    _builder.append(")");
-    _builder.newLineIfNotEmpty();
+    {
+      boolean _and = false;
+      Attribute _att1 = exp.getAtt1();
+      boolean _equals = Objects.equal(_att1, null);
+      if (!_equals) {
+        _and = false;
+      } else {
+        Attribute _att2 = exp.getAtt2();
+        boolean _equals_1 = Objects.equal(_att2, null);
+        _and = _equals_1;
+      }
+      if (_and) {
+        _builder.append("new ExpressionFunction(it.unifi.facpl.lib.function.");
+        funID _functionId = exp.getFunctionId();
+        String _funName = Facpl2Generator_Name.getFunName(_functionId);
+        _builder.append(_funName, "");
+        _builder.append(".class, ");
+        Expression _arg1 = exp.getArg1();
+        Object _expression = this.getExpression(_arg1);
+        _builder.append(_expression, "");
+        _builder.append(",");
+        Expression _arg2 = exp.getArg2();
+        Object _expression_1 = this.getExpression(_arg2);
+        _builder.append(_expression_1, "");
+        _builder.append(")");
+        _builder.newLineIfNotEmpty();
+      } else {
+        boolean _and_1 = false;
+        Attribute _att1_1 = exp.getAtt1();
+        boolean _notEquals = (!Objects.equal(_att1_1, null));
+        if (!_notEquals) {
+          _and_1 = false;
+        } else {
+          Attribute _att2_1 = exp.getAtt2();
+          boolean _equals_2 = Objects.equal(_att2_1, null);
+          _and_1 = _equals_2;
+        }
+        if (_and_1) {
+          _builder.append("new ExpressionFunction(it.unifi.facpl.lib.function.");
+          funID _functionId_1 = exp.getFunctionId();
+          String _funName_1 = Facpl2Generator_Name.getFunName(_functionId_1);
+          _builder.append(_funName_1, "");
+          _builder.append(".class, ");
+          Attribute _att1_2 = exp.getAtt1();
+          Object _expression_2 = this.getExpression(_att1_2);
+          _builder.append(_expression_2, "");
+          _builder.append(",");
+          Expression _arg2_1 = exp.getArg2();
+          Object _expression_3 = this.getExpression(_arg2_1);
+          _builder.append(_expression_3, "");
+          _builder.append(")");
+          _builder.newLineIfNotEmpty();
+        } else {
+          boolean _and_2 = false;
+          Attribute _att2_2 = exp.getAtt2();
+          boolean _notEquals_1 = (!Objects.equal(_att2_2, null));
+          if (!_notEquals_1) {
+            _and_2 = false;
+          } else {
+            Attribute _att1_3 = exp.getAtt1();
+            boolean _equals_3 = Objects.equal(_att1_3, null);
+            _and_2 = _equals_3;
+          }
+          if (_and_2) {
+            _builder.append("new ExpressionFunction(it.unifi.facpl.lib.function.");
+            funID _functionId_2 = exp.getFunctionId();
+            String _funName_2 = Facpl2Generator_Name.getFunName(_functionId_2);
+            _builder.append(_funName_2, "");
+            _builder.append(".class, ");
+            Expression _arg1_1 = exp.getArg1();
+            Object _expression_4 = this.getExpression(_arg1_1);
+            _builder.append(_expression_4, "");
+            _builder.append(",");
+            Attribute _att2_3 = exp.getAtt2();
+            Object _expression_5 = this.getExpression(_att2_3);
+            _builder.append(_expression_5, "");
+            _builder.append(")");
+            _builder.newLineIfNotEmpty();
+          } else {
+            boolean _and_3 = false;
+            Attribute _att2_4 = exp.getAtt2();
+            boolean _notEquals_2 = (!Objects.equal(_att2_4, null));
+            if (!_notEquals_2) {
+              _and_3 = false;
+            } else {
+              Attribute _att1_4 = exp.getAtt1();
+              boolean _notEquals_3 = (!Objects.equal(_att1_4, null));
+              _and_3 = _notEquals_3;
+            }
+            if (_and_3) {
+              _builder.append("new ExpressionFunction(it.unifi.facpl.lib.function.");
+              funID _functionId_3 = exp.getFunctionId();
+              String _funName_3 = Facpl2Generator_Name.getFunName(_functionId_3);
+              _builder.append(_funName_3, "");
+              _builder.append(".class, ");
+              Attribute _att1_5 = exp.getAtt1();
+              Object _expression_6 = this.getExpression(_att1_5);
+              _builder.append(_expression_6, "");
+              _builder.append(",");
+              Attribute _att2_5 = exp.getAtt2();
+              Object _expression_7 = this.getExpression(_att2_5);
+              _builder.append(_expression_7, "");
+              _builder.append(")");
+              _builder.newLineIfNotEmpty();
+            }
+          }
+        }
+      }
+    }
     return _builder;
   }
   
@@ -967,6 +1262,19 @@ public class Facpl2Generator implements IGenerator {
     String _value = e.getValue();
     String _plus = ("new FacplDate(\"" + _value);
     return (_plus + "\")");
+  }
+  
+  protected Object _getExpression(final Attribute e) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("new StatusAttribute(");
+    String _name = e.getName();
+    _builder.append(_name, "");
+    _builder.append(", FacplStatusType.");
+    String _type = e.getType();
+    String _attributeType = this.getAttributeType(_type);
+    _builder.append(_attributeType, "");
+    _builder.append(")");
+    return _builder;
   }
   
   protected Object _getExpression(final AttributeName attributeName) {
@@ -1379,6 +1687,12 @@ public class Facpl2Generator implements IGenerator {
       }
     }
     _builder.append("\t");
+    _builder.append("Status1 st = new Status1();");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("CxtReq.setStatus(st.getStatus());");
+    _builder.newLine();
+    _builder.append("\t");
     _builder.append("return CxtReq;");
     _builder.newLine();
     _builder.append("\t");
@@ -1569,7 +1883,7 @@ public class Facpl2Generator implements IGenerator {
     }
   }
   
-  public Object getExpression(final Expression exp) {
+  public Object getExpression(final EObject exp) {
     if (exp instanceof AndExpression) {
       return _getExpression((AndExpression)exp);
     } else if (exp instanceof AttributeName) {
@@ -1596,6 +1910,8 @@ public class Facpl2Generator implements IGenerator {
       return _getExpression((StringLiteral)exp);
     } else if (exp instanceof TimeLiteral) {
       return _getExpression((TimeLiteral)exp);
+    } else if (exp instanceof Attribute) {
+      return _getExpression((Attribute)exp);
     } else {
       throw new IllegalArgumentException("Unhandled parameter types: " +
         Arrays.<Object>asList(exp).toString());

@@ -78,8 +78,35 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//FunctionDeclaration/args"/>
     </genClasses>
     <genClasses ecoreClass="Facpl2.ecore#//PAF">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//PAF/status"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//PAF/pep"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//PAF/pdp"/>
+    </genClasses>
+    <genClasses ecoreClass="Facpl2.ecore#//STATUS">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//STATUS/elements"/>
+    </genClasses>
+    <genClasses ecoreClass="Facpl2.ecore#//Attribute">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//Attribute/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//Attribute/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//Attribute/x"/>
+    </genClasses>
+    <genClasses ecoreClass="Facpl2.ecore#//AttributeDeclaration">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//AttributeDeclaration/att"/>
+    </genClasses>
+    <genClasses ecoreClass="Facpl2.ecore#//PepFunction">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//PepFunction/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Facpl2.ecore#//PepFunction/att"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//PepFunction/value"/>
+    </genClasses>
+    <genClasses ecoreClass="Facpl2.ecore#//Obligation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//Obligation/EvaluetedOn"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//Obligation/typeObl"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//Obligation/pepAction"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//Obligation/expr"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//Obligation/function"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//Obligation/e1"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//Obligation/e2"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//Obligation/expiration"/>
     </genClasses>
     <genClasses ecoreClass="Facpl2.ecore#//Request">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//Request/stub"/>
@@ -118,12 +145,6 @@
     <genClasses ecoreClass="Facpl2.ecore#//Rule">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//Rule/effect"/>
     </genClasses>
-    <genClasses ecoreClass="Facpl2.ecore#//Obligation">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//Obligation/EvaluetedOn"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//Obligation/typeObl"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//Obligation/pepAction"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//Obligation/expr"/>
-    </genClasses>
     <genClasses ecoreClass="Facpl2.ecore#//Expression"/>
     <genClasses ecoreClass="Facpl2.ecore#//NotExpression">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//NotExpression/arg"/>
@@ -131,7 +152,9 @@
     <genClasses ecoreClass="Facpl2.ecore#//Function">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//Function/functionId"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//Function/arg1"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Facpl2.ecore#//Function/att1"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//Function/arg2"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Facpl2.ecore#//Function/att2"/>
     </genClasses>
     <genClasses ecoreClass="Facpl2.ecore#//DeclaredFunction">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Facpl2.ecore#//DeclaredFunction/functionId"/>

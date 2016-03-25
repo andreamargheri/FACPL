@@ -8,11 +8,10 @@ import org.eclipse.xtext.junit4.IInjectorProvider;
 import com.google.inject.Injector;
 
 public class Facpl2UiInjectorProvider implements IInjectorProvider {
-
+	
 	@Override
 	public Injector getInjector() {
-		return it.unifi.xtext.facpl.ui.internal.Facpl2Activator.getInstance()
-				.getInjector("it.unifi.xtext.facpl.Facpl2");
+		return it.unifi.xtext.facpl.ui.internal.Facpl2Activator.getInstance().getInjector("it.unifi.xtext.facpl.Facpl2");
 	}
-
+	
 }

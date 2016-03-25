@@ -11,8 +11,8 @@ import org.eclipse.xtext.junit4.IRegistryConfigurator;
 import com.google.inject.Injector;
 
 public class Facpl2InjectorProvider implements IInjectorProvider, IRegistryConfigurator {
-
-	protected GlobalStateMemento stateBeforeInjectorCreation;
+	
+    protected GlobalStateMemento stateBeforeInjectorCreation;
 	protected GlobalStateMemento stateAfterInjectorCreation;
 	protected Injector injector;
 
@@ -21,7 +21,8 @@ public class Facpl2InjectorProvider implements IInjectorProvider, IRegistryConfi
 	}
 
 	@Override
-	public Injector getInjector() {
+	public Injector getInjector()
+	{
 		if (injector == null) {
 			stateBeforeInjectorCreation = GlobalRegistries.makeCopyOfGlobalState();
 			this.injector = internalCreateInjector();
@@ -29,9 +30,9 @@ public class Facpl2InjectorProvider implements IInjectorProvider, IRegistryConfi
 		}
 		return injector;
 	}
-
+	
 	protected Injector internalCreateInjector() {
-		return new Facpl2StandaloneSetup().createInjectorAndDoEMFRegistration();
+	    return new Facpl2StandaloneSetup().createInjectorAndDoEMFRegistration();
 	}
 
 	@Override
