@@ -19,7 +19,7 @@ MainFacpl:
 	'PAS' '{' 'Extended Indeterminate' ':' extIndet=BooleanLiteral ';'
 	('Java Package' ':' genPackage=STRING ';')?
 	('Requests To Evaluate' ':' (refRequest+=[Request] (',' refRequest+=[Request])*) ';')
-	paf=PAF '}';
+	paf=PAF'}';
 
 
 	//Function Declaration
@@ -34,8 +34,48 @@ enum TypeLiteral:
 ;
 
 	//PAF - Policy Authorisation Framework
+/*
+ * 
+ * ROBA NUOVA
+ * 
+ * 
+ */
 PAF:
-	'pep:' pep=PEPAlg 'pdp:' pdp=PDP;
+	(status = STATUS)? 'pep:' pep=PEPAlg 'pdp:' pdp=PDP;
+	
+STATUS:
+	'status:' '[' elements+= AttributeDeclaration+ ']'
+;
+Attribute:
+	type = 'boolean' name = ID '=' x = BooleanLiteral |
+	type = 'int' name = ID '=' x = IntLiteral |
+	type = 'date' name = ID '=' x = (DateLiteral | TimeLiteral) |
+	type = 'float' name = ID '=' x = (IntLiteral | DoubleLiteral) |
+	type = 'string' name = ID '=' x = StringLiteral 
+;
+AttributeDeclaration:
+	'('att = Attribute')'
+;
+ PepFunction:
+	 name = 'add-status''('att = [Attribute]',' value =  IntLiteral')' |  name ='add-status''('att = [Attribute]','value =DoubleLiteral')' |
+	 name ='sub-status''('att = [Attribute]','value =IntLiteral')' |  name ='sub-status''('att = [Attribute]','value =DoubleLiteral')' |
+	 name ='div-status''('att = [Attribute]',' value =IntLiteral')' |  name ='div-status''('att = [Attribute]','value =DoubleLiteral')' |
+	 name ='mul-status''('att = [Attribute]','value =IntLiteral')' |  name ='mul-status''('att = [Attribute]','value =DoubleLiteral')' |
+	 name ='sum-date''('att = [Attribute]','value =(DateLiteral | TimeLiteral)')' |  name ='set-date''('att = [Attribute]','value =(DateLiteral | TimeLiteral)')' |
+	 name ='set-string''('att = [Attribute]','value =StringLiteral')' |  name = 'sum-string''('att = [Attribute]','value =StringLiteral')' |
+	 name ='flag-status''('att = [Attribute]','value =BooleanLiteral')'
+;
+Obligation:
+	'[' EvaluetedOn=Effect typeObl=('M' | 'O')
+	 
+	 (((pepAction=ID '(' (expr+=Expression (',' expr+=Expression)*)* ')') | function = PepFunction) 
+	 	| e1 = Function '~' e2 = Function
+	 )
+	 ']'
+	;
+/*
+ * ------------------------------------------------
+ */
 
 enum PEPAlg:
 	BASE='base' | DENY='deny-biased' | PERMIT='permit-biased';
@@ -87,9 +127,8 @@ Rule:
 enum Effect:
 	PERMIT='permit' | DENY='deny';
 
-	//OBLIGATION
-Obligation:
-	'[' EvaluetedOn=Effect typeObl=('M' | 'O') pepAction=ID '(' (expr+=Expression (',' expr+=Expression)*)* ')' ']';
+
+
 
 	//EXPRESSION
 Expression:
@@ -108,7 +147,7 @@ NotExpression:
 	'!' arg=BasicExpression;
 
 Function:
-	functionId=funID '(' arg1=Expression ',' arg2=Expression ')';
+	functionId=funID '(' ((arg1=Expression) | ('status''/'att1 = [Attribute])) ',' ((arg2=Expression) | ('status''/'att2 = [Attribute])) ')';
 	
 	//Invocation of declared function 
 DeclaredFunction: 

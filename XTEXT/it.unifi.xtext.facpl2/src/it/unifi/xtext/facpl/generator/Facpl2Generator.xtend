@@ -35,6 +35,7 @@ import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.eclipse.xtext.generator.IGenerator
 import org.eclipse.xtext.resource.XtextResourceSet
+import it.unifi.xtext.facpl.facpl2.Attribute
 
 class Facpl2Generator implements IGenerator {
 	
@@ -121,6 +122,7 @@ class Facpl2Generator implements IGenerator {
 				
 				fsa.generateFile(packageFolder +"MainFACPL.java",compileMain(e.getMain,fsa))
 				fsa.generateFile(packageFolder +"PEPAction.java",compilePEPAction)
+				fsa.generateFile(packageFolder + "Status1.java", compileStatus(e.getMain))
 			}
 				
 		}
@@ -141,6 +143,44 @@ class Facpl2Generator implements IGenerator {
 			}
 		}
 	}
+	
+	
+	//----------------------------------------------------
+	//STATUS
+	//----------------------------------------------------
+	
+	def CharSequence compileStatus(MainFacpl main)'''
+	«IF packageName != ""»package «packageName»«ENDIF»
+	import java.util.HashMap;
+	import it.unifi.facpl.lib.enums.FacplStatusType;
+	import it.unifi.facpl.system.status.FacplStatus;
+	import it.unifi.facpl.system.status.StatusAttribute;
+	
+	public class Status1 {
+	
+		private static FacplStatus status;
+	
+		public Status1() {
+		}
+	
+		public FacplStatus getStatus() {
+			if (status == null) {
+				HashMap<StatusAttribute, Object> attributes = new HashMap<StatusAttribute, Object>();
+				«FOR p : main.paf.status.elements»
+				attributes.put(new StatusAttribute("«p.att.name»", FacplStatusType.«getAttributeType(p.att.type)»), «p.att.x.expression»);
+				«ENDFOR»
+				status = new FacplStatus(attributes, this.getClass().getName());
+				return status;
+			}
+			return status;
+		}
+	}
+	
+	
+	'''
+		def getAttributeType(String s) {
+			return s.toUpperCase;
+		}
 	
 	//----------------------------------------------------
 	//PDP
@@ -198,7 +238,7 @@ class Facpl2Generator implements IGenerator {
 				result.append("Request: "+ resPDP.getId() + "\n\n");
 				result.append("PDP Decision=\n " + resPDP.toString()+"\n\n");
 				//enforce decision
-				AuthorisationPEP resPEP = system.pep.doEnforcement(resPDP);
+				AuthorisationPEP resPEP = system.pep.doEnforcement(resPDP, rcxt);
 				result.append("PEP Decision=\n " + resPEP.toString()+"\n");
 				result.append("---------------------------------------------------\n");
 			}
@@ -339,7 +379,23 @@ class Facpl2Generator implements IGenerator {
 	//OBLIGATIONS
 	//----------------------------------------------------
 	def compileObligation(Obligation obl) '''
+		«IF obl.function == null»
 		new Obligation("«obl.pepAction»",Effect.«obl.evaluetedOn.getName»,ObligationType.«obl.typeObl»,«obl.expr.getOblExpression»)
+		«ELSE»	
+		new ObligationStatus(«getPepFunction(obl.function.name)»,Effect.«obl.evaluetedOn.getName», «generateOblStatusArgs(obl)»)
+		«ENDIF»
+	'''
+	def getPepFunction(String s){
+		if (s.equals("add-status")) {
+			return "new AddStatus()"
+		} else if (s.equals("sub-status")) {
+			return "new SubStatus()"
+		}
+	}
+	
+	def CharSequence generateOblStatusArgs(Obligation obl) '''
+	new StatusAttribute("«obl.function.att.name»",FacplStatusType.«getAttributeType(obl.function.att.type)»), 
+	«obl.function.value.expression»
 	'''
 	
 	def getOblExpression(EList<Expression> list) '''
@@ -368,7 +424,15 @@ class Facpl2Generator implements IGenerator {
 	'''
 	
 	def dispatch getExpression(Function exp)'''
+		«IF exp.att1 == null && exp.att2 == null»
 		new ExpressionFunction(it.unifi.facpl.lib.function.«Facpl2Generator_Name::getFunName(exp.functionId)».class, «getExpression(exp.arg1)»,«getExpression(exp.arg2)»)
+		«ELSEIF exp.att1 != null && exp.att2 == null»
+		new ExpressionFunction(it.unifi.facpl.lib.function.«Facpl2Generator_Name::getFunName(exp.functionId)».class, «getExpression(exp.att1)»,«getExpression(exp.arg2)»)
+		«ELSEIF exp.att2 != null && exp.att1 == null»
+		new ExpressionFunction(it.unifi.facpl.lib.function.«Facpl2Generator_Name::getFunName(exp.functionId)».class, «getExpression(exp.arg1)»,«getExpression(exp.att2)»)
+		«ELSEIF exp.att2 != null && exp.att1 != null»
+		new ExpressionFunction(it.unifi.facpl.lib.function.«Facpl2Generator_Name::getFunName(exp.functionId)».class, «getExpression(exp.att1)»,«getExpression(exp.att2)»)
+		«ENDIF»
 	'''
 	
 	def dispatch getExpression(DeclaredFunction exp)'''
@@ -406,6 +470,9 @@ class Facpl2Generator implements IGenerator {
 
 	def dispatch getExpression(DateLiteral e) {
 		'new FacplDate("' + e.value + '")'
+	}
+	def dispatch getExpression(Attribute e) {
+		'''new StatusAttribute(«e.name», FacplStatusType.«getAttributeType(e.type)»)'''
 	}
 
 	def dispatch getExpression(AttributeName attributeName) '''
@@ -561,6 +628,8 @@ class Facpl2Generator implements IGenerator {
 			//context stub: default-one
 			CxtReq =  new ContextRequest(req, ContextStub_Default.getInstance());
 			«ENDIF»
+			Status1 st = new Status1();
+			CxtReq.setStatus(st.getStatus());
 			return CxtReq;
 			}
 		}
