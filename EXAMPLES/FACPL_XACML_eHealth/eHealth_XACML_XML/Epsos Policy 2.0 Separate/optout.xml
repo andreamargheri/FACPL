@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<PolicySet PolicyCombiningAlgId="urn:oasis:names:tc:xacml:1.0:policy-combining-algorithm:permit-overrides" 
+    PolicySetId="poldeny" 
+    xmlns="urn:oasis:names:tc:xacml:2.0:policy:schema:os" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="urn:oasis:names:tc:xacml:2.0:policy:schema:os access_control-xacml-2.0-policy-schema-os.xsd">
+    <Description>Policy that denies everything</Description>
+    <Target/>
+    <Policy PolicyId="policy_id_poldeny" 
+        RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:permit-overrides" 
+        xmlns="urn:oasis:names:tc:xacml:2.0:policy:schema:os">
+        <Description>Policy that denies everything</Description>
+        <Target/>
+        <Rule RuleId="urn:oasis:names:tc:xacml:2.0:example:SimpleRule1" Effect="Deny"/>
+        
+    </Policy>
+</PolicySet>    

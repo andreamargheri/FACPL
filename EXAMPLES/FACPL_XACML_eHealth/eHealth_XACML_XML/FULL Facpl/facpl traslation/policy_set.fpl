@@ -1,0 +1,20 @@
+import "privacy_obl.fpl"
+import "denyAll.fpl"
+import "epsos_request.fpl"
+
+
+PAS {
+	Combined Decision: false ; 
+	Extended Indeterminate: false;
+	Requests To Evaluate: Request1,Request2,Request3,Request4;
+	
+	pep: base
+	pdp: permit-overrides 
+	 PolicySet policySet_Id { permit-overrides 
+ 	 policies: 
+ 	 	include denyAll
+ 	 	include privacy_obl
+ 	 obl:  [permit M redirectTo( epsos/redirectto:url)] 
+ 	 } 
+}
+

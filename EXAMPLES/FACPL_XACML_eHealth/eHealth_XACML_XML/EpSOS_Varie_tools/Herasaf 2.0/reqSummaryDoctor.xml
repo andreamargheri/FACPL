@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- doctor ask for write ePrescription -->
+
+<Request xmlns="urn:oasis:names:tc:xacml:2.0:context:schema:os"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:oasis:names:tc:xacml:2.0:context:schema:os access_control-xacml-2.0-context-schema-os.xsd">
+	<Subject>
+		<Attribute DataType="http://www.w3.org/2001/XMLSchema#string"
+			AttributeId="urn:oasis:names:tc:xacml:2.0:subject:role">
+			<AttributeValue>
+				medical doctor
+			</AttributeValue>
+		</Attribute>
+		<Attribute DataType="http://www.w3.org/2001/XMLSchema#string"
+			AttributeId="urn:oasis:names:tc:xspa:1.0:subject:purposeofuse">
+			<AttributeValue>
+				TREATMENT
+			</AttributeValue>
+		</Attribute>
+		<Attribute DataType="http://www.w3.org/2001/XMLSchema#string"
+			AttributeId="urn:oasis:names:tc:xspa:1.0:subject:hl7:permission">
+			<AttributeValue>urn:oasis:names:tc:xspa:1.0:subject:hl7:permission:PRD-003
+			</AttributeValue>
+			<AttributeValue>urn:oasis:names:tc:xspa:1.0:subject:hl7:permission:PRD-005
+			</AttributeValue>
+			<AttributeValue>urn:oasis:names:tc:xspa:1.0:subject:hl7:permission:PRD-010
+			</AttributeValue>
+			<AttributeValue>urn:oasis:names:tc:xspa:1.0:subject:hl7:permission:PRD-016
+			</AttributeValue>
+		</Attribute>
+		<Attribute DataType="http://www.w3.org/2001/XMLSchema#string"
+			AttributeId="urn:oasis:names:tc:xacml:1.0:subject:doctor-id">
+			<AttributeValue> jh1234
+			</AttributeValue>
+		</Attribute>
+	</Subject>
+	<Resource>
+		<Attribute DataType="http://www.w3.org/2001/XMLSchema#string"
+			AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id">
+			<AttributeValue> 34133-9
+			</AttributeValue>
+		</Attribute>
+		<Attribute DataType="http://www.w3.org/2001/XMLSchema#string"
+			AttributeId="urn:oasis:names:tx:xacml:1.0:resource:resouce-id:email">
+			<AttributeValue> mail@mail.it
+			</AttributeValue>
+		</Attribute>
+	</Resource>
+	<Action>
+		<Attribute DataType="http://www.w3.org/2001/XMLSchema#string"
+			AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id">
+			<AttributeValue>Read</AttributeValue>
+		</Attribute>
+	</Action>
+	<Environment>
+	</Environment>
+</Request>

@@ -1,0 +1,39 @@
+Request:{Request1 
+	(subject/purposeofuse, "TREATEMENT")
+	(subject/role, "medical doctor")
+	(subject/doctor-id, "jh1234")
+	(subject/hl7.permission, "PRD-003","PRD-005","PRD-010","PRD-016")
+	(resource/resource-id, "34133-9")
+	(resource/resource-id.email, "mail@gmail.com")
+	(action/action-id, "Read")
+} 
+
+Request:{Request2 
+	(subject/purposeofuse, "TREATEMENT")
+	(subject/role, "medical doctor")
+	(subject/doctor-id, "jh1234")
+	(subject/hl7.permission, "PRD-004","PRD-010")
+	(resource/resource-id, "57829-4")
+	(resource/resource-id.email, "mail@gmail.com")
+	(action/action-id, "Read")
+} 
+
+Request:{Request3 
+	(subject/purposeofuse, "TREATEMENT")
+	(subject/role, "medical doctor")
+	(subject/doctor-id, "jh1234")
+	(subject/hl7.permission, "PRD-004","PRD-010")
+	(resource/resource-id, "57829-4")
+	(resource/resource-id.email, "mail@gmail.com")
+	(action/action-id, "Delete")
+}
+
+Request:{Request4  
+	(subject/purposeofuse, "TREATEMENT")
+	(subject/role, "medical doctor")
+	(subject/hl7.permission, "PRD-003","PRD-005","PRD-010","PRD-016")	(resource/resource-id, "34133-9")
+	(resource/resource-id.email, "mail@gmail.com")
+	(action/action-id, "Read")
+}
+
+

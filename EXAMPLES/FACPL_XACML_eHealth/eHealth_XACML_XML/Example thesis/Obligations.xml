@@ -1,0 +1,24 @@
+<ObligationExpressions>
+	<ObligationExpression ObligationId="urn:oasis:names:tc:xacml:obligation:email"
+		FulfillOn="Permit">
+		<AttributeAssignmentExpression
+			AttributeId="urn:oasis:names:tc:xacml:3.0:attribute:mailto">
+			<AttributeSelector MustBePresent="true"
+				Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+				Path="md:record/md:patient/md:patientContact/md:email" DataType="http://www.w3.org/2001/XMLSchema#string" />
+		</AttributeAssignmentExpression>
+		<AttributeAssignmentExpression
+			AttributeId="urn:oasis:names:tc:xacml:3.0:attribute:text">
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+				Your medical record has been accessed by:
+			</AttributeValue>
+		</AttributeAssignmentExpression>
+		<AttributeAssignmentExpression
+			AttributeId="urn:oasis:names:tc:xacml:3.0:example:attribute:text">
+			<AttributeDesignator MustBePresent="false"
+				Category="urn:oasis:names:tc:xacml:3.0:attribute-category:subject"
+				AttributeId="urn:oasis:names:tc:xacml:3.0:subject:subject-id"
+				DataType="http://www.w3.org/2001/XMLSchema#string" />
+		</AttributeAssignmentExpression>
+	</ObligationExpression>
+</ObligationExpressions>

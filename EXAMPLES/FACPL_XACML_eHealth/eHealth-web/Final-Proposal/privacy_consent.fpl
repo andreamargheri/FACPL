@@ -1,0 +1,68 @@
+import "tissec_request.fpl"
+
+PAS {
+	
+	Combined Decision : false ; 
+	Extended Indeterminate : false;
+	Java Package : "Tissec" ;
+	Requests To Evaluate: RequestAdmin,   //ADMINISTRATIVE STAFF
+		RequestPharmacistRead,RequestPharmacistWrite,RequestPharmacistWriteEM,  //PHARMACIST
+		RequestReadDoc,	RequestWriteDoc,RequestDocDelete  //MEDICAL DOCTOR
+	;
+	
+	pep: base 
+	pdp: only-one-applicable 
+	
+	PolicySet ePrescription { only-one-applicable
+		target: equal ( "34133-9" , resource/resource-id ) //|| equal ("57829-4", resource/resource-id)
+		policies:	
+		Policy doctor < deny-unless-permit //permit-unless-deny  
+			target:
+				equal ( "medical doctor" , subject/role ) &&
+				(equal ( "TREATEMENT" , subject/purposeofuse ) || equal ("EMERGENCY", subject/purposeofuse))
+			rules:
+				Rule rule1 ( permit  
+					target:
+						equal ( "Read" , action/action-id ) 
+					condition:
+						subset ( bag("PRD-003","PRD-005"), subject/hl7.permission)
+					obl:
+						[ permit  M  log ( system/system-id , "Prescription Read" ) ])
+				Rule rule2 ( permit 
+					target:
+						equal ( "Write" , action/action-id ) 
+					condition:
+						and (equal(subject/doctor-id, resource/patient-id.doctor-id),
+							subset ( bag("PRD-003","PRD-005","PRD-010","PRD-016"), subject/hl7.permission))
+					obl: 
+						[ permit  M  log ( system/system-id , "ePrescriptions Update" ) ]	)
+			obl:
+				[ deny M  log ( subject/doctor-id , resource/resource-id , action/action-id) ]
+				[ permit O mailTo (resource/patient-id.email , "Your medical record has been requested by EpSOS subject")]
+		 >
+		 Policy pharmacist < deny-unless-permit //permit-unless-deny //  
+			target:
+				equal ( "pharmacist" , subject/role ) &&
+				(equal ( "TREATEMENT" , subject/purposeofuse ) || equal ("EMERGENCY", subject/purposeofuse))
+			rules:
+				Rule rule1 ( permit  
+					target:
+						equal ( "Read" , action/action-id ) 
+					condition:
+						subset ( bag("PRD-003","PRD-005","PRD-011"), subject/hl7.permission)
+					obl:
+						[ permit  M  log ( system/system-id , "Prescription Read" ) ])
+				Rule rule2 ( permit
+					target: 
+						equal ("Write", action/action-id) && equal ("EMERGENCY", subject/purposeofuse)
+					condition:
+						subset ( bag("PRD-003","PRD-005","PRD-011","PRD-017"), subject/hl7.permission)
+					obl: 
+						[ permit  M  log ( system/system-id , "ePrescriptions Update" ) ]) 
+			obl:
+			[ deny M  log ( subject/doctor-id , resource/resource-id , action/action-id) ]
+			[ permit O mailTo (resource/patient-id.email , "Your medical record has been requested by EpSOS subject")]
+		 >	 
+	 }
+}
+

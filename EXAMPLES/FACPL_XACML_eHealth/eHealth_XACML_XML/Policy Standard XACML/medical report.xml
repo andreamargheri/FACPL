@@ -1,0 +1,49 @@
+<email>homers@aol.com</email>
+</parentGuardianContact>
+</parentGuardian>
+<primaryCarePhysician>
+	<physicianName>
+		<first>Julius</first>
+		<last>Hibbert</last>
+	</physicianName>
+	<physicianContact>
+		<street>1 First St</street>
+		<city>Springfield</city>
+		<state>MA</state>
+		<zip>12345</zip>
+		<phone>555.123.9012</phone>
+		<fax>555.123.9013</fax>
+		<email />
+	</physicianContact>
+	<registrationID>ABC123</registrationID>
+</primaryCarePhysician>
+<insurer>
+	<name>Blue Cross</name>
+	<street>1234 Main St</street>
+	<city>Springfield</city>
+	<state>MA</state>
+	<zip>12345</zip>
+	<phone>555.123.5678</phone>
+	<fax>555.123.5679</fax>
+	<email />
+</insurer>
+<medical>
+	<treatment>
+		<drug>
+			<name>methylphenidate hydrochloride</name>
+			<dailyDosage>30mgs</dailyDosage>
+			<startDate>1999-01-12</startDate>
+		</drug>
+		<comment>
+			patient exhibits side-effects of skin coloration and carpal
+			degeneration
+		</comment>
+	</treatment>
+	<result>
+		<test>blood pressure</test>
+		<value>120/80</value>
+		<date>2001-06-09</date>
+		<performedBy>Nurse Betty</performedBy>
+	</result>
+</medical>
+</record>

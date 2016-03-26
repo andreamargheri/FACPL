@@ -1,0 +1,24 @@
+import 'Privacy_Consent.fpl'
+import 'Requests_ePrescription.fpl'
+import 'Requests_summary.fpl'
+
+
+PAS {
+	Combined Decision : false; 
+	Extended Indeterminate : false;
+	Java Package : 'eHealthFull';
+	Requests To Evaluate:
+	R_ePre_Admin, R_ePre_PharmacistRead, R_ePre_PharmacistWrite, R_ePre_PharmacistWriteEM, R_ePre_ReadDoc, R_ePre_tDocDelete, R_ePre_WriteDoc,
+	R_Summary_DocDelete, R_Summary_DocWriteEM, R_Summary_NurseReadEM, R_Summary_NurseWriteEM, R_Summary_PharmacistRead, R_Summary_PharmacistWrite, R_Summary_ReadDoc, R_Summary_WriteDoc
+	; 
+	
+	pep: base
+	pdp: deny-overrides
+	PolicySet Informed_Consent { only-one-applicable 
+ 	 	target: equal("Alice", patient/id)
+ 	 	policies: 
+ 	 		 include ePrescription
+ 	 		 include patientSummary
+ 	 }
+}
+

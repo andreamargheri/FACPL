@@ -1,0 +1,6 @@
+
+	Policy denyAll<	deny-unless-permit
+		target: equal("pharmacist", subject/role )
+		rules: Rule denyAll( deny ) 
+	>   
+

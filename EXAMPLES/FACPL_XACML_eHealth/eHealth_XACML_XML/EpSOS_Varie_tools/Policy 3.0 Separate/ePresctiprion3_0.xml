@@ -1,0 +1,95 @@
+<Policy xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17
+	http://docs.oasis-open.org/xacml/3.0/xacml-core-v3-schema-wd-17.xsd"
+	PolicyId="ePresctiprion" Version="1.0"
+	RuleCombiningAlgId="urn:oasis:names:tc:xacml:3.0:rule-combining-algorithm:permit-overrides"
+	MaxDelegationDepth="1">
+	<Target>
+		<AnyOf>
+			<AllOf>
+				<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+						TREATEMENT
+					</AttributeValue>
+					<AttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#anyURI"
+						MustBePresent="false"
+						Category="urn:oasis:names:tc:xacml:3.0:attribute-category:subject"
+						AttributeId="urn:oasis:names:tc:xacml:1.0:subject:purposeofuse" />
+				</Match>
+			</AllOf>
+		</AnyOf>
+		<AnyOf>
+			<AllOf>
+				<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+						medical doctor
+					</AttributeValue>
+					<AttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#anyURI"
+						MustBePresent="false"
+						Category="urn:oasis:names:tc:xacml:3.0:attribute-category:subject"
+						AttributeId="urn:oasis:names:tc:xacml:1.0:subject:role" />
+				</Match>
+			</AllOf>
+			<AllOf>
+				<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+						pharmachist
+					</AttributeValue>
+					<AttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#anyURI"
+						MustBePresent="false"
+						Category="urn:oasis:names:tc:xacml:3.0:attribute-category:subject"
+						AttributeId="urn:oasis:names:tc:xacml:1.0:subject:role" />
+				</Match>
+			</AllOf>
+		</AnyOf>
+		<AnyOf>
+			<AllOf>
+				<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+						57829-4
+					</AttributeValue>
+					<AttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#anyURI"
+						MustBePresent="false"
+						Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+						AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id" />
+				</Match>
+			</AllOf>
+		</AnyOf>
+	</Target>
+	<Rule RuleId="rule1" Effect="Permit">
+		<Target>
+			<AnyOf>
+				<AllOf>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+							Read
+						</AttributeValue>
+						<AttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#anyURI"
+							MustBePresent="false"
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action"
+							AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" />
+					</Match>
+				</AllOf>
+			</AnyOf>
+		</Target>
+		<Condition>
+			<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-subset">
+				<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-bag">
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+						urn:oasis:names:tc:xspa:1.0:hl7:PRD-004
+					</AttributeValue>
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+						urn:oasis:names:tc:xspa:1.0:hl7:PRD-010
+					</AttributeValue>
+				</Apply>
+				<AttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#anyURI"
+					MustBePresent="false"
+					Category="urn:oasis:names:tc:xacml:3.0:attribute-category:subject"
+					AttributeId="urn:oasis:names:tc:xacml:1.0:subject:hl7.permission" />
+			</Apply>
+		</Condition>
+	</Rule>
+	<Rule RuleId="ruledeny" Effect="Deny">
+	</Rule>
+</Policy>

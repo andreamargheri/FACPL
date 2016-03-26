@@ -1,0 +1,119 @@
+/*
+ * PERMIT
+ */
+Request:{R_Summary_WriteDoc 
+	(patient/id, "Alice")
+	(subject/purposeofuse, "TREATEMENT")
+	(subject/role, "medical doctor")
+	(subject/doctor-id, "jh1234")
+	(subject/hl7.permission, "PRD-006","PRD-007","PRD-010","PRD-016")
+	(system/system-id, "Sys-1")
+	(resource/resource-id, "57829-4")
+	(resource/patient-id.doctor-id, "jh1234")
+	(resource/patient-id.email, "mail@gmail.com")
+	(action/action-id, "Write")
+} 
+
+/*
+ * PERMIT
+ */
+Request:{R_Summary_ReadDoc 
+	(patient/id, "Alice")
+	(subject/purposeofuse, "TREATEMENT")
+	(subject/role, "medical doctor")
+	(subject/doctor-id, "jh1234")
+	(subject/hl7.permission, "PRD-006","PRD-007")
+	(system/system-id, "Sys-1")
+	(resource/resource-id, "57829-4")
+	(resource/patient-id.email, "mail@gmail.com")
+	(action/action-id, "Read")
+} 
+
+/*
+ * PERMIT
+ */
+Request:{R_Summary_DocWriteEM 
+	(patient/id, "Alice")
+	(subject/purposeofuse, "EMERGENCY")
+	(subject/role, "medical doctor")
+	(subject/doctor-id, "jh1234")
+	(subject/hl7.permission, "PRD-006","PRD-007","PRD-010","PRD-016")
+	(resource/resource-id, "57829-4")
+	(system/system-id, "Sys-1")
+	(resource/patient-id.doctor-id, "jh1234")
+	(resource/patient-id.email, "mail@gmail.com")
+	(action/action-id, "Write")
+}
+
+/*
+ * DENY
+ */
+Request:{R_Summary_DocDelete 
+	(patient/id, "Alice")
+	(subject/purposeofuse, "TREATEMENT")
+	(subject/role, "medical doctor")
+	(subject/doctor-id, "jh1234")
+	(subject/hl7.permission, "PRD-006","PRD-007")
+	(resource/resource-id, "57829-4")
+	(resource/patient-id.email, "mail@gmail.com")
+	(action/action-id, "Delete")
+}
+
+/*
+ * DENY
+ */
+Request:{R_Summary_PharmacistRead
+	(patient/id, "Alice")
+	(subject/purposeofuse, "TREATEMENT")
+	(subject/role, "pharmacist")
+	(subject/doctor-id, "jh1234")
+	(resource/resource-id, "57829-4")
+	(system/system-id, "Sys-1")
+	(resource/patient-id.email, "mail@gmail.com")
+	(action/action-id, "Read")
+}
+
+/*
+ * DENY
+ */
+Request:{R_Summary_PharmacistWrite
+	(patient/id, "Alice")
+	(subject/purposeofuse, "TREATEMENT")
+	(subject/role, "pharmacist")
+	(subject/doctor-id, "jh1234")
+	(resource/resource-id, "57829-4")
+	(system/system-id, "Sys-1")
+	(resource/patient-id.email, "mail@gmail.com")
+	(action/action-id, "Write")
+}
+
+/*
+ * PERMIT
+ */
+Request:{R_Summary_NurseReadEM
+	(patient/id, "Alice")
+	(subject/purposeofuse, "EMERGENCY")
+	(subject/role, "nurse")
+	(subject/doctor-id, "jh1234")
+	(resource/resource-id, "57829-4")
+	(system/system-id, "Sys-1")
+	(resource/patient-id.email, "mail@gmail.com")
+	(action/action-id, "Read")
+}
+
+/*
+ * DENY
+ */
+Request:{R_Summary_NurseWriteEM
+	(patient/id, "Alice")
+	(subject/purposeofuse, "EMERGENCY")
+	(subject/role, "nurse")
+	(subject/doctor-id, "jh1234")
+	(resource/resource-id, "57829-4")
+	(system/system-id, "Sys-1")
+	(resource/patient-id.email, "mail@gmail.com")
+	(action/action-id, "Write")
+}
+
+
+

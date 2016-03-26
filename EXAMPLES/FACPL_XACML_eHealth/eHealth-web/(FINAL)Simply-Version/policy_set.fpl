@@ -1,0 +1,41 @@
+
+
+import "tissec_request.fpl"
+
+
+PAS{
+	Combined Decision: false ; 
+	Extended Indeterminate: false;
+	Java Package : "Tissec" ;
+	Requests To Evaluate : RequestAdmin,   //ADMINISTRATIVE STAFF
+	RequestPharmacistRead,RequestPharmacistWrite,  //PHARMACIST
+	RequestReadDoc,	RequestWriteDoc,RequestDocDelete  //MEDICAL DOCTOR
+	;
+
+	pep: base  
+	pdp: only-one-applicable 
+	
+	Policy ePrescription < permit-overrides
+		target: equal ( "ePrescription" , resource/type)
+		rules:	
+			Rule rule1 ( permit  
+					target:
+						equal ( "doctor" , subject/role ) && equal ( "write" , action/id ) 
+					condition:
+						subset ( bag("ePre=Create","ePre-Access"), subject/permission))
+			Rule rule2 ( permit  
+					target:
+						equal ( "doctor" , subject/role ) && equal ( "read" , action/id ) 
+					condition:
+						subset ( bag("ePre-Access"), subject/permission))
+			Rule rule3 ( permit  
+					target:
+						equal ( "pharmacist" , subject/role ) && equal ( "read" , action/id ) 
+					condition:
+						subset ( bag("ePre-Access"), subject/permission))
+			obl:
+				[ permit  M  log ( system/time, resource/type,subject/id,action/id) ]
+		 >
+	 
+}
+

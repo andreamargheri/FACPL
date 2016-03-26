@@ -1,0 +1,101 @@
+    <!-- This policy denies everything but doctor access (query and retrieve) 
+	to patient summaries -->
+<Policy PolicyId="policyId1"
+	RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:permit-overrides"
+	xmlns="urn:oasis:names:tc:xacml:2.0:policy:schema:os" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:oasis:names:tc:xacml:2.0:policy:schema:os access_control-xacml-2.0-policy-schema-os.xsd">
+	<Target>
+		<Subjects>
+			<Subject>
+				<SubjectMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">medical doctor
+					</AttributeValue>
+					<SubjectAttributeDesignator
+						AttributeId="urn:oasis:names:tc:xacml:2.0:subject:role" DataType="http://www.w3.org/2001/XMLSchema#string" />
+				</SubjectMatch>
+				<SubjectMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">TREATMENT</AttributeValue>
+					<SubjectAttributeDesignator
+						AttributeId="urn:oasis:names:tc:xspa:1.0:subject:purposeofuse"
+						DataType="http://www.w3.org/2001/XMLSchema#string" />
+				</SubjectMatch>
+			</Subject>
+		</Subjects>
+		<Resources>
+			<Resource>
+				<ResourceMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">34133-9</AttributeValue> <!-- urn:epsos:ps -->
+					<ResourceAttributeDesignator
+						AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"
+						DataType="http://www.w3.org/2001/XMLSchema#string" />
+				</ResourceMatch>
+			</Resource>
+		</Resources>
+	</Target>
+	<Rule RuleId="permitId" Effect="Permit">
+		<Description>Matches all the READ operations to requests containing
+			the correct permissions
+		</Description>
+		<Target>
+			<Actions>
+				<Action>
+					<ActionMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Read</AttributeValue>
+						<ActionAttributeDesignator
+							AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
+							DataType="http://www.w3.org/2001/XMLSchema#string" />
+					</ActionMatch>
+				</Action>
+			</Actions>
+		</Target>
+		<Condition>
+			<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-subset">
+				<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-bag">
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">urn:oasis:names:tc:xspa:1.0:subject:hl7:permission:PRD-003
+					</AttributeValue>
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">urn:oasis:names:tc:xspa:1.0:subject:hl7:permission:PRD-005
+					</AttributeValue>
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">urn:oasis:names:tc:xspa:1.0:subject:hl7:permission:PRD-010
+					</AttributeValue>
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">urn:oasis:names:tc:xspa:1.0:subject:hl7:permission:PRD-016
+					</AttributeValue>
+				</Apply>
+				<SubjectAttributeDesignator
+					AttributeId="urn:oasis:names:tc:xspa:1.0:subject:hl7:permission"
+					DataType="http://www.w3.org/2001/XMLSchema#string" />
+			</Apply>
+		</Condition>
+	</Rule>
+	<Rule RuleId="denyRule" Effect="Deny" />
+	<Obligations>
+		<Obligation ObligationId="urn:oasis:names:tc:xacml:obligation:log"
+			FulfillOn="Permit">
+			<AttributeAssignment AttributeId="urn:oasis:names:tc:xacml:1.0:attribute:subject"
+				DataType="http://www.w3.org/2001/XMLSchema#string">
+				<SubjectDesignator DataType="http://www.w3.org/2001/XMLSchema#string"
+					AttributeId="urn:oasis:names:tc:xacml:1.0:subject:doctor-id" />
+			</AttributeAssignment>
+			<AttributeAssignment
+				AttributeId="urn:oasis:names:tc:xacml:1.0:resource"
+				DataType="http://www.w3.org/2001/XMLSchema#string">
+				<ResourceDesignator DataType="http://www.w3.org/2001/XMLSchema#string"
+					AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id" />
+			</AttributeAssignment>
+		</Obligation>
+		<Obligation FulfillOn="Deny"
+			ObligationId="urn:oasis:names:tc:xacml:obligation:mail">
+			<AttributeAssignment AttributeId="urn:oasis:names:tc:xacml:3.0:attribute:mailto"
+				DataType="http://www.w3.org/2001/XMLSchema#string">
+				<ResourceDesignator DataType="http://www.w3.org/2001/XMLSchema#string"
+					AttributeId="urn:oasis:names:tx:xacml:1.0:resource:resouce-id:email" />
+			</AttributeAssignment>
+			<AttributeAssignment DataType="http://www.w3.org/2001/XMLSchema#string"
+				AttributeId="urn:oasis:names:tc:xacml:1.0:attribute:text">
+				<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+					Your medical record has been
+					requested by EpSOS subject
+				</AttributeValue>
+			</AttributeAssignment>
+		</Obligation>
+	</Obligations>
+</Policy>

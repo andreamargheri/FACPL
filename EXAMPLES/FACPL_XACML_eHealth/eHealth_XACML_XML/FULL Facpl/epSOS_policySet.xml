@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PolicySet xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17 
+		http://docs.oasis-open.org/xacml/3.0/xacml-core-v3-schema-wd-17.xsd"
+	PolicySetId="" Version="1.0"
+	PolicyCombiningAlgId="urn:oasis:names:tc:xacml:3.0:policy-combining-algorithm:permit-overrides"
+	MaxDelegationDepth="1">
+	<Description>
+	In case of permit authorization decision add redirect obligation for encryption service
+	</Description>
+	<Target />
+	<PolicyIdReference>urn:oasis:names:tc:xacml:3.0:policy_deny_all</PolicyIdReference>
+	<PolicyIdReference>urn:oasis:names:tc:xacml:3.0:policy_privacy</PolicyIdReference>
+	<ObligationExpressions>
+		<ObligationExpression FulfillOn="Permit"
+			ObligationId="urn:oasis:names:tc:xacml:3.0:obligations:redirectto">
+			<AttributeAssignmentExpression
+				AttributeId="urn:epsos:obligations:redirectto:url">
+				<AttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#anyURI"
+					MustBePresent="false"
+					Category="urn:oasis:names:tc:xacml:3.0:attribute-category:epsos"
+					AttributeId="urn:oasis:names:tx:xacml:3.0:epsos:redirectto-url" />
+			</AttributeAssignmentExpression>
+		</ObligationExpression>
+	</ObligationExpressions>
+</PolicySet>

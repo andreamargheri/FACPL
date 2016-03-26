@@ -1,0 +1,47 @@
+<Target>
+<AnyOf>
+	<AllOf>
+		<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+			medical record
+			<AttributeDesignator MustBePresent="false"
+					Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+					AttributeId="urn:oasis:names:tc:xacml:3.0:resource:resource-id"
+					DataType="http://www.w3.org/2001/XMLSchema#string" />
+		</Match>
+	</AllOf>
+</AnyOf>
+<AnyOf>
+	<AllOf>
+		<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+			doctor
+			<AttributeDesignator MustBePresent="false"
+					Category="urn:oasis:names:tc:xacml:3.0:attribute-category:subject"
+					AttributeId="urn:oasis:names:tc:xacml:3.0:subject:subject-role"
+					DataType="http://www.w3.org/2001/XMLSchema#string" />
+		</Match>
+		<Match MatchId="urn:oasis:names:tc:xacml:3.0:function:string-equal">
+			read
+			<AttributeDesignator MustBePresent="false"
+					Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action"
+					AttributeId="urn:oasis:names:tc:xacml:3.0:action:action-id"
+					DataType="http://www.w3.org/2001/XMLSchema#string" />
+		</Match>
+	</AllOf>
+	<AllOf>
+		<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+			nurse
+			<AttributeDesignator MustBePresent="false"
+					Category="urn:oasis:names:tc:xacml:3.0:attribute-category:subject"
+					AttributeId="urn:oasis:names:tc:xacml:3.0:subject:subject-role"
+					DataType="http://www.w3.org/2001/XMLSchema#string" />
+		</Match>
+		<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+			write
+			<AttributeDesignator MustBePresent="false"
+					Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action"
+					AttributeId="urn:oasis:names:tc:xacml:3.0:action:action-id"
+					DataType="http://www.w3.org/2001/XMLSchema#string" />
+		</Match>
+	</AllOf>
+</AnyOf>
+</Target>

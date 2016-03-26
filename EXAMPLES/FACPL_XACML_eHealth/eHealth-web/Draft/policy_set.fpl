@@ -1,0 +1,23 @@
+import "privacy_consent.fpl"
+import "denyAll.fpl"
+import "tissec_request.fpl"
+
+
+PAS{
+	Combined Decision : false ; 
+	Extended Indeterminate : false;
+	Java Package: "Tissec" ;
+	//Eval Request {RequestAdmin,RequestDelete,RequestPharmacistWrite,RequestReadDoc,RequestWriteDoc}
+	Requests To Evaluate: RequestWriteDoc;
+	
+	pep: base
+	pdp: permit-overrides 
+	PolicySet policySet_Id { permit-overrides 
+	 	 policies: 
+	 	 	include denyAll
+	 	 	include doctor
+	 	 	include pharmacist
+	 	//obl:  [permit M redirectTo( system/redirectto:url)]
+ 	} 
+}
+

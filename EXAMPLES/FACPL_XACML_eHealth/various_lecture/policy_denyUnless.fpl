@@ -1,0 +1,27 @@
+import 'requests.fpl'
+
+PAS {
+	Combined Decision : false;
+	Extended Indeterminate : false;
+	Java Package : "imtFinalpermitUnless";
+	Requests To Evaluate: Request1,Request2;
+	
+	pep:base
+	pdp:deny-unless-permit
+
+		Policy ePrescription< permit-overrides
+		target: equal("e-Prescription",resource/id)
+		rules:
+		Rule rule1 (permit  
+			target:equal("doctor",subject/role) && equal("read",action/id)  
+			condition: subset(bag("e-Pre-Access"), subject/permission))
+		
+		Rule rule2 (permit  
+			target:equal("doctor",subject/role) && equal("write",action/id) 
+			condition: subset(bag("e-Pre-Access","e-Pre-Create"), subject/permission))
+		
+		Rule rule3 (permit  
+			target:equal("pharmacist",subject/role)&&equal("read",action/id) 
+			condition: subset(bag("e-Pre-Access"), subject/permission))
+		>
+}	

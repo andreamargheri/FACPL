@@ -1,0 +1,49 @@
+<Target>
+	<Subjects>
+		<Subject>
+			<SubjectMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+				doctor
+				<SubjectAttributeDesignator
+					AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-role"
+					DataType="http://www.w3.org/2001/XMLSchema#string" />
+			</SubjectMatch>
+		</Subject>
+		<Subject>
+			<SubjectMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+				nurse
+				<SubjectAttributeDesignator
+					AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-role"
+					DataType="http://www.w3.org/2001/XMLSchema#string" />
+			</SubjectMatch>
+		</Subject>
+	</Subjects>
+	<Resources>
+		<Resource>
+			<ResourceMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+				medical record
+				<ResourceAttributeDesignator
+					AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"
+					DataType="http://www.w3.org/2001/XMLSchema#string" />
+			</ResourceMatch>
+		</Resource>
+	</Resources>
+	<Actions>
+		<Action>
+			<ActionMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+				read
+				<ActionAttributeDesignator
+					AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
+					DataType="http://www.w3.org/2001/XMLSchema#string" />
+			</ActionMatch>
+		</Action>
+		<Action>
+			<ActionMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+				write
+				<ActionAttributeDesignator
+					AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
+					DataType="http://www.w3.org/2001/XMLSchema#string" />
+			</ActionMatch>
+		</Action>
+	</Actions>
+</Target>
+			

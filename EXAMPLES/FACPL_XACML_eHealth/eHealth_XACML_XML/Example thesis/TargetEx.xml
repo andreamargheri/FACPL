@@ -1,0 +1,32 @@
+<Target>
+	<AnyOf>
+		<AllOf>
+			<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+				<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+					administrator
+				</AttributeValue>
+				<AttributeDesignator MustBePresent="false"
+					Category="urn:oasis:names:tc:xacml:3.0:subject:access-subject"
+					AttributeId="urn:oasis:names:tc:xacml:3.0:example:attribute:role"
+					DataType="http://www.w3.org/2001/XMLSchema#string" />
+			</Match>
+		</AllOf>
+		<AllOf>
+			...
+		</AllOf>
+	</AnyOf>
+	<AnyOf>
+		<AllOf>
+			<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+				<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+					P16
+				</AttributeValue>
+				<AttributeSelector MustBePresent="false"
+					Category="urn:oasis:names:tc:xacml:3.0:resource:access-resource"
+					Path="md:record/md:patient/md:patientDocID/text()" 
+					DataType="http://www.w3.org/2001/XMLSchema#string" />
+			</Match>
+			...
+		</AllOf>
+	</AnyOf>
+</Target>

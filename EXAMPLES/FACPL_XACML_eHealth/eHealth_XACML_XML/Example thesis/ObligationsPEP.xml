@@ -1,0 +1,22 @@
+<Obligations>
+	<Obligation ObligationId="urn:oasis:names:tc:xacml:obligation:email">
+		<AttributeAssignment DataType="http://www.w3.org/2001/XMLSchema#string"
+			AttributeId="urn:oasis:names:tc:xacml:3.0:attribute:mailto">
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+				homers@aol.com
+			</AttributeValue>
+		</AttributeAssignment>
+		<AttributeAssignment DataType="http://www.w3.org/2001/XMLSchema#string"
+			AttributeId="urn:oasis:names:tc:xacml:example:attribute:text">
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+				Your medical record has been accessed by:
+			</AttributeValue>
+		</AttributeAssignment >
+		<AttributeAssignment DataType="http://www.w3.org/2001/XMLSchema#string"
+			AttributeId="urn:oasis:names:tc:xacml:example:attribute:text">
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+				Julius Hibbert
+			</AttributeValue>
+		</AttributeAssignment>
+	</Obligation>
+</Obligations>

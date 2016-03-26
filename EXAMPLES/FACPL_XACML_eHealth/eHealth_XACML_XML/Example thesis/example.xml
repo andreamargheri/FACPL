@@ -1,0 +1,16 @@
+<Policy RuleCombiningAlgId="permit-overrides">
+	<Target/>
+	<Rule RuleId="rule1" Effect="Permit">
+		<Target/>
+		<Condition>
+			<Apply FunctionId="string-equal">
+				<AttributeValue DataType="string">PRD-001</AttributeValue>
+				<AttributeDesignator DataType="string"
+					AttributeId="subject.permission" />
+			</Apply>
+		</Condition>
+	</Rule>
+	<Rule RuleId="ruledeny" Effect="Deny">
+	</Rule>
+</Policy>
+

@@ -1,0 +1,78 @@
+Request:{RequestWriteDoc 
+	(subject/purposeofuse, "TREATEMENT")
+	(subject/role, "medical doctor")
+	(subject/doctor-id, "jh1234")
+	(subject/hl7.permission, "PRD-003","PRD-005","PRD-010","PRD-016")
+	(system/system-id, "Sys-1")
+	(resource/resource-id, "34133-9")
+	(resource/patient-id.doctor-id, "jh1234")
+	(resource/patient-id.email, "mail@gmail.com")
+	(action/action-id, "Write")
+} 
+
+Request:{RequestReadDoc 
+	(subject/purposeofuse, "TREATEMENT")
+	(subject/role, "medical doctor")
+	(subject/doctor-id, "jh1234")
+	(subject/hl7.permission, "PRD-004","PRD-005")
+	(resource/resource-id, "34133-9")
+	(resource/patient-id.email, "mail@gmail.com")
+	(action/action-id, "Read")
+} 
+
+
+Request:{RequestDocDelete 
+	(subject/purposeofuse, "TREATEMENT")
+	(subject/role, "medical doctor")
+	(subject/doctor-id, "jh1234")
+	(subject/hl7.permission, "PRD-004","PRD-005")
+	(resource/resource-id, "34133-9")
+	(resource/patient-id.email, "mail@gmail.com")
+	(action/action-id, "Delete")
+}
+
+Request:{RequestPharmacistRead
+	(subject/purposeofuse, "TREATEMENT")
+	(subject/role, "pharmacist")
+	(subject/doctor-id, "jh1234")
+	(subject/hl7.permission, "PRD-003","PRD-005","PRD-011","PRD-017")
+	(resource/resource-id, "34133-9")
+	(system/system-id, "Sys-1")
+	(resource/patient-id.email, "mail@gmail.com")
+	(action/action-id, "Read")
+}
+
+
+Request:{RequestPharmacistWrite
+	(subject/purposeofuse, "TREATEMENT")
+	(subject/role, "pharmacist")
+	(subject/doctor-id, "jh1234")
+	(subject/hl7.permission, "PRD-003","PRD-005","PRD-011","PRD-017")
+	(resource/resource-id, "34133-9")
+	(system/system-id, "Sys-1")
+	(resource/patient-id.email, "mail@gmail.com")
+	(action/action-id, "Write")
+}
+
+Request:{RequestPharmacistWriteEM
+	(subject/purposeofuse, "EMERGENCY")
+	(subject/role, "pharmacist")
+	(subject/doctor-id, "jh1234")
+	(subject/hl7.permission, "PRD-003","PRD-005","PRD-011","PRD-017")
+	(resource/resource-id, "34133-9")
+	(system/system-id, "Sys-1")
+	(resource/patient-id.email, "mail@gmail.com")
+	(action/action-id, "Write")
+}
+
+
+Request:{RequestAdmin  
+	(subject/purposeofuse, "TREATEMENT")
+	(subject/role, "admin")
+	(subject/hl7.permission, "PRD-003","PRD-005","PRD-010","PRD-016")
+	(resource/resource-id, "34133-9")
+	(resource/patient-id.email, "mail@gmail.com")
+	(action/action-id, "Read")
+}
+
+

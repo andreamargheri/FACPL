@@ -1,0 +1,76 @@
+
+PAS{
+	Combined Decision :false ; 
+	Extended Indeterminate : false ; 
+	Java Package : "eHealth";
+	Requests To Evaluate: Request1 , Request2 , Request3 ;
+	
+	
+	pep: base 
+ 	pdp: only-one-applicable
+	PolicySet patientConsent {permit-overrides target: equal("Alice",resource/patient-id) policies: 
+		Policy ePre < permit-overrides 
+			target:equal("e-Prescription",resource/id) 
+			rules: 
+				Rule readDoc ( permit target: equal("doctor",subject/role) && 
+						 equal("read",action/id) 
+					 condition: subset(bag("e-Pre-Access"),subject/permission))
+				Rule writeDoc ( permit target: equal("doctor",subject/role) && 
+			 			 equal("write",action/id) 
+					 condition: subset(bag("e-Pre-Create","e-Pre-Access"),subject/permission))
+				Rule readPha ( permit target: equal("pharmacist",subject/role) && 
+			 			 equal("read",action/id) 
+					 condition: subset(bag("e-Pre-Access"),subject/permission))
+			 obl:[permit M log(environment/time,resource/id,subject/id,action/id)]>
+		Policy eDis < permit-overrides 
+			target:equal("e-Dispensation",resource/id) 
+			rules: 
+				Rule readPha ( permit target: equal("pharmacist",subject/role) && 
+					 equal("read",action/id) 
+					 condition: subset(bag("e-Dis-Access"),subject/permission))
+				Rule writePha ( permit target: equal("pharmacist",subject/role) && 
+		 			 equal("write",action/id) 
+					 condition: subset(bag("e-Dis-Create","e-Dis-Access"),subject/permission))
+			 obl:[permit M log(environment/time,resource/id,subject/id,action/id)]>
+		Policy denyAll < deny-overrides rules: Rule denyRule (deny) >
+	obl: 
+	[deny M mailTo(resource/patient-id.mail, "Data request by unauthorized subject")]
+	[permit O compress(true)]
+	}
+}
+
+/*
+ * Request1 : PERMIT
+ * Request2 : PERMIT
+ * Request3 : PERMIT
+ */
+
+Request:{ Request1 
+(subject/id,"Dr.House") 
+(resource/patient-id,"Alice") 
+(resource/id,"e-Prescription") 
+(subject/role,"doctor") 
+(subject/permission,"e-Pre-Access") 
+(action/id,"read") 
+(resource/patient-id.mail,"mail")
+}
+
+Request:{ Request2 
+(subject/id,"Dr.House") 
+(resource/patient-id,"Alice") 
+(resource/id,"e-Dispensation") 
+(subject/role,"pharmacist") 
+(subject/permission,"e-Dis-Access") 
+(action/id,"read") 
+(resource/patient-id.mail,"mail")
+}
+
+Request:{ Request3
+(subject/id,"Dr.Foreman") 
+(resource/patient-id,"Alice") 
+(resource/id,"e-Prescription") 
+(subject/role,"doctor") 
+(subject/permission,"e-Pre-Access","e-Pre-Create") 
+(action/id,"write")
+(resource/patient-id.mail,"mail") 
+}

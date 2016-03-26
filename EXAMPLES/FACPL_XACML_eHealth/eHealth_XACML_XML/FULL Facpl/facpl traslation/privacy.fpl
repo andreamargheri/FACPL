@@ -1,0 +1,14 @@
+	Policy privacy < permit-overrides 
+	 target:
+			equal ( "medical doctor" , subject/role ) &&
+			equal ( "TREATEMENT" , subject/purposeofuse ) &&
+			equal ( "34133-9" , resource/resource-id )
+		 rules:
+			Rule rule1 ( permit  
+				target:
+					equal ( "Read" , action/action-id ) 
+				condition:
+					subset ( bag("PRD-003","PRD-005","PRD-010","PRD-016") , 
+						subject/hl7.permission) )
+			Rule rule2 ( deny ) 
+	>

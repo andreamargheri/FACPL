@@ -1,0 +1,15 @@
+Request:{ Request1 
+(subject/id,"Marley") 
+(resource/id,"e-Prescription") 
+(subject/role,"doctor") 
+(subject/permission,"e-Pre-Access","e-Pre-Create") 
+(action/id,"write") 
+}
+
+Request:{ Request2 
+(subject/id,"Alice") 
+(resource/id,"e-Prescription") 
+(subject/role,"pharmacist") 
+(subject/permission,"e-Pre-Access","e-Pre-Create") 
+(action/id,"write") 
+}
