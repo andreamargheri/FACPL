@@ -1,16 +1,13 @@
 package it.unifi.facpl.lib.algorithm.check;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import it.unifi.facpl.lib.context.AbstractFulfilledObligation;
 import it.unifi.facpl.lib.context.AuthorisationPEP;
 import it.unifi.facpl.lib.context.ContextRequest;
-import it.unifi.facpl.lib.context.FulfilledObligationCheck;
 import it.unifi.facpl.lib.enums.ExtendedDecision;
 import it.unifi.facpl.lib.enums.StandardDecision;
 
@@ -21,17 +18,14 @@ public class PermitOverridesCheck implements IEvaluableAlgorithmCheck {
 	private Boolean atLeastOneErrorDP = false;
 	private Boolean atLeastOneDeny = false;
 	private Boolean atLeastOnePermit = false;
-	
+
 	@Override
 	public AuthorisationPEP evaluate(List<StandardDecision> decList, ContextRequest cxtRequest) {
 		Logger l = LoggerFactory.getLogger(getClass());
 		l.debug("PERMIT OVERRIDES CHECK STARTED");
 
-
-
 		AuthorisationPEP dr = new AuthorisationPEP(UUID.randomUUID().toString().substring(0, 8));
 		for (StandardDecision dec : decList) {
-
 
 			if (ExtendedDecision.PERMIT.equals(dec)) {
 				l.debug("ALG.PERMIT = dt: PERMIT");

@@ -8,7 +8,7 @@ import it.unifi.facpl.system.status.FacplStatus;
 
 /**
  * 
- * @author Andrea 
+ * @author Andrea
  */
 public abstract class AbstractFulfilledObligation {
 
@@ -17,7 +17,6 @@ public abstract class AbstractFulfilledObligation {
 	protected LinkedList<Object> arguments;
 	protected LinkedList<Object> argsStatus;
 
-	
 	/*
 	 * abstract type of all fulfilled obligation
 	 */

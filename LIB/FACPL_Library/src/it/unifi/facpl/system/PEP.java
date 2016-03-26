@@ -21,11 +21,9 @@ import it.unifi.facpl.lib.context.AbstractFulfilledObligation;
 import it.unifi.facpl.lib.context.AuthorisationPDP;
 import it.unifi.facpl.lib.context.AuthorisationPEP;
 import it.unifi.facpl.lib.context.ContextRequest_Status;
-import it.unifi.facpl.lib.context.FulfilledObligationCheck;
 import it.unifi.facpl.lib.context.FulfilledObligationStatus;
 import it.unifi.facpl.lib.context.FullfilledObbligation;
 import it.unifi.facpl.lib.enums.EnforcementAlgorithm;
-import it.unifi.facpl.lib.enums.ExtendedDecision;
 import it.unifi.facpl.lib.enums.ObligationType;
 import it.unifi.facpl.lib.enums.StandardDecision;
 import it.unifi.facpl.lib.interfaces.IPepAction;
@@ -98,7 +96,7 @@ public class PEP {
 							// if any error throw exception
 							this.dischargeObligation(obl, cxtReq);
 						} catch (Throwable t) {
-							 t.printStackTrace();
+							t.printStackTrace();
 							l.debug("Obligation Evaluation Failed");
 							// return deny in all cases of error
 							l.debug("Enforced Decision:" + StandardDecision.DENY);
@@ -121,7 +119,7 @@ public class PEP {
 							// if any error throw exception
 							this.dischargeObligation(obl, cxtReq);
 						} catch (Throwable t) {
-							 t.printStackTrace();
+							t.printStackTrace();
 							l.debug("Obligations Evaluation Failed");
 							// return deny in all cases of error
 							l.debug("Enforced Decision:" + StandardDecision.PERMIT);
@@ -190,7 +188,7 @@ public class PEP {
 		}
 		/*
 		 * evaluating of Status Obligation
-		 *  
+		 * 
 		 */
 		else if (obl instanceof FulfilledObligationStatus) {
 			obl = (FulfilledObligationStatus) obl;
@@ -198,9 +196,6 @@ public class PEP {
 		}
 
 	}
-
-
-
 
 	public void addPEPActions(HashMap<String, Class<? extends IPepAction>> classPepActions) {
 		Logger l = LoggerFactory.getLogger(PEP.class);

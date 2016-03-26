@@ -6,14 +6,13 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import it.unifi.facpl.lib.algorithm.DenyUnlessPermit;
 import it.unifi.facpl.lib.context.AuthorisationPEP;
 import it.unifi.facpl.lib.context.ContextRequest;
-import it.unifi.facpl.lib.context.FulfilledObligationCheck;
 import it.unifi.facpl.lib.enums.StandardDecision;
 
 public class DenyUnlessPermitCheck implements IEvaluableAlgorithmCheck {
 	private Boolean atLeastOnePermit = false;
+
 	@Override
 	public AuthorisationPEP evaluate(List<StandardDecision> decList, ContextRequest cxtRequest) {
 		Logger l = LoggerFactory.getLogger(getClass());
@@ -37,7 +36,7 @@ public class DenyUnlessPermitCheck implements IEvaluableAlgorithmCheck {
 			return dr;
 		}
 	}
-	
+
 	@Override
 	public void resetAlg() {
 		this.atLeastOnePermit = false;

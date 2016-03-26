@@ -14,9 +14,8 @@ public class StatusAttribute extends AttributeName {
 
 	private FacplStatusType type;
 
-
 	public StatusAttribute(String id, FacplStatusType type) {
-		super(id,"status");
+		super(id, "status");
 		this.type = type;
 	}
 
@@ -27,15 +26,15 @@ public class StatusAttribute extends AttributeName {
 	public void setType(FacplStatusType type) {
 		this.type = type;
 	}
-	
-
 
 	@Override
 	public String toString() {
-		return this.type.toString() + "/" + super.getIDAttribute() ;
+		return this.type.toString() + "/" + super.getIDAttribute();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -46,7 +45,9 @@ public class StatusAttribute extends AttributeName {
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -57,8 +58,5 @@ public class StatusAttribute extends AttributeName {
 		}
 		return false;
 	}
-	
-	
-	
 
 }

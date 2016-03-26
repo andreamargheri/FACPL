@@ -16,7 +16,7 @@ public abstract class MathOperationStatus implements IExpressionFunctionStatus {
 
 	public void evaluateFunction(FacplStatus status, List<Object> args) throws Throwable {
 
-		if (args.size() == 2) { 
+		if (args.size() == 2) {
 			StatusAttribute s1;
 			if (args.get(0) instanceof StatusAttribute) {
 				s1 = (StatusAttribute) args.get(0);
@@ -26,8 +26,8 @@ public abstract class MathOperationStatus implements IExpressionFunctionStatus {
 			Object o2 = args.get(1); // value
 			ArithmeticEvaluatorStatus evaluator = ArithmeticEvaluatorFactoryStatus.getInstance().getEvaluator(o2);
 			// invoke the abstract method implemented in the "operation class"
-			op(evaluator, s1, o2, status); 
-									
+			op(evaluator, s1, o2, status);
+
 		} else {
 			throw new Exception("Illegal number of arguments");
 		}
@@ -36,6 +36,7 @@ public abstract class MathOperationStatus implements IExpressionFunctionStatus {
 	/*
 	 * abstract method for operation
 	 */
-	abstract protected void op(ArithmeticEvaluatorStatus ev, StatusAttribute s1, Object o2, FacplStatus status) throws Throwable;
+	abstract protected void op(ArithmeticEvaluatorStatus ev, StatusAttribute s1, Object o2, FacplStatus status)
+			throws Throwable;
 
 }

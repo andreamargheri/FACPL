@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import it.unifi.facpl.lib.context.ContextRequest;
-import it.unifi.facpl.lib.context.ContextRequest_Status;
 import it.unifi.facpl.lib.enums.ExprBooleanConnector;
 import it.unifi.facpl.lib.enums.ExpressionValue;
 import it.unifi.facpl.lib.util.AttributeName;

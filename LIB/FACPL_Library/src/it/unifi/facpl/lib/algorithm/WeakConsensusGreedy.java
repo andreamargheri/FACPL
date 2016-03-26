@@ -37,7 +37,6 @@ public class WeakConsensusGreedy implements IEvaluableAlgorithm {
 		Logger l = LoggerFactory.getLogger(WeakConsensusGreedy.class);
 		l.debug("-> WEAK CONSENSUS started");
 
-
 		LinkedList<AbstractFulfilledObligation> obligationDeny = new LinkedList<AbstractFulfilledObligation>();
 		LinkedList<AbstractFulfilledObligation> obligationPermit = new LinkedList<AbstractFulfilledObligation>();
 

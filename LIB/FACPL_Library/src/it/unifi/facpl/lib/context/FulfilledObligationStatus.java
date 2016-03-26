@@ -14,9 +14,8 @@ import it.unifi.facpl.system.status.function.arithmetic.evaluator.IExpressionFun
  */
 public class FulfilledObligationStatus extends AbstractFulfilledObligation {
 	/*
-	 * this obligation contains an 
-	 * IExpressionFunctionStatus-type object
-	 *  that will modify the status attribute
+	 * this obligation contains an IExpressionFunctionStatus-type object that
+	 * will modify the status attribute
 	 */
 	private IExpressionFunctionStatus pepFunction;
 
@@ -35,7 +34,7 @@ public class FulfilledObligationStatus extends AbstractFulfilledObligation {
 
 	@Override
 	public AbstractFulfilledObligation evaluateObl(FacplStatus status) throws Throwable {
-		//invoke the action in the object for status attribute modification
+		// invoke the action in the object for status attribute modification
 		this.pepFunction.evaluateFunction(status, this.getArgsStatus());
 		return this;
 	}

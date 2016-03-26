@@ -24,9 +24,11 @@ public class AuthorisationPEP {
 		this.id = id;
 		this.decision = dec;
 	}
+
 	public AuthorisationPEP() {
 		this.id = UUID.randomUUID().toString().substring(0, 8);
 	}
+
 	public AuthorisationPEP(String id) {
 		this.id = id;
 	}

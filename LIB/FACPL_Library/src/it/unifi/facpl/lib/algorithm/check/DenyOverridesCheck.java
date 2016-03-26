@@ -21,13 +21,13 @@ public class DenyOverridesCheck implements IEvaluableAlgorithmCheck {
 	@Override
 	public AuthorisationPEP evaluate(List<StandardDecision> decList, ContextRequest cxtRequest) {
 		Logger l = LoggerFactory.getLogger(getClass());
-		
+
 		l.debug("DENY OVERRIDE FOR CHECK STARTED");
-		
+
 		AuthorisationPEP dr = new AuthorisationPEP(UUID.randomUUID().toString().substring(0, 8));
-		
+
 		for (StandardDecision dec : decList) {
-			
+
 			if (StandardDecision.DENY.equals(dec)) {
 				atLeastOneDeny = true;
 				dr.setDecision(StandardDecision.DENY);
@@ -82,7 +82,7 @@ public class DenyOverridesCheck implements IEvaluableAlgorithmCheck {
 		this.atLeastOneErrorDP = false;
 		this.atLeastOneErrorP = false;
 		this.atLeastOnePermit = false;
-		
+
 	}
 
 }

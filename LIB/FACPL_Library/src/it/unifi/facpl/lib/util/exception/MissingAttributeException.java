@@ -22,5 +22,4 @@ public class MissingAttributeException extends Exception {
 		super(string);
 	}
 
-
 }

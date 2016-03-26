@@ -13,15 +13,16 @@ public class AbstractFulfilledObligationCheck extends AbstractFulfilledObligatio
 		this.evaluatedOn = effect;
 		this.arguments = new LinkedList<Object>();
 	}
+
 	@Override
 	public Object getPepAction() {
-		
+
 		return null;
 	}
 
 	@Override
 	public AbstractFulfilledObligation evaluateObl(FacplStatus status) throws Throwable {
-		
+
 		return null;
 	}
 

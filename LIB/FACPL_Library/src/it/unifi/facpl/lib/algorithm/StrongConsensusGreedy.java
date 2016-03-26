@@ -32,7 +32,6 @@ public class StrongConsensusGreedy implements IEvaluableAlgorithm {
 		Logger l = LoggerFactory.getLogger(StrongConsensusGreedy.class);
 		l.debug("-> STRONG CONSENSUS started");
 
-
 		LinkedList<AbstractFulfilledObligation> obligationDeny = new LinkedList<AbstractFulfilledObligation>();
 		LinkedList<AbstractFulfilledObligation> obligationPermit = new LinkedList<AbstractFulfilledObligation>();
 

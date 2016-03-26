@@ -10,18 +10,18 @@ public class FacplDate {
 	private String dateS;
 
 	public FacplDate() {
-		Calendar c=Calendar.getInstance();
-		String s=null;
+		Calendar c = Calendar.getInstance();
+		String s = null;
 		try {
 			s = Util.parseCalendar(c);
-			this.date 	=  Util.parseDate(s);
-			this.dateS	= s;
+			this.date = Util.parseDate(s);
+			this.dateS = s;
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.append("The input date and/or time value cannot be parsed");
 		}
-		//System.err.println(this.toString());
-		
+		// System.err.println(this.toString());
+
 	}
 
 	public FacplDate(String dateS) {

@@ -5,10 +5,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import it.unifi.facpl.lib.algorithm.FirstApplicable;
 import it.unifi.facpl.lib.context.AuthorisationPEP;
 import it.unifi.facpl.lib.context.ContextRequest;
-import it.unifi.facpl.lib.context.FulfilledObligationCheck;
 import it.unifi.facpl.lib.enums.StandardDecision;
 
 public class FirstApplicableCheck implements IEvaluableAlgorithmCheck {
@@ -21,7 +19,7 @@ public class FirstApplicableCheck implements IEvaluableAlgorithmCheck {
 		AuthorisationPEP dr = new AuthorisationPEP();
 
 		for (StandardDecision d : decList) {
-			
+
 			if (d.equals(StandardDecision.DENY)) {
 				l.debug("First Applicable END - Result DENY");
 				dr.setDecision(StandardDecision.DENY);
@@ -36,7 +34,7 @@ public class FirstApplicableCheck implements IEvaluableAlgorithmCheck {
 				l.debug("First Applicable Continue - Element NOT APPLICABLE, continue");
 				continue;
 			}
-			if (dr.getDecision().equals(StandardDecision.INDETERMINATE)){
+			if (dr.getDecision().equals(StandardDecision.INDETERMINATE)) {
 				l.debug("First Applicable END - Result INDETERMINATE");
 				dr.setDecision(StandardDecision.INDETERMINATE);
 				return dr;
@@ -50,7 +48,7 @@ public class FirstApplicableCheck implements IEvaluableAlgorithmCheck {
 	@Override
 	public void resetAlg() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

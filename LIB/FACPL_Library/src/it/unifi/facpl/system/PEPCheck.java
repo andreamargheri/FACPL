@@ -114,7 +114,7 @@ public class PEPCheck extends PEP {
 					l.debug("ADDED: " + temp);
 					checkObl.add(temp);
 				}
-			}else if (o instanceof FulfilledObligationTimeCheck) {
+			} else if (o instanceof FulfilledObligationTimeCheck) {
 				FulfilledObligationTimeCheck temp = null;
 				try {
 					temp = (FulfilledObligationTimeCheck) ((FulfilledObligationTimeCheck) o).clone();
@@ -142,15 +142,15 @@ public class PEPCheck extends PEP {
 		StandardDecision dec;
 		LinkedList<StandardDecision> decisionList = new LinkedList<StandardDecision>();
 		for (AbstractFulfilledObligationCheck obl : checkObl) {
-			if (obl instanceof FulfilledObligationCheck){
-				dec = ((FulfilledObligationCheck)obl).getObligationResult(ctxRequest);
+			if (obl instanceof FulfilledObligationCheck) {
+				dec = ((FulfilledObligationCheck) obl).getObligationResult(ctxRequest);
 				decisionList.add(dec);
 				if (StandardDecision.NOT_APPLICABLE.equals(dec)) {
 					r.setDecision(StandardDecision.NOT_APPLICABLE);
 					return r;
 				}
-			}else if (obl instanceof FulfilledObligationTimeCheck){
-				dec = ((FulfilledObligationTimeCheck)obl).getObligationResult(ctxRequest);
+			} else if (obl instanceof FulfilledObligationTimeCheck) {
+				dec = ((FulfilledObligationTimeCheck) obl).getObligationResult(ctxRequest);
 				decisionList.add(dec);
 				if (StandardDecision.NOT_APPLICABLE.equals(dec)) {
 					r.setDecision(StandardDecision.NOT_APPLICABLE);

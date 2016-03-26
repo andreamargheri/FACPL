@@ -9,10 +9,11 @@ public class ArithmeticEvaluatorFactoryStatus {
 	private static ArithmeticEvaluatorFactoryStatus instance;
 
 	private HashMap<Class<?>, ArithmeticEvaluatorStatus> table;
+
 	/*
-	 * for now it's useless 'cause always return the same class
-	 *  but this structure increase reuse of the code in the future for
-	 *  the implementation of a new type of arithmetic evaluator
+	 * for now it's useless 'cause always return the same class but this
+	 * structure increase reuse of the code in the future for the implementation
+	 * of a new type of arithmetic evaluator
 	 */
 	private ArithmeticEvaluatorFactoryStatus() {
 		this.table = new HashMap<Class<?>, ArithmeticEvaluatorStatus>();

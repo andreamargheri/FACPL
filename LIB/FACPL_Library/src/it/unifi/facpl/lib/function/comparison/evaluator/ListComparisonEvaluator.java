@@ -65,7 +65,6 @@ public class ListComparisonEvaluator implements IComparisonEvaluator {
 		throw new UnsupportedTypeException("list", "Is-subset-of");
 	}
 
-
 	@Override
 	public boolean isListElement(List<?> list, Object o2) throws Throwable {
 		boolean dummy = false;

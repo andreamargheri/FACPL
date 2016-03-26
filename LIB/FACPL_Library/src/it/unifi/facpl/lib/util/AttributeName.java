@@ -32,7 +32,9 @@ public class AttributeName {
 		return category.toString() + "/" + idAttribute.toString();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -44,7 +46,9 @@ public class AttributeName {
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -75,5 +79,5 @@ public class AttributeName {
 		}
 		return true;
 	}
-	
+
 }

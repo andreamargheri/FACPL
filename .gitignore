@@ -5,7 +5,7 @@
 *.lock
 *~
 *.class
-
+*.xtendbin
 
 WEB-APPs/
 WEB-Example/

@@ -33,7 +33,7 @@ public abstract class AbstractObligation implements IObligationElement {
 		this.argsFunction = new LinkedList<Object>();
 		this.argsStatus = new LinkedList<Object>();
 	}
-	
+
 	public AbstractObligation(Effect evaluatedOn, Object... args) {
 		this.evaluatedOn = evaluatedOn;
 		this.typeObl = ObligationType.M;

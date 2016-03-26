@@ -5,25 +5,21 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import it.unifi.facpl.lib.algorithm.OnlyOneApplicable;
 import it.unifi.facpl.lib.context.AuthorisationPEP;
 import it.unifi.facpl.lib.context.ContextRequest;
-import it.unifi.facpl.lib.context.FulfilledObligationCheck;
 import it.unifi.facpl.lib.enums.StandardDecision;
 
 public class OnlyOneApplicableCheck implements IEvaluableAlgorithmCheck {
 
 	private Boolean atLeastOne = false;
-	//FulfilledObligationCheck selectedPolicy = null;
-	private StandardDecision selectedDecision=StandardDecision.INDETERMINATE;
+	// FulfilledObligationCheck selectedPolicy = null;
+	private StandardDecision selectedDecision = StandardDecision.INDETERMINATE;
 	private StandardDecision appResult;
-	
+
 	@Override
 	public AuthorisationPEP evaluate(List<StandardDecision> decList, ContextRequest cxtRequest) {
 		Logger l = LoggerFactory.getLogger(getClass());
 		l.debug("-> ONLY ONE APPLICABLE started");
-
-
 
 		AuthorisationPEP dr = new AuthorisationPEP();
 
@@ -40,8 +36,8 @@ public class OnlyOneApplicableCheck implements IEvaluableAlgorithmCheck {
 					return dr;
 				} else {
 					atLeastOne = true;
-					//selectedPolicy = el;
-					selectedDecision= dec;
+					// selectedPolicy = el;
+					selectedDecision = dec;
 
 				}
 			}
@@ -63,8 +59,8 @@ public class OnlyOneApplicableCheck implements IEvaluableAlgorithmCheck {
 	@Override
 	public void resetAlg() {
 		this.atLeastOne = false;
-		this.selectedDecision=StandardDecision.INDETERMINATE;
-		
+		this.selectedDecision = StandardDecision.INDETERMINATE;
+
 	}
 
 }

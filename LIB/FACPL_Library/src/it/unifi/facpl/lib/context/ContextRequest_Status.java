@@ -37,7 +37,7 @@ public class ContextRequest_Status extends ContextRequest {
 	@Override
 	public Object getContextRequestValues(AttributeName name) throws MissingAttributeException {
 		Logger l = LoggerFactory.getLogger(ContextRequest_Status.class);
- 
+
 		if (name instanceof StatusAttribute) {
 			if (status != null) {
 				try {
@@ -50,7 +50,7 @@ public class ContextRequest_Status extends ContextRequest {
 				l.debug("Throw MissingAttributeExcepion for " + name.toString() + "Status is missing");
 				throw new MissingAttributeException();
 			}
-		}else {
+		} else {
 			return super.getContextRequestValues(name);
 		}
 	}

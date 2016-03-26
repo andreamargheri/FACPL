@@ -9,16 +9,16 @@ public interface ArithmeticEvaluatorStatus {
 	 */
 	public void add(FacplStatus status, StatusAttribute o1, Object o2) throws Throwable;
 
-	public void divide(FacplStatus status,StatusAttribute o1, Object o2) throws Throwable;
+	public void divide(FacplStatus status, StatusAttribute o1, Object o2) throws Throwable;
 
-	public void multiply(FacplStatus status,StatusAttribute o1, Object o2) throws Throwable;
+	public void multiply(FacplStatus status, StatusAttribute o1, Object o2) throws Throwable;
 
-	public void subtract(FacplStatus status,StatusAttribute o1, Object o2) throws Throwable;
+	public void subtract(FacplStatus status, StatusAttribute o1, Object o2) throws Throwable;
 
-	public void flag(FacplStatus status,StatusAttribute o1, Object o2) throws Throwable; 
+	public void flag(FacplStatus status, StatusAttribute o1, Object o2) throws Throwable;
 
-	public void sum_date(FacplStatus status,StatusAttribute s1, Object o2) throws Throwable;
-	
-	public void set_date(FacplStatus status,StatusAttribute s1, Object o2) throws Throwable;
+	public void sum_date(FacplStatus status, StatusAttribute s1, Object o2) throws Throwable;
+
+	public void set_date(FacplStatus status, StatusAttribute s1, Object o2) throws Throwable;
 
 }

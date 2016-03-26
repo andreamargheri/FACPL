@@ -17,13 +17,12 @@ public class DenyOverridesGreedyCheck implements IEvaluableAlgorithmCheck {
 	private Boolean atLeastOneErrorP = false;
 	private Boolean atLeastOneErrorDP = false;
 	private Boolean atLeastOnePermit = false;
-	
+
 	@Override
 	public AuthorisationPEP evaluate(List<StandardDecision> decList, ContextRequest cxtRequest) {
 		Logger l = LoggerFactory.getLogger(getClass());
 
 		l.debug("-> DENY OVERRIDES (GREEDY) CHECK STARTED");
-
 
 		AuthorisationPEP dr = new AuthorisationPEP(UUID.randomUUID().toString().substring(0, 8));
 
@@ -81,18 +80,19 @@ public class DenyOverridesGreedyCheck implements IEvaluableAlgorithmCheck {
 			dr.setDecision(StandardDecision.INDETERMINATE);
 			return dr;
 		}
-		
+
 		l.debug("ALG.DENY-Greedy = dt: NotAPP");
 		dr.setDecision(StandardDecision.NOT_APPLICABLE);
 		return dr;
 	}
+
 	@Override
 	public void resetAlg() {
 		this.atLeastOneErrorD = false;
 		this.atLeastOneErrorDP = false;
 		this.atLeastOneErrorP = false;
 		this.atLeastOnePermit = false;
-		
+
 	}
 
 }

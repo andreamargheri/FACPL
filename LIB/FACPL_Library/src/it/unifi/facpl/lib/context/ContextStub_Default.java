@@ -10,11 +10,6 @@
  *******************************************************************************/
 package it.unifi.facpl.lib.context;
 
-import java.util.Date;
-
-import it.unifi.facpl.lib.interfaces.IContextStub;
-import it.unifi.facpl.lib.util.AttributeName;
-
 @SuppressWarnings("all")
 public class ContextStub_Default extends AbstractContextStub {
 

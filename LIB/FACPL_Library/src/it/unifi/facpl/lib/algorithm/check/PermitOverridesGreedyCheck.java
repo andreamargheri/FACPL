@@ -5,26 +5,21 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import it.unifi.facpl.lib.algorithm.PermitOverridesGreedy;
 import it.unifi.facpl.lib.context.AuthorisationPEP;
 import it.unifi.facpl.lib.context.ContextRequest;
-import it.unifi.facpl.lib.context.FulfilledObligationCheck;
 import it.unifi.facpl.lib.enums.StandardDecision;
 
 public class PermitOverridesGreedyCheck implements IEvaluableAlgorithmCheck {
-	private Boolean atLeastOneErrorD = false;
-	private Boolean atLeastOneErrorP = false;
 	private Boolean atLeastOneErrorDP = false;
 	private Boolean atLeastOneDeny = false;
-	
+
 	@Override
 	public AuthorisationPEP evaluate(List<StandardDecision> decList, ContextRequest cxtRequest) {
 		Logger l = LoggerFactory.getLogger(getClass());
 		l.debug("-> PERMIT OVERRIDES started");
 
-
 		AuthorisationPEP dr = new AuthorisationPEP();
-		
+
 		for (StandardDecision dec : decList) {
 			StandardDecision d = dec;
 
@@ -46,9 +41,7 @@ public class PermitOverridesGreedyCheck implements IEvaluableAlgorithmCheck {
 				continue;
 			}
 			if (StandardDecision.INDETERMINATE.equals(d)) {
-				atLeastOneErrorD = true;
 				atLeastOneErrorDP = true;
-				atLeastOneErrorP = true;
 				continue;
 			}
 
@@ -72,11 +65,11 @@ public class PermitOverridesGreedyCheck implements IEvaluableAlgorithmCheck {
 
 	@Override
 	public void resetAlg() {
-		this.atLeastOneErrorD = false;
-		this.atLeastOneErrorP = false;
+//		this.atLeastOneErrorD = false;
+//		this.atLeastOneErrorP = false;
 		this.atLeastOneErrorDP = false;
 		this.atLeastOneDeny = false;
-		
+
 	}
 
 }

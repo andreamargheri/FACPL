@@ -1,15 +1,14 @@
 package it.unifi.facpl.lib.context;
 
 import it.unifi.facpl.lib.enums.Effect;
-import it.unifi.facpl.lib.enums.ObligationType;
 import it.unifi.facpl.lib.policy.ExpressionBooleanTree;
 import it.unifi.facpl.lib.policy.ExpressionFunction;
 
 public class FulfilledObligationCheckPersistent extends FulfilledObligationCheck {
 
 	/*
-	 * same constructor of FulfilledObligationCheck,
-	 * but expiration is initialized with -1
+	 * same constructor of FulfilledObligationCheck, but expiration is
+	 * initialized with -1
 	 */
 	public FulfilledObligationCheckPersistent(Effect evaluatedOn, ExpressionBooleanTree target,
 			ExpressionBooleanTree status_target) {

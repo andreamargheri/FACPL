@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import it.unifi.facpl.lib.context.ContextRequest;
-import it.unifi.facpl.lib.context.ContextRequest_Status;
 import it.unifi.facpl.lib.enums.ExpressionValue;
 import it.unifi.facpl.lib.interfaces.IExpressionFunction;
 import it.unifi.facpl.lib.util.AttributeName;
@@ -75,7 +74,8 @@ public class ExpressionFunction {
 				try {
 					// Literals
 					values.add(obj);
-					//cxtRequest.getContextRequestValues((StatusAttribute) obj);
+					// cxtRequest.getContextRequestValues((StatusAttribute)
+					// obj);
 				} catch (Exception e) {
 					e.printStackTrace();
 					// Add value BOTTOM for modeling the absence of attribute

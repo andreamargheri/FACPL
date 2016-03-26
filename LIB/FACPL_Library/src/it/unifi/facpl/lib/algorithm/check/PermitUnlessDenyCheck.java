@@ -8,13 +8,12 @@ import org.slf4j.LoggerFactory;
 
 import it.unifi.facpl.lib.context.AuthorisationPEP;
 import it.unifi.facpl.lib.context.ContextRequest;
-import it.unifi.facpl.lib.context.FulfilledObligationCheck;
 import it.unifi.facpl.lib.enums.StandardDecision;
 
 public class PermitUnlessDenyCheck implements IEvaluableAlgorithmCheck {
 
-	private Boolean atLeastOneDeny = false;
-	
+//	private Boolean atLeastOneDeny = false;
+
 	@Override
 	public AuthorisationPEP evaluate(List<StandardDecision> decList, ContextRequest cxtRequest) {
 		Logger l = LoggerFactory.getLogger(getClass());
@@ -44,7 +43,7 @@ public class PermitUnlessDenyCheck implements IEvaluableAlgorithmCheck {
 
 	@Override
 	public void resetAlg() {
-		this.atLeastOneDeny = false;
-		
+//		this.atLeastOneDeny = false;
+
 	}
 }

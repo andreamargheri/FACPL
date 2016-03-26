@@ -7,17 +7,16 @@ import it.unifi.facpl.lib.util.exception.MissingAttributeException;
 
 public class FacplStatus {
 
-	
 	private String statusID;
-	
-	private HashMap<StatusAttribute,Object> status;
+
+	private HashMap<StatusAttribute, Object> status;
 
 	/**
 	 * @param id
 	 */
 
 	public FacplStatus(String statusID) {
-		this.status = new HashMap<StatusAttribute,Object>();
+		this.status = new HashMap<StatusAttribute, Object>();
 		this.statusID = statusID;
 	}
 
@@ -25,27 +24,28 @@ public class FacplStatus {
 	 * @param attributeList
 	 * @param id
 	 */
-	public FacplStatus(HashMap<StatusAttribute,Object> attributeList, String statusID) {
+	public FacplStatus(HashMap<StatusAttribute, Object> attributeList, String statusID) {
 		this.status = attributeList;
 		this.statusID = statusID;
 	}
 
 	public FacplStatus() {
-		this.status = new HashMap<StatusAttribute,Object>();
+		this.status = new HashMap<StatusAttribute, Object>();
 		this.statusID = UUID.randomUUID().toString().substring(0, 8);
 	}
-	
-	public FacplStatus(HashMap<StatusAttribute,Object> attributeList) {
+
+	public FacplStatus(HashMap<StatusAttribute, Object> attributeList) {
 		this.status = attributeList;
-		this.statusID =  UUID.randomUUID().toString().substring(0, 8);;
+		this.statusID = UUID.randomUUID().toString().substring(0, 8);
+		;
 	}
 
 	public String getStatusID() {
 		return this.statusID;
 	}
 
-	public void add(StatusAttribute a,String v) {
-		this.status.put(a,v);
+	public void add(StatusAttribute a, String v) {
+		this.status.put(a, v);
 	}
 
 	/**
@@ -54,18 +54,19 @@ public class FacplStatus {
 	 * @param attribute
 	 */
 	public Object retrieveAttribute(StatusAttribute attribute) throws MissingAttributeException {
-		Object v = this.status.get(attribute);	
-		if (v == null){
+		Object v = this.status.get(attribute);
+		if (v == null) {
 			throw new MissingAttributeException("attribute doesn't exist in the current status");
-		}else{
+		} else {
 			return v;
 		}
 	}
+
 	public void setAttribute(StatusAttribute attribute, Object o) throws MissingAttributeException {
 		Object v = this.status.get(attribute);
-		if (v == null){
+		if (v == null) {
 			throw new MissingAttributeException("attribute doesn't exist in the current status");
-		}else{
+		} else {
 			this.status.put(attribute, o);
 		}
 	}

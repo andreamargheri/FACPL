@@ -37,7 +37,6 @@ public class PermitUnlessDenyGreedy implements IEvaluableAlgorithm {
 		Logger l = LoggerFactory.getLogger(PermitUnlessDenyGreedy.class);
 		l.debug("-> PERMIT UNLESS DENY-GREEDY started");
 
-
 		LinkedList<AbstractFulfilledObligation> obls_permit = new LinkedList<AbstractFulfilledObligation>();
 
 		AuthorisationPDP dr = new AuthorisationPDP();

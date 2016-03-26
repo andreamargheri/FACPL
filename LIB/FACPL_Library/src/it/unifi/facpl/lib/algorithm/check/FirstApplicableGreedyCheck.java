@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 
 import it.unifi.facpl.lib.context.AuthorisationPEP;
 import it.unifi.facpl.lib.context.ContextRequest;
-import it.unifi.facpl.lib.context.FulfilledObligationCheck;
 import it.unifi.facpl.lib.enums.StandardDecision;
 
 public class FirstApplicableGreedyCheck implements IEvaluableAlgorithmCheck {
@@ -20,7 +19,7 @@ public class FirstApplicableGreedyCheck implements IEvaluableAlgorithmCheck {
 		AuthorisationPEP dr = new AuthorisationPEP();
 
 		for (StandardDecision d : decList) {
-			
+
 			if (d.equals(StandardDecision.DENY)) {
 				l.debug("First Applicable END - Result DENY");
 				dr.setDecision(StandardDecision.DENY);
@@ -35,7 +34,7 @@ public class FirstApplicableGreedyCheck implements IEvaluableAlgorithmCheck {
 				l.debug("First Applicable Continue - Element NOT APPLICABLE, continue");
 				continue;
 			}
-			if (d.equals(StandardDecision.INDETERMINATE)){
+			if (d.equals(StandardDecision.INDETERMINATE)) {
 				l.debug("First Applicable END - Result INDETERMINATE");
 				dr.setDecision(StandardDecision.INDETERMINATE);
 				return dr;
@@ -49,7 +48,7 @@ public class FirstApplicableGreedyCheck implements IEvaluableAlgorithmCheck {
 	@Override
 	public void resetAlg() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

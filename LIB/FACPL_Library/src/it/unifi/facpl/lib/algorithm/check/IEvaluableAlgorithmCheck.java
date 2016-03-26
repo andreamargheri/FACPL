@@ -9,5 +9,6 @@ import it.unifi.facpl.lib.enums.StandardDecision;
 public interface IEvaluableAlgorithmCheck {
 
 	AuthorisationPEP evaluate(List<StandardDecision> checkObl, ContextRequest cxtRequest);
+
 	public void resetAlg();
 }

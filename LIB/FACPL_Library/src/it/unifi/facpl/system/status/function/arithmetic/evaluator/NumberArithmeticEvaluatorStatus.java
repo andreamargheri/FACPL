@@ -25,13 +25,13 @@ public class NumberArithmeticEvaluatorStatus implements ArithmeticEvaluatorStatu
 	}
 
 	@Override
-	public void add(FacplStatus status,StatusAttribute o1, Object o2) throws Throwable {
+	public void add(FacplStatus status, StatusAttribute o1, Object o2) throws Throwable {
 		if (o1.getType() == FacplStatusType.INT) {
-			Integer value = (int)(status.retrieveAttribute(o1));
+			Integer value = (int) (status.retrieveAttribute(o1));
 			Integer newValue = value + (int) o2;
 			status.setAttribute(o1, newValue);
 		} else if (o1.getType() == FacplStatusType.DOUBLE) {
-			Double value = (Double)(status.retrieveAttribute(o1));
+			Double value = (Double) (status.retrieveAttribute(o1));
 			Double newValue = value + (double) o2;
 			status.setAttribute(o1, newValue);
 		} else {
@@ -40,13 +40,13 @@ public class NumberArithmeticEvaluatorStatus implements ArithmeticEvaluatorStatu
 	}
 
 	@Override
-	public void divide(FacplStatus status,StatusAttribute o1, Object o2) throws Throwable {
+	public void divide(FacplStatus status, StatusAttribute o1, Object o2) throws Throwable {
 		if (o1.getType() == FacplStatusType.INT) {
-			Integer value = (int)(status.retrieveAttribute(o1));
+			Integer value = (int) (status.retrieveAttribute(o1));
 			Integer newValue = value / (int) o2;
 			status.setAttribute(o1, newValue);
 		} else if (o1.getType() == FacplStatusType.DOUBLE) {
-			Double value = (Double)(status.retrieveAttribute(o1));
+			Double value = (Double) (status.retrieveAttribute(o1));
 			Double newValue = value / (double) o2;
 			status.setAttribute(o1, newValue);
 		} else {
@@ -55,13 +55,13 @@ public class NumberArithmeticEvaluatorStatus implements ArithmeticEvaluatorStatu
 	}
 
 	@Override
-	public void multiply(FacplStatus status,StatusAttribute o1, Object o2) throws Throwable {
+	public void multiply(FacplStatus status, StatusAttribute o1, Object o2) throws Throwable {
 		if (o1.getType() == FacplStatusType.INT) {
-			Integer value = (int)(status.retrieveAttribute(o1));
+			Integer value = (int) (status.retrieveAttribute(o1));
 			Integer newValue = value * (int) o2;
 			status.setAttribute(o1, newValue);
 		} else if (o1.getType() == FacplStatusType.DOUBLE) {
-			Double value = (Double)(status.retrieveAttribute(o1));
+			Double value = (Double) (status.retrieveAttribute(o1));
 			Double newValue = value * (double) o2;
 			status.setAttribute(o1, newValue);
 		} else {
@@ -70,13 +70,13 @@ public class NumberArithmeticEvaluatorStatus implements ArithmeticEvaluatorStatu
 	}
 
 	@Override
-	public void subtract(FacplStatus status,StatusAttribute o1, Object o2) throws Throwable {
+	public void subtract(FacplStatus status, StatusAttribute o1, Object o2) throws Throwable {
 		if (o1.getType() == FacplStatusType.INT) {
-			Integer value = (int)(status.retrieveAttribute(o1));
+			Integer value = (int) (status.retrieveAttribute(o1));
 			Integer newValue = value - (int) o2;
 			status.setAttribute(o1, newValue);
 		} else if (o1.getType() == FacplStatusType.DOUBLE) {
-			Double value = (Double)(status.retrieveAttribute(o1));
+			Double value = (Double) (status.retrieveAttribute(o1));
 			Double newValue = value - (double) o2;
 			status.setAttribute(o1, newValue);
 		} else {
@@ -85,7 +85,7 @@ public class NumberArithmeticEvaluatorStatus implements ArithmeticEvaluatorStatu
 	}
 
 	@Override
-	public void flag(FacplStatus status,StatusAttribute o1, Object o2) throws Throwable {
+	public void flag(FacplStatus status, StatusAttribute o1, Object o2) throws Throwable {
 		if (o1.getType() == FacplStatusType.BOOLEAN) {
 			Boolean newValue = (Boolean) o2;
 			status.setAttribute(o1, newValue.booleanValue());
@@ -96,13 +96,12 @@ public class NumberArithmeticEvaluatorStatus implements ArithmeticEvaluatorStatu
 
 	}
 
-	
 	/*
 	 * 
 	 * RIVEDERE QUESTA
 	 */
 	@Override
-	public void sum_date(FacplStatus status,StatusAttribute o1, Object o2) throws Throwable {
+	public void sum_date(FacplStatus status, StatusAttribute o1, Object o2) throws Throwable {
 		if (o1.getType() == FacplStatusType.DATE) {
 			Calendar d1 = Util.parseDate((String) status.retrieveAttribute(o1));
 			Calendar d2 = Util.parseDate(((FacplDate) o2).toString());
@@ -118,14 +117,14 @@ public class NumberArithmeticEvaluatorStatus implements ArithmeticEvaluatorStatu
 	}
 
 	@Override
-	public void set_date(FacplStatus status,StatusAttribute o1, Object o2) throws Throwable {
+	public void set_date(FacplStatus status, StatusAttribute o1, Object o2) throws Throwable {
 		if (o1.getType() == FacplStatusType.DATE) {
 			Calendar d2 = Util.parseDate(((FacplDate) o2).toString());
 			status.setAttribute(o1, Util.parseCalendar(d2));
 		} else {
 			throw new UnsupportedTypeException("Date", "Add");
 		}
-		
+
 	}
 
 }

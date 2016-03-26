@@ -57,8 +57,7 @@ public class Request {
 		try {
 			Object values = values_cat.get(name.getIDAttribute());
 
-			
-			if (values == null) { 
+			if (values == null) {
 				throw new MissingAttributeException();
 			}
 			if (values instanceof Set) {
