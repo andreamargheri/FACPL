@@ -379,15 +379,16 @@ class Facpl2Generator implements IGenerator {
 	//OBLIGATIONS
 	//----------------------------------------------------
 	def compileObligation(Obligation obl) '''
-		«IF obl.getExpiration() != null»
+		«IF obl.expiration != null»
 		new ObligationCheck(Effect.«obl.evaluetedOn.getName»,«getExpression(obl.e1)»,«getExpression(obl.e2)»,«getExpression(obl.getExpiration())»)
 		«ENDIF»
-		«IF obl.getE1() != null»
+		«IF obl.getE1() != null && obl.getE2() != null && obl.expiration== null »
 		new ObligationCheck(Effect.«obl.evaluetedOn.getName»,«getExpression(obl.e1)»,«getExpression(obl.e2)»)
 		«ENDIF»
-		«IF obl.function == null»
-		new Obligation("«obl.pepAction»",Effect.«obl.evaluetedOn.getName»,ObligationType.«obl.typeObl»,«obl.expr.getOblExpression»)
-		«ELSE»
+		«IF obl.function == null && obl.pepAction!=null»
+		new Obligation("«obl.pepAction»",Effect.«obl.evaluetedOn.getName»,ObligationType.«obl.typeObl»,«obl.expr.getOblExpression»
+		«ENDIF»
+		«IF obl.function != null»
 		new ObligationStatus(«getPepFunction(obl.function.name)»,Effect.«obl.evaluetedOn.getName», «generateOblStatusArgs(obl)»)
 		«ENDIF»
 	'''
