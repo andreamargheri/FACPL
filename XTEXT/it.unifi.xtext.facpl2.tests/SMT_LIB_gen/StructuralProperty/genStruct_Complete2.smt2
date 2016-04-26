@@ -8,7 +8,7 @@
 ;#######################
 (define-sort Set (T) (Array Int T)) 
 ;################### STRING DECLARATIONs #######################
- (declare-datatypes () ((String s_read s_Andrea )))
+ (declare-datatypes () ((String s_read s_Andrea  s_AdditionalStringValue )))
 ;################### FACPL FUNCTION DECLARATIONs #######################
 (define-fun isFalse ((x (TValue Bool))) Bool
 	(ite (= x (mk-val false false false)) true false)
@@ -16,6 +16,13 @@
 
 (define-fun isTrue ((x (TValue Bool))) Bool
 	(ite (= x (mk-val true false false)) true false)
+)
+
+(define-fun isBool ((x (TValue Bool))) Bool
+		(ite (or (isFalse x) (isTrue x))
+			true
+			false
+		)
 )
 
 (define-fun isNotBoolValue ((x (TValue Bool))) Bool
@@ -443,8 +450,12 @@ true
 ;INDET
 (define-fun cns_r12_indet () Bool
 	(or 
-		(err cns_target_r12)
-		(isNotBoolValue cns_target_r12)
+		(not
+			(or  
+				(isBool cns_target_r12)
+				(miss cns_target_r12)
+			)
+		)
 		(and 
 			(isTrue cns_target_r12)
 			(not cns_obl_permit_r12)
@@ -509,8 +520,12 @@ true
 ;INDET
 (define-fun cns_Name1_indet () Bool
 	(or 
-		(err cns_target_Name1)
-		(isNotBoolValue cns_target_Name1)
+		(not
+			(or  
+				(isBool cns_target_Name1)
+				(miss cns_target_Name1)
+			)
+		)
 		(and (isTrue cns_target_Name1) cns_Name1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_Name1)
@@ -526,6 +541,7 @@ true
 )
 ;################### END TOP-LEVEL POLICY Name1 CONSTRAINTs #########################
 ;###################### STRUCTURAL PROPERTY #####################
+(echo "--> Check COMPLETE of Name1... (holds if the following check is unsat)")
 (assert cns_Name1_notApp)
 
 (check-sat)

@@ -498,8 +498,6 @@ public class SMT_LIBGenerator_Property_Test extends AbstractXtextTests {
       Facpl model = this._parseHelper.parse(_builder);
       this._validationTestHelper.assertNoErrors(model);
       String str = this._sMT_LIBGenerator.doGenerateStructural_Property_Code(model, "Name", "Name1", StructuralProperty.COVER);
-      boolean _contains = str.contains("(=> cns_Name_permit cns_Name1_permit)");
-      Assert.assertEquals(Boolean.valueOf(_contains), Boolean.valueOf(true));
       PrintWriter writer = new PrintWriter("SMT_LIB_gen/StructuralProperty/genStruct_Coverage1.smt2", "UTF-8");
       writer.println(str);
       writer.close();
@@ -528,8 +526,8 @@ public class SMT_LIBGenerator_Property_Test extends AbstractXtextTests {
       this._validationTestHelper.assertNoErrors(model);
       String _doGenerateStructural_Property_Code = this._sMT_LIBGenerator.doGenerateStructural_Property_Code(model, "Name", "Name1", StructuralProperty.DISJOINT);
       str = _doGenerateStructural_Property_Code;
-      boolean _contains_1 = str.contains("(and cns_Name_permit cns_Name1_permit)");
-      Assert.assertEquals(Boolean.valueOf(_contains_1), Boolean.valueOf(true));
+      boolean _contains = str.contains("(and cns_Name_permit cns_Name1_permit)");
+      Assert.assertEquals(Boolean.valueOf(_contains), Boolean.valueOf(true));
       PrintWriter _printWriter = new PrintWriter("SMT_LIB_gen/StructuralProperty/genStruct_Disjoint1.smt2", "UTF-8");
       writer = _printWriter;
       writer.println(str);

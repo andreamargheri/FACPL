@@ -235,7 +235,7 @@ public class SMT_LIBGenerator_Test extends AbstractXtextTests {
       String cns = this._sMT_LIBGenerator.doGenerateSMT_LIB_Test(model);
       System.out.println(cns);
       StringConcatenation _builder_1 = new StringConcatenation();
-      _builder_1.append("(declare-datatypes () ((String s_prova s_pharmacist s_doc )))");
+      _builder_1.append("(declare-datatypes () ((String s_prova s_pharmacist s_doc  s_AdditionalStringValue )))");
       boolean _contains = cns.contains(_builder_1);
       if (_contains) {
         Assert.assertEquals(Boolean.valueOf(true), Boolean.valueOf(true));

@@ -8,7 +8,7 @@
 ;#######################
 (define-sort Set (T) (Array Int T)) 
 ;################### STRING DECLARATIONs #######################
- (declare-datatypes () ((String s_doctor s_e-Prescription s_read s_e-Pre-Write s_e-Pre-Read s_pharmacist s_write )))
+ (declare-datatypes () ((String s_doctor s_e-Prescription s_read s_e-Pre-Write s_e-Pre-Read s_pharmacist s_write  s_AdditionalStringValue )))
 ;################### FACPL FUNCTION DECLARATIONs #######################
 (define-fun isFalse ((x (TValue Bool))) Bool
 	(ite (= x (mk-val false false false)) true false)
@@ -16,6 +16,13 @@
 
 (define-fun isTrue ((x (TValue Bool))) Bool
 	(ite (= x (mk-val true false false)) true false)
+)
+
+(define-fun isBool ((x (TValue Bool))) Bool
+		(ite (or (isFalse x) (isTrue x))
+			true
+			false
+		)
 )
 
 (define-fun isNotBoolValue ((x (TValue Bool))) Bool
@@ -480,8 +487,12 @@ true
 ;INDET
 (define-fun cns_write_indet () Bool
 	(or 
-		(err cns_target_write)
-		(isNotBoolValue cns_target_write)
+		(not
+			(or  
+				(isBool cns_target_write)
+				(miss cns_target_write)
+			)
+		)
 		(and 
 			(isTrue cns_target_write)
 			(not cns_obl_permit_write)
@@ -519,8 +530,12 @@ true
 ;INDET
 (define-fun cns_read_indet () Bool
 	(or 
-		(err cns_target_read)
-		(isNotBoolValue cns_target_read)
+		(not
+			(or  
+				(isBool cns_target_read)
+				(miss cns_target_read)
+			)
+		)
 		(and 
 			(isTrue cns_target_read)
 			(not cns_obl_permit_read)
@@ -558,8 +573,12 @@ true
 ;INDET
 (define-fun cns_pha_indet () Bool
 	(or 
-		(err cns_target_pha)
-		(isNotBoolValue cns_target_pha)
+		(not
+			(or  
+				(isBool cns_target_pha)
+				(miss cns_target_pha)
+			)
+		)
 		(and 
 			(isTrue cns_target_pha)
 			(not cns_obl_permit_pha)
@@ -665,8 +684,12 @@ true
 ;INDET
 (define-fun cns_ePre_indet () Bool
 	(or 
-		(err cns_target_ePre)
-		(isNotBoolValue cns_target_ePre)
+		(not
+			(or  
+				(isBool cns_target_ePre)
+				(miss cns_target_ePre)
+			)
+		)
 		(and (isTrue cns_target_ePre) cns_ePre_cmb_final_indet)
 		(and 
 			(isTrue cns_target_ePre)

@@ -8,7 +8,7 @@
 ;#######################
 (define-sort Set (T) (Array Int T)) 
 ;################### STRING DECLARATIONs #######################
- (declare-datatypes () ((String s_read s_write s_Andrea )))
+ (declare-datatypes () ((String s_read s_write s_Andrea  s_AdditionalStringValue )))
 ;################### FACPL FUNCTION DECLARATIONs #######################
 (define-fun isFalse ((x (TValue Bool))) Bool
 	(ite (= x (mk-val false false false)) true false)
@@ -16,6 +16,13 @@
 
 (define-fun isTrue ((x (TValue Bool))) Bool
 	(ite (= x (mk-val true false false)) true false)
+)
+
+(define-fun isBool ((x (TValue Bool))) Bool
+		(ite (or (isFalse x) (isTrue x))
+			true
+			false
+		)
 )
 
 (define-fun isNotBoolValue ((x (TValue Bool))) Bool
@@ -448,8 +455,12 @@ true
 ;INDET
 (define-fun cns_r1_indet () Bool
 	(or 
-		(err cns_target_r1)
-		(isNotBoolValue cns_target_r1)
+		(not
+			(or  
+				(isBool cns_target_r1)
+				(miss cns_target_r1)
+			)
+		)
 		(and 
 			(isTrue cns_target_r1)
 			(not cns_obl_permit_r1)
@@ -514,8 +525,12 @@ true
 ;INDET
 (define-fun cns_Name_indet () Bool
 	(or 
-		(err cns_target_Name)
-		(isNotBoolValue cns_target_Name)
+		(not
+			(or  
+				(isBool cns_target_Name)
+				(miss cns_target_Name)
+			)
+		)
 		(and (isTrue cns_target_Name) cns_Name_cmb_final_indet)
 		(and 
 			(isTrue cns_target_Name)
@@ -530,7 +545,7 @@ true
 	)
 )
 ;################### END TOP-LEVEL POLICY Name CONSTRAINTs #########################
-;###################### SECURITY PROPERTY #####################
+;###################### AUTHORISATION PROPERTY #####################
 (assert (= (select (val n_action/id) 0) s_read))
 (assert (= (select (val n_action/id) 1) s_write))
 
@@ -544,7 +559,8 @@ true
 (assert (not (err n_action/id)))
 (assert (miss n_subject/id))
 
-(assert cns_Name_permit)
+(assert cns_Name_permit)(echo " --> Check EVAL property... (holds if the following check is sat)")
+
 
 (check-sat)
 (get-model)

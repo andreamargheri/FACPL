@@ -295,8 +295,12 @@ def dispatch getInternalPolicyConstr(Rule r)
 ;INDET
 (define-fun cns_«r.name»_indet () Bool
 	(or 
-		(err cns_target_«r.name»)
-		(isNotBoolValue cns_target_«r.name»)
+		(not
+			(or  
+				(isBool cns_target_«r.name»)
+				(miss cns_target_«r.name»)
+			)
+		)
 		(and 
 			(isTrue cns_target_«r.name»)
 			«IF r.effect.equals(Effect.PERMIT)»
@@ -394,8 +398,12 @@ def getFinalConstrPSet(String p_name,FacplPolicy pol)'''
 ;INDET
 (define-fun cns_«p_name»_indet () Bool
 	(or 
-		(err cns_target_«p_name»)
-		(isNotBoolValue cns_target_«p_name»)
+		(not
+			(or  
+				(isBool cns_target_«p_name»)
+				(miss cns_target_«p_name»)
+			)
+		)
 		«IF pol instanceof PolicySet»
 		(and (isTrue cns_target_«p_name») cns_«p_name»_cmb_final_indet)
 		«ENDIF»

@@ -16,6 +16,13 @@
 	(ite (= x (mk-val true false false)) true false)
 )
 
+(define-fun isBool ((x (TValue Bool))) Bool
+		(ite (or (isFalse x) (isTrue x))
+			true
+			false
+		)
+)
+
 (define-fun isNotBoolValue ((x (TValue Bool))) Bool
 		(ite (or (isFalse x) (isTrue x)) 
 			false
@@ -406,8 +413,12 @@ true
 ;INDET
 (define-fun cns_name_indet () Bool
 	(or 
-		(err cns_target_name)
-		(isNotBoolValue cns_target_name)
+		(not
+			(or  
+				(isBool cns_target_name)
+				(miss cns_target_name)
+			)
+		)
 		(and 
 			(isTrue cns_target_name)
 			(not cns_obl_permit_name)
@@ -474,8 +485,12 @@ true
 ;INDET
 (define-fun cns_pSet_indet () Bool
 	(or 
-		(err cns_target_pSet)
-		(isNotBoolValue cns_target_pSet)
+		(not
+			(or  
+				(isBool cns_target_pSet)
+				(miss cns_target_pSet)
+			)
+		)
 		(and (isTrue cns_target_pSet) cns_pSet_cmb_final_indet)
 		(and 
 			(isTrue cns_target_pSet)

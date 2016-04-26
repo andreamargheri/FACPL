@@ -170,7 +170,7 @@ public class SMT_LIBGenerator_Test extends AbstractXtextTests {
 		/*
 		 * Non assigned attribute considered as boolean
 		 */
-		if (cns.contains('''(declare-datatypes () ((String s_prova s_pharmacist s_doc )))''')) {
+		if (cns.contains('''(declare-datatypes () ((String s_prova s_pharmacist s_doc  s_AdditionalStringValue )))''')) {
 			assertEquals(true, true)
 		} else {
 			assertEquals(false, true)
