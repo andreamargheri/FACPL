@@ -4,10 +4,10 @@ import it.unifi.xtext.facpl.facpl2.Facpl
 import it.unifi.xtext.facpl.facpl2.Request
 import it.unifi.xtext.facpl.generator.generators.SMT_LIBGenerator_Code
 import it.unifi.xtext.facpl.generator.util.Decision
-import it.unifi.xtext.facpl.generator.util.SecurityProperty
 import it.unifi.xtext.facpl.generator.util.StructuralProperty
 import it.unifi.xtext.facpl.validation.inference.SubstitutionSet
 import org.eclipse.xtext.generator.IFileSystemAccess
+import it.unifi.xtext.facpl.generator.util.AuthorisationProperty
 
 class SMT_LIBGenerator extends SMT_LIBGenerator_Code {
 
@@ -40,12 +40,12 @@ class SMT_LIBGenerator extends SMT_LIBGenerator_Code {
 	}
 
 	/**
-	 * EntryPoint for Security Property
+	 * EntryPoint for Authorisation Property
 	 */
-	def void doGenerateSecurity_Property(Facpl resource, String policy_name, String name_property, Request req,
-		Decision dec, SecurityProperty prop, IFileSystemAccess fsa) {
+	def void doGenerateAuthorisation_Property(Facpl resource, String policy_name, String name_property, Request req,
+		Decision dec, AuthorisationProperty prop, IFileSystemAccess fsa) {
 
-		var str = doGenerateSecurity_Property_Code(resource, policy_name, req, dec, prop);
+		var str = doGenerateAuthorisation_Property_Code(resource, policy_name, req, dec, prop);
 
 		var fileName =  "Property_" + name_property + "_" + policy_name ;
 		/* Copy the generated SMT-LIB in a FILE  */
@@ -58,7 +58,7 @@ class SMT_LIBGenerator extends SMT_LIBGenerator_Code {
 	
 	
 	/**
-	 * EntryPoint for Security Property
+	 * EntryPoint for Structural Property
 	 */
 	def void doGenerateStructural_Property(Facpl resource, String policy_name1, String policy_name2, 
 		String name_property, StructuralProperty prop, IFileSystemAccess fsa) {
@@ -253,10 +253,10 @@ class SMT_LIBGenerator extends SMT_LIBGenerator_Code {
 	
 
 	/**
-	 * Generation of SMT-LIB code for Security Property 
+	 * Generation of SMT-LIB code for Authorisation Property 
 	 */
-	def String doGenerateSecurity_Property_Code(Facpl resource, String policy_name, Request req, Decision dec,
-		SecurityProperty prop) {
+	def String doGenerateAuthorisation_Property_Code(Facpl resource, String policy_name, Request req, Decision dec,
+		AuthorisationProperty prop) {
 		
 		var str = new StringBuffer
 		
@@ -273,7 +273,7 @@ class SMT_LIBGenerator extends SMT_LIBGenerator_Code {
 			}
 		}
 
-		str.append(";###################### SECURITY PROPERTY #####################\n")
+		str.append(";###################### AUTHORISATION PROPERTY #####################\n")
 
 		/* Add the definition of the property */
 		/* -> 1.  Insert Assertion modeling Request */
@@ -313,7 +313,7 @@ class SMT_LIBGenerator extends SMT_LIBGenerator_Code {
 		}
 
 		/* ONLY FOR EVAL PROPERTY */
-		if (prop.equals(SecurityProperty.EVAL)) {
+		if (prop.equals(AuthorisationProperty.EVAL)) {
 			/* Force to bottom the attributes not assigned in the request */
 			for (attr_policy : this.attributes.substitutions.keySet) {
 				if (!isDefinedInReq(attr_policy, req)) {

@@ -7,7 +7,6 @@ import it.unifi.xtext.facpl.facpl2.Request
 import it.unifi.xtext.facpl.generator.SMT_LIBGenerator
 import it.unifi.xtext.facpl.generator.util.Decision
 import it.unifi.xtext.facpl.generator.util.PolicyConstant
-import it.unifi.xtext.facpl.generator.util.SecurityProperty
 import it.unifi.xtext.facpl.generator.util.StructuralProperty
 import it.unifi.xtext.facpl.validation.FacplType
 import it.unifi.xtext.facpl.validation.inference.FacplTypeInference
@@ -19,6 +18,7 @@ import org.eclipse.xtext.junit4.util.ParseHelper
 import org.eclipse.xtext.junit4.validation.ValidationTestHelper
 import org.junit.Test
 import org.junit.runner.RunWith
+import it.unifi.xtext.facpl.generator.util.AuthorisationProperty
 
 @InjectWith(typeof(Facpl2InjectorProvider))
 @RunWith(typeof(XtextRunner))
@@ -159,7 +159,7 @@ public class SMT_LIBGenerator_Property_Test extends AbstractXtextTests {
 
 		assertNoErrors(request)
 
-		var str = doGenerateSecurity_Property_Code(model, "Name", request, Decision.PERMIT, SecurityProperty.EVAL)
+		var str = doGenerateAuthorisation_Property_Code(model, "Name", request, Decision.PERMIT, AuthorisationProperty.EVAL)
 
 		/* Test if subject/id assert to bottom */
 		assertEquals(str.contains("(assert (miss n_subject/id))"), true)
@@ -190,7 +190,7 @@ public class SMT_LIBGenerator_Property_Test extends AbstractXtextTests {
 		assertNoErrors(request)
 
 		/* -> NOT-APP */
-		str = doGenerateSecurity_Property_Code(model, "Name", request, Decision.NOT_APPLICABLE, SecurityProperty.MAY)
+		str = doGenerateAuthorisation_Property_Code(model, "Name", request, Decision.NOT_APPLICABLE, AuthorisationProperty.MAY)
 
 		/* Test if subject/id assert to bottom */
 		assertEquals(str.contains("(assert (miss n_subject/id))"), false)
@@ -204,7 +204,7 @@ public class SMT_LIBGenerator_Property_Test extends AbstractXtextTests {
 		writer.close();
 
 		/* -> INDET */
-		str = doGenerateSecurity_Property_Code(model, "Name", request, Decision.INDETERMINATE, SecurityProperty.MAY)
+		str = doGenerateAuthorisation_Property_Code(model, "Name", request, Decision.INDETERMINATE, AuthorisationProperty.MAY)
 
 		/* Test if subject/id assert to bottom */
 		assertEquals(str.contains("(assert (miss n_subject/id))"), false)
@@ -234,7 +234,7 @@ public class SMT_LIBGenerator_Property_Test extends AbstractXtextTests {
 
 		assertNoErrors(request)
 
-		str = doGenerateSecurity_Property_Code(model, "Name", request, Decision.NOT_APPLICABLE, SecurityProperty.MUST)
+		str = doGenerateAuthorisation_Property_Code(model, "Name", request, Decision.NOT_APPLICABLE, AuthorisationProperty.MUST)
 
 		/* Test if subject/id assert to bottom */
 		assertEquals(str.contains("(assert (miss n_subject/id))"), false)
@@ -264,7 +264,7 @@ public class SMT_LIBGenerator_Property_Test extends AbstractXtextTests {
 
 		assertNoErrors(request)
 
-		str = doGenerateSecurity_Property_Code(model, "Name", request, Decision.PERMIT, SecurityProperty.MUST)
+		str = doGenerateAuthorisation_Property_Code(model, "Name", request, Decision.PERMIT, AuthorisationProperty.MUST)
 
 		/* Test if subject/id assert to bottom */
 		assertEquals(str.contains("(assert (miss n_subject/id))"), false)
@@ -298,7 +298,7 @@ public class SMT_LIBGenerator_Property_Test extends AbstractXtextTests {
 
 		assertNoErrors(request)
 
-		var str = doGenerateSecurity_Property_Code(model, "Name", request, Decision.PERMIT, SecurityProperty.EVAL)
+		var str = doGenerateAuthorisation_Property_Code(model, "Name", request, Decision.PERMIT, AuthorisationProperty.EVAL)
 
 		/* Test if subject/id assert to bottom */
 		assertEquals(str.contains("(assert (miss n_subject/id))"), true)
@@ -337,7 +337,7 @@ public class SMT_LIBGenerator_Property_Test extends AbstractXtextTests {
 
 		assertNoErrors(request)
 
-		var str = doGenerateSecurity_Property_Code(model, "Name", request, Decision.PERMIT, SecurityProperty.EVAL)
+		var str = doGenerateAuthorisation_Property_Code(model, "Name", request, Decision.PERMIT, AuthorisationProperty.EVAL)
 
 		/* Test if the attribute declared in the request but not in the policy is correctly added in the code */
 		assertEquals(str.contains("(declare-const n_action/purpose (TValue String))"), true)

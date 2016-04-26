@@ -13,8 +13,8 @@ import it.unifi.xtext.facpl.facpl2.PDP;
 import it.unifi.xtext.facpl.facpl2.PolicySet;
 import it.unifi.xtext.facpl.facpl2.Request;
 import it.unifi.xtext.facpl.generator.generators.SMT_LIBGenerator_Code;
+import it.unifi.xtext.facpl.generator.util.AuthorisationProperty;
 import it.unifi.xtext.facpl.generator.util.Decision;
-import it.unifi.xtext.facpl.generator.util.SecurityProperty;
 import it.unifi.xtext.facpl.generator.util.StructuralProperty;
 import it.unifi.xtext.facpl.validation.FacplType;
 import it.unifi.xtext.facpl.validation.inference.SubstitutionSet;
@@ -76,10 +76,10 @@ public class SMT_LIBGenerator extends SMT_LIBGenerator_Code {
   }
   
   /**
-   * EntryPoint for Security Property
+   * EntryPoint for Authorisation Property
    */
-  public void doGenerateSecurity_Property(final Facpl resource, final String policy_name, final String name_property, final Request req, final Decision dec, final SecurityProperty prop, final IFileSystemAccess fsa) {
-    String str = this.doGenerateSecurity_Property_Code(resource, policy_name, req, dec, prop);
+  public void doGenerateAuthorisation_Property(final Facpl resource, final String policy_name, final String name_property, final Request req, final Decision dec, final AuthorisationProperty prop, final IFileSystemAccess fsa) {
+    String str = this.doGenerateAuthorisation_Property_Code(resource, policy_name, req, dec, prop);
     String fileName = ((("Property_" + name_property) + "_") + policy_name);
     fsa.generateFile((fileName + ".smt2"), str);
     CharSequence _bashCommand = this.getBashCommand(fileName, name_property, policy_name);
@@ -87,7 +87,7 @@ public class SMT_LIBGenerator extends SMT_LIBGenerator_Code {
   }
   
   /**
-   * EntryPoint for Security Property
+   * EntryPoint for Structural Property
    */
   public void doGenerateStructural_Property(final Facpl resource, final String policy_name1, final String policy_name2, final String name_property, final StructuralProperty prop, final IFileSystemAccess fsa) {
     String str = "";
@@ -258,9 +258,9 @@ public class SMT_LIBGenerator extends SMT_LIBGenerator_Code {
   }
   
   /**
-   * Generation of SMT-LIB code for Security Property
+   * Generation of SMT-LIB code for Authorisation Property
    */
-  public String doGenerateSecurity_Property_Code(final Facpl resource, final String policy_name, final Request req, final Decision dec, final SecurityProperty prop) {
+  public String doGenerateAuthorisation_Property_Code(final Facpl resource, final String policy_name, final Request req, final Decision dec, final AuthorisationProperty prop) {
     try {
       StringBuffer str = new StringBuffer();
       CharSequence _initialiseFacplResource_Request = this.initialiseFacplResource_Request(resource, req);
@@ -278,7 +278,7 @@ public class SMT_LIBGenerator extends SMT_LIBGenerator_Code {
           }
         }
       }
-      str.append(";###################### SECURITY PROPERTY #####################\n");
+      str.append(";###################### AUTHORISATION PROPERTY #####################\n");
       EList<AttributeReq> _attributes = req.getAttributes();
       for (final AttributeReq attr : _attributes) {
         AttributeName _name_1 = attr.getName();
@@ -349,7 +349,7 @@ public class SMT_LIBGenerator extends SMT_LIBGenerator_Code {
           str.append(_plus_7);
         }
       }
-      boolean _equals_2 = prop.equals(SecurityProperty.EVAL);
+      boolean _equals_2 = prop.equals(AuthorisationProperty.EVAL);
       if (_equals_2) {
         HashMap<String, FacplType> _substitutions = this.attributes.getSubstitutions();
         Set<String> _keySet = _substitutions.keySet();

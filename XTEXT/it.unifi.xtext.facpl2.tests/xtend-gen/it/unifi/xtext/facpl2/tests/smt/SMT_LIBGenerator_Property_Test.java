@@ -5,10 +5,10 @@ import it.unifi.xtext.facpl.Facpl2InjectorProvider;
 import it.unifi.xtext.facpl.facpl2.Facpl;
 import it.unifi.xtext.facpl.facpl2.Request;
 import it.unifi.xtext.facpl.generator.SMT_LIBGenerator;
+import it.unifi.xtext.facpl.generator.util.AuthorisationProperty;
 import it.unifi.xtext.facpl.generator.util.ConstraintConstant;
 import it.unifi.xtext.facpl.generator.util.Decision;
 import it.unifi.xtext.facpl.generator.util.PolicyConstant;
-import it.unifi.xtext.facpl.generator.util.SecurityProperty;
 import it.unifi.xtext.facpl.generator.util.StructuralProperty;
 import it.unifi.xtext.facpl.validation.FacplType;
 import it.unifi.xtext.facpl.validation.inference.FacplTypeInference;
@@ -211,7 +211,7 @@ public class SMT_LIBGenerator_Property_Test extends AbstractXtextTests {
       EList<Request> _requests = _parse.getRequests();
       Request request = _requests.get(0);
       this._validationTestHelper.assertNoErrors(request);
-      String str = this._sMT_LIBGenerator.doGenerateSecurity_Property_Code(model, "Name", request, Decision.PERMIT, SecurityProperty.EVAL);
+      String str = this._sMT_LIBGenerator.doGenerateAuthorisation_Property_Code(model, "Name", request, Decision.PERMIT, AuthorisationProperty.EVAL);
       boolean _contains = str.contains("(assert (miss n_subject/id))");
       Assert.assertEquals(Boolean.valueOf(_contains), Boolean.valueOf(true));
       boolean _contains_1 = str.contains("(assert cns_Name_permit)");
@@ -241,8 +241,8 @@ public class SMT_LIBGenerator_Property_Test extends AbstractXtextTests {
       Request _get = _requests_1.get(0);
       request = _get;
       this._validationTestHelper.assertNoErrors(request);
-      String _doGenerateSecurity_Property_Code = this._sMT_LIBGenerator.doGenerateSecurity_Property_Code(model, "Name", request, Decision.NOT_APPLICABLE, SecurityProperty.MAY);
-      str = _doGenerateSecurity_Property_Code;
+      String _doGenerateAuthorisation_Property_Code = this._sMT_LIBGenerator.doGenerateAuthorisation_Property_Code(model, "Name", request, Decision.NOT_APPLICABLE, AuthorisationProperty.MAY);
+      str = _doGenerateAuthorisation_Property_Code;
       boolean _contains_2 = str.contains("(assert (miss n_subject/id))");
       Assert.assertEquals(Boolean.valueOf(_contains_2), Boolean.valueOf(false));
       boolean _contains_3 = str.contains("(assert cns_Name_notApp)");
@@ -251,8 +251,8 @@ public class SMT_LIBGenerator_Property_Test extends AbstractXtextTests {
       writer = _printWriter;
       writer.println(str);
       writer.close();
-      String _doGenerateSecurity_Property_Code_1 = this._sMT_LIBGenerator.doGenerateSecurity_Property_Code(model, "Name", request, Decision.INDETERMINATE, SecurityProperty.MAY);
-      str = _doGenerateSecurity_Property_Code_1;
+      String _doGenerateAuthorisation_Property_Code_1 = this._sMT_LIBGenerator.doGenerateAuthorisation_Property_Code(model, "Name", request, Decision.INDETERMINATE, AuthorisationProperty.MAY);
+      str = _doGenerateAuthorisation_Property_Code_1;
       boolean _contains_4 = str.contains("(assert (miss n_subject/id))");
       Assert.assertEquals(Boolean.valueOf(_contains_4), Boolean.valueOf(false));
       boolean _contains_5 = str.contains("(assert cns_Name_indet)");
@@ -283,8 +283,8 @@ public class SMT_LIBGenerator_Property_Test extends AbstractXtextTests {
       Request _get_1 = _requests_2.get(0);
       request = _get_1;
       this._validationTestHelper.assertNoErrors(request);
-      String _doGenerateSecurity_Property_Code_2 = this._sMT_LIBGenerator.doGenerateSecurity_Property_Code(model, "Name", request, Decision.NOT_APPLICABLE, SecurityProperty.MUST);
-      str = _doGenerateSecurity_Property_Code_2;
+      String _doGenerateAuthorisation_Property_Code_2 = this._sMT_LIBGenerator.doGenerateAuthorisation_Property_Code(model, "Name", request, Decision.NOT_APPLICABLE, AuthorisationProperty.MUST);
+      str = _doGenerateAuthorisation_Property_Code_2;
       boolean _contains_6 = str.contains("(assert (miss n_subject/id))");
       Assert.assertEquals(Boolean.valueOf(_contains_6), Boolean.valueOf(false));
       boolean _contains_7 = str.contains("(assert (not cns_Name_notApp))");
@@ -315,8 +315,8 @@ public class SMT_LIBGenerator_Property_Test extends AbstractXtextTests {
       Request _get_2 = _requests_3.get(0);
       request = _get_2;
       this._validationTestHelper.assertNoErrors(request);
-      String _doGenerateSecurity_Property_Code_3 = this._sMT_LIBGenerator.doGenerateSecurity_Property_Code(model, "Name", request, Decision.PERMIT, SecurityProperty.MUST);
-      str = _doGenerateSecurity_Property_Code_3;
+      String _doGenerateAuthorisation_Property_Code_3 = this._sMT_LIBGenerator.doGenerateAuthorisation_Property_Code(model, "Name", request, Decision.PERMIT, AuthorisationProperty.MUST);
+      str = _doGenerateAuthorisation_Property_Code_3;
       boolean _contains_8 = str.contains("(assert (miss n_subject/id))");
       Assert.assertEquals(Boolean.valueOf(_contains_8), Boolean.valueOf(false));
       boolean _contains_9 = str.contains("(assert (not cns_Name_permit))");
@@ -356,7 +356,7 @@ public class SMT_LIBGenerator_Property_Test extends AbstractXtextTests {
       EList<Request> _requests = _parse.getRequests();
       Request request = _requests.get(0);
       this._validationTestHelper.assertNoErrors(request);
-      String str = this._sMT_LIBGenerator.doGenerateSecurity_Property_Code(model, "Name", request, Decision.PERMIT, SecurityProperty.EVAL);
+      String str = this._sMT_LIBGenerator.doGenerateAuthorisation_Property_Code(model, "Name", request, Decision.PERMIT, AuthorisationProperty.EVAL);
       boolean _contains = str.contains("(assert (miss n_subject/id))");
       Assert.assertEquals(Boolean.valueOf(_contains), Boolean.valueOf(true));
       boolean _contains_1 = str.contains("(assert cns_Name_permit)");
@@ -396,7 +396,7 @@ public class SMT_LIBGenerator_Property_Test extends AbstractXtextTests {
       EList<Request> _requests = _parse.getRequests();
       Request request = _requests.get(0);
       this._validationTestHelper.assertNoErrors(request);
-      String str = this._sMT_LIBGenerator.doGenerateSecurity_Property_Code(model, "Name", request, Decision.PERMIT, SecurityProperty.EVAL);
+      String str = this._sMT_LIBGenerator.doGenerateAuthorisation_Property_Code(model, "Name", request, Decision.PERMIT, AuthorisationProperty.EVAL);
       boolean _contains = str.contains("(declare-const n_action/purpose (TValue String))");
       Assert.assertEquals(Boolean.valueOf(_contains), Boolean.valueOf(true));
     } catch (Throwable _e) {

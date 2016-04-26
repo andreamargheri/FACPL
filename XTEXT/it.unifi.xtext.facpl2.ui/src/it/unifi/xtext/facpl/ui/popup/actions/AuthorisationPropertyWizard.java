@@ -18,18 +18,18 @@ import it.unifi.xtext.facpl.facpl2.FacplPolicy;
 import it.unifi.xtext.facpl.facpl2.Request;
 import it.unifi.xtext.facpl.generator.SMT_LIBGenerator;
 import it.unifi.xtext.facpl.generator.util.Decision;
-import it.unifi.xtext.facpl.generator.util.SecurityProperty;
+import it.unifi.xtext.facpl.generator.util.AuthorisationProperty;
 import it.unifi.xtext.facpl.ui.popup.actions.propertyDialog.PropertyNameDialog;
 
 /**
  * @author Andrea Margheri
  *
  */
-public class SecurityPropertyWizard {
+public class AuthorisationPropertyWizard {
 
 	public static final String ex_mess = "No element selected!";
 
-	public Object createSecurityProperty(Shell activeShell, EclipseResourceFileSystemAccess2 fsa, Facpl e,
+	public Object createAuthorisationProperty(Shell activeShell, EclipseResourceFileSystemAccess2 fsa, Facpl e,
 			SMT_LIBGenerator generator) {
 
 		try {
@@ -50,24 +50,24 @@ public class SecurityPropertyWizard {
 			ListDialog type_P_dialog = new ListDialog(activeShell);
 			type_P_dialog.setMessage("Choose a Property... \n" + msg_info);
 			type_P_dialog.setInput(
-					new SecurityProperty[] { SecurityProperty.EVAL, SecurityProperty.MAY, SecurityProperty.MUST });
+					new AuthorisationProperty[] { AuthorisationProperty.EVAL, AuthorisationProperty.MAY, AuthorisationProperty.MUST });
 			type_P_dialog.setContentProvider(new ArrayContentProvider());
 			type_P_dialog.setLabelProvider(new LabelProvider() {
 				@Override
 				public String getText(Object element) {
-					return ((SecurityProperty) element).toString();
+					return ((AuthorisationProperty) element).toString();
 				}
 			});
-			type_P_dialog.setInitialSelections(new SecurityProperty[] { SecurityProperty.EVAL });
+			type_P_dialog.setInitialSelections(new AuthorisationProperty[] { AuthorisationProperty.EVAL });
 
-			type_P_dialog.setTitle("Which security property...");
+			type_P_dialog.setTitle("Which authorisation property...");
 
 			// user pressed cancel
 			if (type_P_dialog.open() != ListDialog.OK) {
 				return false;
 			}
 
-			SecurityProperty sec_prop = (SecurityProperty) type_P_dialog.getResult()[0];
+			AuthorisationProperty sec_prop = (AuthorisationProperty) type_P_dialog.getResult()[0];
 
 			/* 1b -> Choose the Property Decision */
 
@@ -84,7 +84,7 @@ public class SecurityPropertyWizard {
 			});
 			type_P_Dec_dialog.setInitialSelections(new Decision[] { Decision.PERMIT });
 
-			type_P_Dec_dialog.setTitle("Which decision for the chosen security property...");
+			type_P_Dec_dialog.setTitle("Which decision for the chosen authorisation property...");
 
 			// user pressed cancel
 			if (type_P_Dec_dialog.open() != ListDialog.OK) {
@@ -104,7 +104,7 @@ public class SecurityPropertyWizard {
 				type_Request_dialog.setLabelProvider(new LabelProvider());
 
 			} catch (Exception ex) {
-				MessageDialog.openError(activeShell, "Security Property", ex_mess);
+				MessageDialog.openError(activeShell, "Authorisation Property", ex_mess);
 				return false;
 			}
 			type_Request_dialog.setTitle("Which request...");
@@ -126,7 +126,7 @@ public class SecurityPropertyWizard {
 				type_Policy_dialog.setLabelProvider(new LabelProvider());
 
 			} catch (Exception ex) {
-				MessageDialog.openError(activeShell, "Security Property", ex_mess);
+				MessageDialog.openError(activeShell, "Authorisation Property", ex_mess);
 				return false;
 			}
 			type_Policy_dialog.setTitle("Which policy...");
@@ -145,20 +145,20 @@ public class SecurityPropertyWizard {
 			/*
 			 * 4 -> Generate the file for the Verification of the chosen
 			 * Property
-			 */
+			 */ 
 
-			generator.doGenerateSecurity_Property((Facpl) e, policy_name, name_property, req, prop_decision, sec_prop,
+			generator.doGenerateAuthorisation_Property((Facpl) e, policy_name, name_property, req, prop_decision, sec_prop,
 					fsa);
 
-			MessageDialog.openInformation(activeShell, "Create Security Property",
+			MessageDialog.openInformation(activeShell, "Create Authorisation Property",
 					"SMT-LIB code for property verification generated!");
 
 		} catch (Exception ex) {
 			if (ex.getMessage().equals("")) {
-				MessageDialog.openWarning(activeShell, "Create Security Property",
-						"Creation of Security Property Aborted");
+				MessageDialog.openWarning(activeShell, "Create Authorisation Property",
+						"Creation of Authorisation Property Aborted");
 			} else {
-				MessageDialog.openWarning(activeShell, "Create Security Property", ex.getMessage());
+				MessageDialog.openWarning(activeShell, "Create Authorisation Property", ex.getMessage());
 			}
 		}
 
