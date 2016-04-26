@@ -8,7 +8,7 @@
 ;#######################
 (define-sort Set (T) (Array Int T)) 
 ;################### STRING DECLARATIONs #######################
- (declare-datatypes () ((String s_doctor s_e-Dis-Read s_e-Prescription s_read s_Alice s_e-Dispensation s_e-Pre-Write s_e-Pre-Read s_pharmacist s_e-Dis-Write s_write s_Data_request_by_unauthorised_subject )))
+ (declare-datatypes () ((String s_doctor s_e-Dis-Read s_e-Prescription s_read s_Alice s_e-Dispensation s_e-Pre-Write s_e-Pre-Read s_pharmacist s_e-Dis-Write s_write s_Data_request_by_unauthorised_subject  s_AdditionalStringValue )))
 ;################### FACPL FUNCTION DECLARATIONs #######################
 (define-fun isFalse ((x (TValue Bool))) Bool
 	(ite (= x (mk-val false false false)) true false)
@@ -16,6 +16,13 @@
 
 (define-fun isTrue ((x (TValue Bool))) Bool
 	(ite (= x (mk-val true false false)) true false)
+)
+
+(define-fun isBool ((x (TValue Bool))) Bool
+		(ite (or (isFalse x) (isTrue x))
+			true
+			false
+		)
 )
 
 (define-fun isNotBoolValue ((x (TValue Bool))) Bool
@@ -513,8 +520,12 @@ true
 ;INDET
 (define-fun cns_write_indet () Bool
 	(or 
-		(err cns_target_write)
-		(isNotBoolValue cns_target_write)
+		(not
+			(or  
+				(isBool cns_target_write)
+				(miss cns_target_write)
+			)
+		)
 		(and 
 			(isTrue cns_target_write)
 			(not cns_obl_permit_write)
@@ -552,8 +563,12 @@ true
 ;INDET
 (define-fun cns_read_indet () Bool
 	(or 
-		(err cns_target_read)
-		(isNotBoolValue cns_target_read)
+		(not
+			(or  
+				(isBool cns_target_read)
+				(miss cns_target_read)
+			)
+		)
 		(and 
 			(isTrue cns_target_read)
 			(not cns_obl_permit_read)
@@ -591,8 +606,12 @@ true
 ;INDET
 (define-fun cns_pha_indet () Bool
 	(or 
-		(err cns_target_pha)
-		(isNotBoolValue cns_target_pha)
+		(not
+			(or  
+				(isBool cns_target_pha)
+				(miss cns_target_pha)
+			)
+		)
 		(and 
 			(isTrue cns_target_pha)
 			(not cns_obl_permit_pha)
@@ -697,8 +716,12 @@ true
 ;INDET
 (define-fun cns_ePre_indet () Bool
 	(or 
-		(err cns_target_ePre)
-		(isNotBoolValue cns_target_ePre)
+		(not
+			(or  
+				(isBool cns_target_ePre)
+				(miss cns_target_ePre)
+			)
+		)
 		(and (isTrue cns_target_ePre) cns_ePre_cmb_final_indet)
 		(and 
 			(isTrue cns_target_ePre)
@@ -745,8 +768,12 @@ true
 ;INDET
 (define-fun cns_writeDis_indet () Bool
 	(or 
-		(err cns_target_writeDis)
-		(isNotBoolValue cns_target_writeDis)
+		(not
+			(or  
+				(isBool cns_target_writeDis)
+				(miss cns_target_writeDis)
+			)
+		)
 		(and 
 			(isTrue cns_target_writeDis)
 			(not cns_obl_permit_writeDis)
@@ -784,8 +811,12 @@ true
 ;INDET
 (define-fun cns_readDis_indet () Bool
 	(or 
-		(err cns_target_readDis)
-		(isNotBoolValue cns_target_readDis)
+		(not
+			(or  
+				(isBool cns_target_readDis)
+				(miss cns_target_readDis)
+			)
+		)
 		(and 
 			(isTrue cns_target_readDis)
 			(not cns_obl_permit_readDis)
@@ -823,8 +854,12 @@ true
 ;INDET
 (define-fun cns_phaDis_indet () Bool
 	(or 
-		(err cns_target_phaDis)
-		(isNotBoolValue cns_target_phaDis)
+		(not
+			(or  
+				(isBool cns_target_phaDis)
+				(miss cns_target_phaDis)
+			)
+		)
 		(and 
 			(isTrue cns_target_phaDis)
 			(not cns_obl_permit_phaDis)
@@ -929,8 +964,12 @@ true
 ;INDET
 (define-fun cns_eDis_indet () Bool
 	(or 
-		(err cns_target_eDis)
-		(isNotBoolValue cns_target_eDis)
+		(not
+			(or  
+				(isBool cns_target_eDis)
+				(miss cns_target_eDis)
+			)
+		)
 		(and (isTrue cns_target_eDis) cns_eDis_cmb_final_indet)
 		(and 
 			(isTrue cns_target_eDis)
@@ -976,8 +1015,12 @@ true
 ;INDET
 (define-fun cns_ruleDeny_indet () Bool
 	(or 
-		(err cns_target_ruleDeny)
-		(isNotBoolValue cns_target_ruleDeny)
+		(not
+			(or  
+				(isBool cns_target_ruleDeny)
+				(miss cns_target_ruleDeny)
+			)
+		)
 		(and 
 			(isTrue cns_target_ruleDeny)
 			(not cns_obl_deny_ruleDeny)
@@ -1079,8 +1122,12 @@ true
 ;INDET
 (define-fun cns_AliceConsent_indet () Bool
 	(or 
-		(err cns_target_AliceConsent)
-		(isNotBoolValue cns_target_AliceConsent)
+		(not
+			(or  
+				(isBool cns_target_AliceConsent)
+				(miss cns_target_AliceConsent)
+			)
+		)
 		(and (isTrue cns_target_AliceConsent) cns_AliceConsent_cmb_final_indet)
 		(and 
 			(isTrue cns_target_AliceConsent)

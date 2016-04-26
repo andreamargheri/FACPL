@@ -8,7 +8,7 @@
 ;#######################
 (define-sort Set (T) (Array Int T)) 
 ;################### STRING DECLARATIONs #######################
- (declare-datatypes () ((String s_doctor s_e-Dis-Read s_read s_Alice s_e-Dispensation s_pharmacist s_e-Dis-Write s_write s_Data_request_by_unauthorised_subject )))
+ (declare-datatypes () ((String s_doctor s_e-Dis-Read s_read s_Alice s_e-Dispensation s_pharmacist s_e-Dis-Write s_write s_Data_request_by_unauthorised_subject  s_AdditionalStringValue )))
 ;################### FACPL FUNCTION DECLARATIONs #######################
 (define-fun isFalse ((x (TValue Bool))) Bool
 	(ite (= x (mk-val false false false)) true false)
@@ -16,6 +16,13 @@
 
 (define-fun isTrue ((x (TValue Bool))) Bool
 	(ite (= x (mk-val true false false)) true false)
+)
+
+(define-fun isBool ((x (TValue Bool))) Bool
+		(ite (or (isFalse x) (isTrue x))
+			true
+			false
+		)
 )
 
 (define-fun isNotBoolValue ((x (TValue Bool))) Bool
@@ -498,8 +505,12 @@ true
 ;INDET
 (define-fun cns_writeDis_indet () Bool
 	(or 
-		(err cns_target_writeDis)
-		(isNotBoolValue cns_target_writeDis)
+		(not
+			(or  
+				(isBool cns_target_writeDis)
+				(miss cns_target_writeDis)
+			)
+		)
 		(and 
 			(isTrue cns_target_writeDis)
 			(not cns_obl_permit_writeDis)
@@ -537,8 +548,12 @@ true
 ;INDET
 (define-fun cns_readDis_indet () Bool
 	(or 
-		(err cns_target_readDis)
-		(isNotBoolValue cns_target_readDis)
+		(not
+			(or  
+				(isBool cns_target_readDis)
+				(miss cns_target_readDis)
+			)
+		)
 		(and 
 			(isTrue cns_target_readDis)
 			(not cns_obl_permit_readDis)
@@ -576,8 +591,12 @@ true
 ;INDET
 (define-fun cns_phaDis_indet () Bool
 	(or 
-		(err cns_target_phaDis)
-		(isNotBoolValue cns_target_phaDis)
+		(not
+			(or  
+				(isBool cns_target_phaDis)
+				(miss cns_target_phaDis)
+			)
+		)
 		(and 
 			(isTrue cns_target_phaDis)
 			(not cns_obl_permit_phaDis)
@@ -682,8 +701,12 @@ true
 ;INDET
 (define-fun cns_eDis_indet () Bool
 	(or 
-		(err cns_target_eDis)
-		(isNotBoolValue cns_target_eDis)
+		(not
+			(or  
+				(isBool cns_target_eDis)
+				(miss cns_target_eDis)
+			)
+		)
 		(and (isTrue cns_target_eDis) cns_eDis_cmb_final_indet)
 		(and 
 			(isTrue cns_target_eDis)
@@ -729,8 +752,12 @@ true
 ;INDET
 (define-fun cns_ruleDeny_indet () Bool
 	(or 
-		(err cns_target_ruleDeny)
-		(isNotBoolValue cns_target_ruleDeny)
+		(not
+			(or  
+				(isBool cns_target_ruleDeny)
+				(miss cns_target_ruleDeny)
+			)
+		)
 		(and 
 			(isTrue cns_target_ruleDeny)
 			(not cns_obl_deny_ruleDeny)
@@ -808,8 +835,12 @@ true
 ;INDET
 (define-fun cns_AliceEDispensation_indet () Bool
 	(or 
-		(err cns_target_AliceEDispensation)
-		(isNotBoolValue cns_target_AliceEDispensation)
+		(not
+			(or  
+				(isBool cns_target_AliceEDispensation)
+				(miss cns_target_AliceEDispensation)
+			)
+		)
 		(and (isTrue cns_target_AliceEDispensation) cns_AliceEDispensation_cmb_final_indet)
 		(and 
 			(isTrue cns_target_AliceEDispensation)

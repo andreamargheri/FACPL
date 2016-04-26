@@ -8,7 +8,7 @@
 ;#######################
 (define-sort Set (T) (Array Int T)) 
 ;################### STRING DECLARATIONs #######################
- (declare-datatypes () ((String s_paper-decision_rc s_conferenceInfo_rc s_pcMember-assignments_rc s_paper-review-content-rating_rc s_admin s_pc-member s_discussion s_paper-review-info-reviewer_rc s_delete s_pc-chair s_pcMember-conflicts_rc s_conference_rc s_create s_isMeetingFlag_rc s_paper-assignments_rc s_write s_paper-review-content-commentsAll_rc s_read s_paper-submission_rc s_paper-review_rc s_pcMember_rc s_pcMember-info-isChairFlag_rc s_paper_rc s_paper-submission-file_rc s_false s_subreviewer s_pcMember-info-password_rc s_paper-conflicts_rc s_true s_pcMember-assignmentCount_rc s_paper-review-content_rc s_pcMember-info_rc s_paper-submission-info_rc s_paper-review-info_rc s_paper-review-content-commentsPc_rc s_paper-review-info-submissionStatus_rc )))
+ (declare-datatypes () ((String s_paper-decision_rc s_conferenceInfo_rc s_pcMember-assignments_rc s_paper-review-content-rating_rc s_admin s_pc-member s_discussion s_paper-review-info-reviewer_rc s_delete s_pc-chair s_pcMember-conflicts_rc s_conference_rc s_create s_isMeetingFlag_rc s_paper-assignments_rc s_write s_paper-review-content-commentsAll_rc s_read s_paper-submission_rc s_paper-review_rc s_pcMember_rc s_pcMember-info-isChairFlag_rc s_paper_rc s_paper-submission-file_rc s_false s_subreviewer s_pcMember-info-password_rc s_paper-conflicts_rc s_true s_pcMember-assignmentCount_rc s_paper-review-content_rc s_pcMember-info_rc s_paper-submission-info_rc s_paper-review-info_rc s_paper-review-content-commentsPc_rc s_paper-review-info-submissionStatus_rc  s_AdditionalStringValue )))
 ;################### FACPL FUNCTION DECLARATIONs #######################
 (define-fun isFalse ((x (TValue Bool))) Bool
 	(ite (= x (mk-val false false false)) true false)
@@ -16,6 +16,13 @@
 
 (define-fun isTrue ((x (TValue Bool))) Bool
 	(ite (= x (mk-val true false false)) true false)
+)
+
+(define-fun isBool ((x (TValue Bool))) Bool
+		(ite (or (isFalse x) (isTrue x))
+			true
+			false
+		)
 )
 
 (define-fun isNotBoolValue ((x (TValue Bool))) Bool
@@ -653,8 +660,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_0_0_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_0_0_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_0_0_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_0_0_0_r_1)
+				(miss cns_target_RPSlist_0_0_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_0_0_0_r_1)
 			(not cns_obl_permit_RPSlist_0_0_0_r_1)
@@ -718,8 +729,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_0_0_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_0_0_0)
-		(isNotBoolValue cns_target_RPSlist_0_0_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_0_0_0)
+				(miss cns_target_RPSlist_0_0_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_0_0_0) cns_RPSlist_0_0_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_0_0_0)
@@ -766,8 +781,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_0_0_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_0_0_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_0_0_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_0_0_1_r_1)
+				(miss cns_target_RPSlist_0_0_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_0_0_1_r_1)
 			(not cns_obl_permit_RPSlist_0_0_1_r_1)
@@ -831,8 +850,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_0_0_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_0_0_1)
-		(isNotBoolValue cns_target_RPSlist_0_0_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_0_0_1)
+				(miss cns_target_RPSlist_0_0_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_0_0_1) cns_RPSlist_0_0_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_0_0_1)
@@ -879,8 +902,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_0_0_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_0_0_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_0_0_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_0_0_2_r_1)
+				(miss cns_target_RPSlist_0_0_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_0_0_2_r_1)
 			(not cns_obl_permit_RPSlist_0_0_2_r_1)
@@ -944,8 +971,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_0_0_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_0_0_2)
-		(isNotBoolValue cns_target_RPSlist_0_0_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_0_0_2)
+				(miss cns_target_RPSlist_0_0_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_0_0_2) cns_RPSlist_0_0_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_0_0_2)
@@ -992,8 +1023,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_0_0_3_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_0_0_3_r_1)
-		(isNotBoolValue cns_target_RPSlist_0_0_3_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_0_0_3_r_1)
+				(miss cns_target_RPSlist_0_0_3_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_0_0_3_r_1)
 			(not cns_obl_deny_RPSlist_0_0_3_r_1)
@@ -1057,8 +1092,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_0_0_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_0_0_3)
-		(isNotBoolValue cns_target_RPSlist_0_0_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_0_0_3)
+				(miss cns_target_RPSlist_0_0_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_0_0_3) cns_RPSlist_0_0_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_0_0_3)
@@ -1166,8 +1205,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_0_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_0_0)
-		(isNotBoolValue cns_target_RPSlist_0_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_0_0)
+				(miss cns_target_RPSlist_0_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_0_0) cns_RPSlist_0_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_0_0)
@@ -1239,8 +1282,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_0)
-		(isNotBoolValue cns_target_RPSlist_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_0)
+				(miss cns_target_RPSlist_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_0) cns_RPSlist_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_0)
@@ -1289,8 +1336,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_1_0_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_1_0_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_1_0_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_1_0_0_r_1)
+				(miss cns_target_RPSlist_1_0_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_1_0_0_r_1)
 			(not cns_obl_permit_RPSlist_1_0_0_r_1)
@@ -1354,8 +1405,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_1_0_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_1_0_0)
-		(isNotBoolValue cns_target_RPSlist_1_0_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_1_0_0)
+				(miss cns_target_RPSlist_1_0_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_1_0_0) cns_RPSlist_1_0_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_1_0_0)
@@ -1403,8 +1458,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_1_0_1_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_1_0_1_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_1_0_1_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_1_0_1_0_r_1)
+				(miss cns_target_RPSlist_1_0_1_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_1_0_1_0_r_1)
 			(not cns_obl_permit_RPSlist_1_0_1_0_r_1)
@@ -1468,8 +1527,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_1_0_1_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_1_0_1_0)
-		(isNotBoolValue cns_target_RPSlist_1_0_1_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_1_0_1_0)
+				(miss cns_target_RPSlist_1_0_1_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_1_0_1_0) cns_RPSlist_1_0_1_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_1_0_1_0)
@@ -1516,8 +1579,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_1_0_1_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_1_0_1_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_1_0_1_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_1_0_1_1_r_1)
+				(miss cns_target_RPSlist_1_0_1_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_1_0_1_1_r_1)
 			(not cns_obl_permit_RPSlist_1_0_1_1_r_1)
@@ -1581,8 +1648,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_1_0_1_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_1_0_1_1)
-		(isNotBoolValue cns_target_RPSlist_1_0_1_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_1_0_1_1)
+				(miss cns_target_RPSlist_1_0_1_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_1_0_1_1) cns_RPSlist_1_0_1_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_1_0_1_1)
@@ -1629,8 +1700,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_1_0_1_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_1_0_1_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_1_0_1_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_1_0_1_2_r_1)
+				(miss cns_target_RPSlist_1_0_1_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_1_0_1_2_r_1)
 			(not cns_obl_permit_RPSlist_1_0_1_2_r_1)
@@ -1694,8 +1769,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_1_0_1_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_1_0_1_2)
-		(isNotBoolValue cns_target_RPSlist_1_0_1_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_1_0_1_2)
+				(miss cns_target_RPSlist_1_0_1_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_1_0_1_2) cns_RPSlist_1_0_1_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_1_0_1_2)
@@ -1742,8 +1821,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_1_0_1_3_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_1_0_1_3_r_1)
-		(isNotBoolValue cns_target_RPSlist_1_0_1_3_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_1_0_1_3_r_1)
+				(miss cns_target_RPSlist_1_0_1_3_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_1_0_1_3_r_1)
 			(not cns_obl_deny_RPSlist_1_0_1_3_r_1)
@@ -1807,8 +1890,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_1_0_1_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_1_0_1_3)
-		(isNotBoolValue cns_target_RPSlist_1_0_1_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_1_0_1_3)
+				(miss cns_target_RPSlist_1_0_1_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_1_0_1_3) cns_RPSlist_1_0_1_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_1_0_1_3)
@@ -1916,8 +2003,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_1_0_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_1_0_1)
-		(isNotBoolValue cns_target_RPSlist_1_0_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_1_0_1)
+				(miss cns_target_RPSlist_1_0_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_1_0_1) cns_RPSlist_1_0_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_1_0_1)
@@ -1991,8 +2082,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_1_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_1_0)
-		(isNotBoolValue cns_target_RPSlist_1_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_1_0)
+				(miss cns_target_RPSlist_1_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_1_0) cns_RPSlist_1_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_1_0)
@@ -2064,8 +2159,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_1)
-		(isNotBoolValue cns_target_RPSlist_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_1)
+				(miss cns_target_RPSlist_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_1) cns_RPSlist_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_1)
@@ -2114,8 +2213,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_2_0_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_2_0_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_2_0_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_2_0_0_r_1)
+				(miss cns_target_RPSlist_2_0_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_2_0_0_r_1)
 			(not cns_obl_permit_RPSlist_2_0_0_r_1)
@@ -2179,8 +2282,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_2_0_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_2_0_0)
-		(isNotBoolValue cns_target_RPSlist_2_0_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_2_0_0)
+				(miss cns_target_RPSlist_2_0_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_2_0_0) cns_RPSlist_2_0_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_2_0_0)
@@ -2227,8 +2334,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_2_0_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_2_0_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_2_0_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_2_0_1_r_1)
+				(miss cns_target_RPSlist_2_0_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_2_0_1_r_1)
 			(not cns_obl_permit_RPSlist_2_0_1_r_1)
@@ -2292,8 +2403,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_2_0_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_2_0_1)
-		(isNotBoolValue cns_target_RPSlist_2_0_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_2_0_1)
+				(miss cns_target_RPSlist_2_0_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_2_0_1) cns_RPSlist_2_0_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_2_0_1)
@@ -2340,8 +2455,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_2_0_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_2_0_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_2_0_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_2_0_2_r_1)
+				(miss cns_target_RPSlist_2_0_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_2_0_2_r_1)
 			(not cns_obl_deny_RPSlist_2_0_2_r_1)
@@ -2405,8 +2524,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_2_0_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_2_0_2)
-		(isNotBoolValue cns_target_RPSlist_2_0_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_2_0_2)
+				(miss cns_target_RPSlist_2_0_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_2_0_2) cns_RPSlist_2_0_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_2_0_2)
@@ -2453,8 +2576,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_2_0_3_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_2_0_3_r_1)
-		(isNotBoolValue cns_target_RPSlist_2_0_3_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_2_0_3_r_1)
+				(miss cns_target_RPSlist_2_0_3_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_2_0_3_r_1)
 			(not cns_obl_permit_RPSlist_2_0_3_r_1)
@@ -2518,8 +2645,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_2_0_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_2_0_3)
-		(isNotBoolValue cns_target_RPSlist_2_0_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_2_0_3)
+				(miss cns_target_RPSlist_2_0_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_2_0_3) cns_RPSlist_2_0_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_2_0_3)
@@ -2567,8 +2698,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_2_0_4_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_2_0_4_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_2_0_4_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_2_0_4_0_r_1)
+				(miss cns_target_RPSlist_2_0_4_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_2_0_4_0_r_1)
 			(not cns_obl_permit_RPSlist_2_0_4_0_r_1)
@@ -2632,8 +2767,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_2_0_4_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_2_0_4_0)
-		(isNotBoolValue cns_target_RPSlist_2_0_4_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_2_0_4_0)
+				(miss cns_target_RPSlist_2_0_4_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_2_0_4_0) cns_RPSlist_2_0_4_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_2_0_4_0)
@@ -2680,8 +2819,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_2_0_4_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_2_0_4_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_2_0_4_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_2_0_4_1_r_1)
+				(miss cns_target_RPSlist_2_0_4_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_2_0_4_1_r_1)
 			(not cns_obl_permit_RPSlist_2_0_4_1_r_1)
@@ -2745,8 +2888,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_2_0_4_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_2_0_4_1)
-		(isNotBoolValue cns_target_RPSlist_2_0_4_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_2_0_4_1)
+				(miss cns_target_RPSlist_2_0_4_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_2_0_4_1) cns_RPSlist_2_0_4_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_2_0_4_1)
@@ -2793,8 +2940,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_2_0_4_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_2_0_4_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_2_0_4_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_2_0_4_2_r_1)
+				(miss cns_target_RPSlist_2_0_4_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_2_0_4_2_r_1)
 			(not cns_obl_permit_RPSlist_2_0_4_2_r_1)
@@ -2858,8 +3009,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_2_0_4_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_2_0_4_2)
-		(isNotBoolValue cns_target_RPSlist_2_0_4_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_2_0_4_2)
+				(miss cns_target_RPSlist_2_0_4_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_2_0_4_2) cns_RPSlist_2_0_4_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_2_0_4_2)
@@ -2906,8 +3061,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_2_0_4_3_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_2_0_4_3_r_1)
-		(isNotBoolValue cns_target_RPSlist_2_0_4_3_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_2_0_4_3_r_1)
+				(miss cns_target_RPSlist_2_0_4_3_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_2_0_4_3_r_1)
 			(not cns_obl_deny_RPSlist_2_0_4_3_r_1)
@@ -2971,8 +3130,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_2_0_4_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_2_0_4_3)
-		(isNotBoolValue cns_target_RPSlist_2_0_4_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_2_0_4_3)
+				(miss cns_target_RPSlist_2_0_4_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_2_0_4_3) cns_RPSlist_2_0_4_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_2_0_4_3)
@@ -3080,8 +3243,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_2_0_4_indet () Bool
 	(or 
-		(err cns_target_RPSlist_2_0_4)
-		(isNotBoolValue cns_target_RPSlist_2_0_4)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_2_0_4)
+				(miss cns_target_RPSlist_2_0_4)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_2_0_4) cns_RPSlist_2_0_4_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_2_0_4)
@@ -3206,8 +3373,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_2_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_2_0)
-		(isNotBoolValue cns_target_RPSlist_2_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_2_0)
+				(miss cns_target_RPSlist_2_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_2_0) cns_RPSlist_2_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_2_0)
@@ -3279,8 +3450,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_2)
-		(isNotBoolValue cns_target_RPSlist_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_2)
+				(miss cns_target_RPSlist_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_2) cns_RPSlist_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_2)
@@ -3329,8 +3504,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_3_0_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_3_0_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_3_0_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_3_0_0_r_1)
+				(miss cns_target_RPSlist_3_0_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_3_0_0_r_1)
 			(not cns_obl_permit_RPSlist_3_0_0_r_1)
@@ -3394,8 +3573,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_3_0_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_3_0_0)
-		(isNotBoolValue cns_target_RPSlist_3_0_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_3_0_0)
+				(miss cns_target_RPSlist_3_0_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_3_0_0) cns_RPSlist_3_0_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_3_0_0)
@@ -3442,8 +3625,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_3_0_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_3_0_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_3_0_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_3_0_1_r_1)
+				(miss cns_target_RPSlist_3_0_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_3_0_1_r_1)
 			(not cns_obl_permit_RPSlist_3_0_1_r_1)
@@ -3507,8 +3694,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_3_0_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_3_0_1)
-		(isNotBoolValue cns_target_RPSlist_3_0_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_3_0_1)
+				(miss cns_target_RPSlist_3_0_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_3_0_1) cns_RPSlist_3_0_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_3_0_1)
@@ -3555,8 +3746,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_3_0_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_3_0_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_3_0_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_3_0_2_r_1)
+				(miss cns_target_RPSlist_3_0_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_3_0_2_r_1)
 			(not cns_obl_deny_RPSlist_3_0_2_r_1)
@@ -3620,8 +3815,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_3_0_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_3_0_2)
-		(isNotBoolValue cns_target_RPSlist_3_0_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_3_0_2)
+				(miss cns_target_RPSlist_3_0_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_3_0_2) cns_RPSlist_3_0_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_3_0_2)
@@ -3669,8 +3868,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_3_0_3_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_3_0_3_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_3_0_3_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_3_0_3_0_r_1)
+				(miss cns_target_RPSlist_3_0_3_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_3_0_3_0_r_1)
 			(not cns_obl_permit_RPSlist_3_0_3_0_r_1)
@@ -3734,8 +3937,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_3_0_3_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_3_0_3_0)
-		(isNotBoolValue cns_target_RPSlist_3_0_3_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_3_0_3_0)
+				(miss cns_target_RPSlist_3_0_3_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_3_0_3_0) cns_RPSlist_3_0_3_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_3_0_3_0)
@@ -3782,8 +3989,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_3_0_3_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_3_0_3_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_3_0_3_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_3_0_3_1_r_1)
+				(miss cns_target_RPSlist_3_0_3_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_3_0_3_1_r_1)
 			(not cns_obl_permit_RPSlist_3_0_3_1_r_1)
@@ -3847,8 +4058,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_3_0_3_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_3_0_3_1)
-		(isNotBoolValue cns_target_RPSlist_3_0_3_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_3_0_3_1)
+				(miss cns_target_RPSlist_3_0_3_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_3_0_3_1) cns_RPSlist_3_0_3_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_3_0_3_1)
@@ -3895,8 +4110,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_3_0_3_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_3_0_3_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_3_0_3_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_3_0_3_2_r_1)
+				(miss cns_target_RPSlist_3_0_3_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_3_0_3_2_r_1)
 			(not cns_obl_deny_RPSlist_3_0_3_2_r_1)
@@ -3960,8 +4179,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_3_0_3_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_3_0_3_2)
-		(isNotBoolValue cns_target_RPSlist_3_0_3_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_3_0_3_2)
+				(miss cns_target_RPSlist_3_0_3_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_3_0_3_2) cns_RPSlist_3_0_3_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_3_0_3_2)
@@ -4008,8 +4231,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_3_0_3_3_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_3_0_3_3_r_1)
-		(isNotBoolValue cns_target_RPSlist_3_0_3_3_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_3_0_3_3_r_1)
+				(miss cns_target_RPSlist_3_0_3_3_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_3_0_3_3_r_1)
 			(not cns_obl_permit_RPSlist_3_0_3_3_r_1)
@@ -4073,8 +4300,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_3_0_3_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_3_0_3_3)
-		(isNotBoolValue cns_target_RPSlist_3_0_3_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_3_0_3_3)
+				(miss cns_target_RPSlist_3_0_3_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_3_0_3_3) cns_RPSlist_3_0_3_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_3_0_3_3)
@@ -4122,8 +4353,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_3_0_3_4_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_3_0_3_4_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_3_0_3_4_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_3_0_3_4_0_r_1)
+				(miss cns_target_RPSlist_3_0_3_4_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_3_0_3_4_0_r_1)
 			(not cns_obl_permit_RPSlist_3_0_3_4_0_r_1)
@@ -4187,8 +4422,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_3_0_3_4_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_3_0_3_4_0)
-		(isNotBoolValue cns_target_RPSlist_3_0_3_4_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_3_0_3_4_0)
+				(miss cns_target_RPSlist_3_0_3_4_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_3_0_3_4_0) cns_RPSlist_3_0_3_4_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_3_0_3_4_0)
@@ -4235,8 +4474,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_3_0_3_4_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_3_0_3_4_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_3_0_3_4_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_3_0_3_4_1_r_1)
+				(miss cns_target_RPSlist_3_0_3_4_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_3_0_3_4_1_r_1)
 			(not cns_obl_permit_RPSlist_3_0_3_4_1_r_1)
@@ -4300,8 +4543,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_3_0_3_4_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_3_0_3_4_1)
-		(isNotBoolValue cns_target_RPSlist_3_0_3_4_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_3_0_3_4_1)
+				(miss cns_target_RPSlist_3_0_3_4_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_3_0_3_4_1) cns_RPSlist_3_0_3_4_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_3_0_3_4_1)
@@ -4348,8 +4595,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_3_0_3_4_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_3_0_3_4_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_3_0_3_4_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_3_0_3_4_2_r_1)
+				(miss cns_target_RPSlist_3_0_3_4_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_3_0_3_4_2_r_1)
 			(not cns_obl_permit_RPSlist_3_0_3_4_2_r_1)
@@ -4413,8 +4664,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_3_0_3_4_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_3_0_3_4_2)
-		(isNotBoolValue cns_target_RPSlist_3_0_3_4_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_3_0_3_4_2)
+				(miss cns_target_RPSlist_3_0_3_4_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_3_0_3_4_2) cns_RPSlist_3_0_3_4_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_3_0_3_4_2)
@@ -4461,8 +4716,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_3_0_3_4_3_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_3_0_3_4_3_r_1)
-		(isNotBoolValue cns_target_RPSlist_3_0_3_4_3_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_3_0_3_4_3_r_1)
+				(miss cns_target_RPSlist_3_0_3_4_3_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_3_0_3_4_3_r_1)
 			(not cns_obl_deny_RPSlist_3_0_3_4_3_r_1)
@@ -4526,8 +4785,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_3_0_3_4_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_3_0_3_4_3)
-		(isNotBoolValue cns_target_RPSlist_3_0_3_4_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_3_0_3_4_3)
+				(miss cns_target_RPSlist_3_0_3_4_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_3_0_3_4_3) cns_RPSlist_3_0_3_4_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_3_0_3_4_3)
@@ -4635,8 +4898,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_3_0_3_4_indet () Bool
 	(or 
-		(err cns_target_RPSlist_3_0_3_4)
-		(isNotBoolValue cns_target_RPSlist_3_0_3_4)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_3_0_3_4)
+				(miss cns_target_RPSlist_3_0_3_4)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_3_0_3_4) cns_RPSlist_3_0_3_4_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_3_0_3_4)
@@ -4761,8 +5028,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_3_0_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_3_0_3)
-		(isNotBoolValue cns_target_RPSlist_3_0_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_3_0_3)
+				(miss cns_target_RPSlist_3_0_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_3_0_3) cns_RPSlist_3_0_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_3_0_3)
@@ -4870,8 +5141,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_3_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_3_0)
-		(isNotBoolValue cns_target_RPSlist_3_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_3_0)
+				(miss cns_target_RPSlist_3_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_3_0) cns_RPSlist_3_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_3_0)
@@ -4943,8 +5218,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_3)
-		(isNotBoolValue cns_target_RPSlist_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_3)
+				(miss cns_target_RPSlist_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_3) cns_RPSlist_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_3)
@@ -4993,8 +5272,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_4_0_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_4_0_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_4_0_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_4_0_0_r_1)
+				(miss cns_target_RPSlist_4_0_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_4_0_0_r_1)
 			(not cns_obl_permit_RPSlist_4_0_0_r_1)
@@ -5058,8 +5341,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_4_0_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_4_0_0)
-		(isNotBoolValue cns_target_RPSlist_4_0_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_4_0_0)
+				(miss cns_target_RPSlist_4_0_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_4_0_0) cns_RPSlist_4_0_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_4_0_0)
@@ -5106,8 +5393,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_4_0_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_4_0_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_4_0_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_4_0_1_r_1)
+				(miss cns_target_RPSlist_4_0_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_4_0_1_r_1)
 			(not cns_obl_permit_RPSlist_4_0_1_r_1)
@@ -5171,8 +5462,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_4_0_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_4_0_1)
-		(isNotBoolValue cns_target_RPSlist_4_0_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_4_0_1)
+				(miss cns_target_RPSlist_4_0_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_4_0_1) cns_RPSlist_4_0_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_4_0_1)
@@ -5219,8 +5514,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_4_0_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_4_0_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_4_0_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_4_0_2_r_1)
+				(miss cns_target_RPSlist_4_0_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_4_0_2_r_1)
 			(not cns_obl_deny_RPSlist_4_0_2_r_1)
@@ -5284,8 +5583,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_4_0_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_4_0_2)
-		(isNotBoolValue cns_target_RPSlist_4_0_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_4_0_2)
+				(miss cns_target_RPSlist_4_0_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_4_0_2) cns_RPSlist_4_0_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_4_0_2)
@@ -5333,8 +5636,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_4_0_3_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_4_0_3_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_4_0_3_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_4_0_3_0_r_1)
+				(miss cns_target_RPSlist_4_0_3_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_4_0_3_0_r_1)
 			(not cns_obl_permit_RPSlist_4_0_3_0_r_1)
@@ -5398,8 +5705,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_4_0_3_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_4_0_3_0)
-		(isNotBoolValue cns_target_RPSlist_4_0_3_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_4_0_3_0)
+				(miss cns_target_RPSlist_4_0_3_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_4_0_3_0) cns_RPSlist_4_0_3_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_4_0_3_0)
@@ -5446,8 +5757,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_4_0_3_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_4_0_3_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_4_0_3_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_4_0_3_1_r_1)
+				(miss cns_target_RPSlist_4_0_3_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_4_0_3_1_r_1)
 			(not cns_obl_permit_RPSlist_4_0_3_1_r_1)
@@ -5511,8 +5826,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_4_0_3_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_4_0_3_1)
-		(isNotBoolValue cns_target_RPSlist_4_0_3_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_4_0_3_1)
+				(miss cns_target_RPSlist_4_0_3_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_4_0_3_1) cns_RPSlist_4_0_3_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_4_0_3_1)
@@ -5559,8 +5878,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_4_0_3_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_4_0_3_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_4_0_3_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_4_0_3_2_r_1)
+				(miss cns_target_RPSlist_4_0_3_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_4_0_3_2_r_1)
 			(not cns_obl_deny_RPSlist_4_0_3_2_r_1)
@@ -5624,8 +5947,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_4_0_3_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_4_0_3_2)
-		(isNotBoolValue cns_target_RPSlist_4_0_3_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_4_0_3_2)
+				(miss cns_target_RPSlist_4_0_3_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_4_0_3_2) cns_RPSlist_4_0_3_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_4_0_3_2)
@@ -5672,8 +5999,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_4_0_3_3_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_4_0_3_3_r_1)
-		(isNotBoolValue cns_target_RPSlist_4_0_3_3_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_4_0_3_3_r_1)
+				(miss cns_target_RPSlist_4_0_3_3_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_4_0_3_3_r_1)
 			(not cns_obl_permit_RPSlist_4_0_3_3_r_1)
@@ -5737,8 +6068,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_4_0_3_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_4_0_3_3)
-		(isNotBoolValue cns_target_RPSlist_4_0_3_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_4_0_3_3)
+				(miss cns_target_RPSlist_4_0_3_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_4_0_3_3) cns_RPSlist_4_0_3_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_4_0_3_3)
@@ -5786,8 +6121,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_4_0_3_4_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_4_0_3_4_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_4_0_3_4_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_4_0_3_4_0_r_1)
+				(miss cns_target_RPSlist_4_0_3_4_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_4_0_3_4_0_r_1)
 			(not cns_obl_permit_RPSlist_4_0_3_4_0_r_1)
@@ -5851,8 +6190,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_4_0_3_4_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_4_0_3_4_0)
-		(isNotBoolValue cns_target_RPSlist_4_0_3_4_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_4_0_3_4_0)
+				(miss cns_target_RPSlist_4_0_3_4_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_4_0_3_4_0) cns_RPSlist_4_0_3_4_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_4_0_3_4_0)
@@ -5899,8 +6242,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_4_0_3_4_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_4_0_3_4_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_4_0_3_4_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_4_0_3_4_1_r_1)
+				(miss cns_target_RPSlist_4_0_3_4_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_4_0_3_4_1_r_1)
 			(not cns_obl_permit_RPSlist_4_0_3_4_1_r_1)
@@ -5964,8 +6311,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_4_0_3_4_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_4_0_3_4_1)
-		(isNotBoolValue cns_target_RPSlist_4_0_3_4_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_4_0_3_4_1)
+				(miss cns_target_RPSlist_4_0_3_4_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_4_0_3_4_1) cns_RPSlist_4_0_3_4_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_4_0_3_4_1)
@@ -6012,8 +6363,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_4_0_3_4_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_4_0_3_4_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_4_0_3_4_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_4_0_3_4_2_r_1)
+				(miss cns_target_RPSlist_4_0_3_4_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_4_0_3_4_2_r_1)
 			(not cns_obl_permit_RPSlist_4_0_3_4_2_r_1)
@@ -6077,8 +6432,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_4_0_3_4_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_4_0_3_4_2)
-		(isNotBoolValue cns_target_RPSlist_4_0_3_4_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_4_0_3_4_2)
+				(miss cns_target_RPSlist_4_0_3_4_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_4_0_3_4_2) cns_RPSlist_4_0_3_4_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_4_0_3_4_2)
@@ -6125,8 +6484,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_4_0_3_4_3_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_4_0_3_4_3_r_1)
-		(isNotBoolValue cns_target_RPSlist_4_0_3_4_3_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_4_0_3_4_3_r_1)
+				(miss cns_target_RPSlist_4_0_3_4_3_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_4_0_3_4_3_r_1)
 			(not cns_obl_deny_RPSlist_4_0_3_4_3_r_1)
@@ -6190,8 +6553,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_4_0_3_4_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_4_0_3_4_3)
-		(isNotBoolValue cns_target_RPSlist_4_0_3_4_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_4_0_3_4_3)
+				(miss cns_target_RPSlist_4_0_3_4_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_4_0_3_4_3) cns_RPSlist_4_0_3_4_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_4_0_3_4_3)
@@ -6299,8 +6666,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_4_0_3_4_indet () Bool
 	(or 
-		(err cns_target_RPSlist_4_0_3_4)
-		(isNotBoolValue cns_target_RPSlist_4_0_3_4)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_4_0_3_4)
+				(miss cns_target_RPSlist_4_0_3_4)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_4_0_3_4) cns_RPSlist_4_0_3_4_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_4_0_3_4)
@@ -6425,8 +6796,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_4_0_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_4_0_3)
-		(isNotBoolValue cns_target_RPSlist_4_0_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_4_0_3)
+				(miss cns_target_RPSlist_4_0_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_4_0_3) cns_RPSlist_4_0_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_4_0_3)
@@ -6534,8 +6909,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_4_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_4_0)
-		(isNotBoolValue cns_target_RPSlist_4_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_4_0)
+				(miss cns_target_RPSlist_4_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_4_0) cns_RPSlist_4_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_4_0)
@@ -6607,8 +6986,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_4_indet () Bool
 	(or 
-		(err cns_target_RPSlist_4)
-		(isNotBoolValue cns_target_RPSlist_4)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_4)
+				(miss cns_target_RPSlist_4)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_4) cns_RPSlist_4_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_4)
@@ -6658,8 +7041,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_5_0_0_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_5_0_0_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_5_0_0_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_5_0_0_0_r_1)
+				(miss cns_target_RPSlist_5_0_0_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_5_0_0_0_r_1)
 			(not cns_obl_permit_RPSlist_5_0_0_0_r_1)
@@ -6723,8 +7110,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_5_0_0_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_5_0_0_0)
-		(isNotBoolValue cns_target_RPSlist_5_0_0_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_5_0_0_0)
+				(miss cns_target_RPSlist_5_0_0_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_5_0_0_0) cns_RPSlist_5_0_0_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_5_0_0_0)
@@ -6771,8 +7162,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_5_0_0_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_5_0_0_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_5_0_0_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_5_0_0_1_r_1)
+				(miss cns_target_RPSlist_5_0_0_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_5_0_0_1_r_1)
 			(not cns_obl_permit_RPSlist_5_0_0_1_r_1)
@@ -6836,8 +7231,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_5_0_0_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_5_0_0_1)
-		(isNotBoolValue cns_target_RPSlist_5_0_0_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_5_0_0_1)
+				(miss cns_target_RPSlist_5_0_0_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_5_0_0_1) cns_RPSlist_5_0_0_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_5_0_0_1)
@@ -6884,8 +7283,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_5_0_0_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_5_0_0_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_5_0_0_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_5_0_0_2_r_1)
+				(miss cns_target_RPSlist_5_0_0_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_5_0_0_2_r_1)
 			(not cns_obl_deny_RPSlist_5_0_0_2_r_1)
@@ -6949,8 +7352,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_5_0_0_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_5_0_0_2)
-		(isNotBoolValue cns_target_RPSlist_5_0_0_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_5_0_0_2)
+				(miss cns_target_RPSlist_5_0_0_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_5_0_0_2) cns_RPSlist_5_0_0_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_5_0_0_2)
@@ -6997,8 +7404,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_5_0_0_3_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_5_0_0_3_r_1)
-		(isNotBoolValue cns_target_RPSlist_5_0_0_3_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_5_0_0_3_r_1)
+				(miss cns_target_RPSlist_5_0_0_3_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_5_0_0_3_r_1)
 			(not cns_obl_permit_RPSlist_5_0_0_3_r_1)
@@ -7062,8 +7473,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_5_0_0_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_5_0_0_3)
-		(isNotBoolValue cns_target_RPSlist_5_0_0_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_5_0_0_3)
+				(miss cns_target_RPSlist_5_0_0_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_5_0_0_3) cns_RPSlist_5_0_0_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_5_0_0_3)
@@ -7111,8 +7526,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_5_0_0_4_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_5_0_0_4_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_5_0_0_4_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_5_0_0_4_0_r_1)
+				(miss cns_target_RPSlist_5_0_0_4_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_5_0_0_4_0_r_1)
 			(not cns_obl_permit_RPSlist_5_0_0_4_0_r_1)
@@ -7176,8 +7595,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_5_0_0_4_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_5_0_0_4_0)
-		(isNotBoolValue cns_target_RPSlist_5_0_0_4_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_5_0_0_4_0)
+				(miss cns_target_RPSlist_5_0_0_4_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_5_0_0_4_0) cns_RPSlist_5_0_0_4_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_5_0_0_4_0)
@@ -7224,8 +7647,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_5_0_0_4_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_5_0_0_4_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_5_0_0_4_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_5_0_0_4_1_r_1)
+				(miss cns_target_RPSlist_5_0_0_4_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_5_0_0_4_1_r_1)
 			(not cns_obl_permit_RPSlist_5_0_0_4_1_r_1)
@@ -7289,8 +7716,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_5_0_0_4_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_5_0_0_4_1)
-		(isNotBoolValue cns_target_RPSlist_5_0_0_4_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_5_0_0_4_1)
+				(miss cns_target_RPSlist_5_0_0_4_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_5_0_0_4_1) cns_RPSlist_5_0_0_4_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_5_0_0_4_1)
@@ -7337,8 +7768,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_5_0_0_4_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_5_0_0_4_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_5_0_0_4_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_5_0_0_4_2_r_1)
+				(miss cns_target_RPSlist_5_0_0_4_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_5_0_0_4_2_r_1)
 			(not cns_obl_permit_RPSlist_5_0_0_4_2_r_1)
@@ -7402,8 +7837,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_5_0_0_4_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_5_0_0_4_2)
-		(isNotBoolValue cns_target_RPSlist_5_0_0_4_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_5_0_0_4_2)
+				(miss cns_target_RPSlist_5_0_0_4_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_5_0_0_4_2) cns_RPSlist_5_0_0_4_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_5_0_0_4_2)
@@ -7450,8 +7889,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_5_0_0_4_3_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_5_0_0_4_3_r_1)
-		(isNotBoolValue cns_target_RPSlist_5_0_0_4_3_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_5_0_0_4_3_r_1)
+				(miss cns_target_RPSlist_5_0_0_4_3_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_5_0_0_4_3_r_1)
 			(not cns_obl_deny_RPSlist_5_0_0_4_3_r_1)
@@ -7515,8 +7958,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_5_0_0_4_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_5_0_0_4_3)
-		(isNotBoolValue cns_target_RPSlist_5_0_0_4_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_5_0_0_4_3)
+				(miss cns_target_RPSlist_5_0_0_4_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_5_0_0_4_3) cns_RPSlist_5_0_0_4_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_5_0_0_4_3)
@@ -7624,8 +8071,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_5_0_0_4_indet () Bool
 	(or 
-		(err cns_target_RPSlist_5_0_0_4)
-		(isNotBoolValue cns_target_RPSlist_5_0_0_4)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_5_0_0_4)
+				(miss cns_target_RPSlist_5_0_0_4)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_5_0_0_4) cns_RPSlist_5_0_0_4_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_5_0_0_4)
@@ -7750,8 +8201,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_5_0_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_5_0_0)
-		(isNotBoolValue cns_target_RPSlist_5_0_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_5_0_0)
+				(miss cns_target_RPSlist_5_0_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_5_0_0) cns_RPSlist_5_0_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_5_0_0)
@@ -7823,8 +8278,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_5_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_5_0)
-		(isNotBoolValue cns_target_RPSlist_5_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_5_0)
+				(miss cns_target_RPSlist_5_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_5_0) cns_RPSlist_5_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_5_0)
@@ -7896,8 +8355,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_5_indet () Bool
 	(or 
-		(err cns_target_RPSlist_5)
-		(isNotBoolValue cns_target_RPSlist_5)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_5)
+				(miss cns_target_RPSlist_5)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_5) cns_RPSlist_5_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_5)
@@ -7946,8 +8409,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_6_0_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_6_0_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_6_0_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_6_0_0_r_1)
+				(miss cns_target_RPSlist_6_0_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_6_0_0_r_1)
 			(not cns_obl_permit_RPSlist_6_0_0_r_1)
@@ -8011,8 +8478,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_6_0_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_6_0_0)
-		(isNotBoolValue cns_target_RPSlist_6_0_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_6_0_0)
+				(miss cns_target_RPSlist_6_0_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_6_0_0) cns_RPSlist_6_0_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_6_0_0)
@@ -8059,8 +8530,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_6_0_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_6_0_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_6_0_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_6_0_1_r_1)
+				(miss cns_target_RPSlist_6_0_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_6_0_1_r_1)
 			(not cns_obl_permit_RPSlist_6_0_1_r_1)
@@ -8124,8 +8599,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_6_0_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_6_0_1)
-		(isNotBoolValue cns_target_RPSlist_6_0_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_6_0_1)
+				(miss cns_target_RPSlist_6_0_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_6_0_1) cns_RPSlist_6_0_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_6_0_1)
@@ -8172,8 +8651,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_6_0_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_6_0_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_6_0_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_6_0_2_r_1)
+				(miss cns_target_RPSlist_6_0_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_6_0_2_r_1)
 			(not cns_obl_deny_RPSlist_6_0_2_r_1)
@@ -8237,8 +8720,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_6_0_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_6_0_2)
-		(isNotBoolValue cns_target_RPSlist_6_0_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_6_0_2)
+				(miss cns_target_RPSlist_6_0_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_6_0_2) cns_RPSlist_6_0_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_6_0_2)
@@ -8286,8 +8773,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_6_0_3_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_6_0_3_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_6_0_3_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_6_0_3_0_r_1)
+				(miss cns_target_RPSlist_6_0_3_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_6_0_3_0_r_1)
 			(not cns_obl_permit_RPSlist_6_0_3_0_r_1)
@@ -8351,8 +8842,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_6_0_3_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_6_0_3_0)
-		(isNotBoolValue cns_target_RPSlist_6_0_3_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_6_0_3_0)
+				(miss cns_target_RPSlist_6_0_3_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_6_0_3_0) cns_RPSlist_6_0_3_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_6_0_3_0)
@@ -8399,8 +8894,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_6_0_3_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_6_0_3_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_6_0_3_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_6_0_3_1_r_1)
+				(miss cns_target_RPSlist_6_0_3_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_6_0_3_1_r_1)
 			(not cns_obl_permit_RPSlist_6_0_3_1_r_1)
@@ -8464,8 +8963,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_6_0_3_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_6_0_3_1)
-		(isNotBoolValue cns_target_RPSlist_6_0_3_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_6_0_3_1)
+				(miss cns_target_RPSlist_6_0_3_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_6_0_3_1) cns_RPSlist_6_0_3_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_6_0_3_1)
@@ -8512,8 +9015,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_6_0_3_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_6_0_3_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_6_0_3_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_6_0_3_2_r_1)
+				(miss cns_target_RPSlist_6_0_3_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_6_0_3_2_r_1)
 			(not cns_obl_deny_RPSlist_6_0_3_2_r_1)
@@ -8577,8 +9084,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_6_0_3_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_6_0_3_2)
-		(isNotBoolValue cns_target_RPSlist_6_0_3_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_6_0_3_2)
+				(miss cns_target_RPSlist_6_0_3_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_6_0_3_2) cns_RPSlist_6_0_3_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_6_0_3_2)
@@ -8625,8 +9136,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_6_0_3_3_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_6_0_3_3_r_1)
-		(isNotBoolValue cns_target_RPSlist_6_0_3_3_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_6_0_3_3_r_1)
+				(miss cns_target_RPSlist_6_0_3_3_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_6_0_3_3_r_1)
 			(not cns_obl_permit_RPSlist_6_0_3_3_r_1)
@@ -8690,8 +9205,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_6_0_3_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_6_0_3_3)
-		(isNotBoolValue cns_target_RPSlist_6_0_3_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_6_0_3_3)
+				(miss cns_target_RPSlist_6_0_3_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_6_0_3_3) cns_RPSlist_6_0_3_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_6_0_3_3)
@@ -8739,8 +9258,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_6_0_3_4_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_6_0_3_4_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_6_0_3_4_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_6_0_3_4_0_r_1)
+				(miss cns_target_RPSlist_6_0_3_4_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_6_0_3_4_0_r_1)
 			(not cns_obl_permit_RPSlist_6_0_3_4_0_r_1)
@@ -8804,8 +9327,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_6_0_3_4_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_6_0_3_4_0)
-		(isNotBoolValue cns_target_RPSlist_6_0_3_4_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_6_0_3_4_0)
+				(miss cns_target_RPSlist_6_0_3_4_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_6_0_3_4_0) cns_RPSlist_6_0_3_4_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_6_0_3_4_0)
@@ -8852,8 +9379,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_6_0_3_4_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_6_0_3_4_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_6_0_3_4_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_6_0_3_4_1_r_1)
+				(miss cns_target_RPSlist_6_0_3_4_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_6_0_3_4_1_r_1)
 			(not cns_obl_permit_RPSlist_6_0_3_4_1_r_1)
@@ -8917,8 +9448,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_6_0_3_4_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_6_0_3_4_1)
-		(isNotBoolValue cns_target_RPSlist_6_0_3_4_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_6_0_3_4_1)
+				(miss cns_target_RPSlist_6_0_3_4_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_6_0_3_4_1) cns_RPSlist_6_0_3_4_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_6_0_3_4_1)
@@ -8965,8 +9500,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_6_0_3_4_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_6_0_3_4_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_6_0_3_4_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_6_0_3_4_2_r_1)
+				(miss cns_target_RPSlist_6_0_3_4_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_6_0_3_4_2_r_1)
 			(not cns_obl_permit_RPSlist_6_0_3_4_2_r_1)
@@ -9030,8 +9569,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_6_0_3_4_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_6_0_3_4_2)
-		(isNotBoolValue cns_target_RPSlist_6_0_3_4_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_6_0_3_4_2)
+				(miss cns_target_RPSlist_6_0_3_4_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_6_0_3_4_2) cns_RPSlist_6_0_3_4_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_6_0_3_4_2)
@@ -9078,8 +9621,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_6_0_3_4_3_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_6_0_3_4_3_r_1)
-		(isNotBoolValue cns_target_RPSlist_6_0_3_4_3_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_6_0_3_4_3_r_1)
+				(miss cns_target_RPSlist_6_0_3_4_3_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_6_0_3_4_3_r_1)
 			(not cns_obl_deny_RPSlist_6_0_3_4_3_r_1)
@@ -9143,8 +9690,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_6_0_3_4_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_6_0_3_4_3)
-		(isNotBoolValue cns_target_RPSlist_6_0_3_4_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_6_0_3_4_3)
+				(miss cns_target_RPSlist_6_0_3_4_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_6_0_3_4_3) cns_RPSlist_6_0_3_4_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_6_0_3_4_3)
@@ -9252,8 +9803,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_6_0_3_4_indet () Bool
 	(or 
-		(err cns_target_RPSlist_6_0_3_4)
-		(isNotBoolValue cns_target_RPSlist_6_0_3_4)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_6_0_3_4)
+				(miss cns_target_RPSlist_6_0_3_4)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_6_0_3_4) cns_RPSlist_6_0_3_4_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_6_0_3_4)
@@ -9378,8 +9933,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_6_0_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_6_0_3)
-		(isNotBoolValue cns_target_RPSlist_6_0_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_6_0_3)
+				(miss cns_target_RPSlist_6_0_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_6_0_3) cns_RPSlist_6_0_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_6_0_3)
@@ -9487,8 +10046,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_6_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_6_0)
-		(isNotBoolValue cns_target_RPSlist_6_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_6_0)
+				(miss cns_target_RPSlist_6_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_6_0) cns_RPSlist_6_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_6_0)
@@ -9560,8 +10123,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_6_indet () Bool
 	(or 
-		(err cns_target_RPSlist_6)
-		(isNotBoolValue cns_target_RPSlist_6)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_6)
+				(miss cns_target_RPSlist_6)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_6) cns_RPSlist_6_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_6)
@@ -9610,8 +10177,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_7_0_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_7_0_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_7_0_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_7_0_0_r_1)
+				(miss cns_target_RPSlist_7_0_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_7_0_0_r_1)
 			(not cns_obl_permit_RPSlist_7_0_0_r_1)
@@ -9675,8 +10246,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_7_0_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_7_0_0)
-		(isNotBoolValue cns_target_RPSlist_7_0_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_7_0_0)
+				(miss cns_target_RPSlist_7_0_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_7_0_0) cns_RPSlist_7_0_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_7_0_0)
@@ -9723,8 +10298,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_7_0_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_7_0_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_7_0_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_7_0_1_r_1)
+				(miss cns_target_RPSlist_7_0_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_7_0_1_r_1)
 			(not cns_obl_permit_RPSlist_7_0_1_r_1)
@@ -9788,8 +10367,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_7_0_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_7_0_1)
-		(isNotBoolValue cns_target_RPSlist_7_0_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_7_0_1)
+				(miss cns_target_RPSlist_7_0_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_7_0_1) cns_RPSlist_7_0_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_7_0_1)
@@ -9836,8 +10419,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_7_0_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_7_0_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_7_0_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_7_0_2_r_1)
+				(miss cns_target_RPSlist_7_0_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_7_0_2_r_1)
 			(not cns_obl_deny_RPSlist_7_0_2_r_1)
@@ -9901,8 +10488,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_7_0_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_7_0_2)
-		(isNotBoolValue cns_target_RPSlist_7_0_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_7_0_2)
+				(miss cns_target_RPSlist_7_0_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_7_0_2) cns_RPSlist_7_0_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_7_0_2)
@@ -9950,8 +10541,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_7_0_3_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_7_0_3_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_7_0_3_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_7_0_3_0_r_1)
+				(miss cns_target_RPSlist_7_0_3_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_7_0_3_0_r_1)
 			(not cns_obl_permit_RPSlist_7_0_3_0_r_1)
@@ -10015,8 +10610,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_7_0_3_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_7_0_3_0)
-		(isNotBoolValue cns_target_RPSlist_7_0_3_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_7_0_3_0)
+				(miss cns_target_RPSlist_7_0_3_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_7_0_3_0) cns_RPSlist_7_0_3_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_7_0_3_0)
@@ -10063,8 +10662,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_7_0_3_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_7_0_3_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_7_0_3_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_7_0_3_1_r_1)
+				(miss cns_target_RPSlist_7_0_3_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_7_0_3_1_r_1)
 			(not cns_obl_permit_RPSlist_7_0_3_1_r_1)
@@ -10128,8 +10731,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_7_0_3_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_7_0_3_1)
-		(isNotBoolValue cns_target_RPSlist_7_0_3_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_7_0_3_1)
+				(miss cns_target_RPSlist_7_0_3_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_7_0_3_1) cns_RPSlist_7_0_3_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_7_0_3_1)
@@ -10176,8 +10783,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_7_0_3_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_7_0_3_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_7_0_3_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_7_0_3_2_r_1)
+				(miss cns_target_RPSlist_7_0_3_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_7_0_3_2_r_1)
 			(not cns_obl_deny_RPSlist_7_0_3_2_r_1)
@@ -10241,8 +10852,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_7_0_3_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_7_0_3_2)
-		(isNotBoolValue cns_target_RPSlist_7_0_3_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_7_0_3_2)
+				(miss cns_target_RPSlist_7_0_3_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_7_0_3_2) cns_RPSlist_7_0_3_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_7_0_3_2)
@@ -10290,8 +10905,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_7_0_3_3_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_7_0_3_3_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_7_0_3_3_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_7_0_3_3_0_r_1)
+				(miss cns_target_RPSlist_7_0_3_3_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_7_0_3_3_0_r_1)
 			(not cns_obl_permit_RPSlist_7_0_3_3_0_r_1)
@@ -10355,8 +10974,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_7_0_3_3_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_7_0_3_3_0)
-		(isNotBoolValue cns_target_RPSlist_7_0_3_3_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_7_0_3_3_0)
+				(miss cns_target_RPSlist_7_0_3_3_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_7_0_3_3_0) cns_RPSlist_7_0_3_3_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_7_0_3_3_0)
@@ -10403,8 +11026,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_7_0_3_3_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_7_0_3_3_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_7_0_3_3_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_7_0_3_3_1_r_1)
+				(miss cns_target_RPSlist_7_0_3_3_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_7_0_3_3_1_r_1)
 			(not cns_obl_permit_RPSlist_7_0_3_3_1_r_1)
@@ -10468,8 +11095,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_7_0_3_3_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_7_0_3_3_1)
-		(isNotBoolValue cns_target_RPSlist_7_0_3_3_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_7_0_3_3_1)
+				(miss cns_target_RPSlist_7_0_3_3_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_7_0_3_3_1) cns_RPSlist_7_0_3_3_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_7_0_3_3_1)
@@ -10516,8 +11147,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_7_0_3_3_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_7_0_3_3_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_7_0_3_3_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_7_0_3_3_2_r_1)
+				(miss cns_target_RPSlist_7_0_3_3_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_7_0_3_3_2_r_1)
 			(not cns_obl_deny_RPSlist_7_0_3_3_2_r_1)
@@ -10581,8 +11216,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_7_0_3_3_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_7_0_3_3_2)
-		(isNotBoolValue cns_target_RPSlist_7_0_3_3_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_7_0_3_3_2)
+				(miss cns_target_RPSlist_7_0_3_3_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_7_0_3_3_2) cns_RPSlist_7_0_3_3_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_7_0_3_3_2)
@@ -10629,8 +11268,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_7_0_3_3_3_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_7_0_3_3_3_r_1)
-		(isNotBoolValue cns_target_RPSlist_7_0_3_3_3_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_7_0_3_3_3_r_1)
+				(miss cns_target_RPSlist_7_0_3_3_3_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_7_0_3_3_3_r_1)
 			(not cns_obl_permit_RPSlist_7_0_3_3_3_r_1)
@@ -10694,8 +11337,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_7_0_3_3_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_7_0_3_3_3)
-		(isNotBoolValue cns_target_RPSlist_7_0_3_3_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_7_0_3_3_3)
+				(miss cns_target_RPSlist_7_0_3_3_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_7_0_3_3_3) cns_RPSlist_7_0_3_3_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_7_0_3_3_3)
@@ -10743,8 +11390,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_7_0_3_3_4_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_7_0_3_3_4_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_7_0_3_3_4_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_7_0_3_3_4_0_r_1)
+				(miss cns_target_RPSlist_7_0_3_3_4_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_7_0_3_3_4_0_r_1)
 			(not cns_obl_permit_RPSlist_7_0_3_3_4_0_r_1)
@@ -10808,8 +11459,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_7_0_3_3_4_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_7_0_3_3_4_0)
-		(isNotBoolValue cns_target_RPSlist_7_0_3_3_4_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_7_0_3_3_4_0)
+				(miss cns_target_RPSlist_7_0_3_3_4_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_7_0_3_3_4_0) cns_RPSlist_7_0_3_3_4_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_7_0_3_3_4_0)
@@ -10856,8 +11511,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_7_0_3_3_4_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_7_0_3_3_4_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_7_0_3_3_4_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_7_0_3_3_4_1_r_1)
+				(miss cns_target_RPSlist_7_0_3_3_4_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_7_0_3_3_4_1_r_1)
 			(not cns_obl_permit_RPSlist_7_0_3_3_4_1_r_1)
@@ -10921,8 +11580,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_7_0_3_3_4_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_7_0_3_3_4_1)
-		(isNotBoolValue cns_target_RPSlist_7_0_3_3_4_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_7_0_3_3_4_1)
+				(miss cns_target_RPSlist_7_0_3_3_4_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_7_0_3_3_4_1) cns_RPSlist_7_0_3_3_4_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_7_0_3_3_4_1)
@@ -10969,8 +11632,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_7_0_3_3_4_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_7_0_3_3_4_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_7_0_3_3_4_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_7_0_3_3_4_2_r_1)
+				(miss cns_target_RPSlist_7_0_3_3_4_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_7_0_3_3_4_2_r_1)
 			(not cns_obl_permit_RPSlist_7_0_3_3_4_2_r_1)
@@ -11034,8 +11701,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_7_0_3_3_4_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_7_0_3_3_4_2)
-		(isNotBoolValue cns_target_RPSlist_7_0_3_3_4_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_7_0_3_3_4_2)
+				(miss cns_target_RPSlist_7_0_3_3_4_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_7_0_3_3_4_2) cns_RPSlist_7_0_3_3_4_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_7_0_3_3_4_2)
@@ -11082,8 +11753,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_7_0_3_3_4_3_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_7_0_3_3_4_3_r_1)
-		(isNotBoolValue cns_target_RPSlist_7_0_3_3_4_3_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_7_0_3_3_4_3_r_1)
+				(miss cns_target_RPSlist_7_0_3_3_4_3_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_7_0_3_3_4_3_r_1)
 			(not cns_obl_deny_RPSlist_7_0_3_3_4_3_r_1)
@@ -11147,8 +11822,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_7_0_3_3_4_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_7_0_3_3_4_3)
-		(isNotBoolValue cns_target_RPSlist_7_0_3_3_4_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_7_0_3_3_4_3)
+				(miss cns_target_RPSlist_7_0_3_3_4_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_7_0_3_3_4_3) cns_RPSlist_7_0_3_3_4_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_7_0_3_3_4_3)
@@ -11256,8 +11935,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_7_0_3_3_4_indet () Bool
 	(or 
-		(err cns_target_RPSlist_7_0_3_3_4)
-		(isNotBoolValue cns_target_RPSlist_7_0_3_3_4)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_7_0_3_3_4)
+				(miss cns_target_RPSlist_7_0_3_3_4)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_7_0_3_3_4) cns_RPSlist_7_0_3_3_4_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_7_0_3_3_4)
@@ -11382,8 +12065,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_7_0_3_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_7_0_3_3)
-		(isNotBoolValue cns_target_RPSlist_7_0_3_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_7_0_3_3)
+				(miss cns_target_RPSlist_7_0_3_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_7_0_3_3) cns_RPSlist_7_0_3_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_7_0_3_3)
@@ -11491,8 +12178,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_7_0_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_7_0_3)
-		(isNotBoolValue cns_target_RPSlist_7_0_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_7_0_3)
+				(miss cns_target_RPSlist_7_0_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_7_0_3) cns_RPSlist_7_0_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_7_0_3)
@@ -11600,8 +12291,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_7_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_7_0)
-		(isNotBoolValue cns_target_RPSlist_7_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_7_0)
+				(miss cns_target_RPSlist_7_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_7_0) cns_RPSlist_7_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_7_0)
@@ -11673,8 +12368,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_7_indet () Bool
 	(or 
-		(err cns_target_RPSlist_7)
-		(isNotBoolValue cns_target_RPSlist_7)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_7)
+				(miss cns_target_RPSlist_7)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_7) cns_RPSlist_7_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_7)
@@ -11723,8 +12422,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_8_0_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_8_0_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_8_0_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_8_0_0_r_1)
+				(miss cns_target_RPSlist_8_0_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_8_0_0_r_1)
 			(not cns_obl_permit_RPSlist_8_0_0_r_1)
@@ -11788,8 +12491,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_8_0_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_8_0_0)
-		(isNotBoolValue cns_target_RPSlist_8_0_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_8_0_0)
+				(miss cns_target_RPSlist_8_0_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_8_0_0) cns_RPSlist_8_0_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_8_0_0)
@@ -11836,8 +12543,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_8_0_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_8_0_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_8_0_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_8_0_1_r_1)
+				(miss cns_target_RPSlist_8_0_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_8_0_1_r_1)
 			(not cns_obl_deny_RPSlist_8_0_1_r_1)
@@ -11901,8 +12612,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_8_0_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_8_0_1)
-		(isNotBoolValue cns_target_RPSlist_8_0_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_8_0_1)
+				(miss cns_target_RPSlist_8_0_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_8_0_1) cns_RPSlist_8_0_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_8_0_1)
@@ -11949,8 +12664,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_8_0_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_8_0_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_8_0_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_8_0_2_r_1)
+				(miss cns_target_RPSlist_8_0_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_8_0_2_r_1)
 			(not cns_obl_permit_RPSlist_8_0_2_r_1)
@@ -12014,8 +12733,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_8_0_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_8_0_2)
-		(isNotBoolValue cns_target_RPSlist_8_0_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_8_0_2)
+				(miss cns_target_RPSlist_8_0_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_8_0_2) cns_RPSlist_8_0_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_8_0_2)
@@ -12062,8 +12785,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_8_0_3_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_8_0_3_r_1)
-		(isNotBoolValue cns_target_RPSlist_8_0_3_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_8_0_3_r_1)
+				(miss cns_target_RPSlist_8_0_3_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_8_0_3_r_1)
 			(not cns_obl_deny_RPSlist_8_0_3_r_1)
@@ -12127,8 +12854,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_8_0_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_8_0_3)
-		(isNotBoolValue cns_target_RPSlist_8_0_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_8_0_3)
+				(miss cns_target_RPSlist_8_0_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_8_0_3) cns_RPSlist_8_0_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_8_0_3)
@@ -12176,8 +12907,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_8_0_4_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_8_0_4_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_8_0_4_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_8_0_4_0_r_1)
+				(miss cns_target_RPSlist_8_0_4_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_8_0_4_0_r_1)
 			(not cns_obl_permit_RPSlist_8_0_4_0_r_1)
@@ -12241,8 +12976,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_8_0_4_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_8_0_4_0)
-		(isNotBoolValue cns_target_RPSlist_8_0_4_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_8_0_4_0)
+				(miss cns_target_RPSlist_8_0_4_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_8_0_4_0) cns_RPSlist_8_0_4_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_8_0_4_0)
@@ -12289,8 +13028,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_8_0_4_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_8_0_4_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_8_0_4_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_8_0_4_1_r_1)
+				(miss cns_target_RPSlist_8_0_4_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_8_0_4_1_r_1)
 			(not cns_obl_permit_RPSlist_8_0_4_1_r_1)
@@ -12354,8 +13097,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_8_0_4_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_8_0_4_1)
-		(isNotBoolValue cns_target_RPSlist_8_0_4_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_8_0_4_1)
+				(miss cns_target_RPSlist_8_0_4_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_8_0_4_1) cns_RPSlist_8_0_4_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_8_0_4_1)
@@ -12402,8 +13149,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_8_0_4_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_8_0_4_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_8_0_4_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_8_0_4_2_r_1)
+				(miss cns_target_RPSlist_8_0_4_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_8_0_4_2_r_1)
 			(not cns_obl_deny_RPSlist_8_0_4_2_r_1)
@@ -12467,8 +13218,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_8_0_4_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_8_0_4_2)
-		(isNotBoolValue cns_target_RPSlist_8_0_4_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_8_0_4_2)
+				(miss cns_target_RPSlist_8_0_4_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_8_0_4_2) cns_RPSlist_8_0_4_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_8_0_4_2)
@@ -12516,8 +13271,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_8_0_4_3_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_8_0_4_3_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_8_0_4_3_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_8_0_4_3_0_r_1)
+				(miss cns_target_RPSlist_8_0_4_3_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_8_0_4_3_0_r_1)
 			(not cns_obl_permit_RPSlist_8_0_4_3_0_r_1)
@@ -12581,8 +13340,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_8_0_4_3_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_8_0_4_3_0)
-		(isNotBoolValue cns_target_RPSlist_8_0_4_3_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_8_0_4_3_0)
+				(miss cns_target_RPSlist_8_0_4_3_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_8_0_4_3_0) cns_RPSlist_8_0_4_3_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_8_0_4_3_0)
@@ -12629,8 +13392,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_8_0_4_3_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_8_0_4_3_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_8_0_4_3_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_8_0_4_3_1_r_1)
+				(miss cns_target_RPSlist_8_0_4_3_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_8_0_4_3_1_r_1)
 			(not cns_obl_permit_RPSlist_8_0_4_3_1_r_1)
@@ -12694,8 +13461,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_8_0_4_3_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_8_0_4_3_1)
-		(isNotBoolValue cns_target_RPSlist_8_0_4_3_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_8_0_4_3_1)
+				(miss cns_target_RPSlist_8_0_4_3_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_8_0_4_3_1) cns_RPSlist_8_0_4_3_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_8_0_4_3_1)
@@ -12742,8 +13513,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_8_0_4_3_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_8_0_4_3_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_8_0_4_3_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_8_0_4_3_2_r_1)
+				(miss cns_target_RPSlist_8_0_4_3_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_8_0_4_3_2_r_1)
 			(not cns_obl_deny_RPSlist_8_0_4_3_2_r_1)
@@ -12807,8 +13582,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_8_0_4_3_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_8_0_4_3_2)
-		(isNotBoolValue cns_target_RPSlist_8_0_4_3_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_8_0_4_3_2)
+				(miss cns_target_RPSlist_8_0_4_3_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_8_0_4_3_2) cns_RPSlist_8_0_4_3_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_8_0_4_3_2)
@@ -12855,8 +13634,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_8_0_4_3_3_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_8_0_4_3_3_r_1)
-		(isNotBoolValue cns_target_RPSlist_8_0_4_3_3_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_8_0_4_3_3_r_1)
+				(miss cns_target_RPSlist_8_0_4_3_3_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_8_0_4_3_3_r_1)
 			(not cns_obl_permit_RPSlist_8_0_4_3_3_r_1)
@@ -12920,8 +13703,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_8_0_4_3_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_8_0_4_3_3)
-		(isNotBoolValue cns_target_RPSlist_8_0_4_3_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_8_0_4_3_3)
+				(miss cns_target_RPSlist_8_0_4_3_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_8_0_4_3_3) cns_RPSlist_8_0_4_3_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_8_0_4_3_3)
@@ -12969,8 +13756,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_8_0_4_3_4_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_8_0_4_3_4_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_8_0_4_3_4_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_8_0_4_3_4_0_r_1)
+				(miss cns_target_RPSlist_8_0_4_3_4_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_8_0_4_3_4_0_r_1)
 			(not cns_obl_permit_RPSlist_8_0_4_3_4_0_r_1)
@@ -13034,8 +13825,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_8_0_4_3_4_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_8_0_4_3_4_0)
-		(isNotBoolValue cns_target_RPSlist_8_0_4_3_4_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_8_0_4_3_4_0)
+				(miss cns_target_RPSlist_8_0_4_3_4_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_8_0_4_3_4_0) cns_RPSlist_8_0_4_3_4_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_8_0_4_3_4_0)
@@ -13082,8 +13877,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_8_0_4_3_4_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_8_0_4_3_4_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_8_0_4_3_4_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_8_0_4_3_4_1_r_1)
+				(miss cns_target_RPSlist_8_0_4_3_4_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_8_0_4_3_4_1_r_1)
 			(not cns_obl_permit_RPSlist_8_0_4_3_4_1_r_1)
@@ -13147,8 +13946,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_8_0_4_3_4_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_8_0_4_3_4_1)
-		(isNotBoolValue cns_target_RPSlist_8_0_4_3_4_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_8_0_4_3_4_1)
+				(miss cns_target_RPSlist_8_0_4_3_4_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_8_0_4_3_4_1) cns_RPSlist_8_0_4_3_4_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_8_0_4_3_4_1)
@@ -13195,8 +13998,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_8_0_4_3_4_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_8_0_4_3_4_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_8_0_4_3_4_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_8_0_4_3_4_2_r_1)
+				(miss cns_target_RPSlist_8_0_4_3_4_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_8_0_4_3_4_2_r_1)
 			(not cns_obl_permit_RPSlist_8_0_4_3_4_2_r_1)
@@ -13260,8 +14067,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_8_0_4_3_4_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_8_0_4_3_4_2)
-		(isNotBoolValue cns_target_RPSlist_8_0_4_3_4_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_8_0_4_3_4_2)
+				(miss cns_target_RPSlist_8_0_4_3_4_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_8_0_4_3_4_2) cns_RPSlist_8_0_4_3_4_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_8_0_4_3_4_2)
@@ -13308,8 +14119,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_8_0_4_3_4_3_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_8_0_4_3_4_3_r_1)
-		(isNotBoolValue cns_target_RPSlist_8_0_4_3_4_3_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_8_0_4_3_4_3_r_1)
+				(miss cns_target_RPSlist_8_0_4_3_4_3_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_8_0_4_3_4_3_r_1)
 			(not cns_obl_deny_RPSlist_8_0_4_3_4_3_r_1)
@@ -13373,8 +14188,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_8_0_4_3_4_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_8_0_4_3_4_3)
-		(isNotBoolValue cns_target_RPSlist_8_0_4_3_4_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_8_0_4_3_4_3)
+				(miss cns_target_RPSlist_8_0_4_3_4_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_8_0_4_3_4_3) cns_RPSlist_8_0_4_3_4_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_8_0_4_3_4_3)
@@ -13482,8 +14301,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_8_0_4_3_4_indet () Bool
 	(or 
-		(err cns_target_RPSlist_8_0_4_3_4)
-		(isNotBoolValue cns_target_RPSlist_8_0_4_3_4)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_8_0_4_3_4)
+				(miss cns_target_RPSlist_8_0_4_3_4)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_8_0_4_3_4) cns_RPSlist_8_0_4_3_4_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_8_0_4_3_4)
@@ -13608,8 +14431,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_8_0_4_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_8_0_4_3)
-		(isNotBoolValue cns_target_RPSlist_8_0_4_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_8_0_4_3)
+				(miss cns_target_RPSlist_8_0_4_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_8_0_4_3) cns_RPSlist_8_0_4_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_8_0_4_3)
@@ -13717,8 +14544,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_8_0_4_indet () Bool
 	(or 
-		(err cns_target_RPSlist_8_0_4)
-		(isNotBoolValue cns_target_RPSlist_8_0_4)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_8_0_4)
+				(miss cns_target_RPSlist_8_0_4)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_8_0_4) cns_RPSlist_8_0_4_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_8_0_4)
@@ -13843,8 +14674,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_8_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_8_0)
-		(isNotBoolValue cns_target_RPSlist_8_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_8_0)
+				(miss cns_target_RPSlist_8_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_8_0) cns_RPSlist_8_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_8_0)
@@ -13916,8 +14751,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_8_indet () Bool
 	(or 
-		(err cns_target_RPSlist_8)
-		(isNotBoolValue cns_target_RPSlist_8)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_8)
+				(miss cns_target_RPSlist_8)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_8) cns_RPSlist_8_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_8)
@@ -13966,8 +14805,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_9_0_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_9_0_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_9_0_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_9_0_0_r_1)
+				(miss cns_target_RPSlist_9_0_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_9_0_0_r_1)
 			(not cns_obl_permit_RPSlist_9_0_0_r_1)
@@ -14031,8 +14874,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_9_0_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_9_0_0)
-		(isNotBoolValue cns_target_RPSlist_9_0_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_9_0_0)
+				(miss cns_target_RPSlist_9_0_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_9_0_0) cns_RPSlist_9_0_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_9_0_0)
@@ -14079,8 +14926,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_9_0_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_9_0_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_9_0_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_9_0_1_r_1)
+				(miss cns_target_RPSlist_9_0_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_9_0_1_r_1)
 			(not cns_obl_permit_RPSlist_9_0_1_r_1)
@@ -14144,8 +14995,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_9_0_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_9_0_1)
-		(isNotBoolValue cns_target_RPSlist_9_0_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_9_0_1)
+				(miss cns_target_RPSlist_9_0_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_9_0_1) cns_RPSlist_9_0_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_9_0_1)
@@ -14192,8 +15047,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_9_0_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_9_0_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_9_0_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_9_0_2_r_1)
+				(miss cns_target_RPSlist_9_0_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_9_0_2_r_1)
 			(not cns_obl_permit_RPSlist_9_0_2_r_1)
@@ -14257,8 +15116,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_9_0_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_9_0_2)
-		(isNotBoolValue cns_target_RPSlist_9_0_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_9_0_2)
+				(miss cns_target_RPSlist_9_0_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_9_0_2) cns_RPSlist_9_0_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_9_0_2)
@@ -14306,8 +15169,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_9_0_3_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_9_0_3_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_9_0_3_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_9_0_3_0_r_1)
+				(miss cns_target_RPSlist_9_0_3_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_9_0_3_0_r_1)
 			(not cns_obl_permit_RPSlist_9_0_3_0_r_1)
@@ -14371,8 +15238,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_9_0_3_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_9_0_3_0)
-		(isNotBoolValue cns_target_RPSlist_9_0_3_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_9_0_3_0)
+				(miss cns_target_RPSlist_9_0_3_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_9_0_3_0) cns_RPSlist_9_0_3_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_9_0_3_0)
@@ -14419,8 +15290,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_9_0_3_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_9_0_3_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_9_0_3_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_9_0_3_1_r_1)
+				(miss cns_target_RPSlist_9_0_3_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_9_0_3_1_r_1)
 			(not cns_obl_permit_RPSlist_9_0_3_1_r_1)
@@ -14484,8 +15359,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_9_0_3_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_9_0_3_1)
-		(isNotBoolValue cns_target_RPSlist_9_0_3_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_9_0_3_1)
+				(miss cns_target_RPSlist_9_0_3_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_9_0_3_1) cns_RPSlist_9_0_3_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_9_0_3_1)
@@ -14532,8 +15411,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_9_0_3_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_9_0_3_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_9_0_3_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_9_0_3_2_r_1)
+				(miss cns_target_RPSlist_9_0_3_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_9_0_3_2_r_1)
 			(not cns_obl_permit_RPSlist_9_0_3_2_r_1)
@@ -14597,8 +15480,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_9_0_3_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_9_0_3_2)
-		(isNotBoolValue cns_target_RPSlist_9_0_3_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_9_0_3_2)
+				(miss cns_target_RPSlist_9_0_3_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_9_0_3_2) cns_RPSlist_9_0_3_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_9_0_3_2)
@@ -14645,8 +15532,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_9_0_3_3_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_9_0_3_3_r_1)
-		(isNotBoolValue cns_target_RPSlist_9_0_3_3_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_9_0_3_3_r_1)
+				(miss cns_target_RPSlist_9_0_3_3_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_9_0_3_3_r_1)
 			(not cns_obl_deny_RPSlist_9_0_3_3_r_1)
@@ -14710,8 +15601,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_9_0_3_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_9_0_3_3)
-		(isNotBoolValue cns_target_RPSlist_9_0_3_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_9_0_3_3)
+				(miss cns_target_RPSlist_9_0_3_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_9_0_3_3) cns_RPSlist_9_0_3_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_9_0_3_3)
@@ -14819,8 +15714,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_9_0_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_9_0_3)
-		(isNotBoolValue cns_target_RPSlist_9_0_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_9_0_3)
+				(miss cns_target_RPSlist_9_0_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_9_0_3) cns_RPSlist_9_0_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_9_0_3)
@@ -14928,8 +15827,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_9_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_9_0)
-		(isNotBoolValue cns_target_RPSlist_9_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_9_0)
+				(miss cns_target_RPSlist_9_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_9_0) cns_RPSlist_9_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_9_0)
@@ -15001,8 +15904,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_9_indet () Bool
 	(or 
-		(err cns_target_RPSlist_9)
-		(isNotBoolValue cns_target_RPSlist_9)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_9)
+				(miss cns_target_RPSlist_9)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_9) cns_RPSlist_9_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_9)
@@ -15052,8 +15959,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_10_0_0_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_10_0_0_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_10_0_0_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_10_0_0_0_r_1)
+				(miss cns_target_RPSlist_10_0_0_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_10_0_0_0_r_1)
 			(not cns_obl_permit_RPSlist_10_0_0_0_r_1)
@@ -15117,8 +16028,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_10_0_0_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_10_0_0_0)
-		(isNotBoolValue cns_target_RPSlist_10_0_0_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_10_0_0_0)
+				(miss cns_target_RPSlist_10_0_0_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_10_0_0_0) cns_RPSlist_10_0_0_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_10_0_0_0)
@@ -15165,8 +16080,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_10_0_0_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_10_0_0_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_10_0_0_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_10_0_0_1_r_1)
+				(miss cns_target_RPSlist_10_0_0_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_10_0_0_1_r_1)
 			(not cns_obl_permit_RPSlist_10_0_0_1_r_1)
@@ -15230,8 +16149,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_10_0_0_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_10_0_0_1)
-		(isNotBoolValue cns_target_RPSlist_10_0_0_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_10_0_0_1)
+				(miss cns_target_RPSlist_10_0_0_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_10_0_0_1) cns_RPSlist_10_0_0_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_10_0_0_1)
@@ -15279,8 +16202,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_10_0_0_2_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_10_0_0_2_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_10_0_0_2_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_10_0_0_2_0_r_1)
+				(miss cns_target_RPSlist_10_0_0_2_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_10_0_0_2_0_r_1)
 			(not cns_obl_permit_RPSlist_10_0_0_2_0_r_1)
@@ -15344,8 +16271,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_10_0_0_2_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_10_0_0_2_0)
-		(isNotBoolValue cns_target_RPSlist_10_0_0_2_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_10_0_0_2_0)
+				(miss cns_target_RPSlist_10_0_0_2_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_10_0_0_2_0) cns_RPSlist_10_0_0_2_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_10_0_0_2_0)
@@ -15392,8 +16323,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_10_0_0_2_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_10_0_0_2_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_10_0_0_2_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_10_0_0_2_1_r_1)
+				(miss cns_target_RPSlist_10_0_0_2_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_10_0_0_2_1_r_1)
 			(not cns_obl_permit_RPSlist_10_0_0_2_1_r_1)
@@ -15457,8 +16392,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_10_0_0_2_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_10_0_0_2_1)
-		(isNotBoolValue cns_target_RPSlist_10_0_0_2_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_10_0_0_2_1)
+				(miss cns_target_RPSlist_10_0_0_2_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_10_0_0_2_1) cns_RPSlist_10_0_0_2_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_10_0_0_2_1)
@@ -15505,8 +16444,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_10_0_0_2_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_10_0_0_2_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_10_0_0_2_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_10_0_0_2_2_r_1)
+				(miss cns_target_RPSlist_10_0_0_2_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_10_0_0_2_2_r_1)
 			(not cns_obl_permit_RPSlist_10_0_0_2_2_r_1)
@@ -15570,8 +16513,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_10_0_0_2_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_10_0_0_2_2)
-		(isNotBoolValue cns_target_RPSlist_10_0_0_2_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_10_0_0_2_2)
+				(miss cns_target_RPSlist_10_0_0_2_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_10_0_0_2_2) cns_RPSlist_10_0_0_2_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_10_0_0_2_2)
@@ -15619,8 +16566,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_10_0_0_2_3_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_10_0_0_2_3_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_10_0_0_2_3_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_10_0_0_2_3_0_r_1)
+				(miss cns_target_RPSlist_10_0_0_2_3_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_10_0_0_2_3_0_r_1)
 			(not cns_obl_permit_RPSlist_10_0_0_2_3_0_r_1)
@@ -15684,8 +16635,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_10_0_0_2_3_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_10_0_0_2_3_0)
-		(isNotBoolValue cns_target_RPSlist_10_0_0_2_3_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_10_0_0_2_3_0)
+				(miss cns_target_RPSlist_10_0_0_2_3_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_10_0_0_2_3_0) cns_RPSlist_10_0_0_2_3_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_10_0_0_2_3_0)
@@ -15732,8 +16687,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_10_0_0_2_3_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_10_0_0_2_3_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_10_0_0_2_3_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_10_0_0_2_3_1_r_1)
+				(miss cns_target_RPSlist_10_0_0_2_3_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_10_0_0_2_3_1_r_1)
 			(not cns_obl_permit_RPSlist_10_0_0_2_3_1_r_1)
@@ -15797,8 +16756,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_10_0_0_2_3_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_10_0_0_2_3_1)
-		(isNotBoolValue cns_target_RPSlist_10_0_0_2_3_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_10_0_0_2_3_1)
+				(miss cns_target_RPSlist_10_0_0_2_3_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_10_0_0_2_3_1) cns_RPSlist_10_0_0_2_3_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_10_0_0_2_3_1)
@@ -15845,8 +16808,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_10_0_0_2_3_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_10_0_0_2_3_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_10_0_0_2_3_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_10_0_0_2_3_2_r_1)
+				(miss cns_target_RPSlist_10_0_0_2_3_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_10_0_0_2_3_2_r_1)
 			(not cns_obl_permit_RPSlist_10_0_0_2_3_2_r_1)
@@ -15910,8 +16877,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_10_0_0_2_3_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_10_0_0_2_3_2)
-		(isNotBoolValue cns_target_RPSlist_10_0_0_2_3_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_10_0_0_2_3_2)
+				(miss cns_target_RPSlist_10_0_0_2_3_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_10_0_0_2_3_2) cns_RPSlist_10_0_0_2_3_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_10_0_0_2_3_2)
@@ -15958,8 +16929,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_10_0_0_2_3_3_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_10_0_0_2_3_3_r_1)
-		(isNotBoolValue cns_target_RPSlist_10_0_0_2_3_3_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_10_0_0_2_3_3_r_1)
+				(miss cns_target_RPSlist_10_0_0_2_3_3_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_10_0_0_2_3_3_r_1)
 			(not cns_obl_deny_RPSlist_10_0_0_2_3_3_r_1)
@@ -16023,8 +16998,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_10_0_0_2_3_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_10_0_0_2_3_3)
-		(isNotBoolValue cns_target_RPSlist_10_0_0_2_3_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_10_0_0_2_3_3)
+				(miss cns_target_RPSlist_10_0_0_2_3_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_10_0_0_2_3_3) cns_RPSlist_10_0_0_2_3_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_10_0_0_2_3_3)
@@ -16132,8 +17111,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_10_0_0_2_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_10_0_0_2_3)
-		(isNotBoolValue cns_target_RPSlist_10_0_0_2_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_10_0_0_2_3)
+				(miss cns_target_RPSlist_10_0_0_2_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_10_0_0_2_3) cns_RPSlist_10_0_0_2_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_10_0_0_2_3)
@@ -16241,8 +17224,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_10_0_0_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_10_0_0_2)
-		(isNotBoolValue cns_target_RPSlist_10_0_0_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_10_0_0_2)
+				(miss cns_target_RPSlist_10_0_0_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_10_0_0_2) cns_RPSlist_10_0_0_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_10_0_0_2)
@@ -16333,8 +17320,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_10_0_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_10_0_0)
-		(isNotBoolValue cns_target_RPSlist_10_0_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_10_0_0)
+				(miss cns_target_RPSlist_10_0_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_10_0_0) cns_RPSlist_10_0_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_10_0_0)
@@ -16406,8 +17397,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_10_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_10_0)
-		(isNotBoolValue cns_target_RPSlist_10_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_10_0)
+				(miss cns_target_RPSlist_10_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_10_0) cns_RPSlist_10_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_10_0)
@@ -16479,8 +17474,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_10_indet () Bool
 	(or 
-		(err cns_target_RPSlist_10)
-		(isNotBoolValue cns_target_RPSlist_10)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_10)
+				(miss cns_target_RPSlist_10)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_10) cns_RPSlist_10_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_10)
@@ -16529,8 +17528,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_11_0_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_11_0_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_11_0_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_11_0_0_r_1)
+				(miss cns_target_RPSlist_11_0_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_11_0_0_r_1)
 			(not cns_obl_permit_RPSlist_11_0_0_r_1)
@@ -16594,8 +17597,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_11_0_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_11_0_0)
-		(isNotBoolValue cns_target_RPSlist_11_0_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_11_0_0)
+				(miss cns_target_RPSlist_11_0_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_11_0_0) cns_RPSlist_11_0_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_11_0_0)
@@ -16642,8 +17649,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_11_0_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_11_0_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_11_0_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_11_0_1_r_1)
+				(miss cns_target_RPSlist_11_0_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_11_0_1_r_1)
 			(not cns_obl_permit_RPSlist_11_0_1_r_1)
@@ -16707,8 +17718,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_11_0_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_11_0_1)
-		(isNotBoolValue cns_target_RPSlist_11_0_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_11_0_1)
+				(miss cns_target_RPSlist_11_0_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_11_0_1) cns_RPSlist_11_0_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_11_0_1)
@@ -16756,8 +17771,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_11_0_2_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_11_0_2_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_11_0_2_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_11_0_2_0_r_1)
+				(miss cns_target_RPSlist_11_0_2_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_11_0_2_0_r_1)
 			(not cns_obl_permit_RPSlist_11_0_2_0_r_1)
@@ -16821,8 +17840,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_11_0_2_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_11_0_2_0)
-		(isNotBoolValue cns_target_RPSlist_11_0_2_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_11_0_2_0)
+				(miss cns_target_RPSlist_11_0_2_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_11_0_2_0) cns_RPSlist_11_0_2_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_11_0_2_0)
@@ -16869,8 +17892,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_11_0_2_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_11_0_2_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_11_0_2_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_11_0_2_1_r_1)
+				(miss cns_target_RPSlist_11_0_2_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_11_0_2_1_r_1)
 			(not cns_obl_permit_RPSlist_11_0_2_1_r_1)
@@ -16934,8 +17961,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_11_0_2_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_11_0_2_1)
-		(isNotBoolValue cns_target_RPSlist_11_0_2_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_11_0_2_1)
+				(miss cns_target_RPSlist_11_0_2_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_11_0_2_1) cns_RPSlist_11_0_2_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_11_0_2_1)
@@ -16982,8 +18013,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_11_0_2_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_11_0_2_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_11_0_2_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_11_0_2_2_r_1)
+				(miss cns_target_RPSlist_11_0_2_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_11_0_2_2_r_1)
 			(not cns_obl_permit_RPSlist_11_0_2_2_r_1)
@@ -17047,8 +18082,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_11_0_2_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_11_0_2_2)
-		(isNotBoolValue cns_target_RPSlist_11_0_2_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_11_0_2_2)
+				(miss cns_target_RPSlist_11_0_2_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_11_0_2_2) cns_RPSlist_11_0_2_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_11_0_2_2)
@@ -17096,8 +18135,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_11_0_2_3_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_11_0_2_3_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_11_0_2_3_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_11_0_2_3_0_r_1)
+				(miss cns_target_RPSlist_11_0_2_3_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_11_0_2_3_0_r_1)
 			(not cns_obl_permit_RPSlist_11_0_2_3_0_r_1)
@@ -17161,8 +18204,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_11_0_2_3_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_11_0_2_3_0)
-		(isNotBoolValue cns_target_RPSlist_11_0_2_3_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_11_0_2_3_0)
+				(miss cns_target_RPSlist_11_0_2_3_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_11_0_2_3_0) cns_RPSlist_11_0_2_3_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_11_0_2_3_0)
@@ -17209,8 +18256,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_11_0_2_3_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_11_0_2_3_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_11_0_2_3_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_11_0_2_3_1_r_1)
+				(miss cns_target_RPSlist_11_0_2_3_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_11_0_2_3_1_r_1)
 			(not cns_obl_permit_RPSlist_11_0_2_3_1_r_1)
@@ -17274,8 +18325,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_11_0_2_3_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_11_0_2_3_1)
-		(isNotBoolValue cns_target_RPSlist_11_0_2_3_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_11_0_2_3_1)
+				(miss cns_target_RPSlist_11_0_2_3_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_11_0_2_3_1) cns_RPSlist_11_0_2_3_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_11_0_2_3_1)
@@ -17322,8 +18377,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_11_0_2_3_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_11_0_2_3_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_11_0_2_3_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_11_0_2_3_2_r_1)
+				(miss cns_target_RPSlist_11_0_2_3_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_11_0_2_3_2_r_1)
 			(not cns_obl_permit_RPSlist_11_0_2_3_2_r_1)
@@ -17387,8 +18446,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_11_0_2_3_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_11_0_2_3_2)
-		(isNotBoolValue cns_target_RPSlist_11_0_2_3_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_11_0_2_3_2)
+				(miss cns_target_RPSlist_11_0_2_3_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_11_0_2_3_2) cns_RPSlist_11_0_2_3_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_11_0_2_3_2)
@@ -17435,8 +18498,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_11_0_2_3_3_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_11_0_2_3_3_r_1)
-		(isNotBoolValue cns_target_RPSlist_11_0_2_3_3_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_11_0_2_3_3_r_1)
+				(miss cns_target_RPSlist_11_0_2_3_3_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_11_0_2_3_3_r_1)
 			(not cns_obl_deny_RPSlist_11_0_2_3_3_r_1)
@@ -17500,8 +18567,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_11_0_2_3_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_11_0_2_3_3)
-		(isNotBoolValue cns_target_RPSlist_11_0_2_3_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_11_0_2_3_3)
+				(miss cns_target_RPSlist_11_0_2_3_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_11_0_2_3_3) cns_RPSlist_11_0_2_3_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_11_0_2_3_3)
@@ -17609,8 +18680,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_11_0_2_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_11_0_2_3)
-		(isNotBoolValue cns_target_RPSlist_11_0_2_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_11_0_2_3)
+				(miss cns_target_RPSlist_11_0_2_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_11_0_2_3) cns_RPSlist_11_0_2_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_11_0_2_3)
@@ -17718,8 +18793,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_11_0_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_11_0_2)
-		(isNotBoolValue cns_target_RPSlist_11_0_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_11_0_2)
+				(miss cns_target_RPSlist_11_0_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_11_0_2) cns_RPSlist_11_0_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_11_0_2)
@@ -17810,8 +18889,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_11_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_11_0)
-		(isNotBoolValue cns_target_RPSlist_11_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_11_0)
+				(miss cns_target_RPSlist_11_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_11_0) cns_RPSlist_11_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_11_0)
@@ -17883,8 +18966,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_11_indet () Bool
 	(or 
-		(err cns_target_RPSlist_11)
-		(isNotBoolValue cns_target_RPSlist_11)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_11)
+				(miss cns_target_RPSlist_11)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_11) cns_RPSlist_11_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_11)
@@ -17934,8 +19021,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_12_0_0_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_12_0_0_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_12_0_0_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_12_0_0_0_r_1)
+				(miss cns_target_RPSlist_12_0_0_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_12_0_0_0_r_1)
 			(not cns_obl_permit_RPSlist_12_0_0_0_r_1)
@@ -17999,8 +19090,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_12_0_0_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_12_0_0_0)
-		(isNotBoolValue cns_target_RPSlist_12_0_0_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_12_0_0_0)
+				(miss cns_target_RPSlist_12_0_0_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_12_0_0_0) cns_RPSlist_12_0_0_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_12_0_0_0)
@@ -18047,8 +19142,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_12_0_0_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_12_0_0_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_12_0_0_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_12_0_0_1_r_1)
+				(miss cns_target_RPSlist_12_0_0_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_12_0_0_1_r_1)
 			(not cns_obl_permit_RPSlist_12_0_0_1_r_1)
@@ -18112,8 +19211,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_12_0_0_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_12_0_0_1)
-		(isNotBoolValue cns_target_RPSlist_12_0_0_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_12_0_0_1)
+				(miss cns_target_RPSlist_12_0_0_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_12_0_0_1) cns_RPSlist_12_0_0_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_12_0_0_1)
@@ -18161,8 +19264,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_12_0_0_2_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_12_0_0_2_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_12_0_0_2_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_12_0_0_2_0_r_1)
+				(miss cns_target_RPSlist_12_0_0_2_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_12_0_0_2_0_r_1)
 			(not cns_obl_permit_RPSlist_12_0_0_2_0_r_1)
@@ -18226,8 +19333,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_12_0_0_2_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_12_0_0_2_0)
-		(isNotBoolValue cns_target_RPSlist_12_0_0_2_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_12_0_0_2_0)
+				(miss cns_target_RPSlist_12_0_0_2_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_12_0_0_2_0) cns_RPSlist_12_0_0_2_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_12_0_0_2_0)
@@ -18274,8 +19385,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_12_0_0_2_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_12_0_0_2_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_12_0_0_2_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_12_0_0_2_1_r_1)
+				(miss cns_target_RPSlist_12_0_0_2_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_12_0_0_2_1_r_1)
 			(not cns_obl_permit_RPSlist_12_0_0_2_1_r_1)
@@ -18339,8 +19454,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_12_0_0_2_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_12_0_0_2_1)
-		(isNotBoolValue cns_target_RPSlist_12_0_0_2_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_12_0_0_2_1)
+				(miss cns_target_RPSlist_12_0_0_2_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_12_0_0_2_1) cns_RPSlist_12_0_0_2_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_12_0_0_2_1)
@@ -18387,8 +19506,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_12_0_0_2_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_12_0_0_2_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_12_0_0_2_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_12_0_0_2_2_r_1)
+				(miss cns_target_RPSlist_12_0_0_2_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_12_0_0_2_2_r_1)
 			(not cns_obl_permit_RPSlist_12_0_0_2_2_r_1)
@@ -18452,8 +19575,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_12_0_0_2_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_12_0_0_2_2)
-		(isNotBoolValue cns_target_RPSlist_12_0_0_2_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_12_0_0_2_2)
+				(miss cns_target_RPSlist_12_0_0_2_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_12_0_0_2_2) cns_RPSlist_12_0_0_2_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_12_0_0_2_2)
@@ -18501,8 +19628,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_12_0_0_2_3_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_12_0_0_2_3_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_12_0_0_2_3_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_12_0_0_2_3_0_r_1)
+				(miss cns_target_RPSlist_12_0_0_2_3_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_12_0_0_2_3_0_r_1)
 			(not cns_obl_permit_RPSlist_12_0_0_2_3_0_r_1)
@@ -18566,8 +19697,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_12_0_0_2_3_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_12_0_0_2_3_0)
-		(isNotBoolValue cns_target_RPSlist_12_0_0_2_3_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_12_0_0_2_3_0)
+				(miss cns_target_RPSlist_12_0_0_2_3_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_12_0_0_2_3_0) cns_RPSlist_12_0_0_2_3_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_12_0_0_2_3_0)
@@ -18614,8 +19749,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_12_0_0_2_3_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_12_0_0_2_3_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_12_0_0_2_3_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_12_0_0_2_3_1_r_1)
+				(miss cns_target_RPSlist_12_0_0_2_3_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_12_0_0_2_3_1_r_1)
 			(not cns_obl_permit_RPSlist_12_0_0_2_3_1_r_1)
@@ -18679,8 +19818,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_12_0_0_2_3_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_12_0_0_2_3_1)
-		(isNotBoolValue cns_target_RPSlist_12_0_0_2_3_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_12_0_0_2_3_1)
+				(miss cns_target_RPSlist_12_0_0_2_3_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_12_0_0_2_3_1) cns_RPSlist_12_0_0_2_3_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_12_0_0_2_3_1)
@@ -18727,8 +19870,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_12_0_0_2_3_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_12_0_0_2_3_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_12_0_0_2_3_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_12_0_0_2_3_2_r_1)
+				(miss cns_target_RPSlist_12_0_0_2_3_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_12_0_0_2_3_2_r_1)
 			(not cns_obl_permit_RPSlist_12_0_0_2_3_2_r_1)
@@ -18792,8 +19939,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_12_0_0_2_3_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_12_0_0_2_3_2)
-		(isNotBoolValue cns_target_RPSlist_12_0_0_2_3_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_12_0_0_2_3_2)
+				(miss cns_target_RPSlist_12_0_0_2_3_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_12_0_0_2_3_2) cns_RPSlist_12_0_0_2_3_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_12_0_0_2_3_2)
@@ -18840,8 +19991,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_12_0_0_2_3_3_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_12_0_0_2_3_3_r_1)
-		(isNotBoolValue cns_target_RPSlist_12_0_0_2_3_3_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_12_0_0_2_3_3_r_1)
+				(miss cns_target_RPSlist_12_0_0_2_3_3_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_12_0_0_2_3_3_r_1)
 			(not cns_obl_deny_RPSlist_12_0_0_2_3_3_r_1)
@@ -18905,8 +20060,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_12_0_0_2_3_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_12_0_0_2_3_3)
-		(isNotBoolValue cns_target_RPSlist_12_0_0_2_3_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_12_0_0_2_3_3)
+				(miss cns_target_RPSlist_12_0_0_2_3_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_12_0_0_2_3_3) cns_RPSlist_12_0_0_2_3_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_12_0_0_2_3_3)
@@ -19014,8 +20173,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_12_0_0_2_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_12_0_0_2_3)
-		(isNotBoolValue cns_target_RPSlist_12_0_0_2_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_12_0_0_2_3)
+				(miss cns_target_RPSlist_12_0_0_2_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_12_0_0_2_3) cns_RPSlist_12_0_0_2_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_12_0_0_2_3)
@@ -19123,8 +20286,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_12_0_0_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_12_0_0_2)
-		(isNotBoolValue cns_target_RPSlist_12_0_0_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_12_0_0_2)
+				(miss cns_target_RPSlist_12_0_0_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_12_0_0_2) cns_RPSlist_12_0_0_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_12_0_0_2)
@@ -19215,8 +20382,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_12_0_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_12_0_0)
-		(isNotBoolValue cns_target_RPSlist_12_0_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_12_0_0)
+				(miss cns_target_RPSlist_12_0_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_12_0_0) cns_RPSlist_12_0_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_12_0_0)
@@ -19288,8 +20459,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_12_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_12_0)
-		(isNotBoolValue cns_target_RPSlist_12_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_12_0)
+				(miss cns_target_RPSlist_12_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_12_0) cns_RPSlist_12_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_12_0)
@@ -19361,8 +20536,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_12_indet () Bool
 	(or 
-		(err cns_target_RPSlist_12)
-		(isNotBoolValue cns_target_RPSlist_12)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_12)
+				(miss cns_target_RPSlist_12)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_12) cns_RPSlist_12_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_12)
@@ -19411,8 +20590,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_13_0_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_13_0_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_13_0_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_13_0_0_r_1)
+				(miss cns_target_RPSlist_13_0_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_13_0_0_r_1)
 			(not cns_obl_permit_RPSlist_13_0_0_r_1)
@@ -19476,8 +20659,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_13_0_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_13_0_0)
-		(isNotBoolValue cns_target_RPSlist_13_0_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_13_0_0)
+				(miss cns_target_RPSlist_13_0_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_13_0_0) cns_RPSlist_13_0_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_13_0_0)
@@ -19525,8 +20712,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_13_0_1_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_13_0_1_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_13_0_1_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_13_0_1_0_r_1)
+				(miss cns_target_RPSlist_13_0_1_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_13_0_1_0_r_1)
 			(not cns_obl_permit_RPSlist_13_0_1_0_r_1)
@@ -19590,8 +20781,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_13_0_1_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_13_0_1_0)
-		(isNotBoolValue cns_target_RPSlist_13_0_1_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_13_0_1_0)
+				(miss cns_target_RPSlist_13_0_1_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_13_0_1_0) cns_RPSlist_13_0_1_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_13_0_1_0)
@@ -19638,8 +20833,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_13_0_1_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_13_0_1_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_13_0_1_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_13_0_1_1_r_1)
+				(miss cns_target_RPSlist_13_0_1_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_13_0_1_1_r_1)
 			(not cns_obl_permit_RPSlist_13_0_1_1_r_1)
@@ -19703,8 +20902,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_13_0_1_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_13_0_1_1)
-		(isNotBoolValue cns_target_RPSlist_13_0_1_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_13_0_1_1)
+				(miss cns_target_RPSlist_13_0_1_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_13_0_1_1) cns_RPSlist_13_0_1_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_13_0_1_1)
@@ -19751,8 +20954,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_13_0_1_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_13_0_1_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_13_0_1_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_13_0_1_2_r_1)
+				(miss cns_target_RPSlist_13_0_1_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_13_0_1_2_r_1)
 			(not cns_obl_permit_RPSlist_13_0_1_2_r_1)
@@ -19816,8 +21023,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_13_0_1_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_13_0_1_2)
-		(isNotBoolValue cns_target_RPSlist_13_0_1_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_13_0_1_2)
+				(miss cns_target_RPSlist_13_0_1_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_13_0_1_2) cns_RPSlist_13_0_1_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_13_0_1_2)
@@ -19865,8 +21076,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_13_0_1_3_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_13_0_1_3_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_13_0_1_3_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_13_0_1_3_0_r_1)
+				(miss cns_target_RPSlist_13_0_1_3_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_13_0_1_3_0_r_1)
 			(not cns_obl_permit_RPSlist_13_0_1_3_0_r_1)
@@ -19930,8 +21145,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_13_0_1_3_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_13_0_1_3_0)
-		(isNotBoolValue cns_target_RPSlist_13_0_1_3_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_13_0_1_3_0)
+				(miss cns_target_RPSlist_13_0_1_3_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_13_0_1_3_0) cns_RPSlist_13_0_1_3_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_13_0_1_3_0)
@@ -19978,8 +21197,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_13_0_1_3_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_13_0_1_3_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_13_0_1_3_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_13_0_1_3_1_r_1)
+				(miss cns_target_RPSlist_13_0_1_3_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_13_0_1_3_1_r_1)
 			(not cns_obl_permit_RPSlist_13_0_1_3_1_r_1)
@@ -20043,8 +21266,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_13_0_1_3_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_13_0_1_3_1)
-		(isNotBoolValue cns_target_RPSlist_13_0_1_3_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_13_0_1_3_1)
+				(miss cns_target_RPSlist_13_0_1_3_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_13_0_1_3_1) cns_RPSlist_13_0_1_3_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_13_0_1_3_1)
@@ -20091,8 +21318,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_13_0_1_3_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_13_0_1_3_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_13_0_1_3_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_13_0_1_3_2_r_1)
+				(miss cns_target_RPSlist_13_0_1_3_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_13_0_1_3_2_r_1)
 			(not cns_obl_permit_RPSlist_13_0_1_3_2_r_1)
@@ -20156,8 +21387,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_13_0_1_3_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_13_0_1_3_2)
-		(isNotBoolValue cns_target_RPSlist_13_0_1_3_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_13_0_1_3_2)
+				(miss cns_target_RPSlist_13_0_1_3_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_13_0_1_3_2) cns_RPSlist_13_0_1_3_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_13_0_1_3_2)
@@ -20204,8 +21439,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_13_0_1_3_3_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_13_0_1_3_3_r_1)
-		(isNotBoolValue cns_target_RPSlist_13_0_1_3_3_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_13_0_1_3_3_r_1)
+				(miss cns_target_RPSlist_13_0_1_3_3_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_13_0_1_3_3_r_1)
 			(not cns_obl_deny_RPSlist_13_0_1_3_3_r_1)
@@ -20269,8 +21508,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_13_0_1_3_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_13_0_1_3_3)
-		(isNotBoolValue cns_target_RPSlist_13_0_1_3_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_13_0_1_3_3)
+				(miss cns_target_RPSlist_13_0_1_3_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_13_0_1_3_3) cns_RPSlist_13_0_1_3_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_13_0_1_3_3)
@@ -20378,8 +21621,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_13_0_1_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_13_0_1_3)
-		(isNotBoolValue cns_target_RPSlist_13_0_1_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_13_0_1_3)
+				(miss cns_target_RPSlist_13_0_1_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_13_0_1_3) cns_RPSlist_13_0_1_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_13_0_1_3)
@@ -20487,8 +21734,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_13_0_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_13_0_1)
-		(isNotBoolValue cns_target_RPSlist_13_0_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_13_0_1)
+				(miss cns_target_RPSlist_13_0_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_13_0_1) cns_RPSlist_13_0_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_13_0_1)
@@ -20562,8 +21813,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_13_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_13_0)
-		(isNotBoolValue cns_target_RPSlist_13_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_13_0)
+				(miss cns_target_RPSlist_13_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_13_0) cns_RPSlist_13_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_13_0)
@@ -20635,8 +21890,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_13_indet () Bool
 	(or 
-		(err cns_target_RPSlist_13)
-		(isNotBoolValue cns_target_RPSlist_13)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_13)
+				(miss cns_target_RPSlist_13)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_13) cns_RPSlist_13_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_13)
@@ -20685,8 +21944,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_14_0_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_14_0_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_14_0_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_14_0_0_r_1)
+				(miss cns_target_RPSlist_14_0_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_14_0_0_r_1)
 			(not cns_obl_permit_RPSlist_14_0_0_r_1)
@@ -20750,8 +22013,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_14_0_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_14_0_0)
-		(isNotBoolValue cns_target_RPSlist_14_0_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_14_0_0)
+				(miss cns_target_RPSlist_14_0_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_14_0_0) cns_RPSlist_14_0_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_14_0_0)
@@ -20798,8 +22065,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_14_0_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_14_0_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_14_0_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_14_0_1_r_1)
+				(miss cns_target_RPSlist_14_0_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_14_0_1_r_1)
 			(not cns_obl_permit_RPSlist_14_0_1_r_1)
@@ -20863,8 +22134,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_14_0_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_14_0_1)
-		(isNotBoolValue cns_target_RPSlist_14_0_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_14_0_1)
+				(miss cns_target_RPSlist_14_0_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_14_0_1) cns_RPSlist_14_0_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_14_0_1)
@@ -20911,8 +22186,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_14_0_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_14_0_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_14_0_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_14_0_2_r_1)
+				(miss cns_target_RPSlist_14_0_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_14_0_2_r_1)
 			(not cns_obl_permit_RPSlist_14_0_2_r_1)
@@ -20976,8 +22255,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_14_0_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_14_0_2)
-		(isNotBoolValue cns_target_RPSlist_14_0_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_14_0_2)
+				(miss cns_target_RPSlist_14_0_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_14_0_2) cns_RPSlist_14_0_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_14_0_2)
@@ -21024,8 +22307,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_14_0_3_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_14_0_3_r_1)
-		(isNotBoolValue cns_target_RPSlist_14_0_3_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_14_0_3_r_1)
+				(miss cns_target_RPSlist_14_0_3_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_14_0_3_r_1)
 			(not cns_obl_deny_RPSlist_14_0_3_r_1)
@@ -21089,8 +22376,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_14_0_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_14_0_3)
-		(isNotBoolValue cns_target_RPSlist_14_0_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_14_0_3)
+				(miss cns_target_RPSlist_14_0_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_14_0_3) cns_RPSlist_14_0_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_14_0_3)
@@ -21138,8 +22429,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_14_0_4_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_14_0_4_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_14_0_4_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_14_0_4_0_r_1)
+				(miss cns_target_RPSlist_14_0_4_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_14_0_4_0_r_1)
 			(not cns_obl_permit_RPSlist_14_0_4_0_r_1)
@@ -21203,8 +22498,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_14_0_4_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_14_0_4_0)
-		(isNotBoolValue cns_target_RPSlist_14_0_4_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_14_0_4_0)
+				(miss cns_target_RPSlist_14_0_4_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_14_0_4_0) cns_RPSlist_14_0_4_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_14_0_4_0)
@@ -21251,8 +22550,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_14_0_4_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_14_0_4_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_14_0_4_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_14_0_4_1_r_1)
+				(miss cns_target_RPSlist_14_0_4_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_14_0_4_1_r_1)
 			(not cns_obl_permit_RPSlist_14_0_4_1_r_1)
@@ -21316,8 +22619,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_14_0_4_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_14_0_4_1)
-		(isNotBoolValue cns_target_RPSlist_14_0_4_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_14_0_4_1)
+				(miss cns_target_RPSlist_14_0_4_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_14_0_4_1) cns_RPSlist_14_0_4_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_14_0_4_1)
@@ -21364,8 +22671,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_14_0_4_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_14_0_4_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_14_0_4_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_14_0_4_2_r_1)
+				(miss cns_target_RPSlist_14_0_4_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_14_0_4_2_r_1)
 			(not cns_obl_permit_RPSlist_14_0_4_2_r_1)
@@ -21429,8 +22740,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_14_0_4_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_14_0_4_2)
-		(isNotBoolValue cns_target_RPSlist_14_0_4_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_14_0_4_2)
+				(miss cns_target_RPSlist_14_0_4_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_14_0_4_2) cns_RPSlist_14_0_4_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_14_0_4_2)
@@ -21478,8 +22793,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_14_0_4_3_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_14_0_4_3_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_14_0_4_3_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_14_0_4_3_0_r_1)
+				(miss cns_target_RPSlist_14_0_4_3_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_14_0_4_3_0_r_1)
 			(not cns_obl_permit_RPSlist_14_0_4_3_0_r_1)
@@ -21543,8 +22862,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_14_0_4_3_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_14_0_4_3_0)
-		(isNotBoolValue cns_target_RPSlist_14_0_4_3_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_14_0_4_3_0)
+				(miss cns_target_RPSlist_14_0_4_3_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_14_0_4_3_0) cns_RPSlist_14_0_4_3_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_14_0_4_3_0)
@@ -21591,8 +22914,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_14_0_4_3_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_14_0_4_3_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_14_0_4_3_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_14_0_4_3_1_r_1)
+				(miss cns_target_RPSlist_14_0_4_3_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_14_0_4_3_1_r_1)
 			(not cns_obl_permit_RPSlist_14_0_4_3_1_r_1)
@@ -21656,8 +22983,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_14_0_4_3_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_14_0_4_3_1)
-		(isNotBoolValue cns_target_RPSlist_14_0_4_3_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_14_0_4_3_1)
+				(miss cns_target_RPSlist_14_0_4_3_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_14_0_4_3_1) cns_RPSlist_14_0_4_3_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_14_0_4_3_1)
@@ -21704,8 +23035,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_14_0_4_3_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_14_0_4_3_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_14_0_4_3_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_14_0_4_3_2_r_1)
+				(miss cns_target_RPSlist_14_0_4_3_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_14_0_4_3_2_r_1)
 			(not cns_obl_permit_RPSlist_14_0_4_3_2_r_1)
@@ -21769,8 +23104,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_14_0_4_3_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_14_0_4_3_2)
-		(isNotBoolValue cns_target_RPSlist_14_0_4_3_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_14_0_4_3_2)
+				(miss cns_target_RPSlist_14_0_4_3_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_14_0_4_3_2) cns_RPSlist_14_0_4_3_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_14_0_4_3_2)
@@ -21817,8 +23156,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_14_0_4_3_3_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_14_0_4_3_3_r_1)
-		(isNotBoolValue cns_target_RPSlist_14_0_4_3_3_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_14_0_4_3_3_r_1)
+				(miss cns_target_RPSlist_14_0_4_3_3_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_14_0_4_3_3_r_1)
 			(not cns_obl_deny_RPSlist_14_0_4_3_3_r_1)
@@ -21882,8 +23225,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_14_0_4_3_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_14_0_4_3_3)
-		(isNotBoolValue cns_target_RPSlist_14_0_4_3_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_14_0_4_3_3)
+				(miss cns_target_RPSlist_14_0_4_3_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_14_0_4_3_3) cns_RPSlist_14_0_4_3_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_14_0_4_3_3)
@@ -21991,8 +23338,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_14_0_4_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_14_0_4_3)
-		(isNotBoolValue cns_target_RPSlist_14_0_4_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_14_0_4_3)
+				(miss cns_target_RPSlist_14_0_4_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_14_0_4_3) cns_RPSlist_14_0_4_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_14_0_4_3)
@@ -22100,8 +23451,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_14_0_4_indet () Bool
 	(or 
-		(err cns_target_RPSlist_14_0_4)
-		(isNotBoolValue cns_target_RPSlist_14_0_4)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_14_0_4)
+				(miss cns_target_RPSlist_14_0_4)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_14_0_4) cns_RPSlist_14_0_4_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_14_0_4)
@@ -22226,8 +23581,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_14_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_14_0)
-		(isNotBoolValue cns_target_RPSlist_14_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_14_0)
+				(miss cns_target_RPSlist_14_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_14_0) cns_RPSlist_14_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_14_0)
@@ -22299,8 +23658,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_14_indet () Bool
 	(or 
-		(err cns_target_RPSlist_14)
-		(isNotBoolValue cns_target_RPSlist_14)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_14)
+				(miss cns_target_RPSlist_14)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_14) cns_RPSlist_14_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_14)
@@ -22349,8 +23712,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_15_0_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_15_0_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_15_0_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_15_0_0_r_1)
+				(miss cns_target_RPSlist_15_0_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_15_0_0_r_1)
 			(not cns_obl_permit_RPSlist_15_0_0_r_1)
@@ -22414,8 +23781,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_15_0_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_15_0_0)
-		(isNotBoolValue cns_target_RPSlist_15_0_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_15_0_0)
+				(miss cns_target_RPSlist_15_0_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_15_0_0) cns_RPSlist_15_0_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_15_0_0)
@@ -22462,8 +23833,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_15_0_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_15_0_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_15_0_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_15_0_1_r_1)
+				(miss cns_target_RPSlist_15_0_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_15_0_1_r_1)
 			(not cns_obl_deny_RPSlist_15_0_1_r_1)
@@ -22527,8 +23902,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_15_0_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_15_0_1)
-		(isNotBoolValue cns_target_RPSlist_15_0_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_15_0_1)
+				(miss cns_target_RPSlist_15_0_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_15_0_1) cns_RPSlist_15_0_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_15_0_1)
@@ -22575,8 +23954,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_15_0_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_15_0_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_15_0_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_15_0_2_r_1)
+				(miss cns_target_RPSlist_15_0_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_15_0_2_r_1)
 			(not cns_obl_permit_RPSlist_15_0_2_r_1)
@@ -22640,8 +24023,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_15_0_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_15_0_2)
-		(isNotBoolValue cns_target_RPSlist_15_0_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_15_0_2)
+				(miss cns_target_RPSlist_15_0_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_15_0_2) cns_RPSlist_15_0_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_15_0_2)
@@ -22688,8 +24075,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_15_0_3_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_15_0_3_r_1)
-		(isNotBoolValue cns_target_RPSlist_15_0_3_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_15_0_3_r_1)
+				(miss cns_target_RPSlist_15_0_3_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_15_0_3_r_1)
 			(not cns_obl_deny_RPSlist_15_0_3_r_1)
@@ -22753,8 +24144,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_15_0_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_15_0_3)
-		(isNotBoolValue cns_target_RPSlist_15_0_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_15_0_3)
+				(miss cns_target_RPSlist_15_0_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_15_0_3) cns_RPSlist_15_0_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_15_0_3)
@@ -22801,8 +24196,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_15_0_4_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_15_0_4_r_1)
-		(isNotBoolValue cns_target_RPSlist_15_0_4_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_15_0_4_r_1)
+				(miss cns_target_RPSlist_15_0_4_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_15_0_4_r_1)
 			(not cns_obl_deny_RPSlist_15_0_4_r_1)
@@ -22866,8 +24265,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_15_0_4_indet () Bool
 	(or 
-		(err cns_target_RPSlist_15_0_4)
-		(isNotBoolValue cns_target_RPSlist_15_0_4)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_15_0_4)
+				(miss cns_target_RPSlist_15_0_4)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_15_0_4) cns_RPSlist_15_0_4_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_15_0_4)
@@ -22915,8 +24318,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_15_0_5_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_15_0_5_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_15_0_5_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_15_0_5_0_r_1)
+				(miss cns_target_RPSlist_15_0_5_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_15_0_5_0_r_1)
 			(not cns_obl_permit_RPSlist_15_0_5_0_r_1)
@@ -22980,8 +24387,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_15_0_5_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_15_0_5_0)
-		(isNotBoolValue cns_target_RPSlist_15_0_5_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_15_0_5_0)
+				(miss cns_target_RPSlist_15_0_5_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_15_0_5_0) cns_RPSlist_15_0_5_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_15_0_5_0)
@@ -23028,8 +24439,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_15_0_5_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_15_0_5_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_15_0_5_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_15_0_5_1_r_1)
+				(miss cns_target_RPSlist_15_0_5_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_15_0_5_1_r_1)
 			(not cns_obl_permit_RPSlist_15_0_5_1_r_1)
@@ -23093,8 +24508,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_15_0_5_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_15_0_5_1)
-		(isNotBoolValue cns_target_RPSlist_15_0_5_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_15_0_5_1)
+				(miss cns_target_RPSlist_15_0_5_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_15_0_5_1) cns_RPSlist_15_0_5_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_15_0_5_1)
@@ -23141,8 +24560,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_15_0_5_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_15_0_5_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_15_0_5_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_15_0_5_2_r_1)
+				(miss cns_target_RPSlist_15_0_5_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_15_0_5_2_r_1)
 			(not cns_obl_permit_RPSlist_15_0_5_2_r_1)
@@ -23206,8 +24629,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_15_0_5_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_15_0_5_2)
-		(isNotBoolValue cns_target_RPSlist_15_0_5_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_15_0_5_2)
+				(miss cns_target_RPSlist_15_0_5_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_15_0_5_2) cns_RPSlist_15_0_5_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_15_0_5_2)
@@ -23255,8 +24682,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_15_0_5_3_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_15_0_5_3_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_15_0_5_3_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_15_0_5_3_0_r_1)
+				(miss cns_target_RPSlist_15_0_5_3_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_15_0_5_3_0_r_1)
 			(not cns_obl_permit_RPSlist_15_0_5_3_0_r_1)
@@ -23320,8 +24751,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_15_0_5_3_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_15_0_5_3_0)
-		(isNotBoolValue cns_target_RPSlist_15_0_5_3_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_15_0_5_3_0)
+				(miss cns_target_RPSlist_15_0_5_3_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_15_0_5_3_0) cns_RPSlist_15_0_5_3_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_15_0_5_3_0)
@@ -23368,8 +24803,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_15_0_5_3_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_15_0_5_3_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_15_0_5_3_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_15_0_5_3_1_r_1)
+				(miss cns_target_RPSlist_15_0_5_3_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_15_0_5_3_1_r_1)
 			(not cns_obl_permit_RPSlist_15_0_5_3_1_r_1)
@@ -23433,8 +24872,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_15_0_5_3_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_15_0_5_3_1)
-		(isNotBoolValue cns_target_RPSlist_15_0_5_3_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_15_0_5_3_1)
+				(miss cns_target_RPSlist_15_0_5_3_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_15_0_5_3_1) cns_RPSlist_15_0_5_3_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_15_0_5_3_1)
@@ -23481,8 +24924,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_15_0_5_3_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_15_0_5_3_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_15_0_5_3_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_15_0_5_3_2_r_1)
+				(miss cns_target_RPSlist_15_0_5_3_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_15_0_5_3_2_r_1)
 			(not cns_obl_permit_RPSlist_15_0_5_3_2_r_1)
@@ -23546,8 +24993,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_15_0_5_3_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_15_0_5_3_2)
-		(isNotBoolValue cns_target_RPSlist_15_0_5_3_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_15_0_5_3_2)
+				(miss cns_target_RPSlist_15_0_5_3_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_15_0_5_3_2) cns_RPSlist_15_0_5_3_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_15_0_5_3_2)
@@ -23594,8 +25045,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_15_0_5_3_3_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_15_0_5_3_3_r_1)
-		(isNotBoolValue cns_target_RPSlist_15_0_5_3_3_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_15_0_5_3_3_r_1)
+				(miss cns_target_RPSlist_15_0_5_3_3_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_15_0_5_3_3_r_1)
 			(not cns_obl_deny_RPSlist_15_0_5_3_3_r_1)
@@ -23659,8 +25114,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_15_0_5_3_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_15_0_5_3_3)
-		(isNotBoolValue cns_target_RPSlist_15_0_5_3_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_15_0_5_3_3)
+				(miss cns_target_RPSlist_15_0_5_3_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_15_0_5_3_3) cns_RPSlist_15_0_5_3_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_15_0_5_3_3)
@@ -23768,8 +25227,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_15_0_5_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_15_0_5_3)
-		(isNotBoolValue cns_target_RPSlist_15_0_5_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_15_0_5_3)
+				(miss cns_target_RPSlist_15_0_5_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_15_0_5_3) cns_RPSlist_15_0_5_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_15_0_5_3)
@@ -23877,8 +25340,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_15_0_5_indet () Bool
 	(or 
-		(err cns_target_RPSlist_15_0_5)
-		(isNotBoolValue cns_target_RPSlist_15_0_5)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_15_0_5)
+				(miss cns_target_RPSlist_15_0_5)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_15_0_5) cns_RPSlist_15_0_5_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_15_0_5)
@@ -24020,8 +25487,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_15_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_15_0)
-		(isNotBoolValue cns_target_RPSlist_15_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_15_0)
+				(miss cns_target_RPSlist_15_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_15_0) cns_RPSlist_15_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_15_0)
@@ -24093,8 +25564,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_15_indet () Bool
 	(or 
-		(err cns_target_RPSlist_15)
-		(isNotBoolValue cns_target_RPSlist_15)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_15)
+				(miss cns_target_RPSlist_15)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_15) cns_RPSlist_15_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_15)
@@ -24143,8 +25618,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_16_0_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_16_0_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_16_0_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_16_0_0_r_1)
+				(miss cns_target_RPSlist_16_0_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_16_0_0_r_1)
 			(not cns_obl_permit_RPSlist_16_0_0_r_1)
@@ -24208,8 +25687,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_16_0_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_16_0_0)
-		(isNotBoolValue cns_target_RPSlist_16_0_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_16_0_0)
+				(miss cns_target_RPSlist_16_0_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_16_0_0) cns_RPSlist_16_0_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_16_0_0)
@@ -24256,8 +25739,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_16_0_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_16_0_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_16_0_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_16_0_1_r_1)
+				(miss cns_target_RPSlist_16_0_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_16_0_1_r_1)
 			(not cns_obl_permit_RPSlist_16_0_1_r_1)
@@ -24321,8 +25808,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_16_0_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_16_0_1)
-		(isNotBoolValue cns_target_RPSlist_16_0_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_16_0_1)
+				(miss cns_target_RPSlist_16_0_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_16_0_1) cns_RPSlist_16_0_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_16_0_1)
@@ -24369,8 +25860,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_16_0_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_16_0_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_16_0_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_16_0_2_r_1)
+				(miss cns_target_RPSlist_16_0_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_16_0_2_r_1)
 			(not cns_obl_permit_RPSlist_16_0_2_r_1)
@@ -24434,8 +25929,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_16_0_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_16_0_2)
-		(isNotBoolValue cns_target_RPSlist_16_0_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_16_0_2)
+				(miss cns_target_RPSlist_16_0_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_16_0_2) cns_RPSlist_16_0_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_16_0_2)
@@ -24482,8 +25981,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_16_0_3_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_16_0_3_r_1)
-		(isNotBoolValue cns_target_RPSlist_16_0_3_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_16_0_3_r_1)
+				(miss cns_target_RPSlist_16_0_3_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_16_0_3_r_1)
 			(not cns_obl_deny_RPSlist_16_0_3_r_1)
@@ -24547,8 +26050,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_16_0_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_16_0_3)
-		(isNotBoolValue cns_target_RPSlist_16_0_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_16_0_3)
+				(miss cns_target_RPSlist_16_0_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_16_0_3) cns_RPSlist_16_0_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_16_0_3)
@@ -24595,8 +26102,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_16_0_4_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_16_0_4_r_1)
-		(isNotBoolValue cns_target_RPSlist_16_0_4_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_16_0_4_r_1)
+				(miss cns_target_RPSlist_16_0_4_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_16_0_4_r_1)
 			(not cns_obl_permit_RPSlist_16_0_4_r_1)
@@ -24634,8 +26145,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_16_0_4_r_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_16_0_4_r_2)
-		(isNotBoolValue cns_target_RPSlist_16_0_4_r_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_16_0_4_r_2)
+				(miss cns_target_RPSlist_16_0_4_r_2)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_16_0_4_r_2)
 			(not cns_obl_permit_RPSlist_16_0_4_r_2)
@@ -24673,8 +26188,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_16_0_4_r_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_16_0_4_r_3)
-		(isNotBoolValue cns_target_RPSlist_16_0_4_r_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_16_0_4_r_3)
+				(miss cns_target_RPSlist_16_0_4_r_3)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_16_0_4_r_3)
 			(not cns_obl_permit_RPSlist_16_0_4_r_3)
@@ -24712,8 +26231,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_16_0_4_r_4_indet () Bool
 	(or 
-		(err cns_target_RPSlist_16_0_4_r_4)
-		(isNotBoolValue cns_target_RPSlist_16_0_4_r_4)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_16_0_4_r_4)
+				(miss cns_target_RPSlist_16_0_4_r_4)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_16_0_4_r_4)
 			(not cns_obl_permit_RPSlist_16_0_4_r_4)
@@ -24751,8 +26274,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_16_0_4_r_5_indet () Bool
 	(or 
-		(err cns_target_RPSlist_16_0_4_r_5)
-		(isNotBoolValue cns_target_RPSlist_16_0_4_r_5)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_16_0_4_r_5)
+				(miss cns_target_RPSlist_16_0_4_r_5)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_16_0_4_r_5)
 			(not cns_obl_deny_RPSlist_16_0_4_r_5)
@@ -24869,8 +26396,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_16_0_4_indet () Bool
 	(or 
-		(err cns_target_RPSlist_16_0_4)
-		(isNotBoolValue cns_target_RPSlist_16_0_4)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_16_0_4)
+				(miss cns_target_RPSlist_16_0_4)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_16_0_4) cns_RPSlist_16_0_4_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_16_0_4)
@@ -24918,8 +26449,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_16_0_5_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_16_0_5_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_16_0_5_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_16_0_5_0_r_1)
+				(miss cns_target_RPSlist_16_0_5_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_16_0_5_0_r_1)
 			(not cns_obl_permit_RPSlist_16_0_5_0_r_1)
@@ -24983,8 +26518,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_16_0_5_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_16_0_5_0)
-		(isNotBoolValue cns_target_RPSlist_16_0_5_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_16_0_5_0)
+				(miss cns_target_RPSlist_16_0_5_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_16_0_5_0) cns_RPSlist_16_0_5_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_16_0_5_0)
@@ -25031,8 +26570,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_16_0_5_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_16_0_5_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_16_0_5_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_16_0_5_1_r_1)
+				(miss cns_target_RPSlist_16_0_5_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_16_0_5_1_r_1)
 			(not cns_obl_permit_RPSlist_16_0_5_1_r_1)
@@ -25096,8 +26639,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_16_0_5_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_16_0_5_1)
-		(isNotBoolValue cns_target_RPSlist_16_0_5_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_16_0_5_1)
+				(miss cns_target_RPSlist_16_0_5_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_16_0_5_1) cns_RPSlist_16_0_5_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_16_0_5_1)
@@ -25144,8 +26691,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_16_0_5_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_16_0_5_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_16_0_5_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_16_0_5_2_r_1)
+				(miss cns_target_RPSlist_16_0_5_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_16_0_5_2_r_1)
 			(not cns_obl_permit_RPSlist_16_0_5_2_r_1)
@@ -25209,8 +26760,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_16_0_5_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_16_0_5_2)
-		(isNotBoolValue cns_target_RPSlist_16_0_5_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_16_0_5_2)
+				(miss cns_target_RPSlist_16_0_5_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_16_0_5_2) cns_RPSlist_16_0_5_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_16_0_5_2)
@@ -25258,8 +26813,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_16_0_5_3_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_16_0_5_3_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_16_0_5_3_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_16_0_5_3_0_r_1)
+				(miss cns_target_RPSlist_16_0_5_3_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_16_0_5_3_0_r_1)
 			(not cns_obl_permit_RPSlist_16_0_5_3_0_r_1)
@@ -25323,8 +26882,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_16_0_5_3_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_16_0_5_3_0)
-		(isNotBoolValue cns_target_RPSlist_16_0_5_3_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_16_0_5_3_0)
+				(miss cns_target_RPSlist_16_0_5_3_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_16_0_5_3_0) cns_RPSlist_16_0_5_3_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_16_0_5_3_0)
@@ -25371,8 +26934,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_16_0_5_3_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_16_0_5_3_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_16_0_5_3_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_16_0_5_3_1_r_1)
+				(miss cns_target_RPSlist_16_0_5_3_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_16_0_5_3_1_r_1)
 			(not cns_obl_permit_RPSlist_16_0_5_3_1_r_1)
@@ -25436,8 +27003,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_16_0_5_3_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_16_0_5_3_1)
-		(isNotBoolValue cns_target_RPSlist_16_0_5_3_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_16_0_5_3_1)
+				(miss cns_target_RPSlist_16_0_5_3_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_16_0_5_3_1) cns_RPSlist_16_0_5_3_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_16_0_5_3_1)
@@ -25484,8 +27055,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_16_0_5_3_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_16_0_5_3_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_16_0_5_3_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_16_0_5_3_2_r_1)
+				(miss cns_target_RPSlist_16_0_5_3_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_16_0_5_3_2_r_1)
 			(not cns_obl_permit_RPSlist_16_0_5_3_2_r_1)
@@ -25549,8 +27124,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_16_0_5_3_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_16_0_5_3_2)
-		(isNotBoolValue cns_target_RPSlist_16_0_5_3_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_16_0_5_3_2)
+				(miss cns_target_RPSlist_16_0_5_3_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_16_0_5_3_2) cns_RPSlist_16_0_5_3_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_16_0_5_3_2)
@@ -25597,8 +27176,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_16_0_5_3_3_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_16_0_5_3_3_r_1)
-		(isNotBoolValue cns_target_RPSlist_16_0_5_3_3_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_16_0_5_3_3_r_1)
+				(miss cns_target_RPSlist_16_0_5_3_3_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_16_0_5_3_3_r_1)
 			(not cns_obl_deny_RPSlist_16_0_5_3_3_r_1)
@@ -25662,8 +27245,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_16_0_5_3_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_16_0_5_3_3)
-		(isNotBoolValue cns_target_RPSlist_16_0_5_3_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_16_0_5_3_3)
+				(miss cns_target_RPSlist_16_0_5_3_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_16_0_5_3_3) cns_RPSlist_16_0_5_3_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_16_0_5_3_3)
@@ -25771,8 +27358,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_16_0_5_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_16_0_5_3)
-		(isNotBoolValue cns_target_RPSlist_16_0_5_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_16_0_5_3)
+				(miss cns_target_RPSlist_16_0_5_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_16_0_5_3) cns_RPSlist_16_0_5_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_16_0_5_3)
@@ -25880,8 +27471,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_16_0_5_indet () Bool
 	(or 
-		(err cns_target_RPSlist_16_0_5)
-		(isNotBoolValue cns_target_RPSlist_16_0_5)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_16_0_5)
+				(miss cns_target_RPSlist_16_0_5)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_16_0_5) cns_RPSlist_16_0_5_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_16_0_5)
@@ -26023,8 +27618,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_16_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_16_0)
-		(isNotBoolValue cns_target_RPSlist_16_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_16_0)
+				(miss cns_target_RPSlist_16_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_16_0) cns_RPSlist_16_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_16_0)
@@ -26096,8 +27695,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_16_indet () Bool
 	(or 
-		(err cns_target_RPSlist_16)
-		(isNotBoolValue cns_target_RPSlist_16)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_16)
+				(miss cns_target_RPSlist_16)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_16) cns_RPSlist_16_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_16)
@@ -26146,8 +27749,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_17_0_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_17_0_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_17_0_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_17_0_0_r_1)
+				(miss cns_target_RPSlist_17_0_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_17_0_0_r_1)
 			(not cns_obl_permit_RPSlist_17_0_0_r_1)
@@ -26211,8 +27818,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_17_0_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_17_0_0)
-		(isNotBoolValue cns_target_RPSlist_17_0_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_17_0_0)
+				(miss cns_target_RPSlist_17_0_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_17_0_0) cns_RPSlist_17_0_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_17_0_0)
@@ -26260,8 +27871,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_17_0_1_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_17_0_1_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_17_0_1_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_17_0_1_0_r_1)
+				(miss cns_target_RPSlist_17_0_1_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_17_0_1_0_r_1)
 			(not cns_obl_permit_RPSlist_17_0_1_0_r_1)
@@ -26325,8 +27940,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_17_0_1_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_17_0_1_0)
-		(isNotBoolValue cns_target_RPSlist_17_0_1_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_17_0_1_0)
+				(miss cns_target_RPSlist_17_0_1_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_17_0_1_0) cns_RPSlist_17_0_1_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_17_0_1_0)
@@ -26373,8 +27992,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_17_0_1_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_17_0_1_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_17_0_1_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_17_0_1_1_r_1)
+				(miss cns_target_RPSlist_17_0_1_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_17_0_1_1_r_1)
 			(not cns_obl_permit_RPSlist_17_0_1_1_r_1)
@@ -26438,8 +28061,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_17_0_1_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_17_0_1_1)
-		(isNotBoolValue cns_target_RPSlist_17_0_1_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_17_0_1_1)
+				(miss cns_target_RPSlist_17_0_1_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_17_0_1_1) cns_RPSlist_17_0_1_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_17_0_1_1)
@@ -26486,8 +28113,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_17_0_1_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_17_0_1_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_17_0_1_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_17_0_1_2_r_1)
+				(miss cns_target_RPSlist_17_0_1_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_17_0_1_2_r_1)
 			(not cns_obl_permit_RPSlist_17_0_1_2_r_1)
@@ -26551,8 +28182,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_17_0_1_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_17_0_1_2)
-		(isNotBoolValue cns_target_RPSlist_17_0_1_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_17_0_1_2)
+				(miss cns_target_RPSlist_17_0_1_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_17_0_1_2) cns_RPSlist_17_0_1_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_17_0_1_2)
@@ -26599,8 +28234,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_17_0_1_3_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_17_0_1_3_r_1)
-		(isNotBoolValue cns_target_RPSlist_17_0_1_3_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_17_0_1_3_r_1)
+				(miss cns_target_RPSlist_17_0_1_3_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_17_0_1_3_r_1)
 			(not cns_obl_deny_RPSlist_17_0_1_3_r_1)
@@ -26664,8 +28303,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_17_0_1_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_17_0_1_3)
-		(isNotBoolValue cns_target_RPSlist_17_0_1_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_17_0_1_3)
+				(miss cns_target_RPSlist_17_0_1_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_17_0_1_3) cns_RPSlist_17_0_1_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_17_0_1_3)
@@ -26712,8 +28355,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_17_0_1_4_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_17_0_1_4_r_1)
-		(isNotBoolValue cns_target_RPSlist_17_0_1_4_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_17_0_1_4_r_1)
+				(miss cns_target_RPSlist_17_0_1_4_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_17_0_1_4_r_1)
 			(not cns_obl_permit_RPSlist_17_0_1_4_r_1)
@@ -26751,8 +28398,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_17_0_1_4_r_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_17_0_1_4_r_2)
-		(isNotBoolValue cns_target_RPSlist_17_0_1_4_r_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_17_0_1_4_r_2)
+				(miss cns_target_RPSlist_17_0_1_4_r_2)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_17_0_1_4_r_2)
 			(not cns_obl_permit_RPSlist_17_0_1_4_r_2)
@@ -26790,8 +28441,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_17_0_1_4_r_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_17_0_1_4_r_3)
-		(isNotBoolValue cns_target_RPSlist_17_0_1_4_r_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_17_0_1_4_r_3)
+				(miss cns_target_RPSlist_17_0_1_4_r_3)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_17_0_1_4_r_3)
 			(not cns_obl_permit_RPSlist_17_0_1_4_r_3)
@@ -26829,8 +28484,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_17_0_1_4_r_4_indet () Bool
 	(or 
-		(err cns_target_RPSlist_17_0_1_4_r_4)
-		(isNotBoolValue cns_target_RPSlist_17_0_1_4_r_4)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_17_0_1_4_r_4)
+				(miss cns_target_RPSlist_17_0_1_4_r_4)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_17_0_1_4_r_4)
 			(not cns_obl_permit_RPSlist_17_0_1_4_r_4)
@@ -26868,8 +28527,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_17_0_1_4_r_5_indet () Bool
 	(or 
-		(err cns_target_RPSlist_17_0_1_4_r_5)
-		(isNotBoolValue cns_target_RPSlist_17_0_1_4_r_5)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_17_0_1_4_r_5)
+				(miss cns_target_RPSlist_17_0_1_4_r_5)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_17_0_1_4_r_5)
 			(not cns_obl_deny_RPSlist_17_0_1_4_r_5)
@@ -26986,8 +28649,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_17_0_1_4_indet () Bool
 	(or 
-		(err cns_target_RPSlist_17_0_1_4)
-		(isNotBoolValue cns_target_RPSlist_17_0_1_4)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_17_0_1_4)
+				(miss cns_target_RPSlist_17_0_1_4)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_17_0_1_4) cns_RPSlist_17_0_1_4_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_17_0_1_4)
@@ -27035,8 +28702,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_17_0_1_5_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_17_0_1_5_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_17_0_1_5_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_17_0_1_5_0_r_1)
+				(miss cns_target_RPSlist_17_0_1_5_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_17_0_1_5_0_r_1)
 			(not cns_obl_permit_RPSlist_17_0_1_5_0_r_1)
@@ -27100,8 +28771,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_17_0_1_5_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_17_0_1_5_0)
-		(isNotBoolValue cns_target_RPSlist_17_0_1_5_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_17_0_1_5_0)
+				(miss cns_target_RPSlist_17_0_1_5_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_17_0_1_5_0) cns_RPSlist_17_0_1_5_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_17_0_1_5_0)
@@ -27148,8 +28823,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_17_0_1_5_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_17_0_1_5_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_17_0_1_5_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_17_0_1_5_1_r_1)
+				(miss cns_target_RPSlist_17_0_1_5_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_17_0_1_5_1_r_1)
 			(not cns_obl_permit_RPSlist_17_0_1_5_1_r_1)
@@ -27213,8 +28892,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_17_0_1_5_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_17_0_1_5_1)
-		(isNotBoolValue cns_target_RPSlist_17_0_1_5_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_17_0_1_5_1)
+				(miss cns_target_RPSlist_17_0_1_5_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_17_0_1_5_1) cns_RPSlist_17_0_1_5_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_17_0_1_5_1)
@@ -27261,8 +28944,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_17_0_1_5_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_17_0_1_5_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_17_0_1_5_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_17_0_1_5_2_r_1)
+				(miss cns_target_RPSlist_17_0_1_5_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_17_0_1_5_2_r_1)
 			(not cns_obl_permit_RPSlist_17_0_1_5_2_r_1)
@@ -27326,8 +29013,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_17_0_1_5_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_17_0_1_5_2)
-		(isNotBoolValue cns_target_RPSlist_17_0_1_5_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_17_0_1_5_2)
+				(miss cns_target_RPSlist_17_0_1_5_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_17_0_1_5_2) cns_RPSlist_17_0_1_5_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_17_0_1_5_2)
@@ -27375,8 +29066,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_17_0_1_5_3_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_17_0_1_5_3_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_17_0_1_5_3_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_17_0_1_5_3_0_r_1)
+				(miss cns_target_RPSlist_17_0_1_5_3_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_17_0_1_5_3_0_r_1)
 			(not cns_obl_permit_RPSlist_17_0_1_5_3_0_r_1)
@@ -27440,8 +29135,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_17_0_1_5_3_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_17_0_1_5_3_0)
-		(isNotBoolValue cns_target_RPSlist_17_0_1_5_3_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_17_0_1_5_3_0)
+				(miss cns_target_RPSlist_17_0_1_5_3_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_17_0_1_5_3_0) cns_RPSlist_17_0_1_5_3_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_17_0_1_5_3_0)
@@ -27488,8 +29187,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_17_0_1_5_3_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_17_0_1_5_3_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_17_0_1_5_3_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_17_0_1_5_3_1_r_1)
+				(miss cns_target_RPSlist_17_0_1_5_3_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_17_0_1_5_3_1_r_1)
 			(not cns_obl_permit_RPSlist_17_0_1_5_3_1_r_1)
@@ -27553,8 +29256,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_17_0_1_5_3_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_17_0_1_5_3_1)
-		(isNotBoolValue cns_target_RPSlist_17_0_1_5_3_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_17_0_1_5_3_1)
+				(miss cns_target_RPSlist_17_0_1_5_3_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_17_0_1_5_3_1) cns_RPSlist_17_0_1_5_3_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_17_0_1_5_3_1)
@@ -27601,8 +29308,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_17_0_1_5_3_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_17_0_1_5_3_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_17_0_1_5_3_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_17_0_1_5_3_2_r_1)
+				(miss cns_target_RPSlist_17_0_1_5_3_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_17_0_1_5_3_2_r_1)
 			(not cns_obl_permit_RPSlist_17_0_1_5_3_2_r_1)
@@ -27666,8 +29377,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_17_0_1_5_3_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_17_0_1_5_3_2)
-		(isNotBoolValue cns_target_RPSlist_17_0_1_5_3_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_17_0_1_5_3_2)
+				(miss cns_target_RPSlist_17_0_1_5_3_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_17_0_1_5_3_2) cns_RPSlist_17_0_1_5_3_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_17_0_1_5_3_2)
@@ -27714,8 +29429,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_17_0_1_5_3_3_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_17_0_1_5_3_3_r_1)
-		(isNotBoolValue cns_target_RPSlist_17_0_1_5_3_3_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_17_0_1_5_3_3_r_1)
+				(miss cns_target_RPSlist_17_0_1_5_3_3_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_17_0_1_5_3_3_r_1)
 			(not cns_obl_deny_RPSlist_17_0_1_5_3_3_r_1)
@@ -27779,8 +29498,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_17_0_1_5_3_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_17_0_1_5_3_3)
-		(isNotBoolValue cns_target_RPSlist_17_0_1_5_3_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_17_0_1_5_3_3)
+				(miss cns_target_RPSlist_17_0_1_5_3_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_17_0_1_5_3_3) cns_RPSlist_17_0_1_5_3_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_17_0_1_5_3_3)
@@ -27888,8 +29611,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_17_0_1_5_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_17_0_1_5_3)
-		(isNotBoolValue cns_target_RPSlist_17_0_1_5_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_17_0_1_5_3)
+				(miss cns_target_RPSlist_17_0_1_5_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_17_0_1_5_3) cns_RPSlist_17_0_1_5_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_17_0_1_5_3)
@@ -27997,8 +29724,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_17_0_1_5_indet () Bool
 	(or 
-		(err cns_target_RPSlist_17_0_1_5)
-		(isNotBoolValue cns_target_RPSlist_17_0_1_5)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_17_0_1_5)
+				(miss cns_target_RPSlist_17_0_1_5)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_17_0_1_5) cns_RPSlist_17_0_1_5_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_17_0_1_5)
@@ -28140,8 +29871,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_17_0_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_17_0_1)
-		(isNotBoolValue cns_target_RPSlist_17_0_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_17_0_1)
+				(miss cns_target_RPSlist_17_0_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_17_0_1) cns_RPSlist_17_0_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_17_0_1)
@@ -28215,8 +29950,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_17_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_17_0)
-		(isNotBoolValue cns_target_RPSlist_17_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_17_0)
+				(miss cns_target_RPSlist_17_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_17_0) cns_RPSlist_17_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_17_0)
@@ -28288,8 +30027,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_17_indet () Bool
 	(or 
-		(err cns_target_RPSlist_17)
-		(isNotBoolValue cns_target_RPSlist_17)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_17)
+				(miss cns_target_RPSlist_17)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_17) cns_RPSlist_17_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_17)
@@ -28338,8 +30081,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_18_0_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_18_0_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_18_0_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_18_0_0_r_1)
+				(miss cns_target_RPSlist_18_0_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_18_0_0_r_1)
 			(not cns_obl_permit_RPSlist_18_0_0_r_1)
@@ -28403,8 +30150,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_18_0_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_18_0_0)
-		(isNotBoolValue cns_target_RPSlist_18_0_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_18_0_0)
+				(miss cns_target_RPSlist_18_0_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_18_0_0) cns_RPSlist_18_0_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_18_0_0)
@@ -28451,8 +30202,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_18_0_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_18_0_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_18_0_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_18_0_1_r_1)
+				(miss cns_target_RPSlist_18_0_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_18_0_1_r_1)
 			(not cns_obl_permit_RPSlist_18_0_1_r_1)
@@ -28516,8 +30271,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_18_0_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_18_0_1)
-		(isNotBoolValue cns_target_RPSlist_18_0_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_18_0_1)
+				(miss cns_target_RPSlist_18_0_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_18_0_1) cns_RPSlist_18_0_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_18_0_1)
@@ -28565,8 +30324,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_18_0_2_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_18_0_2_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_18_0_2_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_18_0_2_0_r_1)
+				(miss cns_target_RPSlist_18_0_2_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_18_0_2_0_r_1)
 			(not cns_obl_permit_RPSlist_18_0_2_0_r_1)
@@ -28630,8 +30393,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_18_0_2_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_18_0_2_0)
-		(isNotBoolValue cns_target_RPSlist_18_0_2_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_18_0_2_0)
+				(miss cns_target_RPSlist_18_0_2_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_18_0_2_0) cns_RPSlist_18_0_2_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_18_0_2_0)
@@ -28678,8 +30445,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_18_0_2_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_18_0_2_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_18_0_2_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_18_0_2_1_r_1)
+				(miss cns_target_RPSlist_18_0_2_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_18_0_2_1_r_1)
 			(not cns_obl_permit_RPSlist_18_0_2_1_r_1)
@@ -28743,8 +30514,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_18_0_2_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_18_0_2_1)
-		(isNotBoolValue cns_target_RPSlist_18_0_2_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_18_0_2_1)
+				(miss cns_target_RPSlist_18_0_2_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_18_0_2_1) cns_RPSlist_18_0_2_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_18_0_2_1)
@@ -28791,8 +30566,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_18_0_2_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_18_0_2_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_18_0_2_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_18_0_2_2_r_1)
+				(miss cns_target_RPSlist_18_0_2_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_18_0_2_2_r_1)
 			(not cns_obl_permit_RPSlist_18_0_2_2_r_1)
@@ -28856,8 +30635,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_18_0_2_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_18_0_2_2)
-		(isNotBoolValue cns_target_RPSlist_18_0_2_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_18_0_2_2)
+				(miss cns_target_RPSlist_18_0_2_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_18_0_2_2) cns_RPSlist_18_0_2_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_18_0_2_2)
@@ -28904,8 +30687,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_18_0_2_3_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_18_0_2_3_r_1)
-		(isNotBoolValue cns_target_RPSlist_18_0_2_3_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_18_0_2_3_r_1)
+				(miss cns_target_RPSlist_18_0_2_3_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_18_0_2_3_r_1)
 			(not cns_obl_deny_RPSlist_18_0_2_3_r_1)
@@ -28969,8 +30756,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_18_0_2_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_18_0_2_3)
-		(isNotBoolValue cns_target_RPSlist_18_0_2_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_18_0_2_3)
+				(miss cns_target_RPSlist_18_0_2_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_18_0_2_3) cns_RPSlist_18_0_2_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_18_0_2_3)
@@ -29017,8 +30808,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_18_0_2_4_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_18_0_2_4_r_1)
-		(isNotBoolValue cns_target_RPSlist_18_0_2_4_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_18_0_2_4_r_1)
+				(miss cns_target_RPSlist_18_0_2_4_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_18_0_2_4_r_1)
 			(not cns_obl_permit_RPSlist_18_0_2_4_r_1)
@@ -29056,8 +30851,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_18_0_2_4_r_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_18_0_2_4_r_2)
-		(isNotBoolValue cns_target_RPSlist_18_0_2_4_r_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_18_0_2_4_r_2)
+				(miss cns_target_RPSlist_18_0_2_4_r_2)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_18_0_2_4_r_2)
 			(not cns_obl_permit_RPSlist_18_0_2_4_r_2)
@@ -29095,8 +30894,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_18_0_2_4_r_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_18_0_2_4_r_3)
-		(isNotBoolValue cns_target_RPSlist_18_0_2_4_r_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_18_0_2_4_r_3)
+				(miss cns_target_RPSlist_18_0_2_4_r_3)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_18_0_2_4_r_3)
 			(not cns_obl_permit_RPSlist_18_0_2_4_r_3)
@@ -29134,8 +30937,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_18_0_2_4_r_4_indet () Bool
 	(or 
-		(err cns_target_RPSlist_18_0_2_4_r_4)
-		(isNotBoolValue cns_target_RPSlist_18_0_2_4_r_4)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_18_0_2_4_r_4)
+				(miss cns_target_RPSlist_18_0_2_4_r_4)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_18_0_2_4_r_4)
 			(not cns_obl_permit_RPSlist_18_0_2_4_r_4)
@@ -29173,8 +30980,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_18_0_2_4_r_5_indet () Bool
 	(or 
-		(err cns_target_RPSlist_18_0_2_4_r_5)
-		(isNotBoolValue cns_target_RPSlist_18_0_2_4_r_5)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_18_0_2_4_r_5)
+				(miss cns_target_RPSlist_18_0_2_4_r_5)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_18_0_2_4_r_5)
 			(not cns_obl_deny_RPSlist_18_0_2_4_r_5)
@@ -29291,8 +31102,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_18_0_2_4_indet () Bool
 	(or 
-		(err cns_target_RPSlist_18_0_2_4)
-		(isNotBoolValue cns_target_RPSlist_18_0_2_4)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_18_0_2_4)
+				(miss cns_target_RPSlist_18_0_2_4)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_18_0_2_4) cns_RPSlist_18_0_2_4_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_18_0_2_4)
@@ -29340,8 +31155,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_18_0_2_5_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_18_0_2_5_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_18_0_2_5_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_18_0_2_5_0_r_1)
+				(miss cns_target_RPSlist_18_0_2_5_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_18_0_2_5_0_r_1)
 			(not cns_obl_permit_RPSlist_18_0_2_5_0_r_1)
@@ -29405,8 +31224,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_18_0_2_5_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_18_0_2_5_0)
-		(isNotBoolValue cns_target_RPSlist_18_0_2_5_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_18_0_2_5_0)
+				(miss cns_target_RPSlist_18_0_2_5_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_18_0_2_5_0) cns_RPSlist_18_0_2_5_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_18_0_2_5_0)
@@ -29453,8 +31276,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_18_0_2_5_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_18_0_2_5_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_18_0_2_5_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_18_0_2_5_1_r_1)
+				(miss cns_target_RPSlist_18_0_2_5_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_18_0_2_5_1_r_1)
 			(not cns_obl_permit_RPSlist_18_0_2_5_1_r_1)
@@ -29518,8 +31345,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_18_0_2_5_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_18_0_2_5_1)
-		(isNotBoolValue cns_target_RPSlist_18_0_2_5_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_18_0_2_5_1)
+				(miss cns_target_RPSlist_18_0_2_5_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_18_0_2_5_1) cns_RPSlist_18_0_2_5_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_18_0_2_5_1)
@@ -29566,8 +31397,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_18_0_2_5_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_18_0_2_5_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_18_0_2_5_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_18_0_2_5_2_r_1)
+				(miss cns_target_RPSlist_18_0_2_5_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_18_0_2_5_2_r_1)
 			(not cns_obl_permit_RPSlist_18_0_2_5_2_r_1)
@@ -29631,8 +31466,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_18_0_2_5_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_18_0_2_5_2)
-		(isNotBoolValue cns_target_RPSlist_18_0_2_5_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_18_0_2_5_2)
+				(miss cns_target_RPSlist_18_0_2_5_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_18_0_2_5_2) cns_RPSlist_18_0_2_5_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_18_0_2_5_2)
@@ -29680,8 +31519,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_18_0_2_5_3_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_18_0_2_5_3_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_18_0_2_5_3_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_18_0_2_5_3_0_r_1)
+				(miss cns_target_RPSlist_18_0_2_5_3_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_18_0_2_5_3_0_r_1)
 			(not cns_obl_permit_RPSlist_18_0_2_5_3_0_r_1)
@@ -29745,8 +31588,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_18_0_2_5_3_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_18_0_2_5_3_0)
-		(isNotBoolValue cns_target_RPSlist_18_0_2_5_3_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_18_0_2_5_3_0)
+				(miss cns_target_RPSlist_18_0_2_5_3_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_18_0_2_5_3_0) cns_RPSlist_18_0_2_5_3_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_18_0_2_5_3_0)
@@ -29793,8 +31640,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_18_0_2_5_3_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_18_0_2_5_3_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_18_0_2_5_3_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_18_0_2_5_3_1_r_1)
+				(miss cns_target_RPSlist_18_0_2_5_3_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_18_0_2_5_3_1_r_1)
 			(not cns_obl_permit_RPSlist_18_0_2_5_3_1_r_1)
@@ -29858,8 +31709,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_18_0_2_5_3_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_18_0_2_5_3_1)
-		(isNotBoolValue cns_target_RPSlist_18_0_2_5_3_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_18_0_2_5_3_1)
+				(miss cns_target_RPSlist_18_0_2_5_3_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_18_0_2_5_3_1) cns_RPSlist_18_0_2_5_3_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_18_0_2_5_3_1)
@@ -29906,8 +31761,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_18_0_2_5_3_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_18_0_2_5_3_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_18_0_2_5_3_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_18_0_2_5_3_2_r_1)
+				(miss cns_target_RPSlist_18_0_2_5_3_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_18_0_2_5_3_2_r_1)
 			(not cns_obl_permit_RPSlist_18_0_2_5_3_2_r_1)
@@ -29971,8 +31830,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_18_0_2_5_3_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_18_0_2_5_3_2)
-		(isNotBoolValue cns_target_RPSlist_18_0_2_5_3_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_18_0_2_5_3_2)
+				(miss cns_target_RPSlist_18_0_2_5_3_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_18_0_2_5_3_2) cns_RPSlist_18_0_2_5_3_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_18_0_2_5_3_2)
@@ -30019,8 +31882,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_18_0_2_5_3_3_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_18_0_2_5_3_3_r_1)
-		(isNotBoolValue cns_target_RPSlist_18_0_2_5_3_3_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_18_0_2_5_3_3_r_1)
+				(miss cns_target_RPSlist_18_0_2_5_3_3_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_18_0_2_5_3_3_r_1)
 			(not cns_obl_deny_RPSlist_18_0_2_5_3_3_r_1)
@@ -30084,8 +31951,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_18_0_2_5_3_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_18_0_2_5_3_3)
-		(isNotBoolValue cns_target_RPSlist_18_0_2_5_3_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_18_0_2_5_3_3)
+				(miss cns_target_RPSlist_18_0_2_5_3_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_18_0_2_5_3_3) cns_RPSlist_18_0_2_5_3_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_18_0_2_5_3_3)
@@ -30193,8 +32064,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_18_0_2_5_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_18_0_2_5_3)
-		(isNotBoolValue cns_target_RPSlist_18_0_2_5_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_18_0_2_5_3)
+				(miss cns_target_RPSlist_18_0_2_5_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_18_0_2_5_3) cns_RPSlist_18_0_2_5_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_18_0_2_5_3)
@@ -30302,8 +32177,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_18_0_2_5_indet () Bool
 	(or 
-		(err cns_target_RPSlist_18_0_2_5)
-		(isNotBoolValue cns_target_RPSlist_18_0_2_5)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_18_0_2_5)
+				(miss cns_target_RPSlist_18_0_2_5)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_18_0_2_5) cns_RPSlist_18_0_2_5_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_18_0_2_5)
@@ -30445,8 +32324,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_18_0_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_18_0_2)
-		(isNotBoolValue cns_target_RPSlist_18_0_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_18_0_2)
+				(miss cns_target_RPSlist_18_0_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_18_0_2) cns_RPSlist_18_0_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_18_0_2)
@@ -30537,8 +32420,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_18_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_18_0)
-		(isNotBoolValue cns_target_RPSlist_18_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_18_0)
+				(miss cns_target_RPSlist_18_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_18_0) cns_RPSlist_18_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_18_0)
@@ -30610,8 +32497,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_18_indet () Bool
 	(or 
-		(err cns_target_RPSlist_18)
-		(isNotBoolValue cns_target_RPSlist_18)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_18)
+				(miss cns_target_RPSlist_18)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_18) cns_RPSlist_18_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_18)
@@ -30660,8 +32551,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_19_0_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_19_0_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_19_0_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_19_0_0_r_1)
+				(miss cns_target_RPSlist_19_0_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_19_0_0_r_1)
 			(not cns_obl_permit_RPSlist_19_0_0_r_1)
@@ -30725,8 +32620,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_19_0_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_19_0_0)
-		(isNotBoolValue cns_target_RPSlist_19_0_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_19_0_0)
+				(miss cns_target_RPSlist_19_0_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_19_0_0) cns_RPSlist_19_0_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_19_0_0)
@@ -30774,8 +32673,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_19_0_1_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_19_0_1_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_19_0_1_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_19_0_1_0_r_1)
+				(miss cns_target_RPSlist_19_0_1_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_19_0_1_0_r_1)
 			(not cns_obl_permit_RPSlist_19_0_1_0_r_1)
@@ -30839,8 +32742,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_19_0_1_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_19_0_1_0)
-		(isNotBoolValue cns_target_RPSlist_19_0_1_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_19_0_1_0)
+				(miss cns_target_RPSlist_19_0_1_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_19_0_1_0) cns_RPSlist_19_0_1_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_19_0_1_0)
@@ -30888,8 +32795,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_19_0_1_1_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_19_0_1_1_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_19_0_1_1_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_19_0_1_1_0_r_1)
+				(miss cns_target_RPSlist_19_0_1_1_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_19_0_1_1_0_r_1)
 			(not cns_obl_permit_RPSlist_19_0_1_1_0_r_1)
@@ -30953,8 +32864,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_19_0_1_1_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_19_0_1_1_0)
-		(isNotBoolValue cns_target_RPSlist_19_0_1_1_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_19_0_1_1_0)
+				(miss cns_target_RPSlist_19_0_1_1_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_19_0_1_1_0) cns_RPSlist_19_0_1_1_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_19_0_1_1_0)
@@ -31001,8 +32916,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_19_0_1_1_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_19_0_1_1_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_19_0_1_1_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_19_0_1_1_1_r_1)
+				(miss cns_target_RPSlist_19_0_1_1_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_19_0_1_1_1_r_1)
 			(not cns_obl_permit_RPSlist_19_0_1_1_1_r_1)
@@ -31066,8 +32985,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_19_0_1_1_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_19_0_1_1_1)
-		(isNotBoolValue cns_target_RPSlist_19_0_1_1_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_19_0_1_1_1)
+				(miss cns_target_RPSlist_19_0_1_1_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_19_0_1_1_1) cns_RPSlist_19_0_1_1_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_19_0_1_1_1)
@@ -31114,8 +33037,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_19_0_1_1_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_19_0_1_1_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_19_0_1_1_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_19_0_1_1_2_r_1)
+				(miss cns_target_RPSlist_19_0_1_1_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_19_0_1_1_2_r_1)
 			(not cns_obl_permit_RPSlist_19_0_1_1_2_r_1)
@@ -31179,8 +33106,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_19_0_1_1_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_19_0_1_1_2)
-		(isNotBoolValue cns_target_RPSlist_19_0_1_1_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_19_0_1_1_2)
+				(miss cns_target_RPSlist_19_0_1_1_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_19_0_1_1_2) cns_RPSlist_19_0_1_1_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_19_0_1_1_2)
@@ -31227,8 +33158,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_19_0_1_1_3_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_19_0_1_1_3_r_1)
-		(isNotBoolValue cns_target_RPSlist_19_0_1_1_3_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_19_0_1_1_3_r_1)
+				(miss cns_target_RPSlist_19_0_1_1_3_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_19_0_1_1_3_r_1)
 			(not cns_obl_deny_RPSlist_19_0_1_1_3_r_1)
@@ -31292,8 +33227,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_19_0_1_1_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_19_0_1_1_3)
-		(isNotBoolValue cns_target_RPSlist_19_0_1_1_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_19_0_1_1_3)
+				(miss cns_target_RPSlist_19_0_1_1_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_19_0_1_1_3) cns_RPSlist_19_0_1_1_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_19_0_1_1_3)
@@ -31340,8 +33279,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_19_0_1_1_4_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_19_0_1_1_4_r_1)
-		(isNotBoolValue cns_target_RPSlist_19_0_1_1_4_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_19_0_1_1_4_r_1)
+				(miss cns_target_RPSlist_19_0_1_1_4_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_19_0_1_1_4_r_1)
 			(not cns_obl_permit_RPSlist_19_0_1_1_4_r_1)
@@ -31379,8 +33322,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_19_0_1_1_4_r_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_19_0_1_1_4_r_2)
-		(isNotBoolValue cns_target_RPSlist_19_0_1_1_4_r_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_19_0_1_1_4_r_2)
+				(miss cns_target_RPSlist_19_0_1_1_4_r_2)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_19_0_1_1_4_r_2)
 			(not cns_obl_permit_RPSlist_19_0_1_1_4_r_2)
@@ -31418,8 +33365,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_19_0_1_1_4_r_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_19_0_1_1_4_r_3)
-		(isNotBoolValue cns_target_RPSlist_19_0_1_1_4_r_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_19_0_1_1_4_r_3)
+				(miss cns_target_RPSlist_19_0_1_1_4_r_3)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_19_0_1_1_4_r_3)
 			(not cns_obl_permit_RPSlist_19_0_1_1_4_r_3)
@@ -31457,8 +33408,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_19_0_1_1_4_r_4_indet () Bool
 	(or 
-		(err cns_target_RPSlist_19_0_1_1_4_r_4)
-		(isNotBoolValue cns_target_RPSlist_19_0_1_1_4_r_4)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_19_0_1_1_4_r_4)
+				(miss cns_target_RPSlist_19_0_1_1_4_r_4)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_19_0_1_1_4_r_4)
 			(not cns_obl_permit_RPSlist_19_0_1_1_4_r_4)
@@ -31496,8 +33451,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_19_0_1_1_4_r_5_indet () Bool
 	(or 
-		(err cns_target_RPSlist_19_0_1_1_4_r_5)
-		(isNotBoolValue cns_target_RPSlist_19_0_1_1_4_r_5)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_19_0_1_1_4_r_5)
+				(miss cns_target_RPSlist_19_0_1_1_4_r_5)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_19_0_1_1_4_r_5)
 			(not cns_obl_deny_RPSlist_19_0_1_1_4_r_5)
@@ -31614,8 +33573,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_19_0_1_1_4_indet () Bool
 	(or 
-		(err cns_target_RPSlist_19_0_1_1_4)
-		(isNotBoolValue cns_target_RPSlist_19_0_1_1_4)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_19_0_1_1_4)
+				(miss cns_target_RPSlist_19_0_1_1_4)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_19_0_1_1_4) cns_RPSlist_19_0_1_1_4_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_19_0_1_1_4)
@@ -31663,8 +33626,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_19_0_1_1_5_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_19_0_1_1_5_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_19_0_1_1_5_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_19_0_1_1_5_0_r_1)
+				(miss cns_target_RPSlist_19_0_1_1_5_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_19_0_1_1_5_0_r_1)
 			(not cns_obl_permit_RPSlist_19_0_1_1_5_0_r_1)
@@ -31728,8 +33695,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_19_0_1_1_5_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_19_0_1_1_5_0)
-		(isNotBoolValue cns_target_RPSlist_19_0_1_1_5_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_19_0_1_1_5_0)
+				(miss cns_target_RPSlist_19_0_1_1_5_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_19_0_1_1_5_0) cns_RPSlist_19_0_1_1_5_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_19_0_1_1_5_0)
@@ -31776,8 +33747,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_19_0_1_1_5_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_19_0_1_1_5_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_19_0_1_1_5_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_19_0_1_1_5_1_r_1)
+				(miss cns_target_RPSlist_19_0_1_1_5_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_19_0_1_1_5_1_r_1)
 			(not cns_obl_permit_RPSlist_19_0_1_1_5_1_r_1)
@@ -31841,8 +33816,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_19_0_1_1_5_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_19_0_1_1_5_1)
-		(isNotBoolValue cns_target_RPSlist_19_0_1_1_5_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_19_0_1_1_5_1)
+				(miss cns_target_RPSlist_19_0_1_1_5_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_19_0_1_1_5_1) cns_RPSlist_19_0_1_1_5_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_19_0_1_1_5_1)
@@ -31889,8 +33868,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_19_0_1_1_5_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_19_0_1_1_5_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_19_0_1_1_5_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_19_0_1_1_5_2_r_1)
+				(miss cns_target_RPSlist_19_0_1_1_5_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_19_0_1_1_5_2_r_1)
 			(not cns_obl_permit_RPSlist_19_0_1_1_5_2_r_1)
@@ -31954,8 +33937,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_19_0_1_1_5_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_19_0_1_1_5_2)
-		(isNotBoolValue cns_target_RPSlist_19_0_1_1_5_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_19_0_1_1_5_2)
+				(miss cns_target_RPSlist_19_0_1_1_5_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_19_0_1_1_5_2) cns_RPSlist_19_0_1_1_5_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_19_0_1_1_5_2)
@@ -32003,8 +33990,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_19_0_1_1_5_3_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_19_0_1_1_5_3_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_19_0_1_1_5_3_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_19_0_1_1_5_3_0_r_1)
+				(miss cns_target_RPSlist_19_0_1_1_5_3_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_19_0_1_1_5_3_0_r_1)
 			(not cns_obl_permit_RPSlist_19_0_1_1_5_3_0_r_1)
@@ -32068,8 +34059,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_19_0_1_1_5_3_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_19_0_1_1_5_3_0)
-		(isNotBoolValue cns_target_RPSlist_19_0_1_1_5_3_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_19_0_1_1_5_3_0)
+				(miss cns_target_RPSlist_19_0_1_1_5_3_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_19_0_1_1_5_3_0) cns_RPSlist_19_0_1_1_5_3_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_19_0_1_1_5_3_0)
@@ -32116,8 +34111,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_19_0_1_1_5_3_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_19_0_1_1_5_3_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_19_0_1_1_5_3_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_19_0_1_1_5_3_1_r_1)
+				(miss cns_target_RPSlist_19_0_1_1_5_3_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_19_0_1_1_5_3_1_r_1)
 			(not cns_obl_permit_RPSlist_19_0_1_1_5_3_1_r_1)
@@ -32181,8 +34180,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_19_0_1_1_5_3_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_19_0_1_1_5_3_1)
-		(isNotBoolValue cns_target_RPSlist_19_0_1_1_5_3_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_19_0_1_1_5_3_1)
+				(miss cns_target_RPSlist_19_0_1_1_5_3_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_19_0_1_1_5_3_1) cns_RPSlist_19_0_1_1_5_3_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_19_0_1_1_5_3_1)
@@ -32229,8 +34232,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_19_0_1_1_5_3_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_19_0_1_1_5_3_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_19_0_1_1_5_3_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_19_0_1_1_5_3_2_r_1)
+				(miss cns_target_RPSlist_19_0_1_1_5_3_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_19_0_1_1_5_3_2_r_1)
 			(not cns_obl_permit_RPSlist_19_0_1_1_5_3_2_r_1)
@@ -32294,8 +34301,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_19_0_1_1_5_3_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_19_0_1_1_5_3_2)
-		(isNotBoolValue cns_target_RPSlist_19_0_1_1_5_3_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_19_0_1_1_5_3_2)
+				(miss cns_target_RPSlist_19_0_1_1_5_3_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_19_0_1_1_5_3_2) cns_RPSlist_19_0_1_1_5_3_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_19_0_1_1_5_3_2)
@@ -32342,8 +34353,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_19_0_1_1_5_3_3_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_19_0_1_1_5_3_3_r_1)
-		(isNotBoolValue cns_target_RPSlist_19_0_1_1_5_3_3_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_19_0_1_1_5_3_3_r_1)
+				(miss cns_target_RPSlist_19_0_1_1_5_3_3_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_19_0_1_1_5_3_3_r_1)
 			(not cns_obl_deny_RPSlist_19_0_1_1_5_3_3_r_1)
@@ -32407,8 +34422,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_19_0_1_1_5_3_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_19_0_1_1_5_3_3)
-		(isNotBoolValue cns_target_RPSlist_19_0_1_1_5_3_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_19_0_1_1_5_3_3)
+				(miss cns_target_RPSlist_19_0_1_1_5_3_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_19_0_1_1_5_3_3) cns_RPSlist_19_0_1_1_5_3_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_19_0_1_1_5_3_3)
@@ -32516,8 +34535,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_19_0_1_1_5_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_19_0_1_1_5_3)
-		(isNotBoolValue cns_target_RPSlist_19_0_1_1_5_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_19_0_1_1_5_3)
+				(miss cns_target_RPSlist_19_0_1_1_5_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_19_0_1_1_5_3) cns_RPSlist_19_0_1_1_5_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_19_0_1_1_5_3)
@@ -32625,8 +34648,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_19_0_1_1_5_indet () Bool
 	(or 
-		(err cns_target_RPSlist_19_0_1_1_5)
-		(isNotBoolValue cns_target_RPSlist_19_0_1_1_5)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_19_0_1_1_5)
+				(miss cns_target_RPSlist_19_0_1_1_5)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_19_0_1_1_5) cns_RPSlist_19_0_1_1_5_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_19_0_1_1_5)
@@ -32768,8 +34795,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_19_0_1_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_19_0_1_1)
-		(isNotBoolValue cns_target_RPSlist_19_0_1_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_19_0_1_1)
+				(miss cns_target_RPSlist_19_0_1_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_19_0_1_1) cns_RPSlist_19_0_1_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_19_0_1_1)
@@ -32843,8 +34874,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_19_0_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_19_0_1)
-		(isNotBoolValue cns_target_RPSlist_19_0_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_19_0_1)
+				(miss cns_target_RPSlist_19_0_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_19_0_1) cns_RPSlist_19_0_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_19_0_1)
@@ -32918,8 +34953,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_19_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_19_0)
-		(isNotBoolValue cns_target_RPSlist_19_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_19_0)
+				(miss cns_target_RPSlist_19_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_19_0) cns_RPSlist_19_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_19_0)
@@ -32991,8 +35030,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_19_indet () Bool
 	(or 
-		(err cns_target_RPSlist_19)
-		(isNotBoolValue cns_target_RPSlist_19)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_19)
+				(miss cns_target_RPSlist_19)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_19) cns_RPSlist_19_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_19)
@@ -33042,8 +35085,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_20_0_0_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_20_0_0_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_20_0_0_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_20_0_0_0_r_1)
+				(miss cns_target_RPSlist_20_0_0_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_20_0_0_0_r_1)
 			(not cns_obl_permit_RPSlist_20_0_0_0_r_1)
@@ -33107,8 +35154,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_20_0_0_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_20_0_0_0)
-		(isNotBoolValue cns_target_RPSlist_20_0_0_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_20_0_0_0)
+				(miss cns_target_RPSlist_20_0_0_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_20_0_0_0) cns_RPSlist_20_0_0_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_20_0_0_0)
@@ -33155,8 +35206,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_20_0_0_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_20_0_0_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_20_0_0_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_20_0_0_1_r_1)
+				(miss cns_target_RPSlist_20_0_0_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_20_0_0_1_r_1)
 			(not cns_obl_permit_RPSlist_20_0_0_1_r_1)
@@ -33220,8 +35275,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_20_0_0_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_20_0_0_1)
-		(isNotBoolValue cns_target_RPSlist_20_0_0_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_20_0_0_1)
+				(miss cns_target_RPSlist_20_0_0_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_20_0_0_1) cns_RPSlist_20_0_0_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_20_0_0_1)
@@ -33269,8 +35328,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_20_0_0_2_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_20_0_0_2_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_20_0_0_2_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_20_0_0_2_0_r_1)
+				(miss cns_target_RPSlist_20_0_0_2_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_20_0_0_2_0_r_1)
 			(not cns_obl_permit_RPSlist_20_0_0_2_0_r_1)
@@ -33334,8 +35397,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_20_0_0_2_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_20_0_0_2_0)
-		(isNotBoolValue cns_target_RPSlist_20_0_0_2_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_20_0_0_2_0)
+				(miss cns_target_RPSlist_20_0_0_2_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_20_0_0_2_0) cns_RPSlist_20_0_0_2_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_20_0_0_2_0)
@@ -33382,8 +35449,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_20_0_0_2_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_20_0_0_2_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_20_0_0_2_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_20_0_0_2_1_r_1)
+				(miss cns_target_RPSlist_20_0_0_2_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_20_0_0_2_1_r_1)
 			(not cns_obl_permit_RPSlist_20_0_0_2_1_r_1)
@@ -33447,8 +35518,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_20_0_0_2_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_20_0_0_2_1)
-		(isNotBoolValue cns_target_RPSlist_20_0_0_2_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_20_0_0_2_1)
+				(miss cns_target_RPSlist_20_0_0_2_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_20_0_0_2_1) cns_RPSlist_20_0_0_2_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_20_0_0_2_1)
@@ -33495,8 +35570,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_20_0_0_2_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_20_0_0_2_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_20_0_0_2_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_20_0_0_2_2_r_1)
+				(miss cns_target_RPSlist_20_0_0_2_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_20_0_0_2_2_r_1)
 			(not cns_obl_permit_RPSlist_20_0_0_2_2_r_1)
@@ -33560,8 +35639,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_20_0_0_2_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_20_0_0_2_2)
-		(isNotBoolValue cns_target_RPSlist_20_0_0_2_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_20_0_0_2_2)
+				(miss cns_target_RPSlist_20_0_0_2_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_20_0_0_2_2) cns_RPSlist_20_0_0_2_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_20_0_0_2_2)
@@ -33608,8 +35691,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_20_0_0_2_3_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_20_0_0_2_3_r_1)
-		(isNotBoolValue cns_target_RPSlist_20_0_0_2_3_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_20_0_0_2_3_r_1)
+				(miss cns_target_RPSlist_20_0_0_2_3_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_20_0_0_2_3_r_1)
 			(not cns_obl_deny_RPSlist_20_0_0_2_3_r_1)
@@ -33673,8 +35760,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_20_0_0_2_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_20_0_0_2_3)
-		(isNotBoolValue cns_target_RPSlist_20_0_0_2_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_20_0_0_2_3)
+				(miss cns_target_RPSlist_20_0_0_2_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_20_0_0_2_3) cns_RPSlist_20_0_0_2_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_20_0_0_2_3)
@@ -33721,8 +35812,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_20_0_0_2_4_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_20_0_0_2_4_r_1)
-		(isNotBoolValue cns_target_RPSlist_20_0_0_2_4_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_20_0_0_2_4_r_1)
+				(miss cns_target_RPSlist_20_0_0_2_4_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_20_0_0_2_4_r_1)
 			(not cns_obl_permit_RPSlist_20_0_0_2_4_r_1)
@@ -33760,8 +35855,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_20_0_0_2_4_r_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_20_0_0_2_4_r_2)
-		(isNotBoolValue cns_target_RPSlist_20_0_0_2_4_r_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_20_0_0_2_4_r_2)
+				(miss cns_target_RPSlist_20_0_0_2_4_r_2)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_20_0_0_2_4_r_2)
 			(not cns_obl_permit_RPSlist_20_0_0_2_4_r_2)
@@ -33799,8 +35898,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_20_0_0_2_4_r_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_20_0_0_2_4_r_3)
-		(isNotBoolValue cns_target_RPSlist_20_0_0_2_4_r_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_20_0_0_2_4_r_3)
+				(miss cns_target_RPSlist_20_0_0_2_4_r_3)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_20_0_0_2_4_r_3)
 			(not cns_obl_permit_RPSlist_20_0_0_2_4_r_3)
@@ -33838,8 +35941,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_20_0_0_2_4_r_4_indet () Bool
 	(or 
-		(err cns_target_RPSlist_20_0_0_2_4_r_4)
-		(isNotBoolValue cns_target_RPSlist_20_0_0_2_4_r_4)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_20_0_0_2_4_r_4)
+				(miss cns_target_RPSlist_20_0_0_2_4_r_4)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_20_0_0_2_4_r_4)
 			(not cns_obl_permit_RPSlist_20_0_0_2_4_r_4)
@@ -33877,8 +35984,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_20_0_0_2_4_r_5_indet () Bool
 	(or 
-		(err cns_target_RPSlist_20_0_0_2_4_r_5)
-		(isNotBoolValue cns_target_RPSlist_20_0_0_2_4_r_5)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_20_0_0_2_4_r_5)
+				(miss cns_target_RPSlist_20_0_0_2_4_r_5)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_20_0_0_2_4_r_5)
 			(not cns_obl_deny_RPSlist_20_0_0_2_4_r_5)
@@ -33995,8 +36106,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_20_0_0_2_4_indet () Bool
 	(or 
-		(err cns_target_RPSlist_20_0_0_2_4)
-		(isNotBoolValue cns_target_RPSlist_20_0_0_2_4)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_20_0_0_2_4)
+				(miss cns_target_RPSlist_20_0_0_2_4)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_20_0_0_2_4) cns_RPSlist_20_0_0_2_4_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_20_0_0_2_4)
@@ -34044,8 +36159,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_20_0_0_2_5_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_20_0_0_2_5_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_20_0_0_2_5_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_20_0_0_2_5_0_r_1)
+				(miss cns_target_RPSlist_20_0_0_2_5_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_20_0_0_2_5_0_r_1)
 			(not cns_obl_permit_RPSlist_20_0_0_2_5_0_r_1)
@@ -34109,8 +36228,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_20_0_0_2_5_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_20_0_0_2_5_0)
-		(isNotBoolValue cns_target_RPSlist_20_0_0_2_5_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_20_0_0_2_5_0)
+				(miss cns_target_RPSlist_20_0_0_2_5_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_20_0_0_2_5_0) cns_RPSlist_20_0_0_2_5_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_20_0_0_2_5_0)
@@ -34157,8 +36280,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_20_0_0_2_5_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_20_0_0_2_5_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_20_0_0_2_5_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_20_0_0_2_5_1_r_1)
+				(miss cns_target_RPSlist_20_0_0_2_5_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_20_0_0_2_5_1_r_1)
 			(not cns_obl_permit_RPSlist_20_0_0_2_5_1_r_1)
@@ -34222,8 +36349,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_20_0_0_2_5_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_20_0_0_2_5_1)
-		(isNotBoolValue cns_target_RPSlist_20_0_0_2_5_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_20_0_0_2_5_1)
+				(miss cns_target_RPSlist_20_0_0_2_5_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_20_0_0_2_5_1) cns_RPSlist_20_0_0_2_5_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_20_0_0_2_5_1)
@@ -34270,8 +36401,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_20_0_0_2_5_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_20_0_0_2_5_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_20_0_0_2_5_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_20_0_0_2_5_2_r_1)
+				(miss cns_target_RPSlist_20_0_0_2_5_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_20_0_0_2_5_2_r_1)
 			(not cns_obl_permit_RPSlist_20_0_0_2_5_2_r_1)
@@ -34335,8 +36470,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_20_0_0_2_5_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_20_0_0_2_5_2)
-		(isNotBoolValue cns_target_RPSlist_20_0_0_2_5_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_20_0_0_2_5_2)
+				(miss cns_target_RPSlist_20_0_0_2_5_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_20_0_0_2_5_2) cns_RPSlist_20_0_0_2_5_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_20_0_0_2_5_2)
@@ -34384,8 +36523,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_20_0_0_2_5_3_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_20_0_0_2_5_3_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_20_0_0_2_5_3_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_20_0_0_2_5_3_0_r_1)
+				(miss cns_target_RPSlist_20_0_0_2_5_3_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_20_0_0_2_5_3_0_r_1)
 			(not cns_obl_permit_RPSlist_20_0_0_2_5_3_0_r_1)
@@ -34449,8 +36592,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_20_0_0_2_5_3_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_20_0_0_2_5_3_0)
-		(isNotBoolValue cns_target_RPSlist_20_0_0_2_5_3_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_20_0_0_2_5_3_0)
+				(miss cns_target_RPSlist_20_0_0_2_5_3_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_20_0_0_2_5_3_0) cns_RPSlist_20_0_0_2_5_3_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_20_0_0_2_5_3_0)
@@ -34497,8 +36644,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_20_0_0_2_5_3_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_20_0_0_2_5_3_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_20_0_0_2_5_3_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_20_0_0_2_5_3_1_r_1)
+				(miss cns_target_RPSlist_20_0_0_2_5_3_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_20_0_0_2_5_3_1_r_1)
 			(not cns_obl_permit_RPSlist_20_0_0_2_5_3_1_r_1)
@@ -34562,8 +36713,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_20_0_0_2_5_3_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_20_0_0_2_5_3_1)
-		(isNotBoolValue cns_target_RPSlist_20_0_0_2_5_3_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_20_0_0_2_5_3_1)
+				(miss cns_target_RPSlist_20_0_0_2_5_3_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_20_0_0_2_5_3_1) cns_RPSlist_20_0_0_2_5_3_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_20_0_0_2_5_3_1)
@@ -34610,8 +36765,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_20_0_0_2_5_3_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_20_0_0_2_5_3_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_20_0_0_2_5_3_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_20_0_0_2_5_3_2_r_1)
+				(miss cns_target_RPSlist_20_0_0_2_5_3_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_20_0_0_2_5_3_2_r_1)
 			(not cns_obl_permit_RPSlist_20_0_0_2_5_3_2_r_1)
@@ -34675,8 +36834,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_20_0_0_2_5_3_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_20_0_0_2_5_3_2)
-		(isNotBoolValue cns_target_RPSlist_20_0_0_2_5_3_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_20_0_0_2_5_3_2)
+				(miss cns_target_RPSlist_20_0_0_2_5_3_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_20_0_0_2_5_3_2) cns_RPSlist_20_0_0_2_5_3_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_20_0_0_2_5_3_2)
@@ -34723,8 +36886,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_20_0_0_2_5_3_3_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_20_0_0_2_5_3_3_r_1)
-		(isNotBoolValue cns_target_RPSlist_20_0_0_2_5_3_3_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_20_0_0_2_5_3_3_r_1)
+				(miss cns_target_RPSlist_20_0_0_2_5_3_3_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_20_0_0_2_5_3_3_r_1)
 			(not cns_obl_deny_RPSlist_20_0_0_2_5_3_3_r_1)
@@ -34788,8 +36955,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_20_0_0_2_5_3_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_20_0_0_2_5_3_3)
-		(isNotBoolValue cns_target_RPSlist_20_0_0_2_5_3_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_20_0_0_2_5_3_3)
+				(miss cns_target_RPSlist_20_0_0_2_5_3_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_20_0_0_2_5_3_3) cns_RPSlist_20_0_0_2_5_3_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_20_0_0_2_5_3_3)
@@ -34897,8 +37068,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_20_0_0_2_5_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_20_0_0_2_5_3)
-		(isNotBoolValue cns_target_RPSlist_20_0_0_2_5_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_20_0_0_2_5_3)
+				(miss cns_target_RPSlist_20_0_0_2_5_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_20_0_0_2_5_3) cns_RPSlist_20_0_0_2_5_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_20_0_0_2_5_3)
@@ -35006,8 +37181,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_20_0_0_2_5_indet () Bool
 	(or 
-		(err cns_target_RPSlist_20_0_0_2_5)
-		(isNotBoolValue cns_target_RPSlist_20_0_0_2_5)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_20_0_0_2_5)
+				(miss cns_target_RPSlist_20_0_0_2_5)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_20_0_0_2_5) cns_RPSlist_20_0_0_2_5_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_20_0_0_2_5)
@@ -35149,8 +37328,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_20_0_0_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_20_0_0_2)
-		(isNotBoolValue cns_target_RPSlist_20_0_0_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_20_0_0_2)
+				(miss cns_target_RPSlist_20_0_0_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_20_0_0_2) cns_RPSlist_20_0_0_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_20_0_0_2)
@@ -35241,8 +37424,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_20_0_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_20_0_0)
-		(isNotBoolValue cns_target_RPSlist_20_0_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_20_0_0)
+				(miss cns_target_RPSlist_20_0_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_20_0_0) cns_RPSlist_20_0_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_20_0_0)
@@ -35314,8 +37501,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_20_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_20_0)
-		(isNotBoolValue cns_target_RPSlist_20_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_20_0)
+				(miss cns_target_RPSlist_20_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_20_0) cns_RPSlist_20_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_20_0)
@@ -35387,8 +37578,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_20_indet () Bool
 	(or 
-		(err cns_target_RPSlist_20)
-		(isNotBoolValue cns_target_RPSlist_20)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_20)
+				(miss cns_target_RPSlist_20)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_20) cns_RPSlist_20_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_20)
@@ -35438,8 +37633,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_21_0_0_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_21_0_0_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_21_0_0_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_21_0_0_0_r_1)
+				(miss cns_target_RPSlist_21_0_0_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_21_0_0_0_r_1)
 			(not cns_obl_permit_RPSlist_21_0_0_0_r_1)
@@ -35503,8 +37702,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_21_0_0_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_21_0_0_0)
-		(isNotBoolValue cns_target_RPSlist_21_0_0_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_21_0_0_0)
+				(miss cns_target_RPSlist_21_0_0_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_21_0_0_0) cns_RPSlist_21_0_0_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_21_0_0_0)
@@ -35551,8 +37754,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_21_0_0_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_21_0_0_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_21_0_0_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_21_0_0_1_r_1)
+				(miss cns_target_RPSlist_21_0_0_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_21_0_0_1_r_1)
 			(not cns_obl_permit_RPSlist_21_0_0_1_r_1)
@@ -35616,8 +37823,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_21_0_0_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_21_0_0_1)
-		(isNotBoolValue cns_target_RPSlist_21_0_0_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_21_0_0_1)
+				(miss cns_target_RPSlist_21_0_0_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_21_0_0_1) cns_RPSlist_21_0_0_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_21_0_0_1)
@@ -35665,8 +37876,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_21_0_0_2_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_21_0_0_2_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_21_0_0_2_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_21_0_0_2_0_r_1)
+				(miss cns_target_RPSlist_21_0_0_2_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_21_0_0_2_0_r_1)
 			(not cns_obl_permit_RPSlist_21_0_0_2_0_r_1)
@@ -35730,8 +37945,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_21_0_0_2_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_21_0_0_2_0)
-		(isNotBoolValue cns_target_RPSlist_21_0_0_2_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_21_0_0_2_0)
+				(miss cns_target_RPSlist_21_0_0_2_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_21_0_0_2_0) cns_RPSlist_21_0_0_2_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_21_0_0_2_0)
@@ -35778,8 +37997,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_21_0_0_2_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_21_0_0_2_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_21_0_0_2_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_21_0_0_2_1_r_1)
+				(miss cns_target_RPSlist_21_0_0_2_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_21_0_0_2_1_r_1)
 			(not cns_obl_permit_RPSlist_21_0_0_2_1_r_1)
@@ -35843,8 +38066,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_21_0_0_2_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_21_0_0_2_1)
-		(isNotBoolValue cns_target_RPSlist_21_0_0_2_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_21_0_0_2_1)
+				(miss cns_target_RPSlist_21_0_0_2_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_21_0_0_2_1) cns_RPSlist_21_0_0_2_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_21_0_0_2_1)
@@ -35891,8 +38118,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_21_0_0_2_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_21_0_0_2_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_21_0_0_2_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_21_0_0_2_2_r_1)
+				(miss cns_target_RPSlist_21_0_0_2_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_21_0_0_2_2_r_1)
 			(not cns_obl_permit_RPSlist_21_0_0_2_2_r_1)
@@ -35956,8 +38187,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_21_0_0_2_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_21_0_0_2_2)
-		(isNotBoolValue cns_target_RPSlist_21_0_0_2_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_21_0_0_2_2)
+				(miss cns_target_RPSlist_21_0_0_2_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_21_0_0_2_2) cns_RPSlist_21_0_0_2_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_21_0_0_2_2)
@@ -36004,8 +38239,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_21_0_0_2_3_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_21_0_0_2_3_r_1)
-		(isNotBoolValue cns_target_RPSlist_21_0_0_2_3_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_21_0_0_2_3_r_1)
+				(miss cns_target_RPSlist_21_0_0_2_3_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_21_0_0_2_3_r_1)
 			(not cns_obl_deny_RPSlist_21_0_0_2_3_r_1)
@@ -36069,8 +38308,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_21_0_0_2_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_21_0_0_2_3)
-		(isNotBoolValue cns_target_RPSlist_21_0_0_2_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_21_0_0_2_3)
+				(miss cns_target_RPSlist_21_0_0_2_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_21_0_0_2_3) cns_RPSlist_21_0_0_2_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_21_0_0_2_3)
@@ -36117,8 +38360,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_21_0_0_2_4_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_21_0_0_2_4_r_1)
-		(isNotBoolValue cns_target_RPSlist_21_0_0_2_4_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_21_0_0_2_4_r_1)
+				(miss cns_target_RPSlist_21_0_0_2_4_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_21_0_0_2_4_r_1)
 			(not cns_obl_permit_RPSlist_21_0_0_2_4_r_1)
@@ -36156,8 +38403,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_21_0_0_2_4_r_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_21_0_0_2_4_r_2)
-		(isNotBoolValue cns_target_RPSlist_21_0_0_2_4_r_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_21_0_0_2_4_r_2)
+				(miss cns_target_RPSlist_21_0_0_2_4_r_2)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_21_0_0_2_4_r_2)
 			(not cns_obl_permit_RPSlist_21_0_0_2_4_r_2)
@@ -36195,8 +38446,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_21_0_0_2_4_r_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_21_0_0_2_4_r_3)
-		(isNotBoolValue cns_target_RPSlist_21_0_0_2_4_r_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_21_0_0_2_4_r_3)
+				(miss cns_target_RPSlist_21_0_0_2_4_r_3)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_21_0_0_2_4_r_3)
 			(not cns_obl_permit_RPSlist_21_0_0_2_4_r_3)
@@ -36234,8 +38489,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_21_0_0_2_4_r_4_indet () Bool
 	(or 
-		(err cns_target_RPSlist_21_0_0_2_4_r_4)
-		(isNotBoolValue cns_target_RPSlist_21_0_0_2_4_r_4)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_21_0_0_2_4_r_4)
+				(miss cns_target_RPSlist_21_0_0_2_4_r_4)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_21_0_0_2_4_r_4)
 			(not cns_obl_permit_RPSlist_21_0_0_2_4_r_4)
@@ -36273,8 +38532,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_21_0_0_2_4_r_5_indet () Bool
 	(or 
-		(err cns_target_RPSlist_21_0_0_2_4_r_5)
-		(isNotBoolValue cns_target_RPSlist_21_0_0_2_4_r_5)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_21_0_0_2_4_r_5)
+				(miss cns_target_RPSlist_21_0_0_2_4_r_5)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_21_0_0_2_4_r_5)
 			(not cns_obl_deny_RPSlist_21_0_0_2_4_r_5)
@@ -36391,8 +38654,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_21_0_0_2_4_indet () Bool
 	(or 
-		(err cns_target_RPSlist_21_0_0_2_4)
-		(isNotBoolValue cns_target_RPSlist_21_0_0_2_4)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_21_0_0_2_4)
+				(miss cns_target_RPSlist_21_0_0_2_4)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_21_0_0_2_4) cns_RPSlist_21_0_0_2_4_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_21_0_0_2_4)
@@ -36440,8 +38707,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_21_0_0_2_5_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_21_0_0_2_5_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_21_0_0_2_5_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_21_0_0_2_5_0_r_1)
+				(miss cns_target_RPSlist_21_0_0_2_5_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_21_0_0_2_5_0_r_1)
 			(not cns_obl_permit_RPSlist_21_0_0_2_5_0_r_1)
@@ -36505,8 +38776,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_21_0_0_2_5_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_21_0_0_2_5_0)
-		(isNotBoolValue cns_target_RPSlist_21_0_0_2_5_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_21_0_0_2_5_0)
+				(miss cns_target_RPSlist_21_0_0_2_5_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_21_0_0_2_5_0) cns_RPSlist_21_0_0_2_5_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_21_0_0_2_5_0)
@@ -36553,8 +38828,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_21_0_0_2_5_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_21_0_0_2_5_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_21_0_0_2_5_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_21_0_0_2_5_1_r_1)
+				(miss cns_target_RPSlist_21_0_0_2_5_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_21_0_0_2_5_1_r_1)
 			(not cns_obl_permit_RPSlist_21_0_0_2_5_1_r_1)
@@ -36618,8 +38897,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_21_0_0_2_5_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_21_0_0_2_5_1)
-		(isNotBoolValue cns_target_RPSlist_21_0_0_2_5_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_21_0_0_2_5_1)
+				(miss cns_target_RPSlist_21_0_0_2_5_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_21_0_0_2_5_1) cns_RPSlist_21_0_0_2_5_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_21_0_0_2_5_1)
@@ -36666,8 +38949,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_21_0_0_2_5_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_21_0_0_2_5_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_21_0_0_2_5_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_21_0_0_2_5_2_r_1)
+				(miss cns_target_RPSlist_21_0_0_2_5_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_21_0_0_2_5_2_r_1)
 			(not cns_obl_permit_RPSlist_21_0_0_2_5_2_r_1)
@@ -36731,8 +39018,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_21_0_0_2_5_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_21_0_0_2_5_2)
-		(isNotBoolValue cns_target_RPSlist_21_0_0_2_5_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_21_0_0_2_5_2)
+				(miss cns_target_RPSlist_21_0_0_2_5_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_21_0_0_2_5_2) cns_RPSlist_21_0_0_2_5_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_21_0_0_2_5_2)
@@ -36780,8 +39071,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_21_0_0_2_5_3_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_21_0_0_2_5_3_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_21_0_0_2_5_3_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_21_0_0_2_5_3_0_r_1)
+				(miss cns_target_RPSlist_21_0_0_2_5_3_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_21_0_0_2_5_3_0_r_1)
 			(not cns_obl_permit_RPSlist_21_0_0_2_5_3_0_r_1)
@@ -36845,8 +39140,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_21_0_0_2_5_3_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_21_0_0_2_5_3_0)
-		(isNotBoolValue cns_target_RPSlist_21_0_0_2_5_3_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_21_0_0_2_5_3_0)
+				(miss cns_target_RPSlist_21_0_0_2_5_3_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_21_0_0_2_5_3_0) cns_RPSlist_21_0_0_2_5_3_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_21_0_0_2_5_3_0)
@@ -36893,8 +39192,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_21_0_0_2_5_3_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_21_0_0_2_5_3_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_21_0_0_2_5_3_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_21_0_0_2_5_3_1_r_1)
+				(miss cns_target_RPSlist_21_0_0_2_5_3_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_21_0_0_2_5_3_1_r_1)
 			(not cns_obl_permit_RPSlist_21_0_0_2_5_3_1_r_1)
@@ -36958,8 +39261,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_21_0_0_2_5_3_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_21_0_0_2_5_3_1)
-		(isNotBoolValue cns_target_RPSlist_21_0_0_2_5_3_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_21_0_0_2_5_3_1)
+				(miss cns_target_RPSlist_21_0_0_2_5_3_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_21_0_0_2_5_3_1) cns_RPSlist_21_0_0_2_5_3_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_21_0_0_2_5_3_1)
@@ -37006,8 +39313,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_21_0_0_2_5_3_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_21_0_0_2_5_3_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_21_0_0_2_5_3_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_21_0_0_2_5_3_2_r_1)
+				(miss cns_target_RPSlist_21_0_0_2_5_3_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_21_0_0_2_5_3_2_r_1)
 			(not cns_obl_permit_RPSlist_21_0_0_2_5_3_2_r_1)
@@ -37071,8 +39382,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_21_0_0_2_5_3_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_21_0_0_2_5_3_2)
-		(isNotBoolValue cns_target_RPSlist_21_0_0_2_5_3_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_21_0_0_2_5_3_2)
+				(miss cns_target_RPSlist_21_0_0_2_5_3_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_21_0_0_2_5_3_2) cns_RPSlist_21_0_0_2_5_3_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_21_0_0_2_5_3_2)
@@ -37119,8 +39434,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_21_0_0_2_5_3_3_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_21_0_0_2_5_3_3_r_1)
-		(isNotBoolValue cns_target_RPSlist_21_0_0_2_5_3_3_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_21_0_0_2_5_3_3_r_1)
+				(miss cns_target_RPSlist_21_0_0_2_5_3_3_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_21_0_0_2_5_3_3_r_1)
 			(not cns_obl_deny_RPSlist_21_0_0_2_5_3_3_r_1)
@@ -37184,8 +39503,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_21_0_0_2_5_3_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_21_0_0_2_5_3_3)
-		(isNotBoolValue cns_target_RPSlist_21_0_0_2_5_3_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_21_0_0_2_5_3_3)
+				(miss cns_target_RPSlist_21_0_0_2_5_3_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_21_0_0_2_5_3_3) cns_RPSlist_21_0_0_2_5_3_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_21_0_0_2_5_3_3)
@@ -37293,8 +39616,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_21_0_0_2_5_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_21_0_0_2_5_3)
-		(isNotBoolValue cns_target_RPSlist_21_0_0_2_5_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_21_0_0_2_5_3)
+				(miss cns_target_RPSlist_21_0_0_2_5_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_21_0_0_2_5_3) cns_RPSlist_21_0_0_2_5_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_21_0_0_2_5_3)
@@ -37402,8 +39729,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_21_0_0_2_5_indet () Bool
 	(or 
-		(err cns_target_RPSlist_21_0_0_2_5)
-		(isNotBoolValue cns_target_RPSlist_21_0_0_2_5)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_21_0_0_2_5)
+				(miss cns_target_RPSlist_21_0_0_2_5)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_21_0_0_2_5) cns_RPSlist_21_0_0_2_5_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_21_0_0_2_5)
@@ -37545,8 +39876,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_21_0_0_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_21_0_0_2)
-		(isNotBoolValue cns_target_RPSlist_21_0_0_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_21_0_0_2)
+				(miss cns_target_RPSlist_21_0_0_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_21_0_0_2) cns_RPSlist_21_0_0_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_21_0_0_2)
@@ -37637,8 +39972,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_21_0_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_21_0_0)
-		(isNotBoolValue cns_target_RPSlist_21_0_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_21_0_0)
+				(miss cns_target_RPSlist_21_0_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_21_0_0) cns_RPSlist_21_0_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_21_0_0)
@@ -37710,8 +40049,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_21_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_21_0)
-		(isNotBoolValue cns_target_RPSlist_21_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_21_0)
+				(miss cns_target_RPSlist_21_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_21_0) cns_RPSlist_21_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_21_0)
@@ -37783,8 +40126,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_21_indet () Bool
 	(or 
-		(err cns_target_RPSlist_21)
-		(isNotBoolValue cns_target_RPSlist_21)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_21)
+				(miss cns_target_RPSlist_21)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_21) cns_RPSlist_21_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_21)
@@ -37834,8 +40181,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_22_0_0_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_22_0_0_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_22_0_0_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_22_0_0_0_r_1)
+				(miss cns_target_RPSlist_22_0_0_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_22_0_0_0_r_1)
 			(not cns_obl_permit_RPSlist_22_0_0_0_r_1)
@@ -37899,8 +40250,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_22_0_0_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_22_0_0_0)
-		(isNotBoolValue cns_target_RPSlist_22_0_0_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_22_0_0_0)
+				(miss cns_target_RPSlist_22_0_0_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_22_0_0_0) cns_RPSlist_22_0_0_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_22_0_0_0)
@@ -37947,8 +40302,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_22_0_0_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_22_0_0_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_22_0_0_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_22_0_0_1_r_1)
+				(miss cns_target_RPSlist_22_0_0_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_22_0_0_1_r_1)
 			(not cns_obl_permit_RPSlist_22_0_0_1_r_1)
@@ -38012,8 +40371,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_22_0_0_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_22_0_0_1)
-		(isNotBoolValue cns_target_RPSlist_22_0_0_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_22_0_0_1)
+				(miss cns_target_RPSlist_22_0_0_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_22_0_0_1) cns_RPSlist_22_0_0_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_22_0_0_1)
@@ -38061,8 +40424,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_22_0_0_2_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_22_0_0_2_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_22_0_0_2_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_22_0_0_2_0_r_1)
+				(miss cns_target_RPSlist_22_0_0_2_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_22_0_0_2_0_r_1)
 			(not cns_obl_permit_RPSlist_22_0_0_2_0_r_1)
@@ -38126,8 +40493,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_22_0_0_2_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_22_0_0_2_0)
-		(isNotBoolValue cns_target_RPSlist_22_0_0_2_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_22_0_0_2_0)
+				(miss cns_target_RPSlist_22_0_0_2_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_22_0_0_2_0) cns_RPSlist_22_0_0_2_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_22_0_0_2_0)
@@ -38174,8 +40545,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_22_0_0_2_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_22_0_0_2_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_22_0_0_2_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_22_0_0_2_1_r_1)
+				(miss cns_target_RPSlist_22_0_0_2_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_22_0_0_2_1_r_1)
 			(not cns_obl_permit_RPSlist_22_0_0_2_1_r_1)
@@ -38239,8 +40614,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_22_0_0_2_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_22_0_0_2_1)
-		(isNotBoolValue cns_target_RPSlist_22_0_0_2_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_22_0_0_2_1)
+				(miss cns_target_RPSlist_22_0_0_2_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_22_0_0_2_1) cns_RPSlist_22_0_0_2_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_22_0_0_2_1)
@@ -38287,8 +40666,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_22_0_0_2_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_22_0_0_2_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_22_0_0_2_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_22_0_0_2_2_r_1)
+				(miss cns_target_RPSlist_22_0_0_2_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_22_0_0_2_2_r_1)
 			(not cns_obl_permit_RPSlist_22_0_0_2_2_r_1)
@@ -38352,8 +40735,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_22_0_0_2_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_22_0_0_2_2)
-		(isNotBoolValue cns_target_RPSlist_22_0_0_2_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_22_0_0_2_2)
+				(miss cns_target_RPSlist_22_0_0_2_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_22_0_0_2_2) cns_RPSlist_22_0_0_2_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_22_0_0_2_2)
@@ -38400,8 +40787,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_22_0_0_2_3_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_22_0_0_2_3_r_1)
-		(isNotBoolValue cns_target_RPSlist_22_0_0_2_3_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_22_0_0_2_3_r_1)
+				(miss cns_target_RPSlist_22_0_0_2_3_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_22_0_0_2_3_r_1)
 			(not cns_obl_deny_RPSlist_22_0_0_2_3_r_1)
@@ -38465,8 +40856,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_22_0_0_2_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_22_0_0_2_3)
-		(isNotBoolValue cns_target_RPSlist_22_0_0_2_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_22_0_0_2_3)
+				(miss cns_target_RPSlist_22_0_0_2_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_22_0_0_2_3) cns_RPSlist_22_0_0_2_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_22_0_0_2_3)
@@ -38513,8 +40908,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_22_0_0_2_4_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_22_0_0_2_4_r_1)
-		(isNotBoolValue cns_target_RPSlist_22_0_0_2_4_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_22_0_0_2_4_r_1)
+				(miss cns_target_RPSlist_22_0_0_2_4_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_22_0_0_2_4_r_1)
 			(not cns_obl_permit_RPSlist_22_0_0_2_4_r_1)
@@ -38552,8 +40951,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_22_0_0_2_4_r_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_22_0_0_2_4_r_2)
-		(isNotBoolValue cns_target_RPSlist_22_0_0_2_4_r_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_22_0_0_2_4_r_2)
+				(miss cns_target_RPSlist_22_0_0_2_4_r_2)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_22_0_0_2_4_r_2)
 			(not cns_obl_permit_RPSlist_22_0_0_2_4_r_2)
@@ -38591,8 +40994,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_22_0_0_2_4_r_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_22_0_0_2_4_r_3)
-		(isNotBoolValue cns_target_RPSlist_22_0_0_2_4_r_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_22_0_0_2_4_r_3)
+				(miss cns_target_RPSlist_22_0_0_2_4_r_3)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_22_0_0_2_4_r_3)
 			(not cns_obl_permit_RPSlist_22_0_0_2_4_r_3)
@@ -38630,8 +41037,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_22_0_0_2_4_r_4_indet () Bool
 	(or 
-		(err cns_target_RPSlist_22_0_0_2_4_r_4)
-		(isNotBoolValue cns_target_RPSlist_22_0_0_2_4_r_4)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_22_0_0_2_4_r_4)
+				(miss cns_target_RPSlist_22_0_0_2_4_r_4)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_22_0_0_2_4_r_4)
 			(not cns_obl_permit_RPSlist_22_0_0_2_4_r_4)
@@ -38669,8 +41080,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_22_0_0_2_4_r_5_indet () Bool
 	(or 
-		(err cns_target_RPSlist_22_0_0_2_4_r_5)
-		(isNotBoolValue cns_target_RPSlist_22_0_0_2_4_r_5)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_22_0_0_2_4_r_5)
+				(miss cns_target_RPSlist_22_0_0_2_4_r_5)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_22_0_0_2_4_r_5)
 			(not cns_obl_deny_RPSlist_22_0_0_2_4_r_5)
@@ -38787,8 +41202,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_22_0_0_2_4_indet () Bool
 	(or 
-		(err cns_target_RPSlist_22_0_0_2_4)
-		(isNotBoolValue cns_target_RPSlist_22_0_0_2_4)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_22_0_0_2_4)
+				(miss cns_target_RPSlist_22_0_0_2_4)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_22_0_0_2_4) cns_RPSlist_22_0_0_2_4_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_22_0_0_2_4)
@@ -38836,8 +41255,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_22_0_0_2_5_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_22_0_0_2_5_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_22_0_0_2_5_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_22_0_0_2_5_0_r_1)
+				(miss cns_target_RPSlist_22_0_0_2_5_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_22_0_0_2_5_0_r_1)
 			(not cns_obl_permit_RPSlist_22_0_0_2_5_0_r_1)
@@ -38901,8 +41324,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_22_0_0_2_5_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_22_0_0_2_5_0)
-		(isNotBoolValue cns_target_RPSlist_22_0_0_2_5_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_22_0_0_2_5_0)
+				(miss cns_target_RPSlist_22_0_0_2_5_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_22_0_0_2_5_0) cns_RPSlist_22_0_0_2_5_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_22_0_0_2_5_0)
@@ -38949,8 +41376,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_22_0_0_2_5_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_22_0_0_2_5_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_22_0_0_2_5_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_22_0_0_2_5_1_r_1)
+				(miss cns_target_RPSlist_22_0_0_2_5_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_22_0_0_2_5_1_r_1)
 			(not cns_obl_permit_RPSlist_22_0_0_2_5_1_r_1)
@@ -39014,8 +41445,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_22_0_0_2_5_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_22_0_0_2_5_1)
-		(isNotBoolValue cns_target_RPSlist_22_0_0_2_5_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_22_0_0_2_5_1)
+				(miss cns_target_RPSlist_22_0_0_2_5_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_22_0_0_2_5_1) cns_RPSlist_22_0_0_2_5_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_22_0_0_2_5_1)
@@ -39062,8 +41497,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_22_0_0_2_5_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_22_0_0_2_5_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_22_0_0_2_5_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_22_0_0_2_5_2_r_1)
+				(miss cns_target_RPSlist_22_0_0_2_5_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_22_0_0_2_5_2_r_1)
 			(not cns_obl_permit_RPSlist_22_0_0_2_5_2_r_1)
@@ -39127,8 +41566,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_22_0_0_2_5_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_22_0_0_2_5_2)
-		(isNotBoolValue cns_target_RPSlist_22_0_0_2_5_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_22_0_0_2_5_2)
+				(miss cns_target_RPSlist_22_0_0_2_5_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_22_0_0_2_5_2) cns_RPSlist_22_0_0_2_5_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_22_0_0_2_5_2)
@@ -39176,8 +41619,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_22_0_0_2_5_3_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_22_0_0_2_5_3_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_22_0_0_2_5_3_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_22_0_0_2_5_3_0_r_1)
+				(miss cns_target_RPSlist_22_0_0_2_5_3_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_22_0_0_2_5_3_0_r_1)
 			(not cns_obl_permit_RPSlist_22_0_0_2_5_3_0_r_1)
@@ -39241,8 +41688,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_22_0_0_2_5_3_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_22_0_0_2_5_3_0)
-		(isNotBoolValue cns_target_RPSlist_22_0_0_2_5_3_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_22_0_0_2_5_3_0)
+				(miss cns_target_RPSlist_22_0_0_2_5_3_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_22_0_0_2_5_3_0) cns_RPSlist_22_0_0_2_5_3_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_22_0_0_2_5_3_0)
@@ -39289,8 +41740,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_22_0_0_2_5_3_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_22_0_0_2_5_3_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_22_0_0_2_5_3_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_22_0_0_2_5_3_1_r_1)
+				(miss cns_target_RPSlist_22_0_0_2_5_3_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_22_0_0_2_5_3_1_r_1)
 			(not cns_obl_permit_RPSlist_22_0_0_2_5_3_1_r_1)
@@ -39354,8 +41809,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_22_0_0_2_5_3_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_22_0_0_2_5_3_1)
-		(isNotBoolValue cns_target_RPSlist_22_0_0_2_5_3_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_22_0_0_2_5_3_1)
+				(miss cns_target_RPSlist_22_0_0_2_5_3_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_22_0_0_2_5_3_1) cns_RPSlist_22_0_0_2_5_3_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_22_0_0_2_5_3_1)
@@ -39402,8 +41861,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_22_0_0_2_5_3_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_22_0_0_2_5_3_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_22_0_0_2_5_3_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_22_0_0_2_5_3_2_r_1)
+				(miss cns_target_RPSlist_22_0_0_2_5_3_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_22_0_0_2_5_3_2_r_1)
 			(not cns_obl_permit_RPSlist_22_0_0_2_5_3_2_r_1)
@@ -39467,8 +41930,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_22_0_0_2_5_3_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_22_0_0_2_5_3_2)
-		(isNotBoolValue cns_target_RPSlist_22_0_0_2_5_3_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_22_0_0_2_5_3_2)
+				(miss cns_target_RPSlist_22_0_0_2_5_3_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_22_0_0_2_5_3_2) cns_RPSlist_22_0_0_2_5_3_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_22_0_0_2_5_3_2)
@@ -39515,8 +41982,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_22_0_0_2_5_3_3_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_22_0_0_2_5_3_3_r_1)
-		(isNotBoolValue cns_target_RPSlist_22_0_0_2_5_3_3_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_22_0_0_2_5_3_3_r_1)
+				(miss cns_target_RPSlist_22_0_0_2_5_3_3_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_22_0_0_2_5_3_3_r_1)
 			(not cns_obl_deny_RPSlist_22_0_0_2_5_3_3_r_1)
@@ -39580,8 +42051,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_22_0_0_2_5_3_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_22_0_0_2_5_3_3)
-		(isNotBoolValue cns_target_RPSlist_22_0_0_2_5_3_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_22_0_0_2_5_3_3)
+				(miss cns_target_RPSlist_22_0_0_2_5_3_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_22_0_0_2_5_3_3) cns_RPSlist_22_0_0_2_5_3_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_22_0_0_2_5_3_3)
@@ -39689,8 +42164,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_22_0_0_2_5_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_22_0_0_2_5_3)
-		(isNotBoolValue cns_target_RPSlist_22_0_0_2_5_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_22_0_0_2_5_3)
+				(miss cns_target_RPSlist_22_0_0_2_5_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_22_0_0_2_5_3) cns_RPSlist_22_0_0_2_5_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_22_0_0_2_5_3)
@@ -39798,8 +42277,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_22_0_0_2_5_indet () Bool
 	(or 
-		(err cns_target_RPSlist_22_0_0_2_5)
-		(isNotBoolValue cns_target_RPSlist_22_0_0_2_5)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_22_0_0_2_5)
+				(miss cns_target_RPSlist_22_0_0_2_5)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_22_0_0_2_5) cns_RPSlist_22_0_0_2_5_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_22_0_0_2_5)
@@ -39941,8 +42424,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_22_0_0_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_22_0_0_2)
-		(isNotBoolValue cns_target_RPSlist_22_0_0_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_22_0_0_2)
+				(miss cns_target_RPSlist_22_0_0_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_22_0_0_2) cns_RPSlist_22_0_0_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_22_0_0_2)
@@ -40033,8 +42520,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_22_0_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_22_0_0)
-		(isNotBoolValue cns_target_RPSlist_22_0_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_22_0_0)
+				(miss cns_target_RPSlist_22_0_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_22_0_0) cns_RPSlist_22_0_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_22_0_0)
@@ -40106,8 +42597,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_22_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_22_0)
-		(isNotBoolValue cns_target_RPSlist_22_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_22_0)
+				(miss cns_target_RPSlist_22_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_22_0) cns_RPSlist_22_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_22_0)
@@ -40179,8 +42674,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_22_indet () Bool
 	(or 
-		(err cns_target_RPSlist_22)
-		(isNotBoolValue cns_target_RPSlist_22)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_22)
+				(miss cns_target_RPSlist_22)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_22) cns_RPSlist_22_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_22)
@@ -40230,8 +42729,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_23_0_0_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_23_0_0_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_23_0_0_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_23_0_0_0_r_1)
+				(miss cns_target_RPSlist_23_0_0_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_23_0_0_0_r_1)
 			(not cns_obl_permit_RPSlist_23_0_0_0_r_1)
@@ -40295,8 +42798,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_23_0_0_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_23_0_0_0)
-		(isNotBoolValue cns_target_RPSlist_23_0_0_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_23_0_0_0)
+				(miss cns_target_RPSlist_23_0_0_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_23_0_0_0) cns_RPSlist_23_0_0_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_23_0_0_0)
@@ -40344,8 +42851,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_23_0_0_1_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_23_0_0_1_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_23_0_0_1_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_23_0_0_1_0_r_1)
+				(miss cns_target_RPSlist_23_0_0_1_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_23_0_0_1_0_r_1)
 			(not cns_obl_permit_RPSlist_23_0_0_1_0_r_1)
@@ -40409,8 +42920,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_23_0_0_1_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_23_0_0_1_0)
-		(isNotBoolValue cns_target_RPSlist_23_0_0_1_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_23_0_0_1_0)
+				(miss cns_target_RPSlist_23_0_0_1_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_23_0_0_1_0) cns_RPSlist_23_0_0_1_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_23_0_0_1_0)
@@ -40457,8 +42972,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_23_0_0_1_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_23_0_0_1_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_23_0_0_1_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_23_0_0_1_1_r_1)
+				(miss cns_target_RPSlist_23_0_0_1_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_23_0_0_1_1_r_1)
 			(not cns_obl_permit_RPSlist_23_0_0_1_1_r_1)
@@ -40522,8 +43041,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_23_0_0_1_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_23_0_0_1_1)
-		(isNotBoolValue cns_target_RPSlist_23_0_0_1_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_23_0_0_1_1)
+				(miss cns_target_RPSlist_23_0_0_1_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_23_0_0_1_1) cns_RPSlist_23_0_0_1_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_23_0_0_1_1)
@@ -40570,8 +43093,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_23_0_0_1_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_23_0_0_1_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_23_0_0_1_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_23_0_0_1_2_r_1)
+				(miss cns_target_RPSlist_23_0_0_1_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_23_0_0_1_2_r_1)
 			(not cns_obl_permit_RPSlist_23_0_0_1_2_r_1)
@@ -40635,8 +43162,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_23_0_0_1_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_23_0_0_1_2)
-		(isNotBoolValue cns_target_RPSlist_23_0_0_1_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_23_0_0_1_2)
+				(miss cns_target_RPSlist_23_0_0_1_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_23_0_0_1_2) cns_RPSlist_23_0_0_1_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_23_0_0_1_2)
@@ -40683,8 +43214,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_23_0_0_1_3_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_23_0_0_1_3_r_1)
-		(isNotBoolValue cns_target_RPSlist_23_0_0_1_3_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_23_0_0_1_3_r_1)
+				(miss cns_target_RPSlist_23_0_0_1_3_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_23_0_0_1_3_r_1)
 			(not cns_obl_deny_RPSlist_23_0_0_1_3_r_1)
@@ -40748,8 +43283,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_23_0_0_1_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_23_0_0_1_3)
-		(isNotBoolValue cns_target_RPSlist_23_0_0_1_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_23_0_0_1_3)
+				(miss cns_target_RPSlist_23_0_0_1_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_23_0_0_1_3) cns_RPSlist_23_0_0_1_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_23_0_0_1_3)
@@ -40796,8 +43335,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_23_0_0_1_4_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_23_0_0_1_4_r_1)
-		(isNotBoolValue cns_target_RPSlist_23_0_0_1_4_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_23_0_0_1_4_r_1)
+				(miss cns_target_RPSlist_23_0_0_1_4_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_23_0_0_1_4_r_1)
 			(not cns_obl_permit_RPSlist_23_0_0_1_4_r_1)
@@ -40835,8 +43378,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_23_0_0_1_4_r_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_23_0_0_1_4_r_2)
-		(isNotBoolValue cns_target_RPSlist_23_0_0_1_4_r_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_23_0_0_1_4_r_2)
+				(miss cns_target_RPSlist_23_0_0_1_4_r_2)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_23_0_0_1_4_r_2)
 			(not cns_obl_permit_RPSlist_23_0_0_1_4_r_2)
@@ -40874,8 +43421,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_23_0_0_1_4_r_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_23_0_0_1_4_r_3)
-		(isNotBoolValue cns_target_RPSlist_23_0_0_1_4_r_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_23_0_0_1_4_r_3)
+				(miss cns_target_RPSlist_23_0_0_1_4_r_3)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_23_0_0_1_4_r_3)
 			(not cns_obl_permit_RPSlist_23_0_0_1_4_r_3)
@@ -40913,8 +43464,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_23_0_0_1_4_r_4_indet () Bool
 	(or 
-		(err cns_target_RPSlist_23_0_0_1_4_r_4)
-		(isNotBoolValue cns_target_RPSlist_23_0_0_1_4_r_4)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_23_0_0_1_4_r_4)
+				(miss cns_target_RPSlist_23_0_0_1_4_r_4)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_23_0_0_1_4_r_4)
 			(not cns_obl_permit_RPSlist_23_0_0_1_4_r_4)
@@ -40952,8 +43507,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_23_0_0_1_4_r_5_indet () Bool
 	(or 
-		(err cns_target_RPSlist_23_0_0_1_4_r_5)
-		(isNotBoolValue cns_target_RPSlist_23_0_0_1_4_r_5)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_23_0_0_1_4_r_5)
+				(miss cns_target_RPSlist_23_0_0_1_4_r_5)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_23_0_0_1_4_r_5)
 			(not cns_obl_deny_RPSlist_23_0_0_1_4_r_5)
@@ -41070,8 +43629,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_23_0_0_1_4_indet () Bool
 	(or 
-		(err cns_target_RPSlist_23_0_0_1_4)
-		(isNotBoolValue cns_target_RPSlist_23_0_0_1_4)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_23_0_0_1_4)
+				(miss cns_target_RPSlist_23_0_0_1_4)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_23_0_0_1_4) cns_RPSlist_23_0_0_1_4_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_23_0_0_1_4)
@@ -41119,8 +43682,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_23_0_0_1_5_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_23_0_0_1_5_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_23_0_0_1_5_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_23_0_0_1_5_0_r_1)
+				(miss cns_target_RPSlist_23_0_0_1_5_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_23_0_0_1_5_0_r_1)
 			(not cns_obl_permit_RPSlist_23_0_0_1_5_0_r_1)
@@ -41184,8 +43751,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_23_0_0_1_5_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_23_0_0_1_5_0)
-		(isNotBoolValue cns_target_RPSlist_23_0_0_1_5_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_23_0_0_1_5_0)
+				(miss cns_target_RPSlist_23_0_0_1_5_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_23_0_0_1_5_0) cns_RPSlist_23_0_0_1_5_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_23_0_0_1_5_0)
@@ -41232,8 +43803,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_23_0_0_1_5_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_23_0_0_1_5_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_23_0_0_1_5_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_23_0_0_1_5_1_r_1)
+				(miss cns_target_RPSlist_23_0_0_1_5_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_23_0_0_1_5_1_r_1)
 			(not cns_obl_permit_RPSlist_23_0_0_1_5_1_r_1)
@@ -41297,8 +43872,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_23_0_0_1_5_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_23_0_0_1_5_1)
-		(isNotBoolValue cns_target_RPSlist_23_0_0_1_5_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_23_0_0_1_5_1)
+				(miss cns_target_RPSlist_23_0_0_1_5_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_23_0_0_1_5_1) cns_RPSlist_23_0_0_1_5_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_23_0_0_1_5_1)
@@ -41345,8 +43924,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_23_0_0_1_5_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_23_0_0_1_5_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_23_0_0_1_5_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_23_0_0_1_5_2_r_1)
+				(miss cns_target_RPSlist_23_0_0_1_5_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_23_0_0_1_5_2_r_1)
 			(not cns_obl_permit_RPSlist_23_0_0_1_5_2_r_1)
@@ -41410,8 +43993,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_23_0_0_1_5_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_23_0_0_1_5_2)
-		(isNotBoolValue cns_target_RPSlist_23_0_0_1_5_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_23_0_0_1_5_2)
+				(miss cns_target_RPSlist_23_0_0_1_5_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_23_0_0_1_5_2) cns_RPSlist_23_0_0_1_5_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_23_0_0_1_5_2)
@@ -41459,8 +44046,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_23_0_0_1_5_3_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_23_0_0_1_5_3_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_23_0_0_1_5_3_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_23_0_0_1_5_3_0_r_1)
+				(miss cns_target_RPSlist_23_0_0_1_5_3_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_23_0_0_1_5_3_0_r_1)
 			(not cns_obl_permit_RPSlist_23_0_0_1_5_3_0_r_1)
@@ -41524,8 +44115,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_23_0_0_1_5_3_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_23_0_0_1_5_3_0)
-		(isNotBoolValue cns_target_RPSlist_23_0_0_1_5_3_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_23_0_0_1_5_3_0)
+				(miss cns_target_RPSlist_23_0_0_1_5_3_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_23_0_0_1_5_3_0) cns_RPSlist_23_0_0_1_5_3_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_23_0_0_1_5_3_0)
@@ -41572,8 +44167,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_23_0_0_1_5_3_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_23_0_0_1_5_3_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_23_0_0_1_5_3_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_23_0_0_1_5_3_1_r_1)
+				(miss cns_target_RPSlist_23_0_0_1_5_3_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_23_0_0_1_5_3_1_r_1)
 			(not cns_obl_permit_RPSlist_23_0_0_1_5_3_1_r_1)
@@ -41637,8 +44236,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_23_0_0_1_5_3_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_23_0_0_1_5_3_1)
-		(isNotBoolValue cns_target_RPSlist_23_0_0_1_5_3_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_23_0_0_1_5_3_1)
+				(miss cns_target_RPSlist_23_0_0_1_5_3_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_23_0_0_1_5_3_1) cns_RPSlist_23_0_0_1_5_3_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_23_0_0_1_5_3_1)
@@ -41685,8 +44288,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_23_0_0_1_5_3_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_23_0_0_1_5_3_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_23_0_0_1_5_3_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_23_0_0_1_5_3_2_r_1)
+				(miss cns_target_RPSlist_23_0_0_1_5_3_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_23_0_0_1_5_3_2_r_1)
 			(not cns_obl_permit_RPSlist_23_0_0_1_5_3_2_r_1)
@@ -41750,8 +44357,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_23_0_0_1_5_3_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_23_0_0_1_5_3_2)
-		(isNotBoolValue cns_target_RPSlist_23_0_0_1_5_3_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_23_0_0_1_5_3_2)
+				(miss cns_target_RPSlist_23_0_0_1_5_3_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_23_0_0_1_5_3_2) cns_RPSlist_23_0_0_1_5_3_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_23_0_0_1_5_3_2)
@@ -41798,8 +44409,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_23_0_0_1_5_3_3_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_23_0_0_1_5_3_3_r_1)
-		(isNotBoolValue cns_target_RPSlist_23_0_0_1_5_3_3_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_23_0_0_1_5_3_3_r_1)
+				(miss cns_target_RPSlist_23_0_0_1_5_3_3_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_23_0_0_1_5_3_3_r_1)
 			(not cns_obl_deny_RPSlist_23_0_0_1_5_3_3_r_1)
@@ -41863,8 +44478,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_23_0_0_1_5_3_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_23_0_0_1_5_3_3)
-		(isNotBoolValue cns_target_RPSlist_23_0_0_1_5_3_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_23_0_0_1_5_3_3)
+				(miss cns_target_RPSlist_23_0_0_1_5_3_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_23_0_0_1_5_3_3) cns_RPSlist_23_0_0_1_5_3_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_23_0_0_1_5_3_3)
@@ -41972,8 +44591,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_23_0_0_1_5_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_23_0_0_1_5_3)
-		(isNotBoolValue cns_target_RPSlist_23_0_0_1_5_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_23_0_0_1_5_3)
+				(miss cns_target_RPSlist_23_0_0_1_5_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_23_0_0_1_5_3) cns_RPSlist_23_0_0_1_5_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_23_0_0_1_5_3)
@@ -42081,8 +44704,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_23_0_0_1_5_indet () Bool
 	(or 
-		(err cns_target_RPSlist_23_0_0_1_5)
-		(isNotBoolValue cns_target_RPSlist_23_0_0_1_5)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_23_0_0_1_5)
+				(miss cns_target_RPSlist_23_0_0_1_5)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_23_0_0_1_5) cns_RPSlist_23_0_0_1_5_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_23_0_0_1_5)
@@ -42224,8 +44851,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_23_0_0_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_23_0_0_1)
-		(isNotBoolValue cns_target_RPSlist_23_0_0_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_23_0_0_1)
+				(miss cns_target_RPSlist_23_0_0_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_23_0_0_1) cns_RPSlist_23_0_0_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_23_0_0_1)
@@ -42299,8 +44930,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_23_0_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_23_0_0)
-		(isNotBoolValue cns_target_RPSlist_23_0_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_23_0_0)
+				(miss cns_target_RPSlist_23_0_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_23_0_0) cns_RPSlist_23_0_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_23_0_0)
@@ -42372,8 +45007,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_23_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_23_0)
-		(isNotBoolValue cns_target_RPSlist_23_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_23_0)
+				(miss cns_target_RPSlist_23_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_23_0) cns_RPSlist_23_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_23_0)
@@ -42445,8 +45084,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_23_indet () Bool
 	(or 
-		(err cns_target_RPSlist_23)
-		(isNotBoolValue cns_target_RPSlist_23)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_23)
+				(miss cns_target_RPSlist_23)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_23) cns_RPSlist_23_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_23)
@@ -42495,8 +45138,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_24_0_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_24_0_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_24_0_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_24_0_0_r_1)
+				(miss cns_target_RPSlist_24_0_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_24_0_0_r_1)
 			(not cns_obl_permit_RPSlist_24_0_0_r_1)
@@ -42560,8 +45207,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_24_0_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_24_0_0)
-		(isNotBoolValue cns_target_RPSlist_24_0_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_24_0_0)
+				(miss cns_target_RPSlist_24_0_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_24_0_0) cns_RPSlist_24_0_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_24_0_0)
@@ -42608,8 +45259,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_24_0_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_24_0_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_24_0_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_24_0_1_r_1)
+				(miss cns_target_RPSlist_24_0_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_24_0_1_r_1)
 			(not cns_obl_permit_RPSlist_24_0_1_r_1)
@@ -42673,8 +45328,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_24_0_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_24_0_1)
-		(isNotBoolValue cns_target_RPSlist_24_0_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_24_0_1)
+				(miss cns_target_RPSlist_24_0_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_24_0_1) cns_RPSlist_24_0_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_24_0_1)
@@ -42722,8 +45381,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_24_0_2_0_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_24_0_2_0_r_1)
-		(isNotBoolValue cns_target_RPSlist_24_0_2_0_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_24_0_2_0_r_1)
+				(miss cns_target_RPSlist_24_0_2_0_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_24_0_2_0_r_1)
 			(not cns_obl_permit_RPSlist_24_0_2_0_r_1)
@@ -42787,8 +45450,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_24_0_2_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_24_0_2_0)
-		(isNotBoolValue cns_target_RPSlist_24_0_2_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_24_0_2_0)
+				(miss cns_target_RPSlist_24_0_2_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_24_0_2_0) cns_RPSlist_24_0_2_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_24_0_2_0)
@@ -42835,8 +45502,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_24_0_2_1_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_24_0_2_1_r_1)
-		(isNotBoolValue cns_target_RPSlist_24_0_2_1_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_24_0_2_1_r_1)
+				(miss cns_target_RPSlist_24_0_2_1_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_24_0_2_1_r_1)
 			(not cns_obl_permit_RPSlist_24_0_2_1_r_1)
@@ -42900,8 +45571,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_24_0_2_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_24_0_2_1)
-		(isNotBoolValue cns_target_RPSlist_24_0_2_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_24_0_2_1)
+				(miss cns_target_RPSlist_24_0_2_1)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_24_0_2_1) cns_RPSlist_24_0_2_1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_24_0_2_1)
@@ -42948,8 +45623,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_24_0_2_2_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_24_0_2_2_r_1)
-		(isNotBoolValue cns_target_RPSlist_24_0_2_2_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_24_0_2_2_r_1)
+				(miss cns_target_RPSlist_24_0_2_2_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_24_0_2_2_r_1)
 			(not cns_obl_permit_RPSlist_24_0_2_2_r_1)
@@ -43013,8 +45692,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_24_0_2_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_24_0_2_2)
-		(isNotBoolValue cns_target_RPSlist_24_0_2_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_24_0_2_2)
+				(miss cns_target_RPSlist_24_0_2_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_24_0_2_2) cns_RPSlist_24_0_2_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_24_0_2_2)
@@ -43061,8 +45744,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_24_0_2_3_r_1_indet () Bool
 	(or 
-		(err cns_target_RPSlist_24_0_2_3_r_1)
-		(isNotBoolValue cns_target_RPSlist_24_0_2_3_r_1)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_24_0_2_3_r_1)
+				(miss cns_target_RPSlist_24_0_2_3_r_1)
+			)
+		)
 		(and 
 			(isTrue cns_target_RPSlist_24_0_2_3_r_1)
 			(not cns_obl_deny_RPSlist_24_0_2_3_r_1)
@@ -43126,8 +45813,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_24_0_2_3_indet () Bool
 	(or 
-		(err cns_target_RPSlist_24_0_2_3)
-		(isNotBoolValue cns_target_RPSlist_24_0_2_3)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_24_0_2_3)
+				(miss cns_target_RPSlist_24_0_2_3)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_24_0_2_3) cns_RPSlist_24_0_2_3_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_24_0_2_3)
@@ -43235,8 +45926,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_24_0_2_indet () Bool
 	(or 
-		(err cns_target_RPSlist_24_0_2)
-		(isNotBoolValue cns_target_RPSlist_24_0_2)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_24_0_2)
+				(miss cns_target_RPSlist_24_0_2)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_24_0_2) cns_RPSlist_24_0_2_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_24_0_2)
@@ -43327,8 +46022,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_24_0_indet () Bool
 	(or 
-		(err cns_target_RPSlist_24_0)
-		(isNotBoolValue cns_target_RPSlist_24_0)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_24_0)
+				(miss cns_target_RPSlist_24_0)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_24_0) cns_RPSlist_24_0_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_24_0)
@@ -43400,8 +46099,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_24_indet () Bool
 	(or 
-		(err cns_target_RPSlist_24)
-		(isNotBoolValue cns_target_RPSlist_24)
+		(not
+			(or  
+				(isBool cns_target_RPSlist_24)
+				(miss cns_target_RPSlist_24)
+			)
+		)
 		(and (isTrue cns_target_RPSlist_24) cns_RPSlist_24_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist_24)
@@ -43867,8 +46570,12 @@ true
 ;INDET
 (define-fun cns_RPSlist_indet () Bool
 	(or 
-		(err cns_target_RPSlist)
-		(isNotBoolValue cns_target_RPSlist)
+		(not
+			(or  
+				(isBool cns_target_RPSlist)
+				(miss cns_target_RPSlist)
+			)
+		)
 		(and (isTrue cns_target_RPSlist) cns_RPSlist_cmb_final_indet)
 		(and 
 			(isTrue cns_target_RPSlist)
@@ -43883,3 +46590,9 @@ true
 	)
 )
 ;################### END TOP-LEVEL POLICY RPSlist CONSTRAINTs #########################
+
+
+(assert cns_RPSlist_indet)
+
+(check-sat)
+(get-model)
