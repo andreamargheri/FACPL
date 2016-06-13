@@ -25,7 +25,7 @@ public class LessThan implements IComparisonFunction {
 			Object o1 = args.get(0);
 			Object o2 = args.get(1);
 
-			IComparisonEvaluator evaluator = ComparisonEvaluatorFactory.getInstance().getEvaluator(o1);
+			IComparisonEvaluator evaluator = ComparisonEvaluatorFactory.getInstance().getEvaluator(o1,o2);
 			return evaluator.isLessThan(o1, o2);
 
 		} else {

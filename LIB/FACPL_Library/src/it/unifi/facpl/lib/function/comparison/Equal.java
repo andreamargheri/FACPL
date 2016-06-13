@@ -25,7 +25,8 @@ public class Equal implements IComparisonFunction {
 			Object o1 = args.get(0);
 			Object o2 = args.get(1);
 
-			IComparisonEvaluator evaluator = ComparisonEvaluatorFactory.getInstance().getEvaluator(o1);
+			IComparisonEvaluator evaluator = ComparisonEvaluatorFactory.getInstance().getEvaluator(o1,o2);
+			
 			return evaluator.areEquals(o1, o2);
 
 		} else {

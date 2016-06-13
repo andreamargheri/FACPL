@@ -12,7 +12,11 @@ package it.unifi.facpl.lib.function.comparison.evaluator;
 
 import java.util.HashMap;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import it.unifi.facpl.lib.interfaces.IComparisonEvaluator;
+import it.unifi.facpl.lib.policy.ExpressionBooleanTree;
 import it.unifi.facpl.lib.util.FacplDate;
 import it.unifi.facpl.lib.util.Set;
 import it.unifi.facpl.lib.util.exception.UnsupportedTypeException;
@@ -46,19 +50,28 @@ public class ComparisonEvaluatorFactory {
 		return instance;
 	}
 
-	public IComparisonEvaluator getEvaluator(Object o) throws Exception {
+	public IComparisonEvaluator getEvaluator(Object o1, Object o2) throws Exception {
 
+		Logger l = LoggerFactory.getLogger(ExpressionBooleanTree.class);
+		
 		try {
-			IComparisonEvaluator evaluator = table.get(o.getClass());
+			IComparisonEvaluator evaluator = table.get(o1.getClass());
 			if (evaluator == null) {
 				// evaluator = new DefaultComparisonEvaluator();
-				System.err.println("No comparison fucntion available for data type " + o.getClass().getName());
-				throw new Exception("No comparison fucntion available for data type " + o.getClass().getName());
+				l.debug("ERR-> No comparison fucntion available for data type " + o1.getClass().getName());
+				throw new Exception("No comparison fucntion available for data types in input");
 			}
 			return evaluator;
 		} catch (UnsupportedTypeException e) {
-			System.err.println(e.getMessage());
-			throw e;
+			IComparisonEvaluator evaluator = table.get(o1.getClass());
+			if (evaluator == null) {
+				// evaluator = new DefaultComparisonEvaluator();
+				l.debug("ERR-> No comparison fucntion available for data type " + o1.getClass().getName());
+				throw e;
+				//throw new Exception("No comparison fucntion available for data type " + o1.getClass().getName());
+			}else{
+				return evaluator;
+			}
 		}
 	}
 
