@@ -145,137 +145,129 @@ public class TokenHighlight implements ISemanticHighlightingCalculator {
             int _offset_4 = node.getOffset();
             acceptor.addPosition(_offset_4, 7, SyntaxHighlighting.POLICY);
           }
-          boolean _or = false;
-          boolean _equals_5 = Objects.equal(rule, this.rulePepAlg);
-          if (_equals_5) {
-            _or = true;
-          } else {
-            boolean _equals_6 = Objects.equal(rule, this.ruleCombAlg);
-            _or = _equals_6;
-          }
-          if (_or) {
+          if ((Objects.equal(rule, this.rulePepAlg) || Objects.equal(rule, this.ruleCombAlg))) {
             int _offset_5 = node.getOffset();
             int _length_1 = node.getLength();
             acceptor.addPosition(_offset_5, _length_1, SyntaxHighlighting.ALG);
           }
-          boolean _equals_7 = Objects.equal(rule, this.ruleStrategy);
-          if (_equals_7) {
+          boolean _equals_5 = Objects.equal(rule, this.ruleStrategy);
+          if (_equals_5) {
             int _offset_6 = node.getOffset();
             int _length_2 = node.getLength();
             acceptor.addPosition(_offset_6, _length_2, SyntaxHighlighting.STRATEGY);
           }
-          boolean _equals_8 = Objects.equal(rule, this.ruleEffect);
-          if (_equals_8) {
+          boolean _equals_6 = Objects.equal(rule, this.ruleEffect);
+          if (_equals_6) {
             int _offset_7 = node.getOffset();
             int _length_3 = node.getLength();
             acceptor.addPosition(_offset_7, _length_3, SyntaxHighlighting.EFFECT);
           }
-          boolean _equals_9 = Objects.equal(rule, this.ruleFunction);
-          if (_equals_9) {
+          boolean _equals_7 = Objects.equal(rule, this.ruleFunction);
+          if (_equals_7) {
             int _offset_8 = node.getOffset();
             int _length_4 = node.getLength();
             acceptor.addPosition(_offset_8, _length_4, SyntaxHighlighting.FUNCTION);
           }
-          boolean _equals_10 = Objects.equal(rule, this.ruleAttributeName);
-          if (_equals_10) {
+          boolean _equals_8 = Objects.equal(rule, this.ruleAttributeName);
+          if (_equals_8) {
             int _offset_9 = node.getOffset();
             int _length_5 = node.getLength();
             acceptor.addPosition(_offset_9, _length_5, SyntaxHighlighting.STRUCT_NAME);
           }
-          boolean _equals_11 = Objects.equal(rule, this.ruleString);
-          if (_equals_11) {
+          boolean _equals_9 = Objects.equal(rule, this.ruleString);
+          if (_equals_9) {
             int _offset_10 = node.getOffset();
             int _length_6 = node.getLength();
             acceptor.addPosition(_offset_10, _length_6, SyntaxHighlighting.STRING_ID);
           }
-          boolean _equals_12 = Objects.equal(rule, this.ruleBool);
-          if (_equals_12) {
+          boolean _equals_10 = Objects.equal(rule, this.ruleBool);
+          if (_equals_10) {
             int _offset_11 = node.getOffset();
             int _length_7 = node.getLength();
             acceptor.addPosition(_offset_11, _length_7, SyntaxHighlighting.START_KEYWORD);
           }
-          boolean _equals_13 = Objects.equal(rule, this.ruleDate);
-          if (_equals_13) {
+          boolean _equals_11 = Objects.equal(rule, this.ruleDate);
+          if (_equals_11) {
             int _offset_12 = node.getOffset();
             int _length_8 = node.getLength();
             acceptor.addPosition(_offset_12, _length_8, SyntaxHighlighting.DATETIME);
           }
-          boolean _equals_14 = Objects.equal(rule, this.ruleTime);
-          if (_equals_14) {
+          boolean _equals_12 = Objects.equal(rule, this.ruleTime);
+          if (_equals_12) {
             int _offset_13 = node.getOffset();
             int _length_9 = node.getLength();
             acceptor.addPosition(_offset_13, _length_9, SyntaxHighlighting.DATETIME);
           }
-          boolean _equals_15 = Objects.equal(rule, this.ruleset);
-          if (_equals_15) {
+          boolean _equals_13 = Objects.equal(rule, this.ruleset);
+          if (_equals_13) {
             int _offset_14 = node.getOffset();
             acceptor.addPosition(_offset_14, 10, SyntaxHighlighting.SET);
           }
         }
         if ((o instanceof Keyword)) {
           String _value = ((Keyword) o).getValue();
-          boolean _equals_16 = _value.equals("pep:");
-          if (_equals_16) {
+          boolean _equals_14 = _value.equals("pep:");
+          if (_equals_14) {
             int _offset_15 = node.getOffset();
             acceptor.addPosition(_offset_15, 7, SyntaxHighlighting.START_KEYWORD);
           }
           String _value_1 = ((Keyword) o).getValue();
-          boolean _equals_17 = _value_1.equals("pdp:");
-          if (_equals_17) {
+          boolean _equals_15 = _value_1.equals("pdp:");
+          if (_equals_15) {
             int _offset_16 = node.getOffset();
             acceptor.addPosition(_offset_16, 4, SyntaxHighlighting.START_KEYWORD);
           }
           String _value_2 = ((Keyword) o).getValue();
-          boolean _equals_18 = _value_2.equals("PAS");
-          if (_equals_18) {
+          boolean _equals_16 = _value_2.equals("PAS");
+          if (_equals_16) {
             int _offset_17 = node.getOffset();
             acceptor.addPosition(_offset_17, 3, SyntaxHighlighting.POLICY);
           }
           String _value_3 = ((Keyword) o).getValue();
-          boolean _equals_19 = _value_3.equals("Extended Indeterminate");
-          if (_equals_19) {
+          boolean _equals_17 = _value_3.equals("Extended Indeterminate");
+          if (_equals_17) {
             int _offset_18 = node.getOffset();
             acceptor.addPosition(_offset_18, 24, SyntaxHighlighting.MAIN);
           }
           String _value_4 = ((Keyword) o).getValue();
-          boolean _equals_20 = _value_4.equals("Java Package");
-          if (_equals_20) {
+          boolean _equals_18 = _value_4.equals("Java Package");
+          if (_equals_18) {
             int _offset_19 = node.getOffset();
             acceptor.addPosition(_offset_19, 15, SyntaxHighlighting.MAIN);
           }
           String _value_5 = ((Keyword) o).getValue();
-          boolean _equals_21 = _value_5.equals("Requests To Evaluate");
-          if (_equals_21) {
+          boolean _equals_19 = _value_5.equals("Requests To Evaluate");
+          if (_equals_19) {
             int _offset_20 = node.getOffset();
             acceptor.addPosition(_offset_20, 21, SyntaxHighlighting.MAIN);
           }
           String _value_6 = ((Keyword) o).getValue();
-          boolean _equals_22 = _value_6.equals("target:");
-          if (_equals_22) {
+          boolean _equals_20 = _value_6.equals("target:");
+          if (_equals_20) {
             int _offset_21 = node.getOffset();
             acceptor.addPosition(_offset_21, 7, SyntaxHighlighting.POLICY_KEYWORD);
           }
           String _value_7 = ((Keyword) o).getValue();
-          boolean _equals_23 = _value_7.equals("policies:");
-          if (_equals_23) {
+          boolean _equals_21 = _value_7.equals("policies:");
+          if (_equals_21) {
             int _offset_22 = node.getOffset();
             acceptor.addPosition(_offset_22, 9, SyntaxHighlighting.POLICY_KEYWORD);
           }
           String _value_8 = ((Keyword) o).getValue();
-          boolean _equals_24 = _value_8.equals("obl:");
-          if (_equals_24) {
+          boolean _equals_22 = _value_8.equals("obl:");
+          if (_equals_22) {
             int _offset_23 = node.getOffset();
             acceptor.addPosition(_offset_23, 4, SyntaxHighlighting.POLICY_KEYWORD);
           }
           String _value_9 = ((Keyword) o).getValue();
-          boolean _equals_25 = _value_9.equals("include");
-          if (_equals_25) {
+          boolean _equals_23 = _value_9.equals("include");
+          if (_equals_23) {
             int _offset_24 = node.getOffset();
             acceptor.addPosition(_offset_24, 7, SyntaxHighlighting.POLICY_KEYWORD);
           }
           String _value_10 = ((Keyword) o).getValue();
-          boolean _equals_26 = _value_10.equals("import");
-          if (_equals_26) {
+          boolean _equals_24 = _value_10.equals("import");
+          if (_equals_24) {
             int _offset_25 = node.getOffset();
             acceptor.addPosition(_offset_25, 7, SyntaxHighlighting.POLICY_KEYWORD);
           }

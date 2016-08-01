@@ -423,19 +423,7 @@ public class Facpl2Validator extends AbstractFacpl2Validator {
   
   @Check
   public void checkImportUriIsNotEmpty(final Import imports) {
-    boolean _and = false;
-    String _importURI = imports.getImportURI();
-    boolean _notEquals = (!Objects.equal(_importURI, null));
-    if (!_notEquals) {
-      _and = false;
-    } else {
-      String _importURI_1 = imports.getImportURI();
-      String _trim = _importURI_1.trim();
-      int _length = _trim.length();
-      boolean _equals = (_length == 0);
-      _and = _equals;
-    }
-    if (_and) {
+    if (((!Objects.equal(imports.getImportURI(), null)) && (imports.getImportURI().trim().length() == 0))) {
       this.error("Empty importURI string", null);
     }
   }
@@ -605,23 +593,7 @@ public class Facpl2Validator extends AbstractFacpl2Validator {
     Boolean flag = Boolean.valueOf(false);
     EList<AttributeReq> _attributes = r.getAttributes();
     for (final AttributeReq atr : _attributes) {
-      boolean _and = false;
-      AttributeName _name = atr.getName();
-      String _category = _name.getCategory();
-      AttributeName _name_1 = a.getName();
-      String _category_1 = _name_1.getCategory();
-      boolean _equals = _category.equals(_category_1);
-      if (!_equals) {
-        _and = false;
-      } else {
-        AttributeName _name_2 = atr.getName();
-        String _id = _name_2.getId();
-        AttributeName _name_3 = a.getName();
-        String _id_1 = _name_3.getId();
-        boolean _equals_1 = _id.equals(_id_1);
-        _and = _equals_1;
-      }
-      if (_and) {
+      if ((atr.getName().getCategory().equals(a.getName().getCategory()) && atr.getName().getId().equals(a.getName().getId()))) {
         if ((flag).booleanValue()) {
           this.error("Attributes with same names must be declared as Set of values", 
             Facpl2Package.Literals.ATTRIBUTE_REQ__NAME);
@@ -644,26 +616,9 @@ public class Facpl2Validator extends AbstractFacpl2Validator {
       FulfillmentStrategy _fStrategy_1 = alg.getFStrategy();
       boolean _equals = _fStrategy_1.equals(FulfillmentStrategy.GREEDY);
       if (_equals) {
-        boolean _or = false;
-        boolean _or_1 = false;
-        AlgLiteral _idAlg = alg.getIdAlg();
-        boolean _equals_1 = _idAlg.equals(AlgLiteral.FIRST);
-        if (_equals_1) {
-          _or_1 = true;
-        } else {
-          AlgLiteral _idAlg_1 = alg.getIdAlg();
-          boolean _equals_2 = _idAlg_1.equals(AlgLiteral.ONLY_ONE);
-          _or_1 = _equals_2;
-        }
-        if (_or_1) {
-          _or = true;
-        } else {
-          AlgLiteral _idAlg_2 = alg.getIdAlg();
-          boolean _equals_3 = _idAlg_2.equals(
-            AlgLiteral.WEAK_CONS);
-          _or = _equals_3;
-        }
-        if (_or) {
+        if (((alg.getIdAlg().equals(AlgLiteral.FIRST) || alg.getIdAlg().equals(AlgLiteral.ONLY_ONE)) || 
+          alg.getIdAlg().equals(
+            AlgLiteral.WEAK_CONS))) {
           this.warning(
             "Algorithms first-applicable, only-one-applicable and weak-consensus have the same implementation with or without greedy option", 
             Facpl2Package.Literals.ALG__FSTRATEGY);
@@ -825,17 +780,7 @@ public class Facpl2Validator extends AbstractFacpl2Validator {
     tCheck.doSwitch(_root);
     Expression _target = policy.getTarget();
     final FacplType type = tCheck.doSwitch(_target);
-    boolean _and = false;
-    boolean _equals = type.equals(FacplType.BOOLEAN);
-    boolean _not = (!_equals);
-    if (!_not) {
-      _and = false;
-    } else {
-      boolean _equals_1 = type.equals(FacplType.NAME);
-      boolean _not_1 = (!_equals_1);
-      _and = _not_1;
-    }
-    if (_and) {
+    if (((!type.equals(FacplType.BOOLEAN)) && (!type.equals(FacplType.NAME)))) {
       this.warning(
         "Target Expression evaluates to a not-boolean value. This element evaluates to indeterminate", 
         Facpl2Package.Literals.FACPL_POLICY__TARGET);

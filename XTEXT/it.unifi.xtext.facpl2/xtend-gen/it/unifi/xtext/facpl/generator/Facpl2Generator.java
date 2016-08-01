@@ -92,33 +92,21 @@ public class Facpl2Generator implements IGenerator {
         MainFacpl _main = e.getMain();
         boolean _notEquals = (!Objects.equal(_main, null));
         if (_notEquals) {
-          boolean _and = false;
-          MainFacpl _main_1 = e.getMain();
-          String _genPackage = _main_1.getGenPackage();
-          boolean _notEquals_1 = (!Objects.equal(_genPackage, null));
-          if (!_notEquals_1) {
-            _and = false;
-          } else {
-            MainFacpl _main_2 = e.getMain();
-            String _genPackage_1 = _main_2.getGenPackage();
-            boolean _notEquals_2 = (!Objects.equal(_genPackage_1, ""));
-            _and = _notEquals_2;
-          }
-          if (_and) {
-            MainFacpl _main_3 = e.getMain();
-            String name = _main_3.getGenPackage();
+          if (((!Objects.equal(e.getMain().getGenPackage(), null)) && (!Objects.equal(e.getMain().getGenPackage(), "")))) {
+            MainFacpl _main_1 = e.getMain();
+            String name = _main_1.getGenPackage();
             int _length = name.length();
             int _minus = (_length - 1);
             char _charAt = name.charAt(_minus);
             boolean _equals = Objects.equal(Character.valueOf(_charAt), "/");
             if (_equals) {
-              MainFacpl _main_4 = e.getMain();
-              String _genPackage_2 = _main_4.getGenPackage();
-              this.packageFolder = _genPackage_2;
+              MainFacpl _main_2 = e.getMain();
+              String _genPackage = _main_2.getGenPackage();
+              this.packageFolder = _genPackage;
             } else {
-              MainFacpl _main_5 = e.getMain();
-              String _genPackage_3 = _main_5.getGenPackage();
-              String _plus = (_genPackage_3 + "/");
+              MainFacpl _main_3 = e.getMain();
+              String _genPackage_1 = _main_3.getGenPackage();
+              String _plus = (_genPackage_1 + "/");
               this.packageFolder = _plus;
             }
             String _replace = this.packageFolder.replace("/", ".");
@@ -131,8 +119,8 @@ public class Facpl2Generator implements IGenerator {
           }
         }
         EList<Request> _requests = e.getRequests();
-        boolean _notEquals_3 = (!Objects.equal(_requests, null));
-        if (_notEquals_3) {
+        boolean _notEquals_1 = (!Objects.equal(_requests, null));
+        if (_notEquals_1) {
           EList<Request> _requests_1 = e.getRequests();
           for (final Request r : _requests_1) {
             String _name = r.getName();
@@ -143,8 +131,8 @@ public class Facpl2Generator implements IGenerator {
           }
         }
         EList<Import> _importEl = e.getImportEl();
-        boolean _notEquals_4 = (!Objects.equal(_importEl, null));
-        if (_notEquals_4) {
+        boolean _notEquals_2 = (!Objects.equal(_importEl, null));
+        if (_notEquals_2) {
           EList<Import> _importEl_1 = e.getImportEl();
           for (final Import i : _importEl_1) {
             {
@@ -162,8 +150,8 @@ public class Facpl2Generator implements IGenerator {
           }
         }
         EList<PolicySet> _policies = e.getPolicies();
-        boolean _notEquals_5 = (!Objects.equal(_policies, null));
-        if (_notEquals_5) {
+        boolean _notEquals_3 = (!Objects.equal(_policies, null));
+        if (_notEquals_3) {
           EList<PolicySet> _policies_1 = e.getPolicies();
           for (final PolicySet pol : _policies_1) {
             String _nameFacplPolicy = this.getNameFacplPolicy(pol);
@@ -174,8 +162,8 @@ public class Facpl2Generator implements IGenerator {
           }
         }
         EList<FunctionDeclaration> _declarations = e.getDeclarations();
-        boolean _notEquals_6 = (!Objects.equal(_declarations, null));
-        if (_notEquals_6) {
+        boolean _notEquals_4 = (!Objects.equal(_declarations, null));
+        if (_notEquals_4) {
           EList<FunctionDeclaration> _declarations_1 = e.getDeclarations();
           for (final FunctionDeclaration dec : _declarations_1) {
             String _name_1 = dec.getName();
@@ -186,11 +174,11 @@ public class Facpl2Generator implements IGenerator {
             fsa.generateFile(_plus_7, _compileFunction);
           }
         }
-        MainFacpl _main_6 = e.getMain();
-        boolean _notEquals_7 = (!Objects.equal(_main_6, null));
-        if (_notEquals_7) {
-          MainFacpl _main_7 = e.getMain();
-          CharSequence _compileMain = this.compileMain(_main_7, fsa);
+        MainFacpl _main_4 = e.getMain();
+        boolean _notEquals_5 = (!Objects.equal(_main_4, null));
+        if (_notEquals_5) {
+          MainFacpl _main_5 = e.getMain();
+          CharSequence _compileMain = this.compileMain(_main_5, fsa);
           fsa.generateFile((this.packageFolder + "MainFACPL.java"), _compileMain);
           CharSequence _compilePEPAction = this.compilePEPAction();
           fsa.generateFile((this.packageFolder + "PEPAction.java"), _compilePEPAction);
@@ -810,16 +798,7 @@ public class Facpl2Generator implements IGenerator {
   public CharSequence getOblExpression(final EList<Expression> list) {
     StringConcatenation _builder = new StringConcatenation();
     {
-      boolean _or = false;
-      boolean _equals = Objects.equal(list, null);
-      if (_equals) {
-        _or = true;
-      } else {
-        int _size = list.size();
-        boolean _equals_1 = (_size == 0);
-        _or = _equals_1;
-      }
-      if (_or) {
+      if ((Objects.equal(list, null) || (list.size() == 0))) {
         _builder.append("null");
         _builder.newLine();
       } else {

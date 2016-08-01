@@ -662,15 +662,7 @@ public class XMLGenerator {
                 _builder.append(_xMLElementS, "");
                 _builder.newLineIfNotEmpty();
                 {
-                  boolean _and = false;
-                  boolean _notEquals_1 = (!Objects.equal(dad, null));
-                  if (!_notEquals_1) {
-                    _and = false;
-                  } else {
-                    boolean _equals = dad.equals(Connector.OR);
-                    _and = _equals;
-                  }
-                  if (_and) {
+                  if (((!Objects.equal(dad, null)) && dad.equals(Connector.OR))) {
                     Object _root_3 = tree.getRoot();
                     CharSequence _createTargetXML = this.createTargetXML(el, ((Connector) _root_3), Boolean.valueOf(true));
                     _builder.append(_createTargetXML, "");
@@ -761,14 +753,7 @@ public class XMLGenerator {
     if (_equals) {
       return "<AnyOf> \n \t <AllOf> \n \t\t ";
     }
-    boolean _and = false;
-    boolean _equals_1 = Objects.equal(connector, Connector.AND);
-    if (!_equals_1) {
-      _and = false;
-    } else {
-      _and = (!(isMatchSequence).booleanValue());
-    }
-    if (_and) {
+    if ((Objects.equal(connector, Connector.AND) && (!(isMatchSequence).booleanValue()))) {
       return "<AllOf> \n \t\t ";
     }
     return null;
@@ -779,14 +764,7 @@ public class XMLGenerator {
     if (_equals) {
       return "</AllOf> \n \t </AnyOf> \n \t\t ";
     }
-    boolean _and = false;
-    boolean _equals_1 = Objects.equal(connector, Connector.AND);
-    if (!_equals_1) {
-      _and = false;
-    } else {
-      _and = (!(isMatchSequence).booleanValue());
-    }
-    if (_and) {
+    if ((Objects.equal(connector, Connector.AND) && (!(isMatchSequence).booleanValue()))) {
       return "</AllOf> \n \t\t ";
     }
     return null;

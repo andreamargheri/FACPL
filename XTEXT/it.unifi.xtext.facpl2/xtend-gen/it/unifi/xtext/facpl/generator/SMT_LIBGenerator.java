@@ -180,25 +180,15 @@ public class SMT_LIBGenerator extends SMT_LIBGenerator_Code {
       if (_notEquals) {
         EList<PolicySet> _policies_1 = resource.getPolicies();
         for (final PolicySet pol : _policies_1) {
-          boolean _or = false;
-          String _name = pol.getName();
-          boolean _equals = _name.equals(policy_name1);
-          if (_equals) {
-            _or = true;
-          } else {
-            String _name_1 = pol.getName();
-            boolean _equals_1 = _name_1.equals(policy_name2);
-            _or = _equals_1;
-          }
-          if (_or) {
+          if ((pol.getName().equals(policy_name1) || pol.getName().equals(policy_name2))) {
             CharSequence _createMainConstraint = this.createMainConstraint(pol);
             str.append(_createMainConstraint);
           }
         }
       }
       str.append(";###################### STRUCTURAL PROPERTY #####################\n");
-      boolean _equals_2 = property.equals(StructuralProperty.COVER);
-      if (_equals_2) {
+      boolean _equals = property.equals(StructuralProperty.COVER);
+      if (_equals) {
         str.append((((("(echo \"--> Check " + policy_name1) + "COVER") + policy_name2) + "... (holds if the following two checks are unsat)\")\n"));
         str.append((((("(echo \"...(1/2) " + policy_name1) + "_PERMIT  COVER ") + policy_name2) + "_PERMIT...(holds if it is unsat)\")\n "));
         str.append("(push)\n");
@@ -216,8 +206,8 @@ public class SMT_LIBGenerator extends SMT_LIBGenerator_Code {
         str.append("\n(check-sat)\n");
         str.append(";(get-model)\n\n");
       } else {
-        boolean _equals_3 = property.equals(StructuralProperty.DISJOINT);
-        if (_equals_3) {
+        boolean _equals_1 = property.equals(StructuralProperty.DISJOINT);
+        if (_equals_1) {
           str.append((((("(echo \"--> Check " + policy_name1) + "DIJOINT") + policy_name2) + "... (holds if the following four checks are unsat)\")\n"));
           str.append((((("(echo \"...(1/4) " + policy_name1) + "_PERMIT  DIJOINT ") + policy_name2) + "_PERMIT...(holds if it is unsat)\")\n "));
           str.append("(push)\n");

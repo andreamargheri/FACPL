@@ -72,14 +72,7 @@ public class PolicyConstant extends Facpl2Switch<Boolean> {
     if (_notEquals) {
       EList<PolicySet> _policies_1 = object.getPolicies();
       for (final PolicySet pol : _policies_1) {
-        boolean _and = false;
-        if (!s) {
-          _and = false;
-        } else {
-          Boolean _doSwitch = this.doSwitch(pol);
-          _and = (_doSwitch).booleanValue();
-        }
-        s = _and;
+        s = (s && (this.doSwitch(pol)).booleanValue());
       }
     }
     EList<FunctionDeclaration> _declarations = object.getDeclarations();
@@ -87,14 +80,7 @@ public class PolicyConstant extends Facpl2Switch<Boolean> {
     if (_notEquals_1) {
       EList<FunctionDeclaration> _declarations_1 = object.getDeclarations();
       for (final FunctionDeclaration f : _declarations_1) {
-        boolean _and_1 = false;
-        if (!s) {
-          _and_1 = false;
-        } else {
-          Boolean _doSwitch_1 = this.doSwitch(f);
-          _and_1 = (_doSwitch_1).booleanValue();
-        }
-        s = _and_1;
+        s = (s && (this.doSwitch(f)).booleanValue());
       }
     }
     EList<Request> _requests = object.getRequests();
@@ -102,14 +88,7 @@ public class PolicyConstant extends Facpl2Switch<Boolean> {
     if (_notEquals_2) {
       EList<Request> _requests_1 = object.getRequests();
       for (final Request r : _requests_1) {
-        boolean _and_2 = false;
-        if (!s) {
-          _and_2 = false;
-        } else {
-          Boolean _doSwitch_2 = this.doSwitch(r);
-          _and_2 = (_doSwitch_2).booleanValue();
-        }
-        s = _and_2;
+        s = (s && (this.doSwitch(r)).booleanValue());
       }
     }
     return Boolean.valueOf(s);
@@ -126,14 +105,7 @@ public class PolicyConstant extends Facpl2Switch<Boolean> {
         boolean s = true;
         EList<Expression> _value = el.getValue();
         for (final Expression v : _value) {
-          boolean _and = false;
-          if (!s) {
-            _and = false;
-          } else {
-            Boolean _doSwitch = this.doSwitch(v);
-            _and = (_doSwitch).booleanValue();
-          }
-          s = _and;
+          s = (s && (this.doSwitch(v)).booleanValue());
         }
         if ((s == false)) {
           return Boolean.valueOf(false);
@@ -199,39 +171,17 @@ public class PolicyConstant extends Facpl2Switch<Boolean> {
     Expression _target = object.getTarget();
     boolean _notEquals = (!Objects.equal(_target, null));
     if (_notEquals) {
-      boolean _and = false;
-      if (!s) {
-        _and = false;
-      } else {
-        Expression _target_1 = object.getTarget();
-        Boolean _doSwitch = this.doSwitch(_target_1);
-        _and = (_doSwitch).booleanValue();
-      }
-      s = _and;
+      s = (s && (this.doSwitch(object.getTarget())).booleanValue());
     }
     EList<AbstractPolicyIncl> _policies = object.getPolicies();
     for (final AbstractPolicyIncl pol : _policies) {
-      boolean _and_1 = false;
-      if (!s) {
-        _and_1 = false;
-      } else {
-        Boolean _doSwitch_1 = this.doSwitch(pol);
-        _and_1 = (_doSwitch_1).booleanValue();
-      }
-      s = _and_1;
+      s = (s && (this.doSwitch(pol)).booleanValue());
     }
     EList<Obligation> _obl = object.getObl();
     for (final Obligation ob : _obl) {
       EList<Expression> _expr = ob.getExpr();
       for (final Expression expr : _expr) {
-        boolean _and_2 = false;
-        if (!s) {
-          _and_2 = false;
-        } else {
-          Boolean _doSwitch_2 = this.doSwitch(expr);
-          _and_2 = (_doSwitch_2).booleanValue();
-        }
-        s = _and_2;
+        s = (s && (this.doSwitch(expr)).booleanValue());
       }
     }
     return Boolean.valueOf(s);
@@ -243,28 +193,13 @@ public class PolicyConstant extends Facpl2Switch<Boolean> {
     Expression _target = object.getTarget();
     boolean _notEquals = (!Objects.equal(_target, null));
     if (_notEquals) {
-      boolean _and = false;
-      if (!s) {
-        _and = false;
-      } else {
-        Expression _target_1 = object.getTarget();
-        Boolean _doSwitch = this.doSwitch(_target_1);
-        _and = (_doSwitch).booleanValue();
-      }
-      s = _and;
+      s = (s && (this.doSwitch(object.getTarget())).booleanValue());
     }
     EList<Obligation> _obl = object.getObl();
     for (final Obligation ob : _obl) {
       EList<Expression> _expr = ob.getExpr();
       for (final Expression expr : _expr) {
-        boolean _and_1 = false;
-        if (!s) {
-          _and_1 = false;
-        } else {
-          Boolean _doSwitch_1 = this.doSwitch(expr);
-          _and_1 = (_doSwitch_1).booleanValue();
-        }
-        s = _and_1;
+        s = (s && (this.doSwitch(expr)).booleanValue());
       }
     }
     return Boolean.valueOf(s);

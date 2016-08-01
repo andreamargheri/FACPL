@@ -30,32 +30,12 @@ import org.eclipse.emf.common.util.EList;
 public class Facpl2Xacml_Validator extends Facpl2Switch<Boolean> {
   @Override
   public Boolean caseAndExpression(final AndExpression object) {
-    boolean _and = false;
-    Expression _left = object.getLeft();
-    Boolean _doSwitch = this.doSwitch(_left);
-    if (!(_doSwitch).booleanValue()) {
-      _and = false;
-    } else {
-      Expression _right = object.getRight();
-      Boolean _doSwitch_1 = this.doSwitch(_right);
-      _and = (_doSwitch_1).booleanValue();
-    }
-    return Boolean.valueOf(_and);
+    return Boolean.valueOf(((this.doSwitch(object.getLeft())).booleanValue() && (this.doSwitch(object.getRight())).booleanValue()));
   }
   
   @Override
   public Boolean caseOrExpression(final OrExpression object) {
-    boolean _and = false;
-    Expression _left = object.getLeft();
-    Boolean _doSwitch = this.doSwitch(_left);
-    if (!(_doSwitch).booleanValue()) {
-      _and = false;
-    } else {
-      Expression _right = object.getRight();
-      Boolean _doSwitch_1 = this.doSwitch(_right);
-      _and = (_doSwitch_1).booleanValue();
-    }
-    return Boolean.valueOf(_and);
+    return Boolean.valueOf(((this.doSwitch(object.getLeft())).booleanValue() && (this.doSwitch(object.getRight())).booleanValue()));
   }
   
   /**
@@ -71,20 +51,11 @@ public class Facpl2Xacml_Validator extends Facpl2Switch<Boolean> {
    */
   @Override
   public Boolean caseFunction(final Function object) {
-    boolean _and = false;
-    Expression _arg1 = object.getArg1();
-    Boolean _isLiteral = this.isLiteral(_arg1);
-    if (!(_isLiteral).booleanValue()) {
-      _and = false;
-    } else {
-      Expression _arg2 = object.getArg2();
-      _and = (_arg2 instanceof AttributeName);
-    }
-    if (_and) {
+    if (((this.isLiteral(object.getArg1())).booleanValue() && (object.getArg2() instanceof AttributeName))) {
       return Boolean.valueOf(true);
     } else {
-      Expression _arg1_1 = object.getArg1();
-      String _string = _arg1_1.toString();
+      Expression _arg1 = object.getArg1();
+      String _string = _arg1.toString();
       String _plus = ("Function not well-formed: " + _string);
       System.out.println(_plus);
       return Boolean.valueOf(false);
@@ -92,14 +63,8 @@ public class Facpl2Xacml_Validator extends Facpl2Switch<Boolean> {
   }
   
   public Boolean isLiteral(final Expression e) {
-    boolean _or = false;
-    if ((((((e instanceof BooleanLiteral) || (e instanceof StringLiteral)) || (e instanceof IntLiteral)) || 
-      (e instanceof DoubleLiteral)) || (e instanceof DateLiteral))) {
-      _or = true;
-    } else {
-      _or = (e instanceof TimeLiteral);
-    }
-    if (_or) {
+    if (((((((e instanceof BooleanLiteral) || (e instanceof StringLiteral)) || (e instanceof IntLiteral)) || 
+      (e instanceof DoubleLiteral)) || (e instanceof DateLiteral)) || (e instanceof TimeLiteral))) {
       return Boolean.valueOf(true);
     } else {
       return Boolean.valueOf(false);
@@ -169,25 +134,9 @@ public class Facpl2Xacml_Validator extends Facpl2Switch<Boolean> {
       FacplPolicy _newPolicy = el.getNewPolicy();
       boolean _notEquals_1 = (!Objects.equal(_newPolicy, null));
       if (_notEquals_1) {
-        boolean _and = false;
-        if (!flag) {
-          _and = false;
-        } else {
-          FacplPolicy _newPolicy_1 = el.getNewPolicy();
-          Boolean _isXACML_FormedPolicy = this.isXACML_FormedPolicy(_newPolicy_1);
-          _and = (_isXACML_FormedPolicy).booleanValue();
-        }
-        flag = _and;
+        flag = (flag && (this.isXACML_FormedPolicy(el.getNewPolicy())).booleanValue());
       } else {
-        boolean _and_1 = false;
-        if (!flag) {
-          _and_1 = false;
-        } else {
-          PolicySet _refPol = el.getRefPol();
-          Boolean _isXACML_FormedPolicy_1 = this.isXACML_FormedPolicy(_refPol);
-          _and_1 = (_isXACML_FormedPolicy_1).booleanValue();
-        }
-        flag = _and_1;
+        flag = (flag && (this.isXACML_FormedPolicy(el.getRefPol())).booleanValue());
       }
     }
     return Boolean.valueOf(flag);

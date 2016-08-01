@@ -7,16 +7,4 @@
 *._trace
 *.xtendbin
 *.class
-
-
-WEB-APPs/
-WEB-Example/
-JAR/
-JAR-Xtext/
-XACML2FACPL/source/
-XACML2FACPL/doc/
-XACML2FACPL/Jdom/
-TEST/Benchmark/
-EXAMPLES/ASCENS-School/
-EXAMPLES/FACPL_eHealth/
-EXAMPLES/FACPL_XACML_eHealth/ 
+ 
