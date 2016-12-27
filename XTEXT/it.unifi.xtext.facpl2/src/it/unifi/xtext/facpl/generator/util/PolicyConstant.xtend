@@ -190,8 +190,19 @@ class PolicyConstant extends Facpl2Switch<Boolean> {
 	override caseSet(Set set) {
 		val tCheck = new FacplTypeInference()
 		val FacplType t = tCheck.doSwitch(set)
-
+		
 		if (!t.equals(FacplType.SET_NAME)) {
+			
+			//All constants in the set is added to the set of constants
+			for (e: set.args){
+				if ( e instanceof StringLiteral){
+					
+					val c = new ConstraintConstant(FacplType.STRING,e.value.toString,e.value.toString)
+
+					this.constants.put(c.att_name, c)	
+				}
+			}
+							
 			// A bag is identified with its toString
 			val setUtils = new SetUtils()
 
@@ -200,6 +211,7 @@ class PolicyConstant extends Facpl2Switch<Boolean> {
 				val id = "set_" + (this.sets.size + 1).toString
 				this.sets.put(setUtils.doSwitch(set), id)
 
+				// ADD constant for the compilation of SMTLIB
 				val c = new ConstraintConstant(t, id, set)
 
 				this.constants.put(id, c)
@@ -212,7 +224,6 @@ class PolicyConstant extends Facpl2Switch<Boolean> {
 			// if types are checked before the generation this case cannot happen
 			throw new Exception("Bags containing attribute names are not supported")
 		}
-
 		return true
 	}
 

@@ -14,24 +14,24 @@ import it.unifi.facpl.lib.policy.*;
 import it.unifi.facpl.lib.enums.*;
 import it.unifi.facpl.lib.util.*;
 
-@SuppressWarnings("all")	
+@SuppressWarnings("all")
 public class PolicySet_pName extends PolicySet {
-	public PolicySet_pName(){
+	public PolicySet_pName() {
 		addId("pName");
-		//Algorithm Combining
+		// Algorithm Combining
 		addCombiningAlg(it.unifi.facpl.lib.algorithm.PermitOverridesGreedy.class);
-		//PolElements
+		// PolElements
 		addPolicyElement(new Rule_rule1());
-		//Obligation
+		// Obligation
+	}
+
+	private class Rule_rule1 extends Rule {
+
+		Rule_rule1() {
+			addId("rule1");
+			// Effect
+			addEffect(Effect.PERMIT);
+			// Obligations
 		}
-		
-		private class Rule_rule1 extends Rule {
-			
-				Rule_rule1 (){
-					addId("rule1");
-					//Effect
-					addEffect(Effect.PERMIT);
-					//Obligations
-			}	
-		}
+	}
 }

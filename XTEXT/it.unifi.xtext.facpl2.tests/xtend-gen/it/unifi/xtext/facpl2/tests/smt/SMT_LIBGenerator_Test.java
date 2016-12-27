@@ -4,10 +4,7 @@ import com.google.inject.Inject;
 import it.unifi.xtext.facpl.Facpl2InjectorProvider;
 import it.unifi.xtext.facpl.facpl2.Facpl;
 import it.unifi.xtext.facpl.generator.SMT_LIBGenerator;
-import it.unifi.xtext.facpl.generator.util.ConstraintConstant;
-import it.unifi.xtext.facpl.generator.util.PolicyConstant;
 import java.io.PrintWriter;
-import java.util.HashMap;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.junit4.AbstractXtextTests;
 import org.eclipse.xtext.junit4.InjectWith;
@@ -397,122 +394,6 @@ public class SMT_LIBGenerator_Test extends AbstractXtextTests {
   }
   
   @Test
-  public void constantSets() {
-    try {
-      StringConcatenation _builder = new StringConcatenation();
-      _builder.append("PolicySet pSet {deny-unless-permit ");
-      _builder.newLine();
-      _builder.append("policies:");
-      _builder.newLine();
-      _builder.append("\t");
-      _builder.append("Rule name (permit target: in(5,set(5,6))) ");
-      _builder.newLine();
-      _builder.append("}");
-      _builder.newLine();
-      Facpl model = this._parseHelper.parse(_builder);
-      this._validationTestHelper.assertNoErrors(model);
-      PolicyConstant tConst = new PolicyConstant();
-      tConst.doSwitch(model);
-      HashMap<String, String> _sets = tConst.getSets();
-      int _size = _sets.size();
-      Assert.assertEquals(_size, 1);
-      HashMap<String, ConstraintConstant> _constants = tConst.getConstants();
-      boolean _containsKey = _constants.containsKey("set_1");
-      Assert.assertEquals(Boolean.valueOf(_containsKey), Boolean.valueOf(true));
-      StringConcatenation _builder_1 = new StringConcatenation();
-      _builder_1.append("PolicySet pSet {deny-unless-permit ");
-      _builder_1.newLine();
-      _builder_1.append("policies:");
-      _builder_1.newLine();
-      _builder_1.append("\t");
-      _builder_1.append("Rule name (permit target: in(n/id,set(true, false, false)))");
-      _builder_1.newLine();
-      _builder_1.append("\t");
-      _builder_1.append("Rule nam1 (deny target: in(true, set(true, false, false))) ");
-      _builder_1.newLine();
-      _builder_1.append("}");
-      _builder_1.newLine();
-      Facpl _parse = this._parseHelper.parse(_builder_1);
-      model = _parse;
-      this._validationTestHelper.assertNoErrors(model);
-      PolicyConstant _policyConstant = new PolicyConstant();
-      tConst = _policyConstant;
-      tConst.doSwitch(model);
-      HashMap<String, String> _sets_1 = tConst.getSets();
-      int _size_1 = _sets_1.size();
-      Assert.assertEquals(_size_1, 1);
-      HashMap<String, ConstraintConstant> _constants_1 = tConst.getConstants();
-      boolean _containsKey_1 = _constants_1.containsKey("set_1");
-      Assert.assertEquals(Boolean.valueOf(_containsKey_1), Boolean.valueOf(true));
-      StringConcatenation _builder_2 = new StringConcatenation();
-      _builder_2.append("PolicySet pSet {deny-unless-permit ");
-      _builder_2.newLine();
-      _builder_2.append("policies:");
-      _builder_2.newLine();
-      _builder_2.append("\t");
-      _builder_2.append("Rule name (permit target: in(n/id,set(true, false, false)))");
-      _builder_2.newLine();
-      _builder_2.append("\t");
-      _builder_2.append("Rule nam1 (deny target: in(true, set(false, false))) ");
-      _builder_2.newLine();
-      _builder_2.append("}");
-      _builder_2.newLine();
-      Facpl _parse_1 = this._parseHelper.parse(_builder_2);
-      model = _parse_1;
-      this._validationTestHelper.assertNoErrors(model);
-      PolicyConstant _policyConstant_1 = new PolicyConstant();
-      tConst = _policyConstant_1;
-      tConst.doSwitch(model);
-      HashMap<String, String> _sets_2 = tConst.getSets();
-      int _size_2 = _sets_2.size();
-      Assert.assertEquals(_size_2, 2);
-      HashMap<String, ConstraintConstant> _constants_2 = tConst.getConstants();
-      boolean _containsKey_2 = _constants_2.containsKey("set_1");
-      Assert.assertEquals(Boolean.valueOf(_containsKey_2), Boolean.valueOf(true));
-      HashMap<String, ConstraintConstant> _constants_3 = tConst.getConstants();
-      boolean _containsKey_3 = _constants_3.containsKey("set_2");
-      Assert.assertEquals(Boolean.valueOf(_containsKey_3), Boolean.valueOf(true));
-      StringConcatenation _builder_3 = new StringConcatenation();
-      _builder_3.append("PolicySet pSet {deny-unless-permit ");
-      _builder_3.newLine();
-      _builder_3.append("policies:");
-      _builder_3.newLine();
-      _builder_3.append("\t");
-      _builder_3.append("Rule name (permit target: in(n/id,set(true, false, false))) ");
-      _builder_3.newLine();
-      _builder_3.append("}");
-      _builder_3.newLine();
-      _builder_3.newLine();
-      _builder_3.append("PolicySet pSet1 {permit-unless-deny");
-      _builder_3.newLine();
-      _builder_3.append("policies: ");
-      _builder_3.newLine();
-      _builder_3.append("\t");
-      _builder_3.append("Rule nam1 (deny target: in(true, set(false, false)))");
-      _builder_3.newLine();
-      _builder_3.append("}");
-      _builder_3.newLine();
-      Facpl _parse_2 = this._parseHelper.parse(_builder_3);
-      model = _parse_2;
-      this._validationTestHelper.assertNoErrors(model);
-      PolicyConstant _policyConstant_2 = new PolicyConstant();
-      tConst = _policyConstant_2;
-      tConst.doSwitch(model);
-      HashMap<String, String> _sets_3 = tConst.getSets();
-      int _size_3 = _sets_3.size();
-      Assert.assertEquals(_size_3, 2);
-      HashMap<String, ConstraintConstant> _constants_4 = tConst.getConstants();
-      boolean _containsKey_4 = _constants_4.containsKey("set_1");
-      Assert.assertEquals(Boolean.valueOf(_containsKey_4), Boolean.valueOf(true));
-      HashMap<String, ConstraintConstant> _constants_5 = tConst.getConstants();
-      boolean _containsKey_5 = _constants_5.containsKey("set_2");
-      Assert.assertEquals(Boolean.valueOf(_containsKey_5), Boolean.valueOf(true));
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
-    }
-  }
-  
-  @Test
   public void genSets() {
     try {
       StringConcatenation _builder = new StringConcatenation();
@@ -537,6 +418,58 @@ public class SMT_LIBGenerator_Test extends AbstractXtextTests {
         Assert.assertEquals(Boolean.valueOf(false), Boolean.valueOf(true));
       }
       final PrintWriter writer = new PrintWriter("SMT_LIB_gen/decSet/file1_const.smt2", "UTF-8");
+      writer.println(cns);
+      writer.close();
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
+  public void genSetsStringConstants() {
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("PolicySet str_19{deny-overrides-all");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("policies:");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("Rule str_20(permit");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("target: in(attr/str_5,set(false))");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append(")");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("Rule str_21(deny");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("target: in(attr/str_13,set(174))");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append(")");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("Rule str_22(permit");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("target: equal(attr/str_2,67) && in(attr/str_12,set(true)) && in(attr/str_5,set(false)) && in(attr/str_7,set(\"str_23\",\"str_24\")) && equal(attr/str_11,\"str_25\")");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append(")");
+      _builder.newLine();
+      _builder.append("}");
+      Facpl model = this._parseHelper.parse(_builder);
+      this._validationTestHelper.assertNoErrors(model);
+      String cns = this._sMT_LIBGenerator.doGenerateSMT_LIB_Test(model);
+      final PrintWriter writer = new PrintWriter("SMT_LIB_gen/set/file1_set_string.smt2", "UTF-8");
       writer.println(cns);
       writer.close();
     } catch (Throwable _e) {

@@ -14,54 +14,57 @@ import it.unifi.facpl.lib.policy.*;
 import it.unifi.facpl.lib.enums.*;
 import it.unifi.facpl.lib.util.*;
 
-@SuppressWarnings("all")	
+@SuppressWarnings("all")
 public class PolicySet_pName2 extends PolicySet {
-	public PolicySet_pName2(){
+	public PolicySet_pName2() {
 		addId("pName2");
-		//Algorithm Combining
+		// Algorithm Combining
 		addCombiningAlg(it.unifi.facpl.lib.algorithm.PermitOverridesGreedy.class);
-		//PolElements
+		// PolElements
 		addPolicyElement(new Rule_rule11());
 		addPolicyElement(new Rule_rule2());
 		addPolicyElement(new Rule_rule3());
 		addPolicyElement(new Rule_rule4());
-		//Obligation
+		// Obligation
+	}
+
+	private class Rule_rule11 extends Rule {
+
+		Rule_rule11() {
+			addId("rule11");
+			// Effect
+			addEffect(Effect.PERMIT);
+			// Obligations
 		}
-		
-		private class Rule_rule11 extends Rule {
-			
-				Rule_rule11 (){
-					addId("rule11");
-					//Effect
-					addEffect(Effect.PERMIT);
-					//Obligations
-			}	
+	}
+
+	private class Rule_rule2 extends Rule {
+
+		Rule_rule2() {
+			addId("rule2");
+			// Effect
+			addEffect(Effect.PERMIT);
+			// Obligations
 		}
-		private class Rule_rule2 extends Rule {
-			
-				Rule_rule2 (){
-					addId("rule2");
-					//Effect
-					addEffect(Effect.PERMIT);
-					//Obligations
-			}	
+	}
+
+	private class Rule_rule3 extends Rule {
+
+		Rule_rule3() {
+			addId("rule3");
+			// Effect
+			addEffect(Effect.PERMIT);
+			// Obligations
 		}
-		private class Rule_rule3 extends Rule {
-			
-				Rule_rule3 (){
-					addId("rule3");
-					//Effect
-					addEffect(Effect.PERMIT);
-					//Obligations
-			}	
+	}
+
+	private class Rule_rule4 extends Rule {
+
+		Rule_rule4() {
+			addId("rule4");
+			// Effect
+			addEffect(Effect.PERMIT);
+			// Obligations
 		}
-		private class Rule_rule4 extends Rule {
-			
-				Rule_rule4 (){
-					addId("rule4");
-					//Effect
-					addEffect(Effect.PERMIT);
-					//Obligations
-			}	
-		}
+	}
 }

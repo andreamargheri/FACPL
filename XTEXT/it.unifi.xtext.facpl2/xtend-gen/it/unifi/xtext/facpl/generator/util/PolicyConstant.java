@@ -251,6 +251,18 @@ public class PolicyConstant extends Facpl2Switch<Boolean> {
       boolean _equals = t.equals(FacplType.SET_NAME);
       boolean _not = (!_equals);
       if (_not) {
+        EList<Expression> _args = set.getArgs();
+        for (final Expression e : _args) {
+          if ((e instanceof StringLiteral)) {
+            String _value = ((StringLiteral)e).getValue();
+            String _string = _value.toString();
+            String _value_1 = ((StringLiteral)e).getValue();
+            String _string_1 = _value_1.toString();
+            final ConstraintConstant c = new ConstraintConstant(FacplType.STRING, _string, _string_1);
+            String _att_name = c.getAtt_name();
+            this.constants.put(_att_name, c);
+          }
+        }
         final SetUtils setUtils = new SetUtils();
         String _doSwitch = setUtils.doSwitch(set);
         boolean _containsKey = this.sets.containsKey(_doSwitch);
@@ -258,12 +270,12 @@ public class PolicyConstant extends Facpl2Switch<Boolean> {
         if (_not_1) {
           int _size = this.sets.size();
           int _plus = (_size + 1);
-          String _string = Integer.valueOf(_plus).toString();
-          final String id = ("set_" + _string);
+          String _string_2 = Integer.valueOf(_plus).toString();
+          final String id = ("set_" + _string_2);
           String _doSwitch_1 = setUtils.doSwitch(set);
           this.sets.put(_doSwitch_1, id);
-          final ConstraintConstant c = new ConstraintConstant(t, id, set);
-          this.constants.put(id, c);
+          final ConstraintConstant c_1 = new ConstraintConstant(t, id, set);
+          this.constants.put(id, c_1);
         } else {
         }
       } else {
