@@ -274,13 +274,45 @@ public class SMT_LIBGenerator_Code {
       _builder.append(";##### Policy Obligations");
       _builder.newLine();
       {
-        EList<Obligation> _obl = pol.getObl();
-        boolean _notEquals_1 = (!Objects.equal(_obl, null));
-        if (_notEquals_1) {
-          EList<Obligation> _obl_1 = pol.getObl();
-          String _name_3 = pol.getName();
-          CharSequence _obligationConstr = this.getObligationConstr(_obl_1, _name_3);
-          _builder.append(_obligationConstr, "");
+        if ((pol instanceof PolicySet)) {
+          {
+            EList<Obligation> _oblp = ((PolicySet)pol).getOblp();
+            boolean _notEquals_1 = (!Objects.equal(_oblp, null));
+            if (_notEquals_1) {
+              EList<Obligation> _oblp_1 = ((PolicySet)pol).getOblp();
+              String _name_3 = ((PolicySet)pol).getName();
+              String _obligationConstr_Eff = this.getObligationConstr_Eff(_oblp_1, _name_3, Effect.PERMIT);
+              _builder.append(_obligationConstr_Eff, "");
+              _builder.newLineIfNotEmpty();
+            } else {
+              String _name_4 = ((PolicySet)pol).getName();
+              CharSequence _obligationsConstr_Default = this.getObligationsConstr_Default(_name_4, Effect.PERMIT);
+              _builder.append(_obligationsConstr_Default, "");
+              _builder.newLineIfNotEmpty();
+            }
+          }
+          {
+            EList<Obligation> _obld = ((PolicySet)pol).getObld();
+            boolean _notEquals_2 = (!Objects.equal(_obld, null));
+            if (_notEquals_2) {
+              EList<Obligation> _obld_1 = ((PolicySet)pol).getObld();
+              String _name_5 = ((PolicySet)pol).getName();
+              String _obligationConstr_Eff_1 = this.getObligationConstr_Eff(_obld_1, _name_5, Effect.DENY);
+              _builder.append(_obligationConstr_Eff_1, "");
+              _builder.newLineIfNotEmpty();
+            } else {
+              String _name_6 = ((PolicySet)pol).getName();
+              CharSequence _obligationsConstr_Default_1 = this.getObligationsConstr_Default(_name_6, Effect.DENY);
+              _builder.append(_obligationsConstr_Default_1, "");
+              _builder.newLineIfNotEmpty();
+            }
+          }
+        } else {
+          EList<Obligation> _obl = ((Rule) pol).getObl();
+          String _name_7 = pol.getName();
+          Effect _effect = ((Rule) pol).getEffect();
+          String _obligationConstr_Eff_2 = this.getObligationConstr_Eff(_obl, _name_7, _effect);
+          _builder.append(_obligationConstr_Eff_2, "");
           _builder.newLineIfNotEmpty();
         }
       }
@@ -295,13 +327,13 @@ public class SMT_LIBGenerator_Code {
       }
       _builder.append(";##### Policy Final Constraints");
       _builder.newLine();
-      String _name_4 = pol.getName();
-      CharSequence _finalConstrPSet = this.getFinalConstrPSet(_name_4, pol);
+      String _name_8 = pol.getName();
+      CharSequence _finalConstrPSet = this.getFinalConstrPSet(_name_8, pol);
       _builder.append(_finalConstrPSet, "");
       _builder.newLineIfNotEmpty();
       _builder.append(";################### END TOP-LEVEL POLICY ");
-      String _name_5 = pol.getName();
-      _builder.append(_name_5, "");
+      String _name_9 = pol.getName();
+      _builder.append(_name_9, "");
       _builder.append(" CONSTRAINTs #########################");
       _builder.newLineIfNotEmpty();
       return _builder;
@@ -375,15 +407,41 @@ public class SMT_LIBGenerator_Code {
       EList<Obligation> _obl = r.getObl();
       boolean _notEquals_1 = (!Objects.equal(_obl, null));
       if (_notEquals_1) {
-        EList<Obligation> _obl_1 = r.getObl();
-        String _name_3 = r.getName();
-        CharSequence _obligationConstr = this.getObligationConstr(_obl_1, _name_3);
-        _builder.append(_obligationConstr, "");
-        _builder.newLineIfNotEmpty();
+        {
+          Effect _effect = r.getEffect();
+          boolean _equals = _effect.equals(Effect.PERMIT);
+          if (_equals) {
+            EList<Obligation> _obl_1 = r.getObl();
+            String _name_3 = r.getName();
+            Effect _effect_1 = r.getEffect();
+            String _obligationConstr_Eff = this.getObligationConstr_Eff(_obl_1, _name_3, _effect_1);
+            _builder.append(_obligationConstr_Eff, "");
+            _builder.newLineIfNotEmpty();
+            String _name_4 = r.getName();
+            CharSequence _obligationsConstr_Default = this.getObligationsConstr_Default(_name_4, Effect.DENY);
+            _builder.append(_obligationsConstr_Default, "");
+            _builder.newLineIfNotEmpty();
+          } else {
+            EList<Obligation> _obl_2 = r.getObl();
+            String _name_5 = r.getName();
+            Effect _effect_2 = r.getEffect();
+            String _obligationConstr_Eff_1 = this.getObligationConstr_Eff(_obl_2, _name_5, _effect_2);
+            _builder.append(_obligationConstr_Eff_1, "");
+            _builder.newLineIfNotEmpty();
+            String _name_6 = r.getName();
+            CharSequence _obligationsConstr_Default_1 = this.getObligationsConstr_Default(_name_6, Effect.PERMIT);
+            _builder.append(_obligationsConstr_Default_1, "");
+            _builder.newLineIfNotEmpty();
+          }
+        }
       } else {
-        String _name_4 = r.getName();
-        CharSequence _obligationsConstr_Default = this.getObligationsConstr_Default(_name_4);
-        _builder.append(_obligationsConstr_Default, "");
+        String _name_7 = r.getName();
+        CharSequence _obligationsConstr_Default_2 = this.getObligationsConstr_Default(_name_7, Effect.PERMIT);
+        _builder.append(_obligationsConstr_Default_2, "");
+        _builder.newLineIfNotEmpty();
+        String _name_8 = r.getName();
+        CharSequence _obligationsConstr_Default_3 = this.getObligationsConstr_Default(_name_8, Effect.DENY);
+        _builder.append(_obligationsConstr_Default_3, "");
         _builder.newLineIfNotEmpty();
       }
     }
@@ -392,23 +450,23 @@ public class SMT_LIBGenerator_Code {
     _builder.append(";PERMIT");
     _builder.newLine();
     _builder.append("(define-fun cns_");
-    String _name_5 = r.getName();
-    _builder.append(_name_5, "");
+    String _name_9 = r.getName();
+    _builder.append(_name_9, "");
     _builder.append("_permit () Bool");
     _builder.newLineIfNotEmpty();
     {
-      Effect _effect = r.getEffect();
-      boolean _equals = _effect.equals(Effect.DENY);
-      if (_equals) {
+      Effect _effect_3 = r.getEffect();
+      boolean _equals_1 = _effect_3.equals(Effect.DENY);
+      if (_equals_1) {
         _builder.append(" false ");
         _builder.newLineIfNotEmpty();
       } else {
         _builder.append("(and (isTrue cns_target_");
-        String _name_6 = r.getName();
-        _builder.append(_name_6, "");
+        String _name_10 = r.getName();
+        _builder.append(_name_10, "");
         _builder.append(") cns_obl_permit_");
-        String _name_7 = r.getName();
-        _builder.append(_name_7, "");
+        String _name_11 = r.getName();
+        _builder.append(_name_11, "");
         _builder.append(")");
         _builder.newLineIfNotEmpty();
       }
@@ -418,23 +476,23 @@ public class SMT_LIBGenerator_Code {
     _builder.append(";DENY");
     _builder.newLine();
     _builder.append("(define-fun cns_");
-    String _name_8 = r.getName();
-    _builder.append(_name_8, "");
+    String _name_12 = r.getName();
+    _builder.append(_name_12, "");
     _builder.append("_deny () Bool");
     _builder.newLineIfNotEmpty();
     {
-      Effect _effect_1 = r.getEffect();
-      boolean _equals_1 = _effect_1.equals(Effect.PERMIT);
-      if (_equals_1) {
+      Effect _effect_4 = r.getEffect();
+      boolean _equals_2 = _effect_4.equals(Effect.PERMIT);
+      if (_equals_2) {
         _builder.append(" false ");
         _builder.newLineIfNotEmpty();
       } else {
         _builder.append("(and (isTrue cns_target_");
-        String _name_9 = r.getName();
-        _builder.append(_name_9, "");
+        String _name_13 = r.getName();
+        _builder.append(_name_13, "");
         _builder.append(") cns_obl_deny_");
-        String _name_10 = r.getName();
-        _builder.append(_name_10, "");
+        String _name_14 = r.getName();
+        _builder.append(_name_14, "");
         _builder.append(")");
         _builder.newLineIfNotEmpty();
       }
@@ -444,17 +502,17 @@ public class SMT_LIBGenerator_Code {
     _builder.append(";NOT APP");
     _builder.newLine();
     _builder.append("(define-fun cns_");
-    String _name_11 = r.getName();
-    _builder.append(_name_11, "");
+    String _name_15 = r.getName();
+    _builder.append(_name_15, "");
     _builder.append("_notApp () Bool");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
     _builder.append("(or (isFalse cns_target_");
-    String _name_12 = r.getName();
-    _builder.append(_name_12, "\t");
+    String _name_16 = r.getName();
+    _builder.append(_name_16, "\t");
     _builder.append(") (miss cns_target_");
-    String _name_13 = r.getName();
-    _builder.append(_name_13, "\t");
+    String _name_17 = r.getName();
+    _builder.append(_name_17, "\t");
     _builder.append("))");
     _builder.newLineIfNotEmpty();
     _builder.append(")");
@@ -462,8 +520,8 @@ public class SMT_LIBGenerator_Code {
     _builder.append(";INDET");
     _builder.newLine();
     _builder.append("(define-fun cns_");
-    String _name_14 = r.getName();
-    _builder.append(_name_14, "");
+    String _name_18 = r.getName();
+    _builder.append(_name_18, "");
     _builder.append("_indet () Bool");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
@@ -477,14 +535,14 @@ public class SMT_LIBGenerator_Code {
     _builder.newLine();
     _builder.append("\t\t\t\t");
     _builder.append("(isBool cns_target_");
-    String _name_15 = r.getName();
-    _builder.append(_name_15, "\t\t\t\t");
+    String _name_19 = r.getName();
+    _builder.append(_name_19, "\t\t\t\t");
     _builder.append(")");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t\t\t");
     _builder.append("(miss cns_target_");
-    String _name_16 = r.getName();
-    _builder.append(_name_16, "\t\t\t\t");
+    String _name_20 = r.getName();
+    _builder.append(_name_20, "\t\t\t\t");
     _builder.append(")");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t\t");
@@ -498,25 +556,25 @@ public class SMT_LIBGenerator_Code {
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("(isTrue cns_target_");
-    String _name_17 = r.getName();
-    _builder.append(_name_17, "\t\t\t");
+    String _name_21 = r.getName();
+    _builder.append(_name_21, "\t\t\t");
     _builder.append(")");
     _builder.newLineIfNotEmpty();
     {
-      Effect _effect_2 = r.getEffect();
-      boolean _equals_2 = _effect_2.equals(Effect.PERMIT);
-      if (_equals_2) {
+      Effect _effect_5 = r.getEffect();
+      boolean _equals_3 = _effect_5.equals(Effect.PERMIT);
+      if (_equals_3) {
         _builder.append("\t\t\t");
         _builder.append("(not cns_obl_permit_");
-        String _name_18 = r.getName();
-        _builder.append(_name_18, "\t\t\t");
+        String _name_22 = r.getName();
+        _builder.append(_name_22, "\t\t\t");
         _builder.append(")");
         _builder.newLineIfNotEmpty();
       } else {
         _builder.append("\t\t\t");
         _builder.append("(not cns_obl_deny_");
-        String _name_19 = r.getName();
-        _builder.append(_name_19, "\t\t\t");
+        String _name_23 = r.getName();
+        _builder.append(_name_23, "\t\t\t");
         _builder.append(")");
         _builder.newLineIfNotEmpty();
       }
@@ -530,8 +588,8 @@ public class SMT_LIBGenerator_Code {
     _builder.append(")");
     _builder.newLine();
     _builder.append(";################### END CONSTRAINT RULE ");
-    String _name_20 = r.getName();
-    _builder.append(_name_20, "");
+    String _name_24 = r.getName();
+    _builder.append(_name_24, "");
     _builder.append(" #########################");
     _builder.newLineIfNotEmpty();
     return _builder;
@@ -581,18 +639,34 @@ public class SMT_LIBGenerator_Code {
       _builder.append(";##### Policy Obligations");
       _builder.newLine();
       {
-        EList<Obligation> _obl = pol.getObl();
-        boolean _notEquals_1 = (!Objects.equal(_obl, null));
+        EList<Obligation> _oblp = pol.getOblp();
+        boolean _notEquals_1 = (!Objects.equal(_oblp, null));
         if (_notEquals_1) {
-          EList<Obligation> _obl_1 = pol.getObl();
+          EList<Obligation> _oblp_1 = pol.getOblp();
           String _name_3 = pol.getName();
-          CharSequence _obligationConstr = this.getObligationConstr(_obl_1, _name_3);
-          _builder.append(_obligationConstr, "");
+          String _obligationConstr_Eff = this.getObligationConstr_Eff(_oblp_1, _name_3, Effect.PERMIT);
+          _builder.append(_obligationConstr_Eff, "");
           _builder.newLineIfNotEmpty();
         } else {
           String _name_4 = pol.getName();
-          CharSequence _obligationsConstr_Default = this.getObligationsConstr_Default(_name_4);
+          CharSequence _obligationsConstr_Default = this.getObligationsConstr_Default(_name_4, Effect.PERMIT);
           _builder.append(_obligationsConstr_Default, "");
+          _builder.newLineIfNotEmpty();
+        }
+      }
+      {
+        EList<Obligation> _obld = pol.getObld();
+        boolean _notEquals_2 = (!Objects.equal(_obld, null));
+        if (_notEquals_2) {
+          EList<Obligation> _obld_1 = pol.getObld();
+          String _name_5 = pol.getName();
+          String _obligationConstr_Eff_1 = this.getObligationConstr_Eff(_obld_1, _name_5, Effect.DENY);
+          _builder.append(_obligationConstr_Eff_1, "");
+          _builder.newLineIfNotEmpty();
+        } else {
+          String _name_6 = pol.getName();
+          CharSequence _obligationsConstr_Default_1 = this.getObligationsConstr_Default(_name_6, Effect.DENY);
+          _builder.append(_obligationsConstr_Default_1, "");
           _builder.newLineIfNotEmpty();
         }
       }
@@ -603,14 +677,14 @@ public class SMT_LIBGenerator_Code {
       _builder.newLineIfNotEmpty();
       _builder.append(";##### Policy Constraints");
       _builder.newLine();
-      String _name_5 = pol.getName();
-      CharSequence _finalConstrPSet = this.getFinalConstrPSet(_name_5, pol);
+      String _name_7 = pol.getName();
+      CharSequence _finalConstrPSet = this.getFinalConstrPSet(_name_7, pol);
       _builder.append(_finalConstrPSet, "");
       _builder.newLineIfNotEmpty();
       _builder.newLine();
       _builder.append(";################### END CONSTRAINT POLICY SET ");
-      String _name_6 = pol.getName();
-      _builder.append(_name_6, "");
+      String _name_8 = pol.getName();
+      _builder.append(_name_8, "");
       _builder.append(" #########################");
       _builder.newLineIfNotEmpty();
       return _builder;
@@ -909,21 +983,6 @@ public class SMT_LIBGenerator_Code {
    * Obligation Constraint
    * ##############################################
    */
-  public CharSequence getObligationConstr(final List<Obligation> obls, final String name) {
-    StringConcatenation _builder = new StringConcatenation();
-    String _obligationConstr_Eff = this.getObligationConstr_Eff(obls, name, Effect.PERMIT);
-    _builder.append(_obligationConstr_Eff, "");
-    _builder.newLineIfNotEmpty();
-    _builder.append(" ");
-    _builder.newLine();
-    String _obligationConstr_Eff_1 = this.getObligationConstr_Eff(obls, name, Effect.DENY);
-    _builder.append(_obligationConstr_Eff_1, "");
-    _builder.newLineIfNotEmpty();
-    _builder.append(" ");
-    _builder.newLine();
-    return _builder;
-  }
-  
   public String getObligationConstr_Eff(final List<Obligation> obls, final String name, final Effect ef) {
     final StringBuffer str = new StringBuffer();
     String _string = ef.toString();
@@ -938,9 +997,7 @@ public class SMT_LIBGenerator_Code {
       str.append("\t (and ");
       int i = 0;
       for (final Obligation o : obls) {
-        Effect _evaluetedOn = o.getEvaluetedOn();
-        boolean _equals = _evaluetedOn.equals(ef);
-        if (_equals) {
+        {
           i = (i + 1);
           EList<Expression> _expr = o.getExpr();
           int _size_1 = _expr.size();
@@ -977,13 +1034,12 @@ public class SMT_LIBGenerator_Code {
     return str.toString();
   }
   
-  public CharSequence getObligationsConstr_Default(final String name) {
+  public CharSequence getObligationsConstr_Default(final String name, final Effect e) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("(define-fun cns_obl_permit_");
-    _builder.append(name, "");
-    _builder.append(" ()  Bool true )");
-    _builder.newLineIfNotEmpty();
-    _builder.append("(define-fun cns_obl_deny_");
+    _builder.append("(define-fun cns_obl_");
+    String _string = e.toString();
+    _builder.append(_string, "");
+    _builder.append("t_");
     _builder.append(name, "");
     _builder.append(" ()  Bool true )");
     _builder.newLineIfNotEmpty();

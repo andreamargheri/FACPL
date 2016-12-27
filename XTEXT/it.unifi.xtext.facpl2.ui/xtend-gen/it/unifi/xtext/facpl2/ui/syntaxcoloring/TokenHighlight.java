@@ -260,16 +260,28 @@ public class TokenHighlight implements ISemanticHighlightingCalculator {
             acceptor.addPosition(_offset_23, 4, SyntaxHighlighting.POLICY_KEYWORD);
           }
           String _value_9 = ((Keyword) o).getValue();
-          boolean _equals_23 = _value_9.equals("include");
+          boolean _equals_23 = _value_9.equals("obl-p:");
           if (_equals_23) {
             int _offset_24 = node.getOffset();
-            acceptor.addPosition(_offset_24, 7, SyntaxHighlighting.POLICY_KEYWORD);
+            acceptor.addPosition(_offset_24, 6, SyntaxHighlighting.POLICY_KEYWORD);
           }
           String _value_10 = ((Keyword) o).getValue();
-          boolean _equals_24 = _value_10.equals("import");
+          boolean _equals_24 = _value_10.equals("obl-d:");
           if (_equals_24) {
             int _offset_25 = node.getOffset();
-            acceptor.addPosition(_offset_25, 7, SyntaxHighlighting.POLICY_KEYWORD);
+            acceptor.addPosition(_offset_25, 6, SyntaxHighlighting.POLICY_KEYWORD);
+          }
+          String _value_11 = ((Keyword) o).getValue();
+          boolean _equals_25 = _value_11.equals("include");
+          if (_equals_25) {
+            int _offset_26 = node.getOffset();
+            acceptor.addPosition(_offset_26, 7, SyntaxHighlighting.POLICY_KEYWORD);
+          }
+          String _value_12 = ((Keyword) o).getValue();
+          boolean _equals_26 = _value_12.equals("import");
+          if (_equals_26) {
+            int _offset_27 = node.getOffset();
+            acceptor.addPosition(_offset_27, 7, SyntaxHighlighting.POLICY_KEYWORD);
           }
         }
       }

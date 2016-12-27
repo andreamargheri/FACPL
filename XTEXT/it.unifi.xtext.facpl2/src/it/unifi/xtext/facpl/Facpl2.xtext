@@ -65,7 +65,7 @@ AbstractPolicyIncl:
 
 PolicySet:
 	'PolicySet' name=ID '{' polSetAlg=Alg ('target:' target=Expression)? 'policies:'
-	policies+=(AbstractPolicyIncl)+ ('obl:' obl+=Obligation*)? '}';
+	policies+=(AbstractPolicyIncl)+ ('obl-p:' oblp+=Obligation*)? ('obl-d:' obld+=Obligation*)? '}';
 
 	//Algorithms (with fulfilment strategy)
 Alg:
@@ -89,7 +89,9 @@ enum Effect:
 
 	//OBLIGATION
 Obligation:
-	'[' EvaluetedOn=Effect typeObl=('M' | 'O') pepAction=ID '(' (expr+=Expression (',' expr+=Expression)*)* ')' ']';
+	'[' 
+	//EvaluetedOn=Effect 
+	typeObl=('M' | 'O') pepAction=ID '(' (expr+=Expression (',' expr+=Expression)*)* ')' ']';
 
 	//EXPRESSION
 Expression:

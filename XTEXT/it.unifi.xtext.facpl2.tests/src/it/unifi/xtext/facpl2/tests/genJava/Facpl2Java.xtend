@@ -226,9 +226,27 @@ class Facpl2Java {
 	}
 	
 	
+		@Test
+	def void testObligation() {
+     
+     '''
+		PolicySet pName { permit-overrides-greedy 
+		policies:
+			Rule rule1 (deny obl: (M log()) 
+		}
+     '''.compile[compiledClass]
+
+	 '''
+		PolicySet pName { permit-overrides-greedy 
+		policies:
+			Rule rule1 (deny obl: (M log())
+			obl-p: (M log())
+			obl-d: (O log()) 
+		}
+     '''.compile[compiledClass]
 	
 	
 	
-	
+	}
 	
 }

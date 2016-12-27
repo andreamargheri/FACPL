@@ -177,11 +177,18 @@ public class PolicyConstant extends Facpl2Switch<Boolean> {
     for (final AbstractPolicyIncl pol : _policies) {
       s = (s && (this.doSwitch(pol)).booleanValue());
     }
-    EList<Obligation> _obl = object.getObl();
-    for (final Obligation ob : _obl) {
+    EList<Obligation> _oblp = object.getOblp();
+    for (final Obligation ob : _oblp) {
       EList<Expression> _expr = ob.getExpr();
       for (final Expression expr : _expr) {
         s = (s && (this.doSwitch(expr)).booleanValue());
+      }
+    }
+    EList<Obligation> _obld = object.getObld();
+    for (final Obligation ob_1 : _obld) {
+      EList<Expression> _expr_1 = ob_1.getExpr();
+      for (final Expression expr_1 : _expr_1) {
+        s = (s && (this.doSwitch(expr_1)).booleanValue());
       }
     }
     return Boolean.valueOf(s);

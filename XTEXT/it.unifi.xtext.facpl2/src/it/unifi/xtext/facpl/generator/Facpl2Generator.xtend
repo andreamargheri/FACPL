@@ -35,6 +35,7 @@ import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.eclipse.xtext.generator.IGenerator
 import org.eclipse.xtext.resource.XtextResourceSet
+import it.unifi.xtext.facpl.facpl2.Effect
 
 class Facpl2Generator implements IGenerator {
 	
@@ -297,8 +298,11 @@ class Facpl2Generator implements IGenerator {
 				«ENDIF»
 			«ENDFOR»
 			//Obligation
-			«FOR o : pol.obl»
-			addObligation(«o.compileObligation»);
+			«FOR o : pol.oblp»
+			addObligation(«compileObligation(o,Effect::PERMIT)»);
+			«ENDFOR»
+			«FOR o : pol.obld»
+			addObligation(«compileObligation(o,Effect::DENY)»);
 			«ENDFOR»
 			}
 			
@@ -329,7 +333,7 @@ class Facpl2Generator implements IGenerator {
 				«ENDIF»
 				//Obligations
 				«FOR o : rule.obl»
-				addObligation(«o.compileObligation»);
+				addObligation(«compileObligation(o,rule.effect)»);
 				«ENDFOR»
 		}	
 	}
@@ -338,8 +342,8 @@ class Facpl2Generator implements IGenerator {
 	//----------------------------------------------------
 	//OBLIGATIONS
 	//----------------------------------------------------
-	def compileObligation(Obligation obl) '''
-		new Obligation("«obl.pepAction»",Effect.«obl.evaluetedOn.getName»,ObligationType.«obl.typeObl»,«obl.expr.getOblExpression»)
+	def compileObligation(Obligation obl, Effect e) '''
+		new Obligation("«obl.pepAction»",Effect.«e.getName»,ObligationType.«obl.typeObl»,«obl.expr.getOblExpression»)
 	'''
 	
 	def getOblExpression(EList<Expression> list) '''

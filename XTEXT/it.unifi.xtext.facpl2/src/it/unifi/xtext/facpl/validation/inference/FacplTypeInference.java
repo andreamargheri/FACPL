@@ -149,7 +149,12 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 			}
 		}
 		// Obligations
-		for (Obligation o : p.getObl()) {
+		for (Obligation o : p.getOblp()) {
+			t = doSwitch(o);
+			if (t.equals(FacplType.ERR))
+				return FacplType.ERR;
+		}
+		for (Obligation o : p.getObld()) {
 			t = doSwitch(o);
 			if (t.equals(FacplType.ERR))
 				return FacplType.ERR;

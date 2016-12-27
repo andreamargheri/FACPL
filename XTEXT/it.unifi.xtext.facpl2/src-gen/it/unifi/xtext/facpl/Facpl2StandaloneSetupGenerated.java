@@ -24,24 +24,22 @@ public class Facpl2StandaloneSetupGenerated implements ISetup {
 		register(injector);
 		return injector;
 	}
-
+	
 	public Injector createInjector() {
 		return Guice.createInjector(new it.unifi.xtext.facpl.Facpl2RuntimeModule());
 	}
-
+	
 	public void register(Injector injector) {
-		if (!EPackage.Registry.INSTANCE.containsKey("http://www.unifi.it/xtext/facpl/Facpl2")) {
-			EPackage.Registry.INSTANCE.put("http://www.unifi.it/xtext/facpl/Facpl2",
-					it.unifi.xtext.facpl.facpl2.Facpl2Package.eINSTANCE);
-		}
+	if (!EPackage.Registry.INSTANCE.containsKey("http://www.unifi.it/xtext/facpl/Facpl2")) {
+		EPackage.Registry.INSTANCE.put("http://www.unifi.it/xtext/facpl/Facpl2", it.unifi.xtext.facpl.facpl2.Facpl2Package.eINSTANCE);
+	}
 
-		org.eclipse.xtext.resource.IResourceFactory resourceFactory = injector
-				.getInstance(org.eclipse.xtext.resource.IResourceFactory.class);
-		org.eclipse.xtext.resource.IResourceServiceProvider serviceProvider = injector
-				.getInstance(org.eclipse.xtext.resource.IResourceServiceProvider.class);
+		org.eclipse.xtext.resource.IResourceFactory resourceFactory = injector.getInstance(org.eclipse.xtext.resource.IResourceFactory.class);
+		org.eclipse.xtext.resource.IResourceServiceProvider serviceProvider = injector.getInstance(org.eclipse.xtext.resource.IResourceServiceProvider.class);
 		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("fpl", resourceFactory);
-		org.eclipse.xtext.resource.IResourceServiceProvider.Registry.INSTANCE.getExtensionToFactoryMap().put("fpl",
-				serviceProvider);
+		org.eclipse.xtext.resource.IResourceServiceProvider.Registry.INSTANCE.getExtensionToFactoryMap().put("fpl", serviceProvider);
+		
+
 
 	}
 }

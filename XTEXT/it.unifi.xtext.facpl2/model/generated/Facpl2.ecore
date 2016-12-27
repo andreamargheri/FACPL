@@ -77,8 +77,6 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="target" eType="#//Expression"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="obl" upperBound="-1" eType="#//Obligation"
-        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AbstractPolicyIncl">
     <eStructuralFeatures xsi:type="ecore:EReference" name="newPolicy" eType="#//FacplPolicy"
@@ -90,6 +88,10 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="policies" upperBound="-1"
         eType="#//AbstractPolicyIncl" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="oblp" upperBound="-1" eType="#//Obligation"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="obld" upperBound="-1" eType="#//Obligation"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Alg">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="idAlg" eType="#//AlgLiteral"/>
@@ -112,13 +114,14 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Rule" eSuperTypes="#//FacplPolicy">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="effect" eType="#//Effect"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="obl" upperBound="-1" eType="#//Obligation"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="Effect">
     <eLiterals name="PERMIT" literal="permit"/>
     <eLiterals name="DENY" value="1" literal="deny"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Obligation">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="EvaluetedOn" eType="#//Effect"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="typeObl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="pepAction" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="expr" upperBound="-1" eType="#//Expression"

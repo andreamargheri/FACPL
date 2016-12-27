@@ -4,7 +4,7 @@
     editorDirectory="/it.unifi.xtext.facpl2.editor/src" modelPluginID="it.unifi.xtext.facpl2"
     forceOverwrite="true" modelName="Facpl2" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     complianceLevel="6.0" copyrightFields="false" editPluginID="it.unifi.xtext.facpl2.edit"
-    editorPluginID="it.unifi.xtext.facpl2.editor" runtimeVersion="2.11">
+    editorPluginID="it.unifi.xtext.facpl2.editor" runtimeVersion="2.12">
   <genPackages prefix="Facpl2" basePackage="it.unifi.xtext.facpl" disposableProviderFactory="true"
       fileExtensions="fpl" ecorePackage="Facpl2.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="Facpl2.ecore#//TypeLiteral">
@@ -101,7 +101,6 @@
     <genClasses ecoreClass="Facpl2.ecore#//FacplPolicy">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//FacplPolicy/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//FacplPolicy/target"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//FacplPolicy/obl"/>
     </genClasses>
     <genClasses ecoreClass="Facpl2.ecore#//AbstractPolicyIncl">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//AbstractPolicyIncl/newPolicy"/>
@@ -110,6 +109,8 @@
     <genClasses ecoreClass="Facpl2.ecore#//PolicySet">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//PolicySet/polSetAlg"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//PolicySet/policies"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//PolicySet/oblp"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//PolicySet/obld"/>
     </genClasses>
     <genClasses ecoreClass="Facpl2.ecore#//Alg">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//Alg/idAlg"/>
@@ -117,9 +118,9 @@
     </genClasses>
     <genClasses ecoreClass="Facpl2.ecore#//Rule">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//Rule/effect"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//Rule/obl"/>
     </genClasses>
     <genClasses ecoreClass="Facpl2.ecore#//Obligation">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//Obligation/EvaluetedOn"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//Obligation/typeObl"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//Obligation/pepAction"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//Obligation/expr"/>

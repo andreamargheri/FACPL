@@ -209,7 +209,7 @@ public class Facpl2OutlineTreeProvider extends DefaultOutlineTreeProvider {
           }
         }
       }
-      _xblockexpression = this.createEStructuralFeatureNode(polSetNode, pol, Facpl2Package.Literals.FACPL_POLICY__OBL, null, "obligation", 
+      _xblockexpression = this.createEStructuralFeatureNode(polSetNode, pol, Facpl2Package.Literals.FACPL__POLICIES, null, "obligation", 
         true);
     }
     return _xblockexpression;

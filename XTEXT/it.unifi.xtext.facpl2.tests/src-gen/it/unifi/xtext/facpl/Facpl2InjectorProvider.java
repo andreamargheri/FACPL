@@ -3,12 +3,12 @@
  */
 package it.unifi.xtext.facpl;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import org.eclipse.xtext.junit4.GlobalRegistries;
 import org.eclipse.xtext.junit4.GlobalRegistries.GlobalStateMemento;
 import org.eclipse.xtext.junit4.IInjectorProvider;
 import org.eclipse.xtext.junit4.IRegistryConfigurator;
-
-import com.google.inject.Injector;
 
 public class Facpl2InjectorProvider implements IInjectorProvider, IRegistryConfigurator {
 
@@ -21,7 +21,8 @@ public class Facpl2InjectorProvider implements IInjectorProvider, IRegistryConfi
 	}
 
 	@Override
-	public Injector getInjector() {
+	public Injector getInjector()
+	{
 		if (injector == null) {
 			stateBeforeInjectorCreation = GlobalRegistries.makeCopyOfGlobalState();
 			this.injector = internalCreateInjector();
@@ -31,7 +32,24 @@ public class Facpl2InjectorProvider implements IInjectorProvider, IRegistryConfi
 	}
 
 	protected Injector internalCreateInjector() {
-		return new Facpl2StandaloneSetup().createInjectorAndDoEMFRegistration();
+		return new Facpl2StandaloneSetup() {
+			@Override
+			public Injector createInjector() {
+				return Guice.createInjector(createRuntimeModule());
+			}
+		}.createInjectorAndDoEMFRegistration();
+	}
+
+	protected Facpl2RuntimeModule createRuntimeModule() {
+		// make it work also with Maven/Tycho and OSGI
+		// see https://bugs.eclipse.org/bugs/show_bug.cgi?id=493672
+		return new Facpl2RuntimeModule() {
+			@Override
+			public ClassLoader bindClassLoaderToInstance() {
+				return Facpl2InjectorProvider.class
+						.getClassLoader();
+			}
+		};
 	}
 
 	@Override

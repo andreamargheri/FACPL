@@ -11,8 +11,7 @@ public class Facpl2UiInjectorProvider implements IInjectorProvider {
 
 	@Override
 	public Injector getInjector() {
-		return it.unifi.xtext.facpl.ui.internal.Facpl2Activator.getInstance()
-				.getInjector("it.unifi.xtext.facpl.Facpl2");
+		return it.unifi.xtext.facpl.ui.internal.Facpl2Activator.getInstance().getInjector("it.unifi.xtext.facpl.Facpl2");
 	}
 
 }

@@ -32,6 +32,7 @@ import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.IFileSystemAccess
+import it.unifi.xtext.facpl.facpl2.Effect
 
 /**
  * Xtend Generator for creating the XACML policies and/or requests corresponding to the FACPL code given as input
@@ -193,8 +194,11 @@ class XMLGenerator {
 				«pol.newPolicy.compileIntPol»
 			«ENDIF» 
 		«ENDFOR»
-		«IF policy.obl.size() != 0»
-			«compileAdvObl(policy.obl)»
+		«IF policy.oblp.size() != 0»
+			«compileAdvObl(policy.oblp, Effect.PERMIT)»
+		«ENDIF»
+		«IF policy.obld.size() != 0»
+		,	«compileAdvObl(policy.obld, Effect.DENY)»
 		«ENDIF»
 		</PolicySet>
 	'''
@@ -217,7 +221,7 @@ class XMLGenerator {
 	// ------------------------------------------------
 	// OBLIGATION / ADVICE -> ENTRY POINT
 	// ------------------------------------------------
-	def compileAdvObl(EList<Obligation> list) {
+	def compileAdvObl(EList<Obligation> list, Effect e) {
 		var Boolean flag = false
 		var StringBuffer s = new StringBuffer()
 		for (obl : list) {
@@ -226,7 +230,7 @@ class XMLGenerator {
 					s.append("<ObligationExpressions>\n")
 					flag = true
 				}
-				s.append(obl.compileObl)
+				s.append(compileObl(obl,e))
 			}
 		}
 		if (flag) {
@@ -239,7 +243,7 @@ class XMLGenerator {
 					s.append("<AdviceExpressions>\n")
 					flag = true
 				}
-				s.append(obl.compileAdv)
+				s.append(compileAdv(obl,e))
 			}
 		}
 		if (flag) {
@@ -251,8 +255,8 @@ class XMLGenerator {
 	// ----------------------------------------------------------------------
 	// OBGALITION - basic element
 	// ----------------------------------------------------------------------
-	def compileObl(Obligation obl) '''
-		<ObligationExpression ObligationId="«obl.pepAction»" FulfillOn="«obl.evaluetedOn.toString.toFirstUpper»">
+	def compileObl(Obligation obl, Effect e) '''
+		<ObligationExpression ObligationId="«obl.pepAction»" FulfillOn="«e.toString.toFirstUpper»">
 			«FOR o : obl.expr»
 				<AttributeAssignmentExpression AttributeId="urn:oasis:names:tc:xaml:3.0:argument">
 				«o.getExpression»
@@ -264,8 +268,8 @@ class XMLGenerator {
 	// ----------------------------------------------------------------------
 	// ADVICE - basic element
 	// ----------------------------------------------------------------------
-	def compileAdv(Obligation obl) '''
-		<AdviceExpression AdviceId="«obl.pepAction»" AppliesTo="«obl.evaluetedOn.toString.toFirstUpper»">
+	def compileAdv(Obligation obl, Effect e) '''
+		<AdviceExpression AdviceId="«obl.pepAction»" AppliesTo="«e.toString.toFirstUpper»">
 			«FOR o : obl.expr»
 				<AttributeAssignmentExpression AttributeId="urn:oasis:names:tc:xaml:3.0:argument">
 				«o.getExpression»
@@ -294,8 +298,11 @@ class XMLGenerator {
 				«p.newPolicy.compileIntPol»
 			«ENDIF» 
 		«ENDFOR»
-		«IF policy.obl.size() != 0»
-			«compileAdvObl(policy.obl)»
+		«IF policy.oblp.size() != 0»
+			«compileAdvObl(policy.oblp, Effect.PERMIT)»
+		«ENDIF»
+		«IF policy.obld.size() != 0»
+			«compileAdvObl(policy.obld, Effect.DENY)»
 		«ENDIF»
 		</PolicySet>
 	'''
@@ -317,7 +324,7 @@ class XMLGenerator {
 			«ELSE»
 			«ENDIF»
 			«IF rule.obl.size() != 0»
-			«compileAdvObl(rule.obl)»
+			«compileAdvObl(rule.obl,rule.effect)»
 			«ENDIF»
 		</Rule>
 	</Policy>

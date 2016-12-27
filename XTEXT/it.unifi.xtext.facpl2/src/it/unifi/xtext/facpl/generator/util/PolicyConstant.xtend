@@ -136,7 +136,12 @@ class PolicyConstant extends Facpl2Switch<Boolean> {
 			s = s && doSwitch(pol)
 		}
 		// check obligation
-		for (ob : object.obl) {
+		for (ob : object.oblp) {
+			for (expr : ob.expr) {
+				s = s && doSwitch(expr)
+			}
+		}
+		for (ob : object.obld) {
 			for (expr : ob.expr) {
 				s = s && doSwitch(expr)
 			}

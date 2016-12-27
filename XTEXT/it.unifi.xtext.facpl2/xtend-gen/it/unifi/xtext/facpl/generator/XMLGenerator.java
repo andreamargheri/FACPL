@@ -339,13 +339,25 @@ public class XMLGenerator {
       }
     }
     {
-      EList<Obligation> _obl = policy.getObl();
-      int _size = _obl.size();
+      EList<Obligation> _oblp = policy.getOblp();
+      int _size = _oblp.size();
       boolean _notEquals_2 = (_size != 0);
       if (_notEquals_2) {
-        EList<Obligation> _obl_1 = policy.getObl();
-        String _compileAdvObl = this.compileAdvObl(_obl_1);
+        EList<Obligation> _oblp_1 = policy.getOblp();
+        String _compileAdvObl = this.compileAdvObl(_oblp_1, Effect.PERMIT);
         _builder.append(_compileAdvObl, "");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    {
+      EList<Obligation> _obld = policy.getObld();
+      int _size_1 = _obld.size();
+      boolean _notEquals_3 = (_size_1 != 0);
+      if (_notEquals_3) {
+        _builder.append(",\t");
+        EList<Obligation> _obld_1 = policy.getObld();
+        String _compileAdvObl_1 = this.compileAdvObl(_obld_1, Effect.DENY);
+        _builder.append(_compileAdvObl_1, "");
         _builder.newLineIfNotEmpty();
       }
     }
@@ -395,7 +407,7 @@ public class XMLGenerator {
     return _builder;
   }
   
-  public String compileAdvObl(final EList<Obligation> list) {
+  public String compileAdvObl(final EList<Obligation> list, final Effect e) {
     Boolean flag = Boolean.valueOf(false);
     StringBuffer s = new StringBuffer();
     for (final Obligation obl : list) {
@@ -406,7 +418,7 @@ public class XMLGenerator {
           s.append("<ObligationExpressions>\n");
           flag = Boolean.valueOf(true);
         }
-        CharSequence _compileObl = this.compileObl(obl);
+        CharSequence _compileObl = this.compileObl(obl, e);
         s.append(_compileObl);
       }
     }
@@ -422,7 +434,7 @@ public class XMLGenerator {
           s.append("<AdviceExpressions>\n");
           flag = Boolean.valueOf(true);
         }
-        CharSequence _compileAdv = this.compileAdv(obl_1);
+        CharSequence _compileAdv = this.compileAdv(obl_1, e);
         s.append(_compileAdv);
       }
     }
@@ -432,14 +444,13 @@ public class XMLGenerator {
     return s.toString();
   }
   
-  public CharSequence compileObl(final Obligation obl) {
+  public CharSequence compileObl(final Obligation obl, final Effect e) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("<ObligationExpression ObligationId=\"");
     String _pepAction = obl.getPepAction();
     _builder.append(_pepAction, "");
     _builder.append("\" FulfillOn=\"");
-    Effect _evaluetedOn = obl.getEvaluetedOn();
-    String _string = _evaluetedOn.toString();
+    String _string = e.toString();
     String _firstUpper = StringExtensions.toFirstUpper(_string);
     _builder.append(_firstUpper, "");
     _builder.append("\">");
@@ -464,14 +475,13 @@ public class XMLGenerator {
     return _builder;
   }
   
-  public CharSequence compileAdv(final Obligation obl) {
+  public CharSequence compileAdv(final Obligation obl, final Effect e) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("<AdviceExpression AdviceId=\"");
     String _pepAction = obl.getPepAction();
     _builder.append(_pepAction, "");
     _builder.append("\" AppliesTo=\"");
-    Effect _evaluetedOn = obl.getEvaluetedOn();
-    String _string = _evaluetedOn.toString();
+    String _string = e.toString();
     String _firstUpper = StringExtensions.toFirstUpper(_string);
     _builder.append(_firstUpper, "");
     _builder.append("\">");
@@ -547,13 +557,24 @@ public class XMLGenerator {
       }
     }
     {
-      EList<Obligation> _obl = policy.getObl();
-      int _size = _obl.size();
+      EList<Obligation> _oblp = policy.getOblp();
+      int _size = _oblp.size();
       boolean _notEquals_2 = (_size != 0);
       if (_notEquals_2) {
-        EList<Obligation> _obl_1 = policy.getObl();
-        String _compileAdvObl = this.compileAdvObl(_obl_1);
+        EList<Obligation> _oblp_1 = policy.getOblp();
+        String _compileAdvObl = this.compileAdvObl(_oblp_1, Effect.PERMIT);
         _builder.append(_compileAdvObl, "");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    {
+      EList<Obligation> _obld = policy.getObld();
+      int _size_1 = _obld.size();
+      boolean _notEquals_3 = (_size_1 != 0);
+      if (_notEquals_3) {
+        EList<Obligation> _obld_1 = policy.getObld();
+        String _compileAdvObl_1 = this.compileAdvObl(_obld_1, Effect.DENY);
+        _builder.append(_compileAdvObl_1, "");
         _builder.newLineIfNotEmpty();
       }
     }
@@ -619,7 +640,8 @@ public class XMLGenerator {
       if (_notEquals_1) {
         _builder.append("\t\t");
         EList<Obligation> _obl_1 = rule.getObl();
-        String _compileAdvObl = this.compileAdvObl(_obl_1);
+        Effect _effect_1 = rule.getEffect();
+        String _compileAdvObl = this.compileAdvObl(_obl_1, _effect_1);
         _builder.append(_compileAdvObl, "\t\t");
         _builder.newLineIfNotEmpty();
       }

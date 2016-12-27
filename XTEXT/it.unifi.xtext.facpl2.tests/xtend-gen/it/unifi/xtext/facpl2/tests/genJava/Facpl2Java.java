@@ -449,4 +449,46 @@ public class Facpl2Java {
       throw Exceptions.sneakyThrow(_e);
     }
   }
+  
+  @Test
+  public void testObligation() {
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("PolicySet pName { permit-overrides-greedy ");
+      _builder.newLine();
+      _builder.append("policies:");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("Rule rule1 (deny obl: (M log()) ");
+      _builder.newLine();
+      _builder.append("}");
+      _builder.newLine();
+      final IAcceptor<CompilationTestHelper.Result> _function = (CompilationTestHelper.Result it) -> {
+        it.getCompiledClass();
+      };
+      this._compilationTestHelper.compile(_builder, _function);
+      StringConcatenation _builder_1 = new StringConcatenation();
+      _builder_1.append("PolicySet pName { permit-overrides-greedy ");
+      _builder_1.newLine();
+      _builder_1.append("policies:");
+      _builder_1.newLine();
+      _builder_1.append("\t");
+      _builder_1.append("Rule rule1 (deny obl: (M log())");
+      _builder_1.newLine();
+      _builder_1.append("\t");
+      _builder_1.append("obl-p: (M log())");
+      _builder_1.newLine();
+      _builder_1.append("\t");
+      _builder_1.append("obl-d: (O log()) ");
+      _builder_1.newLine();
+      _builder_1.append("}");
+      _builder_1.newLine();
+      final IAcceptor<CompilationTestHelper.Result> _function_1 = (CompilationTestHelper.Result it) -> {
+        it.getCompiledClass();
+      };
+      this._compilationTestHelper.compile(_builder_1, _function_1);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
 }

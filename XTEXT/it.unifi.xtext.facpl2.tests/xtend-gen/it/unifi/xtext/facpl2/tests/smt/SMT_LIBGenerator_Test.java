@@ -13,6 +13,7 @@ import org.eclipse.xtext.junit4.util.ParseHelper;
 import org.eclipse.xtext.junit4.validation.ValidationTestHelper;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Extension;
+import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -470,6 +471,43 @@ public class SMT_LIBGenerator_Test extends AbstractXtextTests {
       this._validationTestHelper.assertNoErrors(model);
       String cns = this._sMT_LIBGenerator.doGenerateSMT_LIB_Test(model);
       final PrintWriter writer = new PrintWriter("SMT_LIB_gen/set/file1_set_string.smt2", "UTF-8");
+      writer.println(cns);
+      writer.close();
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
+  public void genObligationContraint() {
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("PolicySet str_19{deny-overrides-all");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("policies:");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("Rule str_20(permit");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("obl: [M log()]");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append(")");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("obl-p: [M log()]");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("obl-d: [M log()]");
+      _builder.newLine();
+      _builder.append("}");
+      Facpl model = this._parseHelper.parse(_builder);
+      this._validationTestHelper.assertNoErrors(model);
+      String cns = this._sMT_LIBGenerator.doGenerateSMT_LIB_Test(model);
+      InputOutput.<String>println(cns);
+      final PrintWriter writer = new PrintWriter("SMT_LIB_gen/set/file1_obl.smt2", "UTF-8");
       writer.println(cns);
       writer.close();
     } catch (Throwable _e) {

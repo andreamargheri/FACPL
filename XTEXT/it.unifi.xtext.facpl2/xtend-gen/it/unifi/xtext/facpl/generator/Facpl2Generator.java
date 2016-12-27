@@ -665,12 +665,23 @@ public class Facpl2Generator implements IGenerator {
     _builder.append("//Obligation");
     _builder.newLine();
     {
-      EList<Obligation> _obl = pol.getObl();
-      for(final Obligation o : _obl) {
+      EList<Obligation> _oblp = pol.getOblp();
+      for(final Obligation o : _oblp) {
         _builder.append("\t\t");
         _builder.append("addObligation(");
-        CharSequence _compileObligation = this.compileObligation(o);
+        CharSequence _compileObligation = this.compileObligation(o, Effect.PERMIT);
         _builder.append(_compileObligation, "\t\t");
+        _builder.append(");");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    {
+      EList<Obligation> _obld = pol.getObld();
+      for(final Obligation o_1 : _obld) {
+        _builder.append("\t\t");
+        _builder.append("addObligation(");
+        CharSequence _compileObligation_1 = this.compileObligation(o_1, Effect.DENY);
+        _builder.append(_compileObligation_1, "\t\t");
         _builder.append(");");
         _builder.newLineIfNotEmpty();
       }
@@ -760,7 +771,8 @@ public class Facpl2Generator implements IGenerator {
       for(final Obligation o : _obl) {
         _builder.append("\t\t\t");
         _builder.append("addObligation(");
-        CharSequence _compileObligation = this.compileObligation(o);
+        Effect _effect_1 = rule.getEffect();
+        CharSequence _compileObligation = this.compileObligation(o, _effect_1);
         _builder.append(_compileObligation, "\t\t\t");
         _builder.append(");");
         _builder.newLineIfNotEmpty();
@@ -774,14 +786,13 @@ public class Facpl2Generator implements IGenerator {
     return _builder;
   }
   
-  public CharSequence compileObligation(final Obligation obl) {
+  public CharSequence compileObligation(final Obligation obl, final Effect e) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("new Obligation(\"");
     String _pepAction = obl.getPepAction();
     _builder.append(_pepAction, "");
     _builder.append("\",Effect.");
-    Effect _evaluetedOn = obl.getEvaluetedOn();
-    String _name = _evaluetedOn.getName();
+    String _name = e.getName();
     _builder.append(_name, "");
     _builder.append(",ObligationType.");
     String _typeObl = obl.getTypeObl();

@@ -165,7 +165,7 @@ class Facpl2OutlineTreeProvider extends DefaultOutlineTreeProvider {
 			}
 		}
 
-		createEStructuralFeatureNode(polSetNode, pol, Facpl2Package.Literals.FACPL_POLICY__OBL, null, "obligation",
+		createEStructuralFeatureNode(polSetNode, pol, Facpl2Package.Literals.FACPL__POLICIES, null, "obligation",
 			true);
 
 	}

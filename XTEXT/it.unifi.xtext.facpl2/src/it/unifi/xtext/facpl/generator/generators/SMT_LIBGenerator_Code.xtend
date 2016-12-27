@@ -215,8 +215,19 @@ def createMainConstraint(FacplPolicy pol) '''
 «ENDIF»
 «««	STEP 2 -> get constraint of Obligations
 ;##### Policy Obligations
-«IF pol.obl != null»
-	«getObligationConstr(pol.obl,pol.name)»
+«IF pol instanceof PolicySet»
+«IF pol.oblp != null»
+	«getObligationConstr_Eff(pol.oblp,pol.name,Effect.PERMIT)»
+ «ELSE»
+ 	«getObligationsConstr_Default(pol.name,Effect.PERMIT)»
+«ENDIF»
+«IF pol.obld != null»
+	«getObligationConstr_Eff(pol.obld,pol.name,Effect.DENY)»
+«ELSE»
+	«getObligationsConstr_Default(pol.name,Effect.DENY)»
+«ENDIF»
+«ELSE»
+	«getObligationConstr_Eff((pol as Rule).obl,pol.name, (pol as Rule).effect)»
 «ENDIF»
 «««	STEP 3 -> get constraint of Combining Algorithm
 «IF pol instanceof PolicySet»
@@ -268,9 +279,16 @@ def dispatch getInternalPolicyConstr(Rule r)
 «««	STEP 2 -> get constraint of Obligations
 ;##### Rule Obligations
 «IF r.obl != null»
-«getObligationConstr(r.obl,r.name)»
+«IF r.effect.equals(Effect.PERMIT)»
+«getObligationConstr_Eff(r.obl,r.name, r.effect)»
+«getObligationsConstr_Default(r.name,Effect.DENY)»
 «ELSE»
-«getObligationsConstr_Default(r.name)»
+«getObligationConstr_Eff(r.obl,r.name, r.effect)»
+«getObligationsConstr_Default(r.name,Effect.PERMIT)»
+«ENDIF»
+«ELSE»
+«getObligationsConstr_Default(r.name,Effect.PERMIT)»
+«getObligationsConstr_Default(r.name,Effect.DENY)»
 «ENDIF»
 «««	STEP 3 -> building up the four constraints modelling the policy
 ;##### Rule Constraints
@@ -336,11 +354,16 @@ def dispatch getInternalPolicyConstr(PolicySet pol)
 	«ENDIF»
 «««	STEP 2 -> get constraint of Obligations
 ;##### Policy Obligations
-	«IF pol.obl != null»
-«getObligationConstr(pol.obl,pol.name)»
-	«ELSE»
-«getObligationsConstr_Default(pol.name)»
-	«ENDIF»
+«IF pol.oblp != null»
+	«getObligationConstr_Eff(pol.oblp,pol.name, Effect.PERMIT)»
+«ELSE»
+	«getObligationsConstr_Default(pol.name,Effect.PERMIT)»
+«ENDIF»
+«IF pol.obld != null»
+	«getObligationConstr_Eff(pol.obld,pol.name, Effect.DENY)»
+«ELSE»
+	«getObligationsConstr_Default(pol.name,Effect.DENY)»
+«ENDIF»
 «««	STEP 3 -> get constraint of Combining Algorithm
 ;##### Policy Combining Algorithm
 «getCombiningAlgorithmConstr(pol)»
@@ -441,21 +464,21 @@ def getFinalConstrPSet(String p_name,FacplPolicy pol)'''
 	 * Obligation Constraint
 	 * ##############################################
 	 */
-	def getObligationConstr(List<Obligation> obls, String name) '''
-	«getObligationConstr_Eff(obls,name, Effect.PERMIT)»
-	 
-	«getObligationConstr_Eff(obls,name, Effect.DENY)»
-	 
-	'''
+//	def getObligationConstr(List<Obligation> obls, String name, Effect e) '''
+//	«getObligationConstr_Eff(obls,name, Effect.PERMIT, e)»
+//	 
+//	«getObligationConstr_Eff(obls,name, Effect.DENY, e)»
+//	 
+//	'''
 			
 	def getObligationConstr_Eff (List<Obligation> obls, String name, Effect ef){
 		val StringBuffer str = new StringBuffer()
 		str.append("(define-fun cns_obl_"+ef.toString +"_"+ name +" ()  Bool\n")
-		if (obls.size > 0){
+		if (obls.size > 0 ){
 			str.append("\t (and ") 
 			var i = 0
 			for( o : obls){
-			 	if (o.evaluetedOn.equals(ef)){
+//			 	if (o.evaluetedOn.equals(ef)){
 					i = i +1
 					if (o.expr.size > 0){
 						str.append("(and\n ") 
@@ -467,7 +490,7 @@ def getFinalConstrPSet(String p_name,FacplPolicy pol)'''
 					}else{
 						str.append("true")
 					}
-				}
+//				}
 			}
 			if (i == 0){
 				str.append("\t true true")
@@ -480,11 +503,9 @@ def getFinalConstrPSet(String p_name,FacplPolicy pol)'''
 		return str.toString
 	}
 		
-	def getObligationsConstr_Default(String name)'''
-	(define-fun cns_obl_permit_«name» ()  Bool true )
-	(define-fun cns_obl_deny_«name» ()  Bool true )
+	def getObligationsConstr_Default(String name, Effect e)'''
+	(define-fun cns_obl_«e.toString»t_«name» ()  Bool true )
 	'''
-
 
 	/* ########################################################################
 	 * Auxiliary Functions for Datatype, functions and attributes declarations 

@@ -1,9 +1,8 @@
 package it.unifi.xtext.facpl.ui.wizard;
 
 import org.eclipse.ui.dialogs.WizardNewProjectCreationPage;
+import org.eclipse.xtext.ui.wizard.IExtendedProjectInfo;
 import org.eclipse.xtext.ui.wizard.IProjectCreator;
-import org.eclipse.xtext.ui.wizard.IProjectInfo;
-
 import com.google.inject.Inject;
 
 public class Facpl2NewProjectWizard extends org.eclipse.xtext.ui.wizard.XtextNewProjectWizard {
@@ -17,8 +16,8 @@ public class Facpl2NewProjectWizard extends org.eclipse.xtext.ui.wizard.XtextNew
 	}
 
 	/**
-	 * Use this method to add pages to the wizard. The one-time generated
-	 * version of this class will add a default new project page to the wizard.
+	 * Use this method to add pages to the wizard.
+	 * The one-time generated version of this class will add a default new project page to the wizard.
 	 */
 	@Override
 	public void addPages() {
@@ -29,13 +28,15 @@ public class Facpl2NewProjectWizard extends org.eclipse.xtext.ui.wizard.XtextNew
 	}
 
 	/**
-	 * Use this method to read the project settings from the wizard pages and
-	 * feed them into the project info class.
+	 * Use this method to read the project settings from the wizard pages and feed them into the project info class.
 	 */
 	@Override
-	protected IProjectInfo getProjectInfo() {
+	protected IExtendedProjectInfo getProjectInfo() {
 		it.unifi.xtext.facpl.ui.wizard.Facpl2ProjectInfo projectInfo = new it.unifi.xtext.facpl.ui.wizard.Facpl2ProjectInfo();
 		projectInfo.setProjectName(mainPage.getProjectName());
+		if (!mainPage.useDefaults()) {
+			projectInfo.setLocationPath(mainPage.getLocationPath());
+		}
 		return projectInfo;
 	}
 

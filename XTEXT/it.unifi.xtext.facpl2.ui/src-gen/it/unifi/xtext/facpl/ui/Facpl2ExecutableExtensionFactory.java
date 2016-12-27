@@ -12,7 +12,7 @@ import it.unifi.xtext.facpl.ui.internal.Facpl2Activator;
 
 /**
  * This class was generated. Customizations should only happen in a newly
- * introduced subclass.
+ * introduced subclass. 
  */
 public class Facpl2ExecutableExtensionFactory extends AbstractGuiceAwareExecutableExtensionFactory {
 
@@ -20,10 +20,10 @@ public class Facpl2ExecutableExtensionFactory extends AbstractGuiceAwareExecutab
 	protected Bundle getBundle() {
 		return Facpl2Activator.getInstance().getBundle();
 	}
-
+	
 	@Override
 	protected Injector getInjector() {
 		return Facpl2Activator.getInstance().getInjector(Facpl2Activator.IT_UNIFI_XTEXT_FACPL_FACPL2);
 	}
-
+	
 }

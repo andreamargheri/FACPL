@@ -170,6 +170,12 @@ class TokenHighlight implements ISemanticHighlightingCalculator {
 				if ((o as Keyword).getValue().equals("obl:")){
 					acceptor.addPosition(node.getOffset(), 4, SyntaxHighlighting.POLICY_KEYWORD);
 				}
+				if ((o as Keyword).getValue().equals("obl-p:")){
+					acceptor.addPosition(node.getOffset(), 6, SyntaxHighlighting.POLICY_KEYWORD);
+				}
+				if ((o as Keyword).getValue().equals("obl-d:")){
+					acceptor.addPosition(node.getOffset(), 6, SyntaxHighlighting.POLICY_KEYWORD);
+				}
 				if ((o as Keyword).getValue().equals("include")){
 					acceptor.addPosition(node.getOffset(), 7, SyntaxHighlighting.POLICY_KEYWORD);
 				}
