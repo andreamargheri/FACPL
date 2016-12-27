@@ -108,6 +108,9 @@ class SMT_LIBGenerator_Code {
 			}
 		}
 		
+		println("START SMT-LIB Generation Code...")
+		
+		
 		/* Constraint Functions and Various Declarations */
 		return getGeneralDeclarations()
 
@@ -130,6 +133,8 @@ class SMT_LIBGenerator_Code {
 		}
 		
 		/*  Check TYPE INFERENCE  -> Policy and Request*/
+		
+		
 		var FacplType type = tInf.doSwitch(resource)
 
 		var FacplType type1 = tInf.doSwitch(request)
@@ -164,7 +169,7 @@ class SMT_LIBGenerator_Code {
 				stringEls.add(el.value.toString)
 			}
 		}
-		
+			
 		/* Constraint Functions and Various Declarations */
 		return getGeneralDeclarations()
 	}
@@ -504,7 +509,7 @@ def getFinalConstrPSet(String p_name,FacplPolicy pol)'''
 	}
 		
 	def getObligationsConstr_Default(String name, Effect e)'''
-	(define-fun cns_obl_«e.toString»t_«name» ()  Bool true )
+	(define-fun cns_obl_«e.toString»_«name» ()  Bool true )
 	'''
 
 	/* ########################################################################
@@ -678,6 +683,19 @@ def getFinalConstrPSet(String p_name,FacplPolicy pol)'''
 		)
 	)
 	
+	(define-fun «funID.NEQUAL.toString.replaceAll('-','')»String ((x (TValue String)) (y (TValue String))) (TValue Bool)
+			(ite (and (isValString x) (isValString y))
+				(ite (= (val x) (val y))
+					(mk-val false false false)
+					(mk-val true false false)
+				)
+				(ite (or (err x) (err y))
+					(mk-val false false true)
+					(mk-val false true false)
+				)
+			)
+	)
+	
 	(define-fun isValSetString ((x (TValue (Set String)))) Bool
 		(ite (and (not (miss x)) (not (err x))) true false)
 	)
@@ -739,7 +757,7 @@ def getFinalConstrPSet(String p_name,FacplPolicy pol)'''
 		}
 		
 		if (function.functionId.equals(funID.IN)){
-			return getId(function.functionId.toString)+FacplType::getTypeSet(typeF)
+			return getId(function.functionId.toString)+FacplType::getTypeSet_SMT(typeF)
 		}else{
 			return getId(function.functionId.toString)+getType(typeF)
 		}

@@ -54,6 +54,7 @@ import java.util.Set;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Exceptions;
+import org.eclipse.xtext.xbase.lib.InputOutput;
 
 @SuppressWarnings("all")
 public class SMT_LIBGenerator_Code {
@@ -118,6 +119,7 @@ public class SMT_LIBGenerator_Code {
         this.stringEls.add(_string);
       }
     }
+    InputOutput.<String>println("START SMT-LIB Generation Code...");
     return this.getGeneralDeclarations();
   }
   
@@ -1039,7 +1041,7 @@ public class SMT_LIBGenerator_Code {
     _builder.append("(define-fun cns_obl_");
     String _string = e.toString();
     _builder.append(_string, "");
-    _builder.append("t_");
+    _builder.append("_");
     _builder.append(name, "");
     _builder.append(" ()  Bool true )");
     _builder.newLineIfNotEmpty();
@@ -1426,6 +1428,45 @@ public class SMT_LIBGenerator_Code {
         _builder.append(")");
         _builder.newLine();
         _builder.newLine();
+        _builder.append("(define-fun ");
+        String _string_1 = funID.NEQUAL.toString();
+        String _replaceAll = _string_1.replaceAll("-", "");
+        _builder.append(_replaceAll, "");
+        _builder.append("String ((x (TValue String)) (y (TValue String))) (TValue Bool)");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t\t");
+        _builder.append("(ite (and (isValString x) (isValString y))");
+        _builder.newLine();
+        _builder.append("\t\t\t");
+        _builder.append("(ite (= (val x) (val y))");
+        _builder.newLine();
+        _builder.append("\t\t\t\t");
+        _builder.append("(mk-val false false false)");
+        _builder.newLine();
+        _builder.append("\t\t\t\t");
+        _builder.append("(mk-val true false false)");
+        _builder.newLine();
+        _builder.append("\t\t\t");
+        _builder.append(")");
+        _builder.newLine();
+        _builder.append("\t\t\t");
+        _builder.append("(ite (or (err x) (err y))");
+        _builder.newLine();
+        _builder.append("\t\t\t\t");
+        _builder.append("(mk-val false false true)");
+        _builder.newLine();
+        _builder.append("\t\t\t\t");
+        _builder.append("(mk-val false true false)");
+        _builder.newLine();
+        _builder.append("\t\t\t");
+        _builder.append(")");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append(")");
+        _builder.newLine();
+        _builder.append(")");
+        _builder.newLine();
+        _builder.newLine();
         _builder.append("(define-fun isValSetString ((x (TValue (Set String)))) Bool");
         _builder.newLine();
         _builder.append("\t");
@@ -1435,8 +1476,8 @@ public class SMT_LIBGenerator_Code {
         _builder.newLine();
         _builder.newLine();
         _builder.append("(define-fun ");
-        String _string_1 = funID.IN.toString();
-        _builder.append(_string_1, "");
+        String _string_2 = funID.IN.toString();
+        _builder.append(_string_2, "");
         _builder.append("String ((x (TValue String)) (y (TValue (Set String)))) (TValue Bool)");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
@@ -1582,8 +1623,8 @@ public class SMT_LIBGenerator_Code {
       funID _functionId_1 = function.getFunctionId();
       String _string = _functionId_1.toString();
       String _id = this.getId(_string);
-      FacplType _typeSet = FacplType.getTypeSet(typeF);
-      return (_id + _typeSet);
+      String _typeSet_SMT = FacplType.getTypeSet_SMT(typeF);
+      return (_id + _typeSet_SMT);
     } else {
       funID _functionId_2 = function.getFunctionId();
       String _string_1 = _functionId_2.toString();

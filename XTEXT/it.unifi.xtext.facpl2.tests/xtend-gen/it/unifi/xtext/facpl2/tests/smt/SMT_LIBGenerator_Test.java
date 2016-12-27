@@ -105,7 +105,7 @@ public class SMT_LIBGenerator_Test extends AbstractXtextTests {
       _builder_6.append("policies: ");
       _builder_6.newLine();
       _builder_6.append("\t");
-      _builder_6.append("Rule r1 (permit target: cat/id && equal(cat1/id,5))");
+      _builder_6.append("Rule r1 (permit target: cat/id && equal(cat1/id,5100))");
       _builder_6.newLine();
       _builder_6.append("}");
       Facpl _parse_2 = this._parseHelper.parse(_builder_6);

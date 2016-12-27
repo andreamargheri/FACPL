@@ -101,6 +101,31 @@ public enum FacplType {
 			return null;
 		}
 	}
+	
+	
+
+	/**
+	 * Return the type * of the SET type SET_* in input for the SMT-LIB Constraint
+	 * 
+	 * @param f
+	 * @return
+	 */
+	public static String getTypeSet_SMT(FacplType f) {
+		switch (f) {
+		case SET_BOOLEAN:
+			return "Bool";
+		case SET_INT:
+			return "Int";
+		case SET_DOUBLE:
+			return "Real";
+		case SET_STRING:
+			return "String";
+		case SET_DATETIME:
+			return "Int";
+		default:
+			return null;
+		}
+	}
 
 	public static boolean equalType(FacplType type, TypeLiteral literal) {
 		switch (literal) {

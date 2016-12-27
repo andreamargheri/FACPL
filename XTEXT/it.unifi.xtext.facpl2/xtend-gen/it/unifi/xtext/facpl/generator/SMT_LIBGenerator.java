@@ -24,6 +24,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.generator.IFileSystemAccess;
 import org.eclipse.xtext.xbase.lib.Exceptions;
+import org.eclipse.xtext.xbase.lib.InputOutput;
 
 @SuppressWarnings("all")
 public class SMT_LIBGenerator extends SMT_LIBGenerator_Code {
@@ -426,8 +427,8 @@ public class SMT_LIBGenerator extends SMT_LIBGenerator_Code {
    */
   public String doGenerateSMT_LIB_Test(final Facpl resource) throws Exception {
     StringBuffer str = new StringBuffer();
-    CharSequence _initialiseFacplResource = this.initialiseFacplResource(resource);
-    str.append(_initialiseFacplResource);
+    CharSequence init = this.initialiseFacplResource(resource);
+    InputOutput.<String>println("Generating policy code...");
     EList<PolicySet> _policies = resource.getPolicies();
     boolean _notEquals = (!Objects.equal(_policies, null));
     if (_notEquals) {
@@ -437,6 +438,8 @@ public class SMT_LIBGenerator extends SMT_LIBGenerator_Code {
         str.append(_createMainConstraint);
       }
     }
-    return str.toString();
+    String _plus = (init + "\n");
+    String _string = str.toString();
+    return (_plus + _string);
   }
 }

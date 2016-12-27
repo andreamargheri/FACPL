@@ -160,6 +160,7 @@ TimeLiteral:
 terminal BOOLEAN returns ecore::EBoolean:
 	'true' | 'false';
 
+/* NB INTEGER UNSIGNED! */
 terminal INT returns ecore::EInt:
 	('0'..'9')+;
 

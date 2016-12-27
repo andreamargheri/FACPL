@@ -382,7 +382,9 @@ class SMT_LIBGenerator extends SMT_LIBGenerator_Code {
 		var StringBuffer str = new StringBuffer()
 
 		/* Type checks + Initialization of constants and various */
-		str.append(initialiseFacplResource(resource))
+		var init = initialiseFacplResource(resource)
+
+		println("Generating policy code...")
 
 		/* Compiling Policies that are declared out from the brackets of the Main */
 		if (resource.getPolicies != null) {
@@ -391,7 +393,7 @@ class SMT_LIBGenerator extends SMT_LIBGenerator_Code {
 			}
 		}
 
-		return str.toString
+		return init + "\n" + str.toString
 	}
 
 }

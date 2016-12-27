@@ -85,7 +85,7 @@ public class SMT_LIBGenerator_Test extends AbstractXtextTests {
 			'''
 		PolicySet Name {permit-overrides 
 		policies: 
-			Rule r1 (permit target: cat/id && equal(cat1/id,5))
+			Rule r1 (permit target: cat/id && equal(cat1/id,5100))
 		}'''
 		).parse
 
