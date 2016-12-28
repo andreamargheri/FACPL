@@ -21,6 +21,7 @@ import it.unifi.xacmlToFacpl.jaxb.AttributeType;
 import it.unifi.xacmlToFacpl.jaxb.AttributeValueType;
 import it.unifi.xacmlToFacpl.jaxb.AttributesType;
 import it.unifi.xacmlToFacpl.jaxb.ConditionType;
+import it.unifi.xacmlToFacpl.jaxb.EffectType;
 import it.unifi.xacmlToFacpl.jaxb.IdReferenceType;
 import it.unifi.xacmlToFacpl.jaxb.MatchType;
 import it.unifi.xacmlToFacpl.jaxb.ObligationExpressionType;
@@ -144,11 +145,58 @@ public class XacmlParser {
 				st.append(parseID(((IdReferenceType) p.getValue()).getValue()) + "\n");
 			}
 		}
-		if (polSet.getObligationExpressions() != null || polSet.getAdviceExpressions() != null) {
-			st.append("\n");
-			// oblgiations and advices
-			st.append("obl: " + parseObls(polSet.getObligationExpressions(), polSet.getAdviceExpressions()) + "\n");
+		st.append("\n");
+
+		StringBuffer st_permit = new StringBuffer();
+		StringBuffer st_deny = new StringBuffer();
+
+		Boolean flag_permit = false;
+		Boolean flag_deny = false;
+
+		// obligation and advice
+		if (polSet.getObligationExpressions() != null) {
+			// PERMIT_LIST
+			for (ObligationExpressionType obl : polSet.getObligationExpressions().getObligationExpression()) {
+				if (obl.getFulfillOn().equals(EffectType.PERMIT)) {
+					flag_permit = true;
+					st_permit.append(parseObl(obl));
+				}
+			}
+			// DENY_LIST
+			for (ObligationExpressionType obl : polSet.getObligationExpressions().getObligationExpression()) {
+				if (obl.getFulfillOn().equals(EffectType.DENY)) {
+					flag_deny = true;
+					st_permit.append(parseObl(obl));
+				}
+			}
 		}
+		if (polSet.getAdviceExpressions() != null) {
+			// PERMIT_LIST
+			for (AdviceExpressionType adv : polSet.getAdviceExpressions().getAdviceExpression()) {
+				if (adv.getAppliesTo().equals(EffectType.PERMIT)) {
+					flag_permit = true;
+					st_permit.append(parseAdv(adv));
+				}
+			}
+			// DENY_LIST
+			for (AdviceExpressionType adv : polSet.getAdviceExpressions().getAdviceExpression()) {
+				if (adv.getAppliesTo().equals(EffectType.DENY)) {
+					flag_deny = true;
+					st_deny.append(parseAdv(adv));
+				}
+			}
+		}
+
+		// add PERMIT_DENY LIST
+		if (flag_permit) {
+			st.append("obl-p:");
+			st.append(st_permit.toString());
+		}
+		if (flag_deny) {
+			st.append("obl-d:");
+			st.append(st_deny.toString());
+		}
+
 		st.append("}");
 		l.trace("End PolicySet Parsing");
 		return st;
@@ -190,11 +238,57 @@ public class XacmlParser {
 				st.append(parseRule((RuleType) r) + "\n");
 			}
 		}
-		// oblgiations and advices
-		if (policy.getObligationExpressions() != null || policy.getAdviceExpressions() != null) {
-			st.append("\n");
-			st.append("obl: " + parseObls(policy.getObligationExpressions(), policy.getAdviceExpressions()) + "\n");
+
+		StringBuffer st_permit = new StringBuffer();
+		StringBuffer st_deny = new StringBuffer();
+
+		Boolean flag_permit = false;
+		Boolean flag_deny = false;
+
+		// obligation and advice
+		if (policy.getObligationExpressions() != null) {
+			// PERMIT_LIST
+			for (ObligationExpressionType obl : policy.getObligationExpressions().getObligationExpression()) {
+				if (obl.getFulfillOn().equals(EffectType.PERMIT)) {
+					flag_permit = true;
+					st_permit.append(parseObl(obl));
+				}
+			}
+			// DENY_LIST
+			for (ObligationExpressionType obl : policy.getObligationExpressions().getObligationExpression()) {
+				if (obl.getFulfillOn().equals(EffectType.DENY)) {
+					flag_deny = true;
+					st_permit.append(parseObl(obl));
+				}
+			}
 		}
+		if (policy.getAdviceExpressions() != null) {
+			// PERMIT_LIST
+			for (AdviceExpressionType adv : policy.getAdviceExpressions().getAdviceExpression()) {
+				if (adv.getAppliesTo().equals(EffectType.PERMIT)) {
+					flag_permit = true;
+					st_permit.append(parseAdv(adv));
+				}
+			}
+			// DENY_LIST
+			for (AdviceExpressionType adv : policy.getAdviceExpressions().getAdviceExpression()) {
+				if (adv.getAppliesTo().equals(EffectType.DENY)) {
+					flag_deny = true;
+					st_deny.append(parseAdv(adv));
+				}
+			}
+		}
+
+		// add PERMIT_DENY LIST
+		if (flag_permit) {
+			st.append("obl-p:");
+			st.append(st_permit.toString());
+		}
+		if (flag_deny) {
+			st.append("obl-d:");
+			st.append(st_deny.toString());
+		}
+
 		st.append("}");
 		l.trace("End Policy Parsing");
 		return st;
@@ -231,10 +325,25 @@ public class XacmlParser {
 			}
 			s.append(parseCondition(r.getCondition()) + "\n");
 		}
+		
+		// obligation and advice
+		if (r.getObligationExpressions() != null) {
+			for (ObligationExpressionType obl : r.getObligationExpressions().getObligationExpression()) {
+				if (obl.getFulfillOn().equals(r.getEffect())) {
+					s.append(parseObl(obl));
+				}
+			}
 
-		if (r.getObligationExpressions() != null || r.getAdviceExpressions() != null) {
-			s.append("obl: " + parseObls(r.getObligationExpressions(), r.getAdviceExpressions()));
 		}
+		if (r.getAdviceExpressions() != null) {
+			for (AdviceExpressionType adv : r.getAdviceExpressions().getAdviceExpression()) {
+				if (adv.getAppliesTo().equals(r.getEffect())) {
+
+					s.append(parseAdv(adv));
+				}
+			}
+		}
+
 		// closing brackets
 		s.append(")");
 		return s.toString();
@@ -342,47 +451,96 @@ public class XacmlParser {
 		return s.toString();
 	}
 
+	// /**
+	// * Set of obligations and advice of rule, policy and policy set items
+	// *
+	// * @param obls
+	// * @param advs
+	// * @return
+	// */
+	// private String parseObls(ObligationExpressionsType obls,
+	// AdviceExpressionsType advs) {
+	// StringBuffer s = new StringBuffer();
+	// // obls
+	// if (obls != null) {
+	// for (ObligationExpressionType o : obls.getObligationExpression()) {
+	// s.append("[ " + o.getFulfillOn().name().toLowerCase() + " M ");
+	// s.append(parseID(o.getObligationId()) + " ( ");
+	// // arguments
+	// int i = 0;
+	// for (AttributeAssignmentExpressionType arg :
+	// o.getAttributeAssignmentExpression()) {
+	// if (i > 0)
+	// s.append(",");
+	// s.append(parseArgumentObls(arg));
+	// i++;
+	// }
+	// s.append(")]\n");
+	// }
+	// }
+	// // adv
+	// if (advs != null) {
+	// for (AdviceExpressionType a : advs.getAdviceExpression()) {
+	// s.append("[ " + a.getAppliesTo().name().toLowerCase() + " O ");
+	// s.append(parseID(a.getAdviceId()) + " ( ");
+	// // arguments
+	// int i = 0;
+	// for (AttributeAssignmentExpressionType arg :
+	// a.getAttributeAssignmentExpression()) {
+	// if (i > 0)
+	// s.append(", ");
+	// s.append(parseArgumentObls(arg));
+	// i++;
+	// }
+	// s.append(")]\n");
+	// }
+	// }
+	// return s.toString();
+	// }
+
 	/**
-	 * Set of obligations and advice of rule, policy and policy set items
+	 * Parse a single Advice
 	 * 
-	 * @param obls
-	 * @param advs
+	 * @param a
 	 * @return
 	 */
-	private String parseObls(ObligationExpressionsType obls, AdviceExpressionsType advs) {
+	private String parseAdv(AdviceExpressionType a) {
 		StringBuffer s = new StringBuffer();
-		// obls
-		if (obls != null) {
-			for (ObligationExpressionType o : obls.getObligationExpression()) {
-				s.append("[ " + o.getFulfillOn().name().toLowerCase() + " M  ");
-				s.append(parseID(o.getObligationId()) + " ( ");
-				// arguments
-				int i = 0;
-				for (AttributeAssignmentExpressionType arg : o.getAttributeAssignmentExpression()) {
-					if (i > 0)
-						s.append(",");
-					s.append(parseArgumentObls(arg));
-					i++;
-				}
-				s.append(")]\n");
-			}
+		s.append("[ O ");
+		s.append(parseID(a.getAdviceId()) + " ( ");
+		// arguments
+		int i = 0;
+		for (AttributeAssignmentExpressionType arg : a.getAttributeAssignmentExpression()) {
+			if (i > 0)
+				s.append(", ");
+			s.append(parseArgumentObls(arg));
+			i++;
 		}
-		// adv
-		if (advs != null) {
-			for (AdviceExpressionType a : advs.getAdviceExpression()) {
-				s.append("[ " + a.getAppliesTo().name().toLowerCase() + " O ");
-				s.append(parseID(a.getAdviceId()) + " ( ");
-				// arguments
-				int i = 0;
-				for (AttributeAssignmentExpressionType arg : a.getAttributeAssignmentExpression()) {
-					if (i > 0)
-						s.append(", ");
-					s.append(parseArgumentObls(arg));
-					i++;
-				}
-				s.append(")]\n");
-			}
+		s.append(")]\n");
+		return s.toString();
+	}
+
+	/**
+	 * Parse a single Obligation
+	 * 
+	 * @param o
+	 * @return
+	 */
+	private String parseObl(ObligationExpressionType o) {
+		StringBuffer s = new StringBuffer();
+
+		s.append("[ M  ");
+		s.append(parseID(o.getObligationId()) + " ( ");
+		// arguments
+		int i = 0;
+		for (AttributeAssignmentExpressionType arg : o.getAttributeAssignmentExpression()) {
+			if (i > 0)
+				s.append(",");
+			s.append(parseArgumentObls(arg));
+			i++;
 		}
+		s.append(")]\n");
+
 		return s.toString();
 	}
 
@@ -525,7 +683,7 @@ public class XacmlParser {
 			int i = 0;
 			for (JAXBElement<?> ex : ob.getExpression()) {
 				if (i > 0)
-					s.append(" "+ op + " ");
+					s.append(" " + op + " ");
 				s.append(parseExpr(ex));
 				i++;
 			}
