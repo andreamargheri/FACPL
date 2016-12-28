@@ -128,7 +128,7 @@ public class SMT_LIBGenerator_Test extends AbstractXtextTests {
 		PolicySet Name {permit-overrides 
 		policies: 
 			Rule r1 (permit target: true
-			obl: [permit M log(5,6.6,false, cat/id,"prova")])
+			obl: [M log(5,6.6,false, cat/id,"prova")])
 		}'''
 		).parse
 

@@ -350,14 +350,14 @@ class ValidatorChecks {
 			Rule RuleP ( permit target: equal ( "John" , subject / id ) && in ( action / id , set( "read" , "seek" ) ) 
 				
 				obl:
-				[ permit M action1 ( subject / name ) ]
+				[  M action1 ( subject / name ) ]
 			)
 			Rule RuleD ( deny target: in ( action / id , set( "write" , "checkout" ) ) 
 				obl:
-				[ deny M action2 ( subject / name ) ]
+				[  M action2 ( subject / name ) ]
 			)
-			obl:
-			[ permit M log ( "Resource accessed: " , resource / id ) ]
+			obl-p:
+			[ M log ( "Resource accessed: " , resource / id ) ]
 		}'''.parse
 		
 		model.assertNoErrors()
@@ -369,22 +369,23 @@ class ValidatorChecks {
 				target: equal ( "4567-1" , resource / id ) policies:
 				Rule RuleP ( permit target: equal ( "John" , subject / id ) && in ( action / id , set( "read" , "seek" ) ) 
 					obl:
-					[ permit M action1 ( subject / name ) ]
+					[ M action1 ( subject / name ) ]
 				)
 				Rule RuleD ( deny target: equal ( "Mark" , subject / id ) && in ( action / id , set( "write" , "checkout" ) ) 
 					obl:
-					[ deny M action2 ( subject / name ) ]
+					[ M action2 ( subject / name ) ]
 				)
 			}
 			PolicySet obligation_2 { permit-overrides
 				policies:
 				Rule rule1 ( deny )
-				obl:
-				[ deny M log ( "Subject: " , subject / id , subject / name ) ]
+				obl-d:
+				[ M log ( "Subject: " , subject / id , subject / name ) ]
 			}
-			obl:
-			[ permit M log ( "Resource accessed: " , resource / id ) ]
-			[ deny M log ( "Resource requested: " , resource / id ) ]
+			obl-p:
+			[ M log ( "Resource accessed: " , resource / id ) ]
+			obl-d:
+			[ M log ( "Resource requested: " , resource / id ) ]
 		}'''.parse
 		
 		model.assertNoErrors()

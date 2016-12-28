@@ -1070,7 +1070,7 @@ public class TypeCheck_Test {
       _builder.append("\t");
       _builder.newLine();
       _builder.append("\t");
-      _builder.append("obl: [permit M log(5,6.6,false, cat/id,\"prova\")])");
+      _builder.append("obl: [M log(5,6.6,false, cat/id,\"prova\")])");
       _builder.newLine();
       _builder.append("}");
       Facpl model = this._parseHelper.parse(_builder);

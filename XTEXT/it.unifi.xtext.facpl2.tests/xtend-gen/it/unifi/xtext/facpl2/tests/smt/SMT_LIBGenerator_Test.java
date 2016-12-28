@@ -168,7 +168,7 @@ public class SMT_LIBGenerator_Test extends AbstractXtextTests {
       _builder_2.append("Rule r1 (permit target: true");
       _builder_2.newLine();
       _builder_2.append("\t");
-      _builder_2.append("obl: [permit M log(5,6.6,false, cat/id,\"prova\")])");
+      _builder_2.append("obl: [M log(5,6.6,false, cat/id,\"prova\")])");
       _builder_2.newLine();
       _builder_2.append("}");
       Facpl _parse = this._parseHelper.parse(_builder_2);

@@ -6,4 +6,5 @@ policies:
 Rule r1 (permit  target: cat/id
 )
 }
+
 }

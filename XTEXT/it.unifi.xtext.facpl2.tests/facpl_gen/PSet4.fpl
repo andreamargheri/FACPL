@@ -1,5 +1,5 @@
 PolicySet Name { deny-unless-permit-greedy
-target: ((equal(true , cat/id)))&&((less-than(4.0 , n/id)))
+target: (equal(true , cat/id))&&(less-than(4.0 , n/id))
 policies: 
 PolicySet PolicyEnclosingRuler1 { permit-overrides-greedy
 policies: 
@@ -11,4 +11,5 @@ policies:
 Rule r2 (permit  target: cat/id
 )
 }
+
 }

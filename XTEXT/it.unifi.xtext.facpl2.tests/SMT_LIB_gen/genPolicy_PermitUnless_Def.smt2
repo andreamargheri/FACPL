@@ -110,6 +110,45 @@
 	)
 )
 
+(define-fun notequalBool ((x (TValue Bool)) (y (TValue Bool))) (TValue Bool)
+	(ite (or (err x) (err y))
+		(mk-val false false true)
+		(ite (or (miss x) (miss y))
+			(mk-val false true false)
+			(ite (= (val x) (val y))
+				(mk-val false false false)
+				(mk-val true false false)
+			)
+		)
+	)
+)
+
+(define-fun notequalInt ((x (TValue Int)) (y (TValue Int))) (TValue Bool)
+	(ite (or (err x) (err y))
+		(mk-val false false true)
+		(ite (or (miss x) (miss y))
+			(mk-val false true false)
+			(ite (= (val x) (val y))
+				(mk-val false false false)
+				(mk-val true false false)
+			)
+		)
+	)
+)
+
+(define-fun notequalReal ((x (TValue Real)) (y (TValue Real))) (TValue Bool)
+	(ite (or (err x) (err y))
+		(mk-val false false true)
+		(ite (or (miss x) (miss y))
+			(mk-val false true false)
+			(ite (= (val x) (val y))
+				(mk-val false false false)
+				(mk-val true false false)
+			)
+		)
+	)
+)
+
 (define-fun isValInt ((x (TValue Int))) Bool
 	(ite (and (not (miss x)) (not (err x))) true false)
 )
@@ -395,6 +434,7 @@
 (assert (not (miss const_5.5))) 
 (assert (not (err const_5.5)))
 ;################################ END ATTRIBUTEs AND CONSTANTs DECLARATION #############################
+
 ;################### START CONSTRAINT RULE r1 #######################
 ;##### Rule Target
 (define-fun cns_target_r1 () (TValue Bool)
@@ -404,11 +444,7 @@
 (define-fun cns_obl_permit_r1 ()  Bool
 true
 )
- 
-(define-fun cns_obl_deny_r1 ()  Bool
-true
-)
- 
+(define-fun cns_obl_deny_r1 ()  Bool true )
 ;##### Rule Constraints
 ;PERMIT
 (define-fun cns_r1_permit () Bool
@@ -447,11 +483,9 @@ true
 (define-fun cns_obl_permit_Name ()  Bool
 true
 )
- 
 (define-fun cns_obl_deny_Name ()  Bool
 true
 )
- 
 ;##### Policy Combining Algorithm
 (define-fun cns_Name_cmb_final_permit () Bool
 		(and 

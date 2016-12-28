@@ -112,6 +112,45 @@
 	)
 )
 
+(define-fun notequalBool ((x (TValue Bool)) (y (TValue Bool))) (TValue Bool)
+	(ite (or (err x) (err y))
+		(mk-val false false true)
+		(ite (or (miss x) (miss y))
+			(mk-val false true false)
+			(ite (= (val x) (val y))
+				(mk-val false false false)
+				(mk-val true false false)
+			)
+		)
+	)
+)
+
+(define-fun notequalInt ((x (TValue Int)) (y (TValue Int))) (TValue Bool)
+	(ite (or (err x) (err y))
+		(mk-val false false true)
+		(ite (or (miss x) (miss y))
+			(mk-val false true false)
+			(ite (= (val x) (val y))
+				(mk-val false false false)
+				(mk-val true false false)
+			)
+		)
+	)
+)
+
+(define-fun notequalReal ((x (TValue Real)) (y (TValue Real))) (TValue Bool)
+	(ite (or (err x) (err y))
+		(mk-val false false true)
+		(ite (or (miss x) (miss y))
+			(mk-val false true false)
+			(ite (= (val x) (val y))
+				(mk-val false false false)
+				(mk-val true false false)
+			)
+		)
+	)
+)
+
 (define-fun isValString ((x (TValue String))) Bool
 	(ite (and (not (miss x)) (not (err x))) true false)
 )
@@ -127,6 +166,19 @@
 			(mk-val false true false)
 		)
 	)
+)
+
+(define-fun notequalString ((x (TValue String)) (y (TValue String))) (TValue Bool)
+		(ite (and (isValString x) (isValString y))
+			(ite (= (val x) (val y))
+				(mk-val false false false)
+				(mk-val true false false)
+			)
+			(ite (or (err x) (err y))
+				(mk-val false false true)
+				(mk-val false true false)
+			)
+		)
 )
 
 (define-fun isValSetString ((x (TValue (Set String)))) Bool
@@ -484,20 +536,17 @@
 (assert (not (miss const_str_23))) 
 (assert (not (err const_str_23)))
 ;################################ END ATTRIBUTEs AND CONSTANTs DECLARATION #############################
+
 ;################### START CONSTRAINT RULE str_20 #######################
 ;##### Rule Target
 (define-fun cns_target_str_20 () (TValue Bool)
-	(inBoolean n_attr/str_5 const_set_1)
+	(inBool n_attr/str_5 const_set_1)
 )
 ;##### Rule Obligations
 (define-fun cns_obl_permit_str_20 ()  Bool
 true
 )
- 
-(define-fun cns_obl_deny_str_20 ()  Bool
-true
-)
- 
+(define-fun cns_obl_deny_str_20 ()  Bool true )
 ;##### Rule Constraints
 ;PERMIT
 (define-fun cns_str_20_permit () Bool
@@ -533,14 +582,10 @@ true
 	(inInt n_attr/str_13 const_set_2)
 )
 ;##### Rule Obligations
-(define-fun cns_obl_permit_str_21 ()  Bool
-true
-)
- 
 (define-fun cns_obl_deny_str_21 ()  Bool
 true
 )
- 
+(define-fun cns_obl_permit_str_21 ()  Bool true )
 ;##### Rule Constraints
 ;PERMIT
 (define-fun cns_str_21_permit () Bool
@@ -573,17 +618,13 @@ true
 ;################### START CONSTRAINT RULE str_22 #######################
 ;##### Rule Target
 (define-fun cns_target_str_22 () (TValue Bool)
-	(FAnd (FAnd (FAnd (FAnd (equalInt n_attr/str_2 const_67) (inBoolean n_attr/str_12 const_set_3)) (inBoolean n_attr/str_5 const_set_1)) (inString n_attr/str_7 const_set_4)) (equalString n_attr/str_11 const_str_25))
+	(FAnd (FAnd (FAnd (FAnd (equalInt n_attr/str_2 const_67) (inBool n_attr/str_12 const_set_3)) (inBool n_attr/str_5 const_set_1)) (inString n_attr/str_7 const_set_4)) (equalString n_attr/str_11 const_str_25))
 )
 ;##### Rule Obligations
 (define-fun cns_obl_permit_str_22 ()  Bool
 true
 )
- 
-(define-fun cns_obl_deny_str_22 ()  Bool
-true
-)
- 
+(define-fun cns_obl_deny_str_22 ()  Bool true )
 ;##### Rule Constraints
 ;PERMIT
 (define-fun cns_str_22_permit () Bool
@@ -622,11 +663,9 @@ true
 (define-fun cns_obl_permit_str_19 ()  Bool
 true
 )
- 
 (define-fun cns_obl_deny_str_19 ()  Bool
 true
 )
- 
 ;##### Policy Combining Algorithm
 (define-fun cns_str_19_cmb_str_20str_21_permit () Bool
 	 (or 

@@ -110,6 +110,45 @@
 	)
 )
 
+(define-fun notequalBool ((x (TValue Bool)) (y (TValue Bool))) (TValue Bool)
+	(ite (or (err x) (err y))
+		(mk-val false false true)
+		(ite (or (miss x) (miss y))
+			(mk-val false true false)
+			(ite (= (val x) (val y))
+				(mk-val false false false)
+				(mk-val true false false)
+			)
+		)
+	)
+)
+
+(define-fun notequalInt ((x (TValue Int)) (y (TValue Int))) (TValue Bool)
+	(ite (or (err x) (err y))
+		(mk-val false false true)
+		(ite (or (miss x) (miss y))
+			(mk-val false true false)
+			(ite (= (val x) (val y))
+				(mk-val false false false)
+				(mk-val true false false)
+			)
+		)
+	)
+)
+
+(define-fun notequalReal ((x (TValue Real)) (y (TValue Real))) (TValue Bool)
+	(ite (or (err x) (err y))
+		(mk-val false false true)
+		(ite (or (miss x) (miss y))
+			(mk-val false true false)
+			(ite (= (val x) (val y))
+				(mk-val false false false)
+				(mk-val true false false)
+			)
+		)
+	)
+)
+
 (define-fun isValInt ((x (TValue Int))) Bool
 	(ite (and (not (miss x)) (not (err x))) true false)
 )
@@ -366,6 +405,7 @@
 ;################### ATTRIBUTE DECLARATIONs #######################
 ;################### CONSTANTs DECLARATIONs #######################
 ;################################ END ATTRIBUTEs AND CONSTANTs DECLARATION #############################
+
 ;################### START CONSTRAINT RULE str_20 #######################
 ;##### Rule Target
 (define-fun cns_target_str_20 () (TValue Bool)	
@@ -374,7 +414,7 @@
 ;##### Rule Obligations
 (define-fun cns_obl_permit_str_20 ()  Bool
 	 (and true))
-(define-fun cns_obl_denyt_str_20 ()  Bool true )
+(define-fun cns_obl_deny_str_20 ()  Bool true )
 ;##### Rule Constraints
 ;PERMIT
 (define-fun cns_str_20_permit () Bool

@@ -112,6 +112,45 @@
 	)
 )
 
+(define-fun notequalBool ((x (TValue Bool)) (y (TValue Bool))) (TValue Bool)
+	(ite (or (err x) (err y))
+		(mk-val false false true)
+		(ite (or (miss x) (miss y))
+			(mk-val false true false)
+			(ite (= (val x) (val y))
+				(mk-val false false false)
+				(mk-val true false false)
+			)
+		)
+	)
+)
+
+(define-fun notequalInt ((x (TValue Int)) (y (TValue Int))) (TValue Bool)
+	(ite (or (err x) (err y))
+		(mk-val false false true)
+		(ite (or (miss x) (miss y))
+			(mk-val false true false)
+			(ite (= (val x) (val y))
+				(mk-val false false false)
+				(mk-val true false false)
+			)
+		)
+	)
+)
+
+(define-fun notequalReal ((x (TValue Real)) (y (TValue Real))) (TValue Bool)
+	(ite (or (err x) (err y))
+		(mk-val false false true)
+		(ite (or (miss x) (miss y))
+			(mk-val false true false)
+			(ite (= (val x) (val y))
+				(mk-val false false false)
+				(mk-val true false false)
+			)
+		)
+	)
+)
+
 (define-fun isValString ((x (TValue String))) Bool
 	(ite (and (not (miss x)) (not (err x))) true false)
 )
@@ -127,6 +166,19 @@
 			(mk-val false true false)
 		)
 	)
+)
+
+(define-fun notequalString ((x (TValue String)) (y (TValue String))) (TValue Bool)
+		(ite (and (isValString x) (isValString y))
+			(ite (= (val x) (val y))
+				(mk-val false false false)
+				(mk-val true false false)
+			)
+			(ite (or (err x) (err y))
+				(mk-val false false true)
+				(mk-val false true false)
+			)
+		)
 )
 
 (define-fun isValSetString ((x (TValue (Set String)))) Bool
@@ -457,6 +509,7 @@
 (assert (not (miss const_write))) 
 (assert (not (err const_write)))
 ;################################ END ATTRIBUTEs AND CONSTANTs DECLARATION #############################
+
 ;################### START CONSTRAINT RULE write #######################
 ;##### Rule Target
 (define-fun cns_target_write () (TValue Bool)
@@ -466,11 +519,7 @@
 (define-fun cns_obl_permit_write ()  Bool
 true
 )
- 
-(define-fun cns_obl_deny_write ()  Bool
-true
-)
- 
+(define-fun cns_obl_deny_write ()  Bool true )
 ;##### Rule Constraints
 ;PERMIT
 (define-fun cns_write_permit () Bool
@@ -509,11 +558,7 @@ true
 (define-fun cns_obl_permit_read ()  Bool
 true
 )
- 
-(define-fun cns_obl_deny_read ()  Bool
-true
-)
- 
+(define-fun cns_obl_deny_read ()  Bool true )
 ;##### Rule Constraints
 ;PERMIT
 (define-fun cns_read_permit () Bool
@@ -552,11 +597,7 @@ true
 (define-fun cns_obl_permit_pha ()  Bool
 true
 )
- 
-(define-fun cns_obl_deny_pha ()  Bool
-true
-)
- 
+(define-fun cns_obl_deny_pha ()  Bool true )
 ;##### Rule Constraints
 ;PERMIT
 (define-fun cns_pha_permit () Bool
@@ -604,10 +645,9 @@ true
 		 (not (err n_action/id))
 )
 ))
- 
 (define-fun cns_obl_deny_ePre ()  Bool
-	 (and 	 true true))
- 
+true
+)
 ;##### Policy Combining Algorithm
 (define-fun cns_ePre_cmb_writeread_permit () Bool
 	 (or cns_write_permit cns_read_permit)

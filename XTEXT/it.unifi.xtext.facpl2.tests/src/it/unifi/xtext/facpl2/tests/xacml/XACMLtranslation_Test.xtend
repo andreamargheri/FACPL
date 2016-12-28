@@ -94,8 +94,8 @@ class XACMLtranslation_Test extends AbstractXtextTests {
 		PolicySet Name {permit-overrides 
 			policies: 
 				Rule r1 (permit target: true)
-			obl: 
-			[permit M mail(cat/id)]
+			obl-p: 
+			[M mail(cat/id)]
 		}'''.parse
 
 		assertEquals(stubCheckXACML(model, "Obl"), true)
@@ -104,8 +104,8 @@ class XACMLtranslation_Test extends AbstractXtextTests {
 		PolicySet Name {permit-overrides 
 			policies: 
 				Rule r1 (permit target: true)
-			obl: 
-			[permit M mail(cat/id, true, 5, addition(4,5))]
+			obl-p: 
+			[ M mail(cat/id, true, 5, addition(4,5))]
 		}'''.parse
 
 		assertEquals(stubCheckXACML(model, "Obl"), true)
@@ -114,9 +114,10 @@ class XACMLtranslation_Test extends AbstractXtextTests {
 		PolicySet Name {permit-overrides 
 			policies: 
 				Rule r1 (permit target: true)
-			obl: 
-			[permit M mail(cat/id, true, 5, addition(4,5))]
-			[deny O mail(cat/id, true, 5, addition(4,5))]
+			obl-p: 
+			[ M mail(cat/id, true, 5, addition(4,5))]
+			obl-d:
+			[O mail(cat/id, true, 5, addition(4,5))]
 		}'''.parse
 
 		assertEquals(stubCheckXACML(model, "Obl"), true)

@@ -8,7 +8,7 @@
 ;#######################
 (define-sort Set (T) (Array Int T)) 
 ;################### STRING DECLARATIONs #######################
- (declare-datatypes () ((String s_read s_Andrea )))
+ (declare-datatypes () ((String s_read s_Andrea  s_AdditionalStringValue )))
 ;################### FACPL FUNCTION DECLARATIONs #######################
 (define-fun isFalse ((x (TValue Bool))) Bool
 	(ite (= x (mk-val false false false)) true false)
@@ -16,6 +16,13 @@
 
 (define-fun isTrue ((x (TValue Bool))) Bool
 	(ite (= x (mk-val true false false)) true false)
+)
+
+(define-fun isBool ((x (TValue Bool))) Bool
+		(ite (or (isFalse x) (isTrue x))
+			true
+			false
+		)
 )
 
 (define-fun isNotBoolValue ((x (TValue Bool))) Bool
@@ -105,6 +112,45 @@
 	)
 )
 
+(define-fun notequalBool ((x (TValue Bool)) (y (TValue Bool))) (TValue Bool)
+	(ite (or (err x) (err y))
+		(mk-val false false true)
+		(ite (or (miss x) (miss y))
+			(mk-val false true false)
+			(ite (= (val x) (val y))
+				(mk-val false false false)
+				(mk-val true false false)
+			)
+		)
+	)
+)
+
+(define-fun notequalInt ((x (TValue Int)) (y (TValue Int))) (TValue Bool)
+	(ite (or (err x) (err y))
+		(mk-val false false true)
+		(ite (or (miss x) (miss y))
+			(mk-val false true false)
+			(ite (= (val x) (val y))
+				(mk-val false false false)
+				(mk-val true false false)
+			)
+		)
+	)
+)
+
+(define-fun notequalReal ((x (TValue Real)) (y (TValue Real))) (TValue Bool)
+	(ite (or (err x) (err y))
+		(mk-val false false true)
+		(ite (or (miss x) (miss y))
+			(mk-val false true false)
+			(ite (= (val x) (val y))
+				(mk-val false false false)
+				(mk-val true false false)
+			)
+		)
+	)
+)
+
 (define-fun isValString ((x (TValue String))) Bool
 	(ite (and (not (miss x)) (not (err x))) true false)
 )
@@ -120,6 +166,19 @@
 			(mk-val false true false)
 		)
 	)
+)
+
+(define-fun notequalString ((x (TValue String)) (y (TValue String))) (TValue Bool)
+		(ite (and (isValString x) (isValString y))
+			(ite (= (val x) (val y))
+				(mk-val false false false)
+				(mk-val true false false)
+			)
+			(ite (or (err x) (err y))
+				(mk-val false false true)
+				(mk-val false true false)
+			)
+		)
 )
 
 (define-fun isValSetString ((x (TValue (Set String)))) Bool
@@ -425,11 +484,7 @@
 (define-fun cns_obl_permit_r1 ()  Bool
 true
 )
- 
-(define-fun cns_obl_deny_r1 ()  Bool
-true
-)
- 
+(define-fun cns_obl_deny_r1 ()  Bool true )
 ;##### Rule Constraints
 ;PERMIT
 (define-fun cns_r1_permit () Bool
@@ -446,8 +501,12 @@ true
 ;INDET
 (define-fun cns_r1_indet () Bool
 	(or 
-		(err cns_target_r1)
-		(isNotBoolValue cns_target_r1)
+		(not
+			(or  
+				(isBool cns_target_r1)
+				(miss cns_target_r1)
+			)
+		)
 		(and 
 			(isTrue cns_target_r1)
 			(not cns_obl_permit_r1)
@@ -464,11 +523,9 @@ true
 (define-fun cns_obl_permit_Name ()  Bool
 true
 )
- 
 (define-fun cns_obl_deny_Name ()  Bool
 true
 )
- 
 ;##### Policy Combining Algorithm
 (define-fun cns_Name_cmb_final_permit () Bool
 	cns_r1_permit
@@ -512,8 +569,12 @@ true
 ;INDET
 (define-fun cns_Name_indet () Bool
 	(or 
-		(err cns_target_Name)
-		(isNotBoolValue cns_target_Name)
+		(not
+			(or  
+				(isBool cns_target_Name)
+				(miss cns_target_Name)
+			)
+		)
 		(and (isTrue cns_target_Name) cns_Name_cmb_final_indet)
 		(and 
 			(isTrue cns_target_Name)
@@ -537,11 +598,7 @@ true
 (define-fun cns_obl_permit_r12 ()  Bool
 true
 )
- 
-(define-fun cns_obl_deny_r12 ()  Bool
-true
-)
- 
+(define-fun cns_obl_deny_r12 ()  Bool true )
 ;##### Rule Constraints
 ;PERMIT
 (define-fun cns_r12_permit () Bool
@@ -558,8 +615,12 @@ true
 ;INDET
 (define-fun cns_r12_indet () Bool
 	(or 
-		(err cns_target_r12)
-		(isNotBoolValue cns_target_r12)
+		(not
+			(or  
+				(isBool cns_target_r12)
+				(miss cns_target_r12)
+			)
+		)
 		(and 
 			(isTrue cns_target_r12)
 			(not cns_obl_permit_r12)
@@ -576,11 +637,9 @@ true
 (define-fun cns_obl_permit_Name1 ()  Bool
 true
 )
- 
 (define-fun cns_obl_deny_Name1 ()  Bool
 true
 )
- 
 ;##### Policy Combining Algorithm
 (define-fun cns_Name1_cmb_final_permit () Bool
 	cns_r12_permit
@@ -624,8 +683,12 @@ true
 ;INDET
 (define-fun cns_Name1_indet () Bool
 	(or 
-		(err cns_target_Name1)
-		(isNotBoolValue cns_target_Name1)
+		(not
+			(or  
+				(isBool cns_target_Name1)
+				(miss cns_target_Name1)
+			)
+		)
 		(and (isTrue cns_target_Name1) cns_Name1_cmb_final_indet)
 		(and 
 			(isTrue cns_target_Name1)
@@ -641,12 +704,24 @@ true
 )
 ;################### END TOP-LEVEL POLICY Name1 CONSTRAINTs #########################
 ;###################### STRUCTURAL PROPERTY #####################
-(assert (and
-	 (=> cns_Name_permit cns_Name1_permit)
-	 (=> cns_Name_deny cns_Name1_deny)
-))
-
+(echo "--> Check NameCOVERName1... (holds if the following two checks are unsat)")
+(echo "...(1/2) Name_PERMIT  COVER Name1_PERMIT...(holds if it is unsat)")
+ (push)
+(assert 
+	 (and (not cns_Name_permit) cns_Name1_permit)
+)
 
 (check-sat)
-(get-model)
+;(get-model)
+
+(pop)
+(push)
+(echo "...(2/2) Name_DENY  COVER Name1_DENY...(holds if it is unsat)")
+ (assert 
+	 (and (not cns_Name_deny) cns_Name1_deny)
+)
+
+(check-sat)
+;(get-model)
+
 

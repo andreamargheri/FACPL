@@ -55,7 +55,7 @@ class SMT_LIBGenerator_Alg  {
 			policies: 
 			Rule r1 (permit 
 			target: equal(act/id, "write")
-			obl: [permit M log (addition(5,sub/profile))])
+			obl: [ M log (addition(5,sub/profile))])
 		}'''
 		).parse
 
@@ -77,12 +77,12 @@ class SMT_LIBGenerator_Alg  {
 			policies: 
 				Rule r1 (permit 
 					target: equal(act/id, "write")
-					obl: [permit M log (addition(5,sub/profile))])
+					obl: [ M log (addition(5,sub/profile))])
 				Rule r2 (deny)
 				Rule r3 (permit)
 				Rule r4 (permit 
 					target: equal(act/id, "write")
-					obl: [permit M log (addition(5,sub/profile))])
+					obl: [ M log (addition(5,sub/profile))])
 		}'''.parse
 		)
 		assertNoErrors(model)
@@ -126,7 +126,7 @@ class SMT_LIBGenerator_Alg  {
 			policies: 
 				Rule r1 (permit 
 					target: equal(act/id, "write")
-					obl: [permit M log (addition(5,sub/profile))])
+					obl: [ M log (addition(5,sub/profile))])
 		}'''
 		).parse
 
@@ -148,12 +148,12 @@ class SMT_LIBGenerator_Alg  {
 			policies: 
 				Rule r1 (permit 
 					target: equal(act/id, "write")
-					obl: [permit M log (addition(5,sub/profile))])
+					obl: [ M log (addition(5,sub/profile))])
 				Rule r2 (deny)
 				Rule r3 (permit)
 				Rule r4 (permit 
 					target: equal(act/id, "write")
-					obl: [permit M log (addition(5,sub/profile))])
+					obl: [M log (addition(5,sub/profile))])
 		}'''
 		).parse
 
@@ -198,7 +198,7 @@ class SMT_LIBGenerator_Alg  {
 			policies: 
 				Rule r1 (permit 
 					target: equal(act/id, "write")
-					obl: [permit M log (addition(5,sub/profile))])
+					obl: [M log (addition(5,sub/profile))])
 				Rule r2 (deny 
 					target: equal(act/type, 5))
 		}'''
@@ -222,7 +222,7 @@ class SMT_LIBGenerator_Alg  {
 			policies: 
 				Rule r1 (permit 
 					target: equal(act/id, "write")
-					obl: [permit M log (addition(5,sub/profile))])
+					obl: [M log (addition(5,sub/profile))])
 				Rule r2 (deny 
 					target: equal(act/type, 5))
 				Rule r3 (deny 
@@ -271,7 +271,7 @@ class SMT_LIBGenerator_Alg  {
 			policies: 
 				Rule r1 (permit 
 					target: equal(act/id, "write")
-					obl: [permit M log (addition(5,sub/profile))])
+					obl: [ M log (addition(5,sub/profile))])
 				Rule r2 (deny 
 					target: equal(act/type, 5))
 		}'''
@@ -295,7 +295,7 @@ class SMT_LIBGenerator_Alg  {
 			policies: 
 				Rule r1 (permit 
 					target: equal(act/id, "write")
-					obl: [permit M log (addition(5,sub/profile))])
+					obl: [ M log (addition(5,sub/profile))])
 				Rule r2 (deny 
 					target: equal(act/type, 5))
 				Rule r3 (deny 
@@ -344,7 +344,7 @@ class SMT_LIBGenerator_Alg  {
 			policies: 
 				Rule r1 (permit 
 					target: equal(act/id, "write")
-					obl: [permit M log (addition(5,sub/profile))])
+					obl: [ M log (addition(5,sub/profile))])
 				Rule r2 (deny 
 					target: equal(act/type, 5))
 		}'''
@@ -368,7 +368,7 @@ class SMT_LIBGenerator_Alg  {
 			policies: 
 				Rule r1 (permit 
 					target: equal(act/id, "write")
-					obl: [permit M log (addition(5,sub/profile))])
+					obl: [ M log (addition(5,sub/profile))])
 				Rule r2 (deny 
 					target: equal(act/type, 5))
 				Rule r3 (deny 
@@ -417,7 +417,7 @@ class SMT_LIBGenerator_Alg  {
 			policies: 
 				Rule r1 (permit 
 					target: equal(act/id, "write")
-					obl: [permit M log (addition(5,sub/profile))])
+					obl: [ M log (addition(5,sub/profile))])
 				Rule r2 (deny 
 					target: equal(act/type, 5))
 		}'''
@@ -441,7 +441,7 @@ class SMT_LIBGenerator_Alg  {
 			policies: 
 				Rule r1 (permit 
 					target: equal(act/id, "write")
-					obl: [permit M log (addition(5,sub/profile))])
+					obl: [ M log (addition(5,sub/profile))])
 				Rule r2 (deny 
 					target: equal(act/type, 5))
 				Rule r3 (deny 
@@ -490,7 +490,7 @@ class SMT_LIBGenerator_Alg  {
 			policies: 
 				Rule r1 (permit 
 					target: equal(act/id, "write")
-					obl: [permit M log (addition(5,sub/profile))])
+					obl: [ M log (addition(5,sub/profile))])
 				Rule r2 (deny 
 					target: equal(act/type, 5))
 		}'''
@@ -514,7 +514,7 @@ class SMT_LIBGenerator_Alg  {
 			policies: 
 				Rule r1 (permit 
 					target: equal(act/id, "write")
-					obl: [permit M log (addition(5,sub/profile))])
+					obl: [ M log (addition(5,sub/profile))])
 				Rule r2 (deny 
 					target: equal(act/type, 5))
 				Rule r3 (deny 
@@ -563,7 +563,7 @@ class SMT_LIBGenerator_Alg  {
 			policies: 
 				Rule r1 (permit 
 					target: equal(act/id, "write")
-					obl: [permit M log (addition(5,sub/profile))])
+					obl: [ M log (addition(5,sub/profile))])
 				Rule r2 (deny 
 					target: equal(act/type, 5))
 		}'''
@@ -587,7 +587,7 @@ class SMT_LIBGenerator_Alg  {
 			policies: 
 				Rule r1 (permit 
 					target: equal(act/id, "write")
-					obl: [permit M log (addition(5,sub/profile))])
+					obl: [ M log (addition(5,sub/profile))])
 				Rule r2 (deny 
 					target: equal(act/type, 5))
 				Rule r3 (deny 
@@ -620,8 +620,8 @@ class SMT_LIBGenerator_Alg  {
 						)
 						Rule pha (permit target: equal(subject/role, "pharmacist") && equal(action/id, "read")
 							&& in ("e-Pre-Read", subject/permission))
-						  obl: 
-						  [permit M log(system/time, resource/type,subject/id, action/id)]
+						  obl-p: 
+						  [ M log(system/time, resource/type,subject/id, action/id)]
 				}
 			''').parse
 				assertNoErrors(model)

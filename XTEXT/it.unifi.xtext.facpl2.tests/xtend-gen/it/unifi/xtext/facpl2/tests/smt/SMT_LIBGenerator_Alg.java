@@ -79,7 +79,7 @@ public class SMT_LIBGenerator_Alg {
       _builder.append("target: equal(act/id, \"write\")");
       _builder.newLine();
       _builder.append("\t");
-      _builder.append("obl: [permit M log (addition(5,sub/profile))])");
+      _builder.append("obl: [ M log (addition(5,sub/profile))])");
       _builder.newLine();
       _builder.append("}");
       Facpl model = this._parseHelper.parse(_builder);
@@ -112,7 +112,7 @@ public class SMT_LIBGenerator_Alg {
       _builder.append("target: equal(act/id, \"write\")");
       _builder.newLine();
       _builder.append("\t\t\t\t\t");
-      _builder.append("obl: [permit M log (addition(5,sub/profile))])");
+      _builder.append("obl: [ M log (addition(5,sub/profile))])");
       _builder.newLine();
       _builder.append("\t\t\t\t");
       _builder.append("Rule r2 (deny)");
@@ -127,7 +127,7 @@ public class SMT_LIBGenerator_Alg {
       _builder.append("target: equal(act/id, \"write\")");
       _builder.newLine();
       _builder.append("\t\t\t\t\t");
-      _builder.append("obl: [permit M log (addition(5,sub/profile))])");
+      _builder.append("obl: [ M log (addition(5,sub/profile))])");
       _builder.newLine();
       _builder.append("\t\t");
       _builder.append("}");
@@ -192,7 +192,7 @@ public class SMT_LIBGenerator_Alg {
       _builder.append("target: equal(act/id, \"write\")");
       _builder.newLine();
       _builder.append("\t\t\t\t\t");
-      _builder.append("obl: [permit M log (addition(5,sub/profile))])");
+      _builder.append("obl: [ M log (addition(5,sub/profile))])");
       _builder.newLine();
       _builder.append("\t\t");
       _builder.append("}");
@@ -226,7 +226,7 @@ public class SMT_LIBGenerator_Alg {
       _builder.append("target: equal(act/id, \"write\")");
       _builder.newLine();
       _builder.append("\t\t\t\t\t");
-      _builder.append("obl: [permit M log (addition(5,sub/profile))])");
+      _builder.append("obl: [ M log (addition(5,sub/profile))])");
       _builder.newLine();
       _builder.append("\t\t\t\t");
       _builder.append("Rule r2 (deny)");
@@ -241,7 +241,7 @@ public class SMT_LIBGenerator_Alg {
       _builder.append("target: equal(act/id, \"write\")");
       _builder.newLine();
       _builder.append("\t\t\t\t\t");
-      _builder.append("obl: [permit M log (addition(5,sub/profile))])");
+      _builder.append("obl: [M log (addition(5,sub/profile))])");
       _builder.newLine();
       _builder.append("\t\t");
       _builder.append("}");
@@ -306,7 +306,7 @@ public class SMT_LIBGenerator_Alg {
       _builder.append("target: equal(act/id, \"write\")");
       _builder.newLine();
       _builder.append("\t\t\t\t\t");
-      _builder.append("obl: [permit M log (addition(5,sub/profile))])");
+      _builder.append("obl: [M log (addition(5,sub/profile))])");
       _builder.newLine();
       _builder.append("\t\t\t\t");
       _builder.append("Rule r2 (deny ");
@@ -346,7 +346,7 @@ public class SMT_LIBGenerator_Alg {
       _builder.append("target: equal(act/id, \"write\")");
       _builder.newLine();
       _builder.append("\t\t\t\t\t");
-      _builder.append("obl: [permit M log (addition(5,sub/profile))])");
+      _builder.append("obl: [M log (addition(5,sub/profile))])");
       _builder.newLine();
       _builder.append("\t\t\t\t");
       _builder.append("Rule r2 (deny ");
@@ -423,7 +423,7 @@ public class SMT_LIBGenerator_Alg {
       _builder.append("target: equal(act/id, \"write\")");
       _builder.newLine();
       _builder.append("\t\t\t\t\t");
-      _builder.append("obl: [permit M log (addition(5,sub/profile))])");
+      _builder.append("obl: [ M log (addition(5,sub/profile))])");
       _builder.newLine();
       _builder.append("\t\t\t\t");
       _builder.append("Rule r2 (deny ");
@@ -463,7 +463,7 @@ public class SMT_LIBGenerator_Alg {
       _builder.append("target: equal(act/id, \"write\")");
       _builder.newLine();
       _builder.append("\t\t\t\t\t");
-      _builder.append("obl: [permit M log (addition(5,sub/profile))])");
+      _builder.append("obl: [ M log (addition(5,sub/profile))])");
       _builder.newLine();
       _builder.append("\t\t\t\t");
       _builder.append("Rule r2 (deny ");
@@ -540,7 +540,7 @@ public class SMT_LIBGenerator_Alg {
       _builder.append("target: equal(act/id, \"write\")");
       _builder.newLine();
       _builder.append("\t\t\t\t\t");
-      _builder.append("obl: [permit M log (addition(5,sub/profile))])");
+      _builder.append("obl: [ M log (addition(5,sub/profile))])");
       _builder.newLine();
       _builder.append("\t\t\t\t");
       _builder.append("Rule r2 (deny ");
@@ -580,7 +580,7 @@ public class SMT_LIBGenerator_Alg {
       _builder.append("target: equal(act/id, \"write\")");
       _builder.newLine();
       _builder.append("\t\t\t\t\t");
-      _builder.append("obl: [permit M log (addition(5,sub/profile))])");
+      _builder.append("obl: [ M log (addition(5,sub/profile))])");
       _builder.newLine();
       _builder.append("\t\t\t\t");
       _builder.append("Rule r2 (deny ");
@@ -657,7 +657,7 @@ public class SMT_LIBGenerator_Alg {
       _builder.append("target: equal(act/id, \"write\")");
       _builder.newLine();
       _builder.append("\t\t\t\t\t");
-      _builder.append("obl: [permit M log (addition(5,sub/profile))])");
+      _builder.append("obl: [ M log (addition(5,sub/profile))])");
       _builder.newLine();
       _builder.append("\t\t\t\t");
       _builder.append("Rule r2 (deny ");
@@ -697,7 +697,7 @@ public class SMT_LIBGenerator_Alg {
       _builder.append("target: equal(act/id, \"write\")");
       _builder.newLine();
       _builder.append("\t\t\t\t\t");
-      _builder.append("obl: [permit M log (addition(5,sub/profile))])");
+      _builder.append("obl: [ M log (addition(5,sub/profile))])");
       _builder.newLine();
       _builder.append("\t\t\t\t");
       _builder.append("Rule r2 (deny ");
@@ -774,7 +774,7 @@ public class SMT_LIBGenerator_Alg {
       _builder.append("target: equal(act/id, \"write\")");
       _builder.newLine();
       _builder.append("\t\t\t\t\t");
-      _builder.append("obl: [permit M log (addition(5,sub/profile))])");
+      _builder.append("obl: [ M log (addition(5,sub/profile))])");
       _builder.newLine();
       _builder.append("\t\t\t\t");
       _builder.append("Rule r2 (deny ");
@@ -814,7 +814,7 @@ public class SMT_LIBGenerator_Alg {
       _builder.append("target: equal(act/id, \"write\")");
       _builder.newLine();
       _builder.append("\t\t\t\t\t");
-      _builder.append("obl: [permit M log (addition(5,sub/profile))])");
+      _builder.append("obl: [ M log (addition(5,sub/profile))])");
       _builder.newLine();
       _builder.append("\t\t\t\t");
       _builder.append("Rule r2 (deny ");
@@ -891,7 +891,7 @@ public class SMT_LIBGenerator_Alg {
       _builder.append("target: equal(act/id, \"write\")");
       _builder.newLine();
       _builder.append("\t\t\t\t\t");
-      _builder.append("obl: [permit M log (addition(5,sub/profile))])");
+      _builder.append("obl: [ M log (addition(5,sub/profile))])");
       _builder.newLine();
       _builder.append("\t\t\t\t");
       _builder.append("Rule r2 (deny ");
@@ -931,7 +931,7 @@ public class SMT_LIBGenerator_Alg {
       _builder.append("target: equal(act/id, \"write\")");
       _builder.newLine();
       _builder.append("\t\t\t\t\t");
-      _builder.append("obl: [permit M log (addition(5,sub/profile))])");
+      _builder.append("obl: [ M log (addition(5,sub/profile))])");
       _builder.newLine();
       _builder.append("\t\t\t\t");
       _builder.append("Rule r2 (deny ");
@@ -998,10 +998,10 @@ public class SMT_LIBGenerator_Alg {
       _builder.append("&& in (\"e-Pre-Read\", subject/permission))");
       _builder.newLine();
       _builder.append("\t\t\t  ");
-      _builder.append("obl: ");
+      _builder.append("obl-p: ");
       _builder.newLine();
       _builder.append("\t\t\t  ");
-      _builder.append("[permit M log(system/time, resource/type,subject/id, action/id)]");
+      _builder.append("[ M log(system/time, resource/type,subject/id, action/id)]");
       _builder.newLine();
       _builder.append("\t");
       _builder.append("}");
