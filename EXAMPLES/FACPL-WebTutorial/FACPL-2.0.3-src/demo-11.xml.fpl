@@ -1,0 +1,10 @@
+
+PolicySet demo_11 { first-applicable - all
+	target: ( ( equal ( "demo:11" , resource / resource_id ) ) ) policies:
+	Rule id_1 ( deny target: ( ( equal ( "urn:fedora:names:fedora:2.1:action:id-getDatastreamDissemination" , action / id
+				) ) ) && ( ( equal ( "demo:11" , resource / resource_id ) && equal ( "DS1" , resource / id ) ) || ( equal (
+					"demo:11" , resource / resource_id ) && equal ( "RIGHTS1" , resource / id ) ) ) && ! ( in ( subject / fedoraRole ,
+				set( "researcher" , "professor" , "administrator" ) ) ) )
+	Rule id_2 ( deny target: equal ( "testuser4" , subject / loginId ) )
+	Rule id_3 ( permit )
+}

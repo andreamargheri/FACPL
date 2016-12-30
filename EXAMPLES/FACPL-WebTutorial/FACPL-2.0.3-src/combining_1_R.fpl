@@ -1,0 +1,18 @@
+/*
+ * Request1 : DENY
+ * Request2 : PERMIT  
+ */
+Request:{Request1 
+(action/id, "read")
+(subject/id, "John")
+(subject/name, "Wilson")
+(resource/id,"4567-1")
+}
+
+Request:{Request2 
+(action/id, "write")
+(subject/id, "Tom")
+(subject/name, "Winter")
+(resource/id,"5678-2")
+}
+

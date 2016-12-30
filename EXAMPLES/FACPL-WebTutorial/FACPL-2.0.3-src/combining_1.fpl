@@ -1,0 +1,24 @@
+
+import "combining_1_R.fpl"
+
+
+PAS { 
+	Extended Indeterminate : true ;
+	Java Package : "combining_1" ;
+	Requests To Evaluate : Request1 , Request2 ;
+
+	pep: base
+	pdp: permit-overrides
+
+	PolicySet polSet { first-applicable
+		policies:
+		PolicySet first { deny-overrides
+			target: equal ( "4567-1" , resource / id ) policies:
+			Rule Rule_DenyAll ( deny )
+		}
+		PolicySet second { permit-overrides
+			policies:
+			Rule rule1 ( permit )
+		}
+	}
+}

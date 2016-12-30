@@ -1,0 +1,40 @@
+/*
+ * PERMIT (if the vm-id is present)
+ */
+Request:{ RequestRelease
+	(subject/profile-id , "P_1")
+	(resource/vm-type , "TYPE_1")
+	(resource/vm-id, "vm_id1")
+	(action/action-id , "RELEASE")
+}
+ 
+
+/*
+ * PERMIT (if the vm-id is present) othr
+ */
+Request:{ RequestReleaseN
+	(subject/profile-id , "P_1")
+	(resource/vm-type , "TYPE_1")
+	(resource/vm-id, "vm_id3")
+	(action/action-id , "RELEASE")
+}
+
+
+/*
+ * PERMIT
+ */
+Request:{ RequestCreate
+	(subject/profile-id , "P_2")
+	(resource/vm-type , "TYPE_2")
+	(action/action-id , "CREATE")
+}
+
+
+/*
+ * DENY
+ */
+Request:{ RequestCreateP
+	(subject/profile-id , "P_1")
+	(resource/vm-type , "TYPE_2")
+	(action/action-id , "CREATE")
+}

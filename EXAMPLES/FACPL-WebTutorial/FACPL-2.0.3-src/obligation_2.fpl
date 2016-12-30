@@ -1,0 +1,34 @@
+
+import "obligation_2_R.fpl"
+
+PAS { Extended Indeterminate : true ;
+	Java Package : "obligation_2" ;
+	Requests To Evaluate : Request1 , Request2 , Request3 ;
+
+	pep: base
+	pdp: permit-overrides
+	PolicySet polSet { permit-overrides
+		policies:
+		PolicySet obligation_1 { deny-overrides
+			target: equal ( "4567-1" , resource / id ) policies:
+			Rule RuleP ( permit target: equal ( "John" , subject / id ) && in ( action / id , set( "read" , "seek" ) ) 
+				obl:
+				[M action1 ( subject / name ) ]
+			)
+			Rule RuleD ( deny target: equal ( "Mark" , subject / id ) && in ( action / id , set( "write" , "checkout" ) ) 
+				obl:
+				[M action2 ( subject / name ) ]
+			)
+		}
+		PolicySet obligation_2 { permit-overrides
+			policies:
+			Rule rule1 ( deny )
+			obl-d:
+			[M log ( "Subject: " , subject / id , subject / name ) ]
+		}
+		obl-p:
+		[ M log ( "Resource accessed: " , resource / id ) ]
+		obl-d:
+		[ M log ( "Resource requested: " , resource / id ) ]
+	}
+}

@@ -1,0 +1,20 @@
+import "condition_R.fpl"
+
+PAS{
+	Extended Indeterminate: true;
+	Java Package: "condition";
+	Requests To Evaluate: Request1,Request2,Request3;
+	
+	pep: base
+	pdp: permit-overrides 
+	 PolicySet firstPolicy_denyOverrides {deny-overrides
+		 target: equal("4567-1",resource/id)
+		 policies: 
+			Rule RuleCondition_P (permit target: equal("John",subject/id)
+				&&  in(action/id, set("read","seek")) 
+			)
+			Rule RuleCondition_D ( deny
+				target: in(action/id, set("write","checkout"))
+			)  
+	}  
+}
