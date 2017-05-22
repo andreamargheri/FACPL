@@ -1057,6 +1057,52 @@ public class TypeCheck_Test {
   }
   
   @Test
+  public void mapFun() {
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("PolicySet pSet {deny-unless-permit ");
+      _builder.newLine();
+      _builder.append("policies: ");
+      _builder.newLine();
+      _builder.append("Rule name (permit ");
+      _builder.newLine();
+      _builder.append("target: ");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("map(equal,cat/id, true)");
+      _builder.newLine();
+      _builder.append(")");
+      _builder.newLine();
+      _builder.append("}");
+      Facpl model = this._parseHelper.parse(_builder);
+      this._validationTestHelper.assertNoErrors(model);
+      StringConcatenation _builder_1 = new StringConcatenation();
+      _builder_1.append("PolicySet pSet {deny-unless-permit ");
+      _builder_1.newLine();
+      _builder_1.append("policies: ");
+      _builder_1.newLine();
+      _builder_1.append("Rule name (permit ");
+      _builder_1.newLine();
+      _builder_1.append("target: ");
+      _builder_1.newLine();
+      _builder_1.append("\t");
+      _builder_1.append("map(in,cat/id, true)");
+      _builder_1.newLine();
+      _builder_1.append(")");
+      _builder_1.newLine();
+      _builder_1.append("}");
+      Facpl _parse = this._parseHelper.parse(_builder_1);
+      model = _parse;
+      EClass _mapFunction = Facpl2Package.eINSTANCE.getMapFunction();
+      this._validationTestHelper.assertError(model, _mapFunction, 
+        null, 
+        "Expression cannot be typed. It is expected map(f,attr_name, value), where \'f\' is a boolean function, attr_name an attribute name and value any literal");
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
   public void oblFun() {
     try {
       StringConcatenation _builder = new StringConcatenation();

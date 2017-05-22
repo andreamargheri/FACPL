@@ -23,6 +23,7 @@ import it.unifi.xtext.facpl.facpl2.Function;
 import it.unifi.xtext.facpl.facpl2.FunctionDeclaration;
 import it.unifi.xtext.facpl.facpl2.Import;
 import it.unifi.xtext.facpl.facpl2.MainFacpl;
+import it.unifi.xtext.facpl.facpl2.MapFunction;
 import it.unifi.xtext.facpl.facpl2.NotExpression;
 import it.unifi.xtext.facpl.facpl2.OrExpression;
 import it.unifi.xtext.facpl.facpl2.PAF;
@@ -815,6 +816,18 @@ public class Facpl2Validator extends AbstractFacpl2Validator {
           this.error("Sets cannot contain attribute name", Facpl2Package.Literals.SET__ARGS);
         }
       }
+    }
+  }
+  
+  @Check
+  public void checkMapFunction(final MapFunction e) {
+    final FacplTypeInference tCheck = new FacplTypeInference();
+    Facpl _root = this.getRoot(e);
+    tCheck.doSwitch(_root);
+    FacplType t = tCheck.doSwitch(e);
+    boolean _equals = t.equals(FacplType.ERR);
+    if (_equals) {
+      this.error("Expression cannot be typed. It is expected map(f,attr_name, value), where \'f\' is a boolean function, attr_name an attribute name and value any literal", Facpl2Package.Literals.MAP_FUNCTION__FUNCTION_ID);
     }
   }
   

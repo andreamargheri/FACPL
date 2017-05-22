@@ -17,6 +17,7 @@ import it.unifi.xtext.facpl.facpl2.Function;
 import it.unifi.xtext.facpl.facpl2.FunctionDeclaration;
 import it.unifi.xtext.facpl.facpl2.Import;
 import it.unifi.xtext.facpl.facpl2.IntLiteral;
+import it.unifi.xtext.facpl.facpl2.MapFunction;
 import it.unifi.xtext.facpl.facpl2.NotExpression;
 import it.unifi.xtext.facpl.facpl2.Obligation;
 import it.unifi.xtext.facpl.facpl2.OrExpression;
@@ -341,6 +342,27 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 	@Override
 	public FacplType caseFunctionDeclaration(FunctionDeclaration fun) {
 		return FacplType.getFacplType(fun.getType());
+	}
+
+	// MAP FUNCTION
+	@Override
+	public FacplType caseMapFunction(MapFunction fun) {
+		FacplType arg1 = doSwitch(fun.getArg1());
+		FacplType arg2 = doSwitch(fun.getArg2());
+
+		if (fun.getFunctionID().equals(funID.ADD) || fun.getFunctionID().equals(funID.DIVIDE)
+				|| fun.getFunctionID().equals(funID.IN) || fun.getFunctionID().equals(funID.MULTIPLY)
+				|| fun.getFunctionID().equals(funID.SUBTRACT)) {
+			return FacplType.ERR;
+			
+		}
+		if (!arg1.equals(FacplType.NAME) || arg2.equals(FacplType.NAME)){
+			return FacplType.ERR;
+		}
+
+		//Oth, arg1 is an attribute name, and arg2 is a literal of some form, the function is a comparison
+		
+		return FacplType.BOOLEAN;
 	}
 
 	// FUNCTIONs
