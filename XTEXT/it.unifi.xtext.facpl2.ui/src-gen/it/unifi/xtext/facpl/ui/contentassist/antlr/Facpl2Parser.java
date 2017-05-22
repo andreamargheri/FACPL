@@ -83,11 +83,12 @@ public class Facpl2Parser extends AbstractContentAssistParser {
 					put(grammarAccess.getAndExpressionAccess().getGroup_1(), "rule__AndExpression__Group_1__0");
 					put(grammarAccess.getOrExpressionAccess().getGroup(), "rule__OrExpression__Group__0");
 					put(grammarAccess.getOrExpressionAccess().getGroup_1(), "rule__OrExpression__Group_1__0");
-					put(grammarAccess.getBasicExpressionAccess().getGroup_2(), "rule__BasicExpression__Group_2__0");
+					put(grammarAccess.getBasicExpressionAccess().getGroup_3(), "rule__BasicExpression__Group_3__0");
 					put(grammarAccess.getNotExpressionAccess().getGroup(), "rule__NotExpression__Group__0");
 					put(grammarAccess.getFunctionAccess().getGroup(), "rule__Function__Group__0");
 					put(grammarAccess.getDeclaredFunctionAccess().getGroup(), "rule__DeclaredFunction__Group__0");
 					put(grammarAccess.getDeclaredFunctionAccess().getGroup_3(), "rule__DeclaredFunction__Group_3__0");
+					put(grammarAccess.getMapFunctionAccess().getGroup(), "rule__MapFunction__Group__0");
 					put(grammarAccess.getSetAccess().getGroup(), "rule__Set__Group__0");
 					put(grammarAccess.getSetAccess().getGroup_1(), "rule__Set__Group_1__0");
 					put(grammarAccess.getSetAccess().getGroup_1_1(), "rule__Set__Group_1_1__0");
@@ -145,6 +146,9 @@ public class Facpl2Parser extends AbstractContentAssistParser {
 					put(grammarAccess.getDeclaredFunctionAccess().getFunctionIdAssignment_0(), "rule__DeclaredFunction__FunctionIdAssignment_0");
 					put(grammarAccess.getDeclaredFunctionAccess().getArgsAssignment_2(), "rule__DeclaredFunction__ArgsAssignment_2");
 					put(grammarAccess.getDeclaredFunctionAccess().getArgsAssignment_3_1(), "rule__DeclaredFunction__ArgsAssignment_3_1");
+					put(grammarAccess.getMapFunctionAccess().getFunctionIDAssignment_1(), "rule__MapFunction__FunctionIDAssignment_1");
+					put(grammarAccess.getMapFunctionAccess().getArg1Assignment_3(), "rule__MapFunction__Arg1Assignment_3");
+					put(grammarAccess.getMapFunctionAccess().getArg2Assignment_5(), "rule__MapFunction__Arg2Assignment_5");
 					put(grammarAccess.getSetAccess().getArgsAssignment_1_0(), "rule__Set__ArgsAssignment_1_0");
 					put(grammarAccess.getSetAccess().getArgsAssignment_1_1_1(), "rule__Set__ArgsAssignment_1_1_1");
 					put(grammarAccess.getStringLiteralAccess().getValueAssignment(), "rule__StringLiteral__ValueAssignment");

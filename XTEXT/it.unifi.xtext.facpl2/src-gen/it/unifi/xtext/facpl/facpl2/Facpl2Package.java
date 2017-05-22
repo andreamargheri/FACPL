@@ -860,6 +860,52 @@ public interface Facpl2Package extends EPackage
   int DECLARED_FUNCTION_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 2;
 
   /**
+   * The meta object id for the '{@link it.unifi.xtext.facpl.facpl2.impl.MapFunctionImpl <em>Map Function</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see it.unifi.xtext.facpl.facpl2.impl.MapFunctionImpl
+   * @see it.unifi.xtext.facpl.facpl2.impl.Facpl2PackageImpl#getMapFunction()
+   * @generated
+   */
+  int MAP_FUNCTION = 19;
+
+  /**
+   * The feature id for the '<em><b>Function ID</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MAP_FUNCTION__FUNCTION_ID = EXPRESSION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Arg1</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MAP_FUNCTION__ARG1 = EXPRESSION_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Arg2</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MAP_FUNCTION__ARG2 = EXPRESSION_FEATURE_COUNT + 2;
+
+  /**
+   * The number of structural features of the '<em>Map Function</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MAP_FUNCTION_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 3;
+
+  /**
    * The meta object id for the '{@link it.unifi.xtext.facpl.facpl2.impl.SetImpl <em>Set</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -867,7 +913,7 @@ public interface Facpl2Package extends EPackage
    * @see it.unifi.xtext.facpl.facpl2.impl.Facpl2PackageImpl#getSet()
    * @generated
    */
-  int SET = 19;
+  int SET = 20;
 
   /**
    * The feature id for the '<em><b>Args</b></em>' containment reference list.
@@ -895,7 +941,7 @@ public interface Facpl2Package extends EPackage
    * @see it.unifi.xtext.facpl.facpl2.impl.Facpl2PackageImpl#getStringLiteral()
    * @generated
    */
-  int STRING_LITERAL = 20;
+  int STRING_LITERAL = 21;
 
   /**
    * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -923,7 +969,7 @@ public interface Facpl2Package extends EPackage
    * @see it.unifi.xtext.facpl.facpl2.impl.Facpl2PackageImpl#getBooleanLiteral()
    * @generated
    */
-  int BOOLEAN_LITERAL = 21;
+  int BOOLEAN_LITERAL = 22;
 
   /**
    * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -951,7 +997,7 @@ public interface Facpl2Package extends EPackage
    * @see it.unifi.xtext.facpl.facpl2.impl.Facpl2PackageImpl#getIntLiteral()
    * @generated
    */
-  int INT_LITERAL = 22;
+  int INT_LITERAL = 23;
 
   /**
    * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -979,7 +1025,7 @@ public interface Facpl2Package extends EPackage
    * @see it.unifi.xtext.facpl.facpl2.impl.Facpl2PackageImpl#getDoubleLiteral()
    * @generated
    */
-  int DOUBLE_LITERAL = 23;
+  int DOUBLE_LITERAL = 24;
 
   /**
    * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -1007,7 +1053,7 @@ public interface Facpl2Package extends EPackage
    * @see it.unifi.xtext.facpl.facpl2.impl.Facpl2PackageImpl#getDateLiteral()
    * @generated
    */
-  int DATE_LITERAL = 24;
+  int DATE_LITERAL = 25;
 
   /**
    * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -1035,7 +1081,7 @@ public interface Facpl2Package extends EPackage
    * @see it.unifi.xtext.facpl.facpl2.impl.Facpl2PackageImpl#getTimeLiteral()
    * @generated
    */
-  int TIME_LITERAL = 25;
+  int TIME_LITERAL = 26;
 
   /**
    * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -1063,7 +1109,7 @@ public interface Facpl2Package extends EPackage
    * @see it.unifi.xtext.facpl.facpl2.impl.Facpl2PackageImpl#getAndExpression()
    * @generated
    */
-  int AND_EXPRESSION = 26;
+  int AND_EXPRESSION = 27;
 
   /**
    * The feature id for the '<em><b>Left</b></em>' containment reference.
@@ -1100,7 +1146,7 @@ public interface Facpl2Package extends EPackage
    * @see it.unifi.xtext.facpl.facpl2.impl.Facpl2PackageImpl#getOrExpression()
    * @generated
    */
-  int OR_EXPRESSION = 27;
+  int OR_EXPRESSION = 28;
 
   /**
    * The feature id for the '<em><b>Left</b></em>' containment reference.
@@ -1137,7 +1183,7 @@ public interface Facpl2Package extends EPackage
    * @see it.unifi.xtext.facpl.facpl2.impl.Facpl2PackageImpl#getTypeLiteral()
    * @generated
    */
-  int TYPE_LITERAL = 28;
+  int TYPE_LITERAL = 29;
 
   /**
    * The meta object id for the '{@link it.unifi.xtext.facpl.facpl2.PEPAlg <em>PEP Alg</em>}' enum.
@@ -1147,7 +1193,7 @@ public interface Facpl2Package extends EPackage
    * @see it.unifi.xtext.facpl.facpl2.impl.Facpl2PackageImpl#getPEPAlg()
    * @generated
    */
-  int PEP_ALG = 29;
+  int PEP_ALG = 30;
 
   /**
    * The meta object id for the '{@link it.unifi.xtext.facpl.facpl2.AlgLiteral <em>Alg Literal</em>}' enum.
@@ -1157,7 +1203,7 @@ public interface Facpl2Package extends EPackage
    * @see it.unifi.xtext.facpl.facpl2.impl.Facpl2PackageImpl#getAlgLiteral()
    * @generated
    */
-  int ALG_LITERAL = 30;
+  int ALG_LITERAL = 31;
 
   /**
    * The meta object id for the '{@link it.unifi.xtext.facpl.facpl2.FulfillmentStrategy <em>Fulfillment Strategy</em>}' enum.
@@ -1167,7 +1213,7 @@ public interface Facpl2Package extends EPackage
    * @see it.unifi.xtext.facpl.facpl2.impl.Facpl2PackageImpl#getFulfillmentStrategy()
    * @generated
    */
-  int FULFILLMENT_STRATEGY = 31;
+  int FULFILLMENT_STRATEGY = 32;
 
   /**
    * The meta object id for the '{@link it.unifi.xtext.facpl.facpl2.Effect <em>Effect</em>}' enum.
@@ -1177,7 +1223,7 @@ public interface Facpl2Package extends EPackage
    * @see it.unifi.xtext.facpl.facpl2.impl.Facpl2PackageImpl#getEffect()
    * @generated
    */
-  int EFFECT = 32;
+  int EFFECT = 33;
 
   /**
    * The meta object id for the '{@link it.unifi.xtext.facpl.facpl2.funID <em>fun ID</em>}' enum.
@@ -1187,7 +1233,7 @@ public interface Facpl2Package extends EPackage
    * @see it.unifi.xtext.facpl.facpl2.impl.Facpl2PackageImpl#getfunID()
    * @generated
    */
-  int FUN_ID = 33;
+  int FUN_ID = 34;
 
 
   /**
@@ -1874,6 +1920,49 @@ public interface Facpl2Package extends EPackage
    * @generated
    */
   EReference getDeclaredFunction_Args();
+
+  /**
+   * Returns the meta object for class '{@link it.unifi.xtext.facpl.facpl2.MapFunction <em>Map Function</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Map Function</em>'.
+   * @see it.unifi.xtext.facpl.facpl2.MapFunction
+   * @generated
+   */
+  EClass getMapFunction();
+
+  /**
+   * Returns the meta object for the attribute '{@link it.unifi.xtext.facpl.facpl2.MapFunction#getFunctionID <em>Function ID</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Function ID</em>'.
+   * @see it.unifi.xtext.facpl.facpl2.MapFunction#getFunctionID()
+   * @see #getMapFunction()
+   * @generated
+   */
+  EAttribute getMapFunction_FunctionID();
+
+  /**
+   * Returns the meta object for the containment reference '{@link it.unifi.xtext.facpl.facpl2.MapFunction#getArg1 <em>Arg1</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Arg1</em>'.
+   * @see it.unifi.xtext.facpl.facpl2.MapFunction#getArg1()
+   * @see #getMapFunction()
+   * @generated
+   */
+  EReference getMapFunction_Arg1();
+
+  /**
+   * Returns the meta object for the containment reference '{@link it.unifi.xtext.facpl.facpl2.MapFunction#getArg2 <em>Arg2</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Arg2</em>'.
+   * @see it.unifi.xtext.facpl.facpl2.MapFunction#getArg2()
+   * @see #getMapFunction()
+   * @generated
+   */
+  EReference getMapFunction_Arg2();
 
   /**
    * Returns the meta object for class '{@link it.unifi.xtext.facpl.facpl2.Set <em>Set</em>}'.
@@ -2718,6 +2807,40 @@ public interface Facpl2Package extends EPackage
      * @generated
      */
     EReference DECLARED_FUNCTION__ARGS = eINSTANCE.getDeclaredFunction_Args();
+
+    /**
+     * The meta object literal for the '{@link it.unifi.xtext.facpl.facpl2.impl.MapFunctionImpl <em>Map Function</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see it.unifi.xtext.facpl.facpl2.impl.MapFunctionImpl
+     * @see it.unifi.xtext.facpl.facpl2.impl.Facpl2PackageImpl#getMapFunction()
+     * @generated
+     */
+    EClass MAP_FUNCTION = eINSTANCE.getMapFunction();
+
+    /**
+     * The meta object literal for the '<em><b>Function ID</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute MAP_FUNCTION__FUNCTION_ID = eINSTANCE.getMapFunction_FunctionID();
+
+    /**
+     * The meta object literal for the '<em><b>Arg1</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference MAP_FUNCTION__ARG1 = eINSTANCE.getMapFunction_Arg1();
+
+    /**
+     * The meta object literal for the '<em><b>Arg2</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference MAP_FUNCTION__ARG2 = eINSTANCE.getMapFunction_Arg2();
 
     /**
      * The meta object literal for the '{@link it.unifi.xtext.facpl.facpl2.impl.SetImpl <em>Set</em>}' class.

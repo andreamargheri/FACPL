@@ -20,6 +20,7 @@ import it.unifi.xtext.facpl.facpl2.FunctionDeclaration;
 import it.unifi.xtext.facpl.facpl2.Import;
 import it.unifi.xtext.facpl.facpl2.IntLiteral;
 import it.unifi.xtext.facpl.facpl2.MainFacpl;
+import it.unifi.xtext.facpl.facpl2.MapFunction;
 import it.unifi.xtext.facpl.facpl2.NotExpression;
 import it.unifi.xtext.facpl.facpl2.Obligation;
 import it.unifi.xtext.facpl.facpl2.OrExpression;
@@ -100,6 +101,9 @@ public class Facpl2SemanticSequencer extends AbstractDelegatingSemanticSequencer
 				return; 
 			case Facpl2Package.MAIN_FACPL:
 				sequence_MainFacpl(context, (MainFacpl) semanticObject); 
+				return; 
+			case Facpl2Package.MAP_FUNCTION:
+				sequence_MapFunction(context, (MapFunction) semanticObject); 
 				return; 
 			case Facpl2Package.NOT_EXPRESSION:
 				sequence_NotExpression(context, (NotExpression) semanticObject); 
@@ -428,6 +432,36 @@ public class Facpl2SemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 */
 	protected void sequence_MainFacpl(ISerializationContext context, MainFacpl semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Expression returns MapFunction
+	 *     AndExpression returns MapFunction
+	 *     AndExpression.AndExpression_1_0 returns MapFunction
+	 *     OrExpression returns MapFunction
+	 *     OrExpression.OrExpression_1_0 returns MapFunction
+	 *     BasicExpression returns MapFunction
+	 *     MapFunction returns MapFunction
+	 *
+	 * Constraint:
+	 *     (functionID=funID arg1=AttributeName arg2=Literals)
+	 */
+	protected void sequence_MapFunction(ISerializationContext context, MapFunction semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, Facpl2Package.Literals.MAP_FUNCTION__FUNCTION_ID) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, Facpl2Package.Literals.MAP_FUNCTION__FUNCTION_ID));
+			if (transientValues.isValueTransient(semanticObject, Facpl2Package.Literals.MAP_FUNCTION__ARG1) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, Facpl2Package.Literals.MAP_FUNCTION__ARG1));
+			if (transientValues.isValueTransient(semanticObject, Facpl2Package.Literals.MAP_FUNCTION__ARG2) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, Facpl2Package.Literals.MAP_FUNCTION__ARG2));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getMapFunctionAccess().getFunctionIDFunIDEnumRuleCall_1_0(), semanticObject.getFunctionID());
+		feeder.accept(grammarAccess.getMapFunctionAccess().getArg1AttributeNameParserRuleCall_3_0(), semanticObject.getArg1());
+		feeder.accept(grammarAccess.getMapFunctionAccess().getArg2LiteralsParserRuleCall_5_0(), semanticObject.getArg2());
+		feeder.finish();
 	}
 	
 	

@@ -20,8 +20,8 @@ import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 public class Facpl2SyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected Facpl2GrammarAccess grammarAccess;
-	protected AbstractElementAlias match_BasicExpression_LeftParenthesisKeyword_2_0_a;
-	protected AbstractElementAlias match_BasicExpression_LeftParenthesisKeyword_2_0_p;
+	protected AbstractElementAlias match_BasicExpression_LeftParenthesisKeyword_3_0_a;
+	protected AbstractElementAlias match_BasicExpression_LeftParenthesisKeyword_3_0_p;
 	protected AbstractElementAlias match_PolicySet_OblDKeyword_8_0_q;
 	protected AbstractElementAlias match_PolicySet_OblPKeyword_7_0_q;
 	protected AbstractElementAlias match_Rule_OblKeyword_5_0_q;
@@ -29,8 +29,8 @@ public class Facpl2SyntacticSequencer extends AbstractSyntacticSequencer {
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (Facpl2GrammarAccess) access;
-		match_BasicExpression_LeftParenthesisKeyword_2_0_a = new TokenAlias(true, true, grammarAccess.getBasicExpressionAccess().getLeftParenthesisKeyword_2_0());
-		match_BasicExpression_LeftParenthesisKeyword_2_0_p = new TokenAlias(true, false, grammarAccess.getBasicExpressionAccess().getLeftParenthesisKeyword_2_0());
+		match_BasicExpression_LeftParenthesisKeyword_3_0_a = new TokenAlias(true, true, grammarAccess.getBasicExpressionAccess().getLeftParenthesisKeyword_3_0());
+		match_BasicExpression_LeftParenthesisKeyword_3_0_p = new TokenAlias(true, false, grammarAccess.getBasicExpressionAccess().getLeftParenthesisKeyword_3_0());
 		match_PolicySet_OblDKeyword_8_0_q = new TokenAlias(false, true, grammarAccess.getPolicySetAccess().getOblDKeyword_8_0());
 		match_PolicySet_OblPKeyword_7_0_q = new TokenAlias(false, true, grammarAccess.getPolicySetAccess().getOblPKeyword_7_0());
 		match_Rule_OblKeyword_5_0_q = new TokenAlias(false, true, grammarAccess.getRuleAccess().getOblKeyword_5_0());
@@ -48,10 +48,10 @@ public class Facpl2SyntacticSequencer extends AbstractSyntacticSequencer {
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			if (match_BasicExpression_LeftParenthesisKeyword_2_0_a.equals(syntax))
-				emit_BasicExpression_LeftParenthesisKeyword_2_0_a(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_BasicExpression_LeftParenthesisKeyword_2_0_p.equals(syntax))
-				emit_BasicExpression_LeftParenthesisKeyword_2_0_p(semanticObject, getLastNavigableState(), syntaxNodes);
+			if (match_BasicExpression_LeftParenthesisKeyword_3_0_a.equals(syntax))
+				emit_BasicExpression_LeftParenthesisKeyword_3_0_a(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_BasicExpression_LeftParenthesisKeyword_3_0_p.equals(syntax))
+				emit_BasicExpression_LeftParenthesisKeyword_3_0_p(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_PolicySet_OblDKeyword_8_0_q.equals(syntax))
 				emit_PolicySet_OblDKeyword_8_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_PolicySet_OblPKeyword_7_0_q.equals(syntax))
@@ -68,6 +68,7 @@ public class Facpl2SyntacticSequencer extends AbstractSyntacticSequencer {
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) (ambiguity) '!' arg=BasicExpression
+	 *     (rule start) (ambiguity) 'map(' functionID=funID
 	 *     (rule start) (ambiguity) 'set(' args+=Literals
 	 *     (rule start) (ambiguity) category=STRING_O
 	 *     (rule start) (ambiguity) functionId=[FunctionDeclaration|ID]
@@ -81,7 +82,7 @@ public class Facpl2SyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     (rule start) (ambiguity) {AndExpression.left=}
 	 *     (rule start) (ambiguity) {OrExpression.left=}
 	 */
-	protected void emit_BasicExpression_LeftParenthesisKeyword_2_0_a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_BasicExpression_LeftParenthesisKeyword_3_0_a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -93,7 +94,7 @@ public class Facpl2SyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     (rule start) (ambiguity) {AndExpression.left=}
 	 *     (rule start) (ambiguity) {OrExpression.left=}
 	 */
-	protected void emit_BasicExpression_LeftParenthesisKeyword_2_0_p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_BasicExpression_LeftParenthesisKeyword_3_0_p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

@@ -211,6 +211,14 @@ public class Facpl2Switch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case Facpl2Package.MAP_FUNCTION:
+      {
+        MapFunction mapFunction = (MapFunction)theEObject;
+        T result = caseMapFunction(mapFunction);
+        if (result == null) result = caseExpression(mapFunction);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case Facpl2Package.SET:
       {
         Set set = (Set)theEObject;
@@ -587,6 +595,22 @@ public class Facpl2Switch<T> extends Switch<T>
    * @generated
    */
   public T caseDeclaredFunction(DeclaredFunction object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Map Function</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Map Function</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseMapFunction(MapFunction object)
   {
     return null;
   }

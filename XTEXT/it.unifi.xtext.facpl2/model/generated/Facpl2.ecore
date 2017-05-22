@@ -144,6 +144,13 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="args" upperBound="-1" eType="#//Expression"
         containment="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MapFunction" eSuperTypes="#//Expression">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="functionID" eType="#//funID"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="arg1" eType="#//AttributeName"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="arg2" eType="#//Expression"
+        containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="funID">
     <eLiterals name="EQUAL" literal="equal"/>
     <eLiterals name="N_EQUAL" value="1" literal="not-equal"/>

@@ -24,6 +24,7 @@ import it.unifi.xtext.facpl.facpl2.FunctionDeclaration;
 import it.unifi.xtext.facpl.facpl2.Import;
 import it.unifi.xtext.facpl.facpl2.IntLiteral;
 import it.unifi.xtext.facpl.facpl2.MainFacpl;
+import it.unifi.xtext.facpl.facpl2.MapFunction;
 import it.unifi.xtext.facpl.facpl2.NotExpression;
 import it.unifi.xtext.facpl.facpl2.Obligation;
 import it.unifi.xtext.facpl.facpl2.OrExpression;
@@ -891,6 +892,11 @@ public class Facpl2Generator implements IGenerator {
     return _builder;
   }
   
+  protected Object _getExpression(final MapFunction exp) {
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method or field functionId is undefined for the type MapFunction");
+  }
+  
   protected Object _getExpression(final DeclaredFunction exp) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("new ExpressionFunction(");
@@ -1576,6 +1582,8 @@ public class Facpl2Generator implements IGenerator {
       return _getExpression((Function)exp);
     } else if (exp instanceof IntLiteral) {
       return _getExpression((IntLiteral)exp);
+    } else if (exp instanceof MapFunction) {
+      return _getExpression((MapFunction)exp);
     } else if (exp instanceof NotExpression) {
       return _getExpression((NotExpression)exp);
     } else if (exp instanceof OrExpression) {

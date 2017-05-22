@@ -996,18 +996,19 @@ public class Facpl2GrammarAccess extends AbstractGrammarElementFinder {
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cFunctionParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cDeclaredFunctionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		private final Group cGroup_2 = (Group)cAlternatives.eContents().get(2);
-		private final Keyword cLeftParenthesisKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final RuleCall cExpressionParserRuleCall_2_1 = (RuleCall)cGroup_2.eContents().get(1);
-		private final Keyword cRightParenthesisKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
-		private final RuleCall cNotExpressionParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
-		private final RuleCall cLiteralsParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cMapFunctionParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final Group cGroup_3 = (Group)cAlternatives.eContents().get(3);
+		private final Keyword cLeftParenthesisKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final RuleCall cExpressionParserRuleCall_3_1 = (RuleCall)cGroup_3.eContents().get(1);
+		private final Keyword cRightParenthesisKeyword_3_2 = (Keyword)cGroup_3.eContents().get(2);
+		private final RuleCall cNotExpressionParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cLiteralsParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
 		
 		//BasicExpression Expression:
-		//	Function | DeclaredFunction | '(' Expression ')' | NotExpression | Literals
+		//	Function | DeclaredFunction | MapFunction | '(' Expression ')' | NotExpression | Literals
 		@Override public ParserRule getRule() { return rule; }
 
-		//Function | DeclaredFunction | '(' Expression ')' | NotExpression | Literals
+		//Function | DeclaredFunction | MapFunction | '(' Expression ')' | NotExpression | Literals
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//Function
@@ -1016,23 +1017,26 @@ public class Facpl2GrammarAccess extends AbstractGrammarElementFinder {
 		//DeclaredFunction
 		public RuleCall getDeclaredFunctionParserRuleCall_1() { return cDeclaredFunctionParserRuleCall_1; }
 
+		//MapFunction
+		public RuleCall getMapFunctionParserRuleCall_2() { return cMapFunctionParserRuleCall_2; }
+
 		//'(' Expression ')'
-		public Group getGroup_2() { return cGroup_2; }
+		public Group getGroup_3() { return cGroup_3; }
 
 		//'('
-		public Keyword getLeftParenthesisKeyword_2_0() { return cLeftParenthesisKeyword_2_0; }
+		public Keyword getLeftParenthesisKeyword_3_0() { return cLeftParenthesisKeyword_3_0; }
 
 		//Expression
-		public RuleCall getExpressionParserRuleCall_2_1() { return cExpressionParserRuleCall_2_1; }
+		public RuleCall getExpressionParserRuleCall_3_1() { return cExpressionParserRuleCall_3_1; }
 
 		//')'
-		public Keyword getRightParenthesisKeyword_2_2() { return cRightParenthesisKeyword_2_2; }
+		public Keyword getRightParenthesisKeyword_3_2() { return cRightParenthesisKeyword_3_2; }
 
 		//NotExpression
-		public RuleCall getNotExpressionParserRuleCall_3() { return cNotExpressionParserRuleCall_3; }
+		public RuleCall getNotExpressionParserRuleCall_4() { return cNotExpressionParserRuleCall_4; }
 
 		//Literals
-		public RuleCall getLiteralsParserRuleCall_4() { return cLiteralsParserRuleCall_4; }
+		public RuleCall getLiteralsParserRuleCall_5() { return cLiteralsParserRuleCall_5; }
 	}
 
 	public class NotExpressionElements extends AbstractParserRuleElementFinder {
@@ -1162,6 +1166,59 @@ public class Facpl2GrammarAccess extends AbstractGrammarElementFinder {
 
 		//")"
 		public Keyword getRightParenthesisKeyword_4() { return cRightParenthesisKeyword_4; }
+	}
+
+	public class MapFunctionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "it.unifi.xtext.facpl.Facpl2.MapFunction");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cMapKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cFunctionIDAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cFunctionIDFunIDEnumRuleCall_1_0 = (RuleCall)cFunctionIDAssignment_1.eContents().get(0);
+		private final Keyword cCommaKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cArg1Assignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cArg1AttributeNameParserRuleCall_3_0 = (RuleCall)cArg1Assignment_3.eContents().get(0);
+		private final Keyword cCommaKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Assignment cArg2Assignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cArg2LiteralsParserRuleCall_5_0 = (RuleCall)cArg2Assignment_5.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_6 = (Keyword)cGroup.eContents().get(6);
+		
+		////Map function iterating application of function on set elements
+		//MapFunction:
+		//	'map(' functionID=funID ',' arg1=AttributeName ',' arg2=Literals ')';
+		@Override public ParserRule getRule() { return rule; }
+
+		//'map(' functionID=funID ',' arg1=AttributeName ',' arg2=Literals ')'
+		public Group getGroup() { return cGroup; }
+
+		//'map('
+		public Keyword getMapKeyword_0() { return cMapKeyword_0; }
+
+		//functionID=funID
+		public Assignment getFunctionIDAssignment_1() { return cFunctionIDAssignment_1; }
+
+		//funID
+		public RuleCall getFunctionIDFunIDEnumRuleCall_1_0() { return cFunctionIDFunIDEnumRuleCall_1_0; }
+
+		//','
+		public Keyword getCommaKeyword_2() { return cCommaKeyword_2; }
+
+		//arg1=AttributeName
+		public Assignment getArg1Assignment_3() { return cArg1Assignment_3; }
+
+		//AttributeName
+		public RuleCall getArg1AttributeNameParserRuleCall_3_0() { return cArg1AttributeNameParserRuleCall_3_0; }
+
+		//','
+		public Keyword getCommaKeyword_4() { return cCommaKeyword_4; }
+
+		//arg2=Literals
+		public Assignment getArg2Assignment_5() { return cArg2Assignment_5; }
+
+		//Literals
+		public RuleCall getArg2LiteralsParserRuleCall_5_0() { return cArg2LiteralsParserRuleCall_5_0; }
+
+		//')'
+		public Keyword getRightParenthesisKeyword_6() { return cRightParenthesisKeyword_6; }
 	}
 
 	public class LiteralsElements extends AbstractParserRuleElementFinder {
@@ -1771,6 +1828,7 @@ public class Facpl2GrammarAccess extends AbstractGrammarElementFinder {
 	private final NotExpressionElements pNotExpression;
 	private final FunctionElements pFunction;
 	private final DeclaredFunctionElements pDeclaredFunction;
+	private final MapFunctionElements pMapFunction;
 	private final FunIDElements eFunID;
 	private final LiteralsElements pLiterals;
 	private final SetElements pSet;
@@ -1826,6 +1884,7 @@ public class Facpl2GrammarAccess extends AbstractGrammarElementFinder {
 		this.pNotExpression = new NotExpressionElements();
 		this.pFunction = new FunctionElements();
 		this.pDeclaredFunction = new DeclaredFunctionElements();
+		this.pMapFunction = new MapFunctionElements();
 		this.eFunID = new FunIDElements();
 		this.pLiterals = new LiteralsElements();
 		this.pSet = new SetElements();
@@ -2132,7 +2191,7 @@ public class Facpl2GrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//BasicExpression Expression:
-	//	Function | DeclaredFunction | '(' Expression ')' | NotExpression | Literals
+	//	Function | DeclaredFunction | MapFunction | '(' Expression ')' | NotExpression | Literals
 	public BasicExpressionElements getBasicExpressionAccess() {
 		return pBasicExpression;
 	}
@@ -2170,6 +2229,17 @@ public class Facpl2GrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getDeclaredFunctionRule() {
 		return getDeclaredFunctionAccess().getRule();
+	}
+
+	////Map function iterating application of function on set elements
+	//MapFunction:
+	//	'map(' functionID=funID ',' arg1=AttributeName ',' arg2=Literals ')';
+	public MapFunctionElements getMapFunctionAccess() {
+		return pMapFunction;
+	}
+	
+	public ParserRule getMapFunctionRule() {
+		return getMapFunctionAccess().getRule();
 	}
 
 	//enum funID:

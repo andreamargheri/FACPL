@@ -50,6 +50,7 @@
 'include'=76
 'less-than'=49
 'less-than-or-equal'=50
+'map('=87
 'multiply'=57
 'not-equal'=48
 'obl-d:'=81
@@ -63,7 +64,7 @@
 'permit-overrides'=36
 'permit-unless-deny'=39
 'policies:'=78
-'set('=87
+'set('=88
 'strong-consensus'=41
 'subtract'=55
 'target:'=79
@@ -155,3 +156,4 @@ T__84=84
 T__85=85
 T__86=86
 T__87=87
+T__88=88

@@ -36,6 +36,7 @@ import org.eclipse.xtext.generator.IFileSystemAccess
 import org.eclipse.xtext.generator.IGenerator
 import org.eclipse.xtext.resource.XtextResourceSet
 import it.unifi.xtext.facpl.facpl2.Effect
+import it.unifi.xtext.facpl.facpl2.MapFunction
 
 class Facpl2Generator implements IGenerator {
 	
@@ -374,6 +375,16 @@ class Facpl2Generator implements IGenerator {
 	def dispatch getExpression(Function exp)'''
 		new ExpressionFunction(it.unifi.facpl.lib.function.«Facpl2Generator_Name::getFunName(exp.functionId)».class, «getExpression(exp.arg1)»,«getExpression(exp.arg2)»)
 	'''
+	
+	def dispatch getExpression(MapFunction exp)'''
+		
+		
+		new ExpressionFunction(it.unifi.facpl.lib.function.«Facpl2Generator_Name::getFunName(exp.functionId)».class, «getExpression(exp.arg1)»,«getExpression(exp.arg2)»)
+		
+		
+		
+	'''
+	
 	
 	def dispatch getExpression(DeclaredFunction exp)'''
 		new ExpressionFunction(«getNameFunction(exp.functionId.name)».class,

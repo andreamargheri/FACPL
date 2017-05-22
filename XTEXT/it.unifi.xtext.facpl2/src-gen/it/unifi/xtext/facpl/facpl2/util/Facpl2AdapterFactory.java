@@ -170,6 +170,11 @@ public class Facpl2AdapterFactory extends AdapterFactoryImpl
         return createDeclaredFunctionAdapter();
       }
       @Override
+      public Adapter caseMapFunction(MapFunction object)
+      {
+        return createMapFunctionAdapter();
+      }
+      @Override
       public Adapter caseSet(Set object)
       {
         return createSetAdapter();
@@ -517,6 +522,21 @@ public class Facpl2AdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createDeclaredFunctionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link it.unifi.xtext.facpl.facpl2.MapFunction <em>Map Function</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see it.unifi.xtext.facpl.facpl2.MapFunction
+   * @generated
+   */
+  public Adapter createMapFunctionAdapter()
   {
     return null;
   }

@@ -22,7 +22,7 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_ID", "RULE_BOOLEAN", "RULE_INT", "RULE_REAL", "RULE_DATE", "RULE_TIME", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'import'", "'PAS'", "'{'", "'Extended Indeterminate'", "':'", "';'", "'Java Package'", "'Requests To Evaluate'", "','", "'}'", "'dec-fun'", "'('", "')'", "'pep:'", "'pdp:'", "'Request:'", "'['", "']'", "'/'", "'_'", "'-'", "'.'", "'include'", "'PolicySet'", "'target:'", "'policies:'", "'obl-p:'", "'obl-d:'", "'Rule'", "'obl:'", "'M'", "'O'", "'&&'", "'||'", "'!'", "'set('", "'Int'", "'Double'", "'Bool'", "'String'", "'DateTime'", "'Set<Int>'", "'Set<Double>'", "'Set<Bool>'", "'Set<String>'", "'Set<DateTime>'", "'base'", "'deny-biased'", "'permit-biased'", "'only-one-applicable'", "'deny-overrides'", "'permit-overrides'", "'first-applicable'", "'deny-unless-permit'", "'permit-unless-deny'", "'weak-consensus'", "'strong-consensus'", "'custom-algorithm'", "'greedy'", "'all'", "'permit'", "'deny'", "'equal'", "'not-equal'", "'less-than'", "'less-than-or-equal'", "'greater-than'", "'greater-than-or-equal'", "'in'", "'addition'", "'subtract'", "'divide'", "'multiply'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_ID", "RULE_BOOLEAN", "RULE_INT", "RULE_REAL", "RULE_DATE", "RULE_TIME", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'import'", "'PAS'", "'{'", "'Extended Indeterminate'", "':'", "';'", "'Java Package'", "'Requests To Evaluate'", "','", "'}'", "'dec-fun'", "'('", "')'", "'pep:'", "'pdp:'", "'Request:'", "'['", "']'", "'/'", "'_'", "'-'", "'.'", "'include'", "'PolicySet'", "'target:'", "'policies:'", "'obl-p:'", "'obl-d:'", "'Rule'", "'obl:'", "'M'", "'O'", "'&&'", "'||'", "'!'", "'map('", "'set('", "'Int'", "'Double'", "'Bool'", "'String'", "'DateTime'", "'Set<Int>'", "'Set<Double>'", "'Set<Bool>'", "'Set<String>'", "'Set<DateTime>'", "'base'", "'deny-biased'", "'permit-biased'", "'only-one-applicable'", "'deny-overrides'", "'permit-overrides'", "'first-applicable'", "'deny-unless-permit'", "'permit-unless-deny'", "'weak-consensus'", "'strong-consensus'", "'custom-algorithm'", "'greedy'", "'all'", "'permit'", "'deny'", "'equal'", "'not-equal'", "'less-than'", "'less-than-or-equal'", "'greater-than'", "'greater-than-or-equal'", "'in'", "'addition'", "'subtract'", "'divide'", "'multiply'"
     };
     public static final int T__50=50;
     public static final int RULE_BOOLEAN=6;
@@ -98,6 +98,7 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
     public static final int T__48=48;
     public static final int T__49=49;
     public static final int T__44=44;
+    public static final int T__88=88;
     public static final int T__45=45;
     public static final int T__46=46;
     public static final int T__47=47;
@@ -3770,7 +3771,7 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
                 int alt29=2;
                 int LA29_0 = input.LA(1);
 
-                if ( ((LA29_0>=RULE_STRING && LA29_0<=RULE_TIME)||LA29_0==26||(LA29_0>=49 && LA29_0<=50)||(LA29_0>=77 && LA29_0<=87)) ) {
+                if ( ((LA29_0>=RULE_STRING && LA29_0<=RULE_TIME)||LA29_0==26||(LA29_0>=49 && LA29_0<=51)||(LA29_0>=78 && LA29_0<=88)) ) {
                     alt29=1;
                 }
 
@@ -4338,33 +4339,34 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleBasicExpression"
-    // InternalFacpl2.g:1699:1: ruleBasicExpression returns [EObject current=null] : (this_Function_0= ruleFunction | this_DeclaredFunction_1= ruleDeclaredFunction | (otherlv_2= '(' this_Expression_3= ruleExpression otherlv_4= ')' ) | this_NotExpression_5= ruleNotExpression | this_Literals_6= ruleLiterals ) ;
+    // InternalFacpl2.g:1699:1: ruleBasicExpression returns [EObject current=null] : (this_Function_0= ruleFunction | this_DeclaredFunction_1= ruleDeclaredFunction | this_MapFunction_2= ruleMapFunction | (otherlv_3= '(' this_Expression_4= ruleExpression otherlv_5= ')' ) | this_NotExpression_6= ruleNotExpression | this_Literals_7= ruleLiterals ) ;
     public final EObject ruleBasicExpression() throws RecognitionException {
         EObject current = null;
 
-        Token otherlv_2=null;
-        Token otherlv_4=null;
+        Token otherlv_3=null;
+        Token otherlv_5=null;
         EObject this_Function_0 = null;
 
         EObject this_DeclaredFunction_1 = null;
 
-        EObject this_Expression_3 = null;
+        EObject this_MapFunction_2 = null;
 
-        EObject this_NotExpression_5 = null;
+        EObject this_Expression_4 = null;
 
-        EObject this_Literals_6 = null;
+        EObject this_NotExpression_6 = null;
+
+        EObject this_Literals_7 = null;
 
 
          enterRule(); 
             
         try {
-            // InternalFacpl2.g:1702:28: ( (this_Function_0= ruleFunction | this_DeclaredFunction_1= ruleDeclaredFunction | (otherlv_2= '(' this_Expression_3= ruleExpression otherlv_4= ')' ) | this_NotExpression_5= ruleNotExpression | this_Literals_6= ruleLiterals ) )
-            // InternalFacpl2.g:1703:1: (this_Function_0= ruleFunction | this_DeclaredFunction_1= ruleDeclaredFunction | (otherlv_2= '(' this_Expression_3= ruleExpression otherlv_4= ')' ) | this_NotExpression_5= ruleNotExpression | this_Literals_6= ruleLiterals )
+            // InternalFacpl2.g:1702:28: ( (this_Function_0= ruleFunction | this_DeclaredFunction_1= ruleDeclaredFunction | this_MapFunction_2= ruleMapFunction | (otherlv_3= '(' this_Expression_4= ruleExpression otherlv_5= ')' ) | this_NotExpression_6= ruleNotExpression | this_Literals_7= ruleLiterals ) )
+            // InternalFacpl2.g:1703:1: (this_Function_0= ruleFunction | this_DeclaredFunction_1= ruleDeclaredFunction | this_MapFunction_2= ruleMapFunction | (otherlv_3= '(' this_Expression_4= ruleExpression otherlv_5= ')' ) | this_NotExpression_6= ruleNotExpression | this_Literals_7= ruleLiterals )
             {
-            // InternalFacpl2.g:1703:1: (this_Function_0= ruleFunction | this_DeclaredFunction_1= ruleDeclaredFunction | (otherlv_2= '(' this_Expression_3= ruleExpression otherlv_4= ')' ) | this_NotExpression_5= ruleNotExpression | this_Literals_6= ruleLiterals )
-            int alt32=5;
+            // InternalFacpl2.g:1703:1: (this_Function_0= ruleFunction | this_DeclaredFunction_1= ruleDeclaredFunction | this_MapFunction_2= ruleMapFunction | (otherlv_3= '(' this_Expression_4= ruleExpression otherlv_5= ')' ) | this_NotExpression_6= ruleNotExpression | this_Literals_7= ruleLiterals )
+            int alt32=6;
             switch ( input.LA(1) ) {
-            case 77:
             case 78:
             case 79:
             case 80:
@@ -4375,6 +4377,7 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
             case 85:
             case 86:
             case 87:
+            case 88:
                 {
                 alt32=1;
                 }
@@ -4387,7 +4390,7 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
                     alt32=2;
                 }
                 else if ( (LA32_2==19||(LA32_2>=33 && LA32_2<=36)) ) {
-                    alt32=5;
+                    alt32=6;
                 }
                 else {
                     NoViableAltException nvae =
@@ -4397,14 +4400,19 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
                 }
                 }
                 break;
-            case 26:
+            case 50:
                 {
                 alt32=3;
                 }
                 break;
-            case 49:
+            case 26:
                 {
                 alt32=4;
+                }
+                break;
+            case 49:
+                {
+                alt32=5;
                 }
                 break;
             case RULE_STRING:
@@ -4413,9 +4421,9 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
             case RULE_REAL:
             case RULE_DATE:
             case RULE_TIME:
-            case 50:
+            case 51:
                 {
-                alt32=5;
+                alt32=6;
                 }
                 break;
             default:
@@ -4463,68 +4471,86 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalFacpl2.g:1723:6: (otherlv_2= '(' this_Expression_3= ruleExpression otherlv_4= ')' )
+                    // InternalFacpl2.g:1724:5: this_MapFunction_2= ruleMapFunction
                     {
-                    // InternalFacpl2.g:1723:6: (otherlv_2= '(' this_Expression_3= ruleExpression otherlv_4= ')' )
-                    // InternalFacpl2.g:1723:8: otherlv_2= '(' this_Expression_3= ruleExpression otherlv_4= ')'
-                    {
-                    otherlv_2=(Token)match(input,26,FOLLOW_32); 
-
-                        	newLeafNode(otherlv_2, grammarAccess.getBasicExpressionAccess().getLeftParenthesisKeyword_2_0());
-                        
                      
-                            newCompositeNode(grammarAccess.getBasicExpressionAccess().getExpressionParserRuleCall_2_1()); 
+                            newCompositeNode(grammarAccess.getBasicExpressionAccess().getMapFunctionParserRuleCall_2()); 
                         
-                    pushFollow(FOLLOW_48);
-                    this_Expression_3=ruleExpression();
+                    pushFollow(FOLLOW_2);
+                    this_MapFunction_2=ruleMapFunction();
 
                     state._fsp--;
 
                      
-                            current = this_Expression_3; 
+                            current = this_MapFunction_2; 
                             afterParserOrEnumRuleCall();
                         
-                    otherlv_4=(Token)match(input,27,FOLLOW_2); 
-
-                        	newLeafNode(otherlv_4, grammarAccess.getBasicExpressionAccess().getRightParenthesisKeyword_2_2());
-                        
-
-                    }
-
 
                     }
                     break;
                 case 4 :
-                    // InternalFacpl2.g:1742:5: this_NotExpression_5= ruleNotExpression
+                    // InternalFacpl2.g:1733:6: (otherlv_3= '(' this_Expression_4= ruleExpression otherlv_5= ')' )
                     {
-                     
-                            newCompositeNode(grammarAccess.getBasicExpressionAccess().getNotExpressionParserRuleCall_3()); 
+                    // InternalFacpl2.g:1733:6: (otherlv_3= '(' this_Expression_4= ruleExpression otherlv_5= ')' )
+                    // InternalFacpl2.g:1733:8: otherlv_3= '(' this_Expression_4= ruleExpression otherlv_5= ')'
+                    {
+                    otherlv_3=(Token)match(input,26,FOLLOW_32); 
+
+                        	newLeafNode(otherlv_3, grammarAccess.getBasicExpressionAccess().getLeftParenthesisKeyword_3_0());
                         
-                    pushFollow(FOLLOW_2);
-                    this_NotExpression_5=ruleNotExpression();
+                     
+                            newCompositeNode(grammarAccess.getBasicExpressionAccess().getExpressionParserRuleCall_3_1()); 
+                        
+                    pushFollow(FOLLOW_48);
+                    this_Expression_4=ruleExpression();
 
                     state._fsp--;
 
                      
-                            current = this_NotExpression_5; 
+                            current = this_Expression_4; 
+                            afterParserOrEnumRuleCall();
+                        
+                    otherlv_5=(Token)match(input,27,FOLLOW_2); 
+
+                        	newLeafNode(otherlv_5, grammarAccess.getBasicExpressionAccess().getRightParenthesisKeyword_3_2());
+                        
+
+                    }
+
+
+                    }
+                    break;
+                case 5 :
+                    // InternalFacpl2.g:1752:5: this_NotExpression_6= ruleNotExpression
+                    {
+                     
+                            newCompositeNode(grammarAccess.getBasicExpressionAccess().getNotExpressionParserRuleCall_4()); 
+                        
+                    pushFollow(FOLLOW_2);
+                    this_NotExpression_6=ruleNotExpression();
+
+                    state._fsp--;
+
+                     
+                            current = this_NotExpression_6; 
                             afterParserOrEnumRuleCall();
                         
 
                     }
                     break;
-                case 5 :
-                    // InternalFacpl2.g:1752:5: this_Literals_6= ruleLiterals
+                case 6 :
+                    // InternalFacpl2.g:1762:5: this_Literals_7= ruleLiterals
                     {
                      
-                            newCompositeNode(grammarAccess.getBasicExpressionAccess().getLiteralsParserRuleCall_4()); 
+                            newCompositeNode(grammarAccess.getBasicExpressionAccess().getLiteralsParserRuleCall_5()); 
                         
                     pushFollow(FOLLOW_2);
-                    this_Literals_6=ruleLiterals();
+                    this_Literals_7=ruleLiterals();
 
                     state._fsp--;
 
                      
-                            current = this_Literals_6; 
+                            current = this_Literals_7; 
                             afterParserOrEnumRuleCall();
                         
 
@@ -4551,7 +4577,7 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleNotExpression"
-    // InternalFacpl2.g:1768:1: entryRuleNotExpression returns [EObject current=null] : iv_ruleNotExpression= ruleNotExpression EOF ;
+    // InternalFacpl2.g:1778:1: entryRuleNotExpression returns [EObject current=null] : iv_ruleNotExpression= ruleNotExpression EOF ;
     public final EObject entryRuleNotExpression() throws RecognitionException {
         EObject current = null;
 
@@ -4559,8 +4585,8 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalFacpl2.g:1769:2: (iv_ruleNotExpression= ruleNotExpression EOF )
-            // InternalFacpl2.g:1770:2: iv_ruleNotExpression= ruleNotExpression EOF
+            // InternalFacpl2.g:1779:2: (iv_ruleNotExpression= ruleNotExpression EOF )
+            // InternalFacpl2.g:1780:2: iv_ruleNotExpression= ruleNotExpression EOF
             {
              newCompositeNode(grammarAccess.getNotExpressionRule()); 
             pushFollow(FOLLOW_1);
@@ -4587,7 +4613,7 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleNotExpression"
-    // InternalFacpl2.g:1777:1: ruleNotExpression returns [EObject current=null] : (otherlv_0= '!' ( (lv_arg_1_0= ruleBasicExpression ) ) ) ;
+    // InternalFacpl2.g:1787:1: ruleNotExpression returns [EObject current=null] : (otherlv_0= '!' ( (lv_arg_1_0= ruleBasicExpression ) ) ) ;
     public final EObject ruleNotExpression() throws RecognitionException {
         EObject current = null;
 
@@ -4598,21 +4624,21 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalFacpl2.g:1780:28: ( (otherlv_0= '!' ( (lv_arg_1_0= ruleBasicExpression ) ) ) )
-            // InternalFacpl2.g:1781:1: (otherlv_0= '!' ( (lv_arg_1_0= ruleBasicExpression ) ) )
+            // InternalFacpl2.g:1790:28: ( (otherlv_0= '!' ( (lv_arg_1_0= ruleBasicExpression ) ) ) )
+            // InternalFacpl2.g:1791:1: (otherlv_0= '!' ( (lv_arg_1_0= ruleBasicExpression ) ) )
             {
-            // InternalFacpl2.g:1781:1: (otherlv_0= '!' ( (lv_arg_1_0= ruleBasicExpression ) ) )
-            // InternalFacpl2.g:1781:3: otherlv_0= '!' ( (lv_arg_1_0= ruleBasicExpression ) )
+            // InternalFacpl2.g:1791:1: (otherlv_0= '!' ( (lv_arg_1_0= ruleBasicExpression ) ) )
+            // InternalFacpl2.g:1791:3: otherlv_0= '!' ( (lv_arg_1_0= ruleBasicExpression ) )
             {
             otherlv_0=(Token)match(input,49,FOLLOW_32); 
 
                 	newLeafNode(otherlv_0, grammarAccess.getNotExpressionAccess().getExclamationMarkKeyword_0());
                 
-            // InternalFacpl2.g:1785:1: ( (lv_arg_1_0= ruleBasicExpression ) )
-            // InternalFacpl2.g:1786:1: (lv_arg_1_0= ruleBasicExpression )
+            // InternalFacpl2.g:1795:1: ( (lv_arg_1_0= ruleBasicExpression ) )
+            // InternalFacpl2.g:1796:1: (lv_arg_1_0= ruleBasicExpression )
             {
-            // InternalFacpl2.g:1786:1: (lv_arg_1_0= ruleBasicExpression )
-            // InternalFacpl2.g:1787:3: lv_arg_1_0= ruleBasicExpression
+            // InternalFacpl2.g:1796:1: (lv_arg_1_0= ruleBasicExpression )
+            // InternalFacpl2.g:1797:3: lv_arg_1_0= ruleBasicExpression
             {
              
             	        newCompositeNode(grammarAccess.getNotExpressionAccess().getArgBasicExpressionParserRuleCall_1_0()); 
@@ -4660,7 +4686,7 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleFunction"
-    // InternalFacpl2.g:1811:1: entryRuleFunction returns [EObject current=null] : iv_ruleFunction= ruleFunction EOF ;
+    // InternalFacpl2.g:1821:1: entryRuleFunction returns [EObject current=null] : iv_ruleFunction= ruleFunction EOF ;
     public final EObject entryRuleFunction() throws RecognitionException {
         EObject current = null;
 
@@ -4668,8 +4694,8 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalFacpl2.g:1812:2: (iv_ruleFunction= ruleFunction EOF )
-            // InternalFacpl2.g:1813:2: iv_ruleFunction= ruleFunction EOF
+            // InternalFacpl2.g:1822:2: (iv_ruleFunction= ruleFunction EOF )
+            // InternalFacpl2.g:1823:2: iv_ruleFunction= ruleFunction EOF
             {
              newCompositeNode(grammarAccess.getFunctionRule()); 
             pushFollow(FOLLOW_1);
@@ -4696,7 +4722,7 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleFunction"
-    // InternalFacpl2.g:1820:1: ruleFunction returns [EObject current=null] : ( ( (lv_functionId_0_0= rulefunID ) ) otherlv_1= '(' ( (lv_arg1_2_0= ruleExpression ) ) otherlv_3= ',' ( (lv_arg2_4_0= ruleExpression ) ) otherlv_5= ')' ) ;
+    // InternalFacpl2.g:1830:1: ruleFunction returns [EObject current=null] : ( ( (lv_functionId_0_0= rulefunID ) ) otherlv_1= '(' ( (lv_arg1_2_0= ruleExpression ) ) otherlv_3= ',' ( (lv_arg2_4_0= ruleExpression ) ) otherlv_5= ')' ) ;
     public final EObject ruleFunction() throws RecognitionException {
         EObject current = null;
 
@@ -4713,17 +4739,17 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalFacpl2.g:1823:28: ( ( ( (lv_functionId_0_0= rulefunID ) ) otherlv_1= '(' ( (lv_arg1_2_0= ruleExpression ) ) otherlv_3= ',' ( (lv_arg2_4_0= ruleExpression ) ) otherlv_5= ')' ) )
-            // InternalFacpl2.g:1824:1: ( ( (lv_functionId_0_0= rulefunID ) ) otherlv_1= '(' ( (lv_arg1_2_0= ruleExpression ) ) otherlv_3= ',' ( (lv_arg2_4_0= ruleExpression ) ) otherlv_5= ')' )
+            // InternalFacpl2.g:1833:28: ( ( ( (lv_functionId_0_0= rulefunID ) ) otherlv_1= '(' ( (lv_arg1_2_0= ruleExpression ) ) otherlv_3= ',' ( (lv_arg2_4_0= ruleExpression ) ) otherlv_5= ')' ) )
+            // InternalFacpl2.g:1834:1: ( ( (lv_functionId_0_0= rulefunID ) ) otherlv_1= '(' ( (lv_arg1_2_0= ruleExpression ) ) otherlv_3= ',' ( (lv_arg2_4_0= ruleExpression ) ) otherlv_5= ')' )
             {
-            // InternalFacpl2.g:1824:1: ( ( (lv_functionId_0_0= rulefunID ) ) otherlv_1= '(' ( (lv_arg1_2_0= ruleExpression ) ) otherlv_3= ',' ( (lv_arg2_4_0= ruleExpression ) ) otherlv_5= ')' )
-            // InternalFacpl2.g:1824:2: ( (lv_functionId_0_0= rulefunID ) ) otherlv_1= '(' ( (lv_arg1_2_0= ruleExpression ) ) otherlv_3= ',' ( (lv_arg2_4_0= ruleExpression ) ) otherlv_5= ')'
+            // InternalFacpl2.g:1834:1: ( ( (lv_functionId_0_0= rulefunID ) ) otherlv_1= '(' ( (lv_arg1_2_0= ruleExpression ) ) otherlv_3= ',' ( (lv_arg2_4_0= ruleExpression ) ) otherlv_5= ')' )
+            // InternalFacpl2.g:1834:2: ( (lv_functionId_0_0= rulefunID ) ) otherlv_1= '(' ( (lv_arg1_2_0= ruleExpression ) ) otherlv_3= ',' ( (lv_arg2_4_0= ruleExpression ) ) otherlv_5= ')'
             {
-            // InternalFacpl2.g:1824:2: ( (lv_functionId_0_0= rulefunID ) )
-            // InternalFacpl2.g:1825:1: (lv_functionId_0_0= rulefunID )
+            // InternalFacpl2.g:1834:2: ( (lv_functionId_0_0= rulefunID ) )
+            // InternalFacpl2.g:1835:1: (lv_functionId_0_0= rulefunID )
             {
-            // InternalFacpl2.g:1825:1: (lv_functionId_0_0= rulefunID )
-            // InternalFacpl2.g:1826:3: lv_functionId_0_0= rulefunID
+            // InternalFacpl2.g:1835:1: (lv_functionId_0_0= rulefunID )
+            // InternalFacpl2.g:1836:3: lv_functionId_0_0= rulefunID
             {
              
             	        newCompositeNode(grammarAccess.getFunctionAccess().getFunctionIdFunIDEnumRuleCall_0_0()); 
@@ -4754,11 +4780,11 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
                 	newLeafNode(otherlv_1, grammarAccess.getFunctionAccess().getLeftParenthesisKeyword_1());
                 
-            // InternalFacpl2.g:1846:1: ( (lv_arg1_2_0= ruleExpression ) )
-            // InternalFacpl2.g:1847:1: (lv_arg1_2_0= ruleExpression )
+            // InternalFacpl2.g:1856:1: ( (lv_arg1_2_0= ruleExpression ) )
+            // InternalFacpl2.g:1857:1: (lv_arg1_2_0= ruleExpression )
             {
-            // InternalFacpl2.g:1847:1: (lv_arg1_2_0= ruleExpression )
-            // InternalFacpl2.g:1848:3: lv_arg1_2_0= ruleExpression
+            // InternalFacpl2.g:1857:1: (lv_arg1_2_0= ruleExpression )
+            // InternalFacpl2.g:1858:3: lv_arg1_2_0= ruleExpression
             {
              
             	        newCompositeNode(grammarAccess.getFunctionAccess().getArg1ExpressionParserRuleCall_2_0()); 
@@ -4789,11 +4815,11 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
                 	newLeafNode(otherlv_3, grammarAccess.getFunctionAccess().getCommaKeyword_3());
                 
-            // InternalFacpl2.g:1868:1: ( (lv_arg2_4_0= ruleExpression ) )
-            // InternalFacpl2.g:1869:1: (lv_arg2_4_0= ruleExpression )
+            // InternalFacpl2.g:1878:1: ( (lv_arg2_4_0= ruleExpression ) )
+            // InternalFacpl2.g:1879:1: (lv_arg2_4_0= ruleExpression )
             {
-            // InternalFacpl2.g:1869:1: (lv_arg2_4_0= ruleExpression )
-            // InternalFacpl2.g:1870:3: lv_arg2_4_0= ruleExpression
+            // InternalFacpl2.g:1879:1: (lv_arg2_4_0= ruleExpression )
+            // InternalFacpl2.g:1880:3: lv_arg2_4_0= ruleExpression
             {
              
             	        newCompositeNode(grammarAccess.getFunctionAccess().getArg2ExpressionParserRuleCall_4_0()); 
@@ -4845,7 +4871,7 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleDeclaredFunction"
-    // InternalFacpl2.g:1898:1: entryRuleDeclaredFunction returns [EObject current=null] : iv_ruleDeclaredFunction= ruleDeclaredFunction EOF ;
+    // InternalFacpl2.g:1908:1: entryRuleDeclaredFunction returns [EObject current=null] : iv_ruleDeclaredFunction= ruleDeclaredFunction EOF ;
     public final EObject entryRuleDeclaredFunction() throws RecognitionException {
         EObject current = null;
 
@@ -4853,8 +4879,8 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalFacpl2.g:1899:2: (iv_ruleDeclaredFunction= ruleDeclaredFunction EOF )
-            // InternalFacpl2.g:1900:2: iv_ruleDeclaredFunction= ruleDeclaredFunction EOF
+            // InternalFacpl2.g:1909:2: (iv_ruleDeclaredFunction= ruleDeclaredFunction EOF )
+            // InternalFacpl2.g:1910:2: iv_ruleDeclaredFunction= ruleDeclaredFunction EOF
             {
              newCompositeNode(grammarAccess.getDeclaredFunctionRule()); 
             pushFollow(FOLLOW_1);
@@ -4881,7 +4907,7 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDeclaredFunction"
-    // InternalFacpl2.g:1907:1: ruleDeclaredFunction returns [EObject current=null] : ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '(' ( (lv_args_2_0= ruleExpression ) ) (otherlv_3= ',' ( (lv_args_4_0= ruleExpression ) ) )* otherlv_5= ')' ) ;
+    // InternalFacpl2.g:1917:1: ruleDeclaredFunction returns [EObject current=null] : ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '(' ( (lv_args_2_0= ruleExpression ) ) (otherlv_3= ',' ( (lv_args_4_0= ruleExpression ) ) )* otherlv_5= ')' ) ;
     public final EObject ruleDeclaredFunction() throws RecognitionException {
         EObject current = null;
 
@@ -4897,17 +4923,17 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalFacpl2.g:1910:28: ( ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '(' ( (lv_args_2_0= ruleExpression ) ) (otherlv_3= ',' ( (lv_args_4_0= ruleExpression ) ) )* otherlv_5= ')' ) )
-            // InternalFacpl2.g:1911:1: ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '(' ( (lv_args_2_0= ruleExpression ) ) (otherlv_3= ',' ( (lv_args_4_0= ruleExpression ) ) )* otherlv_5= ')' )
+            // InternalFacpl2.g:1920:28: ( ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '(' ( (lv_args_2_0= ruleExpression ) ) (otherlv_3= ',' ( (lv_args_4_0= ruleExpression ) ) )* otherlv_5= ')' ) )
+            // InternalFacpl2.g:1921:1: ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '(' ( (lv_args_2_0= ruleExpression ) ) (otherlv_3= ',' ( (lv_args_4_0= ruleExpression ) ) )* otherlv_5= ')' )
             {
-            // InternalFacpl2.g:1911:1: ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '(' ( (lv_args_2_0= ruleExpression ) ) (otherlv_3= ',' ( (lv_args_4_0= ruleExpression ) ) )* otherlv_5= ')' )
-            // InternalFacpl2.g:1911:2: ( (otherlv_0= RULE_ID ) ) otherlv_1= '(' ( (lv_args_2_0= ruleExpression ) ) (otherlv_3= ',' ( (lv_args_4_0= ruleExpression ) ) )* otherlv_5= ')'
+            // InternalFacpl2.g:1921:1: ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '(' ( (lv_args_2_0= ruleExpression ) ) (otherlv_3= ',' ( (lv_args_4_0= ruleExpression ) ) )* otherlv_5= ')' )
+            // InternalFacpl2.g:1921:2: ( (otherlv_0= RULE_ID ) ) otherlv_1= '(' ( (lv_args_2_0= ruleExpression ) ) (otherlv_3= ',' ( (lv_args_4_0= ruleExpression ) ) )* otherlv_5= ')'
             {
-            // InternalFacpl2.g:1911:2: ( (otherlv_0= RULE_ID ) )
-            // InternalFacpl2.g:1912:1: (otherlv_0= RULE_ID )
+            // InternalFacpl2.g:1921:2: ( (otherlv_0= RULE_ID ) )
+            // InternalFacpl2.g:1922:1: (otherlv_0= RULE_ID )
             {
-            // InternalFacpl2.g:1912:1: (otherlv_0= RULE_ID )
-            // InternalFacpl2.g:1913:3: otherlv_0= RULE_ID
+            // InternalFacpl2.g:1922:1: (otherlv_0= RULE_ID )
+            // InternalFacpl2.g:1923:3: otherlv_0= RULE_ID
             {
 
             			if (current==null) {
@@ -4928,11 +4954,11 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
                 	newLeafNode(otherlv_1, grammarAccess.getDeclaredFunctionAccess().getLeftParenthesisKeyword_1());
                 
-            // InternalFacpl2.g:1928:1: ( (lv_args_2_0= ruleExpression ) )
-            // InternalFacpl2.g:1929:1: (lv_args_2_0= ruleExpression )
+            // InternalFacpl2.g:1938:1: ( (lv_args_2_0= ruleExpression ) )
+            // InternalFacpl2.g:1939:1: (lv_args_2_0= ruleExpression )
             {
-            // InternalFacpl2.g:1929:1: (lv_args_2_0= ruleExpression )
-            // InternalFacpl2.g:1930:3: lv_args_2_0= ruleExpression
+            // InternalFacpl2.g:1939:1: (lv_args_2_0= ruleExpression )
+            // InternalFacpl2.g:1940:3: lv_args_2_0= ruleExpression
             {
              
             	        newCompositeNode(grammarAccess.getDeclaredFunctionAccess().getArgsExpressionParserRuleCall_2_0()); 
@@ -4959,7 +4985,7 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalFacpl2.g:1946:2: (otherlv_3= ',' ( (lv_args_4_0= ruleExpression ) ) )*
+            // InternalFacpl2.g:1956:2: (otherlv_3= ',' ( (lv_args_4_0= ruleExpression ) ) )*
             loop33:
             do {
                 int alt33=2;
@@ -4972,17 +4998,17 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
                 switch (alt33) {
             	case 1 :
-            	    // InternalFacpl2.g:1946:4: otherlv_3= ',' ( (lv_args_4_0= ruleExpression ) )
+            	    // InternalFacpl2.g:1956:4: otherlv_3= ',' ( (lv_args_4_0= ruleExpression ) )
             	    {
             	    otherlv_3=(Token)match(input,23,FOLLOW_32); 
 
             	        	newLeafNode(otherlv_3, grammarAccess.getDeclaredFunctionAccess().getCommaKeyword_3_0());
             	        
-            	    // InternalFacpl2.g:1950:1: ( (lv_args_4_0= ruleExpression ) )
-            	    // InternalFacpl2.g:1951:1: (lv_args_4_0= ruleExpression )
+            	    // InternalFacpl2.g:1960:1: ( (lv_args_4_0= ruleExpression ) )
+            	    // InternalFacpl2.g:1961:1: (lv_args_4_0= ruleExpression )
             	    {
-            	    // InternalFacpl2.g:1951:1: (lv_args_4_0= ruleExpression )
-            	    // InternalFacpl2.g:1952:3: lv_args_4_0= ruleExpression
+            	    // InternalFacpl2.g:1961:1: (lv_args_4_0= ruleExpression )
+            	    // InternalFacpl2.g:1962:3: lv_args_4_0= ruleExpression
             	    {
             	     
             	    	        newCompositeNode(grammarAccess.getDeclaredFunctionAccess().getArgsExpressionParserRuleCall_3_1_0()); 
@@ -5042,8 +5068,198 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
     // $ANTLR end "ruleDeclaredFunction"
 
 
+    // $ANTLR start "entryRuleMapFunction"
+    // InternalFacpl2.g:1990:1: entryRuleMapFunction returns [EObject current=null] : iv_ruleMapFunction= ruleMapFunction EOF ;
+    public final EObject entryRuleMapFunction() throws RecognitionException {
+        EObject current = null;
+
+        EObject iv_ruleMapFunction = null;
+
+
+        try {
+            // InternalFacpl2.g:1991:2: (iv_ruleMapFunction= ruleMapFunction EOF )
+            // InternalFacpl2.g:1992:2: iv_ruleMapFunction= ruleMapFunction EOF
+            {
+             newCompositeNode(grammarAccess.getMapFunctionRule()); 
+            pushFollow(FOLLOW_1);
+            iv_ruleMapFunction=ruleMapFunction();
+
+            state._fsp--;
+
+             current =iv_ruleMapFunction; 
+            match(input,EOF,FOLLOW_2); 
+
+            }
+
+        }
+         
+            catch (RecognitionException re) { 
+                recover(input,re); 
+                appendSkippedTokens();
+            } 
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "entryRuleMapFunction"
+
+
+    // $ANTLR start "ruleMapFunction"
+    // InternalFacpl2.g:1999:1: ruleMapFunction returns [EObject current=null] : (otherlv_0= 'map(' ( (lv_functionID_1_0= rulefunID ) ) otherlv_2= ',' ( (lv_arg1_3_0= ruleAttributeName ) ) otherlv_4= ',' ( (lv_arg2_5_0= ruleLiterals ) ) otherlv_6= ')' ) ;
+    public final EObject ruleMapFunction() throws RecognitionException {
+        EObject current = null;
+
+        Token otherlv_0=null;
+        Token otherlv_2=null;
+        Token otherlv_4=null;
+        Token otherlv_6=null;
+        Enumerator lv_functionID_1_0 = null;
+
+        EObject lv_arg1_3_0 = null;
+
+        EObject lv_arg2_5_0 = null;
+
+
+         enterRule(); 
+            
+        try {
+            // InternalFacpl2.g:2002:28: ( (otherlv_0= 'map(' ( (lv_functionID_1_0= rulefunID ) ) otherlv_2= ',' ( (lv_arg1_3_0= ruleAttributeName ) ) otherlv_4= ',' ( (lv_arg2_5_0= ruleLiterals ) ) otherlv_6= ')' ) )
+            // InternalFacpl2.g:2003:1: (otherlv_0= 'map(' ( (lv_functionID_1_0= rulefunID ) ) otherlv_2= ',' ( (lv_arg1_3_0= ruleAttributeName ) ) otherlv_4= ',' ( (lv_arg2_5_0= ruleLiterals ) ) otherlv_6= ')' )
+            {
+            // InternalFacpl2.g:2003:1: (otherlv_0= 'map(' ( (lv_functionID_1_0= rulefunID ) ) otherlv_2= ',' ( (lv_arg1_3_0= ruleAttributeName ) ) otherlv_4= ',' ( (lv_arg2_5_0= ruleLiterals ) ) otherlv_6= ')' )
+            // InternalFacpl2.g:2003:3: otherlv_0= 'map(' ( (lv_functionID_1_0= rulefunID ) ) otherlv_2= ',' ( (lv_arg1_3_0= ruleAttributeName ) ) otherlv_4= ',' ( (lv_arg2_5_0= ruleLiterals ) ) otherlv_6= ')'
+            {
+            otherlv_0=(Token)match(input,50,FOLLOW_49); 
+
+                	newLeafNode(otherlv_0, grammarAccess.getMapFunctionAccess().getMapKeyword_0());
+                
+            // InternalFacpl2.g:2007:1: ( (lv_functionID_1_0= rulefunID ) )
+            // InternalFacpl2.g:2008:1: (lv_functionID_1_0= rulefunID )
+            {
+            // InternalFacpl2.g:2008:1: (lv_functionID_1_0= rulefunID )
+            // InternalFacpl2.g:2009:3: lv_functionID_1_0= rulefunID
+            {
+             
+            	        newCompositeNode(grammarAccess.getMapFunctionAccess().getFunctionIDFunIDEnumRuleCall_1_0()); 
+            	    
+            pushFollow(FOLLOW_25);
+            lv_functionID_1_0=rulefunID();
+
+            state._fsp--;
+
+
+            	        if (current==null) {
+            	            current = createModelElementForParent(grammarAccess.getMapFunctionRule());
+            	        }
+                   		set(
+                   			current, 
+                   			"functionID",
+                    		lv_functionID_1_0, 
+                    		"it.unifi.xtext.facpl.Facpl2.funID");
+            	        afterParserOrEnumRuleCall();
+            	    
+
+            }
+
+
+            }
+
+            otherlv_2=(Token)match(input,23,FOLLOW_12); 
+
+                	newLeafNode(otherlv_2, grammarAccess.getMapFunctionAccess().getCommaKeyword_2());
+                
+            // InternalFacpl2.g:2029:1: ( (lv_arg1_3_0= ruleAttributeName ) )
+            // InternalFacpl2.g:2030:1: (lv_arg1_3_0= ruleAttributeName )
+            {
+            // InternalFacpl2.g:2030:1: (lv_arg1_3_0= ruleAttributeName )
+            // InternalFacpl2.g:2031:3: lv_arg1_3_0= ruleAttributeName
+            {
+             
+            	        newCompositeNode(grammarAccess.getMapFunctionAccess().getArg1AttributeNameParserRuleCall_3_0()); 
+            	    
+            pushFollow(FOLLOW_25);
+            lv_arg1_3_0=ruleAttributeName();
+
+            state._fsp--;
+
+
+            	        if (current==null) {
+            	            current = createModelElementForParent(grammarAccess.getMapFunctionRule());
+            	        }
+                   		set(
+                   			current, 
+                   			"arg1",
+                    		lv_arg1_3_0, 
+                    		"it.unifi.xtext.facpl.Facpl2.AttributeName");
+            	        afterParserOrEnumRuleCall();
+            	    
+
+            }
+
+
+            }
+
+            otherlv_4=(Token)match(input,23,FOLLOW_26); 
+
+                	newLeafNode(otherlv_4, grammarAccess.getMapFunctionAccess().getCommaKeyword_4());
+                
+            // InternalFacpl2.g:2051:1: ( (lv_arg2_5_0= ruleLiterals ) )
+            // InternalFacpl2.g:2052:1: (lv_arg2_5_0= ruleLiterals )
+            {
+            // InternalFacpl2.g:2052:1: (lv_arg2_5_0= ruleLiterals )
+            // InternalFacpl2.g:2053:3: lv_arg2_5_0= ruleLiterals
+            {
+             
+            	        newCompositeNode(grammarAccess.getMapFunctionAccess().getArg2LiteralsParserRuleCall_5_0()); 
+            	    
+            pushFollow(FOLLOW_48);
+            lv_arg2_5_0=ruleLiterals();
+
+            state._fsp--;
+
+
+            	        if (current==null) {
+            	            current = createModelElementForParent(grammarAccess.getMapFunctionRule());
+            	        }
+                   		set(
+                   			current, 
+                   			"arg2",
+                    		lv_arg2_5_0, 
+                    		"it.unifi.xtext.facpl.Facpl2.Literals");
+            	        afterParserOrEnumRuleCall();
+            	    
+
+            }
+
+
+            }
+
+            otherlv_6=(Token)match(input,27,FOLLOW_2); 
+
+                	newLeafNode(otherlv_6, grammarAccess.getMapFunctionAccess().getRightParenthesisKeyword_6());
+                
+
+            }
+
+
+            }
+
+             leaveRule(); 
+        }
+         
+            catch (RecognitionException re) { 
+                recover(input,re); 
+                appendSkippedTokens();
+            } 
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "ruleMapFunction"
+
+
     // $ANTLR start "entryRuleLiterals"
-    // InternalFacpl2.g:1980:1: entryRuleLiterals returns [EObject current=null] : iv_ruleLiterals= ruleLiterals EOF ;
+    // InternalFacpl2.g:2081:1: entryRuleLiterals returns [EObject current=null] : iv_ruleLiterals= ruleLiterals EOF ;
     public final EObject entryRuleLiterals() throws RecognitionException {
         EObject current = null;
 
@@ -5051,8 +5267,8 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalFacpl2.g:1981:2: (iv_ruleLiterals= ruleLiterals EOF )
-            // InternalFacpl2.g:1982:2: iv_ruleLiterals= ruleLiterals EOF
+            // InternalFacpl2.g:2082:2: (iv_ruleLiterals= ruleLiterals EOF )
+            // InternalFacpl2.g:2083:2: iv_ruleLiterals= ruleLiterals EOF
             {
              newCompositeNode(grammarAccess.getLiteralsRule()); 
             pushFollow(FOLLOW_1);
@@ -5079,7 +5295,7 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleLiterals"
-    // InternalFacpl2.g:1989:1: ruleLiterals returns [EObject current=null] : (this_IntLiteral_0= ruleIntLiteral | this_DoubleLiteral_1= ruleDoubleLiteral | this_BooleanLiteral_2= ruleBooleanLiteral | this_StringLiteral_3= ruleStringLiteral | this_DateLiteral_4= ruleDateLiteral | this_TimeLiteral_5= ruleTimeLiteral | this_AttributeName_6= ruleAttributeName | this_Set_7= ruleSet ) ;
+    // InternalFacpl2.g:2090:1: ruleLiterals returns [EObject current=null] : (this_IntLiteral_0= ruleIntLiteral | this_DoubleLiteral_1= ruleDoubleLiteral | this_BooleanLiteral_2= ruleBooleanLiteral | this_StringLiteral_3= ruleStringLiteral | this_DateLiteral_4= ruleDateLiteral | this_TimeLiteral_5= ruleTimeLiteral | this_AttributeName_6= ruleAttributeName | this_Set_7= ruleSet ) ;
     public final EObject ruleLiterals() throws RecognitionException {
         EObject current = null;
 
@@ -5103,10 +5319,10 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalFacpl2.g:1992:28: ( (this_IntLiteral_0= ruleIntLiteral | this_DoubleLiteral_1= ruleDoubleLiteral | this_BooleanLiteral_2= ruleBooleanLiteral | this_StringLiteral_3= ruleStringLiteral | this_DateLiteral_4= ruleDateLiteral | this_TimeLiteral_5= ruleTimeLiteral | this_AttributeName_6= ruleAttributeName | this_Set_7= ruleSet ) )
-            // InternalFacpl2.g:1993:1: (this_IntLiteral_0= ruleIntLiteral | this_DoubleLiteral_1= ruleDoubleLiteral | this_BooleanLiteral_2= ruleBooleanLiteral | this_StringLiteral_3= ruleStringLiteral | this_DateLiteral_4= ruleDateLiteral | this_TimeLiteral_5= ruleTimeLiteral | this_AttributeName_6= ruleAttributeName | this_Set_7= ruleSet )
+            // InternalFacpl2.g:2093:28: ( (this_IntLiteral_0= ruleIntLiteral | this_DoubleLiteral_1= ruleDoubleLiteral | this_BooleanLiteral_2= ruleBooleanLiteral | this_StringLiteral_3= ruleStringLiteral | this_DateLiteral_4= ruleDateLiteral | this_TimeLiteral_5= ruleTimeLiteral | this_AttributeName_6= ruleAttributeName | this_Set_7= ruleSet ) )
+            // InternalFacpl2.g:2094:1: (this_IntLiteral_0= ruleIntLiteral | this_DoubleLiteral_1= ruleDoubleLiteral | this_BooleanLiteral_2= ruleBooleanLiteral | this_StringLiteral_3= ruleStringLiteral | this_DateLiteral_4= ruleDateLiteral | this_TimeLiteral_5= ruleTimeLiteral | this_AttributeName_6= ruleAttributeName | this_Set_7= ruleSet )
             {
-            // InternalFacpl2.g:1993:1: (this_IntLiteral_0= ruleIntLiteral | this_DoubleLiteral_1= ruleDoubleLiteral | this_BooleanLiteral_2= ruleBooleanLiteral | this_StringLiteral_3= ruleStringLiteral | this_DateLiteral_4= ruleDateLiteral | this_TimeLiteral_5= ruleTimeLiteral | this_AttributeName_6= ruleAttributeName | this_Set_7= ruleSet )
+            // InternalFacpl2.g:2094:1: (this_IntLiteral_0= ruleIntLiteral | this_DoubleLiteral_1= ruleDoubleLiteral | this_BooleanLiteral_2= ruleBooleanLiteral | this_StringLiteral_3= ruleStringLiteral | this_DateLiteral_4= ruleDateLiteral | this_TimeLiteral_5= ruleTimeLiteral | this_AttributeName_6= ruleAttributeName | this_Set_7= ruleSet )
             int alt34=8;
             switch ( input.LA(1) ) {
             case RULE_INT:
@@ -5144,7 +5360,7 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
                 alt34=7;
                 }
                 break;
-            case 50:
+            case 51:
                 {
                 alt34=8;
                 }
@@ -5158,7 +5374,7 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
             switch (alt34) {
                 case 1 :
-                    // InternalFacpl2.g:1994:5: this_IntLiteral_0= ruleIntLiteral
+                    // InternalFacpl2.g:2095:5: this_IntLiteral_0= ruleIntLiteral
                     {
                      
                             newCompositeNode(grammarAccess.getLiteralsAccess().getIntLiteralParserRuleCall_0()); 
@@ -5176,7 +5392,7 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalFacpl2.g:2004:5: this_DoubleLiteral_1= ruleDoubleLiteral
+                    // InternalFacpl2.g:2105:5: this_DoubleLiteral_1= ruleDoubleLiteral
                     {
                      
                             newCompositeNode(grammarAccess.getLiteralsAccess().getDoubleLiteralParserRuleCall_1()); 
@@ -5194,7 +5410,7 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalFacpl2.g:2014:5: this_BooleanLiteral_2= ruleBooleanLiteral
+                    // InternalFacpl2.g:2115:5: this_BooleanLiteral_2= ruleBooleanLiteral
                     {
                      
                             newCompositeNode(grammarAccess.getLiteralsAccess().getBooleanLiteralParserRuleCall_2()); 
@@ -5212,7 +5428,7 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalFacpl2.g:2024:5: this_StringLiteral_3= ruleStringLiteral
+                    // InternalFacpl2.g:2125:5: this_StringLiteral_3= ruleStringLiteral
                     {
                      
                             newCompositeNode(grammarAccess.getLiteralsAccess().getStringLiteralParserRuleCall_3()); 
@@ -5230,7 +5446,7 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalFacpl2.g:2034:5: this_DateLiteral_4= ruleDateLiteral
+                    // InternalFacpl2.g:2135:5: this_DateLiteral_4= ruleDateLiteral
                     {
                      
                             newCompositeNode(grammarAccess.getLiteralsAccess().getDateLiteralParserRuleCall_4()); 
@@ -5248,7 +5464,7 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalFacpl2.g:2044:5: this_TimeLiteral_5= ruleTimeLiteral
+                    // InternalFacpl2.g:2145:5: this_TimeLiteral_5= ruleTimeLiteral
                     {
                      
                             newCompositeNode(grammarAccess.getLiteralsAccess().getTimeLiteralParserRuleCall_5()); 
@@ -5266,7 +5482,7 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // InternalFacpl2.g:2054:5: this_AttributeName_6= ruleAttributeName
+                    // InternalFacpl2.g:2155:5: this_AttributeName_6= ruleAttributeName
                     {
                      
                             newCompositeNode(grammarAccess.getLiteralsAccess().getAttributeNameParserRuleCall_6()); 
@@ -5284,7 +5500,7 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 8 :
-                    // InternalFacpl2.g:2064:5: this_Set_7= ruleSet
+                    // InternalFacpl2.g:2165:5: this_Set_7= ruleSet
                     {
                      
                             newCompositeNode(grammarAccess.getLiteralsAccess().getSetParserRuleCall_7()); 
@@ -5322,7 +5538,7 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleSet"
-    // InternalFacpl2.g:2080:1: entryRuleSet returns [EObject current=null] : iv_ruleSet= ruleSet EOF ;
+    // InternalFacpl2.g:2181:1: entryRuleSet returns [EObject current=null] : iv_ruleSet= ruleSet EOF ;
     public final EObject entryRuleSet() throws RecognitionException {
         EObject current = null;
 
@@ -5330,8 +5546,8 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalFacpl2.g:2081:2: (iv_ruleSet= ruleSet EOF )
-            // InternalFacpl2.g:2082:2: iv_ruleSet= ruleSet EOF
+            // InternalFacpl2.g:2182:2: (iv_ruleSet= ruleSet EOF )
+            // InternalFacpl2.g:2183:2: iv_ruleSet= ruleSet EOF
             {
              newCompositeNode(grammarAccess.getSetRule()); 
             pushFollow(FOLLOW_1);
@@ -5358,7 +5574,7 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleSet"
-    // InternalFacpl2.g:2089:1: ruleSet returns [EObject current=null] : (otherlv_0= 'set(' ( ( (lv_args_1_0= ruleLiterals ) ) (otherlv_2= ',' ( (lv_args_3_0= ruleLiterals ) ) )* ) otherlv_4= ')' ) ;
+    // InternalFacpl2.g:2190:1: ruleSet returns [EObject current=null] : (otherlv_0= 'set(' ( ( (lv_args_1_0= ruleLiterals ) ) (otherlv_2= ',' ( (lv_args_3_0= ruleLiterals ) ) )* ) otherlv_4= ')' ) ;
     public final EObject ruleSet() throws RecognitionException {
         EObject current = null;
 
@@ -5373,24 +5589,24 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalFacpl2.g:2092:28: ( (otherlv_0= 'set(' ( ( (lv_args_1_0= ruleLiterals ) ) (otherlv_2= ',' ( (lv_args_3_0= ruleLiterals ) ) )* ) otherlv_4= ')' ) )
-            // InternalFacpl2.g:2093:1: (otherlv_0= 'set(' ( ( (lv_args_1_0= ruleLiterals ) ) (otherlv_2= ',' ( (lv_args_3_0= ruleLiterals ) ) )* ) otherlv_4= ')' )
+            // InternalFacpl2.g:2193:28: ( (otherlv_0= 'set(' ( ( (lv_args_1_0= ruleLiterals ) ) (otherlv_2= ',' ( (lv_args_3_0= ruleLiterals ) ) )* ) otherlv_4= ')' ) )
+            // InternalFacpl2.g:2194:1: (otherlv_0= 'set(' ( ( (lv_args_1_0= ruleLiterals ) ) (otherlv_2= ',' ( (lv_args_3_0= ruleLiterals ) ) )* ) otherlv_4= ')' )
             {
-            // InternalFacpl2.g:2093:1: (otherlv_0= 'set(' ( ( (lv_args_1_0= ruleLiterals ) ) (otherlv_2= ',' ( (lv_args_3_0= ruleLiterals ) ) )* ) otherlv_4= ')' )
-            // InternalFacpl2.g:2093:3: otherlv_0= 'set(' ( ( (lv_args_1_0= ruleLiterals ) ) (otherlv_2= ',' ( (lv_args_3_0= ruleLiterals ) ) )* ) otherlv_4= ')'
+            // InternalFacpl2.g:2194:1: (otherlv_0= 'set(' ( ( (lv_args_1_0= ruleLiterals ) ) (otherlv_2= ',' ( (lv_args_3_0= ruleLiterals ) ) )* ) otherlv_4= ')' )
+            // InternalFacpl2.g:2194:3: otherlv_0= 'set(' ( ( (lv_args_1_0= ruleLiterals ) ) (otherlv_2= ',' ( (lv_args_3_0= ruleLiterals ) ) )* ) otherlv_4= ')'
             {
-            otherlv_0=(Token)match(input,50,FOLLOW_26); 
+            otherlv_0=(Token)match(input,51,FOLLOW_26); 
 
                 	newLeafNode(otherlv_0, grammarAccess.getSetAccess().getSetKeyword_0());
                 
-            // InternalFacpl2.g:2097:1: ( ( (lv_args_1_0= ruleLiterals ) ) (otherlv_2= ',' ( (lv_args_3_0= ruleLiterals ) ) )* )
-            // InternalFacpl2.g:2097:2: ( (lv_args_1_0= ruleLiterals ) ) (otherlv_2= ',' ( (lv_args_3_0= ruleLiterals ) ) )*
+            // InternalFacpl2.g:2198:1: ( ( (lv_args_1_0= ruleLiterals ) ) (otherlv_2= ',' ( (lv_args_3_0= ruleLiterals ) ) )* )
+            // InternalFacpl2.g:2198:2: ( (lv_args_1_0= ruleLiterals ) ) (otherlv_2= ',' ( (lv_args_3_0= ruleLiterals ) ) )*
             {
-            // InternalFacpl2.g:2097:2: ( (lv_args_1_0= ruleLiterals ) )
-            // InternalFacpl2.g:2098:1: (lv_args_1_0= ruleLiterals )
+            // InternalFacpl2.g:2198:2: ( (lv_args_1_0= ruleLiterals ) )
+            // InternalFacpl2.g:2199:1: (lv_args_1_0= ruleLiterals )
             {
-            // InternalFacpl2.g:2098:1: (lv_args_1_0= ruleLiterals )
-            // InternalFacpl2.g:2099:3: lv_args_1_0= ruleLiterals
+            // InternalFacpl2.g:2199:1: (lv_args_1_0= ruleLiterals )
+            // InternalFacpl2.g:2200:3: lv_args_1_0= ruleLiterals
             {
              
             	        newCompositeNode(grammarAccess.getSetAccess().getArgsLiteralsParserRuleCall_1_0_0()); 
@@ -5417,7 +5633,7 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalFacpl2.g:2115:2: (otherlv_2= ',' ( (lv_args_3_0= ruleLiterals ) ) )*
+            // InternalFacpl2.g:2216:2: (otherlv_2= ',' ( (lv_args_3_0= ruleLiterals ) ) )*
             loop35:
             do {
                 int alt35=2;
@@ -5430,17 +5646,17 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
                 switch (alt35) {
             	case 1 :
-            	    // InternalFacpl2.g:2115:4: otherlv_2= ',' ( (lv_args_3_0= ruleLiterals ) )
+            	    // InternalFacpl2.g:2216:4: otherlv_2= ',' ( (lv_args_3_0= ruleLiterals ) )
             	    {
             	    otherlv_2=(Token)match(input,23,FOLLOW_26); 
 
             	        	newLeafNode(otherlv_2, grammarAccess.getSetAccess().getCommaKeyword_1_1_0());
             	        
-            	    // InternalFacpl2.g:2119:1: ( (lv_args_3_0= ruleLiterals ) )
-            	    // InternalFacpl2.g:2120:1: (lv_args_3_0= ruleLiterals )
+            	    // InternalFacpl2.g:2220:1: ( (lv_args_3_0= ruleLiterals ) )
+            	    // InternalFacpl2.g:2221:1: (lv_args_3_0= ruleLiterals )
             	    {
-            	    // InternalFacpl2.g:2120:1: (lv_args_3_0= ruleLiterals )
-            	    // InternalFacpl2.g:2121:3: lv_args_3_0= ruleLiterals
+            	    // InternalFacpl2.g:2221:1: (lv_args_3_0= ruleLiterals )
+            	    // InternalFacpl2.g:2222:3: lv_args_3_0= ruleLiterals
             	    {
             	     
             	    	        newCompositeNode(grammarAccess.getSetAccess().getArgsLiteralsParserRuleCall_1_1_1_0()); 
@@ -5504,7 +5720,7 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleStringLiteral"
-    // InternalFacpl2.g:2149:1: entryRuleStringLiteral returns [EObject current=null] : iv_ruleStringLiteral= ruleStringLiteral EOF ;
+    // InternalFacpl2.g:2250:1: entryRuleStringLiteral returns [EObject current=null] : iv_ruleStringLiteral= ruleStringLiteral EOF ;
     public final EObject entryRuleStringLiteral() throws RecognitionException {
         EObject current = null;
 
@@ -5512,8 +5728,8 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalFacpl2.g:2150:2: (iv_ruleStringLiteral= ruleStringLiteral EOF )
-            // InternalFacpl2.g:2151:2: iv_ruleStringLiteral= ruleStringLiteral EOF
+            // InternalFacpl2.g:2251:2: (iv_ruleStringLiteral= ruleStringLiteral EOF )
+            // InternalFacpl2.g:2252:2: iv_ruleStringLiteral= ruleStringLiteral EOF
             {
              newCompositeNode(grammarAccess.getStringLiteralRule()); 
             pushFollow(FOLLOW_1);
@@ -5540,7 +5756,7 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleStringLiteral"
-    // InternalFacpl2.g:2158:1: ruleStringLiteral returns [EObject current=null] : ( (lv_value_0_0= RULE_STRING ) ) ;
+    // InternalFacpl2.g:2259:1: ruleStringLiteral returns [EObject current=null] : ( (lv_value_0_0= RULE_STRING ) ) ;
     public final EObject ruleStringLiteral() throws RecognitionException {
         EObject current = null;
 
@@ -5549,14 +5765,14 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalFacpl2.g:2161:28: ( ( (lv_value_0_0= RULE_STRING ) ) )
-            // InternalFacpl2.g:2162:1: ( (lv_value_0_0= RULE_STRING ) )
+            // InternalFacpl2.g:2262:28: ( ( (lv_value_0_0= RULE_STRING ) ) )
+            // InternalFacpl2.g:2263:1: ( (lv_value_0_0= RULE_STRING ) )
             {
-            // InternalFacpl2.g:2162:1: ( (lv_value_0_0= RULE_STRING ) )
-            // InternalFacpl2.g:2163:1: (lv_value_0_0= RULE_STRING )
+            // InternalFacpl2.g:2263:1: ( (lv_value_0_0= RULE_STRING ) )
+            // InternalFacpl2.g:2264:1: (lv_value_0_0= RULE_STRING )
             {
-            // InternalFacpl2.g:2163:1: (lv_value_0_0= RULE_STRING )
-            // InternalFacpl2.g:2164:3: lv_value_0_0= RULE_STRING
+            // InternalFacpl2.g:2264:1: (lv_value_0_0= RULE_STRING )
+            // InternalFacpl2.g:2265:3: lv_value_0_0= RULE_STRING
             {
             lv_value_0_0=(Token)match(input,RULE_STRING,FOLLOW_2); 
 
@@ -5596,7 +5812,7 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleBooleanLiteral"
-    // InternalFacpl2.g:2188:1: entryRuleBooleanLiteral returns [EObject current=null] : iv_ruleBooleanLiteral= ruleBooleanLiteral EOF ;
+    // InternalFacpl2.g:2289:1: entryRuleBooleanLiteral returns [EObject current=null] : iv_ruleBooleanLiteral= ruleBooleanLiteral EOF ;
     public final EObject entryRuleBooleanLiteral() throws RecognitionException {
         EObject current = null;
 
@@ -5604,8 +5820,8 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalFacpl2.g:2189:2: (iv_ruleBooleanLiteral= ruleBooleanLiteral EOF )
-            // InternalFacpl2.g:2190:2: iv_ruleBooleanLiteral= ruleBooleanLiteral EOF
+            // InternalFacpl2.g:2290:2: (iv_ruleBooleanLiteral= ruleBooleanLiteral EOF )
+            // InternalFacpl2.g:2291:2: iv_ruleBooleanLiteral= ruleBooleanLiteral EOF
             {
              newCompositeNode(grammarAccess.getBooleanLiteralRule()); 
             pushFollow(FOLLOW_1);
@@ -5632,7 +5848,7 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleBooleanLiteral"
-    // InternalFacpl2.g:2197:1: ruleBooleanLiteral returns [EObject current=null] : ( (lv_value_0_0= RULE_BOOLEAN ) ) ;
+    // InternalFacpl2.g:2298:1: ruleBooleanLiteral returns [EObject current=null] : ( (lv_value_0_0= RULE_BOOLEAN ) ) ;
     public final EObject ruleBooleanLiteral() throws RecognitionException {
         EObject current = null;
 
@@ -5641,14 +5857,14 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalFacpl2.g:2200:28: ( ( (lv_value_0_0= RULE_BOOLEAN ) ) )
-            // InternalFacpl2.g:2201:1: ( (lv_value_0_0= RULE_BOOLEAN ) )
+            // InternalFacpl2.g:2301:28: ( ( (lv_value_0_0= RULE_BOOLEAN ) ) )
+            // InternalFacpl2.g:2302:1: ( (lv_value_0_0= RULE_BOOLEAN ) )
             {
-            // InternalFacpl2.g:2201:1: ( (lv_value_0_0= RULE_BOOLEAN ) )
-            // InternalFacpl2.g:2202:1: (lv_value_0_0= RULE_BOOLEAN )
+            // InternalFacpl2.g:2302:1: ( (lv_value_0_0= RULE_BOOLEAN ) )
+            // InternalFacpl2.g:2303:1: (lv_value_0_0= RULE_BOOLEAN )
             {
-            // InternalFacpl2.g:2202:1: (lv_value_0_0= RULE_BOOLEAN )
-            // InternalFacpl2.g:2203:3: lv_value_0_0= RULE_BOOLEAN
+            // InternalFacpl2.g:2303:1: (lv_value_0_0= RULE_BOOLEAN )
+            // InternalFacpl2.g:2304:3: lv_value_0_0= RULE_BOOLEAN
             {
             lv_value_0_0=(Token)match(input,RULE_BOOLEAN,FOLLOW_2); 
 
@@ -5688,7 +5904,7 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleIntLiteral"
-    // InternalFacpl2.g:2227:1: entryRuleIntLiteral returns [EObject current=null] : iv_ruleIntLiteral= ruleIntLiteral EOF ;
+    // InternalFacpl2.g:2328:1: entryRuleIntLiteral returns [EObject current=null] : iv_ruleIntLiteral= ruleIntLiteral EOF ;
     public final EObject entryRuleIntLiteral() throws RecognitionException {
         EObject current = null;
 
@@ -5696,8 +5912,8 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalFacpl2.g:2228:2: (iv_ruleIntLiteral= ruleIntLiteral EOF )
-            // InternalFacpl2.g:2229:2: iv_ruleIntLiteral= ruleIntLiteral EOF
+            // InternalFacpl2.g:2329:2: (iv_ruleIntLiteral= ruleIntLiteral EOF )
+            // InternalFacpl2.g:2330:2: iv_ruleIntLiteral= ruleIntLiteral EOF
             {
              newCompositeNode(grammarAccess.getIntLiteralRule()); 
             pushFollow(FOLLOW_1);
@@ -5724,7 +5940,7 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleIntLiteral"
-    // InternalFacpl2.g:2236:1: ruleIntLiteral returns [EObject current=null] : ( (lv_value_0_0= RULE_INT ) ) ;
+    // InternalFacpl2.g:2337:1: ruleIntLiteral returns [EObject current=null] : ( (lv_value_0_0= RULE_INT ) ) ;
     public final EObject ruleIntLiteral() throws RecognitionException {
         EObject current = null;
 
@@ -5733,14 +5949,14 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalFacpl2.g:2239:28: ( ( (lv_value_0_0= RULE_INT ) ) )
-            // InternalFacpl2.g:2240:1: ( (lv_value_0_0= RULE_INT ) )
+            // InternalFacpl2.g:2340:28: ( ( (lv_value_0_0= RULE_INT ) ) )
+            // InternalFacpl2.g:2341:1: ( (lv_value_0_0= RULE_INT ) )
             {
-            // InternalFacpl2.g:2240:1: ( (lv_value_0_0= RULE_INT ) )
-            // InternalFacpl2.g:2241:1: (lv_value_0_0= RULE_INT )
+            // InternalFacpl2.g:2341:1: ( (lv_value_0_0= RULE_INT ) )
+            // InternalFacpl2.g:2342:1: (lv_value_0_0= RULE_INT )
             {
-            // InternalFacpl2.g:2241:1: (lv_value_0_0= RULE_INT )
-            // InternalFacpl2.g:2242:3: lv_value_0_0= RULE_INT
+            // InternalFacpl2.g:2342:1: (lv_value_0_0= RULE_INT )
+            // InternalFacpl2.g:2343:3: lv_value_0_0= RULE_INT
             {
             lv_value_0_0=(Token)match(input,RULE_INT,FOLLOW_2); 
 
@@ -5780,7 +5996,7 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleDoubleLiteral"
-    // InternalFacpl2.g:2266:1: entryRuleDoubleLiteral returns [EObject current=null] : iv_ruleDoubleLiteral= ruleDoubleLiteral EOF ;
+    // InternalFacpl2.g:2367:1: entryRuleDoubleLiteral returns [EObject current=null] : iv_ruleDoubleLiteral= ruleDoubleLiteral EOF ;
     public final EObject entryRuleDoubleLiteral() throws RecognitionException {
         EObject current = null;
 
@@ -5788,8 +6004,8 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalFacpl2.g:2267:2: (iv_ruleDoubleLiteral= ruleDoubleLiteral EOF )
-            // InternalFacpl2.g:2268:2: iv_ruleDoubleLiteral= ruleDoubleLiteral EOF
+            // InternalFacpl2.g:2368:2: (iv_ruleDoubleLiteral= ruleDoubleLiteral EOF )
+            // InternalFacpl2.g:2369:2: iv_ruleDoubleLiteral= ruleDoubleLiteral EOF
             {
              newCompositeNode(grammarAccess.getDoubleLiteralRule()); 
             pushFollow(FOLLOW_1);
@@ -5816,7 +6032,7 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDoubleLiteral"
-    // InternalFacpl2.g:2275:1: ruleDoubleLiteral returns [EObject current=null] : ( (lv_value_0_0= RULE_REAL ) ) ;
+    // InternalFacpl2.g:2376:1: ruleDoubleLiteral returns [EObject current=null] : ( (lv_value_0_0= RULE_REAL ) ) ;
     public final EObject ruleDoubleLiteral() throws RecognitionException {
         EObject current = null;
 
@@ -5825,14 +6041,14 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalFacpl2.g:2278:28: ( ( (lv_value_0_0= RULE_REAL ) ) )
-            // InternalFacpl2.g:2279:1: ( (lv_value_0_0= RULE_REAL ) )
+            // InternalFacpl2.g:2379:28: ( ( (lv_value_0_0= RULE_REAL ) ) )
+            // InternalFacpl2.g:2380:1: ( (lv_value_0_0= RULE_REAL ) )
             {
-            // InternalFacpl2.g:2279:1: ( (lv_value_0_0= RULE_REAL ) )
-            // InternalFacpl2.g:2280:1: (lv_value_0_0= RULE_REAL )
+            // InternalFacpl2.g:2380:1: ( (lv_value_0_0= RULE_REAL ) )
+            // InternalFacpl2.g:2381:1: (lv_value_0_0= RULE_REAL )
             {
-            // InternalFacpl2.g:2280:1: (lv_value_0_0= RULE_REAL )
-            // InternalFacpl2.g:2281:3: lv_value_0_0= RULE_REAL
+            // InternalFacpl2.g:2381:1: (lv_value_0_0= RULE_REAL )
+            // InternalFacpl2.g:2382:3: lv_value_0_0= RULE_REAL
             {
             lv_value_0_0=(Token)match(input,RULE_REAL,FOLLOW_2); 
 
@@ -5872,7 +6088,7 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleDateLiteral"
-    // InternalFacpl2.g:2305:1: entryRuleDateLiteral returns [EObject current=null] : iv_ruleDateLiteral= ruleDateLiteral EOF ;
+    // InternalFacpl2.g:2406:1: entryRuleDateLiteral returns [EObject current=null] : iv_ruleDateLiteral= ruleDateLiteral EOF ;
     public final EObject entryRuleDateLiteral() throws RecognitionException {
         EObject current = null;
 
@@ -5880,8 +6096,8 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalFacpl2.g:2306:2: (iv_ruleDateLiteral= ruleDateLiteral EOF )
-            // InternalFacpl2.g:2307:2: iv_ruleDateLiteral= ruleDateLiteral EOF
+            // InternalFacpl2.g:2407:2: (iv_ruleDateLiteral= ruleDateLiteral EOF )
+            // InternalFacpl2.g:2408:2: iv_ruleDateLiteral= ruleDateLiteral EOF
             {
              newCompositeNode(grammarAccess.getDateLiteralRule()); 
             pushFollow(FOLLOW_1);
@@ -5908,7 +6124,7 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDateLiteral"
-    // InternalFacpl2.g:2314:1: ruleDateLiteral returns [EObject current=null] : ( (lv_value_0_0= RULE_DATE ) ) ;
+    // InternalFacpl2.g:2415:1: ruleDateLiteral returns [EObject current=null] : ( (lv_value_0_0= RULE_DATE ) ) ;
     public final EObject ruleDateLiteral() throws RecognitionException {
         EObject current = null;
 
@@ -5917,14 +6133,14 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalFacpl2.g:2317:28: ( ( (lv_value_0_0= RULE_DATE ) ) )
-            // InternalFacpl2.g:2318:1: ( (lv_value_0_0= RULE_DATE ) )
+            // InternalFacpl2.g:2418:28: ( ( (lv_value_0_0= RULE_DATE ) ) )
+            // InternalFacpl2.g:2419:1: ( (lv_value_0_0= RULE_DATE ) )
             {
-            // InternalFacpl2.g:2318:1: ( (lv_value_0_0= RULE_DATE ) )
-            // InternalFacpl2.g:2319:1: (lv_value_0_0= RULE_DATE )
+            // InternalFacpl2.g:2419:1: ( (lv_value_0_0= RULE_DATE ) )
+            // InternalFacpl2.g:2420:1: (lv_value_0_0= RULE_DATE )
             {
-            // InternalFacpl2.g:2319:1: (lv_value_0_0= RULE_DATE )
-            // InternalFacpl2.g:2320:3: lv_value_0_0= RULE_DATE
+            // InternalFacpl2.g:2420:1: (lv_value_0_0= RULE_DATE )
+            // InternalFacpl2.g:2421:3: lv_value_0_0= RULE_DATE
             {
             lv_value_0_0=(Token)match(input,RULE_DATE,FOLLOW_2); 
 
@@ -5964,7 +6180,7 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleTimeLiteral"
-    // InternalFacpl2.g:2344:1: entryRuleTimeLiteral returns [EObject current=null] : iv_ruleTimeLiteral= ruleTimeLiteral EOF ;
+    // InternalFacpl2.g:2445:1: entryRuleTimeLiteral returns [EObject current=null] : iv_ruleTimeLiteral= ruleTimeLiteral EOF ;
     public final EObject entryRuleTimeLiteral() throws RecognitionException {
         EObject current = null;
 
@@ -5972,8 +6188,8 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalFacpl2.g:2345:2: (iv_ruleTimeLiteral= ruleTimeLiteral EOF )
-            // InternalFacpl2.g:2346:2: iv_ruleTimeLiteral= ruleTimeLiteral EOF
+            // InternalFacpl2.g:2446:2: (iv_ruleTimeLiteral= ruleTimeLiteral EOF )
+            // InternalFacpl2.g:2447:2: iv_ruleTimeLiteral= ruleTimeLiteral EOF
             {
              newCompositeNode(grammarAccess.getTimeLiteralRule()); 
             pushFollow(FOLLOW_1);
@@ -6000,7 +6216,7 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTimeLiteral"
-    // InternalFacpl2.g:2353:1: ruleTimeLiteral returns [EObject current=null] : ( (lv_value_0_0= RULE_TIME ) ) ;
+    // InternalFacpl2.g:2454:1: ruleTimeLiteral returns [EObject current=null] : ( (lv_value_0_0= RULE_TIME ) ) ;
     public final EObject ruleTimeLiteral() throws RecognitionException {
         EObject current = null;
 
@@ -6009,14 +6225,14 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalFacpl2.g:2356:28: ( ( (lv_value_0_0= RULE_TIME ) ) )
-            // InternalFacpl2.g:2357:1: ( (lv_value_0_0= RULE_TIME ) )
+            // InternalFacpl2.g:2457:28: ( ( (lv_value_0_0= RULE_TIME ) ) )
+            // InternalFacpl2.g:2458:1: ( (lv_value_0_0= RULE_TIME ) )
             {
-            // InternalFacpl2.g:2357:1: ( (lv_value_0_0= RULE_TIME ) )
-            // InternalFacpl2.g:2358:1: (lv_value_0_0= RULE_TIME )
+            // InternalFacpl2.g:2458:1: ( (lv_value_0_0= RULE_TIME ) )
+            // InternalFacpl2.g:2459:1: (lv_value_0_0= RULE_TIME )
             {
-            // InternalFacpl2.g:2358:1: (lv_value_0_0= RULE_TIME )
-            // InternalFacpl2.g:2359:3: lv_value_0_0= RULE_TIME
+            // InternalFacpl2.g:2459:1: (lv_value_0_0= RULE_TIME )
+            // InternalFacpl2.g:2460:3: lv_value_0_0= RULE_TIME
             {
             lv_value_0_0=(Token)match(input,RULE_TIME,FOLLOW_2); 
 
@@ -6056,7 +6272,7 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTypeLiteral"
-    // InternalFacpl2.g:2383:1: ruleTypeLiteral returns [Enumerator current=null] : ( (enumLiteral_0= 'Int' ) | (enumLiteral_1= 'Double' ) | (enumLiteral_2= 'Bool' ) | (enumLiteral_3= 'String' ) | (enumLiteral_4= 'DateTime' ) | (enumLiteral_5= 'Set<Int>' ) | (enumLiteral_6= 'Set<Double>' ) | (enumLiteral_7= 'Set<Bool>' ) | (enumLiteral_8= 'Set<String>' ) | (enumLiteral_9= 'Set<DateTime>' ) ) ;
+    // InternalFacpl2.g:2484:1: ruleTypeLiteral returns [Enumerator current=null] : ( (enumLiteral_0= 'Int' ) | (enumLiteral_1= 'Double' ) | (enumLiteral_2= 'Bool' ) | (enumLiteral_3= 'String' ) | (enumLiteral_4= 'DateTime' ) | (enumLiteral_5= 'Set<Int>' ) | (enumLiteral_6= 'Set<Double>' ) | (enumLiteral_7= 'Set<Bool>' ) | (enumLiteral_8= 'Set<String>' ) | (enumLiteral_9= 'Set<DateTime>' ) ) ;
     public final Enumerator ruleTypeLiteral() throws RecognitionException {
         Enumerator current = null;
 
@@ -6073,58 +6289,58 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalFacpl2.g:2385:28: ( ( (enumLiteral_0= 'Int' ) | (enumLiteral_1= 'Double' ) | (enumLiteral_2= 'Bool' ) | (enumLiteral_3= 'String' ) | (enumLiteral_4= 'DateTime' ) | (enumLiteral_5= 'Set<Int>' ) | (enumLiteral_6= 'Set<Double>' ) | (enumLiteral_7= 'Set<Bool>' ) | (enumLiteral_8= 'Set<String>' ) | (enumLiteral_9= 'Set<DateTime>' ) ) )
-            // InternalFacpl2.g:2386:1: ( (enumLiteral_0= 'Int' ) | (enumLiteral_1= 'Double' ) | (enumLiteral_2= 'Bool' ) | (enumLiteral_3= 'String' ) | (enumLiteral_4= 'DateTime' ) | (enumLiteral_5= 'Set<Int>' ) | (enumLiteral_6= 'Set<Double>' ) | (enumLiteral_7= 'Set<Bool>' ) | (enumLiteral_8= 'Set<String>' ) | (enumLiteral_9= 'Set<DateTime>' ) )
+            // InternalFacpl2.g:2486:28: ( ( (enumLiteral_0= 'Int' ) | (enumLiteral_1= 'Double' ) | (enumLiteral_2= 'Bool' ) | (enumLiteral_3= 'String' ) | (enumLiteral_4= 'DateTime' ) | (enumLiteral_5= 'Set<Int>' ) | (enumLiteral_6= 'Set<Double>' ) | (enumLiteral_7= 'Set<Bool>' ) | (enumLiteral_8= 'Set<String>' ) | (enumLiteral_9= 'Set<DateTime>' ) ) )
+            // InternalFacpl2.g:2487:1: ( (enumLiteral_0= 'Int' ) | (enumLiteral_1= 'Double' ) | (enumLiteral_2= 'Bool' ) | (enumLiteral_3= 'String' ) | (enumLiteral_4= 'DateTime' ) | (enumLiteral_5= 'Set<Int>' ) | (enumLiteral_6= 'Set<Double>' ) | (enumLiteral_7= 'Set<Bool>' ) | (enumLiteral_8= 'Set<String>' ) | (enumLiteral_9= 'Set<DateTime>' ) )
             {
-            // InternalFacpl2.g:2386:1: ( (enumLiteral_0= 'Int' ) | (enumLiteral_1= 'Double' ) | (enumLiteral_2= 'Bool' ) | (enumLiteral_3= 'String' ) | (enumLiteral_4= 'DateTime' ) | (enumLiteral_5= 'Set<Int>' ) | (enumLiteral_6= 'Set<Double>' ) | (enumLiteral_7= 'Set<Bool>' ) | (enumLiteral_8= 'Set<String>' ) | (enumLiteral_9= 'Set<DateTime>' ) )
+            // InternalFacpl2.g:2487:1: ( (enumLiteral_0= 'Int' ) | (enumLiteral_1= 'Double' ) | (enumLiteral_2= 'Bool' ) | (enumLiteral_3= 'String' ) | (enumLiteral_4= 'DateTime' ) | (enumLiteral_5= 'Set<Int>' ) | (enumLiteral_6= 'Set<Double>' ) | (enumLiteral_7= 'Set<Bool>' ) | (enumLiteral_8= 'Set<String>' ) | (enumLiteral_9= 'Set<DateTime>' ) )
             int alt36=10;
             switch ( input.LA(1) ) {
-            case 51:
+            case 52:
                 {
                 alt36=1;
                 }
                 break;
-            case 52:
+            case 53:
                 {
                 alt36=2;
                 }
                 break;
-            case 53:
+            case 54:
                 {
                 alt36=3;
                 }
                 break;
-            case 54:
+            case 55:
                 {
                 alt36=4;
                 }
                 break;
-            case 55:
+            case 56:
                 {
                 alt36=5;
                 }
                 break;
-            case 56:
+            case 57:
                 {
                 alt36=6;
                 }
                 break;
-            case 57:
+            case 58:
                 {
                 alt36=7;
                 }
                 break;
-            case 58:
+            case 59:
                 {
                 alt36=8;
                 }
                 break;
-            case 59:
+            case 60:
                 {
                 alt36=9;
                 }
                 break;
-            case 60:
+            case 61:
                 {
                 alt36=10;
                 }
@@ -6138,12 +6354,12 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
             switch (alt36) {
                 case 1 :
-                    // InternalFacpl2.g:2386:2: (enumLiteral_0= 'Int' )
+                    // InternalFacpl2.g:2487:2: (enumLiteral_0= 'Int' )
                     {
-                    // InternalFacpl2.g:2386:2: (enumLiteral_0= 'Int' )
-                    // InternalFacpl2.g:2386:4: enumLiteral_0= 'Int'
+                    // InternalFacpl2.g:2487:2: (enumLiteral_0= 'Int' )
+                    // InternalFacpl2.g:2487:4: enumLiteral_0= 'Int'
                     {
-                    enumLiteral_0=(Token)match(input,51,FOLLOW_2); 
+                    enumLiteral_0=(Token)match(input,52,FOLLOW_2); 
 
                             current = grammarAccess.getTypeLiteralAccess().getIntEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
                             newLeafNode(enumLiteral_0, grammarAccess.getTypeLiteralAccess().getIntEnumLiteralDeclaration_0()); 
@@ -6155,12 +6371,12 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalFacpl2.g:2392:6: (enumLiteral_1= 'Double' )
+                    // InternalFacpl2.g:2493:6: (enumLiteral_1= 'Double' )
                     {
-                    // InternalFacpl2.g:2392:6: (enumLiteral_1= 'Double' )
-                    // InternalFacpl2.g:2392:8: enumLiteral_1= 'Double'
+                    // InternalFacpl2.g:2493:6: (enumLiteral_1= 'Double' )
+                    // InternalFacpl2.g:2493:8: enumLiteral_1= 'Double'
                     {
-                    enumLiteral_1=(Token)match(input,52,FOLLOW_2); 
+                    enumLiteral_1=(Token)match(input,53,FOLLOW_2); 
 
                             current = grammarAccess.getTypeLiteralAccess().getDoubleEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
                             newLeafNode(enumLiteral_1, grammarAccess.getTypeLiteralAccess().getDoubleEnumLiteralDeclaration_1()); 
@@ -6172,12 +6388,12 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalFacpl2.g:2398:6: (enumLiteral_2= 'Bool' )
+                    // InternalFacpl2.g:2499:6: (enumLiteral_2= 'Bool' )
                     {
-                    // InternalFacpl2.g:2398:6: (enumLiteral_2= 'Bool' )
-                    // InternalFacpl2.g:2398:8: enumLiteral_2= 'Bool'
+                    // InternalFacpl2.g:2499:6: (enumLiteral_2= 'Bool' )
+                    // InternalFacpl2.g:2499:8: enumLiteral_2= 'Bool'
                     {
-                    enumLiteral_2=(Token)match(input,53,FOLLOW_2); 
+                    enumLiteral_2=(Token)match(input,54,FOLLOW_2); 
 
                             current = grammarAccess.getTypeLiteralAccess().getBoolEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
                             newLeafNode(enumLiteral_2, grammarAccess.getTypeLiteralAccess().getBoolEnumLiteralDeclaration_2()); 
@@ -6189,12 +6405,12 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalFacpl2.g:2404:6: (enumLiteral_3= 'String' )
+                    // InternalFacpl2.g:2505:6: (enumLiteral_3= 'String' )
                     {
-                    // InternalFacpl2.g:2404:6: (enumLiteral_3= 'String' )
-                    // InternalFacpl2.g:2404:8: enumLiteral_3= 'String'
+                    // InternalFacpl2.g:2505:6: (enumLiteral_3= 'String' )
+                    // InternalFacpl2.g:2505:8: enumLiteral_3= 'String'
                     {
-                    enumLiteral_3=(Token)match(input,54,FOLLOW_2); 
+                    enumLiteral_3=(Token)match(input,55,FOLLOW_2); 
 
                             current = grammarAccess.getTypeLiteralAccess().getStringEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
                             newLeafNode(enumLiteral_3, grammarAccess.getTypeLiteralAccess().getStringEnumLiteralDeclaration_3()); 
@@ -6206,12 +6422,12 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalFacpl2.g:2410:6: (enumLiteral_4= 'DateTime' )
+                    // InternalFacpl2.g:2511:6: (enumLiteral_4= 'DateTime' )
                     {
-                    // InternalFacpl2.g:2410:6: (enumLiteral_4= 'DateTime' )
-                    // InternalFacpl2.g:2410:8: enumLiteral_4= 'DateTime'
+                    // InternalFacpl2.g:2511:6: (enumLiteral_4= 'DateTime' )
+                    // InternalFacpl2.g:2511:8: enumLiteral_4= 'DateTime'
                     {
-                    enumLiteral_4=(Token)match(input,55,FOLLOW_2); 
+                    enumLiteral_4=(Token)match(input,56,FOLLOW_2); 
 
                             current = grammarAccess.getTypeLiteralAccess().getDateTimeEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
                             newLeafNode(enumLiteral_4, grammarAccess.getTypeLiteralAccess().getDateTimeEnumLiteralDeclaration_4()); 
@@ -6223,12 +6439,12 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalFacpl2.g:2416:6: (enumLiteral_5= 'Set<Int>' )
+                    // InternalFacpl2.g:2517:6: (enumLiteral_5= 'Set<Int>' )
                     {
-                    // InternalFacpl2.g:2416:6: (enumLiteral_5= 'Set<Int>' )
-                    // InternalFacpl2.g:2416:8: enumLiteral_5= 'Set<Int>'
+                    // InternalFacpl2.g:2517:6: (enumLiteral_5= 'Set<Int>' )
+                    // InternalFacpl2.g:2517:8: enumLiteral_5= 'Set<Int>'
                     {
-                    enumLiteral_5=(Token)match(input,56,FOLLOW_2); 
+                    enumLiteral_5=(Token)match(input,57,FOLLOW_2); 
 
                             current = grammarAccess.getTypeLiteralAccess().getSetIntEnumLiteralDeclaration_5().getEnumLiteral().getInstance();
                             newLeafNode(enumLiteral_5, grammarAccess.getTypeLiteralAccess().getSetIntEnumLiteralDeclaration_5()); 
@@ -6240,12 +6456,12 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // InternalFacpl2.g:2422:6: (enumLiteral_6= 'Set<Double>' )
+                    // InternalFacpl2.g:2523:6: (enumLiteral_6= 'Set<Double>' )
                     {
-                    // InternalFacpl2.g:2422:6: (enumLiteral_6= 'Set<Double>' )
-                    // InternalFacpl2.g:2422:8: enumLiteral_6= 'Set<Double>'
+                    // InternalFacpl2.g:2523:6: (enumLiteral_6= 'Set<Double>' )
+                    // InternalFacpl2.g:2523:8: enumLiteral_6= 'Set<Double>'
                     {
-                    enumLiteral_6=(Token)match(input,57,FOLLOW_2); 
+                    enumLiteral_6=(Token)match(input,58,FOLLOW_2); 
 
                             current = grammarAccess.getTypeLiteralAccess().getSetDoubleEnumLiteralDeclaration_6().getEnumLiteral().getInstance();
                             newLeafNode(enumLiteral_6, grammarAccess.getTypeLiteralAccess().getSetDoubleEnumLiteralDeclaration_6()); 
@@ -6257,12 +6473,12 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 8 :
-                    // InternalFacpl2.g:2428:6: (enumLiteral_7= 'Set<Bool>' )
+                    // InternalFacpl2.g:2529:6: (enumLiteral_7= 'Set<Bool>' )
                     {
-                    // InternalFacpl2.g:2428:6: (enumLiteral_7= 'Set<Bool>' )
-                    // InternalFacpl2.g:2428:8: enumLiteral_7= 'Set<Bool>'
+                    // InternalFacpl2.g:2529:6: (enumLiteral_7= 'Set<Bool>' )
+                    // InternalFacpl2.g:2529:8: enumLiteral_7= 'Set<Bool>'
                     {
-                    enumLiteral_7=(Token)match(input,58,FOLLOW_2); 
+                    enumLiteral_7=(Token)match(input,59,FOLLOW_2); 
 
                             current = grammarAccess.getTypeLiteralAccess().getSetBoolEnumLiteralDeclaration_7().getEnumLiteral().getInstance();
                             newLeafNode(enumLiteral_7, grammarAccess.getTypeLiteralAccess().getSetBoolEnumLiteralDeclaration_7()); 
@@ -6274,12 +6490,12 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 9 :
-                    // InternalFacpl2.g:2434:6: (enumLiteral_8= 'Set<String>' )
+                    // InternalFacpl2.g:2535:6: (enumLiteral_8= 'Set<String>' )
                     {
-                    // InternalFacpl2.g:2434:6: (enumLiteral_8= 'Set<String>' )
-                    // InternalFacpl2.g:2434:8: enumLiteral_8= 'Set<String>'
+                    // InternalFacpl2.g:2535:6: (enumLiteral_8= 'Set<String>' )
+                    // InternalFacpl2.g:2535:8: enumLiteral_8= 'Set<String>'
                     {
-                    enumLiteral_8=(Token)match(input,59,FOLLOW_2); 
+                    enumLiteral_8=(Token)match(input,60,FOLLOW_2); 
 
                             current = grammarAccess.getTypeLiteralAccess().getSetStringEnumLiteralDeclaration_8().getEnumLiteral().getInstance();
                             newLeafNode(enumLiteral_8, grammarAccess.getTypeLiteralAccess().getSetStringEnumLiteralDeclaration_8()); 
@@ -6291,12 +6507,12 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 10 :
-                    // InternalFacpl2.g:2440:6: (enumLiteral_9= 'Set<DateTime>' )
+                    // InternalFacpl2.g:2541:6: (enumLiteral_9= 'Set<DateTime>' )
                     {
-                    // InternalFacpl2.g:2440:6: (enumLiteral_9= 'Set<DateTime>' )
-                    // InternalFacpl2.g:2440:8: enumLiteral_9= 'Set<DateTime>'
+                    // InternalFacpl2.g:2541:6: (enumLiteral_9= 'Set<DateTime>' )
+                    // InternalFacpl2.g:2541:8: enumLiteral_9= 'Set<DateTime>'
                     {
-                    enumLiteral_9=(Token)match(input,60,FOLLOW_2); 
+                    enumLiteral_9=(Token)match(input,61,FOLLOW_2); 
 
                             current = grammarAccess.getTypeLiteralAccess().getSetDateTimeEnumLiteralDeclaration_9().getEnumLiteral().getInstance();
                             newLeafNode(enumLiteral_9, grammarAccess.getTypeLiteralAccess().getSetDateTimeEnumLiteralDeclaration_9()); 
@@ -6328,7 +6544,7 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePEPAlg"
-    // InternalFacpl2.g:2450:1: rulePEPAlg returns [Enumerator current=null] : ( (enumLiteral_0= 'base' ) | (enumLiteral_1= 'deny-biased' ) | (enumLiteral_2= 'permit-biased' ) ) ;
+    // InternalFacpl2.g:2551:1: rulePEPAlg returns [Enumerator current=null] : ( (enumLiteral_0= 'base' ) | (enumLiteral_1= 'deny-biased' ) | (enumLiteral_2= 'permit-biased' ) ) ;
     public final Enumerator rulePEPAlg() throws RecognitionException {
         Enumerator current = null;
 
@@ -6338,23 +6554,23 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalFacpl2.g:2452:28: ( ( (enumLiteral_0= 'base' ) | (enumLiteral_1= 'deny-biased' ) | (enumLiteral_2= 'permit-biased' ) ) )
-            // InternalFacpl2.g:2453:1: ( (enumLiteral_0= 'base' ) | (enumLiteral_1= 'deny-biased' ) | (enumLiteral_2= 'permit-biased' ) )
+            // InternalFacpl2.g:2553:28: ( ( (enumLiteral_0= 'base' ) | (enumLiteral_1= 'deny-biased' ) | (enumLiteral_2= 'permit-biased' ) ) )
+            // InternalFacpl2.g:2554:1: ( (enumLiteral_0= 'base' ) | (enumLiteral_1= 'deny-biased' ) | (enumLiteral_2= 'permit-biased' ) )
             {
-            // InternalFacpl2.g:2453:1: ( (enumLiteral_0= 'base' ) | (enumLiteral_1= 'deny-biased' ) | (enumLiteral_2= 'permit-biased' ) )
+            // InternalFacpl2.g:2554:1: ( (enumLiteral_0= 'base' ) | (enumLiteral_1= 'deny-biased' ) | (enumLiteral_2= 'permit-biased' ) )
             int alt37=3;
             switch ( input.LA(1) ) {
-            case 61:
+            case 62:
                 {
                 alt37=1;
                 }
                 break;
-            case 62:
+            case 63:
                 {
                 alt37=2;
                 }
                 break;
-            case 63:
+            case 64:
                 {
                 alt37=3;
                 }
@@ -6368,12 +6584,12 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
             switch (alt37) {
                 case 1 :
-                    // InternalFacpl2.g:2453:2: (enumLiteral_0= 'base' )
+                    // InternalFacpl2.g:2554:2: (enumLiteral_0= 'base' )
                     {
-                    // InternalFacpl2.g:2453:2: (enumLiteral_0= 'base' )
-                    // InternalFacpl2.g:2453:4: enumLiteral_0= 'base'
+                    // InternalFacpl2.g:2554:2: (enumLiteral_0= 'base' )
+                    // InternalFacpl2.g:2554:4: enumLiteral_0= 'base'
                     {
-                    enumLiteral_0=(Token)match(input,61,FOLLOW_2); 
+                    enumLiteral_0=(Token)match(input,62,FOLLOW_2); 
 
                             current = grammarAccess.getPEPAlgAccess().getBASEEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
                             newLeafNode(enumLiteral_0, grammarAccess.getPEPAlgAccess().getBASEEnumLiteralDeclaration_0()); 
@@ -6385,12 +6601,12 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalFacpl2.g:2459:6: (enumLiteral_1= 'deny-biased' )
+                    // InternalFacpl2.g:2560:6: (enumLiteral_1= 'deny-biased' )
                     {
-                    // InternalFacpl2.g:2459:6: (enumLiteral_1= 'deny-biased' )
-                    // InternalFacpl2.g:2459:8: enumLiteral_1= 'deny-biased'
+                    // InternalFacpl2.g:2560:6: (enumLiteral_1= 'deny-biased' )
+                    // InternalFacpl2.g:2560:8: enumLiteral_1= 'deny-biased'
                     {
-                    enumLiteral_1=(Token)match(input,62,FOLLOW_2); 
+                    enumLiteral_1=(Token)match(input,63,FOLLOW_2); 
 
                             current = grammarAccess.getPEPAlgAccess().getDENYEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
                             newLeafNode(enumLiteral_1, grammarAccess.getPEPAlgAccess().getDENYEnumLiteralDeclaration_1()); 
@@ -6402,12 +6618,12 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalFacpl2.g:2465:6: (enumLiteral_2= 'permit-biased' )
+                    // InternalFacpl2.g:2566:6: (enumLiteral_2= 'permit-biased' )
                     {
-                    // InternalFacpl2.g:2465:6: (enumLiteral_2= 'permit-biased' )
-                    // InternalFacpl2.g:2465:8: enumLiteral_2= 'permit-biased'
+                    // InternalFacpl2.g:2566:6: (enumLiteral_2= 'permit-biased' )
+                    // InternalFacpl2.g:2566:8: enumLiteral_2= 'permit-biased'
                     {
-                    enumLiteral_2=(Token)match(input,63,FOLLOW_2); 
+                    enumLiteral_2=(Token)match(input,64,FOLLOW_2); 
 
                             current = grammarAccess.getPEPAlgAccess().getPERMITEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
                             newLeafNode(enumLiteral_2, grammarAccess.getPEPAlgAccess().getPERMITEnumLiteralDeclaration_2()); 
@@ -6439,7 +6655,7 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAlgLiteral"
-    // InternalFacpl2.g:2475:1: ruleAlgLiteral returns [Enumerator current=null] : ( (enumLiteral_0= 'only-one-applicable' ) | (enumLiteral_1= 'deny-overrides' ) | (enumLiteral_2= 'permit-overrides' ) | (enumLiteral_3= 'first-applicable' ) | (enumLiteral_4= 'deny-unless-permit' ) | (enumLiteral_5= 'permit-unless-deny' ) | (enumLiteral_6= 'weak-consensus' ) | (enumLiteral_7= 'strong-consensus' ) | (enumLiteral_8= 'custom-algorithm' ) ) ;
+    // InternalFacpl2.g:2576:1: ruleAlgLiteral returns [Enumerator current=null] : ( (enumLiteral_0= 'only-one-applicable' ) | (enumLiteral_1= 'deny-overrides' ) | (enumLiteral_2= 'permit-overrides' ) | (enumLiteral_3= 'first-applicable' ) | (enumLiteral_4= 'deny-unless-permit' ) | (enumLiteral_5= 'permit-unless-deny' ) | (enumLiteral_6= 'weak-consensus' ) | (enumLiteral_7= 'strong-consensus' ) | (enumLiteral_8= 'custom-algorithm' ) ) ;
     public final Enumerator ruleAlgLiteral() throws RecognitionException {
         Enumerator current = null;
 
@@ -6455,53 +6671,53 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalFacpl2.g:2477:28: ( ( (enumLiteral_0= 'only-one-applicable' ) | (enumLiteral_1= 'deny-overrides' ) | (enumLiteral_2= 'permit-overrides' ) | (enumLiteral_3= 'first-applicable' ) | (enumLiteral_4= 'deny-unless-permit' ) | (enumLiteral_5= 'permit-unless-deny' ) | (enumLiteral_6= 'weak-consensus' ) | (enumLiteral_7= 'strong-consensus' ) | (enumLiteral_8= 'custom-algorithm' ) ) )
-            // InternalFacpl2.g:2478:1: ( (enumLiteral_0= 'only-one-applicable' ) | (enumLiteral_1= 'deny-overrides' ) | (enumLiteral_2= 'permit-overrides' ) | (enumLiteral_3= 'first-applicable' ) | (enumLiteral_4= 'deny-unless-permit' ) | (enumLiteral_5= 'permit-unless-deny' ) | (enumLiteral_6= 'weak-consensus' ) | (enumLiteral_7= 'strong-consensus' ) | (enumLiteral_8= 'custom-algorithm' ) )
+            // InternalFacpl2.g:2578:28: ( ( (enumLiteral_0= 'only-one-applicable' ) | (enumLiteral_1= 'deny-overrides' ) | (enumLiteral_2= 'permit-overrides' ) | (enumLiteral_3= 'first-applicable' ) | (enumLiteral_4= 'deny-unless-permit' ) | (enumLiteral_5= 'permit-unless-deny' ) | (enumLiteral_6= 'weak-consensus' ) | (enumLiteral_7= 'strong-consensus' ) | (enumLiteral_8= 'custom-algorithm' ) ) )
+            // InternalFacpl2.g:2579:1: ( (enumLiteral_0= 'only-one-applicable' ) | (enumLiteral_1= 'deny-overrides' ) | (enumLiteral_2= 'permit-overrides' ) | (enumLiteral_3= 'first-applicable' ) | (enumLiteral_4= 'deny-unless-permit' ) | (enumLiteral_5= 'permit-unless-deny' ) | (enumLiteral_6= 'weak-consensus' ) | (enumLiteral_7= 'strong-consensus' ) | (enumLiteral_8= 'custom-algorithm' ) )
             {
-            // InternalFacpl2.g:2478:1: ( (enumLiteral_0= 'only-one-applicable' ) | (enumLiteral_1= 'deny-overrides' ) | (enumLiteral_2= 'permit-overrides' ) | (enumLiteral_3= 'first-applicable' ) | (enumLiteral_4= 'deny-unless-permit' ) | (enumLiteral_5= 'permit-unless-deny' ) | (enumLiteral_6= 'weak-consensus' ) | (enumLiteral_7= 'strong-consensus' ) | (enumLiteral_8= 'custom-algorithm' ) )
+            // InternalFacpl2.g:2579:1: ( (enumLiteral_0= 'only-one-applicable' ) | (enumLiteral_1= 'deny-overrides' ) | (enumLiteral_2= 'permit-overrides' ) | (enumLiteral_3= 'first-applicable' ) | (enumLiteral_4= 'deny-unless-permit' ) | (enumLiteral_5= 'permit-unless-deny' ) | (enumLiteral_6= 'weak-consensus' ) | (enumLiteral_7= 'strong-consensus' ) | (enumLiteral_8= 'custom-algorithm' ) )
             int alt38=9;
             switch ( input.LA(1) ) {
-            case 64:
+            case 65:
                 {
                 alt38=1;
                 }
                 break;
-            case 65:
+            case 66:
                 {
                 alt38=2;
                 }
                 break;
-            case 66:
+            case 67:
                 {
                 alt38=3;
                 }
                 break;
-            case 67:
+            case 68:
                 {
                 alt38=4;
                 }
                 break;
-            case 68:
+            case 69:
                 {
                 alt38=5;
                 }
                 break;
-            case 69:
+            case 70:
                 {
                 alt38=6;
                 }
                 break;
-            case 70:
+            case 71:
                 {
                 alt38=7;
                 }
                 break;
-            case 71:
+            case 72:
                 {
                 alt38=8;
                 }
                 break;
-            case 72:
+            case 73:
                 {
                 alt38=9;
                 }
@@ -6515,12 +6731,12 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
             switch (alt38) {
                 case 1 :
-                    // InternalFacpl2.g:2478:2: (enumLiteral_0= 'only-one-applicable' )
+                    // InternalFacpl2.g:2579:2: (enumLiteral_0= 'only-one-applicable' )
                     {
-                    // InternalFacpl2.g:2478:2: (enumLiteral_0= 'only-one-applicable' )
-                    // InternalFacpl2.g:2478:4: enumLiteral_0= 'only-one-applicable'
+                    // InternalFacpl2.g:2579:2: (enumLiteral_0= 'only-one-applicable' )
+                    // InternalFacpl2.g:2579:4: enumLiteral_0= 'only-one-applicable'
                     {
-                    enumLiteral_0=(Token)match(input,64,FOLLOW_2); 
+                    enumLiteral_0=(Token)match(input,65,FOLLOW_2); 
 
                             current = grammarAccess.getAlgLiteralAccess().getONLY_ONEEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
                             newLeafNode(enumLiteral_0, grammarAccess.getAlgLiteralAccess().getONLY_ONEEnumLiteralDeclaration_0()); 
@@ -6532,12 +6748,12 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalFacpl2.g:2484:6: (enumLiteral_1= 'deny-overrides' )
+                    // InternalFacpl2.g:2585:6: (enumLiteral_1= 'deny-overrides' )
                     {
-                    // InternalFacpl2.g:2484:6: (enumLiteral_1= 'deny-overrides' )
-                    // InternalFacpl2.g:2484:8: enumLiteral_1= 'deny-overrides'
+                    // InternalFacpl2.g:2585:6: (enumLiteral_1= 'deny-overrides' )
+                    // InternalFacpl2.g:2585:8: enumLiteral_1= 'deny-overrides'
                     {
-                    enumLiteral_1=(Token)match(input,65,FOLLOW_2); 
+                    enumLiteral_1=(Token)match(input,66,FOLLOW_2); 
 
                             current = grammarAccess.getAlgLiteralAccess().getDENY_OVEREnumLiteralDeclaration_1().getEnumLiteral().getInstance();
                             newLeafNode(enumLiteral_1, grammarAccess.getAlgLiteralAccess().getDENY_OVEREnumLiteralDeclaration_1()); 
@@ -6549,12 +6765,12 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalFacpl2.g:2490:6: (enumLiteral_2= 'permit-overrides' )
+                    // InternalFacpl2.g:2591:6: (enumLiteral_2= 'permit-overrides' )
                     {
-                    // InternalFacpl2.g:2490:6: (enumLiteral_2= 'permit-overrides' )
-                    // InternalFacpl2.g:2490:8: enumLiteral_2= 'permit-overrides'
+                    // InternalFacpl2.g:2591:6: (enumLiteral_2= 'permit-overrides' )
+                    // InternalFacpl2.g:2591:8: enumLiteral_2= 'permit-overrides'
                     {
-                    enumLiteral_2=(Token)match(input,66,FOLLOW_2); 
+                    enumLiteral_2=(Token)match(input,67,FOLLOW_2); 
 
                             current = grammarAccess.getAlgLiteralAccess().getPERMIT_OVEREnumLiteralDeclaration_2().getEnumLiteral().getInstance();
                             newLeafNode(enumLiteral_2, grammarAccess.getAlgLiteralAccess().getPERMIT_OVEREnumLiteralDeclaration_2()); 
@@ -6566,12 +6782,12 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalFacpl2.g:2496:6: (enumLiteral_3= 'first-applicable' )
+                    // InternalFacpl2.g:2597:6: (enumLiteral_3= 'first-applicable' )
                     {
-                    // InternalFacpl2.g:2496:6: (enumLiteral_3= 'first-applicable' )
-                    // InternalFacpl2.g:2496:8: enumLiteral_3= 'first-applicable'
+                    // InternalFacpl2.g:2597:6: (enumLiteral_3= 'first-applicable' )
+                    // InternalFacpl2.g:2597:8: enumLiteral_3= 'first-applicable'
                     {
-                    enumLiteral_3=(Token)match(input,67,FOLLOW_2); 
+                    enumLiteral_3=(Token)match(input,68,FOLLOW_2); 
 
                             current = grammarAccess.getAlgLiteralAccess().getFIRSTEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
                             newLeafNode(enumLiteral_3, grammarAccess.getAlgLiteralAccess().getFIRSTEnumLiteralDeclaration_3()); 
@@ -6583,12 +6799,12 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalFacpl2.g:2502:6: (enumLiteral_4= 'deny-unless-permit' )
+                    // InternalFacpl2.g:2603:6: (enumLiteral_4= 'deny-unless-permit' )
                     {
-                    // InternalFacpl2.g:2502:6: (enumLiteral_4= 'deny-unless-permit' )
-                    // InternalFacpl2.g:2502:8: enumLiteral_4= 'deny-unless-permit'
+                    // InternalFacpl2.g:2603:6: (enumLiteral_4= 'deny-unless-permit' )
+                    // InternalFacpl2.g:2603:8: enumLiteral_4= 'deny-unless-permit'
                     {
-                    enumLiteral_4=(Token)match(input,68,FOLLOW_2); 
+                    enumLiteral_4=(Token)match(input,69,FOLLOW_2); 
 
                             current = grammarAccess.getAlgLiteralAccess().getDENY_UNLESSEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
                             newLeafNode(enumLiteral_4, grammarAccess.getAlgLiteralAccess().getDENY_UNLESSEnumLiteralDeclaration_4()); 
@@ -6600,12 +6816,12 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalFacpl2.g:2508:6: (enumLiteral_5= 'permit-unless-deny' )
+                    // InternalFacpl2.g:2609:6: (enumLiteral_5= 'permit-unless-deny' )
                     {
-                    // InternalFacpl2.g:2508:6: (enumLiteral_5= 'permit-unless-deny' )
-                    // InternalFacpl2.g:2508:8: enumLiteral_5= 'permit-unless-deny'
+                    // InternalFacpl2.g:2609:6: (enumLiteral_5= 'permit-unless-deny' )
+                    // InternalFacpl2.g:2609:8: enumLiteral_5= 'permit-unless-deny'
                     {
-                    enumLiteral_5=(Token)match(input,69,FOLLOW_2); 
+                    enumLiteral_5=(Token)match(input,70,FOLLOW_2); 
 
                             current = grammarAccess.getAlgLiteralAccess().getPERMIT_UNLESSEnumLiteralDeclaration_5().getEnumLiteral().getInstance();
                             newLeafNode(enumLiteral_5, grammarAccess.getAlgLiteralAccess().getPERMIT_UNLESSEnumLiteralDeclaration_5()); 
@@ -6617,12 +6833,12 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // InternalFacpl2.g:2514:6: (enumLiteral_6= 'weak-consensus' )
+                    // InternalFacpl2.g:2615:6: (enumLiteral_6= 'weak-consensus' )
                     {
-                    // InternalFacpl2.g:2514:6: (enumLiteral_6= 'weak-consensus' )
-                    // InternalFacpl2.g:2514:8: enumLiteral_6= 'weak-consensus'
+                    // InternalFacpl2.g:2615:6: (enumLiteral_6= 'weak-consensus' )
+                    // InternalFacpl2.g:2615:8: enumLiteral_6= 'weak-consensus'
                     {
-                    enumLiteral_6=(Token)match(input,70,FOLLOW_2); 
+                    enumLiteral_6=(Token)match(input,71,FOLLOW_2); 
 
                             current = grammarAccess.getAlgLiteralAccess().getWEAK_CONSEnumLiteralDeclaration_6().getEnumLiteral().getInstance();
                             newLeafNode(enumLiteral_6, grammarAccess.getAlgLiteralAccess().getWEAK_CONSEnumLiteralDeclaration_6()); 
@@ -6634,12 +6850,12 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 8 :
-                    // InternalFacpl2.g:2520:6: (enumLiteral_7= 'strong-consensus' )
+                    // InternalFacpl2.g:2621:6: (enumLiteral_7= 'strong-consensus' )
                     {
-                    // InternalFacpl2.g:2520:6: (enumLiteral_7= 'strong-consensus' )
-                    // InternalFacpl2.g:2520:8: enumLiteral_7= 'strong-consensus'
+                    // InternalFacpl2.g:2621:6: (enumLiteral_7= 'strong-consensus' )
+                    // InternalFacpl2.g:2621:8: enumLiteral_7= 'strong-consensus'
                     {
-                    enumLiteral_7=(Token)match(input,71,FOLLOW_2); 
+                    enumLiteral_7=(Token)match(input,72,FOLLOW_2); 
 
                             current = grammarAccess.getAlgLiteralAccess().getSTRONG_CONSEnumLiteralDeclaration_7().getEnumLiteral().getInstance();
                             newLeafNode(enumLiteral_7, grammarAccess.getAlgLiteralAccess().getSTRONG_CONSEnumLiteralDeclaration_7()); 
@@ -6651,12 +6867,12 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 9 :
-                    // InternalFacpl2.g:2526:6: (enumLiteral_8= 'custom-algorithm' )
+                    // InternalFacpl2.g:2627:6: (enumLiteral_8= 'custom-algorithm' )
                     {
-                    // InternalFacpl2.g:2526:6: (enumLiteral_8= 'custom-algorithm' )
-                    // InternalFacpl2.g:2526:8: enumLiteral_8= 'custom-algorithm'
+                    // InternalFacpl2.g:2627:6: (enumLiteral_8= 'custom-algorithm' )
+                    // InternalFacpl2.g:2627:8: enumLiteral_8= 'custom-algorithm'
                     {
-                    enumLiteral_8=(Token)match(input,72,FOLLOW_2); 
+                    enumLiteral_8=(Token)match(input,73,FOLLOW_2); 
 
                             current = grammarAccess.getAlgLiteralAccess().getCUSTOM_ALGEnumLiteralDeclaration_8().getEnumLiteral().getInstance();
                             newLeafNode(enumLiteral_8, grammarAccess.getAlgLiteralAccess().getCUSTOM_ALGEnumLiteralDeclaration_8()); 
@@ -6688,7 +6904,7 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleFulfillmentStrategy"
-    // InternalFacpl2.g:2536:1: ruleFulfillmentStrategy returns [Enumerator current=null] : ( (enumLiteral_0= 'greedy' ) | (enumLiteral_1= 'all' ) ) ;
+    // InternalFacpl2.g:2637:1: ruleFulfillmentStrategy returns [Enumerator current=null] : ( (enumLiteral_0= 'greedy' ) | (enumLiteral_1= 'all' ) ) ;
     public final Enumerator ruleFulfillmentStrategy() throws RecognitionException {
         Enumerator current = null;
 
@@ -6697,17 +6913,17 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalFacpl2.g:2538:28: ( ( (enumLiteral_0= 'greedy' ) | (enumLiteral_1= 'all' ) ) )
-            // InternalFacpl2.g:2539:1: ( (enumLiteral_0= 'greedy' ) | (enumLiteral_1= 'all' ) )
+            // InternalFacpl2.g:2639:28: ( ( (enumLiteral_0= 'greedy' ) | (enumLiteral_1= 'all' ) ) )
+            // InternalFacpl2.g:2640:1: ( (enumLiteral_0= 'greedy' ) | (enumLiteral_1= 'all' ) )
             {
-            // InternalFacpl2.g:2539:1: ( (enumLiteral_0= 'greedy' ) | (enumLiteral_1= 'all' ) )
+            // InternalFacpl2.g:2640:1: ( (enumLiteral_0= 'greedy' ) | (enumLiteral_1= 'all' ) )
             int alt39=2;
             int LA39_0 = input.LA(1);
 
-            if ( (LA39_0==73) ) {
+            if ( (LA39_0==74) ) {
                 alt39=1;
             }
-            else if ( (LA39_0==74) ) {
+            else if ( (LA39_0==75) ) {
                 alt39=2;
             }
             else {
@@ -6718,12 +6934,12 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
             }
             switch (alt39) {
                 case 1 :
-                    // InternalFacpl2.g:2539:2: (enumLiteral_0= 'greedy' )
+                    // InternalFacpl2.g:2640:2: (enumLiteral_0= 'greedy' )
                     {
-                    // InternalFacpl2.g:2539:2: (enumLiteral_0= 'greedy' )
-                    // InternalFacpl2.g:2539:4: enumLiteral_0= 'greedy'
+                    // InternalFacpl2.g:2640:2: (enumLiteral_0= 'greedy' )
+                    // InternalFacpl2.g:2640:4: enumLiteral_0= 'greedy'
                     {
-                    enumLiteral_0=(Token)match(input,73,FOLLOW_2); 
+                    enumLiteral_0=(Token)match(input,74,FOLLOW_2); 
 
                             current = grammarAccess.getFulfillmentStrategyAccess().getGREEDYEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
                             newLeafNode(enumLiteral_0, grammarAccess.getFulfillmentStrategyAccess().getGREEDYEnumLiteralDeclaration_0()); 
@@ -6735,12 +6951,12 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalFacpl2.g:2545:6: (enumLiteral_1= 'all' )
+                    // InternalFacpl2.g:2646:6: (enumLiteral_1= 'all' )
                     {
-                    // InternalFacpl2.g:2545:6: (enumLiteral_1= 'all' )
-                    // InternalFacpl2.g:2545:8: enumLiteral_1= 'all'
+                    // InternalFacpl2.g:2646:6: (enumLiteral_1= 'all' )
+                    // InternalFacpl2.g:2646:8: enumLiteral_1= 'all'
                     {
-                    enumLiteral_1=(Token)match(input,74,FOLLOW_2); 
+                    enumLiteral_1=(Token)match(input,75,FOLLOW_2); 
 
                             current = grammarAccess.getFulfillmentStrategyAccess().getALLEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
                             newLeafNode(enumLiteral_1, grammarAccess.getFulfillmentStrategyAccess().getALLEnumLiteralDeclaration_1()); 
@@ -6772,7 +6988,7 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEffect"
-    // InternalFacpl2.g:2555:1: ruleEffect returns [Enumerator current=null] : ( (enumLiteral_0= 'permit' ) | (enumLiteral_1= 'deny' ) ) ;
+    // InternalFacpl2.g:2656:1: ruleEffect returns [Enumerator current=null] : ( (enumLiteral_0= 'permit' ) | (enumLiteral_1= 'deny' ) ) ;
     public final Enumerator ruleEffect() throws RecognitionException {
         Enumerator current = null;
 
@@ -6781,17 +6997,17 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalFacpl2.g:2557:28: ( ( (enumLiteral_0= 'permit' ) | (enumLiteral_1= 'deny' ) ) )
-            // InternalFacpl2.g:2558:1: ( (enumLiteral_0= 'permit' ) | (enumLiteral_1= 'deny' ) )
+            // InternalFacpl2.g:2658:28: ( ( (enumLiteral_0= 'permit' ) | (enumLiteral_1= 'deny' ) ) )
+            // InternalFacpl2.g:2659:1: ( (enumLiteral_0= 'permit' ) | (enumLiteral_1= 'deny' ) )
             {
-            // InternalFacpl2.g:2558:1: ( (enumLiteral_0= 'permit' ) | (enumLiteral_1= 'deny' ) )
+            // InternalFacpl2.g:2659:1: ( (enumLiteral_0= 'permit' ) | (enumLiteral_1= 'deny' ) )
             int alt40=2;
             int LA40_0 = input.LA(1);
 
-            if ( (LA40_0==75) ) {
+            if ( (LA40_0==76) ) {
                 alt40=1;
             }
-            else if ( (LA40_0==76) ) {
+            else if ( (LA40_0==77) ) {
                 alt40=2;
             }
             else {
@@ -6802,12 +7018,12 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
             }
             switch (alt40) {
                 case 1 :
-                    // InternalFacpl2.g:2558:2: (enumLiteral_0= 'permit' )
+                    // InternalFacpl2.g:2659:2: (enumLiteral_0= 'permit' )
                     {
-                    // InternalFacpl2.g:2558:2: (enumLiteral_0= 'permit' )
-                    // InternalFacpl2.g:2558:4: enumLiteral_0= 'permit'
+                    // InternalFacpl2.g:2659:2: (enumLiteral_0= 'permit' )
+                    // InternalFacpl2.g:2659:4: enumLiteral_0= 'permit'
                     {
-                    enumLiteral_0=(Token)match(input,75,FOLLOW_2); 
+                    enumLiteral_0=(Token)match(input,76,FOLLOW_2); 
 
                             current = grammarAccess.getEffectAccess().getPERMITEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
                             newLeafNode(enumLiteral_0, grammarAccess.getEffectAccess().getPERMITEnumLiteralDeclaration_0()); 
@@ -6819,12 +7035,12 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalFacpl2.g:2564:6: (enumLiteral_1= 'deny' )
+                    // InternalFacpl2.g:2665:6: (enumLiteral_1= 'deny' )
                     {
-                    // InternalFacpl2.g:2564:6: (enumLiteral_1= 'deny' )
-                    // InternalFacpl2.g:2564:8: enumLiteral_1= 'deny'
+                    // InternalFacpl2.g:2665:6: (enumLiteral_1= 'deny' )
+                    // InternalFacpl2.g:2665:8: enumLiteral_1= 'deny'
                     {
-                    enumLiteral_1=(Token)match(input,76,FOLLOW_2); 
+                    enumLiteral_1=(Token)match(input,77,FOLLOW_2); 
 
                             current = grammarAccess.getEffectAccess().getDENYEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
                             newLeafNode(enumLiteral_1, grammarAccess.getEffectAccess().getDENYEnumLiteralDeclaration_1()); 
@@ -6856,7 +7072,7 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulefunID"
-    // InternalFacpl2.g:2574:1: rulefunID returns [Enumerator current=null] : ( (enumLiteral_0= 'equal' ) | (enumLiteral_1= 'not-equal' ) | (enumLiteral_2= 'less-than' ) | (enumLiteral_3= 'less-than-or-equal' ) | (enumLiteral_4= 'greater-than' ) | (enumLiteral_5= 'greater-than-or-equal' ) | (enumLiteral_6= 'in' ) | (enumLiteral_7= 'addition' ) | (enumLiteral_8= 'subtract' ) | (enumLiteral_9= 'divide' ) | (enumLiteral_10= 'multiply' ) ) ;
+    // InternalFacpl2.g:2675:1: rulefunID returns [Enumerator current=null] : ( (enumLiteral_0= 'equal' ) | (enumLiteral_1= 'not-equal' ) | (enumLiteral_2= 'less-than' ) | (enumLiteral_3= 'less-than-or-equal' ) | (enumLiteral_4= 'greater-than' ) | (enumLiteral_5= 'greater-than-or-equal' ) | (enumLiteral_6= 'in' ) | (enumLiteral_7= 'addition' ) | (enumLiteral_8= 'subtract' ) | (enumLiteral_9= 'divide' ) | (enumLiteral_10= 'multiply' ) ) ;
     public final Enumerator rulefunID() throws RecognitionException {
         Enumerator current = null;
 
@@ -6874,63 +7090,63 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // InternalFacpl2.g:2576:28: ( ( (enumLiteral_0= 'equal' ) | (enumLiteral_1= 'not-equal' ) | (enumLiteral_2= 'less-than' ) | (enumLiteral_3= 'less-than-or-equal' ) | (enumLiteral_4= 'greater-than' ) | (enumLiteral_5= 'greater-than-or-equal' ) | (enumLiteral_6= 'in' ) | (enumLiteral_7= 'addition' ) | (enumLiteral_8= 'subtract' ) | (enumLiteral_9= 'divide' ) | (enumLiteral_10= 'multiply' ) ) )
-            // InternalFacpl2.g:2577:1: ( (enumLiteral_0= 'equal' ) | (enumLiteral_1= 'not-equal' ) | (enumLiteral_2= 'less-than' ) | (enumLiteral_3= 'less-than-or-equal' ) | (enumLiteral_4= 'greater-than' ) | (enumLiteral_5= 'greater-than-or-equal' ) | (enumLiteral_6= 'in' ) | (enumLiteral_7= 'addition' ) | (enumLiteral_8= 'subtract' ) | (enumLiteral_9= 'divide' ) | (enumLiteral_10= 'multiply' ) )
+            // InternalFacpl2.g:2677:28: ( ( (enumLiteral_0= 'equal' ) | (enumLiteral_1= 'not-equal' ) | (enumLiteral_2= 'less-than' ) | (enumLiteral_3= 'less-than-or-equal' ) | (enumLiteral_4= 'greater-than' ) | (enumLiteral_5= 'greater-than-or-equal' ) | (enumLiteral_6= 'in' ) | (enumLiteral_7= 'addition' ) | (enumLiteral_8= 'subtract' ) | (enumLiteral_9= 'divide' ) | (enumLiteral_10= 'multiply' ) ) )
+            // InternalFacpl2.g:2678:1: ( (enumLiteral_0= 'equal' ) | (enumLiteral_1= 'not-equal' ) | (enumLiteral_2= 'less-than' ) | (enumLiteral_3= 'less-than-or-equal' ) | (enumLiteral_4= 'greater-than' ) | (enumLiteral_5= 'greater-than-or-equal' ) | (enumLiteral_6= 'in' ) | (enumLiteral_7= 'addition' ) | (enumLiteral_8= 'subtract' ) | (enumLiteral_9= 'divide' ) | (enumLiteral_10= 'multiply' ) )
             {
-            // InternalFacpl2.g:2577:1: ( (enumLiteral_0= 'equal' ) | (enumLiteral_1= 'not-equal' ) | (enumLiteral_2= 'less-than' ) | (enumLiteral_3= 'less-than-or-equal' ) | (enumLiteral_4= 'greater-than' ) | (enumLiteral_5= 'greater-than-or-equal' ) | (enumLiteral_6= 'in' ) | (enumLiteral_7= 'addition' ) | (enumLiteral_8= 'subtract' ) | (enumLiteral_9= 'divide' ) | (enumLiteral_10= 'multiply' ) )
+            // InternalFacpl2.g:2678:1: ( (enumLiteral_0= 'equal' ) | (enumLiteral_1= 'not-equal' ) | (enumLiteral_2= 'less-than' ) | (enumLiteral_3= 'less-than-or-equal' ) | (enumLiteral_4= 'greater-than' ) | (enumLiteral_5= 'greater-than-or-equal' ) | (enumLiteral_6= 'in' ) | (enumLiteral_7= 'addition' ) | (enumLiteral_8= 'subtract' ) | (enumLiteral_9= 'divide' ) | (enumLiteral_10= 'multiply' ) )
             int alt41=11;
             switch ( input.LA(1) ) {
-            case 77:
+            case 78:
                 {
                 alt41=1;
                 }
                 break;
-            case 78:
+            case 79:
                 {
                 alt41=2;
                 }
                 break;
-            case 79:
+            case 80:
                 {
                 alt41=3;
                 }
                 break;
-            case 80:
+            case 81:
                 {
                 alt41=4;
                 }
                 break;
-            case 81:
+            case 82:
                 {
                 alt41=5;
                 }
                 break;
-            case 82:
+            case 83:
                 {
                 alt41=6;
                 }
                 break;
-            case 83:
+            case 84:
                 {
                 alt41=7;
                 }
                 break;
-            case 84:
+            case 85:
                 {
                 alt41=8;
                 }
                 break;
-            case 85:
+            case 86:
                 {
                 alt41=9;
                 }
                 break;
-            case 86:
+            case 87:
                 {
                 alt41=10;
                 }
                 break;
-            case 87:
+            case 88:
                 {
                 alt41=11;
                 }
@@ -6944,12 +7160,12 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
 
             switch (alt41) {
                 case 1 :
-                    // InternalFacpl2.g:2577:2: (enumLiteral_0= 'equal' )
+                    // InternalFacpl2.g:2678:2: (enumLiteral_0= 'equal' )
                     {
-                    // InternalFacpl2.g:2577:2: (enumLiteral_0= 'equal' )
-                    // InternalFacpl2.g:2577:4: enumLiteral_0= 'equal'
+                    // InternalFacpl2.g:2678:2: (enumLiteral_0= 'equal' )
+                    // InternalFacpl2.g:2678:4: enumLiteral_0= 'equal'
                     {
-                    enumLiteral_0=(Token)match(input,77,FOLLOW_2); 
+                    enumLiteral_0=(Token)match(input,78,FOLLOW_2); 
 
                             current = grammarAccess.getFunIDAccess().getEQUALEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
                             newLeafNode(enumLiteral_0, grammarAccess.getFunIDAccess().getEQUALEnumLiteralDeclaration_0()); 
@@ -6961,12 +7177,12 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalFacpl2.g:2583:6: (enumLiteral_1= 'not-equal' )
+                    // InternalFacpl2.g:2684:6: (enumLiteral_1= 'not-equal' )
                     {
-                    // InternalFacpl2.g:2583:6: (enumLiteral_1= 'not-equal' )
-                    // InternalFacpl2.g:2583:8: enumLiteral_1= 'not-equal'
+                    // InternalFacpl2.g:2684:6: (enumLiteral_1= 'not-equal' )
+                    // InternalFacpl2.g:2684:8: enumLiteral_1= 'not-equal'
                     {
-                    enumLiteral_1=(Token)match(input,78,FOLLOW_2); 
+                    enumLiteral_1=(Token)match(input,79,FOLLOW_2); 
 
                             current = grammarAccess.getFunIDAccess().getN_EQUALEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
                             newLeafNode(enumLiteral_1, grammarAccess.getFunIDAccess().getN_EQUALEnumLiteralDeclaration_1()); 
@@ -6978,12 +7194,12 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalFacpl2.g:2589:6: (enumLiteral_2= 'less-than' )
+                    // InternalFacpl2.g:2690:6: (enumLiteral_2= 'less-than' )
                     {
-                    // InternalFacpl2.g:2589:6: (enumLiteral_2= 'less-than' )
-                    // InternalFacpl2.g:2589:8: enumLiteral_2= 'less-than'
+                    // InternalFacpl2.g:2690:6: (enumLiteral_2= 'less-than' )
+                    // InternalFacpl2.g:2690:8: enumLiteral_2= 'less-than'
                     {
-                    enumLiteral_2=(Token)match(input,79,FOLLOW_2); 
+                    enumLiteral_2=(Token)match(input,80,FOLLOW_2); 
 
                             current = grammarAccess.getFunIDAccess().getLESSEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
                             newLeafNode(enumLiteral_2, grammarAccess.getFunIDAccess().getLESSEnumLiteralDeclaration_2()); 
@@ -6995,12 +7211,12 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalFacpl2.g:2595:6: (enumLiteral_3= 'less-than-or-equal' )
+                    // InternalFacpl2.g:2696:6: (enumLiteral_3= 'less-than-or-equal' )
                     {
-                    // InternalFacpl2.g:2595:6: (enumLiteral_3= 'less-than-or-equal' )
-                    // InternalFacpl2.g:2595:8: enumLiteral_3= 'less-than-or-equal'
+                    // InternalFacpl2.g:2696:6: (enumLiteral_3= 'less-than-or-equal' )
+                    // InternalFacpl2.g:2696:8: enumLiteral_3= 'less-than-or-equal'
                     {
-                    enumLiteral_3=(Token)match(input,80,FOLLOW_2); 
+                    enumLiteral_3=(Token)match(input,81,FOLLOW_2); 
 
                             current = grammarAccess.getFunIDAccess().getLESS_EQEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
                             newLeafNode(enumLiteral_3, grammarAccess.getFunIDAccess().getLESS_EQEnumLiteralDeclaration_3()); 
@@ -7012,12 +7228,12 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalFacpl2.g:2601:6: (enumLiteral_4= 'greater-than' )
+                    // InternalFacpl2.g:2702:6: (enumLiteral_4= 'greater-than' )
                     {
-                    // InternalFacpl2.g:2601:6: (enumLiteral_4= 'greater-than' )
-                    // InternalFacpl2.g:2601:8: enumLiteral_4= 'greater-than'
+                    // InternalFacpl2.g:2702:6: (enumLiteral_4= 'greater-than' )
+                    // InternalFacpl2.g:2702:8: enumLiteral_4= 'greater-than'
                     {
-                    enumLiteral_4=(Token)match(input,81,FOLLOW_2); 
+                    enumLiteral_4=(Token)match(input,82,FOLLOW_2); 
 
                             current = grammarAccess.getFunIDAccess().getGREATEREnumLiteralDeclaration_4().getEnumLiteral().getInstance();
                             newLeafNode(enumLiteral_4, grammarAccess.getFunIDAccess().getGREATEREnumLiteralDeclaration_4()); 
@@ -7029,12 +7245,12 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalFacpl2.g:2607:6: (enumLiteral_5= 'greater-than-or-equal' )
+                    // InternalFacpl2.g:2708:6: (enumLiteral_5= 'greater-than-or-equal' )
                     {
-                    // InternalFacpl2.g:2607:6: (enumLiteral_5= 'greater-than-or-equal' )
-                    // InternalFacpl2.g:2607:8: enumLiteral_5= 'greater-than-or-equal'
+                    // InternalFacpl2.g:2708:6: (enumLiteral_5= 'greater-than-or-equal' )
+                    // InternalFacpl2.g:2708:8: enumLiteral_5= 'greater-than-or-equal'
                     {
-                    enumLiteral_5=(Token)match(input,82,FOLLOW_2); 
+                    enumLiteral_5=(Token)match(input,83,FOLLOW_2); 
 
                             current = grammarAccess.getFunIDAccess().getGREATER_EQEnumLiteralDeclaration_5().getEnumLiteral().getInstance();
                             newLeafNode(enumLiteral_5, grammarAccess.getFunIDAccess().getGREATER_EQEnumLiteralDeclaration_5()); 
@@ -7046,12 +7262,12 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // InternalFacpl2.g:2613:6: (enumLiteral_6= 'in' )
+                    // InternalFacpl2.g:2714:6: (enumLiteral_6= 'in' )
                     {
-                    // InternalFacpl2.g:2613:6: (enumLiteral_6= 'in' )
-                    // InternalFacpl2.g:2613:8: enumLiteral_6= 'in'
+                    // InternalFacpl2.g:2714:6: (enumLiteral_6= 'in' )
+                    // InternalFacpl2.g:2714:8: enumLiteral_6= 'in'
                     {
-                    enumLiteral_6=(Token)match(input,83,FOLLOW_2); 
+                    enumLiteral_6=(Token)match(input,84,FOLLOW_2); 
 
                             current = grammarAccess.getFunIDAccess().getINEnumLiteralDeclaration_6().getEnumLiteral().getInstance();
                             newLeafNode(enumLiteral_6, grammarAccess.getFunIDAccess().getINEnumLiteralDeclaration_6()); 
@@ -7063,12 +7279,12 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 8 :
-                    // InternalFacpl2.g:2619:6: (enumLiteral_7= 'addition' )
+                    // InternalFacpl2.g:2720:6: (enumLiteral_7= 'addition' )
                     {
-                    // InternalFacpl2.g:2619:6: (enumLiteral_7= 'addition' )
-                    // InternalFacpl2.g:2619:8: enumLiteral_7= 'addition'
+                    // InternalFacpl2.g:2720:6: (enumLiteral_7= 'addition' )
+                    // InternalFacpl2.g:2720:8: enumLiteral_7= 'addition'
                     {
-                    enumLiteral_7=(Token)match(input,84,FOLLOW_2); 
+                    enumLiteral_7=(Token)match(input,85,FOLLOW_2); 
 
                             current = grammarAccess.getFunIDAccess().getADDEnumLiteralDeclaration_7().getEnumLiteral().getInstance();
                             newLeafNode(enumLiteral_7, grammarAccess.getFunIDAccess().getADDEnumLiteralDeclaration_7()); 
@@ -7080,12 +7296,12 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 9 :
-                    // InternalFacpl2.g:2625:6: (enumLiteral_8= 'subtract' )
+                    // InternalFacpl2.g:2726:6: (enumLiteral_8= 'subtract' )
                     {
-                    // InternalFacpl2.g:2625:6: (enumLiteral_8= 'subtract' )
-                    // InternalFacpl2.g:2625:8: enumLiteral_8= 'subtract'
+                    // InternalFacpl2.g:2726:6: (enumLiteral_8= 'subtract' )
+                    // InternalFacpl2.g:2726:8: enumLiteral_8= 'subtract'
                     {
-                    enumLiteral_8=(Token)match(input,85,FOLLOW_2); 
+                    enumLiteral_8=(Token)match(input,86,FOLLOW_2); 
 
                             current = grammarAccess.getFunIDAccess().getSUBTRACTEnumLiteralDeclaration_8().getEnumLiteral().getInstance();
                             newLeafNode(enumLiteral_8, grammarAccess.getFunIDAccess().getSUBTRACTEnumLiteralDeclaration_8()); 
@@ -7097,12 +7313,12 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 10 :
-                    // InternalFacpl2.g:2631:6: (enumLiteral_9= 'divide' )
+                    // InternalFacpl2.g:2732:6: (enumLiteral_9= 'divide' )
                     {
-                    // InternalFacpl2.g:2631:6: (enumLiteral_9= 'divide' )
-                    // InternalFacpl2.g:2631:8: enumLiteral_9= 'divide'
+                    // InternalFacpl2.g:2732:6: (enumLiteral_9= 'divide' )
+                    // InternalFacpl2.g:2732:8: enumLiteral_9= 'divide'
                     {
-                    enumLiteral_9=(Token)match(input,86,FOLLOW_2); 
+                    enumLiteral_9=(Token)match(input,87,FOLLOW_2); 
 
                             current = grammarAccess.getFunIDAccess().getDIVIDEEnumLiteralDeclaration_9().getEnumLiteral().getInstance();
                             newLeafNode(enumLiteral_9, grammarAccess.getFunIDAccess().getDIVIDEEnumLiteralDeclaration_9()); 
@@ -7114,12 +7330,12 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 11 :
-                    // InternalFacpl2.g:2637:6: (enumLiteral_10= 'multiply' )
+                    // InternalFacpl2.g:2738:6: (enumLiteral_10= 'multiply' )
                     {
-                    // InternalFacpl2.g:2637:6: (enumLiteral_10= 'multiply' )
-                    // InternalFacpl2.g:2637:8: enumLiteral_10= 'multiply'
+                    // InternalFacpl2.g:2738:6: (enumLiteral_10= 'multiply' )
+                    // InternalFacpl2.g:2738:8: enumLiteral_10= 'multiply'
                     {
-                    enumLiteral_10=(Token)match(input,87,FOLLOW_2); 
+                    enumLiteral_10=(Token)match(input,88,FOLLOW_2); 
 
                             current = grammarAccess.getFunIDAccess().getMULTIPLYEnumLiteralDeclaration_10().getEnumLiteral().getInstance();
                             newLeafNode(enumLiteral_10, grammarAccess.getFunIDAccess().getMULTIPLYEnumLiteralDeclaration_10()); 
@@ -7169,38 +7385,39 @@ public class InternalFacpl2Parser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_13 = new BitSet(new long[]{0x0000000000900000L});
     public static final BitSet FOLLOW_14 = new BitSet(new long[]{0x0000000010000000L});
     public static final BitSet FOLLOW_15 = new BitSet(new long[]{0x0000000001000000L});
-    public static final BitSet FOLLOW_16 = new BitSet(new long[]{0x1FF8000000000000L});
+    public static final BitSet FOLLOW_16 = new BitSet(new long[]{0x3FF0000000000000L});
     public static final BitSet FOLLOW_17 = new BitSet(new long[]{0x0000000004000000L});
     public static final BitSet FOLLOW_18 = new BitSet(new long[]{0x0000000008800000L});
-    public static final BitSet FOLLOW_19 = new BitSet(new long[]{0xE000000000000000L});
+    public static final BitSet FOLLOW_19 = new BitSet(new long[]{0xC000000000000000L,0x0000000000000001L});
     public static final BitSet FOLLOW_20 = new BitSet(new long[]{0x0000000020000000L});
-    public static final BitSet FOLLOW_21 = new BitSet(new long[]{0x0000000000000000L,0x00000000000001FFL});
+    public static final BitSet FOLLOW_21 = new BitSet(new long[]{0x0000000000000000L,0x00000000000003FEL});
     public static final BitSet FOLLOW_22 = new BitSet(new long[]{0x0000000080020000L});
     public static final BitSet FOLLOW_23 = new BitSet(new long[]{0x0000000100000000L});
     public static final BitSet FOLLOW_24 = new BitSet(new long[]{0x0000000005000000L});
     public static final BitSet FOLLOW_25 = new BitSet(new long[]{0x0000000000800000L});
-    public static final BitSet FOLLOW_26 = new BitSet(new long[]{0x00040000000007F0L});
+    public static final BitSet FOLLOW_26 = new BitSet(new long[]{0x00080000000007F0L});
     public static final BitSet FOLLOW_27 = new BitSet(new long[]{0x0000000200000000L});
     public static final BitSet FOLLOW_28 = new BitSet(new long[]{0x0000001C00080002L});
     public static final BitSet FOLLOW_29 = new BitSet(new long[]{0x0000086000000000L});
     public static final BitSet FOLLOW_30 = new BitSet(new long[]{0x0000086000000002L});
     public static final BitSet FOLLOW_31 = new BitSet(new long[]{0x0000018000000000L});
-    public static final BitSet FOLLOW_32 = new BitSet(new long[]{0x00060000040007F0L,0x0000000000FFE000L});
+    public static final BitSet FOLLOW_32 = new BitSet(new long[]{0x000E0000040007F0L,0x0000000001FFC000L});
     public static final BitSet FOLLOW_33 = new BitSet(new long[]{0x0000010000000000L});
     public static final BitSet FOLLOW_34 = new BitSet(new long[]{0x00000E6001000000L});
     public static final BitSet FOLLOW_35 = new BitSet(new long[]{0x0000040081000000L});
     public static final BitSet FOLLOW_36 = new BitSet(new long[]{0x0000000081000000L});
     public static final BitSet FOLLOW_37 = new BitSet(new long[]{0x0000000800000002L});
-    public static final BitSet FOLLOW_38 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000600L});
-    public static final BitSet FOLLOW_39 = new BitSet(new long[]{0x0000000000000000L,0x0000000000001800L});
+    public static final BitSet FOLLOW_38 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000C00L});
+    public static final BitSet FOLLOW_39 = new BitSet(new long[]{0x0000000000000000L,0x0000000000003000L});
     public static final BitSet FOLLOW_40 = new BitSet(new long[]{0x0000108008000000L});
     public static final BitSet FOLLOW_41 = new BitSet(new long[]{0x0000100008000000L});
     public static final BitSet FOLLOW_42 = new BitSet(new long[]{0x0000000088000000L});
     public static final BitSet FOLLOW_43 = new BitSet(new long[]{0x0000600000000000L});
-    public static final BitSet FOLLOW_44 = new BitSet(new long[]{0x000600000C0007F0L,0x0000000000FFE000L});
-    public static final BitSet FOLLOW_45 = new BitSet(new long[]{0x000600000C8007F0L,0x0000000000FFE000L});
+    public static final BitSet FOLLOW_44 = new BitSet(new long[]{0x000E00000C0007F0L,0x0000000001FFC000L});
+    public static final BitSet FOLLOW_45 = new BitSet(new long[]{0x000E00000C8007F0L,0x0000000001FFC000L});
     public static final BitSet FOLLOW_46 = new BitSet(new long[]{0x0000800000000002L});
     public static final BitSet FOLLOW_47 = new BitSet(new long[]{0x0001000000000002L});
     public static final BitSet FOLLOW_48 = new BitSet(new long[]{0x0000000008000000L});
+    public static final BitSet FOLLOW_49 = new BitSet(new long[]{0x0000000000000000L,0x0000000001FFC000L});
 
 }

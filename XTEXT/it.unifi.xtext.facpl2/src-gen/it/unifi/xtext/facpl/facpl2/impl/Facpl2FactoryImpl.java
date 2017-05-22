@@ -84,6 +84,7 @@ public class Facpl2FactoryImpl extends EFactoryImpl implements Facpl2Factory
       case Facpl2Package.NOT_EXPRESSION: return createNotExpression();
       case Facpl2Package.FUNCTION: return createFunction();
       case Facpl2Package.DECLARED_FUNCTION: return createDeclaredFunction();
+      case Facpl2Package.MAP_FUNCTION: return createMapFunction();
       case Facpl2Package.SET: return createSet();
       case Facpl2Package.STRING_LITERAL: return createStringLiteral();
       case Facpl2Package.BOOLEAN_LITERAL: return createBooleanLiteral();
@@ -359,6 +360,17 @@ public class Facpl2FactoryImpl extends EFactoryImpl implements Facpl2Factory
   {
     DeclaredFunctionImpl declaredFunction = new DeclaredFunctionImpl();
     return declaredFunction;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public MapFunction createMapFunction()
+  {
+    MapFunctionImpl mapFunction = new MapFunctionImpl();
+    return mapFunction;
   }
 
   /**

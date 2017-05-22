@@ -194,6 +194,15 @@ public interface Facpl2Factory extends EFactory
   DeclaredFunction createDeclaredFunction();
 
   /**
+   * Returns a new object of class '<em>Map Function</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Map Function</em>'.
+   * @generated
+   */
+  MapFunction createMapFunction();
+
+  /**
    * Returns a new object of class '<em>Set</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
