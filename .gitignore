@@ -4,7 +4,7 @@
 *.log
 *.lock
 *~
-*._trace
+*.java._trace
 *.xtendbin
 *.class
  
