@@ -68,6 +68,7 @@
     </genClasses>
     <genClasses ecoreClass="Facpl2.ecore#//MainFacpl">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//MainFacpl/extIndet"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//MainFacpl/simulateXACML"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//MainFacpl/genPackage"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Facpl2.ecore#//MainFacpl/refRequest"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//MainFacpl/paf"/>
@@ -139,7 +140,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//DeclaredFunction/args"/>
     </genClasses>
     <genClasses ecoreClass="Facpl2.ecore#//MapFunction">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//MapFunction/functionID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Facpl2.ecore#//MapFunction/functionId"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//MapFunction/arg1"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Facpl2.ecore#//MapFunction/arg2"/>
     </genClasses>

@@ -467,9 +467,19 @@ public class Facpl2PackageImpl extends EPackageImpl implements Facpl2Package
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getMainFacpl_SimulateXACML()
+  {
+    return (EReference)mainFacplEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EAttribute getMainFacpl_GenPackage()
   {
-    return (EAttribute)mainFacplEClass.getEStructuralFeatures().get(1);
+    return (EAttribute)mainFacplEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -479,7 +489,7 @@ public class Facpl2PackageImpl extends EPackageImpl implements Facpl2Package
    */
   public EReference getMainFacpl_RefRequest()
   {
-    return (EReference)mainFacplEClass.getEStructuralFeatures().get(2);
+    return (EReference)mainFacplEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -489,7 +499,7 @@ public class Facpl2PackageImpl extends EPackageImpl implements Facpl2Package
    */
   public EReference getMainFacpl_Paf()
   {
-    return (EReference)mainFacplEClass.getEStructuralFeatures().get(3);
+    return (EReference)mainFacplEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -1017,7 +1027,7 @@ public class Facpl2PackageImpl extends EPackageImpl implements Facpl2Package
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getMapFunction_FunctionID()
+  public EAttribute getMapFunction_FunctionId()
   {
     return (EAttribute)mapFunctionEClass.getEStructuralFeatures().get(0);
   }
@@ -1344,6 +1354,7 @@ public class Facpl2PackageImpl extends EPackageImpl implements Facpl2Package
 
     mainFacplEClass = createEClass(MAIN_FACPL);
     createEReference(mainFacplEClass, MAIN_FACPL__EXT_INDET);
+    createEReference(mainFacplEClass, MAIN_FACPL__SIMULATE_XACML);
     createEAttribute(mainFacplEClass, MAIN_FACPL__GEN_PACKAGE);
     createEReference(mainFacplEClass, MAIN_FACPL__REF_REQUEST);
     createEReference(mainFacplEClass, MAIN_FACPL__PAF);
@@ -1517,6 +1528,7 @@ public class Facpl2PackageImpl extends EPackageImpl implements Facpl2Package
 
     initEClass(mainFacplEClass, MainFacpl.class, "MainFacpl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getMainFacpl_ExtIndet(), this.getBooleanLiteral(), null, "extIndet", null, 0, 1, MainFacpl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getMainFacpl_SimulateXACML(), this.getBooleanLiteral(), null, "simulateXACML", null, 0, 1, MainFacpl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getMainFacpl_GenPackage(), ecorePackage.getEString(), "genPackage", null, 0, 1, MainFacpl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getMainFacpl_RefRequest(), this.getRequest(), null, "refRequest", null, 0, -1, MainFacpl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getMainFacpl_Paf(), this.getPAF(), null, "paf", null, 0, 1, MainFacpl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1589,7 +1601,7 @@ public class Facpl2PackageImpl extends EPackageImpl implements Facpl2Package
     initEReference(getDeclaredFunction_Args(), this.getExpression(), null, "args", null, 0, -1, DeclaredFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(mapFunctionEClass, MapFunction.class, "MapFunction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getMapFunction_FunctionID(), this.getfunID(), "functionID", null, 0, 1, MapFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getMapFunction_FunctionId(), this.getfunID(), "functionId", null, 0, 1, MapFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getMapFunction_Arg1(), this.getAttributeName(), null, "arg1", null, 0, 1, MapFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getMapFunction_Arg2(), this.getExpression(), null, "arg2", null, 0, 1, MapFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

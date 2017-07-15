@@ -59,6 +59,8 @@ public class Facpl2Generator implements IGenerator {
   
   protected String packageName = "";
   
+  protected boolean isXACMLTranslation = false;
+  
   protected static URI path;
   
   protected static StringBuffer projectPath;
@@ -118,10 +120,19 @@ public class Facpl2Generator implements IGenerator {
             String _plus_1 = (_substring + ";");
             this.packageName = _plus_1;
           }
+          MainFacpl _main_4 = e.getMain();
+          BooleanLiteral _simulateXACML = _main_4.getSimulateXACML();
+          boolean _notEquals_1 = (!Objects.equal(_simulateXACML, null));
+          if (_notEquals_1) {
+            MainFacpl _main_5 = e.getMain();
+            BooleanLiteral _simulateXACML_1 = _main_5.getSimulateXACML();
+            boolean _isValue = _simulateXACML_1.isValue();
+            this.isXACMLTranslation = _isValue;
+          }
         }
         EList<Request> _requests = e.getRequests();
-        boolean _notEquals_1 = (!Objects.equal(_requests, null));
-        if (_notEquals_1) {
+        boolean _notEquals_2 = (!Objects.equal(_requests, null));
+        if (_notEquals_2) {
           EList<Request> _requests_1 = e.getRequests();
           for (final Request r : _requests_1) {
             String _name = r.getName();
@@ -132,8 +143,8 @@ public class Facpl2Generator implements IGenerator {
           }
         }
         EList<Import> _importEl = e.getImportEl();
-        boolean _notEquals_2 = (!Objects.equal(_importEl, null));
-        if (_notEquals_2) {
+        boolean _notEquals_3 = (!Objects.equal(_importEl, null));
+        if (_notEquals_3) {
           EList<Import> _importEl_1 = e.getImportEl();
           for (final Import i : _importEl_1) {
             {
@@ -151,8 +162,8 @@ public class Facpl2Generator implements IGenerator {
           }
         }
         EList<PolicySet> _policies = e.getPolicies();
-        boolean _notEquals_3 = (!Objects.equal(_policies, null));
-        if (_notEquals_3) {
+        boolean _notEquals_4 = (!Objects.equal(_policies, null));
+        if (_notEquals_4) {
           EList<PolicySet> _policies_1 = e.getPolicies();
           for (final PolicySet pol : _policies_1) {
             String _nameFacplPolicy = this.getNameFacplPolicy(pol);
@@ -163,8 +174,8 @@ public class Facpl2Generator implements IGenerator {
           }
         }
         EList<FunctionDeclaration> _declarations = e.getDeclarations();
-        boolean _notEquals_4 = (!Objects.equal(_declarations, null));
-        if (_notEquals_4) {
+        boolean _notEquals_5 = (!Objects.equal(_declarations, null));
+        if (_notEquals_5) {
           EList<FunctionDeclaration> _declarations_1 = e.getDeclarations();
           for (final FunctionDeclaration dec : _declarations_1) {
             String _name_1 = dec.getName();
@@ -175,11 +186,11 @@ public class Facpl2Generator implements IGenerator {
             fsa.generateFile(_plus_7, _compileFunction);
           }
         }
-        MainFacpl _main_4 = e.getMain();
-        boolean _notEquals_5 = (!Objects.equal(_main_4, null));
-        if (_notEquals_5) {
-          MainFacpl _main_5 = e.getMain();
-          CharSequence _compileMain = this.compileMain(_main_5, fsa);
+        MainFacpl _main_6 = e.getMain();
+        boolean _notEquals_6 = (!Objects.equal(_main_6, null));
+        if (_notEquals_6) {
+          MainFacpl _main_7 = e.getMain();
+          CharSequence _compileMain = this.compileMain(_main_7, fsa);
           fsa.generateFile((this.packageFolder + "MainFACPL.java"), _compileMain);
           CharSequence _compilePEPAction = this.compilePEPAction();
           fsa.generateFile((this.packageFolder + "PEPAction.java"), _compilePEPAction);
@@ -874,27 +885,60 @@ public class Facpl2Generator implements IGenerator {
   }
   
   protected Object _getExpression(final Function exp) {
+    CharSequence _xifexpression = null;
+    if (this.isXACMLTranslation) {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("new ExpressionFunction(true, it.unifi.facpl.lib.function.");
+      funID _functionId = exp.getFunctionId();
+      String _funName = Facpl2Generator_Name.getFunName(_functionId);
+      _builder.append(_funName, "");
+      _builder.append(".class, ");
+      Expression _arg1 = exp.getArg1();
+      Object _expression = this.getExpression(_arg1);
+      _builder.append(_expression, "");
+      _builder.append(",");
+      Expression _arg2 = exp.getArg2();
+      Object _expression_1 = this.getExpression(_arg2);
+      _builder.append(_expression_1, "");
+      _builder.append(")");
+      _xifexpression = _builder;
+    } else {
+      StringConcatenation _builder_1 = new StringConcatenation();
+      _builder_1.append("new ExpressionFunction(it.unifi.facpl.lib.function.");
+      funID _functionId_1 = exp.getFunctionId();
+      String _funName_1 = Facpl2Generator_Name.getFunName(_functionId_1);
+      _builder_1.append(_funName_1, "");
+      _builder_1.append(".class, ");
+      Expression _arg1_1 = exp.getArg1();
+      Object _expression_2 = this.getExpression(_arg1_1);
+      _builder_1.append(_expression_2, "");
+      _builder_1.append(",");
+      Expression _arg2_1 = exp.getArg2();
+      Object _expression_3 = this.getExpression(_arg2_1);
+      _builder_1.append(_expression_3, "");
+      _builder_1.append(")");
+      _xifexpression = _builder_1;
+    }
+    return _xifexpression;
+  }
+  
+  protected Object _getExpression(final MapFunction exp) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("new ExpressionFunction(it.unifi.facpl.lib.function.");
     funID _functionId = exp.getFunctionId();
     String _funName = Facpl2Generator_Name.getFunName(_functionId);
     _builder.append(_funName, "");
     _builder.append(".class, ");
-    Expression _arg1 = exp.getArg1();
+    AttributeName _arg1 = exp.getArg1();
     Object _expression = this.getExpression(_arg1);
     _builder.append(_expression, "");
     _builder.append(",");
     Expression _arg2 = exp.getArg2();
     Object _expression_1 = this.getExpression(_arg2);
     _builder.append(_expression_1, "");
-    _builder.append(")");
+    _builder.append(",true,true)");
     _builder.newLineIfNotEmpty();
     return _builder;
-  }
-  
-  protected Object _getExpression(final MapFunction exp) {
-    throw new Error("Unresolved compilation problems:"
-      + "\nThe method or field functionId is undefined for the type MapFunction");
   }
   
   protected Object _getExpression(final DeclaredFunction exp) {

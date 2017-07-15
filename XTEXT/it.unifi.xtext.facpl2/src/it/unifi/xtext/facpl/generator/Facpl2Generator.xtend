@@ -42,6 +42,7 @@ class Facpl2Generator implements IGenerator {
 	
 	protected var String packageFolder=""; 
 	protected var String packageName="";
+	protected var boolean isXACMLTranslation = false
 	
 	static protected var URI path; 
 	static protected var StringBuffer projectPath;
@@ -65,6 +66,7 @@ class Facpl2Generator implements IGenerator {
 			
 			/* Generating Package */
 			if (e.getMain != null){
+				/* Get package name for generated files */
 				if (e.main.genPackage != null && e.main.genPackage != "" ){
 					var name = e.getMain.genPackage
 					if (name.charAt(name.length-1) == "/"){
@@ -75,6 +77,10 @@ class Facpl2Generator implements IGenerator {
 					//name package for java class
 					packageName = packageFolder.replace("/",".")
 					packageName = packageName.substring(0,packageName.length-1) + ';'
+				}
+				/* Get XACML parameter for semantic correspondence */
+				if (e.main.simulateXACML != null){
+					isXACMLTranslation = e.main.simulateXACML.value
 				}
 			}
 					 
@@ -372,17 +378,15 @@ class Facpl2Generator implements IGenerator {
 		new ExpressionBooleanTree(ExprBooleanConnector.NOT,new ExpressionBooleanTree(«exp.arg.getExpression»))
 	'''
 	
-	def dispatch getExpression(Function exp)'''
-		new ExpressionFunction(it.unifi.facpl.lib.function.«Facpl2Generator_Name::getFunName(exp.functionId)».class, «getExpression(exp.arg1)»,«getExpression(exp.arg2)»)
-	'''
+	def dispatch getExpression(Function exp){
+	if (isXACMLTranslation){
+		'''new ExpressionFunction(true, it.unifi.facpl.lib.function.«Facpl2Generator_Name::getFunName(exp.functionId)».class, «getExpression(exp.arg1)»,«getExpression(exp.arg2)»)'''
+	}else
+		'''new ExpressionFunction(it.unifi.facpl.lib.function.«Facpl2Generator_Name::getFunName(exp.functionId)».class, «getExpression(exp.arg1)»,«getExpression(exp.arg2)»)'''
+	}
 	
 	def dispatch getExpression(MapFunction exp)'''
-		
-		
-		new ExpressionFunction(it.unifi.facpl.lib.function.«Facpl2Generator_Name::getFunName(exp.functionId)».class, «getExpression(exp.arg1)»,«getExpression(exp.arg2)»)
-		
-		
-		
+		new ExpressionFunction(it.unifi.facpl.lib.function.«Facpl2Generator_Name::getFunName(exp.functionId)».class, «getExpression(exp.arg1)»,«getExpression(exp.arg2)»,true,true)
 	'''
 	
 	

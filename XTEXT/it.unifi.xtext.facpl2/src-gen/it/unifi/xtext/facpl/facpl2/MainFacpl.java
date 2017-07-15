@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link it.unifi.xtext.facpl.facpl2.MainFacpl#getExtIndet <em>Ext Indet</em>}</li>
+ *   <li>{@link it.unifi.xtext.facpl.facpl2.MainFacpl#getSimulateXACML <em>Simulate XACML</em>}</li>
  *   <li>{@link it.unifi.xtext.facpl.facpl2.MainFacpl#getGenPackage <em>Gen Package</em>}</li>
  *   <li>{@link it.unifi.xtext.facpl.facpl2.MainFacpl#getRefRequest <em>Ref Request</em>}</li>
  *   <li>{@link it.unifi.xtext.facpl.facpl2.MainFacpl#getPaf <em>Paf</em>}</li>
@@ -52,6 +53,32 @@ public interface MainFacpl extends EObject
    * @generated
    */
   void setExtIndet(BooleanLiteral value);
+
+  /**
+   * Returns the value of the '<em><b>Simulate XACML</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Simulate XACML</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Simulate XACML</em>' containment reference.
+   * @see #setSimulateXACML(BooleanLiteral)
+   * @see it.unifi.xtext.facpl.facpl2.Facpl2Package#getMainFacpl_SimulateXACML()
+   * @model containment="true"
+   * @generated
+   */
+  BooleanLiteral getSimulateXACML();
+
+  /**
+   * Sets the value of the '{@link it.unifi.xtext.facpl.facpl2.MainFacpl#getSimulateXACML <em>Simulate XACML</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Simulate XACML</em>' containment reference.
+   * @see #getSimulateXACML()
+   * @generated
+   */
+  void setSimulateXACML(BooleanLiteral value);
 
   /**
    * Returns the value of the '<em><b>Gen Package</b></em>' attribute.

@@ -49,11 +49,11 @@ public class ExpressionFunction {
 	 */
 	private final boolean isXACMLTranslation;
 
-	public ExpressionFunction() {
-		this.isMap = false;
-		this.isXACMLTranslation = false;
-	}
-
+	/**
+	 * FACPL-oriented expression function. No support for XACML semantics correspondence
+	 * @param function
+	 * @param args
+	 */
 	public ExpressionFunction(Class<? extends IExpressionFunction> function, Object... args) {
 		this.functionCond = function;
 
@@ -63,9 +63,30 @@ public class ExpressionFunction {
 			this.arguments.add(object);
 		}
 		
-		// Single function (not high-order map)
+		/* XACML semantics correspondence */
 		this.isMap = false;
 		this.isXACMLTranslation = false;
+	}
+	
+	
+	/**
+	 * With explicit support for XACML semantics correspondence
+	 * @param function
+	 * @param isXACMLTranslation
+	 * @param args
+	 */
+	public ExpressionFunction(boolean isXACMLTranslation, Class<? extends IExpressionFunction> function, Object... args) {
+		this.functionCond = function;
+
+		this.arguments = new LinkedList<Object>();
+
+		for (Object object : args) {
+			this.arguments.add(object);
+		}
+		
+		/* XACML semantics correspondence */
+		this.isMap = false;
+		this.isXACMLTranslation = isXACMLTranslation;
 	}
 
 	/**
@@ -75,9 +96,10 @@ public class ExpressionFunction {
 	 * @param arg2
 	 * @param mapFunction
 	 *            Setting a map function
+	 * @param isXACMLTranslation
 	 */
-	public ExpressionFunction(Class<? extends IExpressionFunction> function, AttributeName arg1, Object arg2,
-			boolean mapFunction, boolean isXACMLTranslation) {
+	public ExpressionFunction(Class<? extends IExpressionFunction> function, boolean isXACMLTranslation, AttributeName arg1, Object arg2,
+			boolean mapFunction) {
 		
 		/* XACML Translation */
 		this.isMap = mapFunction;

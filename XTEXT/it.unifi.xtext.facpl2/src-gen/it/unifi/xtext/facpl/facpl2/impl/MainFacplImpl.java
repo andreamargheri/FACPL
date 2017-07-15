@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  * </p>
  * <ul>
  *   <li>{@link it.unifi.xtext.facpl.facpl2.impl.MainFacplImpl#getExtIndet <em>Ext Indet</em>}</li>
+ *   <li>{@link it.unifi.xtext.facpl.facpl2.impl.MainFacplImpl#getSimulateXACML <em>Simulate XACML</em>}</li>
  *   <li>{@link it.unifi.xtext.facpl.facpl2.impl.MainFacplImpl#getGenPackage <em>Gen Package</em>}</li>
  *   <li>{@link it.unifi.xtext.facpl.facpl2.impl.MainFacplImpl#getRefRequest <em>Ref Request</em>}</li>
  *   <li>{@link it.unifi.xtext.facpl.facpl2.impl.MainFacplImpl#getPaf <em>Paf</em>}</li>
@@ -50,6 +51,16 @@ public class MainFacplImpl extends MinimalEObjectImpl.Container implements MainF
    * @ordered
    */
   protected BooleanLiteral extIndet;
+
+  /**
+   * The cached value of the '{@link #getSimulateXACML() <em>Simulate XACML</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getSimulateXACML()
+   * @generated
+   * @ordered
+   */
+  protected BooleanLiteral simulateXACML;
 
   /**
    * The default value of the '{@link #getGenPackage() <em>Gen Package</em>}' attribute.
@@ -165,6 +176,54 @@ public class MainFacplImpl extends MinimalEObjectImpl.Container implements MainF
    * <!-- end-user-doc -->
    * @generated
    */
+  public BooleanLiteral getSimulateXACML()
+  {
+    return simulateXACML;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetSimulateXACML(BooleanLiteral newSimulateXACML, NotificationChain msgs)
+  {
+    BooleanLiteral oldSimulateXACML = simulateXACML;
+    simulateXACML = newSimulateXACML;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Facpl2Package.MAIN_FACPL__SIMULATE_XACML, oldSimulateXACML, newSimulateXACML);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setSimulateXACML(BooleanLiteral newSimulateXACML)
+  {
+    if (newSimulateXACML != simulateXACML)
+    {
+      NotificationChain msgs = null;
+      if (simulateXACML != null)
+        msgs = ((InternalEObject)simulateXACML).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - Facpl2Package.MAIN_FACPL__SIMULATE_XACML, null, msgs);
+      if (newSimulateXACML != null)
+        msgs = ((InternalEObject)newSimulateXACML).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - Facpl2Package.MAIN_FACPL__SIMULATE_XACML, null, msgs);
+      msgs = basicSetSimulateXACML(newSimulateXACML, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, Facpl2Package.MAIN_FACPL__SIMULATE_XACML, newSimulateXACML, newSimulateXACML));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public String getGenPackage()
   {
     return genPackage;
@@ -257,6 +316,8 @@ public class MainFacplImpl extends MinimalEObjectImpl.Container implements MainF
     {
       case Facpl2Package.MAIN_FACPL__EXT_INDET:
         return basicSetExtIndet(null, msgs);
+      case Facpl2Package.MAIN_FACPL__SIMULATE_XACML:
+        return basicSetSimulateXACML(null, msgs);
       case Facpl2Package.MAIN_FACPL__PAF:
         return basicSetPaf(null, msgs);
     }
@@ -275,6 +336,8 @@ public class MainFacplImpl extends MinimalEObjectImpl.Container implements MainF
     {
       case Facpl2Package.MAIN_FACPL__EXT_INDET:
         return getExtIndet();
+      case Facpl2Package.MAIN_FACPL__SIMULATE_XACML:
+        return getSimulateXACML();
       case Facpl2Package.MAIN_FACPL__GEN_PACKAGE:
         return getGenPackage();
       case Facpl2Package.MAIN_FACPL__REF_REQUEST:
@@ -298,6 +361,9 @@ public class MainFacplImpl extends MinimalEObjectImpl.Container implements MainF
     {
       case Facpl2Package.MAIN_FACPL__EXT_INDET:
         setExtIndet((BooleanLiteral)newValue);
+        return;
+      case Facpl2Package.MAIN_FACPL__SIMULATE_XACML:
+        setSimulateXACML((BooleanLiteral)newValue);
         return;
       case Facpl2Package.MAIN_FACPL__GEN_PACKAGE:
         setGenPackage((String)newValue);
@@ -326,6 +392,9 @@ public class MainFacplImpl extends MinimalEObjectImpl.Container implements MainF
       case Facpl2Package.MAIN_FACPL__EXT_INDET:
         setExtIndet((BooleanLiteral)null);
         return;
+      case Facpl2Package.MAIN_FACPL__SIMULATE_XACML:
+        setSimulateXACML((BooleanLiteral)null);
+        return;
       case Facpl2Package.MAIN_FACPL__GEN_PACKAGE:
         setGenPackage(GEN_PACKAGE_EDEFAULT);
         return;
@@ -351,6 +420,8 @@ public class MainFacplImpl extends MinimalEObjectImpl.Container implements MainF
     {
       case Facpl2Package.MAIN_FACPL__EXT_INDET:
         return extIndet != null;
+      case Facpl2Package.MAIN_FACPL__SIMULATE_XACML:
+        return simulateXACML != null;
       case Facpl2Package.MAIN_FACPL__GEN_PACKAGE:
         return GEN_PACKAGE_EDEFAULT == null ? genPackage != null : !GEN_PACKAGE_EDEFAULT.equals(genPackage);
       case Facpl2Package.MAIN_FACPL__REF_REQUEST:

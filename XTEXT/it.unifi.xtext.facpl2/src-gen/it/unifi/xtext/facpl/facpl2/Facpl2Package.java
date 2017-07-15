@@ -169,13 +169,22 @@ public interface Facpl2Package extends EPackage
   int MAIN_FACPL__EXT_INDET = 0;
 
   /**
+   * The feature id for the '<em><b>Simulate XACML</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MAIN_FACPL__SIMULATE_XACML = 1;
+
+  /**
    * The feature id for the '<em><b>Gen Package</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int MAIN_FACPL__GEN_PACKAGE = 1;
+  int MAIN_FACPL__GEN_PACKAGE = 2;
 
   /**
    * The feature id for the '<em><b>Ref Request</b></em>' reference list.
@@ -184,7 +193,7 @@ public interface Facpl2Package extends EPackage
    * @generated
    * @ordered
    */
-  int MAIN_FACPL__REF_REQUEST = 2;
+  int MAIN_FACPL__REF_REQUEST = 3;
 
   /**
    * The feature id for the '<em><b>Paf</b></em>' containment reference.
@@ -193,7 +202,7 @@ public interface Facpl2Package extends EPackage
    * @generated
    * @ordered
    */
-  int MAIN_FACPL__PAF = 3;
+  int MAIN_FACPL__PAF = 4;
 
   /**
    * The number of structural features of the '<em>Main Facpl</em>' class.
@@ -202,7 +211,7 @@ public interface Facpl2Package extends EPackage
    * @generated
    * @ordered
    */
-  int MAIN_FACPL_FEATURE_COUNT = 4;
+  int MAIN_FACPL_FEATURE_COUNT = 5;
 
   /**
    * The meta object id for the '{@link it.unifi.xtext.facpl.facpl2.impl.FunctionDeclarationImpl <em>Function Declaration</em>}' class.
@@ -870,7 +879,7 @@ public interface Facpl2Package extends EPackage
   int MAP_FUNCTION = 19;
 
   /**
-   * The feature id for the '<em><b>Function ID</b></em>' attribute.
+   * The feature id for the '<em><b>Function Id</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -1342,6 +1351,17 @@ public interface Facpl2Package extends EPackage
    * @generated
    */
   EReference getMainFacpl_ExtIndet();
+
+  /**
+   * Returns the meta object for the containment reference '{@link it.unifi.xtext.facpl.facpl2.MainFacpl#getSimulateXACML <em>Simulate XACML</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Simulate XACML</em>'.
+   * @see it.unifi.xtext.facpl.facpl2.MainFacpl#getSimulateXACML()
+   * @see #getMainFacpl()
+   * @generated
+   */
+  EReference getMainFacpl_SimulateXACML();
 
   /**
    * Returns the meta object for the attribute '{@link it.unifi.xtext.facpl.facpl2.MainFacpl#getGenPackage <em>Gen Package</em>}'.
@@ -1932,15 +1952,15 @@ public interface Facpl2Package extends EPackage
   EClass getMapFunction();
 
   /**
-   * Returns the meta object for the attribute '{@link it.unifi.xtext.facpl.facpl2.MapFunction#getFunctionID <em>Function ID</em>}'.
+   * Returns the meta object for the attribute '{@link it.unifi.xtext.facpl.facpl2.MapFunction#getFunctionId <em>Function Id</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Function ID</em>'.
-   * @see it.unifi.xtext.facpl.facpl2.MapFunction#getFunctionID()
+   * @return the meta object for the attribute '<em>Function Id</em>'.
+   * @see it.unifi.xtext.facpl.facpl2.MapFunction#getFunctionId()
    * @see #getMapFunction()
    * @generated
    */
-  EAttribute getMapFunction_FunctionID();
+  EAttribute getMapFunction_FunctionId();
 
   /**
    * Returns the meta object for the containment reference '{@link it.unifi.xtext.facpl.facpl2.MapFunction#getArg1 <em>Arg1</em>}'.
@@ -2343,6 +2363,14 @@ public interface Facpl2Package extends EPackage
      * @generated
      */
     EReference MAIN_FACPL__EXT_INDET = eINSTANCE.getMainFacpl_ExtIndet();
+
+    /**
+     * The meta object literal for the '<em><b>Simulate XACML</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference MAIN_FACPL__SIMULATE_XACML = eINSTANCE.getMainFacpl_SimulateXACML();
 
     /**
      * The meta object literal for the '<em><b>Gen Package</b></em>' attribute feature.
@@ -2819,12 +2847,12 @@ public interface Facpl2Package extends EPackage
     EClass MAP_FUNCTION = eINSTANCE.getMapFunction();
 
     /**
-     * The meta object literal for the '<em><b>Function ID</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Function Id</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute MAP_FUNCTION__FUNCTION_ID = eINSTANCE.getMapFunction_FunctionID();
+    EAttribute MAP_FUNCTION__FUNCTION_ID = eINSTANCE.getMapFunction_FunctionId();
 
     /**
      * The meta object literal for the '<em><b>Arg1</b></em>' containment reference feature.

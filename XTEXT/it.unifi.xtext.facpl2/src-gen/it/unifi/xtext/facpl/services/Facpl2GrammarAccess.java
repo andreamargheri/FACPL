@@ -106,36 +106,44 @@ public class Facpl2GrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cExtIndetBooleanLiteralParserRuleCall_4_0 = (RuleCall)cExtIndetAssignment_4.eContents().get(0);
 		private final Keyword cSemicolonKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
-		private final Keyword cJavaPackageKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
+		private final Keyword cSimulateXACMLSemanticsKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
 		private final Keyword cColonKeyword_6_1 = (Keyword)cGroup_6.eContents().get(1);
-		private final Assignment cGenPackageAssignment_6_2 = (Assignment)cGroup_6.eContents().get(2);
-		private final RuleCall cGenPackageSTRINGTerminalRuleCall_6_2_0 = (RuleCall)cGenPackageAssignment_6_2.eContents().get(0);
+		private final Assignment cSimulateXACMLAssignment_6_2 = (Assignment)cGroup_6.eContents().get(2);
+		private final RuleCall cSimulateXACMLBooleanLiteralParserRuleCall_6_2_0 = (RuleCall)cSimulateXACMLAssignment_6_2.eContents().get(0);
 		private final Keyword cSemicolonKeyword_6_3 = (Keyword)cGroup_6.eContents().get(3);
 		private final Group cGroup_7 = (Group)cGroup.eContents().get(7);
-		private final Keyword cRequestsToEvaluateKeyword_7_0 = (Keyword)cGroup_7.eContents().get(0);
+		private final Keyword cJavaPackageKeyword_7_0 = (Keyword)cGroup_7.eContents().get(0);
 		private final Keyword cColonKeyword_7_1 = (Keyword)cGroup_7.eContents().get(1);
-		private final Group cGroup_7_2 = (Group)cGroup_7.eContents().get(2);
-		private final Assignment cRefRequestAssignment_7_2_0 = (Assignment)cGroup_7_2.eContents().get(0);
-		private final CrossReference cRefRequestRequestCrossReference_7_2_0_0 = (CrossReference)cRefRequestAssignment_7_2_0.eContents().get(0);
-		private final RuleCall cRefRequestRequestIDTerminalRuleCall_7_2_0_0_1 = (RuleCall)cRefRequestRequestCrossReference_7_2_0_0.eContents().get(1);
-		private final Group cGroup_7_2_1 = (Group)cGroup_7_2.eContents().get(1);
-		private final Keyword cCommaKeyword_7_2_1_0 = (Keyword)cGroup_7_2_1.eContents().get(0);
-		private final Assignment cRefRequestAssignment_7_2_1_1 = (Assignment)cGroup_7_2_1.eContents().get(1);
-		private final CrossReference cRefRequestRequestCrossReference_7_2_1_1_0 = (CrossReference)cRefRequestAssignment_7_2_1_1.eContents().get(0);
-		private final RuleCall cRefRequestRequestIDTerminalRuleCall_7_2_1_1_0_1 = (RuleCall)cRefRequestRequestCrossReference_7_2_1_1_0.eContents().get(1);
+		private final Assignment cGenPackageAssignment_7_2 = (Assignment)cGroup_7.eContents().get(2);
+		private final RuleCall cGenPackageSTRINGTerminalRuleCall_7_2_0 = (RuleCall)cGenPackageAssignment_7_2.eContents().get(0);
 		private final Keyword cSemicolonKeyword_7_3 = (Keyword)cGroup_7.eContents().get(3);
-		private final Assignment cPafAssignment_8 = (Assignment)cGroup.eContents().get(8);
-		private final RuleCall cPafPAFParserRuleCall_8_0 = (RuleCall)cPafAssignment_8.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_9 = (Keyword)cGroup.eContents().get(9);
+		private final Group cGroup_8 = (Group)cGroup.eContents().get(8);
+		private final Keyword cRequestsToEvaluateKeyword_8_0 = (Keyword)cGroup_8.eContents().get(0);
+		private final Keyword cColonKeyword_8_1 = (Keyword)cGroup_8.eContents().get(1);
+		private final Group cGroup_8_2 = (Group)cGroup_8.eContents().get(2);
+		private final Assignment cRefRequestAssignment_8_2_0 = (Assignment)cGroup_8_2.eContents().get(0);
+		private final CrossReference cRefRequestRequestCrossReference_8_2_0_0 = (CrossReference)cRefRequestAssignment_8_2_0.eContents().get(0);
+		private final RuleCall cRefRequestRequestIDTerminalRuleCall_8_2_0_0_1 = (RuleCall)cRefRequestRequestCrossReference_8_2_0_0.eContents().get(1);
+		private final Group cGroup_8_2_1 = (Group)cGroup_8_2.eContents().get(1);
+		private final Keyword cCommaKeyword_8_2_1_0 = (Keyword)cGroup_8_2_1.eContents().get(0);
+		private final Assignment cRefRequestAssignment_8_2_1_1 = (Assignment)cGroup_8_2_1.eContents().get(1);
+		private final CrossReference cRefRequestRequestCrossReference_8_2_1_1_0 = (CrossReference)cRefRequestAssignment_8_2_1_1.eContents().get(0);
+		private final RuleCall cRefRequestRequestIDTerminalRuleCall_8_2_1_1_0_1 = (RuleCall)cRefRequestRequestCrossReference_8_2_1_1_0.eContents().get(1);
+		private final Keyword cSemicolonKeyword_8_3 = (Keyword)cGroup_8.eContents().get(3);
+		private final Assignment cPafAssignment_9 = (Assignment)cGroup.eContents().get(9);
+		private final RuleCall cPafPAFParserRuleCall_9_0 = (RuleCall)cPafAssignment_9.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_10 = (Keyword)cGroup.eContents().get(10);
 		
 		////Main
 		//MainFacpl:
-		//	'PAS' '{' 'Extended Indeterminate' ':' extIndet=BooleanLiteral ';' ('Java Package' ':' genPackage=STRING ';')?
-		//	('Requests To Evaluate' ':' (refRequest+=[Request] (',' refRequest+=[Request])*) ';') paf=PAF '}';
+		//	'PAS' '{' 'Extended Indeterminate' ':' extIndet=BooleanLiteral ';' ('Simulate XACML Semantics' ':'
+		//	simulateXACML=BooleanLiteral ';')? ('Java Package' ':' genPackage=STRING ';')? ('Requests To Evaluate' ':'
+		//	(refRequest+=[Request] (',' refRequest+=[Request])*) ';') paf=PAF '}';
 		@Override public ParserRule getRule() { return rule; }
 
-		//'PAS' '{' 'Extended Indeterminate' ':' extIndet=BooleanLiteral ';' ('Java Package' ':' genPackage=STRING ';')?
-		//('Requests To Evaluate' ':' (refRequest+=[Request] (',' refRequest+=[Request])*) ';') paf=PAF '}'
+		//'PAS' '{' 'Extended Indeterminate' ':' extIndet=BooleanLiteral ';' ('Simulate XACML Semantics' ':'
+		//simulateXACML=BooleanLiteral ';')? ('Java Package' ':' genPackage=STRING ';')? ('Requests To Evaluate' ':'
+		//(refRequest+=[Request] (',' refRequest+=[Request])*) ';') paf=PAF '}'
 		public Group getGroup() { return cGroup; }
 
 		//'PAS'
@@ -159,71 +167,89 @@ public class Facpl2GrammarAccess extends AbstractGrammarElementFinder {
 		//';'
 		public Keyword getSemicolonKeyword_5() { return cSemicolonKeyword_5; }
 
-		//('Java Package' ':' genPackage=STRING ';')?
+		//('Simulate XACML Semantics' ':' simulateXACML=BooleanLiteral ';')?
 		public Group getGroup_6() { return cGroup_6; }
 
-		//'Java Package'
-		public Keyword getJavaPackageKeyword_6_0() { return cJavaPackageKeyword_6_0; }
+		//'Simulate XACML Semantics'
+		public Keyword getSimulateXACMLSemanticsKeyword_6_0() { return cSimulateXACMLSemanticsKeyword_6_0; }
 
 		//':'
 		public Keyword getColonKeyword_6_1() { return cColonKeyword_6_1; }
 
-		//genPackage=STRING
-		public Assignment getGenPackageAssignment_6_2() { return cGenPackageAssignment_6_2; }
+		//simulateXACML=BooleanLiteral
+		public Assignment getSimulateXACMLAssignment_6_2() { return cSimulateXACMLAssignment_6_2; }
 
-		//STRING
-		public RuleCall getGenPackageSTRINGTerminalRuleCall_6_2_0() { return cGenPackageSTRINGTerminalRuleCall_6_2_0; }
+		//BooleanLiteral
+		public RuleCall getSimulateXACMLBooleanLiteralParserRuleCall_6_2_0() { return cSimulateXACMLBooleanLiteralParserRuleCall_6_2_0; }
 
 		//';'
 		public Keyword getSemicolonKeyword_6_3() { return cSemicolonKeyword_6_3; }
 
-		//('Requests To Evaluate' ':' (refRequest+=[Request] (',' refRequest+=[Request])*) ';')
+		//('Java Package' ':' genPackage=STRING ';')?
 		public Group getGroup_7() { return cGroup_7; }
 
-		//'Requests To Evaluate'
-		public Keyword getRequestsToEvaluateKeyword_7_0() { return cRequestsToEvaluateKeyword_7_0; }
+		//'Java Package'
+		public Keyword getJavaPackageKeyword_7_0() { return cJavaPackageKeyword_7_0; }
 
 		//':'
 		public Keyword getColonKeyword_7_1() { return cColonKeyword_7_1; }
 
-		//(refRequest+=[Request] (',' refRequest+=[Request])*)
-		public Group getGroup_7_2() { return cGroup_7_2; }
+		//genPackage=STRING
+		public Assignment getGenPackageAssignment_7_2() { return cGenPackageAssignment_7_2; }
 
-		//refRequest+=[Request]
-		public Assignment getRefRequestAssignment_7_2_0() { return cRefRequestAssignment_7_2_0; }
-
-		//[Request]
-		public CrossReference getRefRequestRequestCrossReference_7_2_0_0() { return cRefRequestRequestCrossReference_7_2_0_0; }
-
-		//ID
-		public RuleCall getRefRequestRequestIDTerminalRuleCall_7_2_0_0_1() { return cRefRequestRequestIDTerminalRuleCall_7_2_0_0_1; }
-
-		//(',' refRequest+=[Request])*
-		public Group getGroup_7_2_1() { return cGroup_7_2_1; }
-
-		//','
-		public Keyword getCommaKeyword_7_2_1_0() { return cCommaKeyword_7_2_1_0; }
-
-		//refRequest+=[Request]
-		public Assignment getRefRequestAssignment_7_2_1_1() { return cRefRequestAssignment_7_2_1_1; }
-
-		//[Request]
-		public CrossReference getRefRequestRequestCrossReference_7_2_1_1_0() { return cRefRequestRequestCrossReference_7_2_1_1_0; }
-
-		//ID
-		public RuleCall getRefRequestRequestIDTerminalRuleCall_7_2_1_1_0_1() { return cRefRequestRequestIDTerminalRuleCall_7_2_1_1_0_1; }
+		//STRING
+		public RuleCall getGenPackageSTRINGTerminalRuleCall_7_2_0() { return cGenPackageSTRINGTerminalRuleCall_7_2_0; }
 
 		//';'
 		public Keyword getSemicolonKeyword_7_3() { return cSemicolonKeyword_7_3; }
 
+		//('Requests To Evaluate' ':' (refRequest+=[Request] (',' refRequest+=[Request])*) ';')
+		public Group getGroup_8() { return cGroup_8; }
+
+		//'Requests To Evaluate'
+		public Keyword getRequestsToEvaluateKeyword_8_0() { return cRequestsToEvaluateKeyword_8_0; }
+
+		//':'
+		public Keyword getColonKeyword_8_1() { return cColonKeyword_8_1; }
+
+		//(refRequest+=[Request] (',' refRequest+=[Request])*)
+		public Group getGroup_8_2() { return cGroup_8_2; }
+
+		//refRequest+=[Request]
+		public Assignment getRefRequestAssignment_8_2_0() { return cRefRequestAssignment_8_2_0; }
+
+		//[Request]
+		public CrossReference getRefRequestRequestCrossReference_8_2_0_0() { return cRefRequestRequestCrossReference_8_2_0_0; }
+
+		//ID
+		public RuleCall getRefRequestRequestIDTerminalRuleCall_8_2_0_0_1() { return cRefRequestRequestIDTerminalRuleCall_8_2_0_0_1; }
+
+		//(',' refRequest+=[Request])*
+		public Group getGroup_8_2_1() { return cGroup_8_2_1; }
+
+		//','
+		public Keyword getCommaKeyword_8_2_1_0() { return cCommaKeyword_8_2_1_0; }
+
+		//refRequest+=[Request]
+		public Assignment getRefRequestAssignment_8_2_1_1() { return cRefRequestAssignment_8_2_1_1; }
+
+		//[Request]
+		public CrossReference getRefRequestRequestCrossReference_8_2_1_1_0() { return cRefRequestRequestCrossReference_8_2_1_1_0; }
+
+		//ID
+		public RuleCall getRefRequestRequestIDTerminalRuleCall_8_2_1_1_0_1() { return cRefRequestRequestIDTerminalRuleCall_8_2_1_1_0_1; }
+
+		//';'
+		public Keyword getSemicolonKeyword_8_3() { return cSemicolonKeyword_8_3; }
+
 		//paf=PAF
-		public Assignment getPafAssignment_8() { return cPafAssignment_8; }
+		public Assignment getPafAssignment_9() { return cPafAssignment_9; }
 
 		//PAF
-		public RuleCall getPafPAFParserRuleCall_8_0() { return cPafPAFParserRuleCall_8_0; }
+		public RuleCall getPafPAFParserRuleCall_9_0() { return cPafPAFParserRuleCall_9_0; }
 
 		//'}'
-		public Keyword getRightCurlyBracketKeyword_9() { return cRightCurlyBracketKeyword_9; }
+		public Keyword getRightCurlyBracketKeyword_10() { return cRightCurlyBracketKeyword_10; }
 	}
 
 	public class FunctionDeclarationElements extends AbstractParserRuleElementFinder {
@@ -1172,8 +1198,8 @@ public class Facpl2GrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "it.unifi.xtext.facpl.Facpl2.MapFunction");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cMapKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cFunctionIDAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cFunctionIDFunIDEnumRuleCall_1_0 = (RuleCall)cFunctionIDAssignment_1.eContents().get(0);
+		private final Assignment cFunctionIdAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cFunctionIdFunIDEnumRuleCall_1_0 = (RuleCall)cFunctionIdAssignment_1.eContents().get(0);
 		private final Keyword cCommaKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Assignment cArg1Assignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cArg1AttributeNameParserRuleCall_3_0 = (RuleCall)cArg1Assignment_3.eContents().get(0);
@@ -1184,20 +1210,20 @@ public class Facpl2GrammarAccess extends AbstractGrammarElementFinder {
 		
 		////Map function iterating application of function on set elements
 		//MapFunction:
-		//	'map(' functionID=funID ',' arg1=AttributeName ',' arg2=Literals ')';
+		//	'map(' functionId=funID ',' arg1=AttributeName ',' arg2=Literals ')';
 		@Override public ParserRule getRule() { return rule; }
 
-		//'map(' functionID=funID ',' arg1=AttributeName ',' arg2=Literals ')'
+		//'map(' functionId=funID ',' arg1=AttributeName ',' arg2=Literals ')'
 		public Group getGroup() { return cGroup; }
 
 		//'map('
 		public Keyword getMapKeyword_0() { return cMapKeyword_0; }
 
-		//functionID=funID
-		public Assignment getFunctionIDAssignment_1() { return cFunctionIDAssignment_1; }
+		//functionId=funID
+		public Assignment getFunctionIdAssignment_1() { return cFunctionIdAssignment_1; }
 
 		//funID
-		public RuleCall getFunctionIDFunIDEnumRuleCall_1_0() { return cFunctionIDFunIDEnumRuleCall_1_0; }
+		public RuleCall getFunctionIdFunIDEnumRuleCall_1_0() { return cFunctionIdFunIDEnumRuleCall_1_0; }
 
 		//','
 		public Keyword getCommaKeyword_2() { return cCommaKeyword_2; }
@@ -1954,8 +1980,9 @@ public class Facpl2GrammarAccess extends AbstractGrammarElementFinder {
 
 	////Main
 	//MainFacpl:
-	//	'PAS' '{' 'Extended Indeterminate' ':' extIndet=BooleanLiteral ';' ('Java Package' ':' genPackage=STRING ';')?
-	//	('Requests To Evaluate' ':' (refRequest+=[Request] (',' refRequest+=[Request])*) ';') paf=PAF '}';
+	//	'PAS' '{' 'Extended Indeterminate' ':' extIndet=BooleanLiteral ';' ('Simulate XACML Semantics' ':'
+	//	simulateXACML=BooleanLiteral ';')? ('Java Package' ':' genPackage=STRING ';')? ('Requests To Evaluate' ':'
+	//	(refRequest+=[Request] (',' refRequest+=[Request])*) ';') paf=PAF '}';
 	public MainFacplElements getMainFacplAccess() {
 		return pMainFacpl;
 	}
@@ -2233,7 +2260,7 @@ public class Facpl2GrammarAccess extends AbstractGrammarElementFinder {
 
 	////Map function iterating application of function on set elements
 	//MapFunction:
-	//	'map(' functionID=funID ',' arg1=AttributeName ',' arg2=Literals ')';
+	//	'map(' functionId=funID ',' arg1=AttributeName ',' arg2=Literals ')';
 	public MapFunctionElements getMapFunctionAccess() {
 		return pMapFunction;
 	}

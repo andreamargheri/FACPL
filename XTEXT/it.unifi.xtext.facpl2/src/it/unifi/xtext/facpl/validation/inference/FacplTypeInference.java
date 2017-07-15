@@ -350,9 +350,9 @@ public class FacplTypeInference extends Facpl2Switch<FacplType> {
 		FacplType arg1 = doSwitch(fun.getArg1());
 		FacplType arg2 = doSwitch(fun.getArg2());
 
-		if (fun.getFunctionID().equals(funID.ADD) || fun.getFunctionID().equals(funID.DIVIDE)
-				|| fun.getFunctionID().equals(funID.IN) || fun.getFunctionID().equals(funID.MULTIPLY)
-				|| fun.getFunctionID().equals(funID.SUBTRACT)) {
+		if (fun.getFunctionId().equals(funID.ADD) || fun.getFunctionId().equals(funID.DIVIDE)
+				|| fun.getFunctionId().equals(funID.IN) || fun.getFunctionId().equals(funID.MULTIPLY)
+				|| fun.getFunctionId().equals(funID.SUBTRACT)) {
 			return FacplType.ERR;
 			
 		}

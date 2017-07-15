@@ -68,7 +68,7 @@ public class Facpl2SyntacticSequencer extends AbstractSyntacticSequencer {
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) (ambiguity) '!' arg=BasicExpression
-	 *     (rule start) (ambiguity) 'map(' functionID=funID
+	 *     (rule start) (ambiguity) 'map(' functionId=funID
 	 *     (rule start) (ambiguity) 'set(' args+=Literals
 	 *     (rule start) (ambiguity) category=STRING_O
 	 *     (rule start) (ambiguity) functionId=[FunctionDeclaration|ID]

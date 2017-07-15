@@ -428,7 +428,14 @@ public class Facpl2SemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     MainFacpl returns MainFacpl
 	 *
 	 * Constraint:
-	 *     (extIndet=BooleanLiteral genPackage=STRING? refRequest+=[Request|ID] refRequest+=[Request|ID]* paf=PAF)
+	 *     (
+	 *         extIndet=BooleanLiteral 
+	 *         simulateXACML=BooleanLiteral? 
+	 *         genPackage=STRING? 
+	 *         refRequest+=[Request|ID] 
+	 *         refRequest+=[Request|ID]* 
+	 *         paf=PAF
+	 *     )
 	 */
 	protected void sequence_MainFacpl(ISerializationContext context, MainFacpl semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -446,7 +453,7 @@ public class Facpl2SemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     MapFunction returns MapFunction
 	 *
 	 * Constraint:
-	 *     (functionID=funID arg1=AttributeName arg2=Literals)
+	 *     (functionId=funID arg1=AttributeName arg2=Literals)
 	 */
 	protected void sequence_MapFunction(ISerializationContext context, MapFunction semanticObject) {
 		if (errorAcceptor != null) {
@@ -458,7 +465,7 @@ public class Facpl2SemanticSequencer extends AbstractDelegatingSemanticSequencer
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, Facpl2Package.Literals.MAP_FUNCTION__ARG2));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getMapFunctionAccess().getFunctionIDFunIDEnumRuleCall_1_0(), semanticObject.getFunctionID());
+		feeder.accept(grammarAccess.getMapFunctionAccess().getFunctionIdFunIDEnumRuleCall_1_0(), semanticObject.getFunctionId());
 		feeder.accept(grammarAccess.getMapFunctionAccess().getArg1AttributeNameParserRuleCall_3_0(), semanticObject.getArg1());
 		feeder.accept(grammarAccess.getMapFunctionAccess().getArg2LiteralsParserRuleCall_5_0(), semanticObject.getArg2());
 		feeder.finish();

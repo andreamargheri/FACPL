@@ -53,8 +53,9 @@ public class Facpl2Parser extends AbstractContentAssistParser {
 					put(grammarAccess.getMainFacplAccess().getGroup(), "rule__MainFacpl__Group__0");
 					put(grammarAccess.getMainFacplAccess().getGroup_6(), "rule__MainFacpl__Group_6__0");
 					put(grammarAccess.getMainFacplAccess().getGroup_7(), "rule__MainFacpl__Group_7__0");
-					put(grammarAccess.getMainFacplAccess().getGroup_7_2(), "rule__MainFacpl__Group_7_2__0");
-					put(grammarAccess.getMainFacplAccess().getGroup_7_2_1(), "rule__MainFacpl__Group_7_2_1__0");
+					put(grammarAccess.getMainFacplAccess().getGroup_8(), "rule__MainFacpl__Group_8__0");
+					put(grammarAccess.getMainFacplAccess().getGroup_8_2(), "rule__MainFacpl__Group_8_2__0");
+					put(grammarAccess.getMainFacplAccess().getGroup_8_2_1(), "rule__MainFacpl__Group_8_2_1__0");
 					put(grammarAccess.getFunctionDeclarationAccess().getGroup(), "rule__FunctionDeclaration__Group__0");
 					put(grammarAccess.getFunctionDeclarationAccess().getGroup_5(), "rule__FunctionDeclaration__Group_5__0");
 					put(grammarAccess.getPAFAccess().getGroup(), "rule__PAF__Group__0");
@@ -99,10 +100,11 @@ public class Facpl2Parser extends AbstractContentAssistParser {
 					put(grammarAccess.getFacplAccess().getMainAssignment_4(), "rule__Facpl__MainAssignment_4");
 					put(grammarAccess.getImportAccess().getImportURIAssignment_1(), "rule__Import__ImportURIAssignment_1");
 					put(grammarAccess.getMainFacplAccess().getExtIndetAssignment_4(), "rule__MainFacpl__ExtIndetAssignment_4");
-					put(grammarAccess.getMainFacplAccess().getGenPackageAssignment_6_2(), "rule__MainFacpl__GenPackageAssignment_6_2");
-					put(grammarAccess.getMainFacplAccess().getRefRequestAssignment_7_2_0(), "rule__MainFacpl__RefRequestAssignment_7_2_0");
-					put(grammarAccess.getMainFacplAccess().getRefRequestAssignment_7_2_1_1(), "rule__MainFacpl__RefRequestAssignment_7_2_1_1");
-					put(grammarAccess.getMainFacplAccess().getPafAssignment_8(), "rule__MainFacpl__PafAssignment_8");
+					put(grammarAccess.getMainFacplAccess().getSimulateXACMLAssignment_6_2(), "rule__MainFacpl__SimulateXACMLAssignment_6_2");
+					put(grammarAccess.getMainFacplAccess().getGenPackageAssignment_7_2(), "rule__MainFacpl__GenPackageAssignment_7_2");
+					put(grammarAccess.getMainFacplAccess().getRefRequestAssignment_8_2_0(), "rule__MainFacpl__RefRequestAssignment_8_2_0");
+					put(grammarAccess.getMainFacplAccess().getRefRequestAssignment_8_2_1_1(), "rule__MainFacpl__RefRequestAssignment_8_2_1_1");
+					put(grammarAccess.getMainFacplAccess().getPafAssignment_9(), "rule__MainFacpl__PafAssignment_9");
 					put(grammarAccess.getFunctionDeclarationAccess().getTypeAssignment_1(), "rule__FunctionDeclaration__TypeAssignment_1");
 					put(grammarAccess.getFunctionDeclarationAccess().getNameAssignment_2(), "rule__FunctionDeclaration__NameAssignment_2");
 					put(grammarAccess.getFunctionDeclarationAccess().getArgsAssignment_4(), "rule__FunctionDeclaration__ArgsAssignment_4");
@@ -146,7 +148,7 @@ public class Facpl2Parser extends AbstractContentAssistParser {
 					put(grammarAccess.getDeclaredFunctionAccess().getFunctionIdAssignment_0(), "rule__DeclaredFunction__FunctionIdAssignment_0");
 					put(grammarAccess.getDeclaredFunctionAccess().getArgsAssignment_2(), "rule__DeclaredFunction__ArgsAssignment_2");
 					put(grammarAccess.getDeclaredFunctionAccess().getArgsAssignment_3_1(), "rule__DeclaredFunction__ArgsAssignment_3_1");
-					put(grammarAccess.getMapFunctionAccess().getFunctionIDAssignment_1(), "rule__MapFunction__FunctionIDAssignment_1");
+					put(grammarAccess.getMapFunctionAccess().getFunctionIdAssignment_1(), "rule__MapFunction__FunctionIdAssignment_1");
 					put(grammarAccess.getMapFunctionAccess().getArg1Assignment_3(), "rule__MapFunction__Arg1Assignment_3");
 					put(grammarAccess.getMapFunctionAccess().getArg2Assignment_5(), "rule__MapFunction__Arg2Assignment_5");
 					put(grammarAccess.getSetAccess().getArgsAssignment_1_0(), "rule__Set__ArgsAssignment_1_0");
