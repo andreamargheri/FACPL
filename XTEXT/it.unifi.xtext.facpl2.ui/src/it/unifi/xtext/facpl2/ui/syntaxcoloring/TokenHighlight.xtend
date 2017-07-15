@@ -52,6 +52,8 @@ class TokenHighlight implements ISemanticHighlightingCalculator {
 	
 	ParserRule ruleDecFun
 	
+	ParserRule ruleMapFun
+	
 	
 	@Inject
 	def FacplSemanticHighlightingCalculator(IGrammarAccess grammarAccess) {
@@ -77,6 +79,7 @@ class TokenHighlight implements ISemanticHighlightingCalculator {
 		ruleTime = grammarAccess.getTIMERule();
 		ruleTypeLiteral = grammarAccess.typeLiteralRule
 		ruleDecFun = grammarAccess.functionDeclarationRule
+		ruleMapFun = grammarAccess.mapFunctionRule
 	}	
 
 	override provideHighlightingFor(XtextResource resource,IHighlightedPositionAcceptor acceptor){
@@ -120,6 +123,9 @@ class TokenHighlight implements ISemanticHighlightingCalculator {
 				if (rule == ruleFunction ){
 					acceptor.addPosition(node.getOffset(), node.getLength(), SyntaxHighlighting.FUNCTION);
 				}
+				if (rule == ruleMapFun ){
+					acceptor.addPosition(node.getOffset(), node.getLength(), SyntaxHighlighting.FUNCTION);
+				}
 				//attribute_name
 				if (rule == ruleAttributeName){
 					acceptor.addPosition(node.getOffset(), node.getLength(), SyntaxHighlighting.STRUCT_NAME);
@@ -157,6 +163,9 @@ class TokenHighlight implements ISemanticHighlightingCalculator {
 				}
 				if ((o as Keyword).getValue().equals("Java Package")){
 					acceptor.addPosition(node.getOffset(), 15, SyntaxHighlighting.MAIN);
+				}
+				if ((o as Keyword).getValue().equals("Simulate XACML Semantics")){
+					acceptor.addPosition(node.getOffset(), 25, SyntaxHighlighting.MAIN);
 				}
 				if ((o as Keyword).getValue().equals("Requests To Evaluate")){
 					acceptor.addPosition(node.getOffset(), 21, SyntaxHighlighting.MAIN);
