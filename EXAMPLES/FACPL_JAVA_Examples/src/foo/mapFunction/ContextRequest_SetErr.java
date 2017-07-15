@@ -15,7 +15,7 @@ import it.unifi.facpl.lib.context.*;
 import it.unifi.facpl.lib.util.*;
 
 @SuppressWarnings("all")		
-public class ContextRequest_Name {
+public class ContextRequest_SetErr {
 
 	private static ContextRequest CxtReq;
 
@@ -27,9 +27,9 @@ public class ContextRequest_Name {
 	//create map for each category
 	HashMap<String, Object> req_action = new HashMap<String, Object>();
 	//add attribute's values
-	req_action.put("id","READ");
+	req_action.put("id",new Set("WRITE", true ));
 	//add attributes to request
-	Request req = new Request("Name");
+	Request req = new Request("SetErr");
 	req.addAttribute("action",req_action);
 	//context stub: default-one
 	CxtReq =  new ContextRequest(req, ContextStub_Default.getInstance());

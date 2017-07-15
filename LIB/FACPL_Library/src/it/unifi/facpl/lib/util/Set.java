@@ -14,25 +14,25 @@ import java.util.LinkedList;
 
 public class Set {
 
-	private LinkedList<Object> bag_values;
+	private LinkedList<Object> values;
 
 	public Set(Object... elements) {
-		this.bag_values = new LinkedList<Object>();
+		this.values = new LinkedList<Object>();
 		for (Object object : elements) {
-			bag_values.add(object);
+			values.add(object);
 		}
 	}
 
 	public void addValue(Object value) {
-		bag_values.add(value);
+		values.add(value);
 	}
 
-	public LinkedList<Object> getBag_values() {
-		return bag_values;
+	public LinkedList<Object> getValues() {
+		return values;
 	}
 
 	public Boolean isEmpty() {
-		if (bag_values != null & bag_values.size() > 0)
+		if (values != null & values.size() > 0)
 			return false;
 		else
 			return true;
@@ -40,17 +40,17 @@ public class Set {
 
 	@Override
 	public String toString() {
-		return bag_values.toString();
+		return values.toString();
 	}
 
 	public boolean contains(Object object) {
-		return bag_values.contains(object);
+		return values.contains(object);
 	}
 
 	public boolean contains(Set bag) {
 		Boolean flag = true;
-		for (Object el : bag.getBag_values()) {
-			flag = flag && bag_values.contains(el);
+		for (Object el : bag.getValues()) {
+			flag = flag && values.contains(el);
 			if (!flag)
 				return flag;
 		}

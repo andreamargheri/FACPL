@@ -48,7 +48,10 @@ public class MainFACPL{
 		StringBuffer result = new StringBuffer();
 		//request
 		LinkedList<ContextRequest> requests = new LinkedList<ContextRequest>();
-		requests.add(ContextRequest_Name.getContextReq());
+		requests.add(ContextRequest_SetTrue.getContextReq());
+		requests.add(ContextRequest_SetFalse.getContextReq());
+		requests.add(ContextRequest_SetErr.getContextReq());
+		requests.add(ContextRequest_SetBot.getContextReq());
 		for (ContextRequest rcxt : requests) {
 			result.append("---------------------------------------------------\n");
 			AuthorisationPDP resPDP = system.pdp.doAuthorisation(rcxt);

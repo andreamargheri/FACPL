@@ -33,9 +33,10 @@ public class PolicySet_pName extends PolicySet {
 			// Effect
 			addEffect(Effect.PERMIT);
 			// Target
-			addTarget(new ExpressionBooleanTree(
-					new ExpressionFunction(true, it.unifi.facpl.lib.function.comparison.Equal.class,
-							new AttributeName("action", "id"), new Set("READ", "WRITE"))));
+			addTarget(
+					//Equal defined with a map <high-order iterative application a la XACML>
+					new ExpressionBooleanTree(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
+							new AttributeName("action", "id"), "READ", true)));
 
 		}
 	}

@@ -33,12 +33,15 @@ public class ExpressionFunction {
 
 	private Class<? extends IExpressionFunction> functionCond;
 
-	// AtrtibuteName, Literal, ConditionExpressionArgument, list<Object>
-	// (bag),...
+	/**
+	 * 0 = AttributeName 1, ...= Literals or ExpressionItems
+	 */
 	private LinkedList<Object> arguments;
 
-	// Flag for map function (aka high-order function applying iteratively a
-	// function on arguments)
+	/**
+	 * Flag for map function (aka high-order function applying iteratively a
+	 * function on arguments)
+	 */
 	private final boolean isMap;
 
 	public ExpressionFunction() {
@@ -48,7 +51,6 @@ public class ExpressionFunction {
 	public ExpressionFunction(Class<? extends IExpressionFunction> function, Object... args) {
 		this.functionCond = function;
 
-		// Arguments=AttributeName, Value o ExpressionItem
 		this.arguments = new LinkedList<Object>();
 
 		for (Object object : args) {
@@ -59,15 +61,21 @@ public class ExpressionFunction {
 		this.isMap = false;
 	}
 
-	public ExpressionFunction(boolean mapFunction, Class<? extends IExpressionFunction> function, AttributeName arg1,
-			Object arg2) {
+	/**
+	 * 
+	 * @param function
+	 * @param arg1
+	 * @param arg2
+	 * @param mapFunction
+	 *            Setting a map function
+	 */
+	public ExpressionFunction(Class<? extends IExpressionFunction> function, AttributeName arg1, Object arg2,
+			boolean mapFunction) {
 		this.isMap = true;
-
 		this.functionCond = function;
 
 		// Arguments=AttributeName and Literal
 		this.arguments = new LinkedList<Object>();
-
 		this.arguments.add(arg1);
 		this.arguments.add(arg2);
 
@@ -89,75 +97,108 @@ public class ExpressionFunction {
 		Object value = null;
 
 		if (isMap) {
-			// it is a high-order map function
-			l.debug("Map function");
-			Object obj = this.arguments.get(1);
+			try {
+				// it is a high-order map function that iterate the application
+				// of the function on each element of the set taken as argument
+				l.debug("Map function");
 
-			// Collect value on which iterate the function application
-			LinkedList<Object> lst = new LinkedList<Object>();
-			if (obj instanceof Set) {
-				lst = ((Set) obj).getBag_values();
-			} else if (FacplLiteralTypes.isFacplValue(obj)) {
-				// Literals
-				lst.add(obj);
-			}
-			l.debug("Arguments on which iterating: " + lst.toString());
-
-			// Iterate function application
-
-			Class<?> params[] = new Class[1];
-			params[0] = List.class;
-
-			Method function_m;
-			LinkedList<ExpressionValue> function_results = new LinkedList<ExpressionValue>();
-
-			
-			
-			for (Object v : lst) {
-
-				try {
-					l.debug("Current literal is " + v.toString());
-					
-					//set up list to pass as argument to the function
-					LinkedList<Object> function_arg = new LinkedList<Object>();
-					function_arg.add(cxtRequest.getContextRequestValues(((AttributeName) this.arguments.get(0))));
-					function_arg.add(v);
-					
-					//load the function
-					Object intermediate_value = null;
-					function_m = functionCond.getDeclaredMethod("evaluateFunction", params);
-					Object a = functionCond.newInstance();
-					
-					//add intermediate value to the list
-					intermediate_value = function_m.invoke(a,function_arg);
-					
-					l.debug("Intermediate value is " + intermediate_value);
-					
-					if (intermediate_value.equals(true)){
-						function_results.add(ExpressionValue.TRUE);
-					}else if (intermediate_value.equals(false)){
-						function_results.add(ExpressionValue.FALSE);
-					}else if (intermediate_value.equals(ExpressionValue.BOTTOM)){
-						function_results.add(ExpressionValue.BOTTOM);
-					}else{
-						function_results.add(ExpressionValue.ERROR);
-					}
-					
-				} catch (Exception e) {
-					l.debug(e.getMessage());
-					l.debug("Intermediate value is error " + ExpressionValue.ERROR);
+				// Get the set of values to iterate from the request
+				Object valuesToIterate = null;
+				try{
+					valuesToIterate = cxtRequest.getContextRequestValues(((AttributeName) this.arguments.get(0)));
+				}catch (MissingAttributeException e){
+					l.debug("Attribute in map function is bottom. Return bottom");
+					return ExpressionValue.BOTTOM;
+				}
+				
+				// Collect value on which iterate the function application
+				LinkedList<Object> lst = new LinkedList<Object>();
+				if (valuesToIterate instanceof Set) {
+					lst = ((Set) valuesToIterate).getValues();
+				} else if (FacplLiteralTypes.isFacplValue(valuesToIterate)) {
+					// Literals
+					lst.add(valuesToIterate);
+				} else {
+					throw new Exception("Unexpected Definition of Map function");
 				}
 
-				l.debug("Intermediate values so far " + function_results.toString());
-			}
-			
-			//Calculate final decision
-			
-			//TODO!!! 
-			
-			return ExpressionValue.TRUE;
-			
+				l.debug("Arguments on which iterating: " + lst.toString());
 
+				// Iterate function application
+				Class<?> params[] = new Class[1];
+				params[0] = List.class;
+
+				Method function_m;
+				LinkedList<ExpressionValue> function_results = new LinkedList<ExpressionValue>();
+
+				for (Object v : lst) {
+					try {
+						l.debug("Current literal is " + v.toString());
+
+						// set up list to pass as argument to the function
+						LinkedList<Object> function_arg = new LinkedList<Object>();
+						function_arg.add(v);
+						if (FacplLiteralTypes.isFacplValue(this.arguments.get(1))){
+							function_arg.add(this.arguments.get(1));
+						}else{
+							throw new Exception("Unexpected map definition");
+						}
+						
+						// load the function
+						Object intermediate_value = null;
+						function_m = functionCond.getDeclaredMethod("evaluateFunction", params);
+						Object a = functionCond.newInstance();
+
+						// add intermediate values to the list
+						intermediate_value = function_m.invoke(a, function_arg);
+						l.debug("Intermediate value is " + intermediate_value);
+
+						if (intermediate_value.equals(true)) {
+							function_results.add(ExpressionValue.TRUE);
+						} else if (intermediate_value.equals(false)) {
+							function_results.add(ExpressionValue.FALSE);
+						} else if (intermediate_value.equals(ExpressionValue.BOTTOM)) {
+							function_results.add(ExpressionValue.BOTTOM);
+						} else {
+							function_results.add(ExpressionValue.ERROR);
+						}
+
+					} catch (Exception e) {
+						l.debug(e.getMessage());
+						e.printStackTrace();
+						l.debug("Intermediate value is error " + ExpressionValue.ERROR);
+						function_results.add(ExpressionValue.ERROR);
+					}
+
+					l.debug("Intermediate values so far " + function_results.toString());
+				}
+
+				// Calculate final decision
+				/*
+				 * 1. if at least a TRUE -> return TRUE 2. if there is no true
+				 * and there is at least an ERROR -> return ERR 3. if all FALSE
+				 * or BOTTOM -> return FALSE
+				 */
+				boolean isThereERR = false;
+				for (ExpressionValue v : function_results) {
+					if (v.equals(ExpressionValue.TRUE)) {
+						return ExpressionValue.TRUE;
+					} else if (v.equals(ExpressionValue.ERROR)) {
+						isThereERR = true;
+					}
+				}
+
+				if (isThereERR) {
+					return ExpressionValue.ERROR;
+				} else {
+					return ExpressionValue.FALSE;
+				}
+			} catch (Exception e) {
+				l.debug(e.getMessage());
+				e.printStackTrace();
+				l.debug("Unexpected structure of map");
+				return ExpressionValue.ERROR;
+			}
 		} else {
 			// it is a single function
 			LinkedList<Object> values = new LinkedList<Object>();
@@ -168,7 +209,7 @@ public class ExpressionFunction {
 					try {
 						values.add(cxtRequest.getContextRequestValues((AttributeName) obj));
 					} catch (MissingAttributeException e) {
-						// Add value BOTTOM for modeling the absence of
+						// Add value BOTTOM for modelling the absence of
 						// attribute
 						values.add(ExpressionValue.BOTTOM);
 					}
@@ -199,9 +240,8 @@ public class ExpressionFunction {
 				Method function_m;
 				try {
 					function_m = functionCond.getDeclaredMethod("evaluateFunction", params);
-
-					Object alg = functionCond.newInstance();
-					value = function_m.invoke(alg, values);
+					Object a = functionCond.newInstance();
+					value = function_m.invoke(a, values);
 
 				} catch (Exception e) {
 					l.debug(e.getMessage());
@@ -212,6 +252,9 @@ public class ExpressionFunction {
 			}
 
 			l.debug("Expression result is " + value.toString());
+
+			// TODO SUPPORTARE CAMBIO DA BOTTOM A FALSE IN TRADUZIONE XACML
+			// FACPL
 
 			return value;
 		}
