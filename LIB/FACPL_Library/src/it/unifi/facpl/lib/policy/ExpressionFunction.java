@@ -43,9 +43,15 @@ public class ExpressionFunction {
 	 * function on arguments)
 	 */
 	private final boolean isMap;
+	
+	/**
+	 * When set to true, during expression evaluation bottom is converted to false 
+	 */
+	private final boolean isXACMLTranslation;
 
 	public ExpressionFunction() {
 		this.isMap = false;
+		this.isXACMLTranslation = false;
 	}
 
 	public ExpressionFunction(Class<? extends IExpressionFunction> function, Object... args) {
@@ -56,9 +62,10 @@ public class ExpressionFunction {
 		for (Object object : args) {
 			this.arguments.add(object);
 		}
-
+		
 		// Single function (not high-order map)
 		this.isMap = false;
+		this.isXACMLTranslation = false;
 	}
 
 	/**
@@ -70,8 +77,12 @@ public class ExpressionFunction {
 	 *            Setting a map function
 	 */
 	public ExpressionFunction(Class<? extends IExpressionFunction> function, AttributeName arg1, Object arg2,
-			boolean mapFunction) {
-		this.isMap = true;
+			boolean mapFunction, boolean isXACMLTranslation) {
+		
+		/* XACML Translation */
+		this.isMap = mapFunction;
+		this.isXACMLTranslation = isXACMLTranslation;
+		
 		this.functionCond = function;
 
 		// Arguments=AttributeName and Literal
@@ -232,7 +243,13 @@ public class ExpressionFunction {
 
 			if (isBottom(values)) {
 				l.debug("One of the argument is BOTTOM. Return BOTTOM");
-				return ExpressionValue.BOTTOM;
+				/* Support for XACML semantic correspondence */
+				if (isXACMLTranslation){
+					l.debug("Flag on XACML Target simulation set to true -> convert BOTTOM to FALSE");
+					return ExpressionValue.FALSE;
+				} else {
+					return ExpressionValue.BOTTOM;
+				}
 			} else {
 				Class<?> params[] = new Class[1];
 				params[0] = List.class;
@@ -250,12 +267,14 @@ public class ExpressionFunction {
 				}
 
 			}
-
 			l.debug("Expression result is " + value.toString());
-
-			// TODO SUPPORTARE CAMBIO DA BOTTOM A FALSE IN TRADUZIONE XACML
-			// FACPL
-
+			
+			/* Support for XACML semantic correspondence */
+			if (isXACMLTranslation && value.equals(ExpressionValue.BOTTOM)){
+				l.debug("Flag on XACML Target simulation set to true -> convert BOTTOM to FALSE");
+				return ExpressionValue.FALSE;
+			}
+		
 			return value;
 		}
 	}
