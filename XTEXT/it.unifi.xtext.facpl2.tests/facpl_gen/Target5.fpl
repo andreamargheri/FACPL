@@ -1,5 +1,7 @@
+// To simulate XACML semantics in policy evaluation set the option 'Simulate XACML Semantics' to 'true' in the PAS main
+
 PolicySet Name { deny-unless-permit-greedy
-target: ((equal(true , cat/id)&&equal(true , cat/id)&&equal(true , cat/id))||(equal(true , cat/id)&&equal(true , cat/id)&&equal(true , cat/id))||(equal(true , cat/id)&&equal(true , cat/id)&&equal(true , cat/id)))&&((less-than(4.0 , n/id)&&equal(true , cat/id)&&equal(true , cat/id))||(equal(true , cat/id)&&equal(true , cat/id)&&equal(true , cat/id))||(equal(true , cat/id)&&equal(true , cat/id)&&equal(true , cat/id))||(equal(true , cat/id)&&equal(true , cat/id)&&equal(true , cat/id)))
+target: ((map (equal , cat/id , true)&&map (equal , cat/id , true)&&map (equal , cat/id , true))||(map (equal , cat/id , true)&&map (equal , cat/id , true)&&map (equal , cat/id , true))||(map (equal , cat/id , true)&&map (equal , cat/id , true)&&map (equal , cat/id , true)))&&((map (less-than , n/id , 4.0)&&map (equal , cat/id , true)&&map (equal , cat/id , true))||(map (equal , cat/id , true)&&map (equal , cat/id , true)&&map (equal , cat/id , true))||(map (equal , cat/id , true)&&map (equal , cat/id , true)&&map (equal , cat/id , true))||(map (equal , cat/id , true)&&map (equal , cat/id , true)&&map (equal , cat/id , true)))
 policies: 
 PolicySet PolicyEnclosingRuler1 { permit-overrides-greedy
 policies: 

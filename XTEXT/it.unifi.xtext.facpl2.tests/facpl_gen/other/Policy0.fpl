@@ -1,3 +1,5 @@
+// To simulate XACML semantics in policy evaluation set the option 'Simulate XACML Semantics' to 'true' in the PAS main
+
 PolicySet policy_deny_all { permit-overrides-greedy
 policies: 
 Rule SimpleRule1 (deny )

@@ -120,7 +120,7 @@ DeclaredFunction:
 
 	//Map function iterating application of function on set elements
 MapFunction: 
-	'map('functionId=funID ',' arg1=AttributeName ',' arg2=Literals ')'
+	'map' '('functionId=funID ',' arg1=AttributeName ',' arg2=Literals ')'
 ;
 	
 enum funID:
