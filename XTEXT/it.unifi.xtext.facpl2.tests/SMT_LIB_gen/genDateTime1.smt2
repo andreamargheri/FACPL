@@ -409,7 +409,7 @@
 ;################### CONSTANTs DECLARATIONs #######################
  
 (declare-const const_2005/12/12 (TValue Int))
-(assert (= (val const_2005/12/12) 1134342000000))
+(assert (= (val const_2005/12/12) 1134345600000))
 (assert (not (miss const_2005/12/12))) 
 (assert (not (err const_2005/12/12)))
 ;################################ END ATTRIBUTEs AND CONSTANTs DECLARATION #############################

@@ -17,6 +17,7 @@ Import:
 	//Main
 MainFacpl:
 	'PAS' '{' 'Extended Indeterminate' ':' extIndet=BooleanLiteral ';'
+	('Simulate XACML Semantics' ':' simulateXACML=BooleanLiteral ';')? 
 	('Java Package' ':' genPackage=STRING ';')?
 	('Requests To Evaluate' ':' (refRequest+=[Request] (',' refRequest+=[Request])*) ';')
 	paf=PAF '}';
@@ -104,7 +105,7 @@ OrExpression returns Expression:
 	BasicExpression ({OrExpression.left=current} '||' right=BasicExpression)*;
 
 BasicExpression returns Expression:
-	Function | DeclaredFunction |'(' Expression ')' | NotExpression | Literals;
+	Function | DeclaredFunction | MapFunction | '(' Expression ')' | NotExpression | Literals;
 
 NotExpression:
 	'!' arg=BasicExpression;
@@ -116,6 +117,11 @@ Function:
 DeclaredFunction: 
 	functionId=[FunctionDeclaration] "(" args+=Expression (',' args+=Expression)* ")"
 ;	
+
+	//Map function iterating application of function on set elements
+MapFunction: 
+	'map' '('functionId=funID ',' arg1=AttributeName ',' arg2=Literals ')'
+;
 	
 enum funID:
 	EQUAL='equal' | N_EQUAL='not-equal' |

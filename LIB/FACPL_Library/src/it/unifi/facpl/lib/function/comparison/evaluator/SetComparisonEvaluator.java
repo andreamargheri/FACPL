@@ -67,7 +67,7 @@ public class SetComparisonEvaluator implements IComparisonEvaluator {
 	public boolean isIn(Object o1, Object o2) throws Throwable {
 		if (o2 instanceof Set) {
 			return ((Set) o2).contains((Set) o1);
-		} else if (((Set) o1).getBag_values().size() == 1) {
+		} else if (((Set) o1).getValues().size() == 1) {
 			// o2 of a different type, e.g. a literal, thus if the bag is formed
 			// by only one value they are compared each other
 			return ((Set) o1).contains(o2);

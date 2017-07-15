@@ -11,7 +11,6 @@
 package it.unifi.xacmlToFacpl.parser;
 
 import it.unifi.xacmlToFacpl.jaxb.AdviceExpressionType;
-import it.unifi.xacmlToFacpl.jaxb.AdviceExpressionsType;
 import it.unifi.xacmlToFacpl.jaxb.AllOfType;
 import it.unifi.xacmlToFacpl.jaxb.AnyOfType;
 import it.unifi.xacmlToFacpl.jaxb.ApplyType;
@@ -25,7 +24,6 @@ import it.unifi.xacmlToFacpl.jaxb.EffectType;
 import it.unifi.xacmlToFacpl.jaxb.IdReferenceType;
 import it.unifi.xacmlToFacpl.jaxb.MatchType;
 import it.unifi.xacmlToFacpl.jaxb.ObligationExpressionType;
-import it.unifi.xacmlToFacpl.jaxb.ObligationExpressionsType;
 import it.unifi.xacmlToFacpl.jaxb.PolicySetType;
 import it.unifi.xacmlToFacpl.jaxb.PolicyType;
 import it.unifi.xacmlToFacpl.jaxb.RequestType;
@@ -74,6 +72,9 @@ public class XacmlParser {
 		StringBuffer st = new StringBuffer();
 		JAXBElement<?> el;
 		Object obj = u.unmarshal(d);
+
+		st.append("// To simulate XACML semantics in policy evaluation set the option 'Simulate XACML Semantics' to 'true' in the PAS main");
+		st.append("\n\n");
 
 		if (obj instanceof JAXBElement) {
 			el = (JAXBElement<?>) obj;
@@ -446,58 +447,13 @@ public class XacmlParser {
 		} else if (id.equals("!")) {
 			s.append(id + "(" + value + ")");
 		} else {
-			s.append(id + "(" + value + " , " + attr + ")");
+			/* Using map function to simulate XACML evaluation of Match element */
+			s.append("map (" + id + " , "+ attr + " , " + value + ")");
 		}
 		return s.toString();
 	}
 
-	// /**
-	// * Set of obligations and advice of rule, policy and policy set items
-	// *
-	// * @param obls
-	// * @param advs
-	// * @return
-	// */
-	// private String parseObls(ObligationExpressionsType obls,
-	// AdviceExpressionsType advs) {
-	// StringBuffer s = new StringBuffer();
-	// // obls
-	// if (obls != null) {
-	// for (ObligationExpressionType o : obls.getObligationExpression()) {
-	// s.append("[ " + o.getFulfillOn().name().toLowerCase() + " M ");
-	// s.append(parseID(o.getObligationId()) + " ( ");
-	// // arguments
-	// int i = 0;
-	// for (AttributeAssignmentExpressionType arg :
-	// o.getAttributeAssignmentExpression()) {
-	// if (i > 0)
-	// s.append(",");
-	// s.append(parseArgumentObls(arg));
-	// i++;
-	// }
-	// s.append(")]\n");
-	// }
-	// }
-	// // adv
-	// if (advs != null) {
-	// for (AdviceExpressionType a : advs.getAdviceExpression()) {
-	// s.append("[ " + a.getAppliesTo().name().toLowerCase() + " O ");
-	// s.append(parseID(a.getAdviceId()) + " ( ");
-	// // arguments
-	// int i = 0;
-	// for (AttributeAssignmentExpressionType arg :
-	// a.getAttributeAssignmentExpression()) {
-	// if (i > 0)
-	// s.append(", ");
-	// s.append(parseArgumentObls(arg));
-	// i++;
-	// }
-	// s.append(")]\n");
-	// }
-	// }
-	// return s.toString();
-	// }
-
+	
 	/**
 	 * Parse a single Advice
 	 * 
@@ -629,17 +585,6 @@ public class XacmlParser {
 	 *         XACML element
 	 */
 	private String parseValue(AttributeValueType ob) {
-		// Multiple values are permitted only as sequence of AttributeValue not
-		// inside an AttributeValue, i.e
-		/*
-		 * <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
-		 * <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
-		 * value </AttributeValue> <AttributeValue
-		 * DataType="http://www.w3.org/2001/XMLSchema#string"> value
-		 * </AttributeValue> </AttributeValue>
-		 */
-		// generate a wrong result.
-
 		if (ob.getContent().size() > 1) {
 			l.debug("---AttributeValue with mutiples contents are not supported. It is parsed only the first.");
 			l.info("---Multivalued Attribute are rendered as sequence of atribute with same type---");

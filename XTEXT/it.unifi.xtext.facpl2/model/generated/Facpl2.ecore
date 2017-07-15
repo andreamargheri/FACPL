@@ -19,6 +19,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="MainFacpl">
     <eStructuralFeatures xsi:type="ecore:EReference" name="extIndet" eType="#//BooleanLiteral"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="simulateXACML" eType="#//BooleanLiteral"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="genPackage" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="refRequest" unique="false"
         upperBound="-1" eType="#//Request"/>
@@ -142,6 +144,13 @@
   <eClassifiers xsi:type="ecore:EClass" name="DeclaredFunction" eSuperTypes="#//Expression">
     <eStructuralFeatures xsi:type="ecore:EReference" name="functionId" eType="#//FunctionDeclaration"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="args" upperBound="-1" eType="#//Expression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MapFunction" eSuperTypes="#//Expression">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="functionId" eType="#//funID"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="arg1" eType="#//AttributeName"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="arg2" eType="#//Expression"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="funID">

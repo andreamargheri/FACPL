@@ -733,6 +733,39 @@ class TypeCheck_Test {
 	}
 	
 	@Test
+	def mapFun(){
+		var model = '''
+		PolicySet pSet {deny-unless-permit 
+		policies: 
+		Rule name (permit 
+		target: 
+			map(equal,cat/id, true)
+		)
+		}'''.parse
+
+		model.assertNoErrors
+
+
+
+		model = '''
+		PolicySet pSet {deny-unless-permit 
+		policies: 
+		Rule name (permit 
+		target: 
+			map(in,cat/id, true)
+		)
+		}'''.parse
+
+		model.assertError(
+			Facpl2Package::eINSTANCE.mapFunction,
+			null,
+			"Expression cannot be typed. It is expected map(f,attr_name, value), where 'f' is a boolean function, attr_name an attribute name and value any literal"
+		)
+		
+	}
+	
+	
+	@Test
 	def oblFun(){
 		
 		var model = ('''

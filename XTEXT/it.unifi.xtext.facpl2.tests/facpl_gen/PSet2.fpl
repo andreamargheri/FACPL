@@ -1,5 +1,7 @@
+// To simulate XACML semantics in policy evaluation set the option 'Simulate XACML Semantics' to 'true' in the PAS main
+
 PolicySet Name { permit-overrides-greedy
-target: equal(true , cat/id)
+target: map (equal , cat/id , true)
 policies: 
 PolicySet PolicyEnclosingRuler1 { permit-overrides-greedy
 policies: 

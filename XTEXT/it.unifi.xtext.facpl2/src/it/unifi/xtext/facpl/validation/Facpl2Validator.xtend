@@ -40,6 +40,7 @@ import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.scoping.IGlobalScopeProvider
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.validation.Check
+import it.unifi.xtext.facpl.facpl2.MapFunction
 
 /**
  * This class contains custom validation rules. 
@@ -64,7 +65,7 @@ class Facpl2Validator extends AbstractFacpl2Validator {
 			if (el instanceof Request) {
 				if (el.getName().equals(request.getName())) {
 					if (flag) {
-			 			error("Duplicate request name '" + request.getName() + "'",
+						error("Duplicate request name '" + request.getName() + "'",
 							Facpl2Package.Literals.REQUEST__NAME);
 						return
 					}
@@ -616,23 +617,34 @@ class Facpl2Validator extends AbstractFacpl2Validator {
 			val tCheck = new FacplTypeInference()
 			tCheck.doSwitch(getRoot(Set))
 
-			//Type check on Set
+			// Type check on Set
 			var FacplType t = tCheck.doSwitch(Set.getArgs().get(0));
 			for (Expression ob : Set.getArgs()) {
 				t = FacplType.combine(t, tCheck.doSwitch(ob));
 			}
-			
+
 			if (t.equals(FacplType.ERR))
 				error("Set elements have to be of the same type", Facpl2Package.Literals.SET__ARGS)
-			
-			//Avoid nested Sets + Names cannot occurs in Sets
+
+			// Avoid nested Sets + Names cannot occurs in Sets
 			for (Expression ob : Set.getArgs()) {
-				if (ob instanceof Set )
+				if (ob instanceof Set)
 					error("Sets cannot contain other Sets", Facpl2Package.Literals.SET__ARGS)
 				if (ob instanceof AttributeName)
 					error("Sets cannot contain attribute name", Facpl2Package.Literals.SET__ARGS)
-			}	
-				
+			}
+
+		}
+
+		@Check
+		def void checkMapFunction(MapFunction e) {
+			val tCheck = new FacplTypeInference()
+			tCheck.doSwitch(getRoot(e))
+
+			var t = tCheck.doSwitch(e)
+			if (t.equals(FacplType.ERR)) {
+				error("Expression cannot be typed. It is expected map(f,attr_name, value), where 'f' is a boolean function, attr_name an attribute name and value any literal", Facpl2Package.Literals.MAP_FUNCTION__FUNCTION_ID);
+			}
 		}
 
 		@Check
@@ -644,8 +656,8 @@ class Facpl2Validator extends AbstractFacpl2Validator {
 			if (t.equals(FacplType.ERR)) {
 				error("Expression cannot be typed", Facpl2Package.Literals.FUNCTION__FUNCTION_ID);
 			}
-			if (e.functionId.equals(funID.IN)){
-				info("Function 'in' expects (T,Set<T>)",Facpl2Package.Literals.FUNCTION__FUNCTION_ID )	
+			if (e.functionId.equals(funID.IN)) {
+				info("Function 'in' expects (T,Set<T>)", Facpl2Package.Literals.FUNCTION__FUNCTION_ID)
 			}
 		}
 
