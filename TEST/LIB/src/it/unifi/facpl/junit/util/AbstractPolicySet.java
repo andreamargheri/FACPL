@@ -25,7 +25,7 @@ import it.unifi.facpl.lib.util.exception.FulfillmentFailed;
 public class AbstractPolicySet extends PolicySet {
 
 	private TargetDecision m;
-	private Class<? extends IEvaluableAlgorithm> permitOver = it.unifi.facpl.lib.algorithm.PermitOverridesGreedy.class;
+	private IEvaluableAlgorithm permitOver = new it.unifi.facpl.lib.algorithm.PermitOverridesGreedy();
 	private Boolean err_obl;
 
 	/**
