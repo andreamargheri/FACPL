@@ -1,13 +1,3 @@
-/*******************************************************************************
- * Copyright (c) 2016 Andrea Margheri
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    Andrea Margheri
- *******************************************************************************/
 package eHealthWeb.permitAll;
 
 import it.unifi.facpl.lib.policy.*;
@@ -19,9 +9,9 @@ public class PolicySet_eDis extends PolicySet {
 	public PolicySet_eDis() {
 		addId("eDis");
 		// Algorithm Combining
-		addCombiningAlg(it.unifi.facpl.lib.algorithm.PermitOverrides.class);
+		addCombiningAlg(new it.unifi.facpl.lib.algorithm.PermitOverrides());
 		// Target
-		addTarget(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class, "e-Dispensation",
+		addTarget(new ExpressionFunction(new it.unifi.facpl.lib.function.comparison.Equal(), "e-Dispensation",
 				new AttributeName("resource", "type")));
 		// PolElements
 		addPolicyElement(new Rule_readPhaDis());
@@ -39,17 +29,15 @@ public class PolicySet_eDis extends PolicySet {
 			// Effect
 			addEffect(Effect.PERMIT);
 			// Target
-			addTarget(
-					new ExpressionBooleanTree(ExprBooleanConnector.AND,
+			addTarget(new ExpressionBooleanTree(ExprBooleanConnector.AND,
+					new ExpressionBooleanTree(new ExpressionBooleanTree(ExprBooleanConnector.AND,
 							new ExpressionBooleanTree(
-									new ExpressionBooleanTree(ExprBooleanConnector.AND,
-											new ExpressionBooleanTree(new ExpressionFunction(
-													it.unifi.facpl.lib.function.comparison.Equal.class,
-													new AttributeName("subject", "role"), "pharmacist")),
-									new ExpressionBooleanTree(
-											new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
-													new AttributeName("action", "id"), "read")))),
-					new ExpressionBooleanTree(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.In.class,
+									new ExpressionFunction(new it.unifi.facpl.lib.function.comparison.Equal(),
+											new AttributeName("subject", "role"), "pharmacist")),
+							new ExpressionBooleanTree(
+									new ExpressionFunction(new it.unifi.facpl.lib.function.comparison.Equal(),
+											new AttributeName("action", "id"), "read")))),
+					new ExpressionBooleanTree(new ExpressionFunction(new it.unifi.facpl.lib.function.comparison.In(),
 							"e-Dis-Read", new AttributeName("subject", "permission")))));
 			// Obligations
 		}
@@ -67,16 +55,17 @@ public class PolicySet_eDis extends PolicySet {
 							new ExpressionBooleanTree(new ExpressionBooleanTree(ExprBooleanConnector.AND,
 									new ExpressionBooleanTree(new ExpressionBooleanTree(ExprBooleanConnector.AND,
 											new ExpressionBooleanTree(new ExpressionFunction(
-													it.unifi.facpl.lib.function.comparison.Equal.class,
+													new it.unifi.facpl.lib.function.comparison.Equal(),
 													new AttributeName("subject", "role"), "pharmacist")),
-									new ExpressionBooleanTree(
-											new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
+											new ExpressionBooleanTree(new ExpressionFunction(
+													new it.unifi.facpl.lib.function.comparison.Equal(),
 													new AttributeName("action", "id"), "write")))),
+									new ExpressionBooleanTree(
+											new ExpressionFunction(new it.unifi.facpl.lib.function.comparison.In(),
+													"e-Dis-Read", new AttributeName("subject", "permission"))))),
 							new ExpressionBooleanTree(
-									new ExpressionFunction(it.unifi.facpl.lib.function.comparison.In.class,
-											"e-Dis-Read", new AttributeName("subject", "permission"))))),
-					new ExpressionBooleanTree(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.In.class,
-							"e-Dis-Write", new AttributeName("subject", "permission")))));
+									new ExpressionFunction(new it.unifi.facpl.lib.function.comparison.In(),
+											"e-Dis-Write", new AttributeName("subject", "permission")))));
 			// Obligations
 		}
 	}

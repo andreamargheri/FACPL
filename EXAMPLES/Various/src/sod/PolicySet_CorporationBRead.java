@@ -1,13 +1,3 @@
-/*******************************************************************************
- * Copyright (c) 2016 Andrea Margheri
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    Andrea Margheri
- *******************************************************************************/
 package sod;
 
 import it.unifi.facpl.lib.policy.*;
@@ -19,16 +9,13 @@ public class PolicySet_CorporationBRead extends PolicySet {
 	public PolicySet_CorporationBRead(){
 		addId("CorporationBRead");
 		//Algorithm Combining
-		addCombiningAlg(it.unifi.facpl.lib.algorithm.PermitOverridesGreedy.class);
+		addCombiningAlg(new it.unifi.facpl.lib.algorithm.PermitOverridesGreedy());
 		//Target
-		addTarget(new ExpressionBooleanTree(ExprBooleanConnector.AND,new ExpressionBooleanTree(new ExpressionBooleanTree(ExprBooleanConnector.AND,new ExpressionBooleanTree(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class, "University A",new AttributeName("resource","destination") 
-		)
-		),new ExpressionBooleanTree(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class, "Corporation B",new AttributeName("subject","organization") 
-		)
-		))
-		),new ExpressionBooleanTree(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class, "University A",new AttributeName("subject","locality") 
-		)
-		))
+		addTarget(new ExpressionBooleanTree(ExprBooleanConnector.AND,new ExpressionBooleanTree(new ExpressionBooleanTree(ExprBooleanConnector.AND,new ExpressionBooleanTree(new ExpressionFunction(new it.unifi.facpl.lib.function.comparison.Equal(), "University A",new AttributeName("resource","destination") 
+		)),new ExpressionBooleanTree(new ExpressionFunction(new it.unifi.facpl.lib.function.comparison.Equal(), "Corporation B",new AttributeName("subject","organization") 
+		)))
+		),new ExpressionBooleanTree(new ExpressionFunction(new it.unifi.facpl.lib.function.comparison.Equal(), "University A",new AttributeName("subject","locality") 
+		)))
 		);
 		//PolElements
 		addPolicyElement(new Rule_rule1B());
@@ -42,16 +29,14 @@ public class PolicySet_CorporationBRead extends PolicySet {
 					//Effect
 					addEffect(Effect.PERMIT);
 					//Target
-					addTarget(new ExpressionBooleanTree(ExprBooleanConnector.AND,new ExpressionBooleanTree(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class, "Read",new AttributeName("action","action-id") 
-					)
-					),new ExpressionBooleanTree(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.In.class, new Set(
+					addTarget(new ExpressionBooleanTree(ExprBooleanConnector.AND,new ExpressionBooleanTree(new ExpressionFunction(new it.unifi.facpl.lib.function.comparison.Equal(), "Read",new AttributeName("action","action-id") 
+					)),new ExpressionBooleanTree(new ExpressionFunction(new it.unifi.facpl.lib.function.comparison.In(), new Set(
 					"JOINT-PROJECT",
 					"HEALTH-RECORDS",
 					"JRAPP-EXECUTE"
 					)
 					,new AttributeName("subject","permission") 
-					)
-					))
+					)))
 					);
 					//Obligations
 			}	

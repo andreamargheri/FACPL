@@ -15,11 +15,12 @@ PolicySet patientConsent { permit-overrides
 		Rule readPha ( permit target: equal ( subject / role , "pharmacist" ) 
 			&& equal ( action / id , "read" ) 
 			&& in ("e-Pre-Read" , subject / permission ) )
-		obl:
-		[ permit M log ( system / time , resource / type , subject / id , action / id ) ]
+		obl-p:
+		[ M log ( system / time , resource / type , subject / id , action / id ) ]
 	}
 	Rule denyRule ( deny )
-	obl:
-	[ deny M mailTo ( resource / patient-id.mail , "Data requested by unauthorized subject" ) ]
-	[ permit O compress ( ) ]
+	obl-p:
+	[ O compress ( ) ]
+	obl-d:
+	[ M mailTo ( resource / patient-id.mail , "Data requested by unauthorized subject" ) ]
 }

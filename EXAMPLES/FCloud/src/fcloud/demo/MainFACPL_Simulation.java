@@ -39,7 +39,7 @@ public class MainFACPL_Simulation{
 	
 		
 		// defined list of policies included in the PDP
-		LinkedList<FacplPolicy> policies = new LinkedList<FacplPolicy>();
+		LinkedList<IEvaluablePolicy> policies = new LinkedList<IEvaluablePolicy>();
 		
 		/*
 		 * LOAD-BALANCER
@@ -53,7 +53,7 @@ public class MainFACPL_Simulation{
 		policies.add(new energySaver.PolicySet_CloudSystem()); 
 		
 		
-		this.pdp = new PDP(it.unifi.facpl.lib.algorithm.PermitOverridesGreedy.class, policies, false);
+		this.pdp = new PDP(new it.unifi.facpl.lib.algorithm.PermitOverridesGreedy(), policies, false);
 		
 		this.pep = new PEP(EnforcementAlgorithm.DENY_BIASED);
 			

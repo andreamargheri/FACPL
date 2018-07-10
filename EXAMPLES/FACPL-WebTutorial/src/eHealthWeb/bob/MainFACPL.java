@@ -28,9 +28,9 @@ public class MainFACPL {
 
 	public MainFACPL() {
 		// defined list of policies included in the PDP
-		LinkedList<FacplPolicy> policies = new LinkedList<FacplPolicy>();
+		LinkedList<IEvaluablePolicy> policies = new LinkedList<IEvaluablePolicy>();
 		policies.add(new PolicySet_patientConsent());
-		this.pdp = new PDP(it.unifi.facpl.lib.algorithm.PermitOverrides.class, policies, false);
+		this.pdp = new PDP(new it.unifi.facpl.lib.algorithm.PermitOverrides(), policies, false);
 
 		this.pep = new PEP(EnforcementAlgorithm.DENY_BIASED);
 

@@ -1,15 +1,4 @@
-/*******************************************************************************
- * Copyright (c) 2016 Andrea Margheri
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    Andrea Margheri
- *******************************************************************************/
 package energySaver;
-
 
 import it.unifi.facpl.lib.policy.*;
 import it.unifi.facpl.system.*;
@@ -21,10 +10,7 @@ import java.lang.reflect.Method;
 import java.util.LinkedList;
 import java.util.List;
 
-import fcloud.requests.ContextRequest_RequestCreate;
-import fcloud.requests.ContextRequest_RequestCreateP;
-import fcloud.requests.ContextRequest_RequestRelease;
-import fcloud.requests.ContextRequest_RequestReleaseN;
+import fcloud.requests.*;
 
 @SuppressWarnings("all")
 public class MainFACPL{
@@ -34,9 +20,9 @@ public class MainFACPL{
 		
 	public MainFACPL() {
 		// defined list of policies included in the PDP
-		LinkedList<FacplPolicy> policies = new LinkedList<FacplPolicy>();
+		LinkedList<IEvaluablePolicy> policies = new LinkedList<IEvaluablePolicy>();
 		policies.add(new PolicySet_CloudSystem()); 
-		this.pdp = new PDP(it.unifi.facpl.lib.algorithm.PermitOverridesGreedy.class, policies, false);
+		this.pdp = new PDP(new it.unifi.facpl.lib.algorithm.PermitOverridesGreedy(), policies, false);
 		
 		this.pep = new PEP(EnforcementAlgorithm.DENY_BIASED);
 			
@@ -71,7 +57,7 @@ public class MainFACPL{
 			result.append("---------------------------------------------------\n");
 		}
 		System.out.println(result.toString());
-		ShowResult.showResult(result);
+		//ShowResult.showResult(result);
 	}	
 	
 	

@@ -17,12 +17,12 @@ import it.unifi.facpl.lib.interfaces.IPepAction;
 @SuppressWarnings("all")
 public class PEPAction_Cloud {
 	
-	 public static HashMap<String, Class<? extends IPepAction>> getPepActions() {
+	 public static HashMap<String, IPepAction> getPepActions() {
 
-		HashMap<String, Class<? extends IPepAction>> pepAction = new HashMap<String, Class<? extends IPepAction>>();
-		pepAction.put("create", CreateAction.class);
-		pepAction.put("freeze", FreezeAction.class);
-		pepAction.put("release", ReleaseAction.class);
+		HashMap<String, IPepAction> pepAction = new HashMap<String,IPepAction>();
+		pepAction.put("create", new CreateAction());
+		pepAction.put("freeze", new FreezeAction());
+		pepAction.put("release",new ReleaseAction());
 
 		return pepAction;
 	}

@@ -1,13 +1,3 @@
-/*******************************************************************************
- * Copyright (c) 2016 Andrea Margheri
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    Andrea Margheri
- *******************************************************************************/
 package sod;
 
 import it.unifi.facpl.lib.policy.*;
@@ -28,10 +18,10 @@ public class MainFACPL{
 		
 	public MainFACPL() {
 		// defined list of policies included in the PDP
-		LinkedList<FacplPolicy> policies = new LinkedList<FacplPolicy>();
+		LinkedList<IEvaluablePolicy> policies = new LinkedList<IEvaluablePolicy>();
 		policies.add(new PolicySet_AccessRules()); 
 		policies.add(new PolicySet_SoDRules()); 
-		this.pdp = new PDP(it.unifi.facpl.lib.algorithm.PermitOverridesGreedy.class, policies, false);
+		this.pdp = new PDP(new it.unifi.facpl.lib.algorithm.PermitOverridesGreedy(), policies, false);
 		
 		this.pep = new PEP(EnforcementAlgorithm.BASE);
 			
@@ -63,7 +53,7 @@ public class MainFACPL{
 			result.append("---------------------------------------------------\n");
 		}
 		System.out.println(result.toString());
-		ShowResult.showResult(result);
+		//ShowResult.showResult(result);
 	}	
 	
 	

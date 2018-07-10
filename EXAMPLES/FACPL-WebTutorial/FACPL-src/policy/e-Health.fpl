@@ -12,40 +12,31 @@ PAS { Extended Indeterminate : true ;
 
 		PolicySet ePre { permit-overrides
 			target: equal ( "ePrescription" , resource / type ) policies:
-			Rule readDoc ( permit target: equal ( "doctor" , subject / role ) && equal ( "read" , action / id ) 
-				&& in (subject / permission, set("e-Pre-Read") ) )
-			Rule readPha1 ( permit target: equal ( "pharmacist" , subject / role ) && equal ( "read" , action / id ) 
-				&& in ( subject / permission, set("e-Pre-Read") ) )
-
-			obl:
-			[ permit M log ( system / time , resource / type , subject / id , action / id ) ]
+			Rule readDoc ( permit target: equal ( "doctor" , subject / role ) && equal ( "read" , action / id ) && in ( subject
+					/ permission , set( "e-Pre-Read" ) ) )
+			Rule readPha1 ( permit target: equal ( "pharmacist" , subject / role ) && equal ( "read" , action / id ) && in (
+					subject / permission , set( "e-Pre-Read" ) ) )
+			obl-p:
+			[ M log ( system / time , resource / type , subject / id , action / id ) ]
 		}
 
 		PolicySet eDis { permit-overrides
 			target: equal ( "eDispensation" , resource / type ) policies:
-			Rule readPha2 ( permit target: equal ( "pharmacist" , subject / role ) && equal ( "read" , action / id ) 
-				&& in (	subject / permission , set( "e-Dis-Read" ) ) )
-
-			obl:
-			[ permit M log ( system / time , resource / type , subject / id , action / id ) ]
+			Rule readPha2 ( permit target: equal ( "pharmacist" , subject / role ) && equal ( "read" , action / id ) && in (
+					subject / permission , set( "e-Dis-Read" ) ) )
+			obl-p:
+			[ M log ( system / time , resource / type , subject / id , action / id ) ]
 		}
 
 		PolicySet denyAll { deny-overrides
 			policies:
 			Rule denyRule ( deny )
 		}
-
-		obl:
-		[ deny M mailTo ( resource / patient-id.mail , "Personal data requested by unauthorized subject" ) ]
-		[ permit O compress ( true ) ]
+		obl-p:
+		[ O compress ( ) ]
+		obl-d:
+		[ M mailTo ( resource / patient - id . mail , "Data requested by unauthorized subject" ) ]
 	}
 }
-
-
-Request: { Request1 
-	( subject / id , "Marley" ) 
-	( resource / type , "ePrescription" ) 
-	( subject / role , "doctor" ) 
-	( subject / permission , "e-Pre-Read" , "e-Pre-Write" ) 
-	( action / id , "write" ) 
-}
+Request: { Request1 ( subject / id , "Marley" ) ( resource / type , "ePrescription" ) ( subject / role , "doctor" ) (
+		subject / permission , "e-Pre-Read" , "e-Pre-Write" ) ( action / id , "write" ) }

@@ -16,13 +16,13 @@ PAS {
 		Rule stopExploration ( permit 
 			target: equal ( "qry" , action/action-id ) 
 					&& equal("victimPerceived", action/item)
-			obl: [permit M put("stop")]
-				 [permit M put("role", "rescuer")])
+			obl: [ M put("stop")]
+				 [ M put("role", "rescuer")])
 		Rule batteryLevel ( deny 
 			target: equal ( "qry" , action/action-id ) 
 					&& equal("isMoving", action/item)
 					&& greater-than (20, subject/batteryLevel)
-			obl: [deny M put("direction")])
+			obl: [ M put("direction")])
 	}
 	
 	PolicySet Rescuer { permit-unless-deny 
@@ -30,7 +30,7 @@ PAS {
  	 	 Rule victimFound (permit 
  	 	 	target: equal ( "qry" , action/action-id ) 
  	 	 			&& equal("position", action/item)
- 	 	 	obl: [permit M put("stop")] ) 
+ 	 	 	obl: [ M put("stop")] ) 
 	 }
 
 } 
