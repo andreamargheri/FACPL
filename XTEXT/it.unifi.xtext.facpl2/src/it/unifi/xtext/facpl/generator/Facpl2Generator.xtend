@@ -65,9 +65,9 @@ class Facpl2Generator implements IGenerator {
 			}
 			
 			/* Generating Package */
-			if (e.getMain != null){
+			if (e.getMain !== null){
 				/* Get package name for generated files */
-				if (e.main.genPackage != null && e.main.genPackage != "" ){
+				if (e.main.genPackage !== null && e.main.genPackage != "" ){
 					var name = e.getMain.genPackage
 					if (name.charAt(name.length-1) == "/"){
 						packageFolder = e.getMain.genPackage
@@ -79,13 +79,13 @@ class Facpl2Generator implements IGenerator {
 					packageName = packageName.substring(0,packageName.length-1) + ';'
 				}
 				/* Get XACML parameter for semantic correspondence */
-				if (e.main.simulateXACML != null){
+				if (e.main.simulateXACML !== null){
 					isXACMLTranslation = e.main.simulateXACML.value
 				}
 			}
 					 
 			/* Compiling Requests */
-			if (e.getRequests != null){
+			if (e.getRequests !== null){
 				for (r : e.getRequests){
 					//request
 					fsa.generateFile(packageFolder + "ContextRequest_"+r.name+".java",r.compileRequest())
@@ -94,7 +94,7 @@ class Facpl2Generator implements IGenerator {
 			}
 			
 			/* Compiling Import Files */
-			if (e.getImportEl != null){
+			if (e.getImportEl !== null){
 				for (Import i : e.importEl){
 					//call do generate on imported files
 					var Injector injector = new Facpl2StandaloneSetup().createInjectorAndDoEMFRegistration();
@@ -108,14 +108,14 @@ class Facpl2Generator implements IGenerator {
 			}
 			
 			/* Compiling Policies that are declared out from the brackets of the Main */
-			if (e.getPolicies != null){
+			if (e.getPolicies !== null){
 				for(pol : e.getPolicies){
 					fsa.generateFile(packageFolder + getNameFacplPolicy(pol)+".java", compilePolicy(pol,fsa))	
 				}
 			}
 			
 			/* Compiling Declared Functions */	
-			if (e.declarations != null){
+			if (e.declarations !== null){
 				for (dec : e.declarations){
 					fsa.generateFile(packageFolder + getNameFunction(dec.name)+".java", compileFunction(dec))
 				}
@@ -123,7 +123,7 @@ class Facpl2Generator implements IGenerator {
 			}
 				
 			/* Compiling Main */
-			if (e.getMain != null){
+			if (e.getMain !== null){
 				
 				/* Generating Main File of PDP and PEP (Policies possibly defined within the PDP are compiled as well*/
 				
@@ -144,7 +144,7 @@ class Facpl2Generator implements IGenerator {
 		/* Compile the external context stub */
 		for(e: resource.contents.filter(typeof(Facpl))) {
 				/* Compiling Requests */
-			if (e.getRequests != null){
+			if (e.getRequests !== null){
 				fsa.generateFile(packageFolder + "ContextStub_Default.java",external_contextStub)
 			}
 		}
@@ -174,12 +174,12 @@ class Facpl2Generator implements IGenerator {
 			
 		public MainFACPL() {
 			// defined list of policies included in the PDP
-			LinkedList<FacplPolicy> policies = new LinkedList<FacplPolicy>();
+			LinkedList<IEvaluablePolicy> policies = new LinkedList<IEvaluablePolicy>();
 			«FOR p : main.paf.pdp.polSet»
 «««		Firt row adds the name of the policy. The next IF is needed to compile policies possibly defined in the PDP
-			policies.add(new «IF p.refPol == null»«getNameFacplPolicy(p.newPolicy)»«ELSE»«getNameFacplPolicy(p.refPol)»«ENDIF»()); 
+			policies.add(new «IF p.refPol === null»«getNameFacplPolicy(p.newPolicy)»«ELSE»«getNameFacplPolicy(p.refPol)»«ENDIF»()); 
 			«ENDFOR»
-			this.pdp = new PDP(«getAlgName(main.paf.pdp.pdpAlg.idAlg,fsa)»«IF main.paf.pdp.pdpAlg.FStrategy!= null»«IF main.paf.pdp.pdpAlg.FStrategy.equals(FulfillmentStrategy.GREEDY)»Greedy«ENDIF»«ENDIF».class, policies, «IF main.extIndet != null»«getExpression(main.extIndet)»«ELSE»false«ENDIF»);
+			this.pdp = new PDP(new «getAlgName(main.paf.pdp.pdpAlg.idAlg,fsa)»«IF main.paf.pdp.pdpAlg.FStrategy!== null»«IF main.paf.pdp.pdpAlg.FStrategy.equals(FulfillmentStrategy.GREEDY)»Greedy«ENDIF»«ENDIF»(), policies, «IF main.extIndet !== null»«getExpression(main.extIndet)»«ELSE»false«ENDIF»);
 			
 			this.pep = new PEP(EnforcementAlgorithm.«main.paf.pep.literal.replace('-','_').toUpperCase»);
 				
@@ -215,7 +215,7 @@ class Facpl2Generator implements IGenerator {
 		}	
 		
 		«FOR p : main.paf.pdp.polSet»
-			«IF p.newPolicy != null»
+			«IF p.newPolicy !== null»
 				«IF p.newPolicy instanceof PolicySet»
 				«fsa.generateFile(packageFolder + getNameFacplPolicy(p.newPolicy)+".java",compilePolicy(p.newPolicy,fsa))»
 				«ELSE»
@@ -242,20 +242,21 @@ class Facpl2Generator implements IGenerator {
 	«IF packageName != ""»package «packageName»«ENDIF»
 	
 	import java.util.HashMap;
-	import it.unifi.facpl.lib.interfaces.IPepAction;
+	import it.unifi.facpl.lib.interfaces.*;
 
 	@SuppressWarnings("all")
 	public class PEPAction{
 
-	    public static HashMap<String, Class<? extends IPepAction>> getPepActions() {
+		public static HashMap<String, IPepAction> getPepActions() {
 			/*
-			 * Set your own pep action e.g. HashMap<String,Class<? extends
-			 * IPepAction>> pepAction = new HashMap<String,Class<? extends
-			 * IPepAction>>(); pepAction.put("action", Action.class); return
-			 * pepAction;
-			 */
+			* Set your own pep action e.g. HashMap<String,new ***** class Action extending IPepAction***()
+			* 
+			* pepAction = new HashMap<String,IPepAction>(); 
+			* pepAction.put("action", Action.class); return
+			* pepAction;
+			*/
 			return null;
-		}
+	   	}
 		
 	}
 	'''
@@ -290,14 +291,14 @@ class Facpl2Generator implements IGenerator {
 			addId("«pol.getName()»");
 			//Algorithm Combining
 			«compileAlg(pol.polSetAlg,fsa)»
-			«IF pol.target != null»
+			«IF pol.target !== null»
 			//Target
 			addTarget(«getExpression(pol.target)»);
 			«ENDIF»
 			//PolElements
 			«FOR p: pol.policies»
-				addPolicyElement(new «IF p.refPol == null»«getNameFacplPolicy(p.newPolicy)»«ELSE»«getNameFacplPolicy(p.refPol)»«ENDIF»());
-				«IF p.refPol == null»
+				addPolicyElement(new «IF p.refPol === null»«getNameFacplPolicy(p.newPolicy)»«ELSE»«getNameFacplPolicy(p.refPol)»«ENDIF»());
+				«IF p.refPol === null»
 					«IF p.newPolicy instanceof PolicySet»
 «««					COMPILE POLICYSET INTERNALLY DECLARED (it creates a new .java file)
 						«fsa.generateFile(packageFolder + getNameFacplPolicy(p.newPolicy)+".java",compilePolicy(p.newPolicy,fsa))»
@@ -315,7 +316,7 @@ class Facpl2Generator implements IGenerator {
 			
 «««			//Classes Declaring Rules defined
 			«FOR p: pol.policies»
-				«IF p.newPolicy != null»
+				«IF p.newPolicy !== null»
 					«IF p.newPolicy instanceof Rule»
 						«compilePolicy(p.newPolicy as Rule, fsa)»
 					«ENDIF»
@@ -334,7 +335,7 @@ class Facpl2Generator implements IGenerator {
 				addId("«rule.name»");
 				//Effect
 				addEffect(Effect.«rule.effect.getName»);
-				«IF rule.target != null»
+				«IF rule.target !== null»
 				//Target
 				addTarget(«getExpression(rule.target)»);
 				«ENDIF»
@@ -354,7 +355,7 @@ class Facpl2Generator implements IGenerator {
 	'''
 	
 	def getOblExpression(EList<Expression> list) '''
-	«IF list == null || list.size == 0»
+	«IF list === null || list.size == 0»
 		null
 	«ELSE»	
 		«FOR e : list SEPARATOR ','»
@@ -380,18 +381,18 @@ class Facpl2Generator implements IGenerator {
 	
 	def dispatch getExpression(Function exp){
 	if (isXACMLTranslation){
-		'''new ExpressionFunction(true, it.unifi.facpl.lib.function.«Facpl2Generator_Name::getFunName(exp.functionId)».class, «getExpression(exp.arg1)»,«getExpression(exp.arg2)»)'''
+		'''new ExpressionFunction(true, new it.unifi.facpl.lib.function.«Facpl2Generator_Name::getFunName(exp.functionId)»(), «getExpression(exp.arg1)»,«getExpression(exp.arg2)»)'''
 	}else
-		'''new ExpressionFunction(it.unifi.facpl.lib.function.«Facpl2Generator_Name::getFunName(exp.functionId)».class, «getExpression(exp.arg1)»,«getExpression(exp.arg2)»)'''
+		'''new ExpressionFunction(new it.unifi.facpl.lib.function.«Facpl2Generator_Name::getFunName(exp.functionId)»(), «getExpression(exp.arg1)»,«getExpression(exp.arg2)»)'''
 	}
 	
 	def dispatch getExpression(MapFunction exp)'''
-		new ExpressionFunction(it.unifi.facpl.lib.function.«Facpl2Generator_Name::getFunName(exp.functionId)».class, «getExpression(exp.arg1)»,«getExpression(exp.arg2)»,true,true)
+		new ExpressionFunction(new it.unifi.facpl.lib.function.«Facpl2Generator_Name::getFunName(exp.functionId)»(), «getExpression(exp.arg1)»,«getExpression(exp.arg2)»,true,true)
 	'''
 	
 	
 	def dispatch getExpression(DeclaredFunction exp)'''
-		new ExpressionFunction(«getNameFunction(exp.functionId.name)».class,
+		new ExpressionFunction(new «getNameFunction(exp.functionId.name)»(),
 		«IF exp.args.size > 0»
 			«FOR arg : exp.args SEPARATOR ','» 
 				«getExpression(arg)»
@@ -445,9 +446,9 @@ class Facpl2Generator implements IGenerator {
 	
 	def compileAlg(Alg alg,IFileSystemAccess fsa) '''
 		«IF (!alg.idAlg.getName.toString.equals("CUSTOM_ALG"))»
-		addCombiningAlg(«getAlgName(alg.idAlg,fsa)»«IF alg.FStrategy!= null»«IF alg.FStrategy.equals(FulfillmentStrategy.GREEDY)»Greedy«ENDIF»«ENDIF».class);
+		addCombiningAlg(new «getAlgName(alg.idAlg,fsa)»«IF alg.FStrategy!== null»«IF alg.FStrategy.equals(FulfillmentStrategy.GREEDY)»Greedy«ENDIF»«ENDIF»());
 		«ELSE»
-		addCombiningAlg(«getAlgName(alg.idAlg,fsa)».class);
+		addCombiningAlg(new «getAlgName(alg.idAlg,fsa)»());
 		«ENDIF»
 	'''
 	
@@ -494,8 +495,7 @@ class Facpl2Generator implements IGenerator {
 
 	import it.unifi.facpl.lib.context.*;
 	import it.unifi.facpl.lib.enums.ExtendedDecision;
-	import it.unifi.facpl.lib.interfaces.IEvaluableAlgorithm;
-	import it.unifi.facpl.lib.interfaces.IEvaluableElement;
+	import it.unifi.facpl.lib.interfaces.*;
 	import it.unifi.facpl.lib.policy.PAFElement;
 	import it.unifi.facpl.lib.util.DecisionResult;
 	
@@ -503,17 +503,17 @@ class Facpl2Generator implements IGenerator {
 	public class «personalAlg» implements IEvaluableAlgorithm{
 
 		@Override
-		public DecisionResult evaluate(List<EvaluableElement> elements, 
+		public DecisionResult evaluate(List<IEvaluablePolicy> policy, 
 			ContextRequest cxtRequest, Boolean arg2) {
 		
-		Logger l = Logger.getLogger(PAFElement.class);
+		Logger l = Logger.getLogger(IEvaluableAlgorithm.class);
 		l.debug("-> personal combining algorithm started");
 	
 		/* TODO Auto-generated evaluate method
-		* Create personal combing strategy for EvaluableElement
+		* Create personal combing strategy for IEvaluablePolicy
 		* For Example
 		*
-		*for (EvaluableElement el : elements) {
+		*for (IEvaluablePolicy el : elements) {
 		*	DecisionResult d = el.evaluate(cxtRequest);
 		*	if (d.getDecision().equals(ExtendedDecision.PERMIT)){
 		*		obls_permit.addAll(d.getObligation());
@@ -573,7 +573,7 @@ class Facpl2Generator implements IGenerator {
 			«FOR category : xtendUtil::getCategories(request)»
 				req.addAttribute("«category»",req_«xtendUtil::parseNameCat(category)»);
 			«ENDFOR»
-			«IF request.stub!=null»
+			«IF request.stub!==null»
 			//context stub: 
 			CxtReq =  new ContextRequest(req, «request.stub.trim».getInstance());
 			«ELSE»
@@ -610,7 +610,7 @@ class Facpl2Generator implements IGenerator {
 		
 		import java.util.List;
 		
-		import it.unifi.facpl.lib.interfaces.IExpressionFunction;
+		import it.unifi.facpl.lib.interfaces.*;
 		import it.unifi.facpl.lib.util.*;
 		
 		@SuppressWarnings("all")
