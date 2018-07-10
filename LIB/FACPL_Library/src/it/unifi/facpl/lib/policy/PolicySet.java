@@ -10,9 +10,7 @@
  *******************************************************************************/
 package it.unifi.facpl.lib.policy;
 
-import java.lang.reflect.Method;
 import java.util.LinkedList;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,24 +22,25 @@ import it.unifi.facpl.lib.enums.Effect;
 import it.unifi.facpl.lib.enums.ExtendedDecision;
 import it.unifi.facpl.lib.enums.TargetDecision;
 import it.unifi.facpl.lib.interfaces.IEvaluableAlgorithm;
+import it.unifi.facpl.lib.interfaces.IEvaluablePolicy;
 import it.unifi.facpl.lib.util.exception.FulfillmentFailed;
 
 public abstract class PolicySet extends FacplPolicy {
 
-	private LinkedList<FacplPolicy> polElements;
+	private LinkedList<IEvaluablePolicy> polElements;
 
-	private Class<? extends IEvaluableAlgorithm> algCombining;
+	private IEvaluableAlgorithm algCombining;
 
-	protected void addCombiningAlg(Class<? extends IEvaluableAlgorithm> alg) {
+	protected void addCombiningAlg(IEvaluableAlgorithm alg) {
 		Logger l = LoggerFactory.getLogger(PolicySet.class);
 		l.debug(idElement + ": Add combining Algorithm");
 
 		this.algCombining = alg;
 	}
 
-	protected void addPolicyElement(FacplPolicy el) {
+	protected void addPolicyElement(IEvaluablePolicy el) {
 		if (this.polElements == null) {
-			this.polElements = new LinkedList<FacplPolicy>();
+			this.polElements = new LinkedList<IEvaluablePolicy>();
 		}
 		this.polElements.add(el);
 	}
@@ -63,20 +62,10 @@ public abstract class PolicySet extends FacplPolicy {
 			return auth;
 
 		case TRUE:
-			Class<?> params[] = new Class[3];
-			params[0] = List.class;
-			params[1] = ContextRequest.class;
-			params[2] = Boolean.class;
 
 			try {
-
-				Method eval = algCombining.getDeclaredMethod("evaluate", params);
-
-				l.debug("Loading combining algorithm: " + algCombining.getSimpleName());
-				Object alg = algCombining.newInstance();
-				l.debug("Algorithm started on eval elements");
-
-				auth = (AuthorisationPDP) eval.invoke(alg, this.polElements, cxtRequest, extendedIndeterminate);
+				l.debug("Evaluating combining algorithm: " + algCombining.getClass().getSimpleName());
+				auth = algCombining.evaluate(this.polElements, cxtRequest, extendedIndeterminate);
 
 			} catch (Exception e) {
 				// catch expression from Obligation Fulfillment
@@ -123,18 +112,11 @@ public abstract class PolicySet extends FacplPolicy {
 			if (extendedIndeterminate) {
 				l.debug("---------------------------------------");
 				l.debug("Start Extended Indeterminate Evaluation");
-				Class<?> paramsE[] = new Class[3];
-				paramsE[0] = List.class;
-				paramsE[1] = ContextRequest.class;
-				paramsE[2] = Boolean.class;
-
+			
 				try {
-					Method evalIndeterminate = algCombining.getDeclaredMethod("evaluate", paramsE);
-					Object algIndet = algCombining.newInstance();
-
-					auth = (AuthorisationPDP) evalIndeterminate.invoke(algIndet, this.polElements, cxtRequest,
-							extendedIndeterminate);
-
+					l.debug("Evaluating combining algorithm: " + algCombining.getClass().getSimpleName());
+					auth = algCombining.evaluate(this.polElements, cxtRequest, extendedIndeterminate);
+					
 				} catch (Exception e) {
 					// catch exception from Obligation Fulfillment
 					l.debug("Catch generic exception in policy set eval. Return INDETERMINATE DP");

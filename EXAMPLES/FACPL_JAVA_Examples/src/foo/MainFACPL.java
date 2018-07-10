@@ -12,6 +12,7 @@ package foo;
 
 import it.unifi.facpl.lib.policy.*;
 import it.unifi.facpl.system.*;
+import it.unifi.facpl.lib.algorithm.PermitUnlessDenyGreedy;
 import it.unifi.facpl.lib.context.*;
 import it.unifi.facpl.lib.interfaces.*;
 import it.unifi.facpl.lib.enums.*;
@@ -28,9 +29,9 @@ public class MainFACPL{
 		
 	public MainFACPL() {
 		// defined list of policies included in the PDP
-		LinkedList<FacplPolicy> policies = new LinkedList<FacplPolicy>();
+		LinkedList<IEvaluablePolicy> policies = new LinkedList<IEvaluablePolicy>();
 		policies.add(new PolicySet_PSet()); 
-		this.pdp = new PDP(it.unifi.facpl.lib.algorithm.PermitUnlessDenyGreedy.class, policies, false);
+		this.pdp = new PDP(new PermitUnlessDenyGreedy(), policies, false);
 		
 		this.pep = new PEP(EnforcementAlgorithm.DENY_BIASED);
 			

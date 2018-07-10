@@ -10,9 +10,7 @@
  *******************************************************************************/
 package it.unifi.facpl.lib.policy;
 
-import java.lang.reflect.Method;
 import java.util.LinkedList;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +29,7 @@ import it.unifi.facpl.lib.util.exception.MissingAttributeException;
  */
 public class ExpressionFunction {
 
-	private Class<? extends IExpressionFunction> functionCond;
+	private IExpressionFunction functionCond;
 
 	/**
 	 * 0 = AttributeName 1, ...= Literals or ExpressionItems
@@ -54,7 +52,7 @@ public class ExpressionFunction {
 	 * @param function
 	 * @param args
 	 */
-	public ExpressionFunction(Class<? extends IExpressionFunction> function, Object... args) {
+	public ExpressionFunction(IExpressionFunction function, Object... args) {
 		this.functionCond = function;
 
 		this.arguments = new LinkedList<Object>();
@@ -75,7 +73,7 @@ public class ExpressionFunction {
 	 * @param isXACMLTranslation
 	 * @param args
 	 */
-	public ExpressionFunction(boolean isXACMLTranslation, Class<? extends IExpressionFunction> function, Object... args) {
+	public ExpressionFunction(boolean isXACMLTranslation,IExpressionFunction function, Object... args) {
 		this.functionCond = function;
 
 		this.arguments = new LinkedList<Object>();
@@ -98,7 +96,7 @@ public class ExpressionFunction {
 	 *            Setting a map function
 	 * @param isXACMLTranslation
 	 */
-	public ExpressionFunction(Class<? extends IExpressionFunction> function, boolean isXACMLTranslation, AttributeName arg1, Object arg2,
+	public ExpressionFunction(IExpressionFunction function, boolean isXACMLTranslation, AttributeName arg1, Object arg2,
 			boolean mapFunction) {
 		
 		/* XACML Translation */
@@ -158,10 +156,6 @@ public class ExpressionFunction {
 				l.debug("Arguments on which iterating: " + lst.toString());
 
 				// Iterate function application
-				Class<?> params[] = new Class[1];
-				params[0] = List.class;
-
-				Method function_m;
 				LinkedList<ExpressionValue> function_results = new LinkedList<ExpressionValue>();
 
 				for (Object v : lst) {
@@ -177,13 +171,9 @@ public class ExpressionFunction {
 							throw new Exception("Unexpected map definition");
 						}
 						
-						// load the function
+						// eval function
 						Object intermediate_value = null;
-						function_m = functionCond.getDeclaredMethod("evaluateFunction", params);
-						Object a = functionCond.newInstance();
-
-						// add intermediate values to the list
-						intermediate_value = function_m.invoke(a, function_arg);
+						intermediate_value = functionCond.evaluateFunction(function_arg);
 						l.debug("Intermediate value is " + intermediate_value);
 
 						if (intermediate_value.equals(true)) {
@@ -196,7 +186,7 @@ public class ExpressionFunction {
 							function_results.add(ExpressionValue.ERROR);
 						}
 
-					} catch (Exception e) {
+					} catch (Throwable e) {
 						l.debug(e.getMessage());
 						e.printStackTrace();
 						l.debug("Intermediate value is error " + ExpressionValue.ERROR);
@@ -261,7 +251,7 @@ public class ExpressionFunction {
 
 			l.debug("Evaluated Arguments: " + values.toString());
 
-			l.debug("Evaluate Expression: " + functionCond.getSimpleName());
+			l.debug("Evaluate Expression: " + functionCond.getClass().getSimpleName());
 
 			if (isBottom(values)) {
 				l.debug("One of the argument is BOTTOM. Return BOTTOM");
@@ -273,16 +263,11 @@ public class ExpressionFunction {
 					return ExpressionValue.BOTTOM;
 				}
 			} else {
-				Class<?> params[] = new Class[1];
-				params[0] = List.class;
-
-				Method function_m;
+								
 				try {
-					function_m = functionCond.getDeclaredMethod("evaluateFunction", params);
-					Object a = functionCond.newInstance();
-					value = function_m.invoke(a, values);
+					value = functionCond.evaluateFunction(values);
 
-				} catch (Exception e) {
+				} catch (Throwable e) {
 					l.debug(e.getMessage());
 					l.debug("Expression result is " + ExpressionValue.ERROR);
 					return ExpressionValue.ERROR;

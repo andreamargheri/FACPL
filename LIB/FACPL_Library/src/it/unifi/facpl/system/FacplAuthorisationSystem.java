@@ -65,7 +65,7 @@ public class FacplAuthorisationSystem {
 	 * 
 	 * @param classPepActions
 	 */
-	public void inizializePepActions(HashMap<String, Class<? extends IPepAction>> pepActions) {
+	public void inizializePepActions(HashMap<String, IPepAction> pepActions) {
 
 		this.pep.addPEPActions(pepActions);
 

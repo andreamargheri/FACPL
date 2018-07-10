@@ -20,7 +20,7 @@ public class PolicySet_pName extends PolicySet {
 	public PolicySet_pName() {
 		addId("pName");
 		// Algorithm Combining
-		addCombiningAlg(it.unifi.facpl.lib.algorithm.PermitOverridesGreedy.class);
+		addCombiningAlg(new it.unifi.facpl.lib.algorithm.PermitOverridesGreedy());
 		// PolElements
 		addPolicyElement(new Rule_rule1());
 		// Obligation
@@ -35,7 +35,7 @@ public class PolicySet_pName extends PolicySet {
 			// Target
 			addTarget(
 					//Equal defined with a map <high-order iterative application a la XACML>
-					new ExpressionBooleanTree(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class, true,
+					new ExpressionBooleanTree(new ExpressionFunction(new it.unifi.facpl.lib.function.comparison.Equal(), true,
 							new AttributeName("action", "id"), "READ", true)));
 
 		}

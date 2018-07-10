@@ -10,9 +10,7 @@
  *******************************************************************************/
 package it.unifi.facpl.system;
 
-import java.lang.reflect.Method;
 import java.util.HashMap;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +31,7 @@ import it.unifi.facpl.lib.interfaces.IPepAction;
 public class PEP {
 
 	// Reference to Classes modeling Obligation Actions
-	private static HashMap<String, Class<? extends IPepAction>> pepAction;
+	private static HashMap<String, IPepAction> pepAction;
 
 	private EnforcementAlgorithm alg;
 
@@ -154,22 +152,14 @@ public class PEP {
 		try {
 			// discharge obligation
 			// retrieve pepActionClass
-			Class<? extends IPepAction> classAction = pepAction.get(obl.getPepAction());
+			IPepAction classAction = pepAction.get(obl.getPepAction());
 
 			if (classAction == null) {
 				l.debug("Undefined PEP action \"" + obl.getPepAction() + "\"");
-
 				throw new Exception("Undefined " + obl.getPepAction() + " PEP Action");
 			}
 
-			Class<?> params[] = new Class[1];
-			params[0] = List.class;
-
-			Method eval = classAction.getDeclaredMethod("eval", params);
-
-			Object pepAction = classAction.newInstance();
-
-			eval.invoke(pepAction, obl.getArguments());
+			classAction.eval(obl.getArguments());
 
 		} catch (Throwable t) {
 			// check type of obligation for enforcement error
@@ -182,14 +172,14 @@ public class PEP {
 		}
 	}
 
-	public void addPEPActions(HashMap<String, Class<? extends IPepAction>> classPepActions) {
+	public void addPEPActions(HashMap<String, IPepAction> classPepActions) {
 		Logger l = LoggerFactory.getLogger(PEP.class);
 		l.debug("Add standard actions");
 
-		pepAction = new HashMap<String, Class<? extends IPepAction>>();
-		pepAction.put("mail", it.unifi.facpl.lib.pepFunction.MailTo.class);
-		pepAction.put("log", it.unifi.facpl.lib.pepFunction.Log.class);
-		pepAction.put("compress", it.unifi.facpl.lib.pepFunction.Compress.class);
+		pepAction = new HashMap<String, IPepAction>();
+		pepAction.put("mail", new it.unifi.facpl.lib.pepFunction.MailTo());
+		pepAction.put("log", new it.unifi.facpl.lib.pepFunction.Log());
+		pepAction.put("compress", new it.unifi.facpl.lib.pepFunction.Compress());
 
 		if (classPepActions != null) {
 			for (String key : classPepActions.keySet()) {

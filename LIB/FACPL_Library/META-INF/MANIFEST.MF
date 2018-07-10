@@ -16,4 +16,5 @@ Export-Package: it.unifi.facpl.lib.algorithm;uses:="it.unifi.facpl.lib.interface
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.slf4j.api;bundle-version="1.7.2";visibility:=reexport,
  org.apache.log4j;bundle-version="1.2.15";visibility:=reexport,
- FACPL_Dependecies;bundle-version="1.0.0";visibility:=reexport
+ FACPL_Dependecies;bundle-version="1.0.0";visibility:=reexport,
+ FACPL_Library

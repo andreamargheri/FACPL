@@ -19,12 +19,12 @@ public class PolicySet_PSet extends PolicySet {
 	public PolicySet_PSet() {
 		addId("PSet");
 		// Algorithm Combining
-		addCombiningAlg(it.unifi.facpl.lib.algorithm.DenyUnlessPermitGreedy.class);
+		addCombiningAlg(new it.unifi.facpl.lib.algorithm.DenyUnlessPermitGreedy());
 		// Target
 		addTarget(new ExpressionBooleanTree(ExprBooleanConnector.AND,
-				new ExpressionBooleanTree(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.Equal.class,
+				new ExpressionBooleanTree(new ExpressionFunction(new it.unifi.facpl.lib.function.comparison.Equal(),
 						"READ", new AttributeName("action", "id"))),
-				new ExpressionBooleanTree(new ExpressionFunction(Function_F_Name.class, "READ", 4))));
+				new ExpressionBooleanTree(new ExpressionFunction(new Function_F_Name(), "READ", 4))));
 		// PolElements
 		addPolicyElement(new Rule_rule1());
 		// Obligation
@@ -38,10 +38,10 @@ public class PolicySet_PSet extends PolicySet {
 			addEffect(Effect.PERMIT);
 			// Target
 			addTarget(new ExpressionBooleanTree(ExprBooleanConnector.AND,
-					new ExpressionBooleanTree(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.In.class,
+					new ExpressionBooleanTree(new ExpressionFunction(new it.unifi.facpl.lib.function.comparison.In(),
 							new AttributeName("sub", "id"),
-							new ExpressionFunction(Function_F_Name2.class, "foo", true))),
-					new ExpressionBooleanTree(new ExpressionFunction(it.unifi.facpl.lib.function.comparison.In.class,
+							new ExpressionFunction(new Function_F_Name2(), "foo", true))),
+					new ExpressionBooleanTree(new ExpressionFunction(new it.unifi.facpl.lib.function.comparison.In(),
 							new AttributeName("sub", "id"), new Set(true, false)))));
 			// Obligations
 		}

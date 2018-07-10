@@ -13,7 +13,6 @@
  */
 package it.unifi.facpl.system;
 
-import java.lang.reflect.Method;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -22,7 +21,7 @@ import org.slf4j.LoggerFactory;
 import it.unifi.facpl.lib.context.AuthorisationPDP;
 import it.unifi.facpl.lib.context.ContextRequest;
 import it.unifi.facpl.lib.interfaces.IEvaluableAlgorithm;
-import it.unifi.facpl.lib.policy.FacplPolicy;
+import it.unifi.facpl.lib.interfaces.IEvaluablePolicy;
 
 /**
  * @author Andrea Margheri
@@ -30,11 +29,11 @@ import it.unifi.facpl.lib.policy.FacplPolicy;
  */
 public class PDP {
 
-	private Class<? extends IEvaluableAlgorithm> algCombining;
-	private List<FacplPolicy> policies;
+	private IEvaluableAlgorithm algCombining;
+	private List<IEvaluablePolicy> policies;
 	private Boolean extendedIndeterminate;
 
-	public PDP(Class<? extends IEvaluableAlgorithm> algCombining, List<FacplPolicy> policies,
+	public PDP(IEvaluableAlgorithm algCombining, List<IEvaluablePolicy> policies,
 			Boolean extendedIndeterminate) {
 		this.algCombining = algCombining;
 		this.policies = policies;
@@ -57,18 +56,8 @@ public class PDP {
 		try {
 
 			// Invoking Combining Algorithm defining PDP
-			Class<?> params[] = new Class[3];
-			params[0] = List.class;
-			params[1] = ContextRequest.class;
-			params[2] = Boolean.class;
-
-			Method eval = algCombining.getDeclaredMethod("evaluate", params);
-
-			l.debug("Loading combining algorithm PDP: " + eval.getName());
-			Object alg = algCombining.newInstance();
-
 			AuthorisationPDP dr = new AuthorisationPDP();
-			dr = (AuthorisationPDP) eval.invoke(alg, policies, cxtReq, extendedIndeterminate);
+			dr = algCombining.evaluate(policies, cxtReq, extendedIndeterminate);
 			dr.setId(cxtReq.getRequest().getId());
 
 			l.debug("...PDP Evaluation of request " + cxtReq.getRequest().getId() + " completed. PDP decision: "

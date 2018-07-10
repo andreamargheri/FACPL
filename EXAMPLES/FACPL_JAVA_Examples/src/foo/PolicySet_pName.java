@@ -19,7 +19,7 @@ public class PolicySet_pName extends PolicySet {
 	public PolicySet_pName() {
 		addId("pName");
 		// Algorithm Combining
-		addCombiningAlg(it.unifi.facpl.lib.algorithm.PermitOverridesGreedy.class);
+		addCombiningAlg(new it.unifi.facpl.lib.algorithm.PermitOverridesGreedy());
 		// PolElements
 		addPolicyElement(new Rule_rule1());
 		// Obligation
