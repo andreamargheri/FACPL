@@ -21,6 +21,8 @@ import org.eclipse.xtext.ui.editor.outline.IOutlineNode
 import org.eclipse.xtext.ui.editor.outline.impl.DefaultOutlineTreeProvider
 import org.eclipse.xtext.ui.editor.outline.impl.DocumentRootNode
 import org.eclipse.xtext.ui.editor.outline.impl.EStructuralFeatureNode
+import org.eclipse.xtext.ui.IImageHelper.NullImageHelper
+import org.eclipse.jface.resource.ImageDescriptor
 
 /**
  * Customization of the default outline structure.
@@ -61,14 +63,14 @@ class Facpl2OutlineTreeProvider extends DefaultOutlineTreeProvider {
 
 	def _createChildren(DocumentRootNode parentNode, Facpl facpl) {
 		// import
-		if (facpl.getImportEl() != null) {
+		if (facpl.getImportEl() !== null) {
 			for (Import i : facpl.getImportEl()) {
 				createEStructuralFeatureNode(parentNode, i, Facpl2Package.Literals.IMPORT__IMPORT_URI, _image(i),
 					"imp : " + i.getImportURI(), true);
 			}
 		}
 		// Request
-		if (facpl.getRequests() != null) {
+		if (facpl.getRequests() !== null) {
 			for (Request r : facpl.getRequests()) {
 				createEStructuralFeatureNode(parentNode, r, Facpl2Package.Literals.REQUEST__NAME, _image(r),
 					"req : " + r.getName(), true);
@@ -76,7 +78,7 @@ class Facpl2OutlineTreeProvider extends DefaultOutlineTreeProvider {
 		}
 
 		// function declaration
-		if (facpl.declarations != null) {
+		if (facpl.declarations !== null) {
 			for (f : facpl.declarations) {
 				createEStructuralFeatureNode(parentNode, f, Facpl2Package.Literals.FUNCTION__FUNCTION_ID, _image(f),
 					"fun :" + f.name, true);
@@ -84,16 +86,16 @@ class Facpl2OutlineTreeProvider extends DefaultOutlineTreeProvider {
 		}
 
 		// Main
-		if (facpl.getMain() != null) {
+		if (facpl.getMain() !== null) {
 
 			var EStructuralFeatureNode main = createEStructuralFeatureNode(parentNode, facpl.getMain(),
 				Facpl2Package.Literals.MAIN_FACPL__EXT_INDET, _image(facpl.getMain()), "main ", true);
 
-			if (facpl.getMain().getPaf() != null) {
-				if (facpl.getMain().getPaf().getPdp() != null) {
+			if (facpl.getMain().getPaf() !== null) {
+				if (facpl.getMain().getPaf().getPdp() !== null) {
 					for (AbstractPolicyIncl pol : facpl.getMain().getPaf().getPdp().getPolSet()) {
 
-						if (pol.getNewPolicy() != null) {
+						if (pol.getNewPolicy() !== null) {
 
 							if (pol.getNewPolicy() instanceof PolicySet) {
 								createPolicySet(main, pol.getNewPolicy() as PolicySet);
@@ -106,7 +108,7 @@ class Facpl2OutlineTreeProvider extends DefaultOutlineTreeProvider {
 							}
 						}
 
-						if (pol.getRefPol() != null) {
+						if (pol.getRefPol() !== null) {
 							createEStructuralFeatureNode(main, pol.getRefPol(),
 								Facpl2Package.Literals.FACPL_POLICY__NAME, _image(pol.getRefPol()),
 								"ref-pol : " + pol.getRefPol().getName(), false);
@@ -120,7 +122,7 @@ class Facpl2OutlineTreeProvider extends DefaultOutlineTreeProvider {
 		}
 
 		// Policies
-		if (facpl.getPolicies() != null) {
+		if (facpl.getPolicies() !== null) {
 			for (FacplPolicy pol : facpl.getPolicies()) {
 
 				if (pol instanceof PolicySet) {
@@ -141,12 +143,12 @@ class Facpl2OutlineTreeProvider extends DefaultOutlineTreeProvider {
 		var EStructuralFeatureNode polSetNode = createEStructuralFeatureNode(parentNode, pol,
 			Facpl2Package.Literals.FACPL_POLICY__NAME, _image(pol), "pSet : " + pol.getName(), false);
 
-		createEStructuralFeatureNode(polSetNode, pol, Facpl2Package.Literals.FACPL_POLICY__TARGET, null, "target",
+		createEStructuralFeatureNode(polSetNode, pol, Facpl2Package.Literals.FACPL_POLICY__TARGET, _image(pol), "target",
 			true);
 
 		// creating the node of the internal one
 		for (AbstractPolicyIncl el : pol.getPolicies()) {
-			if (el.getNewPolicy() != null) {
+			if (el.getNewPolicy() !== null) {
 
 				if (el.getNewPolicy() instanceof PolicySet) {
 					createPolicySet(polSetNode, el.getNewPolicy() as PolicySet);
@@ -159,20 +161,21 @@ class Facpl2OutlineTreeProvider extends DefaultOutlineTreeProvider {
 				}
 			}
 
-			if (el.getRefPol() != null) {
+			if (el.getRefPol() !== null) {
 				createEStructuralFeatureNode(parentNode, el.getRefPol(), Facpl2Package.Literals.FACPL_POLICY__NAME,
 					_image(el.getRefPol()), "ref-pol : " + el.getRefPol().getName(), false);
 			}
 		}
 
-		createEStructuralFeatureNode(polSetNode, pol, Facpl2Package.Literals.FACPL_POLICY__NAME, null, "obligation",
+		createEStructuralFeatureNode(polSetNode, pol, Facpl2Package.Literals.FACPL_POLICY__NAME, _image(pol), "obligation",
 			true);
 
 	}
 
 	def createPolicySet(IOutlineNode parentNode, Rule pol) {
 
-		var EStructuralFeatureNode polNode = createEStructuralFeatureNode(parentNode, pol,
+//		var EStructuralFeatureNode polNode = 
+		createEStructuralFeatureNode(parentNode, pol,
 			Facpl2Package.Literals.FACPL_POLICY__NAME, _image(pol), "rul : " + pol.getName(), false);
 
 	}
