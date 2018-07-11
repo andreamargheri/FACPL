@@ -1,3 +1,5 @@
+.. _facpl:
+
 FACPL at a glance 
 ------------------
 
