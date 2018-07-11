@@ -9,12 +9,10 @@ Welcome to FACPL's documentation!
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
-
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+	 
+   txt/intro
+   txt/install
+   txt/facpl
+	 
+	 
+.. NOTE:: For any problem or questions, add an issue to the `GitHub repository <https://github.com/andreamargheri/FACPL/issues>`__ or mail to margheri.andrea@gmail.com.
