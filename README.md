@@ -1,8 +1,8 @@
 # Formal Access Control Policy Language (FACPL)
 
-A Java-based library for the specification, analysis and enforcement of Attribute-based Access Control Policies. The framework is result of the research work available [here](https://eprints.soton.ac.uk/415111/).
+A Java-based library for the specification, analysis and enforcement of Attribute-based Access Control Policies. The framework is result of the research work available in this [Journal article](https://eprints.soton.ac.uk/415111/).
 
-Additional information on the research outcomes, applications and people can be found [here](http://facpl.sf.net)
+Additional information on the research outcomes, applications and people can be found on [this website](http://facpl.sf.net)
 
 ## Structure of the repository
 
@@ -18,4 +18,4 @@ Latest release of the plugin is available under the repository releases. It is i
 
 ## User guide
 
-The FACPL User Guide is available [here](https://facpl.readthedocs.io/en/latest/)
+The FACPL User Guide is available on [FACPL readthedocs.org](https://facpl.readthedocs.io/en/latest/)
