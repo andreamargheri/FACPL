@@ -13,7 +13,7 @@ Java Plugin-Development Project that contains all the required libraries
 for the coding and evaluation tasks; note that the project name cannot
 contain any blank space.
 
-.. image:: ../img/FACPL_Project.png
+.. image:: ../img/Facpl_Project.png
 
 The generated FACPL project is like the one reported in Figure 3. FACPL
 files are generic text files having the "*.fpl*" extension and, for
