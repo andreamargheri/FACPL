@@ -2,7 +2,7 @@
 
 A Java-based library for the specification, analysis and enforcement of Attribute-based Access Control Policies. The framework is result of the research work available [here](https://eprints.soton.ac.uk/415111/).
 
-Additional information on the research outcomes, applications and people can be found [here](https://facpl.sf.net)
+Additional information on the research outcomes, applications and people can be found [here](http://facpl.sf.net)
 
 ## Structure of the repository
 
