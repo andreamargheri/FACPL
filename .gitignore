@@ -7,4 +7,5 @@
 *.java._trace
 *.xtendbin
 *.class
- 
+docs/_build
+docs/_static 
